@@ -4,6 +4,8 @@ node_js:
 branches:
   only:
   - develop
+before_install:
+  - sudo apt-get install ncftp
 before_script:
 - cd frontend
 - npm install -g @angular/cli
@@ -11,7 +13,6 @@ before_script:
 script:
 - ng build --prod
 after_success:
-  - apt-get install ncftp
   - cd dist
   - ncftpput -R -v -u $FTP_USER -p $FTP_PASSWORD 50.31.20.254 Unicorn/frontend ./
 notifications:
