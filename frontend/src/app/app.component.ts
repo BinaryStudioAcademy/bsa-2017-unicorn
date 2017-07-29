@@ -13,6 +13,6 @@ export class AppComponent {
   constructor(private http: HttpClient) {
     this.title = 'app';
 
-    http.get('http://localhost:52309/api/values').subscribe((data) => this.data = data);
+    http.get('/api/values').subscribe((data) => this.data = data);
   }
 }
