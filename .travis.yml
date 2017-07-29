@@ -1,0 +1,17 @@
+language: node_js
+node_js:
+- '6.8'
+branches:
+  only:
+  - develop
+before_script:
+- npm install -g @angular/cli
+- npm install
+script:
+- ng build --prod
+after_success:
+  "curl --ftp-create-dirs -u $FTP_USER:$FTP_PASSWORD ftp://50.31.20.254/Unicorn/frontend"
+notifications:
+  email:
+    on_failure: change
+    on_success: change
