@@ -1,8 +1,7 @@
 {
     "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
     "project": {
-        "name": "unicorn",
-        "ejected": false
+        "name": "unicorn"
     },
     "apps": [{
         "root": "src",

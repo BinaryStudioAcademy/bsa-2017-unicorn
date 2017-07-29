@@ -11,7 +11,9 @@ before_script:
 script:
 - ng build --prod
 after_success:
-  "curl --ftp-create-dirs -u $FTP_USER:$FTP_PASSWORD ftp://50.31.20.254/Unicorn/frontend"
+  - apt-get install ncftp
+  - cd dist
+  - ncftpput -R -v -u $FTP_USER -p $FTP_PASSWORD 50.31.20.254 Unicorn/frontend ./
 notifications:
   email:
     on_failure: change
