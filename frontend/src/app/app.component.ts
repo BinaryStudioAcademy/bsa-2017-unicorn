@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { DataService } from './services/data.service';
 
 @Component({
   selector: 'app-root',
+  providers: [DataService],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
@@ -10,9 +11,9 @@ export class AppComponent {
   title: string;
   data: any;
 
-  constructor(private http: HttpClient) {
+  constructor(private dataService: DataService) {
     this.title = 'app';
 
-    http.get('/api/values').subscribe((data) => this.data = data);
+    dataService.getData().subscribe((data) => this.data = data);
   }
 }
