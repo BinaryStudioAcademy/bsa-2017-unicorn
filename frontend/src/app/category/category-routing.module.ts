@@ -7,7 +7,7 @@ import { CategoryDetailsComponent } from './category-details/category-details.co
 @NgModule({
   imports: [
     RouterModule.forChild([
-      { path: "category", component: CategoryComponent },
+      { path: "categories", component: CategoryComponent },
       { path: "category/:id", component: CategoryDetailsComponent }
     ])
   ],

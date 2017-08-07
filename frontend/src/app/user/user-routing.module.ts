@@ -7,7 +7,7 @@ import { UserDetailsComponent } from './user-details/user-details.component';
 @NgModule({
   imports: [
     RouterModule.forChild([
-      { path: "user", component: UserComponent },
+      { path: "users", component: UserComponent },
       { path: "user/:id", component: UserDetailsComponent }
     ])
   ],
