@@ -4,12 +4,9 @@ namespace Unicorn.DataAccess.Context
 {
     class AppContext: DbContext
     {
-
-        public AppContext(string connectionString)
-        : base(connectionString)
+        public AppContext(string connectionString) : base(connectionString)
         {
 
         }
     }
-
 }
