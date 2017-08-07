@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Unicorn.DataAccess.Entities
 {
-    class Role
+    class Permission
     {
         public int Id { get; set; }
 
-        public string Name { get; set; } 
+        public string Name { get; set; }
     }
 }
