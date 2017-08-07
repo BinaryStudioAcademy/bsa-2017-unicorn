@@ -1,29 +1,29 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { UserComponent } from './user-component/user.component';
-import { UserDetailsComponent } from './user-details/user-details.component';
+import { CompanyComponent } from './company-component/company.component';
+import { CompanyDetailsComponent } from './company-details/company-details.component';
 
 @NgModule({
   imports: [
     RouterModule.forRoot([
       {
-        path: 'users',
-        component: UserComponent,
+        path: 'companies',
+        component: CompanyComponent,
       }
     ]),
     RouterModule.forChild([
       {
-        path: 'user',
+        path: 'company',
         children: [
           {
             path: '',
-            redirectTo: '/users',
+            redirectTo: '/companies',
             pathMatch: 'full'
           },
           {
             path: ':id',
-            component: UserDetailsComponent,
+            component: CompanyDetailsComponent,
           }
         ]
       }
@@ -33,4 +33,4 @@ import { UserDetailsComponent } from './user-details/user-details.component';
     RouterModule
   ]
 })
-export class UserRoutingModule { }
+export class CompanyRoutingModule { }
