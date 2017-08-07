@@ -6,9 +6,27 @@ import { CategoryDetailsComponent } from './category-details/category-details.co
 
 @NgModule({
   imports: [
+    RouterModule.forRoot([
+      {
+        path: 'categories',
+        component: CategoryComponent,
+      }
+    ]),
     RouterModule.forChild([
-      { path: "categories", component: CategoryComponent },
-      { path: "category/:id", component: CategoryDetailsComponent }
+      {
+        path: 'category',
+        children: [
+          {
+            path: '',
+            redirectTo: '/categories',
+            pathMatch: 'full'
+          },
+          {
+            path: ':id',
+            component: CategoryDetailsComponent,
+          }
+        ]
+      }
     ])
   ],
   exports: [

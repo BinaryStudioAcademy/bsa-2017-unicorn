@@ -6,9 +6,27 @@ import { UserDetailsComponent } from './user-details/user-details.component';
 
 @NgModule({
   imports: [
+    RouterModule.forRoot([
+      {
+        path: 'users',
+        component: UserComponent,
+      }
+    ]),
     RouterModule.forChild([
-      { path: "users", component: UserComponent },
-      { path: "user/:id", component: UserDetailsComponent }
+      {
+        path: 'user',
+        children: [
+          {
+            path: '',
+            redirectTo: '/users',
+            pathMatch: 'full'
+          },
+          {
+            path: ':id',
+            component: UserDetailsComponent,
+          }
+        ]
+      }
     ])
   ],
   exports: [

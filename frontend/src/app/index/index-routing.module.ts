@@ -6,7 +6,15 @@ import { IndexComponent } from './index-component/index.component';
 @NgModule({
   imports: [
     RouterModule.forChild([
-      { path: "index", component: IndexComponent }
+      {
+        path: "index",
+        component: IndexComponent
+      },
+      {
+        path: '**',
+        redirectTo: '/index',
+        pathMatch: 'full'
+      }
     ])
   ],
   exports: [

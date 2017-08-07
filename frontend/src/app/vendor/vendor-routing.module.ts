@@ -6,9 +6,27 @@ import { VendorDetailsComponent } from './vendor-details/vendor-details.componen
 
 @NgModule({
   imports: [
+    RouterModule.forRoot([
+      {
+        path: 'vendors',
+        component: VendorComponent,
+      }
+    ]),
     RouterModule.forChild([
-      { path: "vendors", component: VendorComponent },
-      { path: "vendor/:id", component: VendorDetailsComponent }
+      {
+        path: 'vendor',
+        children: [
+          {
+            path: '',
+            redirectTo: '/vendors',
+            pathMatch: 'full'
+          },
+          {
+            path: ':id',
+            component: VendorDetailsComponent,
+          }
+        ]
+      }
     ])
   ],
   exports: [
