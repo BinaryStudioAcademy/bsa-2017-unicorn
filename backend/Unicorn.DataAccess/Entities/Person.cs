@@ -12,11 +12,11 @@ namespace Unicorn.DataAccess.Entities
 
         public Account Account { get; set; }
 
+        public DateTime Birthday { get; set; }
+
         public string Name { get; set; }
 
         public string SurnameName { get; set; }
-
-        public DateTime Birthday { get; set; }
 
         public string MiddleName { get; set; }
 
