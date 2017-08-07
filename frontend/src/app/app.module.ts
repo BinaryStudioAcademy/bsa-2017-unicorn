@@ -17,10 +17,14 @@ import { UserModule } from './user/user.module';
 import { VendorModule } from './vendor/vendor.module';
 
 import { IndexModule } from './index/index.module';
+import { ShellComponent } from './shell/shell.component';
+import { MenuComponent } from './menu/menu.component';
 
 @NgModule({
   declarations: [
-    AppComponent    
+    AppComponent,
+    ShellComponent,
+    MenuComponent    
   ],
   imports: [
     BrowserModule,

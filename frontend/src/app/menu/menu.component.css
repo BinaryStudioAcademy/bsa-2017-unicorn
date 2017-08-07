@@ -1,0 +1,20 @@
+nav li {
+    display: inline;
+    margin-right: 18px;
+}
+
+nav li.last {
+    margin-right: 50px;
+}
+
+nav li a {
+    color: gray;
+    font-family: Calibri, 'Trebuchet MS', sans-serif;
+    text-decoration: none;
+}
+
+nav li a:hover {
+    color: #FF647A;
+    background-color: #FFFFFF;
+    text-decoration: none;
+}

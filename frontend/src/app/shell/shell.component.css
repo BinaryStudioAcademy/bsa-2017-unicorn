@@ -1,0 +1,19 @@
+div.wrapper {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0;
+    text-align: left;
+}
+
+#header {
+    display: block;
+    width: 100%;
+}
+
+#menu {
+    display: block;
+    float: right;
+    margin: 10px 0 0 0;
+}
