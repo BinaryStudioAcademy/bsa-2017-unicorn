@@ -6,29 +6,24 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing/app-routing.module';
 
 import { AppComponent } from './app.component';
-import { CategoryComponent } from './category/category.component';
-import { VendorComponent } from './vendor/vendor.component';
-import { UserComponent } from './user/user.component';
 import { IndexComponent } from './index/index.component';
-import { CategoryDetailsComponent } from './category-details/category-details.component';
-import { UserDetailsComponent } from './user-details/user-details.component';
-import { VendorDetailsComponent } from './vendor-details/vendor-details.component';
+
+import { CategoryModule } from './category/category.module';
+import { UserModule } from './user/user.module';
+import { VendorModule } from './vendor/vendor.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CategoryComponent,
-    VendorComponent,
-    UserComponent,
-    IndexComponent,
-    CategoryDetailsComponent,
-    UserDetailsComponent,
-    VendorDetailsComponent
+    IndexComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    CategoryModule,
+    UserModule,
+    VendorModule
   ],
   providers: [],
   bootstrap: [AppComponent]
