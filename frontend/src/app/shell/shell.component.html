@@ -1,11 +1,21 @@
 <div class="wrapper">
   <div id="header">
-    <a class="logo" href='#'>
-        <img src="/assets/images/unicorn_logo.png" />
+    <a href='#'>
+        <img class="logo" src="/assets/images/unicorn_logo.png" />
     </a>
+    <div *ngIf="search" id="search">
+      <div class="ui action left icon input">
+        <input type="text" placeholder="Чесать кота">
+        <i class="search icon"></i>
+        <button class="ui basic button">Сейчас</button>
+      </div>
+    </div>
     <div id="menu">
       <app-menu></app-menu>
     </div>
   </div>
+  <div id="content">
+    <router-outlet></router-outlet>
+  </div>
 </div>
-<router-outlet></router-outlet>
+

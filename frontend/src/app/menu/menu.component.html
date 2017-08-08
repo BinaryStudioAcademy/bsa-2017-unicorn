@@ -1,8 +1,5 @@
 <nav class="navbar">
   <ul>
-    <li><a routerLink="#" routerLinkActive="active">Взяться и сделать</a></li>
-    <li><a routerLink="#" routerLinkActive="active">Помощь</a></li>
-    <li><a routerLink="#" routerLinkActive="active">Регистрация</a></li>
-    <li class="last"><a a routerLink="#" routerLinkActive="active">Войти</a></li>
+    <li *ngFor="let item of items"><a routerLink="{{item.route}}" routerLinkActive="active">{{item.name}}</a></li>
   </ul>
 </nav>

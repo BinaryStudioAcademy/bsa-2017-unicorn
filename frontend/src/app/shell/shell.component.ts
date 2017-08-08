@@ -6,10 +6,20 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./shell.component.css']
 })
 export class ShellComponent implements OnInit {
+  search: boolean;
 
   constructor() { }
 
   ngOnInit() {
+    this.showSearch();
+  }
+
+  showSearch() {
+    this.search = true;
+  }
+
+  hideSearch() {
+    this.search = false;
   }
 
 }
