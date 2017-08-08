@@ -1,15 +1,17 @@
-nav li {
-    display: inline;
-    margin-right: 18px;
+navbar ul {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
-nav li.last {
-    margin-right: 50px;
+nav li {
+    display: inline; 
+    margin-right: 18px;
 }
 
 nav li a {
     color: gray;
-    font-family: Calibri, 'Trebuchet MS', sans-serif;
+    font-family: 'Verdana', 'Century Gothic', 'Calibri', 'Trebuchet MS', sans-serif;
     text-decoration: none;
 }
 
