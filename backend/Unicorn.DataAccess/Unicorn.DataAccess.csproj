@@ -63,6 +63,7 @@
     <Compile Include="Entities\Role.cs" />
     <Compile Include="Entities\Subcategory.cs" />
     <Compile Include="Context\AppContext.cs" />
+    <Compile Include="Repositories\GenericRepository.cs" />
     <Compile Include="Repositories\UnitOfWork\UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
