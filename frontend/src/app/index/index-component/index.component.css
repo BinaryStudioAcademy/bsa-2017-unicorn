@@ -1,0 +1,54 @@
+.wrapper {
+    padding: 50px 50px;
+}
+
+.slogan {
+    width: 40%;
+    font-family: 'Century Gothic', 'Calibri', 'Trebuchet MS', sans-serif;
+    font-size: 30px;
+    line-height: 5px;
+}
+
+.slogan p {
+    line-height: 40px;
+}
+
+.search-container {
+    display: flex;
+    flex-direction: row;
+    width: auto;
+    margin: 50px 0;
+    border-radius: 10px;
+    border: 1px solid lightgray;
+}
+
+.item {
+    width: 100%;
+    margin: 20px;
+}
+
+.item p {
+    font-size: 16px;
+}
+
+.fill-horizontal {
+    width: 100%;
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.search-button {
+    margin: 40px 10px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    background-color: #FF647A;
+}
