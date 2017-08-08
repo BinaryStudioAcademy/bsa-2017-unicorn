@@ -1,16 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Unicorn.DataAccess.Entities
 {
-    class Person
+    public class Person
     {
-        public int Id { get; set; }
-
-        public Account Account { get; set; }
+        public long Id { get; set; }
 
         public DateTime Birthday { get; set; }
 
@@ -23,5 +17,10 @@ namespace Unicorn.DataAccess.Entities
         public string Gender { get; set; }
 
         public string Phone { get; set; }
+
+
+        public virtual Account Account { get; set; }
+
+        public virtual Location Location { get; set; }
     }
 }

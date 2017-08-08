@@ -2,7 +2,7 @@
 
 namespace Unicorn.DataAccess.Entities
 {
-    public class Category
+    public class Work
     {
         public long Id { get; set; }
 
@@ -11,6 +11,8 @@ namespace Unicorn.DataAccess.Entities
         public string Description { get; set; }
 
 
-        public virtual ICollection<Subcategory> Subcategories { get; set; }
+        public virtual Subcategory Subcategory { get; set; }
+
+        public virtual ICollection<Vendor> Vendors { get; set; }
     }
 }

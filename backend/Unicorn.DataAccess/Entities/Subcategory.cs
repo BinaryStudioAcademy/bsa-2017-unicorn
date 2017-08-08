@@ -6,11 +6,17 @@ using System.Threading.Tasks;
 
 namespace Unicorn.DataAccess.Entities
 {
-    public class Subcategoty
+    public class Subcategory
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
+
         public string Name { get; set; }
+
         public string Description { get; set; }
-        public Category ParentCategory { get; set; }
+
+
+        public virtual Category Category { get; set; }
+
+        public ICollection<Work> Works { get; set; }
     }
 }
