@@ -37,7 +37,7 @@ import { MenuComponent } from './menu/menu.component';
     RegisterModule,
     UserModule,
     VendorModule,
-    IndexModule // // This fucking broke all routes, if it goes first
+    IndexModule // Must be the last module
   ],
   providers: [],
   bootstrap: [AppComponent]
