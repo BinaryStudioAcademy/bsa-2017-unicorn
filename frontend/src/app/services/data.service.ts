@@ -7,10 +7,6 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class DataService {
 
-  //urll = /^((?:https:\/\/)|(?:http:\/\/)|(?:www))/;
-
-  
-
   baseUrl: string = environment.apiUrl;
 
   headers: any = {};
@@ -56,30 +52,41 @@ export class DataService {
     return this.http
       .get<T>(this.buildUrl(url))
       .toPromise()
-      ;
+      .catch(this.handleError);
   }
 
   postRequest<T>(url: string, payload: Object): Promise<T> {
     return this.http
       .post<T>(this.buildUrl(url), this.prepareData(payload), {headers: this.getHeaders()})
-      .toPromise();
+      .toPromise()
+      .catch(this.handleError);
   }
 
   putRequest<T>(url: string, payload: Object): Promise<T> {
     return this.http
       .put<T>(this.buildUrl(url), this.prepareData(payload), {headers: this.getHeaders()})
-      .toPromise();
+      .toPromise()
+      .catch(this.handleError);
   }
 
   deleteRequest<T>(url: string, payload: Object): Promise<T> {
     return this.http
       .delete<T>(this.buildUrl(url), {headers: this.getHeaders()})
-      .toPromise();
+      .toPromise()
+      .catch(this.handleError);
   }
 
   patchRequest<T>(url: string, payload: Object): Promise<T> {
     return this.http
       .patch<T>(this.buildUrl(url), this.prepareData(payload), {headers: this.getHeaders()})
-      .toPromise();
+      .toPromise()
+      .catch(this.handleError);
+  }
+
+  handleError(error: any): Promise<any> {
+    if (!environment.production) {
+      console.log(error);
+    }
+    return Promise.reject(error);
   }
 }
