@@ -21,7 +21,7 @@ namespace Unicorn.DataAccess.Context
         public DbSet<Vendor> Vendors { get; set; }
         public DbSet<Work> Works { get; set; }
 
-        public AppContext(string connectionString) : base(connectionString)
+        public AppContext() : base("DefaultConnection")
         {
 
         }
