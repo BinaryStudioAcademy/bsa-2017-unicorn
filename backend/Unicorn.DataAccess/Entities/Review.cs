@@ -2,7 +2,7 @@
 {
     public class Review
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         public string From { get; set; }
 

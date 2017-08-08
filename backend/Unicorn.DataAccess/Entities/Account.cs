@@ -5,7 +5,7 @@ namespace Unicorn.DataAccess.Entities
 {
     public class Account
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         public string Email { get; set; }
 
