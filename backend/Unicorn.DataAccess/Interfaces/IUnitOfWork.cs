@@ -4,7 +4,7 @@ using Unicorn.DataAccess.Repositories;
 
 namespace Unicorn.DataAccess.Interfaces
 {
-    interface IUnitOfWork
+    public interface IUnitOfWork
     {
         IGenericRepository<Account> AccountRepository { get; }
         IGenericRepository<Book> BookRepository { get; }

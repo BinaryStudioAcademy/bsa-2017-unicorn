@@ -6,7 +6,7 @@ using Unicorn.DataAccess.Interfaces;
 
 namespace Unicorn.DataAccess.Repositories.UnitOfWork
 {
-    class UnitOfWork : IDisposable, IUnitOfWork
+    public class UnitOfWork : IDisposable, IUnitOfWork
     {
         private AppContext context;
         private IRepositoryFactory factory;
