@@ -28,29 +28,6 @@ import { VendorProfilePortfolioComponent } from './vendor-profile-portfolio/vend
           {
             path: ':id',
             component: VendorDetailsComponent,
-            children: [
-              {
-                path: 'reviews',
-                component: VendorProfileReviewsComponent
-              },
-              {
-                path: 'porfolio',
-                component: VendorProfilePortfolioComponent
-              },
-              {
-                path: 'contacts',
-                component: VendorProfileContactsComponent
-              },
-              {
-                path: 'info',
-                component: VendorProfileInfoComponent
-              },
-              {
-                path: '',
-                redirectTo: 'info',
-                pathMatch: 'full'
-              }
-            ]
           }
         ]
       }

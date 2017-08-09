@@ -1,4 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { NgModel } from '@angular/forms';
+
+import {SuiModule} from 'ng2-semantic-ui';
 
 import { Vendor } from '../../models/vendor.model';
 
@@ -9,6 +12,8 @@ import { Vendor } from '../../models/vendor.model';
 })
 export class VendorProfileInfoComponent implements OnInit {
   @Input() vendor: Vendor;
+
+
 
   constructor() { }
 
