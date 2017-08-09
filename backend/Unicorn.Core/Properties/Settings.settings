@@ -1,0 +1,18 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Unicorn.Core.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="Issuer" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">UnicornAuthServer</Value>
+    </Setting>
+    <Setting Name="Audience" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">UnicornAngularClient</Value>
+    </Setting>
+    <Setting Name="PrivateKey" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">021bf657c2e986a04b9e43775253d5a7</Value>
+    </Setting>
+    <Setting Name="TokenLifeTime" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">10</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

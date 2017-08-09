@@ -1,17 +1,17 @@
 ﻿using System;
+using Unicorn.DataAccess.Interfaces;
 
 namespace Unicorn.DataAccess.Entities
 {
-    public class Book
+    public class Book : IEntity
     {
         public long Id { get; set; }
-
+        public bool IsDeleted { get; set; }
         public DateTime Date { get; set; }
 
         public string Status { get; set; }
 
         public string Description { get; set; }
-
 
         public virtual Customer Customer { get; set; }
 

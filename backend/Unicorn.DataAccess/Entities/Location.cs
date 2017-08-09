@@ -1,8 +1,11 @@
-﻿namespace Unicorn.DataAccess.Entities
+﻿using Unicorn.DataAccess.Interfaces;
+
+namespace Unicorn.DataAccess.Entities
 {
-    public class Location
+    public class Location : IEntity
     {
         public long Id { get; set; }
+        public bool IsDeleted { get; set; }
 
         public string City { get; set; }
 

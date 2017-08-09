@@ -1,3 +1,25 @@
-<p>
-  company-details works!
-</p>
+<div class="ui container">
+  <img class="ui fluid image" src= {{company.avatar}}>
+</div>
+<div class="ui container">
+  <sui-tabset>
+    <div class="ui pointing secondary menu" style="color:gray!important;">
+      <a class="item" suiTabHeader="1">General information</a>
+      <a class="item" suiTabHeader="2">Reviews</a>
+      <a class="item" suiTabHeader="3">Vendors</a>
+      <a class="item" suiTabHeader="4">Contacts</a>
+    </div>
+    <div class="ui segment" suiTabContent="1">
+      <company-general-information [company]="company"></company-general-information>
+    </div>
+    <div class="ui segment" suiTabContent="2">
+      <company-reviews [reviews]="company.reviews"></company-reviews>
+    </div>
+    <div class="ui segment" suiTabContent="3">
+      <company-vendors [vendors]="company.vendors"></company-vendors>
+    </div>
+    <div class="ui segment" suiTabContent="4">
+      <company-contacts></company-contacts>
+    </div>
+  </sui-tabset>  
+</div>

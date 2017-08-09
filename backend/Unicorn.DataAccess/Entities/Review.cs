@@ -1,8 +1,11 @@
-﻿namespace Unicorn.DataAccess.Entities
+﻿using Unicorn.DataAccess.Interfaces;
+
+namespace Unicorn.DataAccess.Entities
 {
-    public class Review
+    public class Review : IEntity
     {
         public long Id { get; set; }
+        public bool IsDeleted { get; set; }
 
         public string From { get; set; }
 
