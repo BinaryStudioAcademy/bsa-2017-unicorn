@@ -8,7 +8,8 @@ import { Vendor } from '../../models/vendor.model';
   styleUrls: ['./vendor-profile-contacts.component.css']
 })
 export class VendorProfileContactsComponent implements OnInit {
-  @Input() vendor: Vendor;
+  @Input() vendorId: number;
+  
   constructor() { }
 
   ngOnInit() {

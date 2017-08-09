@@ -1,15 +1,16 @@
+import { Review } from './review';
+import { Work } from './work.model';
+
 export class Vendor {
 	id: number;
-	firstName: string;
-	middleName: string;
-	lastName: string;
+	fio: string;
 	avatarUrl: string;
 	location: string;
 	rang: string;
-	experience: number;
-	workLeter: string;
+	workLetter: string;
 
-	//workList: Work[];
+	workList: Work[];
 	rating: number;
+	reviewsCount: number;
 	features: string[]
 }

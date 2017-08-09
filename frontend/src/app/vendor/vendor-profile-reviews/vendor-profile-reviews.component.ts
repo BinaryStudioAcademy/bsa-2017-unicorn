@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { Vendor } from '../../models/vendor.model';
+import { ReviewService } from '../../services/review.service';
+
+import { Review } from '../../models/review';
 
 @Component({
   selector: 'app-vendor-profile-reviews',
@@ -8,10 +10,14 @@ import { Vendor } from '../../models/vendor.model';
   styleUrls: ['./vendor-profile-reviews.component.css']
 })
 export class VendorProfileReviewsComponent implements OnInit {
-  @Input() vendor: Vendor;
-  constructor() { }
+  @Input() vendorId: number;
+  
+  reviews: Review[];
+
+  constructor(private reviewService: ReviewService) { }
 
   ngOnInit() {
+    this.reviews = this.reviewService.getVendorReviews(this.vendorId);
   }
 
 }

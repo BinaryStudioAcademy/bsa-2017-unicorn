@@ -16,6 +16,7 @@ import { VendorProfilePortfolioComponent } from './vendor-profile-portfolio/vend
 import { VendorRoutingModule } from './vendor-routing.module';
 
 import { VendorService } from '../services/vendor.service';
+import { ReviewService } from '../services/review.service';
 import { DataService } from "../services/data.service";
 
 @NgModule({
@@ -36,7 +37,8 @@ import { DataService } from "../services/data.service";
   ],
   providers: [
     DataService,
-    VendorService
+    VendorService,
+    ReviewService
   ]
 })
 export class VendorModule { }

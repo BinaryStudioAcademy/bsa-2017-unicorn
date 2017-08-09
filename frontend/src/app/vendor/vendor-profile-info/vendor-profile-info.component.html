@@ -1,21 +1,24 @@
 <div class="ui equal width grid container">
   <div class="row">
-    <div class="ten wide column">
+    <div class="column">
       <div class="ui equal width grid">
         <div class="row">
-        <div class="ui form">
-          <div class="field">
-            <label>Rating</label>
-            <sui-rating [(ngModel)]="vendor.rating" [isReadonly]="true"></sui-rating>
+          <div class="column">
+            <div class="ui form">
+              <div class="field">
+                <h4>{{vendor.rang}}</h4>
+                <sui-rating [(ngModel)]="vendor.rating" [isReadonly]="true"></sui-rating>
+                <p>Reviews: {{vendor.reviewsCount}}</p>
+              </div>
+            </div>
           </div>
         </div>
+        <div class="row">
+          <div class="column">
+            <h4>About</h4>
+            <p>{{vendor.workLetter}}</p>
+          </div>
         </div>
-      <div class="row">
-        <h4>About</h4>
-      </div>
-      <div class="row">
-        <p>Some text about</p>
-      </div>
         <div class="ui divider"></div>
         <div class="row">
           <div *ngFor="let feature of vendor.features" class="column">
@@ -28,9 +31,5 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class="six wide column">
-      <app-book></app-book>
-    </div>
   </div>
 </div>
