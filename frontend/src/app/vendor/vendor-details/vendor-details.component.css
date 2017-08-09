@@ -1,0 +1,13 @@
+.vendor-header{
+	display: flex;
+	margin: 2em;
+}
+
+.vendor-title {
+	margin: 0 2em 2em 2em;
+}
+
+.vendor-avatar img {
+	width: 5em;
+	height: 5em;
+}
