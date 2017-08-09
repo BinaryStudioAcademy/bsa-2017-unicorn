@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
-namespace Unicorn.Core.DTOs
+namespace Unicorn.Shared.DTOs
 {
     public class WorkDTO
     {
@@ -13,7 +9,6 @@ namespace Unicorn.Core.DTOs
         public string Name { get; set; }
 
         public string Description { get; set; }
-
 
         public virtual SubcategoryDTO Subcategory { get; set; }
 

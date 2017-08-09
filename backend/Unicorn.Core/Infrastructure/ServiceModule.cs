@@ -4,9 +4,9 @@ using Unicorn.DataAccess.Context;
 using Unicorn.DataAccess.Interfaces;
 using Unicorn.DataAccess.Repositories.UnitOfWork;
 
-namespace Unicorn.Core.Infrastructure
+namespace Unicorn.Shared.Infrastructure
 {
-    class ServiceModule : NinjectModule
+    public class ServiceModule : NinjectModule
     {
         public override void Load()
         {

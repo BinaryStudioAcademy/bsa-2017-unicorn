@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Unicorn.Core.DTOs;
+using Unicorn.Shared.DTOs;
 using Unicorn.DataAccess.Interfaces;
 using System.Linq;
+using System.Threading.Tasks;
 
-namespace Unicorn.Core.Services
+namespace Unicorn.Shared.Services
 {
     public class VendorService
     {
@@ -15,6 +16,10 @@ namespace Unicorn.Core.Services
             _unitOfWork = unitOfWork;
         }
         
+        public async Task<IEnumerable<VendorDTO>> GetAllAsync()
+        {
+
+        }
     }
 }
 

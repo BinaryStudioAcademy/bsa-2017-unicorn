@@ -6,7 +6,7 @@ using Unicorn.DataAccess.Repositories.UnitOfWork;
 
 namespace Unicorn.DataAccess.Infrastructure
 {
-    class DataAccessModule : NinjectModule
+    public class DataAccessModule : NinjectModule
     {
         public override void Load()
         {

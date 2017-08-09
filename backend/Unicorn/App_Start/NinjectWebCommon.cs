@@ -7,9 +7,11 @@ namespace Unicorn.App_Start
     using System.Web;
 
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
-
+    
     using Ninject;
     using Ninject.Web.Common;
+    using Unicorn.DataAccess.Infrastructure;
+    using Ninject.Modules;
 
     public static class NinjectWebCommon 
     {
@@ -39,6 +41,7 @@ namespace Unicorn.App_Start
         /// <returns>The created kernel.</returns>
         private static IKernel CreateKernel()
         {
+            var modules = new INinjectModule[] { new DataAccessModule() };
             var kernel = new StandardKernel();
             try
             {
