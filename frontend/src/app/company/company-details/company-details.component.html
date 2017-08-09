@@ -1,3 +1,14 @@
-<p>
-  company-details works!
-</p>
+<div class="ui container">
+  <img class="ui fluid image" src="../../../assets/images/company_logo.png">
+</div>
+<div class="ui container">
+  <div class="ui secondary pointing menu">
+      <a *ngFor="let selector of selectors" class="item {{selector.active}}" (click)="changeSelector(selector)">{{selector.name}}</a>
+  </div>
+    <div class="ui segment">
+      <company-general-information [company]="mockCompany" *ngIf="selectMenu == 'General information'"></company-general-information>
+      <company-reviews *ngIf="selectMenu == 'Reviews'"></company-reviews>
+      <company-vendors *ngIf="selectMenu == 'Vendors'"></company-vendors>
+      <company-contacts *ngIf="selectMenu == 'Contacts'"></company-contacts>
+    </div>
+</div>
