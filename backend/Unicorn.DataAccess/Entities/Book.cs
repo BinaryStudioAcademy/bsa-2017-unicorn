@@ -13,7 +13,6 @@ namespace Unicorn.DataAccess.Entities
 
         public string Description { get; set; }
 
-
         public virtual Customer Customer { get; set; }
 
         public virtual Vendor Vendor { get; set; }
