@@ -16,19 +16,36 @@
 .search-container {
     display: flex;
     flex-direction: row;
+    /* flex-wrap: wrap; */
     width: auto;
     margin: 50px 0;
-    border-radius: 10px;
+    border-radius: 7px;
     border: 1px solid lightgray;
 }
 
-.item {
-    width: 100%;
+.item-left {
+    width:45%;
     margin: 20px;
 }
 
-.item p {
+.item-right {
+    width:45%;
+    margin: 20px;
+}
+
+.item-left p {
     font-size: 16px;
+    font-family: 'Century Gothic', 'Calibri', 'Trebuchet MS', sans-serif;
+}
+
+.item-right p {
+    font-size: 16px;
+    font-family: 'Century Gothic', 'Calibri', 'Trebuchet MS', sans-serif;
+}
+
+.separator {
+    margin: 10px 0;
+    border-right: 1px solid lightgray;
 }
 
 .fill-horizontal {
@@ -38,17 +55,27 @@
 .flex-row {
     display: flex;
     flex-direction: row;
+    margin: 0;
 }
 
 .flex-column {
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 
-.search-button {
-    margin: 40px 10px;
+.btn-date {
+    margin: 0 10px;
+    width: 50%;
+    color: gray;
+    background-color: white;
+    font-family: 'Century Gothic', 'Calibri', 'Trebuchet MS', sans-serif;
+    font-size: 18px;
+} 
+
+.btn-search {
+    margin: 0 10px;
+    width: 40%;
     color: white;
-    border: none;
-    border-radius: 5px;
     background-color: #FF647A;
-}
+} 
