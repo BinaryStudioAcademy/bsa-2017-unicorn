@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\Account.cs" />
+    <Compile Include="Entities\AccountSocialLogin.cs" />
     <Compile Include="Entities\Book.cs" />
     <Compile Include="Entities\Category.cs" />
     <Compile Include="Entities\Company.cs" />
