@@ -1,10 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Unicorn.DataAccess.Entities;
-using Unicorn.DataAccess.Repositories;
 
 namespace Unicorn.DataAccess.Interfaces
 {
-    public interface IUnitOfWork
+    public interface IUnitOfWork : IDisposable
     {
         IGenericRepository<Account> AccountRepository { get; }
         IGenericRepository<Book> BookRepository { get; }
@@ -20,9 +20,6 @@ namespace Unicorn.DataAccess.Interfaces
         IGenericRepository<Subcategory> SubcategoryRepository { get; }
         IGenericRepository<Vendor> VendorRepository { get; }
         IGenericRepository<Work> WorkRepository { get; }
-
-        void Dispose();
-        void Dispose(bool disposing);
         Task SaveAsync();
     }
 }

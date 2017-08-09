@@ -69,6 +69,7 @@
     <Compile Include="Entities\Vendor.cs" />
     <Compile Include="Entities\Work.cs" />
     <Compile Include="Infrastructure\DataAccessModule.cs" />
+    <Compile Include="Interfaces\IEntity.cs" />
     <Compile Include="Interfaces\IGenericRepository.cs" />
     <Compile Include="Interfaces\IRepositoryFactory.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />

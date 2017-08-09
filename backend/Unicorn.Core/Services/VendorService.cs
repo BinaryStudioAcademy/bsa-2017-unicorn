@@ -16,10 +16,6 @@ namespace Unicorn.Shared.Services
             _unitOfWork = unitOfWork;
         }
         
-        public async Task<IEnumerable<VendorDTO>> GetAllAsync()
-        {
-
-        }
     }
 }
 

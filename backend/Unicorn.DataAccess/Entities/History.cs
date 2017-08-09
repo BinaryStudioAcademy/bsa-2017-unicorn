@@ -1,11 +1,13 @@
 ﻿using System;
+using Unicorn.DataAccess.Interfaces;
 
 namespace Unicorn.DataAccess.Entities
 {
-    public class History
+    public class History : IEntity
     {
         public long Id { get; set; }
-        
+        public bool IsDeleted { get; set; }
+
         public long CustomerId { get; set; }
 
         public string CustomerName { get; set; }

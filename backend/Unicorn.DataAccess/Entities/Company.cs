@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using Unicorn.DataAccess.Interfaces;
 
 namespace Unicorn.DataAccess.Entities
 {
-    public class Company
+    public class Company : IEntity
     {
         public long Id { get; set; }
-
+        public bool IsDeleted { get; set; }
         public DateTime FoundationDate { get; set; }
 
         public int Staff { get; set; }

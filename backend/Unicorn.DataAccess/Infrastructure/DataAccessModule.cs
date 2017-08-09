@@ -2,6 +2,7 @@
 using Ninject.Modules;
 using Unicorn.DataAccess.Context;
 using Unicorn.DataAccess.Interfaces;
+using Unicorn.DataAccess.Repositories;
 using Unicorn.DataAccess.Repositories.UnitOfWork;
 
 namespace Unicorn.DataAccess.Infrastructure
@@ -12,7 +13,7 @@ namespace Unicorn.DataAccess.Infrastructure
         {
             Bind<IRepositoryFactory>().ToFactory();
             Bind<AppContext>().ToSelf();
-            Bind(typeof(IGenericRepository<>)).To(typeof(IGenericRepository<>));
+            Bind(typeof(IGenericRepository<>)).To(typeof(GenericRepository<>));
             Bind<IUnitOfWork>().To<UnitOfWork>();
         }
     }

@@ -6,10 +6,11 @@ using Unicorn.DataAccess.Interfaces;
 
 namespace Unicorn.DataAccess.Repositories.UnitOfWork
 {
-    public class UnitOfWork : IDisposable, IUnitOfWork
+    public class UnitOfWork : IUnitOfWork
     {
         private AppContext context;
         private IRepositoryFactory factory;
+
         private IGenericRepository<Account> accountRepository;
         private IGenericRepository<Book> bookRepository;
         private IGenericRepository<Category> categoryRepository;
@@ -25,7 +26,7 @@ namespace Unicorn.DataAccess.Repositories.UnitOfWork
         private IGenericRepository<Vendor> vendorRepository;
         private IGenericRepository<Work> workRepository;
 
-        public UnitOfWork(IRepositoryFactory factory, AppContext context)
+        public UnitOfWork(AppContext context, IRepositoryFactory factory)
         {
             this.context = context;
             this.factory = factory;
@@ -33,9 +34,13 @@ namespace Unicorn.DataAccess.Repositories.UnitOfWork
 
         public IGenericRepository<Account> AccountRepository
         {
-            get { return accountRepository ??
-                    (accountRepository = factory.CreateRepository<Account>(context)); }
+            get
+            {
+                return accountRepository ??
+                       (accountRepository = factory.CreateRepository<Account>(context));
+            }
         }
+
 
         public IGenericRepository<Book> BookRepository
         {

@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
+using Unicorn.DataAccess.Interfaces;
 
-namespace Unicorn.DataAccess.Entities
+namespace Unicorn.DataAccess.Entities 
 {
-    public class Role
+    public class Role : IEntity
     {
         public long Id { get; set; }
+        public bool IsDeleted { get; set; }
 
         public string Name { get; set; }
 

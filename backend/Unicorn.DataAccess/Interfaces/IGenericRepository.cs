@@ -1,19 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace Unicorn.DataAccess.Interfaces
 {
     public interface IRepository
     { }
-    public interface IGenericRepository<TEntity> : IRepository
+    public interface IGenericRepository<T> : IRepository
     {
-        void Delete(object id);
-        void Delete(TEntity entityToDelete);
-        IEnumerable<TEntity> Get(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, string includeProperties = "");
-        TEntity GetByID(object id);
-        void Insert(TEntity entity);
-        void Update(TEntity entityToUpdate);
+        Task<IEnumerable<T>> GetAllAsync();
+        Task<T> GetByIdAsync(int id);
+        Task<T> GetByIdDeletedAsync(int id);
+        void Create(T item);
+        void Update(T item);
+        void Delete(int id);
+        Task ForceDelete(int id);
+        Task Restore(int id);
+        IQueryable<T> Query { get; }
+        IQueryable<T> Deleted { get; }
     }
 }

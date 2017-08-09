@@ -42,7 +42,7 @@ namespace Unicorn.App_Start
         private static IKernel CreateKernel()
         {
             var modules = new INinjectModule[] { new DataAccessModule() };
-            var kernel = new StandardKernel();
+            var kernel = new StandardKernel(modules);
             try
             {
                 kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);
