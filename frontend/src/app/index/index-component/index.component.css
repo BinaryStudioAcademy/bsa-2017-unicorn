@@ -3,7 +3,7 @@
 }
 
 .slogan {
-    width: 45%;
+    width: 42%;
     font-family: 'Century Gothic', 'Calibri', 'Trebuchet MS', sans-serif;
     font-size: 30px;
     line-height: 5px;
@@ -78,3 +78,13 @@
     background-color: #FF647A;
     font-size: 16px; 
 } 
+
+
+
+.ui.secondary.pointing.menu .active.item {
+    background-color: transparent;
+    box-shadow: none;
+    border-color: #FF647A;
+    font-weight: 700;
+    color: #FF647A;
+}
