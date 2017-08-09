@@ -1,24 +1,28 @@
 <div class="wrapper">
-  <h1 class="color-main">Happy unicorn</h1>
+  <h1 class="color-main">{{title}}</h1>
   <div class="color-text slogan">
-    <p>We can scratch your cat right now, because we can do it.</p>
+    <p>{{slogan}}</p>
   </div>
   <div class="search-container">
-    <div class="item-left">
-      <p class="color-text">What to do</p>
-      <div class="ui input fill-horizontal">
-        <input type="text" placeholder="Scratch a cat">
+    <div class="item1">
+      <p class="color-text">{{labelSearch}}</p>
+       <div class="ui input fill-horizontal"> 
+        <input type="text" placeholder="{{placeholderSearch}}" [(ngModel)]="searchText">
       </div>
     </div>
-    <div class="separator"></div>
-    <div class="item-right">
-      <div class="flex-column">
-        <p class="color-text">When do it</p>
-        <div class="ui input fill-horizontal flex-row">
-          <button class="ui button btn-date">Now</button>                    
-          <button class="ui button bg-color-main btn-search">Search</button>                    
-        </div>
-      </div> 
-    </div>  
+    <div class="item2">
+      <p class="color-text">{{labelDate}}</p>
+      <div class="ui left icon input">
+            <i class="calendar icon"></i>
+            <input placeholder="Now" suiDatepicker
+                   [(ngModel)]="searchDate"
+                   [pickerMode]="mode"
+                   [pickerFirstDayOfWeek]="firstDayOfWeek"
+                   [pickerUseNativeOnMobile]="false">
+        </div>                                              
+    </div>
+    <div class="item3"> 
+      <button class="ui button bg-color-main btn-search" (click)="searchVendor()">{{labelButton}}</button>  
+    </div>     
   </div>
 </div>
