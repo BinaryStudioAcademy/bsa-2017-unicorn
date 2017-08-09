@@ -268,7 +268,16 @@ namespace Unicorn.Shared.services
         private HttpRequestMessage PrepareRequest(HttpMethod method, object body, string path,
             Dictionary<string, string> customHeaders = null)
         {
-            var url = $"{_configuration.BasePath}{path}";
+            //var url = $"{_configuration.BasePath}{path}";
+            string url;
+            if (path.StartsWith("http://") || path.StartsWith("https://"))
+            {
+                url = path;
+            }
+            else
+            {
+                url = _configuration.BasePath + path;
+            }
 
             var request = new HttpRequestMessage(method, url);
 
