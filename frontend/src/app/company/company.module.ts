@@ -11,6 +11,9 @@ import { GeneralInformationComponent } from './company-details/general-informati
 import { ReviewsComponent } from './company-details/reviews/reviews.component';
 import { VendorsComponent } from './company-details/vendors/vendors.component';
 import { ContactsComponent } from './company-details/contacts/contacts.component';
+import { Company } from "../models/company";
+import { Review } from "../models/review";
+import { Vendor } from "../models/vendor";
 
 @NgModule({
   imports: [
@@ -27,6 +30,7 @@ import { ContactsComponent } from './company-details/contacts/contacts.component
     ReviewsComponent,
     VendorsComponent,
     ContactsComponent
-  ]
+  ],
+  providers: [Company, Review, Vendor]
 })
 export class CompanyModule { }

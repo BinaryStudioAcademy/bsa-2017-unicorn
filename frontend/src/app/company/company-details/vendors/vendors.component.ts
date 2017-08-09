@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { Vendor } from "../../../models/vendor";
 
 @Component({
   selector: 'company-vendors',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./vendors.component.css']
 })
 export class VendorsComponent implements OnInit {
+@Input()
+vendors: Vendor[];
 
   constructor() { }
 

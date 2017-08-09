@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Company } from "../../../models/company";
 
 @Component({
   selector: 'company-general-information',
@@ -7,7 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class GeneralInformationComponent implements OnInit {
 @Input()
-company: any;
+company: Company;
 
 
   constructor() { }
