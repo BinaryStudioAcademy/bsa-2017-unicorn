@@ -1,19 +1,13 @@
 
-<div class="input wrap">      
+<!-- <div class="container">       -->
    <div class="ui input" style="display:block">
         <input type="text" value="{{user.firstName}}" placeholder="Name">
         <input type="text" value="{{user.lastName}}" placeholder="Lastname">
         <input type="text" value="{{user.middleName}}" placeholder="Middlename">
-  
+        <input type="text" placeholder="Email">
+        <input type="text" placeholder="Phone">
     </div> 
-      <div class="ui input">
-            <input suiDatepicker
-                   ng-model="birthday"
-                   pickerMode="date"
-                   placeholder="Pick your birthday">
-                   
-        </div> 
-  </div>
+     
       
       <div class="ui form">
         <div class="inline fields" style="margin-left:1em">
@@ -34,7 +28,12 @@
         </div>
       </div>
     
-       <div class="ui input">
-        <input type="text" placeholder="Email">
-        <input type="text" placeholder="Phone">
-      </div>
+       <div class="ui left icon input">
+            <i class="calendar icon"></i>
+            <input suiDatepicker
+                   ng-model="birthday"
+                   pickerMode="date"
+                   placeholder="Pick your birthday">
+                   
+       </div>
+    <!-- </div> -->
