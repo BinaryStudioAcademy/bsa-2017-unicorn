@@ -8,7 +8,7 @@ using System.Web.Http.Cors;
 
 namespace Unicorn.Controllers
 {
-    [EnableCors("*", "*", "*")]
+    [EnableCors("*", "*", "*")]    
     public class ValuesController : ApiController
     {
         // GET api/values
