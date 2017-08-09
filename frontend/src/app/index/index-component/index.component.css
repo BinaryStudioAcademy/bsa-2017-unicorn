@@ -78,13 +78,3 @@
     background-color: #FF647A;
     font-size: 16px; 
 } 
-
-
-
-.ui.secondary.pointing.menu .active.item {
-    background-color: transparent;
-    box-shadow: none;
-    border-color: #FF647A;
-    font-weight: 700;
-    color: #FF647A;
-}
