@@ -22,7 +22,7 @@ namespace Unicorn.Core.Services
             return new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Properties.Settings.Default.PrivateKey));
         }
 
-        public async Task<string> GenerateJwtToken(string provider, string uid)
+        public async Task<string> GenerateJwtTokenAsync(string provider, string uid)
         {
             if (!await membershipProvider.VerifyUser(provider, uid))
                 return "Wrong access"; // User not exists in DB
@@ -40,15 +40,11 @@ namespace Unicorn.Core.Services
                     signingCredentials: new SigningCredentials(GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
 
             return new JwtSecurityTokenHandler().WriteToken(jwt);
-        }        
+        }
 
-        public bool ValidateToken(string tokenString)
+        public Task<bool> ValidateTokenAsync(string tokenString)
         {
             bool result = false;
-            if (string.IsNullOrWhiteSpace(tokenString))
-            {
-                return result;
-            }
 
             try
             {
@@ -75,7 +71,7 @@ namespace Unicorn.Core.Services
                 result = false;
             }
 
-            return result;
+            return Task.FromResult(result);
         }
     }
 }
