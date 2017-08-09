@@ -19,6 +19,8 @@ import { VendorModule } from './vendor/vendor.module';
 import { IndexModule } from './index/index.module';
 import { ShellComponent } from './shell/shell.component';
 import { MenuComponent } from './menu/menu.component';
+import { SuiModule } from 'ng2-semantic-ui';
+
 
 @NgModule({
   declarations: [
@@ -27,6 +29,7 @@ import { MenuComponent } from './menu/menu.component';
     MenuComponent    
   ],
   imports: [
+    SuiModule,
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,

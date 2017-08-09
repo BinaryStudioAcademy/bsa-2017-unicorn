@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {SuiModule} from 'ng2-semantic-ui';
 
 @Component({
   selector: 'app-user-details',
@@ -7,8 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserDetailsComponent implements OnInit {
 
-  constructor() { }
-
+  constructor() { 
+  }
+   name:string='Dan';
+   surname:string='Brown'
   ngOnInit() {
   }
 

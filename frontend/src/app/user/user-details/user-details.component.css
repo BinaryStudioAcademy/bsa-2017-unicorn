@@ -1,0 +1,38 @@
+.avatar
+{
+    height: 160px;
+    width: 160px;
+    display: flex;
+    flex-direction: row;
+}
+
+header
+{
+    color: #FF647A;
+    background-color: #FFFFFF;
+    text-decoration: none;
+    font-family: 'Verdana', 'Century Gothic', 'Calibri', 'Trebuchet MS', sans-serif;
+    font-size: 25px;
+    margin: 10px;
+}
+.ui bottom attached segment
+{
+    display: flex;
+    flex-direction: column;
+}
+.ui left icon input
+{
+     display: flex;
+     flex-direction: row;
+}
+.ui form
+{
+   margin-left: 20px;
+}
+
+.ui input
+{
+    margin: 10px;
+    display: flex;
+    flex-direction: row;
+}
