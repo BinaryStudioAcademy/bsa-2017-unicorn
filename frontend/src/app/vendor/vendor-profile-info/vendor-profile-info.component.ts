@@ -3,6 +3,8 @@ import { NgModel } from '@angular/forms';
 
 import {SuiModule} from 'ng2-semantic-ui';
 
+import { BookComponent } from '../../book/book/book.component';
+
 import { Vendor } from '../../models/vendor.model';
 
 @Component({
@@ -12,8 +14,6 @@ import { Vendor } from '../../models/vendor.model';
 })
 export class VendorProfileInfoComponent implements OnInit {
   @Input() vendor: Vendor;
-
-
 
   constructor() { }
 

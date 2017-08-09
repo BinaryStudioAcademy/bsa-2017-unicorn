@@ -16,6 +16,7 @@ import { LoginModule } from './login/login.module';
 import { RegisterModule } from './register/register.module';
 import { UserModule } from './user/user.module';
 import { VendorModule } from './vendor/vendor.module';
+import { BookModule } from './book/book.module';
 
 import { IndexModule } from './index/index.module';
 import { ShellComponent } from './shell/shell.component';
@@ -41,6 +42,7 @@ import { SuiModule } from 'ng2-semantic-ui';
     RegisterModule,
     UserModule,
     VendorModule,
+    BookModule,
     IndexModule // Must be the last module
   ],
   providers: [],

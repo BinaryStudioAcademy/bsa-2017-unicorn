@@ -2,7 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-import {SuiModule} from 'ng2-semantic-ui';
+import { SuiModule } from 'ng2-semantic-ui';
+
+import { BookModule } from '../book/book.module';
 
 import { VendorsComponent } from './vendors/vendors.component';
 import { VendorDetailsComponent } from './vendor-details/vendor-details.component';
@@ -21,7 +23,8 @@ import { DataService } from "../services/data.service";
     CommonModule,
     VendorRoutingModule,
     FormsModule,
-    SuiModule
+    SuiModule,
+    BookModule
   ],
   declarations: [
     VendorDetailsComponent,
@@ -29,7 +32,7 @@ import { DataService } from "../services/data.service";
     VendorProfileContactsComponent,
     VendorProfileReviewsComponent,
     VendorProfilePortfolioComponent,
-    VendorsComponent
+    VendorsComponent,
   ],
   providers: [
     DataService,

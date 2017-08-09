@@ -1,0 +1,18 @@
+<form class="ui form book-form">
+  <div class="field">
+    <label>Data and time</label>
+    <div class="ui left icon input">
+      <i class="calendar icon"></i>
+      <input suiDatepicker [(ngModel)]="book.date" name="date" [pickerUseNativeOnMobile]="false">
+    </div>
+  </div>
+  <div class="field">
+    <label>Address</label>
+    <input [(ngModel)]="book.address" name="address" placeholder="Franka, 12">
+  </div>
+  <div class="field">
+    <label>Contact number</label>
+    <input [(ngModel)]="book.contact" name="contact" placeholder="+380 (XXX) XXXXXXX">
+  </div>
+  <button class="ui button" type="submit">Order work</button>
+</form>
