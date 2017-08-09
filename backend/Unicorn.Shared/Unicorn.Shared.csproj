@@ -30,8 +30,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -41,6 +45,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="services\HttpWrapClientService.cs" />
+    <Compile Include="services\implementations\HttpWrapException.cs" />
+    <Compile Include="services\implementations\HttpWrapResponse.cs" />
+    <Compile Include="services\interception\IHttpInterceptor.cs" />
+    <Compile Include="services\interfaces\IHttpWrapConfiguration.cs" />
+    <Compile Include="services\interfaces\IHttpWrapResponse.cs" />
+    <Compile Include="services\interfaces\IHttpWrapClient.cs" />
+    <Compile Include="services\interfaces\IQueryStringBuilder.cs" />
+    <Compile Include="services\interfaces\IRequestContent.cs" />
+    <Compile Include="services\interfaces\ISerializer.cs" />
+    <Compile Include="services\implementations\JsonRequestContent.cs" />
+    <Compile Include="services\implementations\QueryStringBuilder.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
