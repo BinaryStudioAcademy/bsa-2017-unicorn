@@ -1,119 +1,16 @@
-<link rel="stylesheet" href="https://unpkg.com/semantic-ui-calendar/dist/calendar.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.9/semantic.min.css">
+<div class="avatar_layout">
+  <img class="ui small centered circular image" src="http://автобокс72.рф/img/user.png">
+</div>
 <sui-tabset>
-    <div class="ui top attached tabular menu">
-        <a class="item" suiTabHeader="1">Profile</a>
-        <a class="item" suiTabHeader="2">Tasks</a>
-        <a class="item" suiTabHeader="3">Messages</a>
-        <a class="item" suiTabHeader="4">History</a>
-    </div>
-  <div class="ui bottom attached segment" suiTabContent="1">
-  
-      <img src="https://deti-online.com/img/kak-narisovat-edinoroga-v-stile-hello-kitti-color.jpg" class="avatar">
-
-     
-      <div class="ui input">
-        <input type="text" placeholder={{name}}>
-        <input type="text" placeholder={{surname}}>
-        <input type="text" placeholder={{middlename}}>
-      </div>
-      
-      <div class="ui left icon input">
-            <i class="calendar icon"></i>
-            <input suiDatepicker
-                   ng-model="birthday"
-                   pickerMode="date"
-                   placeholder="Pick your birthday">
-                   
-        </div>
-      <div class="ui form">
-        <div class="grouped fields" style="margin-left:1%">
-
-          <div class="field">
-              <div class="ui slider checkbox">
-                <input type="radio" name="gender" checked="true">
-                <label>Male</label>
-              </div>
-          </div>
-
-          <div class="field">
-            <div class="ui slider checkbox">
-              <input type="radio" name="gender">
-              <label>Female</label>
-            </div>
-          </div>      
-        </div>
-      </div>
-      
-       <div class="ui input">
-        <input type="text" placeholder="Email">
-        <input type="text" placeholder="Phone">
-      </div>
-
-      <div class="ui vertical animated button">
-        <div class="hidden content">Location</div>
-          <div class="visible content">
-            <i class="marker icon"></i>
-          </div>
-      </div>
-      </div> 
-    <div class="ui bottom attached segment" suiTabContent="2">
-     <table class="ui single line table">
-  <thead>
-    <tr>
-      <th>Date of request</th>
-      <th>Type of work</th>
-      <th>Description</th>
-      <th>Vendor</th>
-      <th>Status</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>02.08.2017</td>
-      <td>Cleaning</td>
-      <td>Clean appartaments</td>
-      <td><a>Vasa Pupkin</a></td>
-      <td>In prosess</td>
-      <td><button class="ui pink basic button">Feedback</button></td>
-    </tr>
-    <tr>
-      <td>20.07.2017</td>
-      <td>Plumbing</td>
-      <td>Fix dripping tap</td>
-      <td><a>Petr Petrov</a></td>
-      <td>Done</td>
-      <td><button class="ui pink basic button">Feedback</button></td>
-    </tr>
-  </tbody>
-</table>
-    </div>
-    <div class="ui bottom attached segment" suiTabContent="3">
-      Tab for messages
-    </div>
-     <div class="ui bottom attached segment" suiTabContent="4">
-         <table class="ui single line table">
-  <thead>
-    <tr>
-      <th>Date of request</th>
-      <th>Type of work</th>
-      <th>Description</th>
-      <th>Vendor</th>
-      <th>Done date</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>20.07.2017</td>
-      <td>Plumbing</td>
-      <td>Fix dripping tap</td>
-      <td><a>Petr Petrov</a></td>
-      <td>23.07.2017</td>
-      <td><button class="ui pink basic button">Feedback</button></td>
-    </tr>
-  </tbody>
-</table>
-    </div>
-</sui-tabset>
-
+  <div class="ui pointing secondary menu">
+    <a class="item" suiTabHeader="1">Profile</a>
+    <a class="item" suiTabHeader="2">Tasks</a>
+    <a class="item" suiTabHeader="3">Messages</a>
+    <a class="item" suiTabHeader="4">History</a>
+  </div>
+  <div class="ui segment" suiTabContent="1"><app-user-profile></app-user-profile></div>
+  <div class="ui segment" suiTabContent="2"><app-user-tasks></app-user-tasks></div>
+  <div class="ui segment" suiTabContent="3"><app-user-messages></app-user-messages></div>
+  <div class="ui segment" suiTabContent="4"><app-user-history></app-user-history></div>
+</sui-tabset> 

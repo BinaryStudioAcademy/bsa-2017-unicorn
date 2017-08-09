@@ -6,6 +6,10 @@ import { UserDetailsComponent } from './user-details/user-details.component';
 
 import { UserRoutingModule } from './user-routing.module';
 import {SuiModule} from 'ng2-semantic-ui';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { UserHistoryComponent } from './user-history/user-history.component';
+import { UserTasksComponent } from './user-tasks/user-tasks.component';
+import { UserMessagesComponent } from './user-messages/user-messages.component';
 
 @NgModule({
   imports: [
@@ -15,7 +19,11 @@ import {SuiModule} from 'ng2-semantic-ui';
   ],
   declarations: [
     UserComponent,
-    UserDetailsComponent
+    UserDetailsComponent,
+    UserProfileComponent,
+    UserHistoryComponent,
+    UserTasksComponent,
+    UserMessagesComponent
   ]
 })
 export class UserModule { }

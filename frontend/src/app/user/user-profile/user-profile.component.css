@@ -1,0 +1,22 @@
+.ui left icon input
+{
+     display: block;
+}
+.main font
+{
+    color: rebeccapurple;
+    text-decoration: none;
+    font-family: 'Verdana', 'Century Gothic', 'Calibri', 'Trebuchet MS', sans-serif;
+    font-size: 10px;
+}
+.ui input
+{
+    margin: 10px;
+    display: flex;
+}
+
+.input wrap
+{
+    display: flex;
+    flex-direction: row;
+}

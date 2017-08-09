@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Input  } from '@angular/core';
 import {SuiModule} from 'ng2-semantic-ui';
+import { ActivatedRoute, Params } from '@angular/router';
+import 'rxjs/add/operator/switchMap';
 
 @Component({
   selector: 'app-user-details',
@@ -8,10 +10,8 @@ import {SuiModule} from 'ng2-semantic-ui';
 })
 export class UserDetailsComponent implements OnInit {
 
-  constructor() { 
+  constructor( private route: ActivatedRoute) { 
   }
-   name:string='Dan';
-   surname:string='Brown'
   ngOnInit() {
   }
 

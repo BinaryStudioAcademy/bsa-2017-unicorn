@@ -1,0 +1,40 @@
+
+<div class="input wrap">      
+   <div class="ui input">
+        <input type="text" placeholder="Name" class="main font">
+        <input type="text" placeholder="Surname">
+        <input type="text" placeholder="Middlename">
+  </div>
+      
+      <div class="ui left icon input">
+            <i class="calendar icon"></i>
+            <input suiDatepicker
+                   ng-model="birthday"
+                   pickerMode="date"
+                   placeholder="Pick your birthday">
+                   
+        </div>
+    </div>  
+      <div class="ui form">
+        <div class="grouped fields" style="margin-left:1%">
+
+          <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" name="gender" checked="true">
+                <label>Male</label>
+              </div>
+          </div>
+
+          <div class="field">
+            <div class="ui radio checkbox">
+              <input type="radio" name="gender">
+              <label>Female</label>
+            </div>
+          </div>      
+        </div>
+      </div>
+    
+       <div class="ui input">
+        <input type="text" placeholder="Email">
+        <input type="text" placeholder="Phone">
+      </div>

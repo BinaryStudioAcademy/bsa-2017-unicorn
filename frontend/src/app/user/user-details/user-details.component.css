@@ -1,19 +1,17 @@
-.avatar
+.avatar_layout
 {
-    height: 160px;
-    width: 160px;
-    display: flex;
-    flex-direction: row;
+	height: 150px;
+	background: #D8D8D8;
 }
-
-header
+.ui small circular image
 {
-    color: #FF647A;
-    background-color: #FFFFFF;
+   align-self: center;
+}
+.main font
+{
     text-decoration: none;
     font-family: 'Verdana', 'Century Gothic', 'Calibri', 'Trebuchet MS', sans-serif;
-    font-size: 25px;
-    margin: 10px;
+    font-size: 10px;
 }
 .ui bottom attached segment
 {
