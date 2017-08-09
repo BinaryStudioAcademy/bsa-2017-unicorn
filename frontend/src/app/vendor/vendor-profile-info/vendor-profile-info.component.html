@@ -1,3 +1,52 @@
-<p>
-  vendor-profile-info works!
-</p>
+<div class="ui equal width grid container">
+  <div class="row">
+    <div class="ten wide column">
+      <div class="ui equal width grid">
+        <div class="row">
+        <div class="ui form">
+          <div class="field">
+            <label>Rating</label>
+            <sui-rating [(ngModel)]="vendor.rating" [isReadonly]="true"></sui-rating>
+          </div>
+        </div>
+        </div>
+      <div class="row">
+        <h4>About</h4>
+      </div>
+      <div class="row">
+        <p>Some text about</p>
+      </div>
+        <div class="ui divider"></div>
+        <div class="row">
+          <div *ngFor="let feature of vendor.features" class="column">
+            <div class="feature-image">
+              <img class="ui tiny circular image" src="https://camo.githubusercontent.com/f8ea5eab7494f955e90f60abc1d13f2ce2c2e540/68747470733a2f2f662e636c6f75642e6769746875622e636f6d2f6173736574732f323037383234352f3235393331332f35653833313336322d386362612d313165322d383435332d6536626439353663383961342e706e67">
+            </div>
+            <div class="feature-description">
+              <h5>{{feature}}</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="six wide column">
+      <form class="ui form book-form">
+        <div class="field">
+          <label>First Name</label>
+          <input type="text" name="first-name" placeholder="First Name">
+        </div>
+        <div class="field">
+          <label>Last Name</label>
+          <input type="text" name="last-name" placeholder="Last Name">
+        </div>
+        <div class="field">
+          <div class="ui checkbox" data-vivaldi-spatnav-clickable="1">
+            <input type="checkbox" tabindex="0" class="hidden">
+            <label>I agree to the Terms and Conditions</label>
+          </div>
+        </div>
+        <button class="ui button" type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>

@@ -7,5 +7,9 @@ export class Vendor {
 	location: string;
 	rang: string;
 	experience: number;
-	laterWork: string;
+	workLeter: string;
+
+	//workList: Work[];
+	rating: number;
+	features: string[]
 }

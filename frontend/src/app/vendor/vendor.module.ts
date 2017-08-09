@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 import {SuiModule} from 'ng2-semantic-ui';
 
@@ -19,6 +20,7 @@ import { DataService } from "../services/data.service";
   imports: [
     CommonModule,
     VendorRoutingModule,
+    FormsModule,
     SuiModule
   ],
   declarations: [

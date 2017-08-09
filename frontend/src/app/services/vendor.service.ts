@@ -23,6 +23,8 @@ export class VendorService {
     vendor.location = "Kyiv";
     vendor.rang = "Middle";
     vendor.avatarUrl = "https://image.flaticon.com/icons/png/512/78/78373.png";
+    vendor.rating = 4;
+    vendor.features = ["Excellent service", "We are going fast", "We've scratched cats since 1997", "Warm hands"];
 
     return vendor;
   }
