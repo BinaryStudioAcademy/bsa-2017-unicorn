@@ -23,51 +23,39 @@ namespace Unicorn.Core.Properties {
             }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("UnicornAuthServer")]
         public string Issuer {
             get {
                 return ((string)(this["Issuer"]));
             }
-            set {
-                this["Issuer"] = value;
-            }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("UnicornAngularClient")]
         public string Audience {
             get {
                 return ((string)(this["Audience"]));
             }
-            set {
-                this["Audience"] = value;
-            }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("021bf657c2e986a04b9e43775253d5a7")]
         public string PrivateKey {
             get {
                 return ((string)(this["PrivateKey"]));
             }
-            set {
-                this["PrivateKey"] = value;
-            }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("10")]
         public int TokenLifeTime {
             get {
                 return ((int)(this["TokenLifeTime"]));
-            }
-            set {
-                this["TokenLifeTime"] = value;
             }
         }
     }

@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
 
-namespace Unicorn.Filters
+namespace Unicorn.Filters.Helpers
 {
     public class AuthenticationFailureResult : IHttpActionResult
     {

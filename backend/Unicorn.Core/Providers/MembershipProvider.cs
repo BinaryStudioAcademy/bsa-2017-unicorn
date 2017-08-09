@@ -12,8 +12,20 @@ namespace Unicorn.Core.Providers
     {
         public Task<ClaimsIdentity> GetUserClaims(string provider, string uid)
         {
-            // TODO: Get data from DB
-            throw new NotImplementedException();
+            string login = "Test";
+            string role = "Admin";
+
+            var claims = new List<Claim>
+                {
+                    new Claim("login", login),
+                    new Claim("role", role),
+                    new Claim("somedata_bla_bla", "Make .NET great again!")
+                };
+            ClaimsIdentity claimsIdentity =
+            new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,
+                ClaimsIdentity.DefaultRoleClaimType);
+
+            return Task.FromResult(claimsIdentity);
         }
 
         public Task<bool> VerifyUser(string provider, string uid)
@@ -40,8 +52,10 @@ namespace Unicorn.Core.Providers
 
              */
 
+            return Task.FromResult(true);
+
             // TODO: Get data from DB
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
     }
 }

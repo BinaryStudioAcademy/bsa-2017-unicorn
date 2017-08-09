@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Web.Http;
 using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json.Serialization;
+using Unicorn.Filters;
 
 namespace Unicorn
 {
@@ -15,6 +16,9 @@ namespace Unicorn
             // Web API routes
             config.EnableCors();
             config.MapHttpAttributeRoutes();
+
+            // Filter
+            config.Filters.Add(new TokenAuthenticateAttribute());
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",

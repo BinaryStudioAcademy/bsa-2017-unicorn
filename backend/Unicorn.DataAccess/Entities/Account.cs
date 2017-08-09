@@ -11,7 +11,7 @@ namespace Unicorn.DataAccess.Entities
 
         public bool EmailConfirmed { get; set; }
 
-        public string Password { get; set; }
+        public SocialAccount SocialAccount { get; set; }
 
         public DateTime DateCreated { get; set; }
 

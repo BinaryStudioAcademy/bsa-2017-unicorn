@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http.Filters;
 using Unicorn.Core.Interfaces;
+using Unicorn.Filters.Helpers;
 
 namespace Unicorn.Filters
 {
@@ -52,7 +53,7 @@ namespace Unicorn.Filters
 
         public Task ChallengeAsync(HttpAuthenticationChallengeContext context, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return Task.FromResult<object>(null);
         }
     }
 }

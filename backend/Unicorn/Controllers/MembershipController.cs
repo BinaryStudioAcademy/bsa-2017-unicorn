@@ -5,30 +5,36 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using Unicorn.Core.Interfaces;
+using Unicorn.Core.Providers;
+using Unicorn.Core.Services;
 
 namespace Unicorn.Controllers
 {
     public class MembershipController : ApiController
     {
-        private readonly IAuthService authService;
+        private IAuthService authService;
 
+        /*
         public MembershipController(IAuthService authService)
         {
-            this.authService = authService;
+            this.authService = new AuthJWTService(new MembershipProvider());
         }
+        */
 
         // GET: Membership
-        [HttpGet]
-        public async Task Authenticate(string provider, string uid)
+        [HttpHead]
+        public async Task<string> Get(string provider, string uid)
         {
+            authService = new AuthJWTService(new MembershipProvider());
+
             if (string.IsNullOrWhiteSpace(provider) || string.IsNullOrWhiteSpace(uid))
             {
-                return; // TODO: throw 404 or smth
+                return null; // TODO: throw 404 or smth
             }           
 
             string token = await authService.GenerateJwtTokenAsync(provider, uid);
 
-            // return token ?? or try to store in header
+            return token; // ?? or try to store in header
 
         }
     }

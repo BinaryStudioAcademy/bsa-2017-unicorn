@@ -204,7 +204,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\MembershipController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
-    <Compile Include="Filters\AuthenticationFailureResult.cs" />
+    <Compile Include="Filters\Helpers\AuthenticationFailureResult.cs" />
     <Compile Include="Filters\TokenAuthenticateAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
