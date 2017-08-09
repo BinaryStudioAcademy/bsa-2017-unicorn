@@ -202,6 +202,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -227,9 +228,17 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Unicorn.Core\Unicorn.Core.csproj">
+      <Project>{A1D8996E-B804-400C-9B42-0405A2250A94}</Project>
+      <Name>Unicorn.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Unicorn.DataAccess\Unicorn.DataAccess.csproj">
       <Project>{3cd69eae-0362-4f57-91fa-84507c885797}</Project>
       <Name>Unicorn.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Unicorn.Shared\Unicorn.Shared.csproj">
+      <Project>{4d360fb2-c2db-43ea-95d8-2802c1dd67fc}</Project>
+      <Name>Unicorn.Shared</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

@@ -1,8 +1,6 @@
-﻿using Ninject.Extensions.Factory;
-using Ninject.Modules;
-using Unicorn.DataAccess.Context;
-using Unicorn.DataAccess.Interfaces;
-using Unicorn.DataAccess.Repositories.UnitOfWork;
+﻿using Ninject.Modules;
+using Unicorn.Core.Interfaces;
+using Unicorn.Core.Services;
 
 namespace Unicorn.Shared.Infrastructure
 {
@@ -10,6 +8,7 @@ namespace Unicorn.Shared.Infrastructure
     {
         public override void Load()
         {
+            Bind<ILocationService>().To<LocationService>();
         }
     }
 }
