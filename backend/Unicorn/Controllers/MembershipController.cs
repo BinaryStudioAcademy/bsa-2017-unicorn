@@ -13,20 +13,17 @@ namespace Unicorn.Controllers
     public class MembershipController : ApiController
     {
         private IAuthService authService;
-
-        /*
+        
         public MembershipController(IAuthService authService)
         {
-            this.authService = new AuthJWTService(new MembershipProvider());
+            this.authService = authService;
         }
-        */
+        
 
         // GET: Membership
-        [HttpHead]
+        [HttpGet]
         public async Task<string> Get(string provider, string uid)
         {
-            authService = new AuthJWTService(new MembershipProvider());
-
             if (string.IsNullOrWhiteSpace(provider) || string.IsNullOrWhiteSpace(uid))
             {
                 return null; // TODO: throw 404 or smth

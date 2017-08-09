@@ -15,10 +15,7 @@ namespace Unicorn
         {
             // Web API routes
             config.EnableCors();
-            config.MapHttpAttributeRoutes();
-
-            // Filter
-            config.Filters.Add(new TokenAuthenticateAttribute());
+            config.MapHttpAttributeRoutes();           
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
