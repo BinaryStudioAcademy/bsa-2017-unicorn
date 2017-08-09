@@ -1,12 +1,10 @@
 ﻿using System;
-using Unicorn.DataAccess.Interfaces;
 
-namespace Unicorn.DataAccess.Entities
+namespace Unicorn.Shared.DTOs
 {
-    public class History : IEntity
+    public class HistoryDTO
     {
         public long Id { get; set; }
-        public bool IsDeleted { get; set; }
 
         public long CustomerId { get; set; }
 

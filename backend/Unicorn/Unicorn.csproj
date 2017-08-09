@@ -203,6 +203,7 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\MembershipController.cs" />
+    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Filters\Helpers\AuthenticationFailureResult.cs" />
     <Compile Include="Filters\TokenAuthenticateAttribute.cs" />
@@ -233,6 +234,14 @@
     <ProjectReference Include="..\Unicorn.Core\Unicorn.Core.csproj">
       <Project>{a1d8996e-b804-400c-9b42-0405a2250a94}</Project>
       <Name>Unicorn.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Unicorn.DataAccess\Unicorn.DataAccess.csproj">
+      <Project>{3cd69eae-0362-4f57-91fa-84507c885797}</Project>
+      <Name>Unicorn.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Unicorn.Shared\Unicorn.Shared.csproj">
+      <Project>{4d360fb2-c2db-43ea-95d8-2802c1dd67fc}</Project>
+      <Name>Unicorn.Shared</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

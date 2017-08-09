@@ -1,11 +1,8 @@
-﻿using Unicorn.DataAccess.Interfaces;
-
-namespace Unicorn.DataAccess.Entities
+﻿namespace Unicorn.Shared.DTOs
 {
-    public class Location : IEntity
+    public class LocationDTO
     {
         public long Id { get; set; }
-        public bool IsDeleted { get; set; }
 
         public string City { get; set; }
 

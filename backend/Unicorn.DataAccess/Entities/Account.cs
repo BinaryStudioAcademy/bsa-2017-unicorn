@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using Unicorn.DataAccess.Interfaces;
 
 namespace Unicorn.DataAccess.Entities
 {
-    public class Account
+    public class Account : IEntity
     {
         public long Id { get; set; }
+        public bool IsDeleted { get; set; }
 
         public string Email { get; set; }
 
