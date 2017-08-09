@@ -3,6 +3,11 @@ import {SuiModule} from 'ng2-semantic-ui';
 import { ActivatedRoute, Params } from '@angular/router';
 import 'rxjs/add/operator/switchMap';
 
+import { User } from '../../models/user';
+
+import { UserService } from "../../services/user.service";
+
+
 @Component({
   selector: 'app-user-details',
   templateUrl: './user-details.component.html',
@@ -10,9 +15,11 @@ import 'rxjs/add/operator/switchMap';
 })
 export class UserDetailsComponent implements OnInit {
 
-  constructor( private route: ActivatedRoute) { 
+  fakeUser:User;
+  constructor( private route: ActivatedRoute,private userService: UserService) { 
   }
   ngOnInit() {
+    this.fakeUser = this.userService.getUser(0);
   }
 
 }

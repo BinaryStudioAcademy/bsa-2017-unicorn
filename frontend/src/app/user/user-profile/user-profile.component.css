@@ -1,7 +1,3 @@
-.ui left icon input
-{
-     display: block;
-}
 .main font
 {
     color: rebeccapurple;
@@ -15,6 +11,10 @@
     display: flex;
 }
 
+.ui form
+{
+    display: inline;
+}
 .input wrap
 {
     display: flex;

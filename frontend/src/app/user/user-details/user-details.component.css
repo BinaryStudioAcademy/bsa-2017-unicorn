@@ -1,8 +1,16 @@
-.avatar_layout
-{
-	height: 150px;
-	background: #D8D8D8;
+.user-header{
+	display: flex;
+	height: 170px;
+	background: #d8d8d8;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
 }
+
+.user-title {
+	text-align: center;
+} 
+
 .ui small circular image
 {
    align-self: center;
