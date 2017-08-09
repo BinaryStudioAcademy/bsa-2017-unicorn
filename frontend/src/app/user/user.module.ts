@@ -11,6 +11,9 @@ import { UserHistoryComponent } from './user-history/user-history.component';
 import { UserTasksComponent } from './user-tasks/user-tasks.component';
 import { UserMessagesComponent } from './user-messages/user-messages.component';
 
+import { UserService } from '../services/user.service';
+import { DataService } from "../services/data.service";
+
 @NgModule({
   imports: [
     SuiModule,
@@ -24,6 +27,10 @@ import { UserMessagesComponent } from './user-messages/user-messages.component';
     UserHistoryComponent,
     UserTasksComponent,
     UserMessagesComponent
+  ],
+  providers: [
+    DataService,
+    UserService
   ]
 })
 export class UserModule { }

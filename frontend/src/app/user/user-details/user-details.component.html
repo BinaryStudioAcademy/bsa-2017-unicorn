@@ -1,7 +1,14 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.9/semantic.min.css">
-<div class="avatar_layout">
-  <img class="ui small centered circular image" src="http://автобокс72.рф/img/user.png">
+
+<div class="user-header">
+  <div class="ui small circular image">
+    <img src="{{fakeUser.avatarUrl}}" />
+  </div>
+  <div class="user-title">
+    <h3>{{fakeUser.firstName}} {{fakeUser.lastName}}</h3>
+  </div>
 </div>
+
 <sui-tabset>
   <div class="ui pointing secondary menu">
     <a class="item" suiTabHeader="1">Profile</a>
@@ -9,7 +16,7 @@
     <a class="item" suiTabHeader="3">Messages</a>
     <a class="item" suiTabHeader="4">History</a>
   </div>
-  <div class="ui segment" suiTabContent="1"><app-user-profile></app-user-profile></div>
+  <div class="ui segment" suiTabContent="1"><app-user-profile [user]="fakeUser"></app-user-profile></div>
   <div class="ui segment" suiTabContent="2"><app-user-tasks></app-user-tasks></div>
   <div class="ui segment" suiTabContent="3"><app-user-messages></app-user-messages></div>
   <div class="ui segment" suiTabContent="4"><app-user-history></app-user-history></div>
