@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+
+import { Vendor } from '../../models/vendor.model';
 
 @Component({
   selector: 'app-vendor-profile-portfolio',
@@ -6,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./vendor-profile-portfolio.component.css']
 })
 export class VendorProfilePortfolioComponent implements OnInit {
-
+  @Input() vendor: Vendor;
   constructor() { }
 
   ngOnInit() {
