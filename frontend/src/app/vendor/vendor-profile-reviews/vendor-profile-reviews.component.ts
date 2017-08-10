@@ -7,7 +7,7 @@ import { Review } from '../../models/review.model';
 @Component({
   selector: 'app-vendor-profile-reviews',
   templateUrl: './vendor-profile-reviews.component.html',
-  styleUrls: ['./vendor-profile-reviews.component.css']
+  styleUrls: ['./vendor-profile-reviews.component.sass']
 })
 export class VendorProfileReviewsComponent implements OnInit {
   @Input() vendorId: number;

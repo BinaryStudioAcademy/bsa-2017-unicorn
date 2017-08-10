@@ -10,7 +10,7 @@ import { VendorService } from "../../services/vendor.service";
 @Component({
   selector: 'app-vendor-details',
   templateUrl: './vendor-details.component.html',
-  styleUrls: ['./vendor-details.component.css']
+  styleUrls: ['./vendor-details.component.sass']
 })
 export class VendorDetailsComponent implements OnInit { 
   vendor: Vendor;
