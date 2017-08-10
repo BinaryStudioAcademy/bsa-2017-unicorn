@@ -1,3 +1,33 @@
+.vendor-wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.vendor {
+    margin: 5px;
+    color: gray;
+}
+
+.img-wrapper {
+    width: 172px;
+    height: 134px;
+    overflow: hidden;
+}
+
+.img-wrapper img {
+    width: 100%;
+    min-height: 100%;
+}
+
+.vendor-title {
+    margin: 3px 0;
+    color: gray;
+    font-size: 18px;
+    text-align: center;
+}
+
+
 .ui.secondary.pointing.menu .active.item {
     background-color: transparent;
     box-shadow: none;
