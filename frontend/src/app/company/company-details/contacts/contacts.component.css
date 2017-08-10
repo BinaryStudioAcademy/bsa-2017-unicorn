@@ -3,4 +3,18 @@
     flex-direction: row;
     justify-content: space-around;
     align-items: center;    
+    flex-wrap: wrap;
+}
+
+#contact-desc{
+    font-weight: bold;
+    margin: 10px;
+}
+
+#phones{
+    margin: 10px;
+}
+
+#other-contacts{
+    margin: 10px;
 }

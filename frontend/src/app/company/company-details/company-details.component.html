@@ -1,25 +1,42 @@
-<div class="ui container">
-  <img class="ui fluid image" src= {{company.avatar}}>
+<div class="sixteen wide column container">
+  <img class="ui fluid image" src={{company.avatar}}>
 </div>
-<div class="ui container">
-  <sui-tabset>
-    <div class="ui pointing secondary menu">
-      <a class="item" suiTabHeader="1">General information</a>
-      <a class="item" suiTabHeader="2">Reviews</a>
-      <a class="item" suiTabHeader="3">Vendors</a>
-      <a class="item" suiTabHeader="4">Contacts</a>
+<div class="ui grid container">
+  <div class="row">
+    <div class="sixteen wide column container">
+      <sui-tabset>
+        <div class="ui pointing secondary menu">
+          <a class="item" suiTabHeader="1">General information</a>
+          <a class="item" suiTabHeader="2">Reviews</a>
+          <a class="item" suiTabHeader="3">Vendors</a>
+          <a class="item" suiTabHeader="4">Contacts</a>
+        </div>
+        <div class="row">
+          <div class="ui grid container">
+            <div class="row">
+              <div class="ten wide column">
+                <div class="ui segment" suiTabContent="1">
+                  <company-general-information [company]="company"></company-general-information>
+                </div>
+                <div class="ui segment" suiTabContent="2">
+                  <company-reviews [reviews]="company.reviews"></company-reviews>
+                </div>
+                <div class="ui segment" suiTabContent="3">
+                  <company-vendors [vendors]="company.vendors"></company-vendors>
+                </div>
+                <div class="ui segment" suiTabContent="4">
+                  <company-contacts></company-contacts>
+                </div>
+              </div>
+              <div class="six wide column">
+                <div class="ui segment">
+                  <app-book></app-book>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </sui-tabset>
     </div>
-    <div class="ui segment" suiTabContent="1">
-      <company-general-information [company]="company"></company-general-information>
-    </div>
-    <div class="ui segment" suiTabContent="2">
-      <company-reviews [reviews]="company.reviews"></company-reviews>
-    </div>
-    <div class="ui segment" suiTabContent="3">
-      <company-vendors [vendors]="company.vendors"></company-vendors>
-    </div>
-    <div class="ui segment" suiTabContent="4">
-      <company-contacts></company-contacts>
-    </div>
-  </sui-tabset>  
+  </div>
 </div>

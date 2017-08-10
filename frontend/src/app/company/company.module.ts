@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms'
 import {SuiModule} from 'ng2-semantic-ui';
+import { BookModule } from '../book/book.module';
 
 import { CompanyComponent } from './company-component/company.component';
 import { CompanyDetailsComponent } from './company-details/company-details.component';
@@ -11,8 +12,8 @@ import { GeneralInformationComponent } from './company-details/general-informati
 import { ReviewsComponent } from './company-details/reviews/reviews.component';
 import { VendorsComponent } from './company-details/vendors/vendors.component';
 import { ContactsComponent } from './company-details/contacts/contacts.component';
-import { Company } from "../models/company";
-import { Review } from "../models/review";
+import { Company } from "../models/company.model";
+import { Review } from "../models/review.model";
 import { Vendor } from "../models/vendor";
 
 @NgModule({
@@ -21,7 +22,8 @@ import { Vendor } from "../models/vendor";
     CompanyRoutingModule,
     FormsModule,
     BrowserModule,
-    SuiModule
+    SuiModule,
+    BookModule
   ],
   declarations: [
     CompanyComponent,

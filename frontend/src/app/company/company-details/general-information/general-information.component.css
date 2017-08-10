@@ -7,22 +7,25 @@
 .flex-body{
     display: flex;
     flex-direction: row;    
-    justify-content: space-around;    
+    justify-content: space-between;    
 }
 
 .flex-feature{
     display: flex;
+    justify-content: space-between;    
     align-items: center;
     flex-direction: column;
-    text-align: center;
+    text-align: center;    
 }
 .center{
     text-align: center;
 }
 
-#image-feature{    
+.image-feature{    
     padding: 5px;
     margin: 0;
+    width: 80px!important;
+    height: 80px!important;
 }
 
 #director-avatar{
