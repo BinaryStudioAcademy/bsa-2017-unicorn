@@ -5,6 +5,8 @@ using Microsoft.IdentityModel.Tokens;
 using Unicorn.Core.Interfaces;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Unicorn.Core.Services
 {
@@ -22,10 +24,12 @@ namespace Unicorn.Core.Services
             return new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Properties.Settings.Default.PrivateKey));
         }
 
-        public async Task<string> GenerateJwtTokenAsync(string provider, string uid)
+        public async Task<string> GenerateJwtTokenAsync(string provider, long? uid)
         {
             if (!await membershipProvider.VerifyUser(provider, uid))
-                return "Wrong access"; // User not exists in DB
+            {
+                return null; // User not exists in DB
+            }
 
             ClaimsIdentity identity = await membershipProvider.GetUserClaims(provider, uid); // Role, email etc.            
 
@@ -72,6 +76,26 @@ namespace Unicorn.Core.Services
             }
 
             return Task.FromResult(result);
+        }
+
+        public IEnumerable<Claim> GetClaims(string token)
+        {
+            if (string.IsNullOrWhiteSpace(token))
+            {
+                return null;
+            }
+
+            return new JwtSecurityToken(token).Claims;
+        }
+
+        public Claim GetClaimValue(string token, string key)
+        {
+            if (string.IsNullOrWhiteSpace(token) || string.IsNullOrWhiteSpace(key))
+            {
+                return null;
+            }
+
+            return new JwtSecurityToken(token).Claims.FirstOrDefault(x => x.Type == key);
         }
     }
 }

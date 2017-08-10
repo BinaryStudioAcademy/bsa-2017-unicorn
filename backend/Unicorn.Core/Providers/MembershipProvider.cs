@@ -1,17 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 using Unicorn.Core.Interfaces;
+using Unicorn.DataAccess.Entities;
+using Unicorn.DataAccess.Interfaces;
 
 namespace Unicorn.Core.Providers
 {
     public class MembershipProvider : IMembershipProvider
     {
-        public Task<ClaimsIdentity> GetUserClaims(string provider, string uid)
+        private readonly IUnitOfWork _unitOfWork;
+
+        public MembershipProvider(IUnitOfWork unitOfWork)
         {
+            _unitOfWork = unitOfWork;
+        }
+
+        public Task<ClaimsIdentity> GetUserClaims(string provider, long? uid)
+        {
+            // TODO: Get from DB real data
+
             string login = "Test";
             string role = "Admin";
 
@@ -28,34 +37,25 @@ namespace Unicorn.Core.Providers
             return Task.FromResult(claimsIdentity);
         }
 
-        public Task<bool> VerifyUser(string provider, string uid)
+        public async Task<bool> VerifyUser(string provider, long? uid)
         {
-            /* ТУДУ:
-             
-            AccountSocialLogin result;
+            SocialAccount account;
+            var socialAccounts = await _unitOfWork.SocialAccountRepository.GetAllAsync();
 
-            switch(provider)
+            switch (provider)
             {
                 case "facebook":
-                    result = db.AccountSocialLogin.FindAsync(x => x.FacebookUID == uid);
+                    account = socialAccounts.FirstOrDefault(x => x.FacebookUID == uid);
                     break;
                 case "google":
-                    result = db.AccountSocialLogin.FindAsync(x => x.GoogleUID == uid);
+                    account = socialAccounts.FirstOrDefault(x => x.GoogleUID == uid);
                     break;
-                case default:
-                    result = null;
+                default:
+                    account = null;
                     break;
             }
-            
-            return result == null ? false : true;
 
-
-             */
-
-            return Task.FromResult(true);
-
-            // TODO: Get data from DB
-            //throw new NotImplementedException();
+            return account == null ? false : true;
         }
     }
 }

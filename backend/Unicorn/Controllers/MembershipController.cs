@@ -1,37 +1,44 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Http;
 using Unicorn.Core.Interfaces;
-using Unicorn.Core.Providers;
-using Unicorn.Core.Services;
 
 namespace Unicorn.Controllers
 {
     public class MembershipController : ApiController
     {
         private IAuthService authService;
-        
+
         public MembershipController(IAuthService authService)
         {
             this.authService = authService;
         }
-        
 
         // GET: Membership
-        [HttpGet]
-        public async Task<string> Get(string provider, string uid)
+        [HttpHead]
+        public async Task<HttpResponseMessage> Get(string provider, long? uid)
         {
-            if (string.IsNullOrWhiteSpace(provider) || string.IsNullOrWhiteSpace(uid))
+            HttpResponseMessage response = null;
+
+            if (string.IsNullOrWhiteSpace(provider) || uid == null)
             {
-                return null; // TODO: throw 404 or smth
-            }           
+                response = Request.CreateResponse(HttpStatusCode.NotFound, "Missing provider or uid");
+                return response;
+            }
 
             string token = await authService.GenerateJwtTokenAsync(provider, uid);
 
-            return token; // ?? or try to store in header
+            if (token == null)
+            {
+                response = Request.CreateResponse(HttpStatusCode.NotFound, "Uid not found");
+                return response;
+            }
+
+            response = Request.CreateResponse(HttpStatusCode.OK);
+            response.Headers.Add("Token", token);
+
+            return response;
 
         }
     }
