@@ -5,7 +5,7 @@ import { Review } from "../../../models/review.model";
 @Component({
   selector: 'company-reviews',
   templateUrl: './reviews.component.html',
-  styleUrls: ['./reviews.component.css']
+  styleUrls: ['./reviews.component.sass']
 })
 export class ReviewsComponent implements OnInit {
 @Input()

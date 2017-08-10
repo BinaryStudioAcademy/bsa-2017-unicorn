@@ -4,7 +4,7 @@ import { Vendor } from "../../../models/vendor";
 @Component({
   selector: 'company-vendors',
   templateUrl: './vendors.component.html',
-  styleUrls: ['./vendors.component.css']
+  styleUrls: ['./vendors.component.sass']
 })
 export class VendorsComponent implements OnInit {
 @Input()
