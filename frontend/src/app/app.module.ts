@@ -20,12 +20,14 @@ import { VendorModule } from './vendor/vendor.module';
 import { IndexModule } from './index/index.module';
 import { ShellComponent } from './shell/shell.component';
 import { MenuComponent } from './menu/menu.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ShellComponent,
-    MenuComponent    
+    MenuComponent,
+    FooterComponent    
   ],
   imports: [
     BrowserModule,
