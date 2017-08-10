@@ -1,10 +1,8 @@
 <div class="tabset-container">
-  <sui-tabset>
+   <!-- <sui-tabset>
     <div class="ui pointing secondary menu">
-      <a class="item" suiTabHeader="1">Nested 1</a>
-      <a class="item" suiTabHeader="2">Nested 2</a>
+      <a *ngFor="let tab of tabs" class="item" [suiTabHeader]="tab.id">{{tab.name}}</a>
     </div>
-    <div class="ui" suiTabContent="1">First nested tab!</div>
-    <div class="ui" suiTabContent="2">Second nested tab!</div>
-  </sui-tabset>
+    <div *ngFor="let tab of tabs" class="ui segment" [suiTabContent]="tab.id">First nested tab!</div>
+  </sui-tabset>  -->
 </div>
