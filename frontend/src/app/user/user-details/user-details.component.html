@@ -1,11 +1,13 @@
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.9/semantic.min.css">
-
 <div class="user-header">
   <div class="ui small circular image">
     <img src="{{fakeUser.avatarUrl}}" />
   </div>
   <div class="user-title">
-    <h3>{{fakeUser.firstName}} {{fakeUser.surName}}</h3>
+    <h3 style="display:inline">{{fakeUser.firstName}} {{fakeUser.surName}}</h3>
+    <div style="display:inline" class="fileUpload btn btn-primary">
+      <i class="photo icon"></i>
+    <input type="file" class="upload" />
+   </div>
   </div>
 </div>
 
@@ -19,5 +21,5 @@
   <div class="ui segment" suiTabContent="1"><app-user-profile [user]="fakeUser"></app-user-profile></div>
   <div class="ui segment" suiTabContent="2"><app-user-tasks [user]="fakeUser"></app-user-tasks></div>
   <div class="ui segment" suiTabContent="3"><app-user-messages></app-user-messages></div>
-  <div class="ui segment" suiTabContent="4"><app-user-history></app-user-history></div>
+  <div class="ui segment" suiTabContent="4"><app-user-history [user]="fakeUser"></app-user-history></div>
 </sui-tabset> 
