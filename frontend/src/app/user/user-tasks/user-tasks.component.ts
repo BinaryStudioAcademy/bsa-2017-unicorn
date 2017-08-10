@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component, OnInit, Input } from '@angular/core';
+import { User } from '../../models/user';
+import { NgModel } from '@angular/forms';
 @Component({
   selector: 'app-user-tasks',
   templateUrl: './user-tasks.component.html',
@@ -7,6 +8,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserTasksComponent implements OnInit {
 
+  
+  @Input() user:User;
   constructor() { }
 
   ngOnInit() {

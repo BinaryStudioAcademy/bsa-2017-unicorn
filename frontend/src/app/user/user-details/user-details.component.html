@@ -5,7 +5,7 @@
     <img src="{{fakeUser.avatarUrl}}" />
   </div>
   <div class="user-title">
-    <h3>{{fakeUser.firstName}} {{fakeUser.lastName}}</h3>
+    <h3>{{fakeUser.firstName}} {{fakeUser.surName}}</h3>
   </div>
 </div>
 
@@ -17,7 +17,7 @@
     <a class="item" suiTabHeader="4">History</a>
   </div>
   <div class="ui segment" suiTabContent="1"><app-user-profile [user]="fakeUser"></app-user-profile></div>
-  <div class="ui segment" suiTabContent="2"><app-user-tasks></app-user-tasks></div>
+  <div class="ui segment" suiTabContent="2"><app-user-tasks [user]="fakeUser"></app-user-tasks></div>
   <div class="ui segment" suiTabContent="3"><app-user-messages></app-user-messages></div>
   <div class="ui segment" suiTabContent="4"><app-user-history></app-user-history></div>
 </sui-tabset> 
