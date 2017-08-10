@@ -26,7 +26,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   options = ['Male', 'Female'];
 
   constructor(
-    private auth: AuthService,
+    public auth: AuthService,
     private location: Location,
     private router: Router) { }
 

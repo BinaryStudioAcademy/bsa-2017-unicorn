@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { Location } from '@angular/common';
 
 import { RegisterComponent } from './register-component/register.component';
 import { RegisterRoutingModule } from './register-routing.module';
@@ -17,7 +18,8 @@ import { providers } from './social-providers';
     FormsModule,
     SuiModule,
     CommonModule,
-    RegisterRoutingModule
+    RegisterRoutingModule,
+    Angular2SocialLoginModule
   ],
   declarations: [
     RegisterComponent
