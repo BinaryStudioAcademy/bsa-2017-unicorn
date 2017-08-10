@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Unicorn.Core.Interfaces;
 using Unicorn.DataAccess.Entities;
 using Unicorn.DataAccess.Interfaces;
-using Unicorn.Shared.DTOs;
+using Unicorn.Core.DTOs;
 
 namespace Unicorn.Core.Services
 {
@@ -25,17 +25,16 @@ namespace Unicorn.Core.Services
 
         public async Task<AccountDTO> GetById(int id)
         {
-            var socialAccount = await _unitOfWork.SocialAccountRepository.GetByIdAsync(id);
             var account = await _unitOfWork.AccountRepository.GetByIdAsync(id);
 
-            var accountDto = new AccountDTO() {
+            var accountDto = new AccountDTO()
+            {
                 Id = account.Id,
                 Avatar = account.Avatar,
-                SocialAccount = new SocialAccountDTO()
-                    { Id = account.Id,
-                    FacebookUID = socialAccount.FacebookUID,
-                    GoogleUID = socialAccount.GoogleUID },
-                Rating = account.Rating  };
+                Rating = account.Rating,
+                SocialAccounts = (ICollection<SocialAccountDTO>)account.SocialAccounts,
+                Permissions =  (ICollection<PermissionDTO>)account.Permissions
+            };
             return accountDto;
         }
     }

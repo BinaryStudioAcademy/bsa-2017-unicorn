@@ -2,7 +2,7 @@
 using Unicorn.Core.Interfaces;
 using Unicorn.Core.Services;
 
-namespace Unicorn.Shared.Infrastructure
+namespace Unicorn.Core.Infrastructure
 {
     public class ServiceModule : NinjectModule
     {
@@ -12,6 +12,7 @@ namespace Unicorn.Shared.Infrastructure
             Bind<IAccountService>().To<AccountService>();
             Bind<IBookService>().To<BookService>();
             Bind<ICustomerService>().To<CustomerService>();
+            Bind<IVendorService>().To<VendorService>();
         }
     }
 }

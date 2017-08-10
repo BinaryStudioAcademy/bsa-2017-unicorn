@@ -12,7 +12,7 @@ namespace Unicorn.App_Start
     using Ninject.Web.Common;
     using Unicorn.DataAccess.Infrastructure;
     using Ninject.Modules;
-    using Unicorn.Shared.Infrastructure;
+    using Unicorn.Core.Infrastructure;
     using Unicorn.Core.Interfaces;
     using Unicorn.Core.Providers;
     using Unicorn.Core.Services;

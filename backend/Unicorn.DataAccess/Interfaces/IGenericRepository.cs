@@ -9,13 +9,13 @@ namespace Unicorn.DataAccess.Interfaces
     public interface IGenericRepository<T> : IRepository
     {
         Task<IEnumerable<T>> GetAllAsync();
-        Task<T> GetByIdAsync(int id);
-        Task<T> GetByIdDeletedAsync(int id);
+        Task<T> GetByIdAsync(long id);
+        Task<T> GetByIdDeletedAsync(long id);
         void Create(T item);
         void Update(T item);
-        void Delete(int id);
-        Task ForceDelete(int id);
-        Task Restore(int id);
+        void Delete(long id);
+        Task ForceDelete(long id);
+        Task Restore(long id);
         IQueryable<T> Query { get; }
         IQueryable<T> Deleted { get; }
     }

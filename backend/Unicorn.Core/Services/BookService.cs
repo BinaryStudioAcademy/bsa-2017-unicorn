@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Unicorn.Core.Interfaces;
 using Unicorn.DataAccess.Entities;
 using Unicorn.DataAccess.Interfaces;
-using Unicorn.Shared.DTOs;
+using Unicorn.Core.DTOs;
 
 namespace Unicorn.Core.Services
 {

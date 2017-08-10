@@ -1,13 +1,10 @@
 ﻿using AutoMapper;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Unicorn.Core.Interfaces;
 using Unicorn.DataAccess.Entities;
 using Unicorn.DataAccess.Interfaces;
-using Unicorn.Shared.DTOs;
+using Unicorn.Core.DTOs;
 
 namespace Unicorn.Core.Services
 {
@@ -38,7 +35,8 @@ namespace Unicorn.Core.Services
             {
                 Id = customer.Id,
                 Books = (ICollection<BookDTO>)books,
-                Person = new PersonDTO() {
+                Person = new PersonDTO()
+                {
                     Id = person.Id,
                     Name = person.Name,
                     SurnameName = person.SurnameName,

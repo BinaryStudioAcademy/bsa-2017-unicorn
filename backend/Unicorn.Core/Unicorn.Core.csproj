@@ -68,6 +68,7 @@
     <Compile Include="Interfaces\IMembershipProvider.cs" />
     <Compile Include="Infrastructure\ServiceModule.cs" />
     <Compile Include="Interfaces\ILocationService.cs" />
+    <Compile Include="Interfaces\IVendorService.cs" />
     <Compile Include="Services\AccountService.cs" />
     <Compile Include="Services\BookService.cs" />
     <Compile Include="Services\CustomerService.cs" />
@@ -81,6 +82,7 @@
     </Compile>
     <Compile Include="Providers\MembershipProvider.cs" />
     <Compile Include="Services\AuthService.cs" />
+    <Compile Include="Services\WorkService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

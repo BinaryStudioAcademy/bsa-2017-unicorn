@@ -13,8 +13,6 @@ namespace Unicorn.DataAccess.Entities
 
         public bool EmailConfirmed { get; set; }
 
-        public SocialAccount SocialAccount { get; set; }
-
         public DateTime DateCreated { get; set; }
 
         public string Avatar { get; set; }
@@ -23,6 +21,8 @@ namespace Unicorn.DataAccess.Entities
 
         
         public virtual Role Role { get; set; }
+
+        public virtual ICollection<SocialAccount> SocialAccounts { get; set; }
 
         public virtual ICollection<Permission> Permissions { get; set; }
     }
