@@ -1,4 +1,4 @@
-﻿namespace Unicorn.Shared.DTOs
+﻿namespace Unicorn.Core.DTOs
 {
     public class LocationDTO
     {

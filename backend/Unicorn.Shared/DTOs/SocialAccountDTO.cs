@@ -1,9 +1,10 @@
-﻿namespace Unicorn.Shared.DTOs
+﻿namespace Unicorn.Core.DTOs
 {
     public class SocialAccountDTO
     {
         public long Id { get; set; }
-        public long FacebookUID { get; set; }
-        public long GoogleUID { get; set; }
+        public AccountDTO Account { get; set; }
+        public string Provider { get; set; }
+        public long Uid { get; set; }
     }
 }

@@ -18,16 +18,16 @@ namespace Unicorn.DataAccess.Repositories
         {
             this.context = context;
         }
-        public T GetById(int id)
+        public T GetById(long id)
         {
             return Query.First(x => x.Id == id);
         }
-        public async Task<T> GetByIdAsync(int id)
+        public async Task<T> GetByIdAsync(long id)
         {
             return await Query.SingleOrDefaultAsync(i => i.Id == id);
         }
 
-        public async Task<T> GetByIdDeletedAsync(int id)
+        public async Task<T> GetByIdDeletedAsync(long id)
         {
             return await Deleted.SingleOrDefaultAsync(i => i.Id == id);
         }
@@ -64,7 +64,7 @@ namespace Unicorn.DataAccess.Repositories
             }
         }
 
-        public void Delete(int id)
+        public void Delete(long id)
         {
             try
             {
@@ -82,7 +82,7 @@ namespace Unicorn.DataAccess.Repositories
             }
         }
 
-        public async Task ForceDelete(int id)
+        public async Task ForceDelete(long id)
         {
             try
             {
@@ -99,7 +99,7 @@ namespace Unicorn.DataAccess.Repositories
             }
         }
 
-        public async Task Restore(int id)
+        public async Task Restore(long id)
         {
             try
             {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Unicorn.DataAccess.Interfaces;
-using Unicorn.Shared.DTOs;
+using Unicorn.Core.DTOs;
 using Unicorn.DataAccess.Entities;
 using Unicorn.Core.Interfaces;
 

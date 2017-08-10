@@ -6,6 +6,7 @@ using System.Web.Http;
 using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json.Serialization;
 using Unicorn.Filters;
+using System.Net.Http.Headers;
 
 namespace Unicorn
 {
@@ -22,6 +23,8 @@ namespace Unicorn
                 routeTemplate: "{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
         }
     }
 }

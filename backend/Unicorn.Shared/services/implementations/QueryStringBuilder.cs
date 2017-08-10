@@ -6,9 +6,9 @@ using System.Reflection;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
-using Unicorn.Shared.services.interfaces;
+using Unicorn.Core.services.interfaces;
 
-namespace Unicorn.Shared.services
+namespace Unicorn.Core.services
 {
     internal class QueryStringBuilder : IQueryStringBuilder
     {
