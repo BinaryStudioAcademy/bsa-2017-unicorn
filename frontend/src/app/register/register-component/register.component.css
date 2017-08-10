@@ -1,0 +1,22 @@
+.error-field {
+    margin-bottom: 10px;
+}
+
+.reg-text {
+    color: grey;
+}
+
+.addition-info {
+    margin-top: 10px;
+}
+
+.sign-link:hover {
+    color: #FF647A;
+}
+
+.reg-header {
+    text-align: center;
+    font-family: 'Verdana', 'Century Gothic', 'Calibri', 'Trebuchet MS', sans-serif;
+    font-size: 14px;
+    font-weight: normal;
+}

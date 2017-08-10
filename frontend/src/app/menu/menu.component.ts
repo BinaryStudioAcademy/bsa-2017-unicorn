@@ -25,7 +25,7 @@ export class MenuComponent implements OnInit {
       route: '#'
     }, {
       name: 'Регистрация',
-      route: '#'
+      route: 'register'
     }, {
       name: 'Войти',
       route: '#'
