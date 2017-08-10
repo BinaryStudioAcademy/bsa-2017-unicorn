@@ -33,7 +33,7 @@ namespace Unicorn.Core.Services
                 Avatar = account.Avatar,
                 Rating = account.Rating,
                 SocialAccounts = (ICollection<SocialAccountDTO>)account.SocialAccounts,
-                Permissions =  (ICollection<PermissionDTO>)account.Permissions
+                Permissions =  (ICollection<PermissionDTO>)account.Permissions,
             };
             return accountDto;
         }

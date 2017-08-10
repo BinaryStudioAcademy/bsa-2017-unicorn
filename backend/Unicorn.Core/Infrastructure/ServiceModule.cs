@@ -13,6 +13,8 @@ namespace Unicorn.Core.Infrastructure
             Bind<IBookService>().To<BookService>();
             Bind<ICustomerService>().To<CustomerService>();
             Bind<IVendorService>().To<VendorService>();
+            Bind<IRoleService>().To<RoleService>();
+            Bind<IWorkService>().To<WorkService>();
         }
     }
 }

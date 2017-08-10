@@ -4,9 +4,9 @@ using Unicorn.Core.DTOs;
 
 namespace Unicorn.Core.Interfaces
 {
-    public interface ICustomerService
+    public interface IRoleService
     {
-        Task<IEnumerable<CustomerDTO>> GetAllAsync();
-        Task<CustomerDTO> GetById(int id);
+        Task<IEnumerable<RoleDTO>> GetAllAsync();
+        Task<RoleDTO> GetById(int id);
     }
 }

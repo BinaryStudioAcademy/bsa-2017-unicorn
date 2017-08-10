@@ -1,16 +1,14 @@
 ﻿using AutoMapper;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using Unicorn.Core.DTOs;
+using Unicorn.Core.Interfaces;
 using Unicorn.DataAccess.Entities;
 using Unicorn.DataAccess.Interfaces;
-using Unicorn.Core.DTOs;
 
 namespace Unicorn.Core.Services
 {
-    public class WorkService
+    public class WorkService : IWorkService
     {
         private readonly IUnitOfWork _unitOfWork;
 
