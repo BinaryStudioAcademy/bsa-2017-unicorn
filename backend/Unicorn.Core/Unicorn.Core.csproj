@@ -68,6 +68,7 @@
     <Compile Include="Interfaces\IMembershipProvider.cs" />
     <Compile Include="Infrastructure\ServiceModule.cs" />
     <Compile Include="Interfaces\ILocationService.cs" />
+    <Compile Include="Interfaces\IPersonService.cs" />
     <Compile Include="Interfaces\IRoleService.cs" />
     <Compile Include="Interfaces\IVendorService.cs" />
     <Compile Include="Interfaces\IWorkService.cs" />
@@ -75,6 +76,7 @@
     <Compile Include="Services\BookService.cs" />
     <Compile Include="Services\CustomerService.cs" />
     <Compile Include="Services\LocationService.cs" />
+    <Compile Include="Services\PersonService.cs" />
     <Compile Include="Services\RoleService.cs" />
     <Compile Include="Services\VendorService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
