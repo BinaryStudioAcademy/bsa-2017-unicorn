@@ -27,8 +27,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   constructor(
     public auth: AuthService,
-    private location: Location,
-    private router: Router) { }
+    public location: Location,
+    public router: Router) { }
 
   ngOnInit() {
   }

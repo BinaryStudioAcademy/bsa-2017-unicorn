@@ -24,7 +24,7 @@ import { providers } from './social-providers';
   declarations: [
     RegisterComponent
   ],
-  providers: [AuthService]
+  providers: []
 })
 export class RegisterModule { }
 
