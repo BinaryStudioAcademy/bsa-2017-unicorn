@@ -8,7 +8,8 @@ import { Review } from "../../models/review";
   styleUrls: ['./company-details.component.css']
 })
 export class CompanyDetailsComponent implements OnInit {
-  constructor(public company:Company) { }
+company:Company = new Company;
+  constructor() { }
 
   ngOnInit() {  
     this.company.avatar = "../../../assets/images/company_logo.png";

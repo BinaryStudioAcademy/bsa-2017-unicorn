@@ -1,0 +1,18 @@
+.flex-list{
+    display: flex!important;
+    flex-direction: row;
+    justify-content: space-around;
+    margin: 5px 0;
+    text-align: center;
+}
+
+.vendor-avatar{
+    width: 150px!important;
+    height: 150px!important;
+    margin:5px;
+}
+
+.vendor-description{
+    margin:5px;
+    padding: 5px;
+}

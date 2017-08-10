@@ -30,7 +30,6 @@ import { Vendor } from "../models/vendor";
     ReviewsComponent,
     VendorsComponent,
     ContactsComponent
-  ],
-  providers: [Company, Review, Vendor]
+  ]
 })
 export class CompanyModule { }
