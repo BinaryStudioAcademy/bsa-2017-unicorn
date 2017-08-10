@@ -1,0 +1,94 @@
+.wrapper {
+    padding: 50px 20px;
+}
+
+.slogan {
+    width: 42%;
+    font-family: 'Century Gothic', 'Calibri', 'Trebuchet MS', sans-serif;
+    font-size: 30px;
+    line-height: 5px;
+}
+
+.slogan p {
+    line-height: 40px;
+}
+
+.search-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap; 
+    justify-content: space-around;
+    align-items: center;
+    width: auto;
+    margin: 50px 0;
+    border-radius: 7px;
+    border: 1px solid lightgray;
+    font-family: 'Century Gothic', 'Calibri', 'Trebuchet MS', sans-serif;
+}
+
+.item-search {
+    width: 300px;
+    margin: 20px;
+}
+
+.item-date {
+    width: 200px;
+    margin: 20px;
+}
+
+.item-button {
+    width: 200px;
+    margin: 20px;
+    display: flex;
+    vertical-align: middle;
+}
+
+.separator {
+    margin: 10px 0;
+    border-right: 1px solid lightgray;
+}
+
+.fill-horizontal {
+    width: 100%;
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+    margin: 0;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.btn-date {
+    width: 100%;
+    color: gray;
+    background-color: lightgrey;
+} 
+
+.btn-search {
+    margin: 30px;
+    width: 100%;    
+    height: 45px;
+    color: white;
+    background-color: #FF647A;
+    font-size: 16px; 
+} 
+
+.color-main {
+    color: #FF647A;
+}
+
+.bg-color-main {
+    background-color: #FF647A;
+}
+
+.color-text {
+    color: gray;
+}
+
+

@@ -17,7 +17,7 @@ namespace Unicorn.Core.Services
 
         public LocationService(IUnitOfWork unitOfWork)
         {
-            _unitOfWork = unitOfWork;
+            _unitOfWork = unitOfWork;            
         }
 
         public async Task<IEnumerable<LocationDTO>> GetAllAsync()

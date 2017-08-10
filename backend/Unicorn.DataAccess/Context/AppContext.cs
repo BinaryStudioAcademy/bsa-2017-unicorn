@@ -20,6 +20,7 @@ namespace Unicorn.DataAccess.Context
         public DbSet<Subcategory> Subcategories { get; set; }
         public DbSet<Vendor> Vendors { get; set; }
         public DbSet<Work> Works { get; set; }
+        public DbSet<SocialAccount> SocialAccounts { get; set; }
 
         public AppContext() : base("DefaultConnection")
         {

@@ -25,6 +25,7 @@ namespace Unicorn.DataAccess.Repositories.UnitOfWork
         private IGenericRepository<Subcategory> subcategoryRepository;
         private IGenericRepository<Vendor> vendorRepository;
         private IGenericRepository<Work> workRepository;
+        private IGenericRepository<SocialAccount> socialAccountRepository;
 
         public UnitOfWork(AppContext context, IRepositoryFactory factory)
         {
@@ -156,6 +157,15 @@ namespace Unicorn.DataAccess.Repositories.UnitOfWork
             {
                 return workRepository ??
                   (workRepository = factory.CreateRepository<Work>(context));
+            }
+        }
+
+        public IGenericRepository<SocialAccount> SocialAccountRepository
+        {
+            get
+            {
+                return socialAccountRepository ??
+                  (socialAccountRepository = factory.CreateRepository<SocialAccount>(context));
             }
         }
 

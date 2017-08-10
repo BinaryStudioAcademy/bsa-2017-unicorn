@@ -13,9 +13,6 @@ namespace Unicorn.App_Start
     using Unicorn.DataAccess.Infrastructure;
     using Ninject.Modules;
     using Unicorn.Shared.Infrastructure;
-    using Unicorn.Core.Interfaces;
-    using Unicorn.Core.Providers;
-    using Unicorn.Core.Services;
 
     public static class NinjectWebCommon 
     {
@@ -50,9 +47,7 @@ namespace Unicorn.App_Start
             try
             {
                 kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);
-                kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
-                kernel.Bind<IMembershipProvider>().To<MembershipProvider>();
-                kernel.Bind<IAuthService>().To<AuthJWTService>();
+                kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();                
 
                 RegisterServices(kernel);
                 return kernel;
