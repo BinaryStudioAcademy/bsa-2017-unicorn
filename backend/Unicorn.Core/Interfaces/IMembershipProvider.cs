@@ -5,7 +5,7 @@ namespace Unicorn.Core.Interfaces
 {
     public interface IMembershipProvider
     {
-        Task<bool> VerifyUser(string provider, long? uid);
-        Task<ClaimsIdentity> GetUserClaims(string provider, long? uid);
+        Task<long> VerifyUser(string provider, long uid);
+        Task<ClaimsIdentity> GetUserClaims(long accountId);
     }
 }

@@ -15,13 +15,13 @@ namespace Unicorn.Controllers
             this.authService = authService;
         }
 
-        // GET: Membership
+        // GET: membership?provider=facebook&uid=123456
         [HttpHead]
-        public async Task<HttpResponseMessage> Get(string provider, long? uid)
+        public async Task<HttpResponseMessage> Get(string provider, long uid)
         {
             HttpResponseMessage response = null;
 
-            if (string.IsNullOrWhiteSpace(provider) || uid == null)
+            if (string.IsNullOrWhiteSpace(provider))
             {
                 response = Request.CreateResponse(HttpStatusCode.NotFound, "Missing provider or uid");
                 return response;

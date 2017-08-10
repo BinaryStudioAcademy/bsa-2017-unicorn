@@ -4,7 +4,7 @@ namespace Unicorn.Core.Interfaces
 {
     public interface IAuthService
     {
-        Task<string> GenerateJwtTokenAsync(string provider, long? uid);
+        Task<string> GenerateJwtTokenAsync(string provider, long uid);
         Task<bool> ValidateTokenAsync(string tokenString);       
     }
 }
