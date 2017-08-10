@@ -11,7 +11,7 @@ namespace Unicorn.Shared.DTOs
 
         public bool EmailConfirmed { get; set; }
 
-        public string Password { get; set; }
+        public SocialAccountDTO SocialAccount { get; set; }
 
         public DateTime DateCreated { get; set; }
 
