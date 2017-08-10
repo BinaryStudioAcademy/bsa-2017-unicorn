@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Company } from "../../../models/company";
-import { Review } from "../../../models/review";
+import { Company } from "../../../models/company.model";
+import { Review } from "../../../models/review.model";
 
 @Component({
   selector: 'company-reviews',

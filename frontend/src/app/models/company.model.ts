@@ -1,4 +1,4 @@
-import { Review } from "./review";
+import { Review } from "./review.model";
 import { Vendor } from "./vendor";
 
 export class Company {

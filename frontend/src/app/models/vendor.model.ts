@@ -1,4 +1,4 @@
-import { Review } from './review';
+import { Review } from './review.model';
 import { Work } from './work.model';
 
 export class Vendor {
