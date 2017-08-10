@@ -6,7 +6,7 @@ namespace Unicorn.DataAccess.Entities
     {
         public long Id { get; set; }
         public bool IsDeleted { get; set; }
-        public long FacebookUID { get; set; }
-        public long GoogleUID { get; set; }
+        public long? FacebookUID { get; set; }
+        public long? GoogleUID { get; set; }
     }
 }
