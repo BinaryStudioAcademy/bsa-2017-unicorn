@@ -10,20 +10,24 @@
     <div class="ui" suiTabContent="1">
       <div class="vendor-wrapper">
         <div *ngFor='let vendor of popularVendors' class="vendor">
-          <div class="img-wrapper">
-            <img src="{{vendor.imgUrl}}" />            
-          </div>
-          <p class="vendor-title">{{vendor.name}}<p>
+          <a href="#">
+            <div class="img-wrapper">
+              <img src="{{vendor.imgUrl}}" />            
+            </div>
+            <p class="vendor-title">{{vendor.name}}<p>
+          </a>
          </div> 
       </div>
     </div>
     <div class="ui" suiTabContent="2">
       <div class="vendor-wrapper">
         <div *ngFor='let vendor of cleaningVendors' class="vendor">
-          <div class="img-wrapper">
-            <img src="{{vendor.imgUrl}}" />            
-          </div>
-          <p class="vendor-title">{{vendor.name}}<p>
+          <a href="#">
+            <div class="img-wrapper">
+              <img src="{{vendor.imgUrl}}" />            
+            </div>
+            <p class="vendor-title">{{vendor.name}}<p>
+          </a>
          </div> 
       </div>
     </div>

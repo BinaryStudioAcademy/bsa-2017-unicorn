@@ -4,13 +4,13 @@
     <p>{{slogan}}</p>
   </div>
   <div class="search-container">
-    <div class="item1">
+    <div class="item-search">
       <p class="color-text">{{labelSearch}}</p>
        <div class="ui input fill-horizontal"> 
         <input type="text" placeholder="{{placeholderSearch}}" [(ngModel)]="searchText">
       </div>
     </div>
-    <div class="item2">
+    <div class="item-date">
       <p class="color-text">{{labelDate}}</p>
       <div class="ui left icon input">
             <i class="calendar icon"></i>
@@ -21,7 +21,7 @@
                    [pickerUseNativeOnMobile]="false">
         </div>                                              
     </div>
-    <div class="item3"> 
+    <div class="item-button"> 
       <button class="ui button bg-color-main btn-search" (click)="searchVendor()">{{labelButton}}</button>  
     </div>     
   </div>

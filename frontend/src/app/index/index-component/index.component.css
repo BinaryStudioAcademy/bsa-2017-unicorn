@@ -26,17 +26,17 @@
     font-family: 'Century Gothic', 'Calibri', 'Trebuchet MS', sans-serif;
 }
 
-.item1 {
+.item-search {
     width: 300px;
     margin: 20px;
 }
 
-.item2 {
+.item-date {
     width: 200px;
     margin: 20px;
 }
 
-.item3 {
+.item-button {
     width: 200px;
     margin: 20px;
     display: flex;
@@ -78,3 +78,17 @@
     background-color: #FF647A;
     font-size: 16px; 
 } 
+
+.color-main {
+    color: #FF647A;
+}
+
+.bg-color-main {
+    background-color: #FF647A;
+}
+
+.color-text {
+    color: gray;
+}
+
+
