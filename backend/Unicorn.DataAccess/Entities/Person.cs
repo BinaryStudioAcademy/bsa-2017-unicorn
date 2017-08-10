@@ -1,10 +1,12 @@
 ﻿using System;
+using Unicorn.DataAccess.Interfaces;
 
 namespace Unicorn.DataAccess.Entities
 {
-    public class Person
+    public class Person : IEntity
     {
         public long Id { get; set; }
+        public bool IsDeleted { get; set; }
 
         public DateTime Birthday { get; set; }
 

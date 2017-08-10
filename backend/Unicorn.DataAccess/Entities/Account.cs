@@ -1,17 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using Unicorn.DataAccess.Interfaces;
 
 namespace Unicorn.DataAccess.Entities
 {
-    public class Account
+    public class Account : IEntity
     {
         public long Id { get; set; }
+        public bool IsDeleted { get; set; }
 
         public string Email { get; set; }
 
         public bool EmailConfirmed { get; set; }
 
-        public string Password { get; set; }
+        public SocialAccount SocialAccount { get; set; }
 
         public DateTime DateCreated { get; set; }
 

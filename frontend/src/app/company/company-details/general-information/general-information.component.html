@@ -1,30 +1,25 @@
-<div class="ui container flex-container">  
+<div class="ui container flex-header">
   <h2 class="ui header">{{company.name}}
     <div class="sub header">{{company.location}}
-           <sui-rating class="star" [ngModel]="company.rating" [isReadonly]="true"></sui-rating>   
+      <sui-rating class="star" [ngModel]="company.rating" [isReadonly]="true"></sui-rating>
       Reviews: {{company.reviews.length}}</div>
-  </h2> 
-  <div>
-    <img class="ui avatar image" src="../../../assets/images/company_logo.png">
-      <p>{{company.director}}</p>
+  </h2>
+  <div class="center">
+    <img class="ui avatar image" src= {{company.avatar}}>
+    <p>{{company.director}}</p>
   </div>
 </div>
 
-<div class="ui justified container">  
+<div class="ui justified container">
   {{company.description}}
-</div> 
-<div class="ui divider"> 
 </div>
-<div class="ui container">  
-  <div class="flex-container">
-    <div *ngFor="let feature of company.features" class="item">
-      <div>
-      <img class="ui tiny circular image" src="../../../assets/images/square-image.png">
-        <div style="padding: 10px 0 0 0"><h4>{{feature}}</h4></div>
-      </div>      
-        
+<div class="ui divider">
+</div>
+<div class="ui container">
+  <div class="flex-body">
+    <div *ngFor="let feature of company.features" class="item center">      
+        <img id="image-feature" class="ui tiny circular image" src="../../../assets/images/square-image.png">
+        <h4><p>{{feature}}</p></h4>      
+    </div>
   </div>
-  </div>
-</div> 
-
-
+</div>

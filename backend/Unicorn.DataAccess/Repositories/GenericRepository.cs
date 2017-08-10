@@ -3,77 +3,132 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using Unicorn.DataAccess.Context;
+using Unicorn.DataAccess.Interfaces;
 
 namespace Unicorn.DataAccess.Repositories
 {
-    class GenericRepository<TEntity> where TEntity:class
+    public class GenericRepository<T> : IGenericRepository<T> where T : class, IEntity
     {
-        internal AppContext context;
-        internal DbSet<TEntity> dbSet;
+        private DbContext context;
+        private IDbSet<T> _entities;
 
-        public GenericRepository(AppContext context)
+        public GenericRepository(DbContext context)
         {
             this.context = context;
-            this.dbSet = context.Set<TEntity>();
+        }
+        public T GetById(int id)
+        {
+            return Query.First(x => x.Id == id);
+        }
+        public async Task<T> GetByIdAsync(int id)
+        {
+            return await Query.SingleOrDefaultAsync(i => i.Id == id);
         }
 
-        public virtual IEnumerable<TEntity> Get(
-            Expression<Func<TEntity, bool>> filter = null,
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-            string includeProperties = "")
+        public async Task<T> GetByIdDeletedAsync(int id)
         {
-            IQueryable<TEntity> query = dbSet;
+            return await Deleted.SingleOrDefaultAsync(i => i.Id == id);
+        }
 
-            if (filter != null)
+        public void Create(T entity)
+        {
+            try
             {
-                query = query.Where(filter);
+                if (entity == null)
+                {
+                    throw new ArgumentNullException(nameof(entity));
+                }
+                Entities.Add(entity);
             }
-
-            foreach (var includeProperty in includeProperties.Split
-                (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            catch (Exception ex)
             {
-                query = query.Include(includeProperty);
+                throw ex;
             }
+        }
 
-            if (orderBy != null)
+        public void Update(T entity)
+        {
+            try
             {
-                return orderBy(query).ToList();
+                if (entity == null)
+                {
+                    throw new ArgumentNullException(nameof(entity));
+                }
+                context.Entry(entity).State = EntityState.Modified;
             }
-            else
+            catch (Exception ex)
             {
-                return query.ToList();
+                throw ex;
             }
         }
 
-        public virtual TEntity GetByID(object id)
+        public void Delete(int id)
         {
-            return dbSet.Find(id);
-        }
-        public virtual void Insert(TEntity entity)
-        {
-            dbSet.Add(entity);
-        }
-
-        public virtual void Delete(object id)
-        {
-            TEntity entityToDelete = dbSet.Find(id);
-            Delete(entityToDelete);
-        }
-
-        public virtual void Delete(TEntity entityToDelete)
-        {
-            if (context.Entry(entityToDelete).State == EntityState.Detached)
+            try
             {
-                dbSet.Attach(entityToDelete);
+                var entity = GetById(id);
+                if (entity == null)
+                {
+                    throw new ArgumentNullException(nameof(id));
+                }
+
+                entity.IsDeleted = true;
             }
-            dbSet.Remove(entityToDelete);
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
-        public virtual void Update(TEntity entityToUpdate)
+        public async Task ForceDelete(int id)
         {
-            dbSet.Attach(entityToUpdate);
-            context.Entry(entityToUpdate).State = EntityState.Modified;
+            try
+            {
+                var entity = await GetByIdDeletedAsync(id);
+                if (entity == null)
+                {
+                    throw new ArgumentNullException(nameof(id));
+                }
+                Entities.Remove(entity);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
+
+        public async Task Restore(int id)
+        {
+            try
+            {
+                var entity = await GetByIdDeletedAsync(id);
+                if (entity == null)
+                {
+                    throw new ArgumentNullException(nameof(id));
+                }
+                entity.IsDeleted = false;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public IEnumerable<T> GetAll()
+        {
+            return Query.ToList();
+        }
+
+        public async Task<IEnumerable<T>> GetAllAsync()
+        {
+            return await Query.ToListAsync();
+        }
+
+        protected IDbSet<T> Entities => _entities ?? (_entities = context.Set<T>());
+
+        public IQueryable<T> Query => Entities.Where(x => !x.IsDeleted);
+        public IQueryable<T> Deleted => Entities.Where(x => x.IsDeleted);
     }
 }

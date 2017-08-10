@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
+using Unicorn.DataAccess.Interfaces;
 
 namespace Unicorn.DataAccess.Entities
 {
-    public class Vendor
+    public class Vendor : IEntity
     {
         public long Id { get; set; }
+        public bool IsDeleted { get; set; }
 
         public double Experience { get; set; }
 

@@ -2,201 +2,170 @@
 using System.Threading.Tasks;
 using Unicorn.DataAccess.Context;
 using Unicorn.DataAccess.Entities;
+using Unicorn.DataAccess.Interfaces;
 
 namespace Unicorn.DataAccess.Repositories.UnitOfWork
 {
-    class UnitOfWork : IDisposable
+    public class UnitOfWork : IUnitOfWork
     {
         private AppContext context;
-        private GenericRepository<Account> accountRepository;
-        private GenericRepository<Book> bookRepository;
-        private GenericRepository<Category> categoryRepository;
-        private GenericRepository<Company> companyRepository;
-        private GenericRepository<Customer> customerRepository;
-        private GenericRepository<History> historyRepository;
-        private GenericRepository<Location> locationRepository;
-        private GenericRepository<Permission> permissionRepository;
-        private GenericRepository<Person> personRepository;
-        private GenericRepository<Review> reviewRepository;
-        private GenericRepository<Role> roleRepository;
-        private GenericRepository<Subcategory> subcategoryRepository;
-        private GenericRepository<Vendor> vendorRepository;
-        private GenericRepository<Work> workRepository;
+        private IRepositoryFactory factory;
 
-        public UnitOfWork()
+        private IGenericRepository<Account> accountRepository;
+        private IGenericRepository<Book> bookRepository;
+        private IGenericRepository<Category> categoryRepository;
+        private IGenericRepository<Company> companyRepository;
+        private IGenericRepository<Customer> customerRepository;
+        private IGenericRepository<History> historyRepository;
+        private IGenericRepository<Location> locationRepository;
+        private IGenericRepository<Permission> permissionRepository;
+        private IGenericRepository<Person> personRepository;
+        private IGenericRepository<Review> reviewRepository;
+        private IGenericRepository<Role> roleRepository;
+        private IGenericRepository<Subcategory> subcategoryRepository;
+        private IGenericRepository<Vendor> vendorRepository;
+        private IGenericRepository<Work> workRepository;
+        private IGenericRepository<SocialAccount> socialAccountRepository;
+
+        public UnitOfWork(AppContext context, IRepositoryFactory factory)
         {
-            context = new AppContext("DefaultConnection");
-        }
-        public UnitOfWork(string connectionString)
-        {
-            context = new AppContext(connectionString);
+            this.context = context;
+            this.factory = factory;
         }
 
-        public GenericRepository<Account> AccountRepository
+        public IGenericRepository<Account> AccountRepository
         {
             get
             {
-                if (this.accountRepository == null)
-                {
-                    this.accountRepository = new GenericRepository<Account>(context);
-                }
-                return accountRepository;
+                return accountRepository ??
+                       (accountRepository = factory.CreateRepository<Account>(context));
             }
         }
 
-        public GenericRepository<Book> BookRepository
+
+        public IGenericRepository<Book> BookRepository
         {
             get
             {
-                if (this.bookRepository == null)
-                {
-                    this.bookRepository = new GenericRepository<Book>(context);
-                }
-                return bookRepository;
+                return bookRepository ??
+                  (bookRepository = factory.CreateRepository<Book>(context));
             }
         }
 
-        public GenericRepository<Category> CategoryRepository
+        public IGenericRepository<Category> CategoryRepository
         {
             get
             {
-                if (this.categoryRepository == null)
-                {
-                    this.categoryRepository = new GenericRepository<Category>(context);
-                }
-                return categoryRepository;
+                return categoryRepository ??
+                  (categoryRepository = factory.CreateRepository<Category>(context));
             }
         }
 
-        public GenericRepository<Company> CompanyRepository
+        public IGenericRepository<Company> CompanyRepository
         {
             get
             {
-                if (this.companyRepository == null)
-                {
-                    this.companyRepository = new GenericRepository<Company>(context);
-                }
-                return companyRepository;
+                return companyRepository ??
+                  (companyRepository = factory.CreateRepository<Company>(context));
             }
         }
 
-        public GenericRepository<Customer> CustomerRepository
+        public IGenericRepository<Customer> CustomerRepository
         {
             get
             {
-                if (this.customerRepository == null)
-                {
-                    this.customerRepository = new GenericRepository<Customer>(context);
-                }
-                return customerRepository;
+                return customerRepository ??
+                  (customerRepository = factory.CreateRepository<Customer>(context));
             }
         }
 
-        public GenericRepository<History> HistoryRepository
+        public IGenericRepository<History> HistoryRepository
         {
             get
             {
-                if (this.historyRepository == null)
-                {
-                    this.historyRepository = new GenericRepository<History>(context);
-                }
-                return historyRepository;
+                return historyRepository ??
+                  (historyRepository = factory.CreateRepository<History>(context));
             }
         }
 
-        public GenericRepository<Location> LocationRepository
+        public IGenericRepository<Location> LocationRepository
         {
             get
             {
-                if (this.locationRepository == null)
-                {
-                    this.locationRepository = new GenericRepository<Location>(context);
-                }
-                return locationRepository;
+                return locationRepository ??
+                  (locationRepository = factory.CreateRepository<Location>(context));
             }
         }
 
-        public GenericRepository<Permission> PermissionRepository
+        public IGenericRepository<Permission> PermissionRepository
         {
             get
             {
-                if (this.permissionRepository == null)
-                {
-                    this.permissionRepository = new GenericRepository<Permission>(context);
-                }
-                return permissionRepository;
+                return permissionRepository ??
+                  (permissionRepository = factory.CreateRepository<Permission>(context));
             }
         }
 
-        public GenericRepository<Person> PersonRepository
+        public IGenericRepository<Person> PersonRepository
         {
             get
             {
-                if (this.personRepository == null)
-                {
-                    this.personRepository = new GenericRepository<Person>(context);
-                }
-                return personRepository;
+                return personRepository ??
+                  (personRepository = factory.CreateRepository<Person>(context));
             }
         }
 
-        public GenericRepository<Review> ReviewRepository
+        public IGenericRepository<Review> ReviewRepository
         {
             get
             {
-                if (this.reviewRepository == null)
-                {
-                    this.reviewRepository = new GenericRepository<Review>(context);
-                }
-                return reviewRepository;
+                return reviewRepository ??
+                  (reviewRepository = factory.CreateRepository<Review>(context));
             }
         }
 
-        public GenericRepository<Role> RoleRepository
+        public IGenericRepository<Role> RoleRepository
         {
             get
             {
-                if (this.roleRepository == null)
-                {
-                    this.roleRepository = new GenericRepository<Role>(context);
-                }
-                return roleRepository;
+                return roleRepository ??
+                  (roleRepository = factory.CreateRepository<Role>(context));
             }
         }
 
-        public GenericRepository<Subcategory> SubcategoryRepository
+        public IGenericRepository<Subcategory> SubcategoryRepository
         {
             get
             {
-                if (this.subcategoryRepository == null)
-                {
-                    this.subcategoryRepository = new GenericRepository<Subcategory>(context);
-                }
-                return subcategoryRepository;
+                return subcategoryRepository ??
+                  (subcategoryRepository = factory.CreateRepository<Subcategory>(context));
             }
         }
 
-        public GenericRepository<Vendor> VendorRepository
+        public IGenericRepository<Vendor> VendorRepository
         {
             get
             {
-                if (this.vendorRepository == null)
-                {
-                    this.vendorRepository = new GenericRepository<Vendor>(context);
-                }
-                return vendorRepository;
+                return vendorRepository ??
+                  (vendorRepository = factory.CreateRepository<Vendor>(context));
             }
         }
 
-        public GenericRepository<Work> WorkRepository
+        public IGenericRepository<Work> WorkRepository
         {
             get
             {
-                if (this.workRepository == null)
-                {
-                    this.workRepository = new GenericRepository<Work>(context);
-                }
-                return workRepository;
+                return workRepository ??
+                  (workRepository = factory.CreateRepository<Work>(context));
+            }
+        }
+
+        public IGenericRepository<SocialAccount> SocialAccountRepository
+        {
+            get
+            {
+                return socialAccountRepository ??
+                  (socialAccountRepository = factory.CreateRepository<SocialAccount>(context));
             }
         }
 

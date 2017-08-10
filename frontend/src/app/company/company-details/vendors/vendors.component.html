@@ -1,3 +1,7 @@
-<p>
-  vendors works!
-</p>
+<div class="ui vertical list">
+  <div *ngFor="let vendor of vendors" class="item">
+    <img class="ui avatar image" src= {{vendor.avatar}}>
+    <div class="content">
+      <div class="header">{{vendor.fio}}</div>{{vendor.position}} </div>
+  </div>  
+</div>

@@ -1,13 +1,20 @@
-.flex-container{
+.flex-header{
     display: flex;
     flex-direction: row;    
     justify-content: space-between;    
 }
 
-.flex-container > div {
+.flex-body{
+    display: flex;
+    flex-direction: row;    
+    justify-content: space-around;    
+}
+
+.center{
     text-align: center;
 }
 
-.avatar-align{    
-    padding: 2px;
+#image-feature{    
+    padding: 5px;
+    margin: 0;
 }

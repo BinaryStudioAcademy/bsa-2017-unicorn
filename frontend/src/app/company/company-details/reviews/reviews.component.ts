@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { Company } from "../../../models/company";
+import { Review } from "../../../models/review";
 
 @Component({
   selector: 'company-reviews',
@@ -6,7 +8,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./reviews.component.css']
 })
 export class ReviewsComponent implements OnInit {
-
+@Input()
+reviews: Review[];
   constructor() { }
 
   ngOnInit() {

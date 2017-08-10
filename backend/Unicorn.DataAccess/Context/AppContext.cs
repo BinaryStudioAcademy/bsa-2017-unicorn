@@ -4,7 +4,7 @@ using Unicorn.DataAccess.Entities;
 
 namespace Unicorn.DataAccess.Context
 {
-    class AppContext: DbContext
+    public class AppContext: DbContext
     {
         public DbSet<Account> Accounts { get; set; }
         public DbSet<Book> Books { get; set; }
@@ -20,8 +20,9 @@ namespace Unicorn.DataAccess.Context
         public DbSet<Subcategory> Subcategories { get; set; }
         public DbSet<Vendor> Vendors { get; set; }
         public DbSet<Work> Works { get; set; }
+        public DbSet<SocialAccount> SocialAccounts { get; set; }
 
-        public AppContext(string connectionString) : base(connectionString)
+        public AppContext() : base("DefaultConnection")
         {
 
         }
