@@ -18,16 +18,19 @@ export class MenuComponent implements OnInit {
 
   addMenuItems() {
     this.items = [{
-      name: 'Взяться и сделать',
+      name: 'Get task',
       route: '#'
     }, {
-      name: 'Помощь',
+      name: 'Vendors',
       route: '#'
     }, {
-      name: 'Регистрация',
+      name: 'Help',
       route: '#'
     }, {
-      name: 'Войти',
+      name: 'Registration',
+      route: '#'
+    }, {
+      name: 'Log in',
       route: '#'
     }];
   }
