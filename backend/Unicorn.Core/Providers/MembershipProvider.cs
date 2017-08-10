@@ -27,7 +27,7 @@ namespace Unicorn.Core.Providers
                     new Claim("role", account.Role.Name)
                 };
 
-            return new ClaimsIdentity(claims, "Token"); ;
+            return new ClaimsIdentity(claims, "Token");
         }
 
         public async Task<long> VerifyUser(string provider, long uid)
