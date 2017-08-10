@@ -9,6 +9,9 @@ namespace Unicorn.Shared.Infrastructure
         public override void Load()
         {
             Bind<ILocationService>().To<LocationService>();
+            Bind<IAccountService>().To<AccountService>();
+            Bind<IBookService>().To<BookService>();
+            Bind<ICustomerService>().To<CustomerService>();
         }
     }
 }
