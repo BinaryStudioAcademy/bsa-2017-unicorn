@@ -14,7 +14,8 @@ import { RegisterInfo } from '../models/register-info';
 })
 export class RegisterComponent implements OnInit, OnDestroy {
 
-  mode: 'date';
+  mode: string;
+  modalSize: string;
 
   public user;
   sub: any;
@@ -32,6 +33,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
     public router: Router) { }
 
   ngOnInit() {
+    this.mode = 'date';
+    this.modalSize = 'small';
   }
 
   ngOnDestroy() {

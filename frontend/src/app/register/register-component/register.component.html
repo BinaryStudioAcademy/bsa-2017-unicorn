@@ -1,6 +1,7 @@
 <link rel="stylesheet" href="https://unpkg.com/semantic-ui-calendar/dist/calendar.min.css">
-<sui-modal id="register-form"  [isClosable]="true"
+<diV *ngIf="true" class="modal-wrap"><sui-modal id="register-form"  [isClosable]="true"
   [isInverted]="true"
+  [size]="modalSize"
   (dismissed)="modal.deny()"
   (denied)="location.back()"
   [mustScroll]=true #modal> 
@@ -8,19 +9,22 @@
        <p class="reg-header">Registration</p>
   </div>
   <div class="content">
-    <p>Register with..</p> 
-    <button class="ui facebook button" (click)="register('facebook')">
-      <i class="facebook icon"></i>
-      Facebook
-    </button>
-    <button class="ui google plus button" (click)="register('google')">
-      <i class="google plus icon"></i>
-      Google 
-    </button>
-    <button class="ui linkedin button">
-      <i class="linkedin icon"></i>
-      LinkedIn
-    </button>
+    
+    <div class="social-buttons">
+      <button class="ui facebook button" (click)="register('facebook')">
+        <i class="facebook icon"></i>
+        Facebook
+      </button>
+      <button class="ui google plus button" (click)="register('google')">
+        <i class="google plus icon"></i>
+        Google 
+      </button>
+      <button class="ui linkedin button">
+        <i class="linkedin icon"></i>
+        LinkedIn
+      </button>
+    </div>
+
     <div *ngIf='isLogged' class="addition-info ui segment">
       <p>Fill the following fields</p>
       <div class="ui form">
@@ -40,13 +44,30 @@
           </div>
         </div> 
 
-        <div class="field">
+        <!-- <div class="field">
           <label>Gender</label>
           <select class="ui dropdown" [(ngModel)]="gender">
             <option class="ui" value="Male">Male</option>
             <option class="ui" value="Female">Female</option>
           </select>
-        </div> 
+        </div>  -->
+
+        <div class="field">
+          <label>Gender</label>
+          <div class="gender-field">
+            <div class="ui radio checkbox gender-elem">
+              <input type="radio" [(ngModel)]="gender" value="Male" checked="checked">
+              <label>Male</label>
+            </div>
+            <div class="ui radio checkbox gender-elem">
+              <input type="radio" value="Female" [(ngModel)]="gender">
+              <label>Female</label>
+            </div>
+          </div>
+        </div>
+
+        
+        
 
         <div *ngIf="error" class="error-field">
           <sui-message class="error">
@@ -56,7 +77,7 @@
             <p>You must fill all fields</p>
           </sui-message>
         </div>
-        <button class="red ui button" (click)="confirmRegister()">Register</button>
+        <a class="ui button reg-btn" (click)="confirmRegister()">Register</a>
       </div>
     </div>
 
@@ -67,4 +88,4 @@
     </div>
     
   </div>
-</sui-modal> 
+</sui-modal></diV> 
