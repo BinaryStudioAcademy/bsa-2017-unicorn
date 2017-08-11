@@ -29,10 +29,8 @@ import { SuiModule } from 'ng2-semantic-ui';
 
 import { ShellComponent } from './shell/shell.component';
 import { MenuComponent } from './menu/menu.component';
-import { SuiModule } from 'ng2-semantic-ui';
 import { FooterComponent } from './footer/footer.component';
 
-import { environment } from "../environments/environment";
 
 @NgModule({
   declarations: [
