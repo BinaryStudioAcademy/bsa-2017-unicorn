@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, NavigationStart } from '@angular/router';
 
 @Component({
   selector: 'app-shell',
@@ -6,20 +7,23 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./shell.component.css']
 })
 export class ShellComponent implements OnInit {
-  search: boolean;
+  location: string;
 
-  constructor() { }
+  constructor(private router: Router) {
+  }
 
   ngOnInit() {
-    this.showSearch();
+    this.getCurrentUrl();
+    console.log(this.location);
   }
 
-  showSearch() {
-    this.search = true;
-  }
-
-  hideSearch() {
-    this.search = false;
+  getCurrentUrl() {
+    this.router.events
+    .subscribe((event) => {
+      if (event instanceof NavigationStart) {
+        this.location = event.url;
+      }
+    });
   }
 
 }
