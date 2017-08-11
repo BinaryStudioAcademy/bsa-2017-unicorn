@@ -10,7 +10,7 @@ import { RegisterInfo } from '../models/register-info';
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
-  providers: [AuthService]
+  providers: []
 })
 export class RegisterComponent implements OnInit, OnDestroy {
 
@@ -20,6 +20,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
   public user;
   sub: any;
   isLogged: boolean = false;
+  roleSelected = false;
+
+  isCustomer = false;
+  isVendor = false;
+  isCompany = false;
+
   error: boolean = false;
 
   phone: string;
@@ -39,6 +45,15 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     //this.sub.unsubscribe();
+  }
+
+  selectRole(role: string) {
+    switch (role) {
+      case 'customer': this.isCustomer = true; break;
+      case 'vendor': this.isVendor = true; break;
+      case 'company': this.isCompany = true; break;
+    }
+    this.roleSelected = true;
   }
 
   register(provider: string) {

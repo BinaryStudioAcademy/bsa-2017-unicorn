@@ -1,13 +1,3 @@
-.social-buttons {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 8px;
-}
-
-.modal-wrap.ui.small.modal {
-    width: 500px !important;
-}
-
 .error-field {
     margin-bottom: 10px;
 }
@@ -44,15 +34,4 @@
 
 .addition-info {
     margin-top: 10px;
-}
-
-.sign-link:hover {
-    color: #FF647A;
-}
-
-.reg-header {
-    text-align: center;
-    font-family: 'Verdana', 'Century Gothic', 'Calibri', 'Trebuchet MS', sans-serif;
-    font-size: 14px;
-    font-weight: normal;
 }
