@@ -7,14 +7,14 @@
     <div class="item-search">
       <p class="color-text">{{labelSearch}}</p>
        <div class="ui input fill-horizontal"> 
-        <input type="text" placeholder="{{placeholderSearch}}" [(ngModel)]="searchText">
+        <input class="search-input" type="text" placeholder="{{placeholderSearch}}" [(ngModel)]="searchText">
       </div>
     </div>
     <div class="item-date">
       <p class="color-text">{{labelDate}}</p>
       <div class="ui left icon input">
             <i class="calendar icon"></i>
-            <input placeholder="Now" suiDatepicker
+            <input class="datepicker" placeholder="Now" suiDatepicker
                    [(ngModel)]="searchDate"
                    [pickerMode]="mode"
                    [pickerFirstDayOfWeek]="firstDayOfWeek"
@@ -26,4 +26,15 @@
     </div>     
   </div>
   <popular-tasks></popular-tasks>
+  <base href="https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/">
+  <div id="slider">
+    <figure>
+      <img src="/assets/images/slider-01.jpg" alt>
+      <img src="/assets/images/slider-02.jpg" alt>
+      <img src="/assets/images/slider-03.jpg" alt>
+      <img src="/assets/images/slider-04.jpg" alt>
+      <img src="/assets/images/slider-01.jpg" alt>      
+    </figure>
+  </div>
+  <app-footer></app-footer>
 </div>

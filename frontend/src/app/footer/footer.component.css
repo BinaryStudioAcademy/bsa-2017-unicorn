@@ -1,7 +1,7 @@
 .footer-wrapper {
-    width: auto;
+    width: auto; 
     height: auto;
-    background-color: lightgray;
+    background-color: white;
 }
 
 .footer-title {
@@ -11,12 +11,7 @@
     align-items: center;
     width: 100%;
     height: 100px;
-    background-color: #E5E5E5;
     font-size: 18px;
-    -webkit-box-shadow: 0px 1px 1px 1px rgba(0,0,0,0.25);
-    -moz-box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.25);
-    box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.25);
-
 }
 
 .footer-title span {
@@ -32,23 +27,44 @@
 .footer-about {
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-between;
     width: 760px; 
     max-width: 100%;
     margin: 30px auto;
-    background-color: lightgray;
-    color: #5B5B5B;
-    font-size: 18px;
+    color: gray;
+    font-size: 16px;
 
+}
+
+.separator-horiz {
+    height: 2px;
+    background-color: #B5B5B5;
+    border-bottom: 1px solid #E5E5E5;
+}
+
+.separator-horiz-light {
+    height: 3px;
+    border-bottom: 2px solid #E5E5E5;
+}
+
+.separator-vert {
+    width: 2px;
+    background-color: #B5B5B5;
+    border-bottom: 1px solid #E5E5E5;   
 }
 
 .about-item {
-    width: 50%; 
-    margin: 50px 20px;
+    width: 40%; 
+    margin: 40px 10px;
 }
 
-.about-item h2, p {
+.about-item h4 {
     text-align: center;
+    text-transform: uppercase;
+}
+
+.about-item p {
+    text-align: justify;
 }
 
 .footer-bottom {
@@ -58,6 +74,5 @@
     align-items: center;
     width: 100%; 
     height: 50px; 
-    color: white;
-    background-color: gray;
+    color: gray;
 }

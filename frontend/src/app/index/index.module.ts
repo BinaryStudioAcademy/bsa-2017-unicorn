@@ -6,6 +6,7 @@ import { SuiModule } from 'ng2-semantic-ui';
 import { IndexComponent } from './index-component/index.component';
 import { IndexRoutingModule } from './index-routing.module';
 import { PopularTasksComponent } from './index-component/popular-tasks/popular-tasks.component';
+import { FooterComponent } from '../footer/footer.component';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { PopularTasksComponent } from './index-component/popular-tasks/popular-t
   ],
   declarations: [
     IndexComponent,
-    PopularTasksComponent
+    PopularTasksComponent,
+    FooterComponent
   ]
 })
 export class IndexModule { }

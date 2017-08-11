@@ -1,26 +1,39 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router, NavigationStart } from '@angular/router';
+
+import { ISubscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-shell',
   templateUrl: './shell.component.html',
   styleUrls: ['./shell.component.css']
 })
-export class ShellComponent implements OnInit {
-  search: boolean;
-  isEnabled = true;
+export class ShellComponent implements OnInit, OnDestroy {
+  searchVisible: boolean;
+  private subscription: ISubscription;
 
-  constructor() { }
+  constructor(private router: Router) {
+  }
 
   ngOnInit() {
-    this.showSearch();
+    this.getSearchVisibility();
   }
 
-  showSearch() {
-    this.search = true;
+  getSearchVisibility() {
+    this.subscription = this.router.events
+    .subscribe((event) => {
+      if (event instanceof NavigationStart) {
+        if (event.url === '/index' || event.url === '/') {
+          this.searchVisible = false;
+        } else {
+          this.searchVisible = true;
+        }
+      }
+    });
   }
 
-  hideSearch() {
-    this.search = false;
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
 }
