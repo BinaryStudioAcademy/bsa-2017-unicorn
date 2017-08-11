@@ -1,3 +1,59 @@
-<p>
-  vendor-details works!
-</p>
+<div class="ui grid container">
+  <div class="row">
+    <div class="sixteen wide column container">
+      <div class="vendor-header">
+        <div class="vendor-avatar">
+          <img src="{{vendor.avatarUrl}}" />
+        </div>
+        <div class="vendor-title">
+          <h3>{{vendor.fio}}</h3>
+          <p>{{vendor.location}}</p>
+        </div>
+      </div>
+    </div>
+    <!-- </div> -->
+
+
+    <div class="sixteen wide column container">
+      <sui-tabset>
+        <div class="ui pointing secondary menu">
+          <a class="item" suiTabHeader="1">Info</a>
+          <a class="item" suiTabHeader="2">Portfolio</a>
+          <a class="item" suiTabHeader="3">Reviews</a>
+          <a class="item" suiTabHeader="4">Contacts</a>
+        </div>
+        <div class="row">
+          <div class="ui grid container">
+            <div class="row">
+              <div class="ten wide container column">
+                <div class="ui segment" suiTabContent="1">
+                  <app-vendor-profile-info [vendor]="vendor"></app-vendor-profile-info>
+                </div>
+                <div class="ten wide container column">
+                  <div class="ui segment" suiTabContent="2">
+                    <app-vendor-profile-portfolio [vendorId]="vendor.id"></app-vendor-profile-portfolio>
+                  </div>
+                </div>
+                <div class="ten wide container column">
+                  <div class="ui segment" suiTabContent="3">
+                    <app-vendor-profile-reviews [vendorId]="vendor.id"></app-vendor-profile-reviews>
+                  </div>
+                </div>
+                <div class="ten wide container column">
+                  <div class="ui segment" suiTabContent="4">
+                    <app-vendor-profile-contacts [vendorId]="vendor.id"></app-vendor-profile-contacts>
+                  </div>
+                </div>
+              </div>
+              <div class="six wide column">
+                <div class="ui segment">
+                  <app-book></app-book>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </sui-tabset>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,10 @@
+<div class="ui three stackable cards">
+  <div *ngFor="let item of portfolio" class="card">
+    <div class="image">
+      <img src="{{item.image}}">
+    </div>
+    <div class="extra">
+      <p>{{item.category}}, {{item.workType}}</p>
+      <sui-rating [(ngModel)]="item.rating" [isReadonly]="true"></sui-rating>
+  </div>
+</div>
