@@ -18,12 +18,14 @@ import { UserModule } from './user/user.module';
 import { VendorModule } from './vendor/vendor.module';
 import { BookModule } from './book/book.module';
 import { IndexModule } from './index/index.module';
+import { AgmCoreModule } from '@agm/core';
 
 import { SuiModule } from 'ng2-semantic-ui';
 
 import { ShellComponent } from './shell/shell.component';
 import { MenuComponent } from './menu/menu.component';
 import { FooterComponent } from './footer/footer.component';
+import { environment } from "../environments/environment";
 
 @NgModule({
   declarations: [
@@ -34,6 +36,9 @@ import { FooterComponent } from './footer/footer.component';
   ],
   imports: [
     SuiModule,
+    AgmCoreModule.forRoot({
+      apiKey: environment.googleMapsKey
+    }),
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
