@@ -36,12 +36,12 @@
 }
 
 .item-date {
-    width: 200px;
+    width: 210px;
     margin: 20px;
 }
 
 .item-button {
-    width: 200px;
+    width: 210px;
     margin: 20px;
     display: flex;
     vertical-align: middle;

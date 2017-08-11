@@ -10,7 +10,7 @@
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 100px;
+    height: 60px;
     background-color: #E5E5E5;
     font-size: 18px;
     -webkit-box-shadow: 0px 1px 1px 1px rgba(0,0,0,0.25);
@@ -32,23 +32,28 @@
 .footer-about {
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-between;
     width: 760px; 
     max-width: 100%;
     margin: 30px auto;
     background-color: lightgray;
     color: #5B5B5B;
-    font-size: 18px;
+    font-size: 16px;
 
 }
 
 .about-item {
-    width: 50%; 
-    margin: 50px 20px;
+    width: 40%; 
+    margin: 20px 5px;
 }
 
-.about-item h2, p {
+.about-item h4 {
     text-align: center;
+    text-transform: uppercase;
+}
+
+.about-item p {
+    text-align: justify;
 }
 
 .footer-bottom {
