@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -19,7 +18,7 @@ namespace Unicorn.Core.Providers
 
         public async Task<ClaimsIdentity> GetUserClaims(long accountId)
         {
-            var account = await _unitOfWork.AccountRepository.GetByIdAsync(Convert.ToInt32(accountId));
+            var account = await _unitOfWork.AccountRepository.GetByIdAsync(accountId);
 
             var claims = new List<Claim>
                 {
@@ -32,11 +31,10 @@ namespace Unicorn.Core.Providers
 
         public async Task<long> VerifyUser(string provider, long uid)
         {
-            var socialAccounts = await _unitOfWork.SocialAccountRepository.GetAllAsync();
-            // var account = socialAccounts.FirstOrDefault(x => x.Provider == provider && x.Uid == uid).Account.Id
-            // if(account == null) { return 0; }
-            //return account == null ? false : true;
-            return await Task.FromResult(1);
+            var _accounts = await _unitOfWork.SocialAccountRepository.GetAllAsync();
+            var socialAccount = _accounts.FirstOrDefault(x => x.Provider == provider && x.Uid == uid);
+
+            return socialAccount == null ? 0 : socialAccount.Account.Id;
         }
     }
 }

@@ -4,8 +4,9 @@ using Unicorn.Core.DTOs;
 
 namespace Unicorn.Core.Interfaces
 {
-    public interface ILocationService
+    public interface IAccountService
     {
-        Task<IEnumerable<LocationDTO>> GetAllAsync();
+        Task<IEnumerable<AccountDTO>> GetAllAsync();
+        Task<AccountDTO> GetById(int id);
     }
 }
