@@ -12,13 +12,12 @@ export interface IContext {
 })
 export class ContactsComponent implements OnInit {
   @ViewChild('modalTemplate')
-  public modalTemplate:ModalTemplate<IContext, string, string>;
-  public modalService:SuiModalService;
+  public modalTemplate:ModalTemplate<IContext, string, string>;  
   lat: number = 49.85711;
   lng: number = 24.01980;
 
 
-  constructor() { }
+  constructor(public modalService:SuiModalService) { }
 
   ngOnInit() {
   }
