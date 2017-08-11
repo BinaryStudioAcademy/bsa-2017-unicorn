@@ -18,7 +18,6 @@ import { UserModule } from './user/user.module';
 import { VendorModule } from './vendor/vendor.module';
 import { BookModule } from './book/book.module';
 import { IndexModule } from './index/index.module';
-import { AgmCoreModule } from '@agm/core';
 
 import { SuiModule } from 'ng2-semantic-ui';
 
@@ -35,10 +34,7 @@ import { environment } from "../environments/environment";
     FooterComponent    
   ],
   imports: [
-    SuiModule,
-    AgmCoreModule.forRoot({
-      apiKey: environment.googleMapsKey
-    }),
+    SuiModule,    
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,

@@ -16,6 +16,7 @@ import { Company } from "../models/company.model";
 import { Review } from "../models/review.model";
 import { Vendor } from "../models/vendor";
 import { environment } from "../../environments/environment";
+import { AgmCoreModule } from "@agm/core";
 
 @NgModule({
   imports: [
@@ -24,7 +25,10 @@ import { environment } from "../../environments/environment";
     FormsModule,
     BrowserModule,
     SuiModule,
-    BookModule    
+    BookModule,
+    AgmCoreModule.forRoot({
+      apiKey: environment.googleMapsKey
+    }),   
   ],
   declarations: [
     CompanyComponent,
