@@ -1,5 +1,9 @@
 .wrapper {
-    padding: 50px 20px;
+    padding: 50px 20px 0px 20px;
+}
+
+.wrapper h1 {
+    font-size: 40px;
 }
 
 .slogan {
@@ -23,7 +27,7 @@
     margin: 50px 0;
     border-radius: 7px;
     border: 1px solid lightgray;
-    font-family: 'Century Gothic', 'Calibri', 'Trebuchet MS', sans-serif;
+    font-family: 'Verdana', 'Calibri', 'Trebuchet MS', sans-serif;
 }
 
 .search-input {
@@ -92,4 +96,34 @@
     color: gray;
 }
 
+/* ---------- Slider ----------- */
+
+#slider {
+    margin: 100px 0;
+}
+
+@keyframes slidy {
+0% { left: 0%; }
+20% { left: 0%; }
+25% { left: -100%; }
+45% { left: -100%; }
+50% { left: -200%; }
+70% { left: -200%; }
+75% { left: -300%; }
+95% { left: -300%; }
+100% { left: -400%; }
+}
+
+body { margin: 0; } 
+div#slider { overflow: hidden; }
+div#slider figure img { width: 20%; float: left; }
+div#slider figure { 
+  position: relative;
+  width: 500%;
+  margin: 0;
+  left: 0;
+  text-align: left;
+  font-size: 0;
+  animation: 30s slidy infinite; 
+}
 

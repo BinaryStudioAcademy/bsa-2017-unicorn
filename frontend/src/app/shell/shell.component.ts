@@ -9,21 +9,25 @@ import { ISubscription } from 'rxjs/Subscription';
   styleUrls: ['./shell.component.css']
 })
 export class ShellComponent implements OnInit, OnDestroy {
-  location: string;
+  searchVisible: boolean;
   private subscription: ISubscription;
 
   constructor(private router: Router) {
   }
 
   ngOnInit() {
-    this.getCurrentUrl();
+    this.getSearchVisibility();
   }
 
-  getCurrentUrl() {
+  getSearchVisibility() {
     this.subscription = this.router.events
     .subscribe((event) => {
       if (event instanceof NavigationStart) {
-        this.location = event.url;
+        if (event.url !== '/index' && event.url !== '/') {
+          this.searchVisible = true;
+        } else {
+          this.searchVisible = false;
+        }
       }
     });
   }

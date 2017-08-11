@@ -3,7 +3,7 @@
     <a href='#'>
         <img class="logo" src="/assets/images/unicorn_logo.png" />
     </a>
-    <div *ngIf="location != '/index' && location != '/'" id="search">
+    <div *ngIf="searchVisible" id="search">
       <div class="ui action left icon input">
         <input type="text" placeholder="scratch a cat">
         <i class="search icon"></i>
@@ -17,8 +17,8 @@
   <div id="content">
     <router-outlet></router-outlet>
   </div>
-  <div id="footer">
+  <!-- <div id="footer">
     <app-footer></app-footer>
-  </div>
+  </div> -->
 </div>
 
