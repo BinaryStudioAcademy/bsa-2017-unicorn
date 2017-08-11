@@ -26,13 +26,22 @@ wrapper {
     margin: 10px 20px 0 0;
 }
 
-#content {
+/* #content {
     display: block;
     width: 960px;
     max-width: 100%;
     margin: 10px auto;
     padding: 5px;
     text-align: left;
+} */
+
+#content {
+    display: block;
+    width: 100%;
+    /* max-width: 100%; */
+    /* margin: 10px auto; */
+    /* padding: 5px; */
+    /* text-align: left; */
 }
 
 #footer {
