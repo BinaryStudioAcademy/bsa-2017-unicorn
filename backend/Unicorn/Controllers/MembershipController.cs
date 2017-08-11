@@ -16,7 +16,7 @@ namespace Unicorn.Controllers
         }
 
         // GET: membership?provider=facebook&uid=123456
-        [HttpHead]
+        [HttpGet]
         public async Task<HttpResponseMessage> Get(string provider, long uid)
         {
             HttpResponseMessage response = null;
@@ -31,7 +31,8 @@ namespace Unicorn.Controllers
 
             if (token == null)
             {
-                response = Request.CreateResponse(HttpStatusCode.NotFound, "Uid not found");
+                // Special status code for registration
+                response = Request.CreateResponse(HttpStatusCode.NoContent, "Uid not found");
                 return response;
             }
 
