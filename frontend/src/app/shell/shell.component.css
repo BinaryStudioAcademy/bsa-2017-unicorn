@@ -34,3 +34,7 @@ wrapper {
     padding: 5px;
     text-align: left;
 }
+
+#footer {
+  box-shadow: 0px 500px 0px 500px gray;
+}

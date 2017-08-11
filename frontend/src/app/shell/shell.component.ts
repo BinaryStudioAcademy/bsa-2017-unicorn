@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ShellComponent implements OnInit {
   search: boolean;
+  isEnabled = true;
 
   constructor() { }
 

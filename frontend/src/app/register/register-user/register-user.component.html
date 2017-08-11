@@ -1,0 +1,42 @@
+<div class="ui segment">
+    <div class="ui form">
+        <div class="field">
+            <label>Phone</label>
+            <input type="text" placeholder="Phone" [(ngModel)]="phone">
+        </div>
+
+        <div class="field">
+            <label>Date</label>
+            <div class="ui left icon input">
+                <i class="calendar icon"></i>
+                <input suiDatepicker placeholder="Pick your birth" [(ngModel)]="birthday" [pickerMode]="mode">
+            </div>
+        </div>
+
+        <div class="field">
+            <label>Gender</label>
+            <div class="gender-field">
+                <div class="ui radio checkbox gender-elem">
+                    <input type="radio" [(ngModel)]="gender" value="Male" checked="checked">
+                    <label>Male</label>
+                </div>
+                <div class="ui radio checkbox gender-elem">
+                    <input type="radio" value="Female" [(ngModel)]="gender">
+                    <label>Female</label>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="error" class="error-field">
+            <sui-message class="error">
+                <div class="header">
+                    Error
+                </div>
+                <p>You must fill all fields</p>
+            </sui-message>
+        </div>
+        <div class="confirm-div">
+            <a align=center class="ui button reg-btn" (click)="confirmRegister()">Register</a>
+        </div>
+    </div>
+</div>

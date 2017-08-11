@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 
-namespace Unicorn.Shared.DTOs
+namespace Unicorn.Core.DTOs
 {
     public class CustomerDTO
     {
         public long Id { get; set; }
-
 
         public virtual PersonDTO Person { get; set; }
 

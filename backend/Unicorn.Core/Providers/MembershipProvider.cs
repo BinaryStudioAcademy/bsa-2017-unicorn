@@ -3,7 +3,6 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Unicorn.Core.Interfaces;
-using Unicorn.DataAccess.Entities;
 using Unicorn.DataAccess.Interfaces;
 
 namespace Unicorn.Core.Providers
@@ -17,45 +16,25 @@ namespace Unicorn.Core.Providers
             _unitOfWork = unitOfWork;
         }
 
-        public Task<ClaimsIdentity> GetUserClaims(string provider, long? uid)
+        public async Task<ClaimsIdentity> GetUserClaims(long accountId)
         {
-            // TODO: Get from DB real data
-
-            string login = "Test";
-            string role = "Admin";
+            var account = await _unitOfWork.AccountRepository.GetByIdAsync(accountId);
 
             var claims = new List<Claim>
                 {
-                    new Claim("login", login),
-                    new Claim("role", role),
-                    new Claim("somedata_bla_bla", "Make .NET great again!")
+                    new Claim("id", account.Id.ToString()),
+                    new Claim("role", account.Role.Name)
                 };
-            ClaimsIdentity claimsIdentity =
-            new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,
-                ClaimsIdentity.DefaultRoleClaimType);
 
-            return Task.FromResult(claimsIdentity);
+            return new ClaimsIdentity(claims, "Token");
         }
 
-        public async Task<bool> VerifyUser(string provider, long? uid)
+        public async Task<long> VerifyUser(string provider, long uid)
         {
-            SocialAccount account;
-            var socialAccounts = await _unitOfWork.SocialAccountRepository.GetAllAsync();
+            var _accounts = await _unitOfWork.SocialAccountRepository.GetAllAsync();
+            var socialAccount = _accounts.FirstOrDefault(x => x.Provider == provider && x.Uid == uid);
 
-            switch (provider)
-            {
-                case "facebook":
-                    account = socialAccounts.FirstOrDefault(x => x.FacebookUID == uid);
-                    break;
-                case "google":
-                    account = socialAccounts.FirstOrDefault(x => x.GoogleUID == uid);
-                    break;
-                default:
-                    account = null;
-                    break;
-            }
-
-            return account == null ? false : true;
+            return socialAccount == null ? 0 : socialAccount.Account.Id;
         }
     }
 }

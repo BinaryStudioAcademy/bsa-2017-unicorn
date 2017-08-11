@@ -5,7 +5,7 @@ navbar ul {
 }
 
 nav li {
-    display: inline; 
+    display: inline;
     margin-right: 18px;
 }
 
@@ -19,4 +19,8 @@ nav li a:hover {
     color: #FF647A;
     background-color: #FFFFFF;
     text-decoration: none;
+}
+
+a {
+    cursor: pointer;
 }

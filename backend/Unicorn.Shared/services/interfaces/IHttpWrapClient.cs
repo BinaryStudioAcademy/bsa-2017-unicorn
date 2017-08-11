@@ -4,9 +4,9 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using Unicorn.Shared.services.interception;
+using Unicorn.Core.services.interception;
 
-namespace Unicorn.Shared.services.interfaces
+namespace Unicorn.Core.services.interfaces
 {
     public interface IHttpWrapClient
     {
