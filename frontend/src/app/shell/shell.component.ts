@@ -23,10 +23,10 @@ export class ShellComponent implements OnInit, OnDestroy {
     this.subscription = this.router.events
     .subscribe((event) => {
       if (event instanceof NavigationStart) {
-        if (event.url !== '/index' && event.url !== '/') {
-          this.searchVisible = true;
-        } else {
+        if (event.url === '/index' || event.url === '/') {
           this.searchVisible = false;
+        } else {
+          this.searchVisible = true;
         }
       }
     });
