@@ -16,11 +16,14 @@ import { LoginModule } from './login/login.module';
 import { RegisterModule } from './register/register.module';
 import { UserModule } from './user/user.module';
 import { VendorModule } from './vendor/vendor.module';
+import { BookModule } from './book/book.module';
 
 import { IndexModule } from './index/index.module';
 import { ShellComponent } from './shell/shell.component';
 import { MenuComponent } from './menu/menu.component';
+import { SuiModule } from 'ng2-semantic-ui';
 import { FooterComponent } from './footer/footer.component';
+
 
 @NgModule({
   declarations: [
@@ -30,6 +33,7 @@ import { FooterComponent } from './footer/footer.component';
     FooterComponent    
   ],
   imports: [
+    SuiModule,
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
@@ -40,6 +44,7 @@ import { FooterComponent } from './footer/footer.component';
     RegisterModule,
     UserModule,
     VendorModule,
+    BookModule,
     IndexModule // Must be the last module
   ],
   providers: [],

@@ -1,0 +1,15 @@
+<div class="ui comments">
+  <div *ngFor="let review of reviews" class="comment">
+    <a class="avatar">
+      <img src= {{review.avatar}}>
+    </a>
+    <div class="content">
+      <a class="author">{{review.from}}</a>
+      <div class="metadata">
+        <div class="date">{{review.date|date:fullDate}}</div>
+        <div class="rating"><i class="star icon"></i> {{review.grade}} Faves </div>
+      </div>
+      <div class="text">{{review.description}}</div>
+    </div>
+  </div>
+</div>
