@@ -40,7 +40,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.mode = 'date';
-    this.modalSize = 'small';
+    this.modalSize = 'tiny';
   }
 
   ngOnDestroy() {

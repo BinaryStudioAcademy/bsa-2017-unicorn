@@ -1,3 +1,38 @@
-<p>
-  register-company works!
-</p>
+<div class="ui segment">
+    <p>Fill the following fields</p>
+    <div class="ui form">
+
+        <div class="field">
+            <label>Phone</label>
+            <input type="text" placeholder="Phone" [(ngModel)]="phone">
+        </div>
+
+        <div class="field">
+            <label>Staff</label>
+            <input type="text" placeholder="Staff" [(ngModel)]="staff">
+        </div>
+
+        <div class="field">
+            <label>Description</label>
+            <textarea rows="3" placeholder="Enter company description" [(ngModel)]="description"></textarea>
+        </div>
+
+        <div class="field">
+            <label>Foundation</label>
+            <div class="ui left icon input">
+                <i class="calendar icon"></i>
+                <input suiDatepicker placeholder="Foundation" [(ngModel)]="foundation" [pickerMode]="mode">
+            </div>
+        </div>
+
+        <div *ngIf="error" class="error-field">
+            <sui-message class="error">
+                <div class="header">
+                    Error
+                </div>
+                <p>You must fill all fields</p>
+            </sui-message>
+        </div>
+        <a class="ui button reg-btn" (click)="confirmRegister()">Register</a>
+    </div>
+</div>

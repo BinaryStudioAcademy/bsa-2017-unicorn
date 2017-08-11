@@ -12,9 +12,7 @@ export class RegisterUserComponent implements OnInit {
   @Input() social: any;
 
   mode: string;
-
   error: boolean = false;
-
   phone: string;
   birthday;
   gender: string;

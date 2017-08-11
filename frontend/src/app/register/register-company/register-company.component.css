@@ -1,0 +1,20 @@
+.reg-btn {
+    width: 140px;
+    font-weight: normal;
+    background-color: #ff8080;
+    color: white;
+}
+
+.reg-btn:active {
+    background-color: #ff8080;
+    color: white;
+}
+
+.reg-btn:hover {
+    background-color: #ff6666;
+    color: white;
+}
+
+.error-field {
+    margin-bottom: 10px;
+}

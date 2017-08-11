@@ -31,7 +31,7 @@
 
             <app-register-user *ngIf="isCustomer" [social]="user"></app-register-user>
             <app-register-vendor *ngIf="isVendor" [social]="user"></app-register-vendor>
-            <app-register-company *ngIf="isCompany"></app-register-company>
+            <app-register-company *ngIf="isCompany" [social]="user"></app-register-company>
 
             <!--<div *ngIf='isLogged' class="addition-info ui segment">
       <p>Fill the following fields</p>
