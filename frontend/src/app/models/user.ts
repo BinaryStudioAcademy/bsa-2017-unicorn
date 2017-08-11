@@ -1,5 +1,5 @@
 import {Book} from './book.model'
-export class User
+export interface User
 {
 	id: number;
 	isDeleted:boolean;

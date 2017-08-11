@@ -1,4 +1,4 @@
-export class PortfolioItem {
+export interface PortfolioItem {
 	category: string;
 	workType: string;
 	image: string;

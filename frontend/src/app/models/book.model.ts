@@ -1,6 +1,6 @@
 import {Vendor} from './vendor'
 
-export class Book {
+export interface Book {
 	date: Date;
 	address: string;
 	contact: string;

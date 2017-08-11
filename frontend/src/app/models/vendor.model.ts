@@ -1,7 +1,7 @@
 import { Review } from './review.model';
 import { Work } from './work.model';
 
-export class Vendor {
+export interface Vendor {
 	id: number;
 	fio: string;
 	avatarUrl: string;

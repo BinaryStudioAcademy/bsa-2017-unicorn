@@ -1,3 +1,3 @@
-export class Work {
+export interface Work {
 	
 }

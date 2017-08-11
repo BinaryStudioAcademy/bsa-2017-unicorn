@@ -16,7 +16,15 @@ export class BookComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.book = new Book();
+    this.book = {
+      date: null,
+      address: "",
+      contact: "",
+      description: "",
+      vendor: null,
+      status: "",
+      workType: ""
+    }
   }
 
 }

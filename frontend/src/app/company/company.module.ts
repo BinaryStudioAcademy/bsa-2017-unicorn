@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms'
 import {SuiModule} from 'ng2-semantic-ui';
 import { BookModule } from '../book/book.module';
+import { AgmCoreModule } from '@agm/core';
 
 import { CompanyComponent } from './company-component/company.component';
 import { CompanyDetailsComponent } from './company-details/company-details.component';
@@ -15,6 +16,7 @@ import { ContactsComponent } from './company-details/contacts/contacts.component
 import { Company } from "../models/company.model";
 import { Review } from "../models/review.model";
 import { Vendor } from "../models/vendor";
+import { environment } from "../../environments/environment";
 
 @NgModule({
   imports: [
@@ -23,7 +25,10 @@ import { Vendor } from "../models/vendor";
     FormsModule,
     BrowserModule,
     SuiModule,
-    BookModule
+    BookModule,
+    AgmCoreModule.forRoot({
+      apiKey: environment.googleMapsKey
+    })
   ],
   declarations: [
     CompanyComponent,

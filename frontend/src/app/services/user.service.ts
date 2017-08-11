@@ -13,22 +13,34 @@ export class UserService {
 
  
   getUser(id: number) : User {
-    var user: User = new User();
-
-    user.id = 0;
-    user.firstName = "Vasya";
-    user.surName = "Pupkin";
-    user.location = "Dnipro";
-    user.avatarUrl = "http://scontent-sea1-1.cdninstagram.com/t51.2885-15/s480x480/e35/10349706_559451967536913_1168844394_n.jpg?ig_cache_key=MTA1NTAyNTA1NjkwMTIyMzI3Ng%3D%3D.2";
-    var vendor:Vendor = new Vendor();
-    vendor.fio = "Petr Petrov";
-    var fakeBook: Book = new Book();
-    fakeBook.date=new Date(Date.now());
-    fakeBook.description = "fix dripping tap";
-    fakeBook.status = "In Progress";
-    fakeBook.workType="House work";
-    fakeBook.vendor = vendor;
-    user.books=[fakeBook]
+    var user: User = {
+    id: 0,
+    isDeleted: false,
+    firstName: "Vasya",
+    middleName: "",
+    surName: "Pupkin",
+    location: "Dnipro",
+    books: [{
+      date: new Date(Date.now()),
+      description: "fix dripping tap",
+      status: "In Progress",
+      workType: "House work",
+      address: "",
+      contact: "",
+      vendor: {
+        fio: "Petr Petrov",
+        avatar: "",
+        experience: "",
+        exWork: "",
+        position: "",
+        }
+    }],
+    gender: "",
+    email: "",
+    phone: "",
+    dateCreated: null,
+    avatarUrl: "http://scontent-sea1-1.cdninstagram.com/t51.2885-15/s480x480/e35/10349706_559451967536913_1168844394_n.jpg?ig_cache_key=MTA1NTAyNTA1NjkwMTIyMzI3Ng%3D%3D.2"
+    }
     return user;
   }
 

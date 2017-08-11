@@ -1,5 +1,5 @@
-<div class="ui horizontal list flex-list">
-  <div class="item" *ngFor="let vendor of vendors">
+<div class="flex-list">
+  <div class="child-flex"  *ngFor="let vendor of vendors">
     <a><img class="ui avatar image vendor-avatar" src= {{vendor.avatar}}></a>
     <div class="content">
       <div class="header"><a>{{vendor.fio}}</a></div>{{vendor.position}} </div>
