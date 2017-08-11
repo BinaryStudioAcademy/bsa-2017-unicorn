@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { AuthService } from 'angular2-social-login';
+import { RegisterService } from '../../services/register.service';
 
 import { RegisterInfo } from '../models/register-info';
 
@@ -10,7 +11,7 @@ import { RegisterInfo } from '../models/register-info';
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
-  providers: []
+  providers: [RegisterService]
 })
 export class RegisterComponent implements OnInit, OnDestroy {
 
@@ -38,7 +39,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
   constructor(
     public auth: AuthService,
     public location: Location,
-    public router: Router) { }
+    public router: Router,
+    public registerService: RegisterService) { }
 
   ngOnInit() {
     this.mode = 'date';
@@ -64,6 +66,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
         console.log(data);
         this.user=data;
         this.isLogged = true;
+        this.registerService.checkAuthorized(this.user.provider, this.user.uid);
       }
     )
   }
