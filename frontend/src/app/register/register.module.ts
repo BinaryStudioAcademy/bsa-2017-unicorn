@@ -30,6 +30,7 @@ import { RegisterCompanyComponent } from './register-company/register-company.co
     RegisterVendorComponent,
     RegisterCompanyComponent
   ],
+  exports: [RegisterComponent],
   providers: [AuthService]
 })
 export class RegisterModule { }

@@ -9,11 +9,16 @@ import { MenuItem } from './menu-item/menu-item';
 })
 export class MenuComponent implements OnInit {
   items: MenuItem[];
-
+  isEnabled: boolean;
   constructor() { }
 
   ngOnInit() {
     this.addMenuItems();
+    this.isEnabled = false;
+  }
+
+  openModal() {
+    this.isEnabled = true;
   }
 
   addMenuItems() {

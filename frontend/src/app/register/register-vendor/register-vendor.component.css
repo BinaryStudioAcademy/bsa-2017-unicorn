@@ -1,3 +1,8 @@
+.confirm-div {
+    display: flex;
+    justify-content: center;
+}
+
 .error-field {
     margin-bottom: 10px;
 }

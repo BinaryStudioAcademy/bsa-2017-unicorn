@@ -25,7 +25,7 @@ import { MenuComponent } from './menu/menu.component';
   declarations: [
     AppComponent,
     ShellComponent,
-    MenuComponent    
+    MenuComponent
   ],
   imports: [
     BrowserModule,

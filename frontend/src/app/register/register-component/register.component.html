@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="https://unpkg.com/semantic-ui-calendar/dist/calendar.min.css">
-<diV *ngIf="true" class="modal-wrap">
-    <sui-modal id="register-form" [isClosable]="true" [isInverted]="true" [size]="modalSize" (dismissed)="modal.deny()" (denied)="location.back()" [mustScroll]=true #modal>
+<diV *ngIf="enabled" class="modal-wrap">
+    <sui-modal id="register-form" [isClosable]="true" [isInverted]="true" [size]="modalSize" (dismissed)="modal.deny()" [mustScroll]=true #modal>
         <div class="header">
             <p class="reg-header">Registration</p>
         </div>
@@ -22,71 +22,20 @@
             </div>
 
             <div *ngIf="isLogged && !roleSelected">
-                <div class="ui buttons">
-                    <button class="ui button" (click)="selectRole('customer')">Customer</button>
-                    <button class="ui button" (click)="selectRole('vendor')">Vendor</button>
-                    <button class="ui button" (click)="selectRole('company')">Company</button>
+                <div class="ui segment">
+                    <label>Who are you?</label>
+                    <div class="ui basic buttons role-buttons">
+                        <button class="ui button" (click)="selectRole('customer')">Customer</button>
+                        <button class="ui button" (click)="selectRole('vendor')">Vendor</button>
+                        <button class="ui button" (click)="selectRole('company')">Company</button>
+                    </div>
                 </div>
+
             </div>
 
             <app-register-user *ngIf="isCustomer" [social]="user"></app-register-user>
             <app-register-vendor *ngIf="isVendor" [social]="user"></app-register-vendor>
             <app-register-company *ngIf="isCompany" [social]="user"></app-register-company>
-
-            <!--<div *ngIf='isLogged' class="addition-info ui segment">
-      <p>Fill the following fields</p>
-      <div class="ui form">
-        <div class="field">
-          <label>Phone</label>
-          <input type="text" placeholder="Phone" [(ngModel)]="phone">
-        </div>
-
-        <div class="field">
-          <label>Date</label>
-          <div class="ui left icon input">
-              <i class="calendar icon"></i>
-              <input suiDatepicker
-              placeholder="Pick your birth"
-                    [(ngModel)]="birthday"
-                    [pickerMode]="mode">
-          </div>
-        </div> 
-
-        <div class="field">
-          <label>Gender</label>
-          <div class="gender-field">
-            <div class="ui radio checkbox gender-elem">
-              <input type="radio" [(ngModel)]="gender" value="Male" checked="checked">
-              <label>Male</label>
-            </div>
-            <div class="ui radio checkbox gender-elem">
-              <input type="radio" value="Female" [(ngModel)]="gender">
-              <label>Female</label>
-            </div>
-          </div>
-        </div>
-
-        
-        
-
-        <div *ngIf="error" class="error-field">
-          <sui-message class="error">
-            <div class="header">
-              Error
-            </div>
-            <p>You must fill all fields</p>
-          </sui-message>
-        </div>
-        <a class="ui button reg-btn" (click)="confirmRegister()">Register</a>
-      </div>
-    </div>
-
-    <div class="ui horizontal divider" *ngIf="!isLogged">or</div> 
-      
-    <div class="already-have">
-      Already have account? <a class="sign-link" href="#">Sign in</a>
-    </div>-->
-
         </div>
     </sui-modal>
 </diV>

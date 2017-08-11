@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
@@ -13,6 +13,8 @@ import { RegisterInfo } from '../models/register-info';
   providers: []
 })
 export class RegisterComponent implements OnInit, OnDestroy {
+
+  @Input() enabled: boolean;
 
   mode: string;
   modalSize: string;

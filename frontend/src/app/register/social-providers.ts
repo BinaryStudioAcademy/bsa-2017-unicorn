@@ -1,12 +1,12 @@
 export const providers = {
     "google": {
-      "clientId": "38691030979-pa18cq1sdc6alpqp1lhcf2e56dprvg68.apps.googleusercontent.com"
+      "clientId": "38691030979-mgh9v5mcddjqb515u6th2i84lvuqm1jp.apps.googleusercontent.com"
     },
     "linkedin": {
       "clientId": "LINKEDIN_CLIENT_ID"
     },
     "facebook": {
-      "clientId": "FACEBOOK_CLIENT_ID",
-      "apiVersion": "<version>" //like v2.4 
+      "clientId": "1452035144876028",
+      "apiVersion": "v2.4" 
     }
 };

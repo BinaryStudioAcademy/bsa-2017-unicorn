@@ -4,6 +4,11 @@
     margin-bottom: 8px;
 }
 
+.role-buttons {
+    display: flex;
+    justify-content: center;
+}
+
 .error-field {
     margin-bottom: 10px;
 }
