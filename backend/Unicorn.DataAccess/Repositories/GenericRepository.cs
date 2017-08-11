@@ -25,6 +25,7 @@ namespace Unicorn.DataAccess.Repositories
         public async Task<T> GetByIdAsync(long id)
         {
             return await Query.SingleOrDefaultAsync(i => i.Id == id);
+
         }
 
         public async Task<T> GetByIdDeletedAsync(long id)

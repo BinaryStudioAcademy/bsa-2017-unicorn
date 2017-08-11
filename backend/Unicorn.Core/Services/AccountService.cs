@@ -5,6 +5,8 @@ using Unicorn.Core.Interfaces;
 using Unicorn.DataAccess.Entities;
 using Unicorn.DataAccess.Interfaces;
 using Unicorn.Core.DTOs;
+using System.Linq;
+using System.Data.Entity;
 
 namespace Unicorn.Core.Services
 {
@@ -25,17 +27,20 @@ namespace Unicorn.Core.Services
 
         public async Task<AccountDTO> GetById(int id)
         {
-            var account = await _unitOfWork.AccountRepository.GetByIdAsync(id);
-
+            var account = await _unitOfWork.AccountRepository.Query.Include(x => x.SocialAccounts).SingleOrDefaultAsync(x => x.Id == id);
             var accountDto = new AccountDTO()
             {
                 Id = account.Id,
                 Avatar = account.Avatar,
                 Rating = account.Rating,
-                SocialAccounts = (ICollection<SocialAccountDTO>)account.SocialAccounts,
-                Permissions =  (ICollection<PermissionDTO>)account.Permissions,
+                SocialAccounts = account.SocialAccounts
+
+                //Permissions =  (ICollection<PermissionDTO>)account.Permissions,
             };
             return accountDto;
         }
+
+
+        
     }
 }
