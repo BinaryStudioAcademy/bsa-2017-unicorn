@@ -1,0 +1,77 @@
+$tab-color: #FF647A;
+ul
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+
+ul li
+  display: inline-block;
+  clear: both;
+  padding: 10px;
+  border-radius: 20px;
+  margin-bottom: 5px;
+  font-family: Helvetica, Arial, sans-serif;
+
+.him
+  background: #eee;
+  float: left;
+  max-width: 45%;
+  align-self: flex-start;
+.me
+  float: right;
+  background: #5BB0FF;
+  color: #fff;
+  max-width: 45%;
+  align-self: flex-end;
+
+.him + .me
+  border-bottom-right-radius: 5px;
+
+
+.me + .me
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+
+
+
+.container
+   display: flex;
+   justify-content: space-around;
+.users
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+.chat
+    display: flex;
+    flex-direction: column;
+    border-left: 0.5px solid #D5D0D0;
+    padding: 10px;
+    width: 600px;
+.item
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+
+#active
+   background: lighten( $tab-color, 15% );
+
+.date-me
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 8px;
+  color: grey;
+  text-align: right;
+  font-style: italic;
+  padding-right: 6px;
+
+.date-him
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 8px;
+  color: grey;
+  text-align: left;
+  font-style: italic;
+  padding-left: 6px;
+
+.mes_block
+  display: flex;
+  flex-direction: column;
