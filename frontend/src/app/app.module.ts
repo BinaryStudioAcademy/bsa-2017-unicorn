@@ -2,6 +2,12 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 
+// Enviroment
+import { environment } from '../environments/environment.prod';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+
+import { AuthService } from './shared/auth.service';
 
 // Routing
 import { AppRoutingModule } from './app-routing/app-routing.module';
@@ -40,6 +46,8 @@ import { environment } from "../environments/environment";
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
+    AngularFireModule.initializeApp(environment.firebase, 'unicorn-angular'),
+    AngularFireAuthModule,
     CategoryModule,
     CompanyModule,
     DashboardModule,
@@ -50,7 +58,9 @@ import { environment } from "../environments/environment";
     BookModule,
     IndexModule // Must be the last module
   ],
-  providers: [],
+  providers: [
+    AuthService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
