@@ -13,6 +13,32 @@ namespace Unicorn.DataAccess.Context
         protected override void Seed(AppContext context)
         {
 
+            Role role1 = new Role()
+            {
+                Id = 1,
+                IsDeleted = false,
+                Name = "vendor",
+            };
+
+            Role role2 = new Role()
+            {
+                Id = 2,
+                IsDeleted = false,
+                Name = "worker"
+            };
+
+            Role role3 = new Role()
+            {
+                Id = 3,
+                IsDeleted = false,
+                Name = "company",
+            };
+
+            context.Roles.Add(role1);
+            context.Roles.Add(role2);
+            context.Roles.Add(role3);
+
+
             Account account1 = new Account()
             {
                 Id = 1,
@@ -22,6 +48,7 @@ namespace Unicorn.DataAccess.Context
                 Avatar = "cleanok.jpg",
                 Rating = 5,
                 IsDeleted = false,
+                Role = role3
             };
 
             Account account2 = new Account()
@@ -33,6 +60,7 @@ namespace Unicorn.DataAccess.Context
                 Avatar = "andriy.jpg",
                 Rating = 5,
                 IsDeleted = false,
+                Role = role2
             };
 
             Account account3 = new Account()
@@ -44,6 +72,7 @@ namespace Unicorn.DataAccess.Context
                 Avatar = "shnurenko.jpg",
                 Rating = 2,
                 IsDeleted = false,
+                Role = role2
 
             };
 
@@ -56,6 +85,7 @@ namespace Unicorn.DataAccess.Context
                 Avatar = "catcare.jpg",
                 Rating = 4,
                 IsDeleted = false,
+                Role = role1
             };
 
             Account account5 = new Account()
@@ -67,6 +97,7 @@ namespace Unicorn.DataAccess.Context
                 Avatar = "abkprostir.jpg",
                 Rating = 1,
                 IsDeleted = false,
+                Role = role3
             };
 
             SocialAccount socialAccount1 = new SocialAccount()
@@ -131,56 +162,32 @@ namespace Unicorn.DataAccess.Context
 
       
 
-            //Permission permision1 = new Permission()
-            //{
-            //    Id = 1,
-            //    Name = "Comment",
-            //    IsDeleted = false,
-            //    Accounts = { account1, account2, account3, account4, account5 }
+            Permission permision1 = new Permission()
+            {
+                Id = 1,
+                Name = "Comment",
+                IsDeleted = false,
+                Accounts = new List<Account> { account1, account2, account3, account4, account5 }
 
-            //};
+            };
 
-            //Permission permision2 = new Permission()
-            //{
-            //    Id = 2,
-            //    Name = "Edit",
-            //    IsDeleted = false,
-            //    Accounts = { account1, account2, account3 }
-            //};
+            Permission permision2 = new Permission()
+            {
+                Id = 2,
+                Name = "Edit",
+                IsDeleted = false,
+                Accounts = new List<Account> { account1, account2, account3 }
+            };
 
-            //Permission permision3 = new Permission()
-            //{
-            //    Id = 3,
-            //    Name = "Add",
-            //    IsDeleted = false,
-            //    Accounts = { account1, account4, account5 }
-            //};
+            Permission permision3 = new Permission()
+            {
+                Id = 3,
+                Name = "Add",
+                IsDeleted = false,
+                Accounts = new List<Account> { account1, account4, account5 }
+            };
 
-            //Role role1 = new Role()
-            //{
-            //    Id = 1,
-            //    Accounts = { account2 },
-            //    IsDeleted = false,
-            //    Name = "vendor",
-            //};
 
-            //Role role2 = new Role()
-            //{
-            //    Id = 2,
-            //    Accounts = { account2, account4 },
-            //    IsDeleted = false,
-            //    Name = "worker"
-            //};
-
-            //Role role3 = new Role()
-            //{
-            //    Id = 3,
-            //    Accounts = { account1, account5 },
-            //    IsDeleted = false,
-            //    Name = "company",
-            //};
-
-           
 
             //Company company1 = new Company()
             //{
@@ -223,9 +230,9 @@ namespace Unicorn.DataAccess.Context
 
 
 
-            //context.Permissions.Add(permision1);
-            //context.Permissions.Add(permision2);
-            //context.Permissions.Add(permision3);
+            context.Permissions.Add(permision1);
+            context.Permissions.Add(permision2);
+            context.Permissions.Add(permision3);
 
             //context.Locations.Add(location);
             //context.Accounts.Add(account1);
@@ -234,9 +241,6 @@ namespace Unicorn.DataAccess.Context
             //context.Accounts.Add(account4);
             //context.Accounts.Add(account5);
 
-            //context.Roles.Add(role1);
-            //context.Roles.Add(role2);
-            //context.Roles.Add(role3);
 
 
 

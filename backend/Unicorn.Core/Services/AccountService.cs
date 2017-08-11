@@ -27,14 +27,22 @@ namespace Unicorn.Core.Services
 
         public async Task<AccountDTO> GetById(int id)
         {
-            var account = await _unitOfWork.AccountRepository.Query.Include(x => x.SocialAccounts).SingleOrDefaultAsync(x => x.Id == id);
+            var account = await _unitOfWork.AccountRepository.GetByIdAsync(id);
+            var role = await _unitOfWork.RoleRepository.GetByIdAsync(id);
             var accountDto = new AccountDTO()
             {
                 Id = account.Id,
                 Avatar = account.Avatar,
                 Rating = account.Rating,
-                SocialAccounts = account.SocialAccounts
+                DateCreated = account.DateCreated,
+                Email = account.Email,
+                EmailConfirmed =account.EmailConfirmed,
+                SocialAccounts = account.SocialAccounts.Select(x => new SocialAccountDTO { Id = x.Id, Provider = x.Provider, Uid= x.Uid}).ToList(),
+                Permissions = account.Permissions.Select(x => new PermissionDTO { Id = x.Id, Name =x.Name}).ToList(),
+                Role = new RoleDTO {Id = role.Id, Name = role.Name}
+                
 
+                
                 //Permissions =  (ICollection<PermissionDTO>)account.Permissions,
             };
             return accountDto;
