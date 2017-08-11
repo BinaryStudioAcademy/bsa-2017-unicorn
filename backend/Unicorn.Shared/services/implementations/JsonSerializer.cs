@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Unicorn.Shared.services.interfaces;
+using Unicorn.Core.services.interfaces;
 
-namespace Unicorn.Shared.services.implementations
+namespace Unicorn.Core.services.implementations
 {
     class JsonSerializer : ISerializer
     {

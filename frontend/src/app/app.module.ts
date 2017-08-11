@@ -22,13 +22,15 @@ import { IndexModule } from './index/index.module';
 import { ShellComponent } from './shell/shell.component';
 import { MenuComponent } from './menu/menu.component';
 import { SuiModule } from 'ng2-semantic-ui';
+import { FooterComponent } from './footer/footer.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     ShellComponent,
-    MenuComponent    
+    MenuComponent,
+    FooterComponent    
   ],
   imports: [
     SuiModule,

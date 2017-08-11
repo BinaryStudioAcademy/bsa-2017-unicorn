@@ -9,11 +9,16 @@ import { MenuItem } from './menu-item/menu-item';
 })
 export class MenuComponent implements OnInit {
   items: MenuItem[];
-
+  isEnabled: boolean;
   constructor() { }
 
   ngOnInit() {
     this.addMenuItems();
+    this.isEnabled = false;
+  }
+
+  openModal() {
+    this.isEnabled = true;
   }
 
   addMenuItems() {
@@ -24,11 +29,8 @@ export class MenuComponent implements OnInit {
       name: 'Vendors',
       route: '#'
     }, {
-      name: 'Help',
-      route: '#'
-    }, {
       name: 'Registration',
-      route: '#'
+      route: 'register'
     }, {
       name: 'Log in',
       route: '#'

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Unicorn.Shared.DTOs;
+using Unicorn.Core.DTOs;
 
 namespace Unicorn.Core.Interfaces
 {

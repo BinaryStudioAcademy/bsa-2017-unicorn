@@ -15,13 +15,13 @@ namespace Unicorn.Controllers
             this.authService = authService;
         }
 
-        // GET: Membership
-        [HttpHead]
-        public async Task<HttpResponseMessage> Get(string provider, long? uid)
+        // GET: membership?provider=facebook&uid=123456
+        [HttpGet]
+        public async Task<HttpResponseMessage> Get(string provider, long uid)
         {
             HttpResponseMessage response = null;
 
-            if (string.IsNullOrWhiteSpace(provider) || uid == null)
+            if (string.IsNullOrWhiteSpace(provider))
             {
                 response = Request.CreateResponse(HttpStatusCode.NotFound, "Missing provider or uid");
                 return response;
@@ -31,7 +31,8 @@ namespace Unicorn.Controllers
 
             if (token == null)
             {
-                response = Request.CreateResponse(HttpStatusCode.NotFound, "Uid not found");
+                // Special status code for registration
+                response = Request.CreateResponse(HttpStatusCode.NoContent, "Uid not found");
                 return response;
             }
 

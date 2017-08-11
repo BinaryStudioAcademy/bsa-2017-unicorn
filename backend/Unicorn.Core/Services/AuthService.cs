@@ -24,14 +24,16 @@ namespace Unicorn.Core.Services
             return new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Properties.Settings.Default.PrivateKey));
         }
 
-        public async Task<string> GenerateJwtTokenAsync(string provider, long? uid)
+        public async Task<string> GenerateJwtTokenAsync(string provider, long uid)
         {
-            if (!await membershipProvider.VerifyUser(provider, uid))
+            long accountId = await membershipProvider.VerifyUser(provider, uid);
+
+            if (accountId == 0) // User not exists in DB
             {
-                return null; // User not exists in DB
+                return null;
             }
 
-            ClaimsIdentity identity = await membershipProvider.GetUserClaims(provider, uid); // Role, email etc.            
+            ClaimsIdentity identity = await membershipProvider.GetUserClaims(accountId); // Role, email etc.            
 
             var dateTimeNow = DateTime.UtcNow;
 
