@@ -3,8 +3,8 @@
         <!-- <li *ngFor="let item of items"><a routerLink="{{item.route}}" routerLinkActive="active">{{item.name}}</a></li> -->
         <li><a routerLink="#" routerLinkActive="active">Get task</a></li>
         <li><a routerLink="#" routerLinkActive="active">Vendors</a></li>
-        <li><a (click)="openModal()" routerLinkActive="active">Registration</a></li>
+        <app-register [enabled]="isEnabled"></app-register>
         <li><a routerLink="#" routerLinkActive="active">Sign in</a></li>
     </ul>
 </nav>
-<app-register [enabled]="isEnabled"></app-register>
+<!-- <app-register [enabled]="isEnabled"></app-register> -->

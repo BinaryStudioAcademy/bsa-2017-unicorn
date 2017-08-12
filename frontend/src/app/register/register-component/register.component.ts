@@ -1,11 +1,15 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { AuthService } from 'angular2-social-login';
 import { RegisterService } from '../../services/register.service';
 
+import {SuiModalService, TemplateModalConfig, ModalTemplate, ModalSize} from 'ng2-semantic-ui';
+
 import { RegisterInfo } from '../models/register-info';
+
+export interface IContext {}
 
 @Component({
   selector: 'app-register',
@@ -14,6 +18,9 @@ import { RegisterInfo } from '../models/register-info';
   providers: [RegisterService]
 })
 export class RegisterComponent implements OnInit, OnDestroy {
+
+  @ViewChild('modalTemplate')
+  public modalTemplate: ModalTemplate<IContext, string, string>
 
   @Input() enabled: boolean;
 
@@ -29,26 +36,50 @@ export class RegisterComponent implements OnInit, OnDestroy {
   isVendor = false;
   isCompany = false;
 
-  error: boolean = false;
+  // error: boolean = false;
 
-  phone: string;
-  birthday;
-  gender: string;
-  options = ['Male', 'Female'];
+  // phone: string;
+  // birthday;
+  // gender: string;
+  // options = ['Male', 'Female'];
 
   constructor(
+    public modalService: SuiModalService,
     public auth: AuthService,
-    public location: Location,
-    public router: Router,
+    // public location: Location,
+    // public router: Router,
     public registerService: RegisterService) { }
 
   ngOnInit() {
     this.mode = 'date';
     this.modalSize = 'tiny';
+    //this.openModal();
   }
 
   ngOnDestroy() {
     //this.sub.unsubscribe();
+  }
+
+  public openModal() {
+    const config = new TemplateModalConfig<IContext, string, string>(this.modalTemplate);
+    let size = 'tiny';
+    config.closeResult = "closed!";
+    config.context = {};
+    config.size = ModalSize.Small;
+    config.isInverted = true;
+    config.mustScroll = true;
+
+    this.modalService
+        .open(config)
+        .onApprove(result => { /* approve callback */ })
+        .onDeny(result => { 
+          this.isLogged = false;
+          this.isCompany = false;
+          this.isVendor = false;
+          this.isCustomer = false;
+          this.roleSelected = false;
+          this.user = undefined;
+        });
   }
 
   selectRole(role: string) {
@@ -81,33 +112,33 @@ export class RegisterComponent implements OnInit, OnDestroy {
     )
   }
 
-  valid(): boolean {
-    return this.birthday !== undefined && this.gender != undefined && this.phone != undefined;
-  }
+  // valid(): boolean {
+  //   return this.birthday !== undefined && this.gender != undefined && this.phone != undefined;
+  // }
 
-  aggregateInfo(): RegisterInfo{
-    let info = new RegisterInfo();
-    info.birthday = this.birthday;
-    info.gender = this.gender;
-    info.phone = this.phone;
-    info.email = this.user.email;
-    info.image = this.user.image;
-    info.name = this.user.name;
-    info.provider = this.user.provider;
-    info.uid = this.user.uid;
+  // aggregateInfo(): RegisterInfo{
+  //   let info = new RegisterInfo();
+  //   info.birthday = this.birthday;
+  //   info.gender = this.gender;
+  //   info.phone = this.phone;
+  //   info.email = this.user.email;
+  //   info.image = this.user.image;
+  //   info.name = this.user.name;
+  //   info.provider = this.user.provider;
+  //   info.uid = this.user.uid;
 
-    return info;
-  }
+  //   return info;
+  // }
 
-  confirmRegister() {
-    if (this.valid()) {
-      this.error = false;
-      console.log('valid');
-      let regInfo = this.aggregateInfo();
-      console.log(regInfo);
-    } else {
-      this.error = true;
-    }
-  }
+  // confirmRegister() {
+  //   if (this.valid()) {
+  //     this.error = false;
+  //     console.log('valid');
+  //     let regInfo = this.aggregateInfo();
+  //     console.log(regInfo);
+  //   } else {
+  //     this.error = true;
+  //   }
+  // }
 
 }

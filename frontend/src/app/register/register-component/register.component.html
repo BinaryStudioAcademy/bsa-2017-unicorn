@@ -1,41 +1,44 @@
 <link rel="stylesheet" href="https://unpkg.com/semantic-ui-calendar/dist/calendar.min.css">
-<diV *ngIf="enabled" class="modal-wrap">
-    <sui-modal id="register-form" [isClosable]="true" [isInverted]="true" [size]="modalSize" (dismissed)="modal.deny()" [mustScroll]=true #modal>
-        <div class="header">
-            <p class="reg-header">Registration</p>
-        </div>
-        <div class="content">
+<li><a (click)="openModal()" routerLinkActive="active">Registration</a></li>
+<!-- <diV *ngIf="enabled" class="modal-wrap"> -->
+<!-- <sui-modal id="register-form" [isClosable]="true" [isInverted]="true" [size]="modalSize" (dismissed)="modal.deny()" [mustScroll]=true #modal> -->
+<ng-template let-context let-modal="modal" class="tiny" #modalTemplate>
+    <div class="header">
+        <p class="reg-header">Registration</p>
+    </div>
+    <div class="content">
 
-            <div class="social-buttons">
-                <button class="ui facebook button" (click)="register('facebook')">
+        <div class="social-buttons">
+            <button class="ui facebook button" (click)="register('facebook')">
         <i class="facebook icon"></i>
         Facebook
       </button>
-                <button class="ui google plus button" (click)="register('google')">
+            <button class="ui google plus button" (click)="register('google')">
         <i class="google plus icon"></i>
         Google 
       </button>
-                <button class="ui linkedin button">
+            <button class="ui linkedin button">
         <i class="linkedin icon"></i>
         LinkedIn
       </button>
-            </div>
-
-            <div *ngIf="isLogged && !roleSelected">
-                <div class="ui segment">
-                    <label>Who are you?</label>
-                    <div class="ui basic buttons role-buttons">
-                        <button class="ui button" (click)="selectRole('customer')">Customer</button>
-                        <button class="ui button" (click)="selectRole('vendor')">Vendor</button>
-                        <button class="ui button" (click)="selectRole('company')">Company</button>
-                    </div>
-                </div>
-
-            </div>
-
-            <app-register-user *ngIf="isCustomer" [social]="user"></app-register-user>
-            <app-register-vendor *ngIf="isVendor" [social]="user"></app-register-vendor>
-            <app-register-company *ngIf="isCompany" [social]="user"></app-register-company>
         </div>
-    </sui-modal>
-</diV>
+
+        <div *ngIf="isLogged && !roleSelected">
+            <div class="ui segment">
+                <label>Who are you?</label>
+                <div class="ui basic buttons role-buttons">
+                    <button class="ui button" (click)="selectRole('customer')">Customer</button>
+                    <button class="ui button" (click)="selectRole('vendor')">Vendor</button>
+                    <button class="ui button" (click)="selectRole('company')">Company</button>
+                </div>
+            </div>
+
+        </div>
+
+        <app-register-user *ngIf="isCustomer" [social]="user"></app-register-user>
+        <app-register-vendor *ngIf="isVendor" [social]="user"></app-register-vendor>
+        <app-register-company *ngIf="isCompany" [social]="user"></app-register-company>
+    </div>
+</ng-template>
+<!-- </sui-modal> -->
+<!-- </diV> -->

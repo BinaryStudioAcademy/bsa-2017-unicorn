@@ -57,3 +57,31 @@
     font-size: 14px;
     font-weight: normal;
 }
+
+li {
+    display: inline;
+    margin-right: 18px;
+}
+
+li a {
+    color: gray;
+    font-family: 'Century Gothic', 'Calibri', 'Trebuchet MS', sans-serif;
+    text-decoration: none;
+}
+
+li a:hover {
+    color: #FF647A;
+    background-color: #FFFFFF;
+    text-decoration: none;
+}
+
+a {
+    cursor: pointer;
+}
+
+@media only screen and (min-width: 1200px) {
+    .ui.small.modal {
+        width: 500px !important;
+        margin: 0 0 0 -360px;
+    }
+}
