@@ -12,6 +12,9 @@ import { Angular2SocialLoginModule } from 'angular2-social-login';
 import { AuthService } from 'angular2-social-login';
 
 import { providers } from './social-providers';
+import { RegisterUserComponent } from './register-user/register-user.component';
+import { RegisterVendorComponent } from './register-vendor/register-vendor.component';
+import { RegisterCompanyComponent } from './register-company/register-company.component';
 
 @NgModule({
   imports: [
@@ -22,9 +25,13 @@ import { providers } from './social-providers';
     Angular2SocialLoginModule
   ],
   declarations: [
-    RegisterComponent
+    RegisterComponent,
+    RegisterUserComponent,
+    RegisterVendorComponent,
+    RegisterCompanyComponent
   ],
-  providers: []
+  exports: [RegisterComponent],
+  providers: [AuthService]
 })
 export class RegisterModule { }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
@@ -10,15 +10,24 @@ import { RegisterInfo } from '../models/register-info';
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
-  providers: [AuthService]
+  providers: []
 })
 export class RegisterComponent implements OnInit, OnDestroy {
 
-  mode: 'date';
+  @Input() enabled: boolean;
+
+  mode: string;
+  modalSize: string;
 
   public user;
   sub: any;
   isLogged: boolean = false;
+  roleSelected = false;
+
+  isCustomer = false;
+  isVendor = false;
+  isCompany = false;
+
   error: boolean = false;
 
   phone: string;
@@ -32,10 +41,21 @@ export class RegisterComponent implements OnInit, OnDestroy {
     public router: Router) { }
 
   ngOnInit() {
+    this.mode = 'date';
+    this.modalSize = 'tiny';
   }
 
   ngOnDestroy() {
     //this.sub.unsubscribe();
+  }
+
+  selectRole(role: string) {
+    switch (role) {
+      case 'customer': this.isCustomer = true; break;
+      case 'vendor': this.isVendor = true; break;
+      case 'company': this.isCompany = true; break;
+    }
+    this.roleSelected = true;
   }
 
   register(provider: string) {

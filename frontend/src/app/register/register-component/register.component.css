@@ -1,5 +1,42 @@
+.social-buttons {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 8px;
+}
+
+.role-buttons {
+    display: flex;
+    justify-content: center;
+}
+
 .error-field {
     margin-bottom: 10px;
+}
+
+.gender-field {
+    display: flex;
+    flex-direction: column;
+}
+
+.gender-elem {
+    margin-top: 7px;
+}
+
+.reg-btn {
+    width: 140px;
+    font-weight: normal;
+    background-color: #ff8080;
+    color: white;
+}
+
+.reg-btn:active {
+    background-color: #ff8080;
+    color: white;
+}
+
+.reg-btn:hover {
+    background-color: #ff6666;
+    color: white;
 }
 
 .reg-text {

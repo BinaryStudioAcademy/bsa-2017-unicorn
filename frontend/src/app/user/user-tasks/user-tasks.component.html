@@ -1,0 +1,28 @@
+<table class="ui single line table">
+  <thead>
+    <tr>
+      <th>Date of request</th>
+      <th>Type of work</th>
+      <th>Description</th>
+      <th>Vendor</th>
+      <th>Status</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of user.books">
+      <td>{{item.date|date:fullDate}}</td>
+      <td>{{item.workType}}</td>
+      <td>{{item.description}}</td>
+      <td><a>{{item.vendor.fio}}</a></td>
+      <td>{{item.status}}</td>
+      <td>
+        <div class="ui vertical animated button" tabindex="0">
+          <div class="hidden content">Chat</div>
+          <div class="visible content">
+          <i class="mail outline icon"></i>
+        </div>
+</div></td>
+    </tr>
+  </tbody>
+</table>
