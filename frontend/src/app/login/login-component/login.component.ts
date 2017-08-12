@@ -6,12 +6,10 @@ import { AuthService } from '../../shared/auth.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
-  user = null;
+export class LoginComponent implements OnInit {  
   constructor(private auth: AuthService) { }
 
-  ngOnInit() {
-    this.auth.getAuthState().subscribe((user) => this.user = user);
+  ngOnInit() {    
   }
 
   loginWithGoogle() {
@@ -19,15 +17,15 @@ export class LoginComponent implements OnInit {
   }
 
   loginWithFacebook() {
-    this.auth.loginWithFacebook().then(() => this.getUserData());
+    this.auth.loginWithFacebook();
   }
 
   loginWithGithub() {
-    this.auth.loginWithGithub().then(() => this.getUserData());
+    this.auth.loginWithGithub();
   }
 
-  getUserData() {
-    console.log(this.user);
+  loginWithTwitter() {
+    this.auth.loginWithTwitter();
   }
 
   logOut() {
