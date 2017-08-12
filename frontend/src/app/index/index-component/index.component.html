@@ -1,21 +1,19 @@
 <div class="wrapper">
-  <div class="main">
-    <div class="main-wrapper">
-      <div class="slogan-wrapper">
-        <div class="slogan">
+  <div class="section1-wrapper">
+    <div class="section1">
+      <div class="slogan">
           <h1>{{title}}</h1>
           <p>{{slogan}}</p>
         </div>
-      </div>
       <div class="search-container">
         <div class="item-search">
-          <p class="color-text">{{labelSearch}}</p>
+          <p>{{labelSearch}}</p>
           <div class="ui input fill-horizontal"> 
             <input class="search-input" type="text" placeholder="{{placeholderSearch}}" [(ngModel)]="searchText">
           </div>
         </div>
         <div class="item-date">
-          <p class="color-text">{{labelDate}}</p>
+          <p>{{labelDate}}</p>
           <div class="ui left icon input">
                 <i class="calendar icon"></i>
                 <input class="datepicker" placeholder="Now" suiDatepicker

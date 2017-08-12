@@ -2,34 +2,26 @@
     padding: 0;
 }
 
-.main {
-    background-image: url(../../../assets/images/cat_catch_up_1920x1080.jpg);
+.section1-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-image: url(../../../assets/images/cat_fluffy_chair_lying_1920x1080.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: 50% 0%;
 }
 
-.main-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    height: 1080px;
-}
-
-.slogan-wrapper {
+.section1 {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    width: auto;
-    margin: 50px 0px;
-    /* max-width: 910px;
-    margin: 100px 0px;
-    padding: 0 40px; */
+    justify-content: space-around;
+    height: 765px;
+    margin: 0 10px;
 }
 
 .slogan {
-    /* width: 40%;   */
     width: auto;
     max-width: 510px;
     font-family: 'Century Gothic', 'Calibri', 'Trebuchet MS', sans-serif;
@@ -53,11 +45,15 @@
     align-items: flex-end;
     width: auto;
     max-width: 910px;
-    margin: 50px 0;
-    background-color: rgba(255,255,255,0.8);
+    background-color: rgba(255,255,255,0.4);
     border-radius: 7px;
-    border: 1px solid lightgray;
+    border: 1px solid rgba(255,255,255,0.0);
     font-family: 'Verdana', 'Calibri', 'Trebuchet MS', sans-serif;
+}
+
+.search-container p {
+    font-size: 16px;
+    color: white;
 }
 
 .search-input {
@@ -65,18 +61,18 @@
 }
 
 .item-search {
-    width: 300px;
-    margin: 20px;
+    width: 260px;
+    margin: 20px; 
 }
 
 .item-date {
     width: 210px;
-    margin: 20px;
+    margin: 20px; 
 }
 
 .item-button {
     width: 210px;
-    margin: 20px;
+    margin: 20px; 
     display: flex;
     vertical-align: middle;
 }
