@@ -15,8 +15,11 @@ export class RegisterVendorComponent implements OnInit {
 
   experience: number;
   position: string;
-  company: string;
   speciality: string;
+  firstName: string;
+  middleName: string;
+  lastName: string;
+  email: string;
 
   mode: string;
 
@@ -24,7 +27,6 @@ export class RegisterVendorComponent implements OnInit {
 
   phone: string;
   birthday;
-  gender: string;
 
   constructor() { }
 
@@ -33,15 +35,14 @@ export class RegisterVendorComponent implements OnInit {
   }
 
   valid(): boolean {
-    return this.birthday !== undefined && this.gender != undefined && this.phone != undefined 
-      && this.experience !== undefined && this.position !== undefined && this.company !== undefined
+    return this.birthday !== undefined && this.phone != undefined 
+      && this.experience !== undefined && this.position !== undefined
       && this.speciality !== undefined;
   }
 
   aggregateInfo(): Vendor{
     let info = new Vendor();
     info.birthday = this.birthday;
-    info.gender = this.gender;
     info.phone = this.phone;
 
     info.email = this.social.email;
@@ -52,7 +53,6 @@ export class RegisterVendorComponent implements OnInit {
 
     info.experience = this.experience;
     info.position = this.position;
-    info.company = this.company;
     info.speciality = this.speciality;
 
     return info;

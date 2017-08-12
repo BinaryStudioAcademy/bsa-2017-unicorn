@@ -17,7 +17,10 @@ export class RegisterUserComponent implements OnInit {
   error: boolean = false;
   phone: string;
   birthday;
-  gender: string;
+  firstName: string;
+  middleName: string;
+  lastName: string;
+  email: string;
 
   constructor() { }
 
@@ -26,13 +29,13 @@ export class RegisterUserComponent implements OnInit {
   }
 
   valid(): boolean {
-    return this.birthday !== undefined && this.gender != undefined && this.phone != undefined;
+    return this.birthday !== undefined && this.phone != undefined;
   }
 
   aggregateInfo(): Customer{
     let info = new Customer();
     info.birthday = this.birthday;
-    info.gender = this.gender;
+    //info.gender = this.gender;
     
     info.phone = this.phone;
     info.email = this.social.email;

@@ -54,8 +54,8 @@
 .reg-header {
     text-align: center;
     font-family: 'Verdana', 'Century Gothic', 'Calibri', 'Trebuchet MS', sans-serif;
-    font-size: 14px;
-    font-weight: normal;
+    font-size: 18px;
+    font-weight: bold;
 }
 
 li {
@@ -79,9 +79,6 @@ a {
     cursor: pointer;
 }
 
-@media only screen and (min-width: 1200px) {
-    .ui.small.modal {
-        width: 500px !important;
-        margin: 0 0 0 -360px;
-    }
+#custom {
+    display: inline-block;
 }

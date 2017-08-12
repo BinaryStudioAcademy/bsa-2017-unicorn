@@ -18,6 +18,7 @@ export class RegisterCompanyComponent implements OnInit {
   phone: string;
   description: string;
   staff: number;
+  email: string;
   foundation: any;
 
   constructor() { }
