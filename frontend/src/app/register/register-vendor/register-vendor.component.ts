@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
+import * as firebase from 'firebase/app';
+
 import { Vendor } from '../models/vendor';
 
 @Component({
@@ -9,7 +11,7 @@ import { Vendor } from '../models/vendor';
 })
 export class RegisterVendorComponent implements OnInit {
 
-  @Input() social: any;
+  @Input() social: firebase.User;
 
   experience: number;
   position: string;
@@ -43,9 +45,9 @@ export class RegisterVendorComponent implements OnInit {
     info.phone = this.phone;
 
     info.email = this.social.email;
-    info.image = this.social.image;
-    info.name = this.social.name;
-    info.provider = this.social.provider;
+    info.image = this.social.photoURL;
+    info.name = this.social.displayName;
+    info.provider = this.social.providerData[0].providerId;
     info.uid = this.social.uid;
 
     info.experience = this.experience;

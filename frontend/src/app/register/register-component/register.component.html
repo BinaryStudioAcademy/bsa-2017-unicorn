@@ -9,15 +9,15 @@
     <div class="content">
 
         <div class="social-buttons">
-            <button class="ui facebook button" (click)="register('facebook')">
+            <button class="ui facebook button" (click)="loginWithFacebook()">
         <i class="facebook icon"></i>
         Facebook
       </button>
-            <button class="ui google plus button" (click)="register('google')">
+            <button class="ui google plus button" (click)="loginWithGoogle()">
         <i class="google plus icon"></i>
         Google 
       </button>
-            <button class="ui linkedin button">
+            <button class="ui github button">
         <i class="linkedin icon"></i>
         LinkedIn
       </button>
@@ -25,7 +25,7 @@
 
         <div *ngIf="isLogged && !roleSelected">
             <div class="ui segment">
-                <label>Who are you?</label>
+                <label><b>Who are you?</b></label>
                 <div class="ui basic buttons role-buttons">
                     <button class="ui button" (click)="selectRole('customer')">Customer</button>
                     <button class="ui button" (click)="selectRole('vendor')">Vendor</button>
@@ -35,9 +35,9 @@
 
         </div>
 
-        <app-register-user *ngIf="isCustomer" [social]="user"></app-register-user>
-        <app-register-vendor *ngIf="isVendor" [social]="user"></app-register-vendor>
-        <app-register-company *ngIf="isCompany" [social]="user"></app-register-company>
+        <app-register-user *ngIf="isCustomer" [social]="currentUser"></app-register-user>
+        <app-register-vendor *ngIf="isVendor" [social]="currentUser"></app-register-vendor>
+        <app-register-company *ngIf="isCompany" [social]="currentUser"></app-register-company>
     </div>
 </ng-template>
 <!-- </sui-modal> -->
