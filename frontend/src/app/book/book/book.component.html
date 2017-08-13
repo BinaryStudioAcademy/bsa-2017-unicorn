@@ -1,5 +1,14 @@
 <form class="ui form book-form">
   <div class="field">
+    <label>Choose work</label>
+    <select class="ui fluid dropdown">
+      <option value="1">Work type</option>
+      <option value="2">Work type</option>
+      <option value="3">Work type</option>
+      <option value="4">Work type</option>
+    </select>
+  </div>
+  <div class="field">
     <label>Data and time</label>
     <div class="ui left icon input">
       <i class="calendar icon"></i>
@@ -12,9 +21,13 @@
   </div>
   <div class="field">
     <label>Contact number</label>
-    <input [(ngModel)]="book.contact" name="contact" placeholder="+380 (XXX) XXXXXXX">
+    <input [(ngModel)]="book.contact" name="contact" placeholder="+380 (XXX) XXXXXX">
   </div>
   <div style="display: flex; justify-content: center;">
+<<<<<<< HEAD
     <button class="ui button" type="submit" >ORDER</button>
+=======
+    <button class="ui button" type="submit">ORDER</button>
+>>>>>>> feature/mainUI
   </div>  
 </form>
