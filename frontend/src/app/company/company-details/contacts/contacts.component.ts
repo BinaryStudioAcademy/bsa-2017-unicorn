@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import {SuiModalService, TemplateModalConfig, ModalTemplate} from 'ng2-semantic-ui';
+import { Component, OnInit, ViewChild, AfterViewChecked } from '@angular/core';
+import { AgmMap } from "@agm/core";
 
 export interface IContext {
     data:string;
@@ -10,27 +10,25 @@ export interface IContext {
   templateUrl: './contacts.component.html',
   styleUrls: ['./contacts.component.sass']
 })
-export class ContactsComponent implements OnInit {
-  @ViewChild('modalTemplate')
-  public modalTemplate:ModalTemplate<IContext, string, string>;  
+export class ContactsComponent implements OnInit, AfterViewChecked {  
+  @ViewChild(AgmMap) private map: any;
   lat: number = 49.85711;
   lng: number = 24.01980;
 
 
-  constructor(public modalService:SuiModalService) { }
+  constructor() { }
 
-  ngOnInit() {
+  ngOnInit() {     
+  }    
+
+
+  ngAfterViewChecked() {    
+    this.redrawMap();   
   }
 
-  public openModal(dynamicContent:string = "Example") {
-    const config = new TemplateModalConfig<IContext, string, string>(this.modalTemplate);
-
-    config.closeResult = "closed!";
-    config.context = { data: dynamicContent };
-
-    this.modalService
-        .open(config)
-        .onApprove(result => { /* approve callback */ })
-        .onDeny(result => { /* deny callback */});
-}
+  
+  private redrawMap() {    
+    this.map.triggerResize()
+      .then(() => this.map._mapsWrapper.setCenter({lat: this.lat, lng: this.lng}));
+  }  
 }
