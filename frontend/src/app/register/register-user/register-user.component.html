@@ -2,36 +2,30 @@
     <div class="ui form">
 
         <div class="field">
-            <!-- <label>Phone</label> -->
             <input type="text" placeholder="FIRST NAME" [(ngModel)]="firstName">
         </div>
 
         <div class="field">
-            <!-- <label>Phone</label> -->
             <input type="text" placeholder="MIDDLE NAME" [(ngModel)]="middleName">
         </div>
 
         <div class="field">
-            <!-- <label>Phone</label> -->
             <input type="text" placeholder="LAST NAME" [(ngModel)]="lastName">
         </div>
 
         <div class="field">
-            <!-- <label>Phone</label> -->
-            <input type="text" placeholder="EMAIL" [(ngModel)]="email">
-        </div>
-
-        <div class="field">
-            <!-- <label>Phone</label> -->
-            <input type="text" placeholder="PHONE" [(ngModel)]="phone">
-        </div>
-
-        <div class="field">
-            <!-- <label>Date</label> -->
             <div class="ui left icon input">
                 <i class="calendar icon"></i>
                 <input suiDatepicker placeholder="BIRTHDAY" [(ngModel)]="birthday" [pickerMode]="mode">
             </div>
+        </div>
+
+        <div class="field">
+            <input type="text" placeholder="EMAIL" [(ngModel)]="email">
+        </div>
+
+        <div class="field">
+            <input type="text" placeholder="PHONE" [(ngModel)]="phone">
         </div>
 
         <div *ngIf="error" class="error-field">

@@ -35,12 +35,13 @@ export class RegisterUserComponent implements OnInit {
   aggregateInfo(): Customer{
     let info = new Customer();
     info.birthday = this.birthday;
-    //info.gender = this.gender;
     
     info.phone = this.phone;
     info.email = this.social.email;
     info.image = this.social.photoURL;
-    info.name = this.social.displayName;
+    info.firstName = this.firstName;
+    info.middleName = this.middleName;
+    info.lastName = this.lastName;
     info.provider = this.social.providerData[0].providerId;
     info.uid = this.social.uid;
 

@@ -55,6 +55,13 @@ export class DataService {
       .catch(this.handleError);
   }
 
+  getFullRequest<T>(url: string): Promise<T> {
+    return this.http
+      .get<T>(this.buildUrl(url), {observe: 'response'})
+      .toPromise()
+      .catch(this.handleError);
+  }
+
   postRequest<T>(url: string, payload: Object): Promise<T> {
     return this.http
       .post<T>(this.buildUrl(url), this.prepareData(payload), {headers: this.getHeaders()})

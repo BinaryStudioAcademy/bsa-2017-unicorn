@@ -50,23 +50,41 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
     //public auth: AuthService,
     // public location: Location,
-    // public router: Router,
+     public router: Router,
     public registerService: RegisterService,
     public afAuth: AngularFireAuth,
     public ref: ChangeDetectorRef) {
     
   }
 
+  closeModal(): void {
+    //this.router.navigate(['login']);
+  }
+
+  handleResponse(resp: any): void {
+    console.log('status: ' + resp.status);
+    switch(resp.status) {
+      case 204: this.isLogged = true; break;
+      case 200: console.log(200); break;
+      default: this.closeModal(); break;
+    }
+  }
+
   loginWithGoogle() {
     this.afAuth.auth.signInWithPopup(
       new firebase.auth.GoogleAuthProvider())
       .then(x => {
-        // now we can work with user object (take uid, email etc.)
-        // TODO: call service and get token from server
-        console.log(this.currentUser);
-        //this.registerService
+        let uid = x.user.providerData[0].uid;
+        let provider = x.additionalUserInfo.providerId;
+        this.registerService
+          .checkAuthorized(provider, uid)
+          .then(resp => this.handleResponse(resp))
+          .catch(err => {
+            console.log('error: ' + err.status);
+            this.closeModal();
+          });
+        //console.log(x);
         //this.isLogged = true;
-        //this.ref.detectChanges();
       })
       .catch(err => {
         // This prevent error in console, we can handle it there (user close popup error)
@@ -92,15 +110,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.authState = this.afAuth.authState;
     this.authState.subscribe(user => {
       if (user) {
-        this.isLogged = true;
+        //this.isLogged = true;
         this.currentUser = user;
-        //this.ref.detectChanges();
       } else {
         this.currentUser = null;
       }
     });
-    
-    //this.isLoggedOb = new Observable();
   }
 
   ngOnDestroy() {

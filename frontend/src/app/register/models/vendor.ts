@@ -1,14 +1,14 @@
 export class Vendor {
-    gender: string;
     birthday: any;
     phone: string;
     email: string;
     image: string;
     provider: string;
     uid: string;
-    name: string;
+    firstName: string;
+    middleName: string;
+    lastName: string;
     experience: number;
     position: string;
-    company: string;
     speciality: string;
 }

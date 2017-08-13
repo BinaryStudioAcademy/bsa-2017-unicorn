@@ -45,9 +45,11 @@ export class RegisterVendorComponent implements OnInit {
     info.birthday = this.birthday;
     info.phone = this.phone;
 
-    info.email = this.social.email;
+    info.email = this.email;
     info.image = this.social.photoURL;
-    info.name = this.social.displayName;
+    info.firstName = this.firstName;
+    info.middleName = this.middleName;
+    info.lastName = this.lastName;
     info.provider = this.social.providerData[0].providerId;
     info.uid = this.social.uid;
 
