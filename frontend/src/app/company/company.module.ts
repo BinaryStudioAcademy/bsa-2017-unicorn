@@ -20,15 +20,15 @@ import { AgmCoreModule } from "@agm/core";
 
 @NgModule({
   imports: [
+    AgmCoreModule.forRoot({
+      apiKey: environment.googleMapsKey
+    }), 
     CommonModule,
     CompanyRoutingModule,
     FormsModule,
     BrowserModule,
     SuiModule,
-    BookModule,
-    AgmCoreModule.forRoot({
-      apiKey: environment.googleMapsKey
-    }),   
+    BookModule      
   ],
   declarations: [
     CompanyComponent,

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Company } from "../../models/company.model";
 import { Review } from "../../models/review.model";
 
@@ -9,6 +9,7 @@ import { Review } from "../../models/review.model";
 })
 export class CompanyDetailsComponent implements OnInit {
 company:Company;
+
   constructor() { }
 
   ngOnInit() {  
@@ -95,7 +96,7 @@ company:Company;
       director: "Vladik",
       features: ["Excellent service", "We are going fast", "We've scratched cats since 1997", "Warm hands"]
     };
-  } 
+  }  
 
 }
 
