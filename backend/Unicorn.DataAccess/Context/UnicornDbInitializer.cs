@@ -850,7 +850,6 @@ namespace Unicorn.DataAccess.Context
                 Works = new List<Work>() { work2 },
                 ExWork = "Photographer",
                 Person = person2,
-                Company = null
             };
 
             Vendor vendor3 = new Vendor()
@@ -977,7 +976,7 @@ namespace Unicorn.DataAccess.Context
                 Description = "Make asp.net core website",
                 Location = new Location(),
                 Status = "Confirmed",
-                Vendor = null
+                Vendor = vendor6
             };
 
             context.Books.Add(book1);

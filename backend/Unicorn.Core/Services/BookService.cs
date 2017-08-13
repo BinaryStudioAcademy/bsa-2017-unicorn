@@ -59,11 +59,9 @@ namespace Unicorn.Core.Services
             var work = await _unitOfWork.WorkRepository.GetByIdAsync(book.Work.Id);
             var customer = await _unitOfWork.CategoryRepository.GetByIdAsync(book.Customer.Id);
             var personcust = await _unitOfWork.PersonRepository.GetByIdAsync(book.Customer.Person.Id);
-            var vendor = await _unitOfWork.VendorRepository.GetByIdAsync(book.Vendor.Id);
-            var vendorCompany = await _unitOfWork.CompanyRepository.GetByIdAsync(book.Vendor.Company.Id);
-            var vendorComAcc = await _unitOfWork.AccountRepository.GetByIdAsync(vendorCompany.Account.Id);
+            var vendor =  await _unitOfWork.VendorRepository.GetByIdAsync(book.Vendor.Id);     
             var vendorPerson = await _unitOfWork.PersonRepository.GetByIdAsync(vendor.Person.Id);
-            var vendorComPerAcc = await _unitOfWork.AccountRepository.GetByIdAsync(vendor.Person.Account.Id);
+            var vendorAcc = await _unitOfWork.AccountRepository.GetByIdAsync(vendorPerson.Id);
             var bookDto = new BookDTO()
             {
                 Id = book.Id,
@@ -71,6 +69,7 @@ namespace Unicorn.Core.Services
                 Status = book.Status,
                 Description = book.Description,
                 Location = await _location.GetByIdAsync(id),
+                
                 Work = new WorkDTO()
                 {
                     Id = work.Id,
@@ -85,9 +84,9 @@ namespace Unicorn.Core.Services
                 Vendor = new VendorDTO()
                 {
                     Id = vendor.Id,
-                    Person = new PersonDTO() { Id = vendorPerson.Id, Account = new AccountDTO() { Id = vendorComPerAcc.Id, Rating = vendorComPerAcc.Rating }, Name = vendorPerson.Name, SurnameName = vendor.Person.SurnameName, Phone = vendor.Person.Phone },
-                    Company = new CompanyDTO() { Id = vendor.Id, Account = new AccountDTO() { Id = vendorComAcc.Id, DateCreated = vendorComAcc.DateCreated, Rating = vendorComAcc.Rating } },
-                    Experience = vendor.Experience             
+                    Person = new PersonDTO() { Id = vendorPerson.Id, Account = new AccountDTO() { Id = vendorAcc.Id, Rating = vendorAcc.Rating }, Name = vendorPerson.Name, SurnameName = vendor.Person.SurnameName, Phone = vendor.Person.Phone },
+                    //    Company = new CompanyDTO() { Id = vendor.Id, Account = new AccountDTO() { Id = vendorComAcc.Id, DateCreated = vendorComAcc.DateCreated, Rating = vendorComAcc.Rating } },
+                    //    Experience = vendor.Experience             
                 }
             };
             return bookDto;
