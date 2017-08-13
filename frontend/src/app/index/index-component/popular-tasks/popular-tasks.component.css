@@ -5,7 +5,7 @@
 }
 
 .vendor {
-    margin: 5px;
+    margin: 0px;
     color: gray;
 }
 
@@ -27,6 +27,9 @@
     text-align: center;
 }
 
+.item {
+    text-transform: uppercase !important;
+}
 
 .ui.secondary.pointing.menu .active.item {
     background-color: transparent;

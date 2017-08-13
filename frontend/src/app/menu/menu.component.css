@@ -16,7 +16,7 @@
     display: block;
 }
 
-@media screen and (min-width: 490px) {
+@media screen and (min-width: 560px) {
     .nav__list > .nav__list__item {
         border-width: 0 1px 0 0;
     }
