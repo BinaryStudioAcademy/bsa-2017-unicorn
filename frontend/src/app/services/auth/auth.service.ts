@@ -8,36 +8,32 @@ import { User } from './models/user';
 
 @Injectable()
 export class AuthService {
-  public user: User = new User();
+  private user: User = new User();
 
-  constructor(public afAuth: AngularFireAuth, public httpService: DataService) {
+  constructor(public afAuth: AngularFireAuth) {
+    afAuth.authState.subscribe(user => {
+      if (user) {
+        // get user providerId and uid
+        this.initializeUser(user);
+        console.log(this.user);
+
+        // Call backend
+        // TODO: call backend
+      }
+    });
   }
 
   initializeUser(data) {
-    this.user.provider = data.providerId;
+    this.user.provider = data.providerData[0].providerId;
     this.user.uid = data.uid;
   }
 
   loginWithGoogle() {
     this.afAuth.auth.signInWithPopup(
       new firebase.auth.GoogleAuthProvider())
-      .then(x => {
-        // TODO: rewrite with async ???
-        // TODO: POST query to server for get a token
-        this.initializeUser(x.user.providerData[0]); // use data from original provider (google, twitter etc.)
-        console.log(this.user);
-
-        this.httpService.postRequest('membership', this.user).then(x => {
-          /* TODO: check status code from server
-          404 - invalid params (provider or uid) => modal with error or log
-          204 - user not found (special for register) => redirect to register page
-          200 - OK (header Token) => get token from header => saveJWT(token) => redirect to cabinet / profile (login succesfully)
-          */
-        });
-
-      })
       .catch(err => {
         // This prevent error in console, we can handle it there (user close popup error)
+        // TODO: show message box(modal) like airbnb
         alert(err);
       });
   }
@@ -45,10 +41,6 @@ export class AuthService {
   loginWithFacebook() {
     this.afAuth.auth.signInWithPopup(
       new firebase.auth.FacebookAuthProvider())
-      .then(x => {
-        this.initializeUser(x.user.providerData[0]);
-        console.log(this.user);
-      })
       .catch(err => {
         alert(err);
       });
@@ -57,10 +49,6 @@ export class AuthService {
   loginWithGithub() {
     this.afAuth.auth.signInWithPopup(
       new firebase.auth.GithubAuthProvider())
-      .then(x => {
-        this.initializeUser(x.user.providerData[0]);
-        console.log(this.user);
-      })
       .catch(err => {
         alert(err);
       });
@@ -69,10 +57,6 @@ export class AuthService {
   loginWithTwitter() {
     this.afAuth.auth.signInWithPopup(
       new firebase.auth.TwitterAuthProvider())
-      .then(x => {
-        this.initializeUser(x.user.providerData[0]);
-        console.log(this.user);
-      })
       .catch(err => {
         alert(err);
       });
@@ -80,6 +64,7 @@ export class AuthService {
 
   logout() {
     this.afAuth.auth.signOut();
+    localStorage.removeItem('token');
   }
 
   saveJWT(jwt: string) {
