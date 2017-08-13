@@ -24,6 +24,8 @@ namespace Unicorn.Core.Services
             List<PersonDTO> dataReturn = new List<PersonDTO>();
             foreach (var person in persons)
             {
+                var account = await _unitOfWork.AccountRepository.GetByIdAsync(person.Account.Id);
+                var location = await _unitOfWork.LocationRepository.GetByIdAsync(person.Location.Id);
                 var persontDto = new PersonDTO()
                 {
                     Id = person.Id,
@@ -32,8 +34,28 @@ namespace Unicorn.Core.Services
                     MiddleName = person.MiddleName,
                     Birthday = person.Birthday,
                     Gender = person.Gender,
-                    Phone = person.Phone
-                    
+                    Phone = person.Phone,
+                    Account = new AccountDTO()
+                     {
+                         Id = account.Id,
+                         Role = new RoleDTO() { Id = account.Role.Id, Name = account.Role.Name },
+                         Avatar = account.Avatar,
+                         DateCreated = account.DateCreated,
+                         Email = account.Email,
+                         EmailConfirmed = account.EmailConfirmed,
+                         Permissions = account.Permissions.Select(x => new PermissionDTO { Id = x.Id, Name = x.Name }).ToList(),
+                         Rating = account.Rating,
+                         SocialAccounts = account.SocialAccounts.Select(x => new SocialAccountDTO { Id = x.Id, Provider = x.Provider, Uid = x.Uid }).ToList()
+                     },
+                    Location = new LocationDTO()
+                    {
+                        Id = location.Id,
+                        Adress = location.Adress,
+                        City = location.City,
+                        CoordinateX = location.CoordinateX,
+                        CoordinateY = location.CoordinateY,
+                        PostIndex = location.PostIndex
+                    }
                 };
                 dataReturn.Add(persontDto);
             }
@@ -43,8 +65,8 @@ namespace Unicorn.Core.Services
         public async Task<PersonDTO> GetById(long id)
         {
             var person = await _unitOfWork.PersonRepository.GetByIdAsync(id);
-            var account = await _unitOfWork.AccountRepository.GetByIdAsync(id);
-            var location = await _unitOfWork.LocationRepository.GetByIdAsync(id);
+            var account = await _unitOfWork.AccountRepository.GetByIdAsync(person.Account.Id);
+            var location = await _unitOfWork.LocationRepository.GetByIdAsync(person.Location.Id);
 
             var persontDto = new PersonDTO()
             {

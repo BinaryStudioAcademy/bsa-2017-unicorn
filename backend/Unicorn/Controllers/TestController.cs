@@ -35,7 +35,7 @@ namespace Unicorn.Controllers
         [HttpGet]
         public async Task<IHttpActionResult> GetAllAsync()
         {
-            var result = await _personservice.GetAllAsync();
+            var result = await _bookservice.GetAllAsync();
             if (result == null)
                 return NotFound();
 
@@ -45,7 +45,7 @@ namespace Unicorn.Controllers
         [HttpGet]
         public async Task<IHttpActionResult> GetAllAsync(int id)
         {
-            var result = await _personservice.GetById(id);
+            var result = await _bookservice.GetById(id);
             if (result == null)
                 return NotFound();
 

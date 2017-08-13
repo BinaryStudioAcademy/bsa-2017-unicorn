@@ -57,9 +57,6 @@ namespace Unicorn.Core.Services
                 Role = new RoleDTO {Id = role.Id, Name = role.Name}
             };
             return accountDto;
-        }
-
-
-        
+        }      
     }
 }
