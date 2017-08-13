@@ -6,6 +6,7 @@
         <p>{{slogan}}</p>
       </div>
       <div class="search-container">
+        <div class="settings-container">
         <div class="item-search">
           <p>{{labelSearch}}</p>
           <div class="ui input fill-horizontal"> 
@@ -22,6 +23,31 @@
                       [pickerFirstDayOfWeek]="firstDayOfWeek"
                       [pickerUseNativeOnMobile]="false">
             </div>                                              
+        </div>
+        <div class="item-category">
+          <p>{{labelCategory}}</p>
+          <div class="ui segment">
+            <i class="dropdown icon"></i>
+            <div class="ui pointing dropdown link item" suiDropdown>
+              <div class="text">{{selCategory}}</div>              
+                <div class="menu" suiDropdownMenu>
+                  <div *ngFor="let category of categories" class="item" (click)="setCategory(category)">{{category}}</div>
+                </div>
+            </div>
+          </div>
+        </div>
+        <div class="item-subcategory">
+          <p>{{labelSubcategory}}</p>
+          <div class="ui segment">
+            <i class="dropdown icon"></i>
+            <div class="ui pointing dropdown link item" suiDropdown>
+              <div class="text">{{selSubcategory}}</div>
+              <div class="menu" suiDropdownMenu>
+                <div *ngFor="let subcategory of subcategories" class="item" (click)="setSubcategory(subcategory)">{{subcategory}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
         </div>
         <div class="item-button"> 
           <button class="ui button bg-color-main btn-search" (click)="searchVendor()">{{labelButton}}</button>  

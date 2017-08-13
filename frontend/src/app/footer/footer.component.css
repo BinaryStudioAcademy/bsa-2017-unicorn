@@ -3,6 +3,7 @@
     max-width: 910px;
     height: auto;
     margin: 0 auto;
+    /* padding: 50px 0 50px 0; */
     background-color: white;
 }
 
@@ -32,7 +33,7 @@
     justify-content: space-between;
     width: 760px; 
     max-width: 100%;
-    margin: 30px auto;
+    margin: 80px auto;
     color: gray;
     font-size: 16px;
 
@@ -42,6 +43,10 @@
     height: 2px;
     background-color: #B5B5B5;
     border-bottom: 1px solid #E5E5E5;
+}
+
+.separator-margin {
+    margin: 50px 20px;
 }
 
 .separator-horiz-light {
