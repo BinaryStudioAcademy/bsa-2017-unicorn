@@ -19,6 +19,12 @@ export class AuthService {
 
         // Call backend
         // TODO: call backend
+        /*
+        get status code and:
+          if(204) => continue register
+          else if (200) => save token and redirect to account/dashboard
+          else => show error
+        */
       }
     });
   }
