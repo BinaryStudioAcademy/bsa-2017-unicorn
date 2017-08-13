@@ -2,11 +2,17 @@
     padding: 0;
 }
 
+/* ------------ Generalize ----------- */
+
+
+
+/* ------------ Section 1 ----------- */
+
 .section1-wrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-image: url(../../../assets/images/cat_fluffy_chair_lying_1920x1080.jpg);
+    background-image: url(../../../assets/images/background.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: 50% 0%;
@@ -45,7 +51,7 @@
     align-items: flex-end;
     width: auto;
     max-width: 910px;
-    background-color: rgba(255,255,255,0.4);
+    background-color: rgba(255,255,255,0.2);
     border-radius: 7px;
     border: 1px solid rgba(255,255,255,0.0);
     font-family: 'Verdana', 'Calibri', 'Trebuchet MS', sans-serif;
@@ -77,16 +83,16 @@
     vertical-align: middle;
 }
 
-.separator {
+ /* .separator {
     margin: 10px 0;
     border-right: 1px solid lightgray;
-}
+} */
 
 .fill-horizontal {
     width: 100%;
-}
+} 
 
-.flex-row {
+/* .flex-row {
     display: flex;
     flex-direction: row;
     margin: 0;
@@ -96,7 +102,7 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-}
+}  */
 
 .datepicker {
     height: 45px;
@@ -110,7 +116,7 @@
     font-size: 16px; 
 } 
 
-.color-main {
+/* .color-main {
     color: #FF647A;
 }
 
@@ -120,6 +126,18 @@
 
 .color-text {
     color: gray;
+} */
+
+
+/* ------------ Section 2 ----------- */
+
+.section2-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    min-height: 465px;
+    margin: 0 10px;
 }
 
 /* ---------- Slider ----------- */

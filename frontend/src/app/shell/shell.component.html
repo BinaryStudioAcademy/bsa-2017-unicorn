@@ -1,17 +1,12 @@
 <div class="wrapper">
-    <div id="header">
-        <a href='#'>
-            <img class="logo" src="/assets/images/unicorn_logo.png" />
-        </a>
-        <div *ngIf="searchVisible" id="search">
-            <div class="ui action left icon input">
-                <input type="text" placeholder="scratch a cat">
-                <i class="search icon"></i>
-                <button class="ui basic button">Now</button>
+    <div class="header-wrapper">
+        <div id="header">
+            <a href='#'>
+                <img class="logo" src="/assets/images/unicorn_logo.png" />
+            </a>
+            <div id="menu">
+                <app-menu></app-menu>
             </div>
-        </div>
-        <div id="menu">
-            <app-menu></app-menu>
         </div>
     </div>
     <div id="content">

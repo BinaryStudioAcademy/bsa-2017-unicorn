@@ -1,10 +1,19 @@
-wrapper {
+.wrapper {
     display: block;
     width: auto;
     max-width: 100%;
     margin: 0 auto;
     padding: 0;
     text-align: left;
+}
+
+.header-wrapper {
+    /* top: 0px;
+    position: fixed;
+    background-color: white; 
+    width: 100%;
+    z-index: 1; 
+    display: block; */
 }
 
 #header {
