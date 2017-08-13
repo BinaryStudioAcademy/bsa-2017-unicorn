@@ -7,6 +7,6 @@ namespace Unicorn.Core.Interfaces
     public interface IAccountService
     {
         Task<IEnumerable<AccountDTO>> GetAllAsync();
-        Task<AccountDTO> GetById(int id);
+        Task<AccountDTO> GetById(long id);
     }
 }

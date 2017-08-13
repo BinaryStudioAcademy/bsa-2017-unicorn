@@ -25,7 +25,7 @@ namespace Unicorn.Core.Services
             return Mapper.Map<IEnumerable<Customer>, List<CustomerDTO>>(await _unitOfWork.CustomerRepository.GetAllAsync());
         }
 
-        public async Task<CustomerDTO> GetById(int id)
+        public async Task<CustomerDTO> GetById(long id)
         {
             var customer = await _unitOfWork.CustomerRepository.GetByIdAsync(id);
             var person = await _unitOfWork.PersonRepository.GetByIdAsync(id);

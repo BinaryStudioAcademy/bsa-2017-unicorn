@@ -7,5 +7,6 @@ namespace Unicorn.Core.Interfaces
     public interface ILocationService
     {
         Task<IEnumerable<LocationDTO>> GetAllAsync();
+        Task<LocationDTO> GetByIdAsync(long id);
     }
 }

@@ -17,18 +17,25 @@ namespace Unicorn.Controllers
     {
         private readonly ILocationService _locationService;
         private readonly IAccountService _acc;
+        private readonly IBookService _bookservice;
+        private readonly IPersonService _personservice;
 
-        public TestController(ILocationService locationService, IAccountService acc)
+        public TestController(ILocationService locationService, 
+                              IAccountService acc,
+                              IBookService bookservice,
+                              IPersonService personservice)
         {
             Database.SetInitializer<AppContext>(new UnicornDbInitializer());
             _locationService = locationService;
             _acc = acc;
+            _bookservice = bookservice;
+            _personservice = personservice;
         }
 
         [HttpGet]
         public async Task<IHttpActionResult> GetAllAsync()
         {
-            var result = await _acc.GetAllAsync();
+            var result = await _personservice.GetAllAsync();
             if (result == null)
                 return NotFound();
 
@@ -38,7 +45,7 @@ namespace Unicorn.Controllers
         [HttpGet]
         public async Task<IHttpActionResult> GetAllAsync(int id)
         {
-            var result = await _acc.GetById(id);
+            var result = await _personservice.GetById(id);
             if (result == null)
                 return NotFound();
 

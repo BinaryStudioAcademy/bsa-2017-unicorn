@@ -25,5 +25,20 @@ namespace Unicorn.Core.Services
             Mapper.Initialize(cfg => cfg.CreateMap<Location, LocationDTO > ());
             return Mapper.Map<IEnumerable<Location>, List<LocationDTO>>(await _unitOfWork.LocationRepository.GetAllAsync());
         }
+
+        public async Task<LocationDTO> GetByIdAsync(long id)
+        {
+            var location = await _unitOfWork.LocationRepository.GetByIdAsync(id);
+            LocationDTO locationDto = new LocationDTO()
+            {
+                Id = location.Id,
+                Adress = location.Adress,
+                City = location.City,
+                CoordinateX = location.CoordinateX,
+                CoordinateY = location.CoordinateY,
+                PostIndex = location.PostIndex           
+            };
+            return locationDto;
+        }
     }
 }
