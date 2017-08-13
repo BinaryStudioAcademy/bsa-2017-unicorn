@@ -1,4 +1,4 @@
-export class Review {
+export interface Review {
     avatar: string;
     date: Date;
     from: string;

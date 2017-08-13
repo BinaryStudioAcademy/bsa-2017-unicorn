@@ -35,5 +35,16 @@ namespace Unicorn.Core.Services
             };
             return roleDto;
         }
+
+        public async Task<RoleDTO> GetByUserId(long uid)
+        {
+            var account = await _unitOfWork.AccountRepository.GetByIdAsync(uid);
+
+            if (account == null)
+                return null;
+
+            Mapper.Initialize(cfg => cfg.CreateMap<Role, RoleDTO>());
+            return Mapper.Map<Role, RoleDTO>(account.Role);
+        }
     }
 }

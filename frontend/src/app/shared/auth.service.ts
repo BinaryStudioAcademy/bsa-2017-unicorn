@@ -24,18 +24,50 @@ export class AuthService {
   }
 
   loginWithGoogle() {
-    return this.afAuth.auth.signInWithPopup(
-      new firebase.auth.GoogleAuthProvider());
+    this.afAuth.auth.signInWithPopup(
+      new firebase.auth.GoogleAuthProvider())
+      .then(x => {
+        // now we can work with user object (take uid, email etc.)
+        // TODO: call service and get token from server
+        console.log(x);
+      })
+      .catch(err => {
+        // This prevent error in console, we can handle it there (user close popup error)
+        alert(err);
+      });
   }
 
   loginWithFacebook() {
-    return this.afAuth.auth.signInWithPopup(
-      new firebase.auth.FacebookAuthProvider());
+    this.afAuth.auth.signInWithPopup(
+      new firebase.auth.FacebookAuthProvider())
+      .then(x => {
+        console.log(x);
+      })
+      .catch(err => {
+        alert(err);
+      });
   }
 
   loginWithGithub() {
-    return this.afAuth.auth.signInWithPopup(
-      new firebase.auth.GithubAuthProvider());
+    this.afAuth.auth.signInWithPopup(
+      new firebase.auth.GithubAuthProvider())
+      .then(x => {
+        console.log(x);
+      })
+      .catch(err => {
+        alert(err);
+      });
+  }
+
+  loginWithTwitter() {
+    this.afAuth.auth.signInWithPopup(
+      new firebase.auth.TwitterAuthProvider())
+      .then(x => {
+        console.log(x);
+      })
+      .catch(err => {
+        alert(err);
+      });
   }
 
   isLoggenIn() {

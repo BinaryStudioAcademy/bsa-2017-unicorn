@@ -5,7 +5,7 @@ import { DataService } from './services/data.service';
   selector: 'app-root',
   providers: [DataService],
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.sass']
 })
 export class AppComponent {
   title: string;

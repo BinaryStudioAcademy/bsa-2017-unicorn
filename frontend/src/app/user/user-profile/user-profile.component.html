@@ -1,0 +1,45 @@
+<div class="container">
+ <div class="column">
+   <div class="ui input">
+     <div class="elem">
+        <input type="text" value="{{user.firstName}}" placeholder="Name">
+        <input type="text" value="{{user.surName}}" placeholder="Lastname">
+        <input type="text" value="{{user.middleName}}" placeholder="Middlename">
+        <input type="text" value="{{user.email}}" placeholder="Email">
+        <input type="text" value="{{user.phone}}" placeholder="Phone">
+    </div> 
+  </div> 
+<div class="elem">
+  <div class="ui form">
+        <div class="inline fields" style="margin:1em;">
+       
+          <div class="field">
+              <div class="ui radio checkbox">
+                <input id="male" class="ui radio checkbox" type="radio" name="gender" checked="true">
+                <label for="male">Male</label>
+              </div>
+          </div>
+          <div class="field" style="padding-left:40px">
+            <div class="ui radio checkbox">
+              <input type="radio" name="gender"id="female">
+              <label for="female">Female</label>
+            </div>
+          </div>      
+        </div>
+      </div>  
+  </div>
+  <div class="elem">
+       <div class="ui left icon input">
+            <i class="calendar icon" style="margin-left:5px;"></i>
+            <input suiDatepicker
+                   ng-model="birthday"
+                   pickerMode="date"
+                   placeholder="Pick your birthday">
+       </div> 
+  </div> 
+ </div>
+ <div class="column">
+   <label class="gray_font">Your location:  {{user.location}}</label>
+   <div class="square"></div>
+ </div>
+</div>
