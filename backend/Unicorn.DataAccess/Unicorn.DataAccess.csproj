@@ -79,6 +79,10 @@
     <Compile Include="Migrations\201708141403061_InitialCreate.Designer.cs">
       <DependentUpon>201708141403061_InitialCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201708142137204_change-roles.cs" />
+    <Compile Include="Migrations\201708142137204_change-roles.Designer.cs">
+      <DependentUpon>201708142137204_change-roles.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entities\Role.cs" />
@@ -94,6 +98,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201708141403061_InitialCreate.resx">
       <DependentUpon>201708141403061_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708142137204_change-roles.resx">
+      <DependentUpon>201708142137204_change-roles.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

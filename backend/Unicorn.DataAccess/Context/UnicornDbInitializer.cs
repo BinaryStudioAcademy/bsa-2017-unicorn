@@ -188,7 +188,6 @@ namespace Unicorn.DataAccess.Context
 
                 }
             };
-
             context.Roles.Add(role1);
             context.SaveChanges();
             context.Roles.Add(role2);
@@ -209,7 +208,7 @@ namespace Unicorn.DataAccess.Context
                 Avatar = "cleanok.jpg",
                 Rating = 5,
                 IsDeleted = false,
-                Role = new Role() { Id = role3.Id, Name = role3.Name, IsDeleted = false }
+                Role = new Role() { Id = role4.Id, Name = role4.Name, IsDeleted = false, Permissions = role4.Permissions }
             };
 
             Account account2 = new Account()
@@ -221,7 +220,7 @@ namespace Unicorn.DataAccess.Context
                 Avatar = "andriy.jpg",
                 Rating = 5,
                 IsDeleted = false,
-                Role = new Role() { Id = role1.Id, Name = role1.Name, IsDeleted = false }
+                Role = new Role() { Id = role3.Id, Name = role3.Name, IsDeleted = false, Permissions = role3.Permissions }
             };
 
             Account account3 = new Account()
@@ -233,7 +232,7 @@ namespace Unicorn.DataAccess.Context
                 Avatar = "shnurenko.jpg",
                 Rating = 2,
                 IsDeleted = false,
-                Role = new Role() { Id = role2.Id, Name = role2.Name, IsDeleted = false }
+                Role = new Role() { Id = role2.Id, Name = role2.Name, IsDeleted = false, Permissions = role2.Permissions }
 
             };
 
@@ -246,7 +245,7 @@ namespace Unicorn.DataAccess.Context
                 Avatar = "catcare.jpg",
                 Rating = 4,
                 IsDeleted = false,
-                Role = new Role() { Id = role3.Id, Name = role3.Name, IsDeleted = false }
+                Role = new Role() { Id = role4.Id, Name = role4.Name, IsDeleted = false, Permissions = role4.Permissions }
             };
 
             Account account5 = new Account()
@@ -258,7 +257,7 @@ namespace Unicorn.DataAccess.Context
                 Avatar = "abkprostir.jpg",
                 Rating = 1,
                 IsDeleted = false,
-                Role = new Role() { Id = role1.Id, Name = role1.Name, IsDeleted = false }
+                Role = new Role() { Id = role3.Id, Name = role3.Name, IsDeleted = false, Permissions = role3.Permissions }
             };
 
             Account account6 = new Account()
@@ -270,7 +269,7 @@ namespace Unicorn.DataAccess.Context
                 Avatar = "drivingcompany.jpg",
                 Rating = 4,
                 IsDeleted = false,
-                Role = new Role() { Id = role3.Id, Name = role3.Name, IsDeleted = false }
+                Role = new Role() { Id = role4.Id, Name = role4.Name, IsDeleted = false, Permissions = role4.Permissions }
             };
 
             Account account7 = new Account()
@@ -282,7 +281,7 @@ namespace Unicorn.DataAccess.Context
                 Avatar = "andrewsany_worker.jpg",
                 Rating = 4,
                 IsDeleted = false,
-                Role = new Role() { Id = role2.Id, Name = role2.Name, IsDeleted = false }
+                Role = new Role() { Id = role2.Id, Name = role2.Name, IsDeleted = false, Permissions = role2.Permissions }
             };
 
             Account account8 = new Account()
@@ -294,7 +293,7 @@ namespace Unicorn.DataAccess.Context
                 Avatar = "shmirmasha_worker.jpg",
                 Rating = 3,
                 IsDeleted = false,
-                Role = new Role() { Id = role2.Id, Name = role2.Name, IsDeleted = false }
+                Role = new Role() { Id = role2.Id, Name = role2.Name, IsDeleted = false, Permissions = role2.Permissions }
             };
 
             Account account9 = new Account()
@@ -306,7 +305,7 @@ namespace Unicorn.DataAccess.Context
                 Avatar = "vitykostyuban_vendor.jpg",
                 Rating = 5,
                 IsDeleted = false,
-                Role = new Role() { Id = role1.Id, Name = role1.Name, IsDeleted = false }
+                Role = new Role() { Id = role3.Id, Name = role3.Name, IsDeleted = false, Permissions = role3.Permissions }
             };
 
             Account account10 = new Account()
@@ -318,7 +317,7 @@ namespace Unicorn.DataAccess.Context
                 Avatar = "admin.jpg",
                 Rating = 5,
                 IsDeleted = false,
-                Role = new Role() { Id = role4.Id, Name = role4.Name, IsDeleted = false }
+                Role = new Role() { Id = role5.Id, Name = role5.Name, IsDeleted = false, Permissions = role5.Permissions }
             };
 
             context.Accounts.Add(account1);
