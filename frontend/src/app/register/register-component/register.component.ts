@@ -189,7 +189,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     //   case 'company': this.isCompany = true; break;
     // }
     // this.roleSelected = true;
-    this.clearRoles();
+    this.clearRoles();  
     this.roles[role] = true;
   }
 }

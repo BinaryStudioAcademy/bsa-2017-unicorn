@@ -11,11 +11,14 @@ import { Vendor } from '../register/models/vendor';
 export class RegisterService {
 
   constructor(
-    private dataService: DataService) { }
+    private dataService: DataService) {
+      this.dataService.setHeader('Content-Type', 'application/json');
+    }
 
   checkAuthorized(provider: string, uid: string): Promise<any> {
-    let url = `membership?provider=${provider}&uid=111`;
-    return this.dataService.getFullRequest<string>(url);
+    let url = `membership?provider=${provider}&uid=${uid}`;
+    console.log(uid);
+    return this.dataService.postFullRequest<string>('membership', {provider: provider, uid: uid});
   }
 
   confirmCustomer(customer: Customer): Promise<any> {
