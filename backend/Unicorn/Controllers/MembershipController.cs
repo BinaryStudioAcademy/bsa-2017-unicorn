@@ -2,10 +2,13 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using Unicorn.Core.Interfaces;
+using Unicorn.Models;
 
 namespace Unicorn.Controllers
 {
+    [EnableCors("*", "*", "*")]
     public class MembershipController : ApiController
     {
         private IAuthService authService;
@@ -15,19 +18,20 @@ namespace Unicorn.Controllers
             this.authService = authService;
         }
 
-        // GET: membership?provider=facebook&uid=123456
-        [HttpGet]
-        public async Task<HttpResponseMessage> Get(string provider, long uid)
+        // POST: Membership
+        [HttpPost]
+        public async Task<HttpResponseMessage> Post([FromBody]UserSocial user)
         {
             HttpResponseMessage response = null;
 
-            if (string.IsNullOrWhiteSpace(provider))
+            if (user == null || (string.IsNullOrWhiteSpace(user.Provider) || string.IsNullOrWhiteSpace(user.Uid)))
             {
                 response = Request.CreateResponse(HttpStatusCode.NotFound, "Missing provider or uid");
                 return response;
             }
 
-            string token = await authService.GenerateJwtTokenAsync(provider, uid);
+            //string token = await authService.GenerateJwtTokenAsync(provider, uid);
+            string token = "123_TEST";
 
             if (token == null)
             {

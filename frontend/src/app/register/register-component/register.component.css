@@ -54,6 +54,40 @@
 .reg-header {
     text-align: center;
     font-family: 'Verdana', 'Century Gothic', 'Calibri', 'Trebuchet MS', sans-serif;
-    font-size: 14px;
+    font-size: 18px;
+    font-weight: normal;
+}
+
+li {
+    display: inline;
+    margin-right: 18px;
+}
+
+li a {
+    color: gray;
+    font-family: 'Century Gothic', 'Calibri', 'Trebuchet MS', sans-serif;
+    text-decoration: none;
+}
+
+li a:hover {
+    color: #FF647A;
+    background-color: #FFFFFF;
+    text-decoration: none;
+}
+
+a {
+    cursor: pointer;
+}
+
+#custom {
+    display: inline-block;
+}
+
+.question-lbl {
+    display: flex;
+    justify-content: center;
+}
+
+.question-lbl>label {
     font-weight: normal;
 }

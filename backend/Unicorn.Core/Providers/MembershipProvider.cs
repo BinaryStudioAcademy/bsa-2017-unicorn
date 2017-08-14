@@ -29,7 +29,7 @@ namespace Unicorn.Core.Providers
             return new ClaimsIdentity(claims, "Token");
         }
 
-        public async Task<long> VerifyUser(string provider, long uid)
+        public async Task<long> VerifyUser(string provider, string uid)
         {
             var _accounts = await _unitOfWork.SocialAccountRepository.GetAllAsync();
             var socialAccount = _accounts.FirstOrDefault(x => x.Provider == provider && x.Uid == uid);

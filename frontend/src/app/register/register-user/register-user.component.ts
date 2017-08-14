@@ -1,5 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 
+import * as firebase from 'firebase/app';
+import { RegisterService } from '../../services/register.service';
+
 import { Customer } from '../models/customer';
 
 @Component({
@@ -9,34 +12,38 @@ import { Customer } from '../models/customer';
 })
 export class RegisterUserComponent implements OnInit {
 
-  @Input() social: any;
+  @Input() social: firebase.User;
 
   mode: string;
   error: boolean = false;
   phone: string;
   birthday;
-  gender: string;
+  firstName: string;
+  middleName: string;
+  lastName: string;
+  email: string;
 
-  constructor() { }
+  constructor(private registerService: RegisterService) { }
 
   ngOnInit() {
     this.mode = 'date';
   }
 
   valid(): boolean {
-    return this.birthday !== undefined && this.gender != undefined && this.phone != undefined;
+    return this.birthday !== undefined && this.phone != undefined;
   }
 
   aggregateInfo(): Customer{
     let info = new Customer();
     info.birthday = this.birthday;
-    info.gender = this.gender;
     
     info.phone = this.phone;
     info.email = this.social.email;
-    info.image = this.social.image;
-    info.name = this.social.name;
-    info.provider = this.social.provider;
+    info.image = this.social.photoURL;
+    info.firstName = this.firstName;
+    info.middleName = this.middleName;
+    info.lastName = this.lastName;
+    info.provider = this.social.providerData[0].providerId;
     info.uid = this.social.uid;
 
     return info;
@@ -48,6 +55,7 @@ export class RegisterUserComponent implements OnInit {
       console.log('valid');
       let regInfo = this.aggregateInfo();
       console.log(regInfo);
+      this.registerService.confirmCustomer(regInfo);
     } else {
       this.error = true;
     }

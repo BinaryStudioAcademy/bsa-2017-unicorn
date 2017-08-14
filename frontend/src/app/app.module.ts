@@ -7,7 +7,7 @@ import { environment } from '../environments/environment.prod';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 
-import { AuthService } from './shared/auth.service';
+import { AuthService } from './services/auth/auth.service';
 
 // Routing
 import { AppRoutingModule } from './app-routing/app-routing.module';
@@ -35,12 +35,12 @@ import { MenuComponent } from './menu/menu.component';
 
 
 @NgModule({
-  declarations: [
+  declarations: [    
     AppComponent,
     ShellComponent,
     MenuComponent
   ],
-  imports: [
+  imports: [    
     SuiModule,    
     BrowserModule,
     HttpClientModule,

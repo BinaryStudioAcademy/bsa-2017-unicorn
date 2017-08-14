@@ -26,8 +26,11 @@
     "@angular/router": "^4.0.0",
     "@ngui/map": "^0.18.4",
     "@types/googlemaps": "^3.26.17",
+<<<<<<< HEAD
     "angular2-image-upload": "^0.6.6",
     "angular2-social-login": "^3.1.1",
+=======
+>>>>>>> 09058fec321ae09bb3c6ff63864ecfcfd83724c6
     "angularfire2": "^4.0.0-rc.1",
     "core-js": "^2.4.1",
     "firebase": "^4.2.0",

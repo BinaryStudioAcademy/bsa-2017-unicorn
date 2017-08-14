@@ -1,5 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 
+import * as firebase from 'firebase/app';
+import { RegisterService } from '../../services/register.service';
+
 import { Company } from '../models/company';
 
 @Component({
@@ -9,16 +12,18 @@ import { Company } from '../models/company';
 })
 export class RegisterCompanyComponent implements OnInit {
 
-  @Input() social: any;
+  @Input() social: firebase.User;
 
+  name: string;
   mode: string;
   error: boolean = false;
   phone: string;
   description: string;
   staff: number;
+  email: string;
   foundation: any;
 
-  constructor() { }
+  constructor(private registerService: RegisterService) { }
 
   ngOnInit() {
     this.mode = 'date';
@@ -35,10 +40,10 @@ export class RegisterCompanyComponent implements OnInit {
     info.staff = this.staff;
     info.description = this.description;
     info.phone = this.phone;
-    info.email = this.social.email;
-    info.image = this.social.image;
-    info.name = this.social.name;
-    info.provider = this.social.provider;
+    info.email = this.email;
+    info.image = this.social.photoURL;
+    info.name = this.name;
+    info.provider = this.social.providerData[0].providerId;
     info.uid = this.social.uid;
 
     return info;
@@ -50,6 +55,7 @@ export class RegisterCompanyComponent implements OnInit {
       console.log('valid');
       let regInfo = this.aggregateInfo();
       console.log(regInfo);
+      this.registerService.confirmCompany(regInfo);
     } else {
       this.error = true;
     }
