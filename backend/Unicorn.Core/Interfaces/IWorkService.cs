@@ -7,6 +7,6 @@ namespace Unicorn.Core.Interfaces
     public interface IWorkService
     {
         Task<IEnumerable<WorkDTO>> GetAllAsync();
-        Task<WorkDTO> GetById(int id);
+        Task<WorkDTO> GetById(long id);
     }
 }

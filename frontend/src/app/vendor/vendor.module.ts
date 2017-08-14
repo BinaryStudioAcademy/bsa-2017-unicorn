@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { SuiModule } from 'ng2-semantic-ui';
+import { environment } from '../../environments/environment';
+import { AgmCoreModule } from '@agm/core';
 
 import { BookModule } from '../book/book.module';
 
@@ -21,6 +23,9 @@ import { DataService } from "../services/data.service";
 
 @NgModule({
   imports: [
+    AgmCoreModule.forRoot({
+      apiKey: environment.googleMapsKey
+    }),
     CommonModule,
     VendorRoutingModule,
     FormsModule,

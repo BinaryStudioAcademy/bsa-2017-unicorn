@@ -1,3 +1,5 @@
+﻿@import "../../../global-style-variables.sass";
+
 .gray_font
     color: gray;
     text-decoration: none;
@@ -5,13 +7,15 @@
     font-size: 15px;
     margin-top: 1.3em;
     margin-bottom: 1.3em;
-.square 
+.map 
   width: 40em;
-  height: 20em;
+  height: 16.3em;
   background: green;	
   
 .ui input
-    margin: 10px;
+    margin: 20px;
+    margin-bottom: 0px;
+    width: 250px;
     display: flex;
 
       
@@ -26,3 +30,12 @@
     flex-direction: column;
 .elem
     display: block;
+.ui.basic.button
+   box-shadow: 0 0 0 1px $primary_color;
+   color:  $primary_color;
+   background: none;
+   padding: 10px;
+   margin-top: 23px;
+   width: 100px;
+   margin-right: 0px;
+   align-self: flex-end;

@@ -1,4 +1,4 @@
-$tab-color: #FF647A;
+﻿$tab-color: #FF647A;
 ul
   list-style: none;
   margin: 0;
@@ -33,14 +33,16 @@ ul li
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
 
-
+.userName
+  font-size: 15px;
+  margin-top: 4px;
 
 .container
    display: flex;
    justify-content: space-around;
 .users
-    display: flex;
     flex-direction: column;
+    display: flex;
     width: 300px;
 .chat
     display: flex;
@@ -48,12 +50,15 @@ ul li
     border-left: 0.5px solid #D5D0D0;
     padding: 10px;
     width: 600px;
-.item
+.user
+    display: flex;
+    flex-direction: row;
     margin-top: 10px;
     margin-bottom: 10px;
-    padding: 10px;
+    padding: 5px 10px;
 
-#active
+.user:hover 
+   cursor: pointer;
    background: lighten( $tab-color, 15% );
 
 .date-me
@@ -75,3 +80,5 @@ ul li
 .mes_block
   display: flex;
   flex-direction: column;
+#active
+  background: lighten( $tab-color, 10% );

@@ -25,7 +25,7 @@ namespace Unicorn.Controllers
         [Route("roles/{uid}")]
         public async Task<IHttpActionResult> GetRole(long uid)
         {
-            var result = await _roleService.GetByUserId(uid);
+            var result = await _roleService.GetByIdAsync(uid);
             if (result == null)
                 return NotFound();
 
