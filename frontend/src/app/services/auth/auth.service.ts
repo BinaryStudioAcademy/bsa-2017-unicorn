@@ -3,36 +3,43 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 import { Observable } from 'rxjs/Observable';
 
+import { DataService } from '../data.service';
+import { User } from './models/user';
+
 @Injectable()
 export class AuthService {
-  private authState: Observable<firebase.User>
-  private currentUser: firebase.User = null;
+  private user: User = new User();
 
   constructor(public afAuth: AngularFireAuth) {
-    this.authState = this.afAuth.authState;
-    this.authState.subscribe(user => {
+    afAuth.authState.subscribe(user => {
       if (user) {
-        this.currentUser = user;
-      } else {
-        this.currentUser = null;
+        // get user providerId and uid
+        this.initializeUser(user);
+        console.log(this.user);
+
+        // Call backend
+        // TODO: call backend
+        /*
+        get status code and:
+          if(204) => continue register
+          else if (200) => save token and redirect to account/dashboard
+          else => show error
+        */
       }
     });
   }
 
-  getAuthState() {
-    return this.authState;
+  initializeUser(data) {
+    this.user.provider = data.providerData[0].providerId;
+    this.user.uid = data.uid;
   }
 
   loginWithGoogle() {
     this.afAuth.auth.signInWithPopup(
       new firebase.auth.GoogleAuthProvider())
-      .then(x => {
-        // now we can work with user object (take uid, email etc.)
-        // TODO: call service and get token from server
-        console.log(x);
-      })
       .catch(err => {
         // This prevent error in console, we can handle it there (user close popup error)
+        // TODO: show message box(modal) like airbnb
         alert(err);
       });
   }
@@ -40,9 +47,6 @@ export class AuthService {
   loginWithFacebook() {
     this.afAuth.auth.signInWithPopup(
       new firebase.auth.FacebookAuthProvider())
-      .then(x => {
-        console.log(x);
-      })
       .catch(err => {
         alert(err);
       });
@@ -51,9 +55,6 @@ export class AuthService {
   loginWithGithub() {
     this.afAuth.auth.signInWithPopup(
       new firebase.auth.GithubAuthProvider())
-      .then(x => {
-        console.log(x);
-      })
       .catch(err => {
         alert(err);
       });
@@ -62,19 +63,19 @@ export class AuthService {
   loginWithTwitter() {
     this.afAuth.auth.signInWithPopup(
       new firebase.auth.TwitterAuthProvider())
-      .then(x => {
-        console.log(x);
-      })
       .catch(err => {
         alert(err);
       });
   }
 
-  isLoggenIn() {
-    return this.currentUser == null ? false : true;
-  }
-
   logout() {
     this.afAuth.auth.signOut();
+    localStorage.removeItem('token');
+  }
+
+  saveJWT(jwt: string) {
+    if (jwt) {
+      localStorage.setItem('token', jwt);
+    }
   }
 }
