@@ -13,14 +13,17 @@ nav li a {
     color: gray;
     font-family: 'Century Gothic', 'Calibri', 'Trebuchet MS', sans-serif;
     text-decoration: none;
+    text-transform: uppercase;
 }
 
 nav li a:hover {
     color: #FF647A;
     background-color: #FFFFFF;
     text-decoration: none;
+    text-transform: uppercase;    
 }
 
 a {
     cursor: pointer;
 }
+

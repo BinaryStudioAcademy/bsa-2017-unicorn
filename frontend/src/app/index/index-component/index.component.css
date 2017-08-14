@@ -1,104 +1,243 @@
 .wrapper {
-    padding: 50px 20px 0px 20px;
+    padding: 0;
 }
 
-.wrapper h1 {
-    font-size: 40px;
+/* ------------ Main Section ----------- */
+
+.section-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-image: url(../../../assets/images/housework-dollar-paid.jpg);
+    background-repeat: no-repeat;
+    background-size:cover;
+    background-position:center center;
+    background-attachment:fixed;
+}
+
+.section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-around;
+    /* width: 910px; */
+    height: auto;
+    margin: 50px 5px 100px 5px;
+    background-color: rgba(255,255,255,1.0);
+    border: 1px solid rgba(255,255,255,0.0);
 }
 
 .slogan {
-    width: 42%;
+    width: auto;
+    max-width: 510px;
+    margin: 30px;
     font-family: 'Century Gothic', 'Calibri', 'Trebuchet MS', sans-serif;
-    font-size: 30px;
-    line-height: 5px;
+}
+
+.slogan h1 {
+    color: #FF647A;
+    font-size: 36px;
 }
 
 .slogan p {
-    line-height: 40px;
+    color: gray;
+    font-size: 26px;
+}
+
+@media screen and (min-width: 490px) {
+    .slogan h1 {
+        color: #FF647A;
+        font-size: 60px;
+    }
+
+    .slogan p {
+        color: gray;
+        font-size: 40px;
+    }
 }
 
 .search-container {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap; 
-    justify-content: space-around;
-    align-items: flex-end;
+    justify-content: center;
+    align-items: center; 
     width: auto;
-    margin: 50px 0;
-    border-radius: 7px;
-    border: 1px solid lightgray;
+    max-width: 910px;
+    margin: 50px auto;
+    padding: 20px;
     font-family: 'Verdana', 'Calibri', 'Trebuchet MS', sans-serif;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+}
+
+.search-container p {
+    font-size: 16px;
+    color: gray;
+}
+
+.search-group1 {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    /* width: 500px;  */
+    margin: 5px 20px;
+}
+.search-group2 {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    /* width: 200px;  */
+    margin: 5px 20px;    
 }
 
 .search-input {
-    height: 45px;
+    height: 49px;
+    width: 350px; 
+    margin: 5px 0 !important; 
 }
 
-.item-search {
-    width: 300px;
-    margin: 20px;
+.datepicker {
+    margin: 5px 0 !important;
+    width: 150px;
+    height: 49px !important;
 }
 
 .item-date {
-    width: 210px;
-    margin: 20px;
+    width: 150px;
+    margin: 10px 20px; 
 }
 
 .item-button {
-    width: 210px;
-    margin: 20px;
     display: flex;
-    vertical-align: middle;
-}
-
-.separator {
-    margin: 10px 0;
-    border-right: 1px solid lightgray;
 }
 
 .fill-horizontal {
     width: 100%;
-}
-
-.flex-row {
-    display: flex;
-    flex-direction: row;
-    margin: 0;
-}
-
-.flex-column {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-}
+} 
 
 .datepicker {
     height: 45px;
 }
 
 .btn-search {
-    width: 100%;    
-    height: 45px;
+    margin: 5px 0;
+    width: 150px;    
+    height: 49px;
     color: white;
     background-color: #FF647A;
     font-size: 16px; 
 } 
 
-.color-main {
+/* ------------ Section 2 ----------- */
+
+ .section2-wrapper {
+    /* display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    min-height: 465px; */
+    margin: 50px auto 100px auto;
+}
+
+/* ------------ Information ----------- */
+
+.info-wrapper {
+    margin: 20px;
+}
+
+.customer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 50% 0%;
+    background-image: url(../../../assets/images/young-couple.jpg);
+}
+
+.vendor {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 50% 0%;
+    background-image: url(../../../assets/images/office-space.jpg);
+}
+
+.customer-section {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end; 
+    justify-content: flex-start;
+    height: 765px;
+    margin: 0 10px;
+}
+
+.info-title {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 260px;
+    font-size: 26px;
+    font-family: 'Century Gothic', 'Calibri', 'Trebuchet MS', sans-serif;
+    background-color: transparent;
+}
+
+.info-title span {
     color: #FF647A;
+    margin: 0 20px 0 10px;
+    font-weight: bold;
 }
 
-.bg-color-main {
-    background-color: #FF647A;
-}
-
-.color-text {
+.info-title p {
     color: gray;
+}
+
+.vendor-section {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start; 
+    justify-content: flex-start;
+    height: 765px;
+    margin: 0 10px;
+}
+
+.info-container {
+    max-width: 910px;
+    margin: 20px;
+    padding: 20px;
+    color: #606060;
+    background-color: rgba(255,255,255,0.6);
+    border: 1px solid rgba(255,255,255,0.0);
+    font-family: 'Century Gothic', 'Calibri', 'Trebuchet MS', sans-serif;
+}
+
+.info-container h4 {
+    font-size: 34px;
+}
+
+.info-container p {
+    font-size: 26px;
+}
+
+@media screen and (min-width: 490px) {
+    .info-container h4 {
+    font-size: 44px;
+    }
+    .info-container p {
+        font-size: 32px;
+    }
 }
 
 /* ---------- Slider ----------- */
 
-#slider {
+/* #slider {
     margin: 100px 0;
 }
 
@@ -125,5 +264,5 @@ div#slider figure {
   text-align: left;
   font-size: 0;
   animation: 30s slidy infinite; 
-}
+} */
 
