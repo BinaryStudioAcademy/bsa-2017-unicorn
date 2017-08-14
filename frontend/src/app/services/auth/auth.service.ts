@@ -8,74 +8,65 @@ import { User } from './models/user';
 
 @Injectable()
 export class AuthService {
-  private user: User = new User();
-
-  constructor(public afAuth: AngularFireAuth) {
-    afAuth.authState.subscribe(user => {
-      if (user) {
-        // get user providerId and uid
-        this.initializeUser(user);
-        console.log(this.user);
-
-        // Call backend
-        // TODO: call backend
-        /*
-        get status code and:
-          if(204) => continue register
-          else if (200) => save token and redirect to account/dashboard
-          else => show error
-        */
-      }
-    });
+  constructor(public afAuth: AngularFireAuth, public httpService: DataService) {
   }
 
-  initializeUser(data) {
-    this.user.provider = data.providerData[0].providerId;
-    this.user.uid = data.uid;
+  private initializeUser(data): User {
+    let user = new User();
+    user.provider = data.providerData[0].providerId;
+    user.uid = data.uid;
+
+    return user;
   }
 
-  loginWithGoogle() {
-    this.afAuth.auth.signInWithPopup(
-      new firebase.auth.GoogleAuthProvider())
-      .catch(err => {
-        // This prevent error in console, we can handle it there (user close popup error)
-        // TODO: show message box(modal) like airbnb
-        alert(err);
-      });
-  }
-
-  loginWithFacebook() {
-    this.afAuth.auth.signInWithPopup(
-      new firebase.auth.FacebookAuthProvider())
-      .catch(err => {
-        alert(err);
-      });
-  }
-
-  loginWithGithub() {
-    this.afAuth.auth.signInWithPopup(
-      new firebase.auth.GithubAuthProvider())
-      .catch(err => {
-        alert(err);
-      });
-  }
-
-  loginWithTwitter() {
-    this.afAuth.auth.signInWithPopup(
-      new firebase.auth.TwitterAuthProvider())
-      .catch(err => {
-        alert(err);
-      });
-  }
-
-  logout() {
-    this.afAuth.auth.signOut();
-    localStorage.removeItem('token');
-  }
-
-  saveJWT(jwt: string) {
+  private saveJWT(jwt: string) {
     if (jwt) {
       localStorage.setItem('token', jwt);
     }
+  }
+
+  public loginWithGoogle() {
+    return this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider())
+      .then(data => {
+        return this.initializeUser(data.user);
+      })
+      .then(user => {
+        return this.httpService.postRequest('membership', user);
+      });
+  }
+
+  public loginWithFacebook() {
+    return this.afAuth.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider())
+      .then(data => {
+        return this.initializeUser(data.user);
+      })
+      .then(user => {
+        return this.httpService.postRequest('membership', user);
+      });
+  }
+
+  public loginWithGithub() {
+    return this.afAuth.auth.signInWithPopup(new firebase.auth.GithubAuthProvider())
+      .then(data => {
+        return this.initializeUser(data.user);
+      })
+      .then(user => {
+        return this.httpService.postRequest('membership', user);
+      });
+  }
+
+  public loginWithTwitter() {
+    return this.afAuth.auth.signInWithPopup(new firebase.auth.TwitterAuthProvider())
+      .then(data => {
+        return this.initializeUser(data.user);
+      })
+      .then(user => {
+        return this.httpService.postRequest('membership', user);
+      });
+  }
+
+  public logout() {
+    this.afAuth.auth.signOut();
+    localStorage.removeItem('token');
   }
 }

@@ -2,8 +2,6 @@ import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
-import { AuthService } from 'angular2-social-login';
-
 import { RegisterInfo } from '../models/register-info';
 
 @Component({
@@ -36,7 +34,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
   options = ['Male', 'Female'];
 
   constructor(
-    public auth: AuthService,
     public location: Location,
     public router: Router) { }
 
@@ -58,24 +55,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.roleSelected = true;
   }
 
-  register(provider: string) {
-    this.sub = this.auth.login(provider).subscribe(
-      (data) => {
-        console.log(data);
-        this.user=data;
-        this.isLogged = true;
-      }
-    )
+  register(provider: string) {    
   }
 
   logout() {
-    this.auth.logout().subscribe(
-      (data) => {
-        console.log(data);
-        this.user=null;
-        this.isLogged = false;
-      }
-    )
+    
   }
 
   valid(): boolean {
