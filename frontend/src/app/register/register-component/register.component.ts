@@ -148,7 +148,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     config.context = {};
     config.size = ModalSize.Small;
     config.isInverted = true;
-    config.mustScroll = true;
+    //config.mustScroll = true;
 
     this.activeModal = this.modalService
       .open(config)
