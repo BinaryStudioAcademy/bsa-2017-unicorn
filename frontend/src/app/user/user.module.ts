@@ -25,7 +25,7 @@ import { ImageUploadModule } from "angular2-image-upload";
         SuiModule,
         CommonModule,
         UserRoutingModule,
-        ImageUploadModule
+        ImageUploadModule.forRoot()
 
     ],
     declarations: [
