@@ -1,9 +1,8 @@
-<nav class="nav nav--red">
-    <ul class="nav__list">
-        <li class="nav__list__item"><a routerLink="#" routerLinkActive="active">Get task</a></li><!--
-        --><li class="nav__list__item"><a routerLink="#" routerLinkActive="active">Vendors</a></li><!--
-        --><li class="nav__list__item"><a (click)="openModal()" routerLinkActive="active">Registration</a></li><!--
-        --><li class="nav__list__item"><a routerLink="#" routerLinkActive="active">Sign in</a></li>
+<nav class="navbar">
+    <ul>
+        <li><a routerLink="#" routerLinkActive="active">Get task</a></li>
+        <li><a routerLink="#" routerLinkActive="active">Vendors</a></li>
+        <app-register [enabled]="isEnabled"></app-register>
+        <li><a routerLink="#" routerLinkActive="active">Sign in</a></li>
     </ul>
 </nav>
-<app-register [enabled]="isEnabled"></app-register>
