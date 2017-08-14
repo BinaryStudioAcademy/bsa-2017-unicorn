@@ -75,21 +75,9 @@
     <Compile Include="Interfaces\IGenericRepository.cs" />
     <Compile Include="Interfaces\IRepositoryFactory.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
-    <Compile Include="Migrations\201708100601014_InitialCreate.cs" />
-    <Compile Include="Migrations\201708100601014_InitialCreate.Designer.cs">
-      <DependentUpon>201708100601014_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201708100720438_UID nulluble.cs" />
-    <Compile Include="Migrations\201708100720438_UID nulluble.Designer.cs">
-      <DependentUpon>201708100720438_UID nulluble.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201708101212330_Authorization changed.cs" />
-    <Compile Include="Migrations\201708101212330_Authorization changed.Designer.cs">
-      <DependentUpon>201708101212330_Authorization changed.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201708140827095_Added Company into Book.cs" />
-    <Compile Include="Migrations\201708140827095_Added Company into Book.Designer.cs">
-      <DependentUpon>201708140827095_Added Company into Book.cs</DependentUpon>
+    <Compile Include="Migrations\201708141403061_InitialCreate.cs" />
+    <Compile Include="Migrations\201708141403061_InitialCreate.Designer.cs">
+      <DependentUpon>201708141403061_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -104,17 +92,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201708100601014_InitialCreate.resx">
-      <DependentUpon>201708100601014_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201708100720438_UID nulluble.resx">
-      <DependentUpon>201708100720438_UID nulluble.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201708101212330_Authorization changed.resx">
-      <DependentUpon>201708101212330_Authorization changed.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201708140827095_Added Company into Book.resx">
-      <DependentUpon>201708140827095_Added Company into Book.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201708141403061_InitialCreate.resx">
+      <DependentUpon>201708141403061_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

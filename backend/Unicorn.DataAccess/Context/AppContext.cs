@@ -24,7 +24,7 @@ namespace Unicorn.DataAccess.Context
 
         public AppContext() : base("DefaultConnection")
         {
-            Database.SetInitializer<AppContext>(new DropCreateDatabaseAlways<AppContext>());
+            Database.SetInitializer<AppContext>(new CreateDatabaseIfNotExists<AppContext>());
         }
     }
 }

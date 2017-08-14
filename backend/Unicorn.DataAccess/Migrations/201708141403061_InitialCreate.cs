@@ -19,13 +19,10 @@ namespace Unicorn.DataAccess.Migrations
                         Avatar = c.String(),
                         Rating = c.Int(nullable: false),
                         Role_Id = c.Long(),
-                        SocialAccount_Id = c.Long(),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Roles", t => t.Role_Id)
-                .ForeignKey("dbo.SocialAccounts", t => t.SocialAccount_Id)
-                .Index(t => t.Role_Id)
-                .Index(t => t.SocialAccount_Id);
+                .Index(t => t.Role_Id);
             
             CreateTable(
                 "dbo.Permissions",
@@ -53,10 +50,13 @@ namespace Unicorn.DataAccess.Migrations
                     {
                         Id = c.Long(nullable: false, identity: true),
                         IsDeleted = c.Boolean(nullable: false),
-                        FacebookUID = c.Long(nullable: false),
-                        GoogleUID = c.Long(nullable: false),
+                        Provider = c.String(),
+                        Uid = c.String(),
+                        Account_Id = c.Long(),
                     })
-                .PrimaryKey(t => t.Id);
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Accounts", t => t.Account_Id)
+                .Index(t => t.Account_Id);
             
             CreateTable(
                 "dbo.Books",
@@ -67,45 +67,32 @@ namespace Unicorn.DataAccess.Migrations
                         Date = c.DateTime(nullable: false),
                         Status = c.String(),
                         Description = c.String(),
+                        Company_Id = c.Long(),
                         Customer_Id = c.Long(),
                         Location_Id = c.Long(),
                         Vendor_Id = c.Long(),
                         Work_Id = c.Long(),
                     })
                 .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Companies", t => t.Company_Id)
                 .ForeignKey("dbo.Customers", t => t.Customer_Id)
                 .ForeignKey("dbo.Locations", t => t.Location_Id)
                 .ForeignKey("dbo.Vendors", t => t.Vendor_Id)
                 .ForeignKey("dbo.Works", t => t.Work_Id)
+                .Index(t => t.Company_Id)
                 .Index(t => t.Customer_Id)
                 .Index(t => t.Location_Id)
                 .Index(t => t.Vendor_Id)
                 .Index(t => t.Work_Id);
             
             CreateTable(
-                "dbo.Customers",
+                "dbo.Companies",
                 c => new
                     {
                         Id = c.Long(nullable: false, identity: true),
                         IsDeleted = c.Boolean(nullable: false),
-                        Person_Id = c.Long(),
-                    })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.People", t => t.Person_Id)
-                .Index(t => t.Person_Id);
-            
-            CreateTable(
-                "dbo.People",
-                c => new
-                    {
-                        Id = c.Long(nullable: false, identity: true),
-                        IsDeleted = c.Boolean(nullable: false),
-                        Birthday = c.DateTime(nullable: false),
-                        Name = c.String(),
-                        SurnameName = c.String(),
-                        MiddleName = c.String(),
-                        Gender = c.String(),
-                        Phone = c.String(),
+                        FoundationDate = c.DateTime(nullable: false),
+                        Staff = c.Int(nullable: false),
                         Account_Id = c.Long(),
                         Location_Id = c.Long(),
                     })
@@ -148,13 +135,17 @@ namespace Unicorn.DataAccess.Migrations
                 .Index(t => t.Person_Id);
             
             CreateTable(
-                "dbo.Companies",
+                "dbo.People",
                 c => new
                     {
                         Id = c.Long(nullable: false, identity: true),
                         IsDeleted = c.Boolean(nullable: false),
-                        FoundationDate = c.DateTime(nullable: false),
-                        Staff = c.Int(nullable: false),
+                        Birthday = c.DateTime(nullable: false),
+                        Name = c.String(),
+                        SurnameName = c.String(),
+                        MiddleName = c.String(),
+                        Gender = c.String(),
+                        Phone = c.String(),
                         Account_Id = c.Long(),
                         Location_Id = c.Long(),
                     })
@@ -202,6 +193,18 @@ namespace Unicorn.DataAccess.Migrations
                         Description = c.String(),
                     })
                 .PrimaryKey(t => t.Id);
+            
+            CreateTable(
+                "dbo.Customers",
+                c => new
+                    {
+                        Id = c.Long(nullable: false, identity: true),
+                        IsDeleted = c.Boolean(nullable: false),
+                        Person_Id = c.Long(),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.People", t => t.Person_Id)
+                .Index(t => t.Person_Id);
             
             CreateTable(
                 "dbo.Histories",
@@ -266,20 +269,21 @@ namespace Unicorn.DataAccess.Migrations
         {
             DropForeignKey("dbo.Books", "Work_Id", "dbo.Works");
             DropForeignKey("dbo.Books", "Vendor_Id", "dbo.Vendors");
+            DropForeignKey("dbo.Books", "Location_Id", "dbo.Locations");
+            DropForeignKey("dbo.Customers", "Person_Id", "dbo.People");
+            DropForeignKey("dbo.Books", "Customer_Id", "dbo.Customers");
+            DropForeignKey("dbo.Books", "Company_Id", "dbo.Companies");
             DropForeignKey("dbo.WorkVendors", "Vendor_Id", "dbo.Vendors");
             DropForeignKey("dbo.WorkVendors", "Work_Id", "dbo.Works");
             DropForeignKey("dbo.Works", "Subcategory_Id", "dbo.Subcategories");
             DropForeignKey("dbo.Subcategories", "Category_Id", "dbo.Categories");
             DropForeignKey("dbo.Vendors", "Person_Id", "dbo.People");
+            DropForeignKey("dbo.People", "Location_Id", "dbo.Locations");
+            DropForeignKey("dbo.People", "Account_Id", "dbo.Accounts");
             DropForeignKey("dbo.Vendors", "Company_Id", "dbo.Companies");
             DropForeignKey("dbo.Companies", "Location_Id", "dbo.Locations");
             DropForeignKey("dbo.Companies", "Account_Id", "dbo.Accounts");
-            DropForeignKey("dbo.Books", "Location_Id", "dbo.Locations");
-            DropForeignKey("dbo.Customers", "Person_Id", "dbo.People");
-            DropForeignKey("dbo.People", "Location_Id", "dbo.Locations");
-            DropForeignKey("dbo.People", "Account_Id", "dbo.Accounts");
-            DropForeignKey("dbo.Books", "Customer_Id", "dbo.Customers");
-            DropForeignKey("dbo.Accounts", "SocialAccount_Id", "dbo.SocialAccounts");
+            DropForeignKey("dbo.SocialAccounts", "Account_Id", "dbo.Accounts");
             DropForeignKey("dbo.Accounts", "Role_Id", "dbo.Roles");
             DropForeignKey("dbo.PermissionAccounts", "Account_Id", "dbo.Accounts");
             DropForeignKey("dbo.PermissionAccounts", "Permission_Id", "dbo.Permissions");
@@ -287,33 +291,34 @@ namespace Unicorn.DataAccess.Migrations
             DropIndex("dbo.WorkVendors", new[] { "Work_Id" });
             DropIndex("dbo.PermissionAccounts", new[] { "Account_Id" });
             DropIndex("dbo.PermissionAccounts", new[] { "Permission_Id" });
+            DropIndex("dbo.Customers", new[] { "Person_Id" });
             DropIndex("dbo.Subcategories", new[] { "Category_Id" });
             DropIndex("dbo.Works", new[] { "Subcategory_Id" });
-            DropIndex("dbo.Companies", new[] { "Location_Id" });
-            DropIndex("dbo.Companies", new[] { "Account_Id" });
-            DropIndex("dbo.Vendors", new[] { "Person_Id" });
-            DropIndex("dbo.Vendors", new[] { "Company_Id" });
             DropIndex("dbo.People", new[] { "Location_Id" });
             DropIndex("dbo.People", new[] { "Account_Id" });
-            DropIndex("dbo.Customers", new[] { "Person_Id" });
+            DropIndex("dbo.Vendors", new[] { "Person_Id" });
+            DropIndex("dbo.Vendors", new[] { "Company_Id" });
+            DropIndex("dbo.Companies", new[] { "Location_Id" });
+            DropIndex("dbo.Companies", new[] { "Account_Id" });
             DropIndex("dbo.Books", new[] { "Work_Id" });
             DropIndex("dbo.Books", new[] { "Vendor_Id" });
             DropIndex("dbo.Books", new[] { "Location_Id" });
             DropIndex("dbo.Books", new[] { "Customer_Id" });
-            DropIndex("dbo.Accounts", new[] { "SocialAccount_Id" });
+            DropIndex("dbo.Books", new[] { "Company_Id" });
+            DropIndex("dbo.SocialAccounts", new[] { "Account_Id" });
             DropIndex("dbo.Accounts", new[] { "Role_Id" });
             DropTable("dbo.WorkVendors");
             DropTable("dbo.PermissionAccounts");
             DropTable("dbo.Reviews");
             DropTable("dbo.Histories");
+            DropTable("dbo.Customers");
             DropTable("dbo.Categories");
             DropTable("dbo.Subcategories");
             DropTable("dbo.Works");
-            DropTable("dbo.Companies");
+            DropTable("dbo.People");
             DropTable("dbo.Vendors");
             DropTable("dbo.Locations");
-            DropTable("dbo.People");
-            DropTable("dbo.Customers");
+            DropTable("dbo.Companies");
             DropTable("dbo.Books");
             DropTable("dbo.SocialAccounts");
             DropTable("dbo.Roles");

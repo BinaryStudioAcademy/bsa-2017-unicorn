@@ -13,7 +13,7 @@ namespace Unicorn.DataAccess.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201708100601014_InitialCreate"; }
+            get { return "201708141403061_InitialCreate"; }
         }
         
         string IMigrationMetadata.Source

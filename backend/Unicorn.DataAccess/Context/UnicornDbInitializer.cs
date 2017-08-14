@@ -5,7 +5,7 @@ using Unicorn.DataAccess.Entities;
 
 namespace Unicorn.DataAccess.Context
 {
-    public class UnicornDbInitializer : DropCreateDatabaseAlways<AppContext>
+    public class UnicornDbInitializer : CreateDatabaseIfNotExists<AppContext>
     {
         protected override void Seed(AppContext context)
         {
@@ -202,7 +202,7 @@ namespace Unicorn.DataAccess.Context
             {
                 Id = 1,
                 IsDeleted = false,
-                Uid = 1,
+                Uid = "1",
                 Provider = "Microsoft",
                 Account = account1
             };
@@ -211,7 +211,7 @@ namespace Unicorn.DataAccess.Context
             {
                 Id = 2,
                 IsDeleted = false,
-                Uid = 2,
+                Uid = "2",
                 Provider = "Facebook",
                 Account = account2
             };
@@ -220,7 +220,7 @@ namespace Unicorn.DataAccess.Context
             {
                 Id = 3,
                 IsDeleted = false,
-                Uid = 3,
+                Uid = "3",
                 Provider = "Google",
                 Account = account3
             };
@@ -229,7 +229,7 @@ namespace Unicorn.DataAccess.Context
             {
                 Id = 4,
                 IsDeleted = false,
-                Uid = 4,
+                Uid = "4",
                 Provider = "Google",
                 Account = account4
             };
@@ -238,7 +238,7 @@ namespace Unicorn.DataAccess.Context
             {
                 Id = 5,
                 IsDeleted = false,
-                Uid = 5,
+                Uid = "5",
                 Provider = "Google",
                 Account = account5
             };
@@ -247,7 +247,7 @@ namespace Unicorn.DataAccess.Context
             {
                 Id = 6,
                 IsDeleted = false,
-                Uid = 6,
+                Uid = "6",
                 Provider = "Facebook",
                 Account = account6
             };
@@ -256,7 +256,7 @@ namespace Unicorn.DataAccess.Context
             {
                 Id = 7,
                 IsDeleted = false,
-                Uid = 6,
+                Uid = "7",
                 Provider = "Google",
                 Account = account7
             };
@@ -265,7 +265,7 @@ namespace Unicorn.DataAccess.Context
             {
                 Id = 7,
                 IsDeleted = false,
-                Uid = 8,
+                Uid = "8",
                 Provider = "Facbook",
                 Account = account7
             };
@@ -274,7 +274,7 @@ namespace Unicorn.DataAccess.Context
             {
                 Id = 7,
                 IsDeleted = false,
-                Uid = 9,
+                Uid = "9",
                 Provider = "Twitter",
                 Account = account7
             };
@@ -283,7 +283,7 @@ namespace Unicorn.DataAccess.Context
             {
                 Id = 8,
                 IsDeleted = false,
-                Uid = 10,
+                Uid = "10",
                 Provider = "Google",
                 Account = account8
             };
@@ -292,7 +292,7 @@ namespace Unicorn.DataAccess.Context
             {
                 Id = 9,
                 IsDeleted = false,
-                Uid = 11,
+                Uid = "11",
                 Provider = "Facebook",
                 Account = account9
             };

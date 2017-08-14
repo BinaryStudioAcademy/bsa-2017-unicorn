@@ -17,7 +17,7 @@ namespace Unicorn.Controllers
 
         // GET: membership?provider=facebook&uid=123456
         [HttpHead]
-        public async Task<HttpResponseMessage> Get(string provider, long uid)
+        public async Task<HttpResponseMessage> Get(string provider, string uid)
         {
             HttpResponseMessage response = null;
 

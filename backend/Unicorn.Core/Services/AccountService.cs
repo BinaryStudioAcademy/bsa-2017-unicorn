@@ -22,7 +22,6 @@ namespace Unicorn.Core.Services
             List<AccountDTO> allaccountsData = new List<AccountDTO>();
             foreach (var account in accountlist)
             {
-                var role = await _unitOfWork.RoleRepository.GetByIdAsync(account.Id);
                 var accountDto = new AccountDTO()
                 {
                     Id = account.Id,
@@ -33,7 +32,7 @@ namespace Unicorn.Core.Services
                     EmailConfirmed = account.EmailConfirmed,
                     SocialAccounts = account.SocialAccounts.Select(x => new SocialAccountDTO { Id = x.Id, Provider = x.Provider, Uid = x.Uid}).ToList(),
                     Permissions = account.Permissions.Select(x => new PermissionDTO { Id = x.Id, Name = x.Name }).ToList(),
-                    Role = new RoleDTO { Id = role.Id, Name = role.Name }
+                    Role = new RoleDTO { Id = account.Role.Id, Name = account.Role.Name }
                 };
                 allaccountsData.Add(accountDto);
             }
@@ -43,7 +42,6 @@ namespace Unicorn.Core.Services
         public async Task<AccountDTO> GetById(long id)
         {
             var account = await _unitOfWork.AccountRepository.GetByIdAsync(id);
-            var role = await _unitOfWork.RoleRepository.GetByIdAsync(id);
             var accountDto = new AccountDTO()
             {
                 Id = account.Id,
@@ -54,7 +52,7 @@ namespace Unicorn.Core.Services
                 EmailConfirmed =account.EmailConfirmed,
                 SocialAccounts = account.SocialAccounts.Select(x => new SocialAccountDTO { Id = x.Id, Provider = x.Provider, Uid= x.Uid}).ToList(),
                 Permissions = account.Permissions.Select(x => new PermissionDTO { Id = x.Id, Name =x.Name}).ToList(),
-                Role = new RoleDTO {Id = role.Id, Name = role.Name}
+                Role = new RoleDTO { Id = account.Role.Id, Name = account.Role.Name }
             };
             return accountDto;
         }      

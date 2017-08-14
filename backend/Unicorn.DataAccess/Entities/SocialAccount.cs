@@ -8,6 +8,6 @@ namespace Unicorn.DataAccess.Entities
         public bool IsDeleted { get; set; }
         public Account Account { get; set; }
         public string Provider { get; set; }
-        public long Uid { get; set; }
+        public string Uid { get; set; }
     }
 }
