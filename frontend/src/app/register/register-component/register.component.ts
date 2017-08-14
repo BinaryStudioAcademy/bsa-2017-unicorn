@@ -65,7 +65,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     console.log('status: ' + resp.status);
     switch(resp.status) {
       case 204: this.isLogged = true; break;
-      case 200: console.log(200); break;
+      case 200: localStorage.setItem('token', resp.body); break;
       default: this.closeModal(); break;
     }
   }
