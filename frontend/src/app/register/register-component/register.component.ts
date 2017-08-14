@@ -34,7 +34,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   mode: string;
   modalSize: string;
-  error: boolean;
+  error: boolean = false;
 
   social: any;
   sub: any;
@@ -87,11 +87,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.afAuth.auth.signInWithPopup(
       new firebase.auth.GoogleAuthProvider())
       .then(x => {
-        let uid = x.user.providerData[0].uid;
-        let provider = x.additionalUserInfo.providerId;
-        this.checkRegistration(provider, uid);
-        //console.log(x);
-        //this.isLogged = true;
+         console.log(x);
+        // let uid = x.user.providerData[0].uid;
+        // let provider = x.additionalUserInfo.providerId;
+        // this.checkRegistration(provider, uid);
       })
       .catch(err => {
         this.handleErrorLogin();
@@ -105,7 +104,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
         console.log(x);
       })
       .catch(err => {
-        alert(err);
+        this.handleErrorLogin();
       });
   }
 
@@ -116,22 +115,22 @@ export class RegisterComponent implements OnInit, OnDestroy {
         console.log(x);
       })
       .catch(err => {
-        alert(err);
+        this.handleErrorLogin();
       });
   }
 
   ngOnInit() {
     this.mode = 'date';
-    this.modalSize = 'tiny';
+    //this.modalSize = 'tiny';
 
     this.authState = this.afAuth.authState;
     this.authState.subscribe(user => {
       if (user) {
-        //this.isLogged = true;
         this.currentUser = user;
-      } else {
-        this.currentUser = null;
-      }
+        let uid = user.providerData[0].providerId;
+        let provider = user.uid;
+        this.checkRegistration(provider, uid);
+      } 
     });
   }
 

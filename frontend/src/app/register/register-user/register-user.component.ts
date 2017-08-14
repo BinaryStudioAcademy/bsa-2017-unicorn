@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 import * as firebase from 'firebase/app';
+import { RegisterService } from '../../services/register.service';
 
 import { Customer } from '../models/customer';
 
@@ -22,7 +23,7 @@ export class RegisterUserComponent implements OnInit {
   lastName: string;
   email: string;
 
-  constructor() { }
+  constructor(private registerService: RegisterService) { }
 
   ngOnInit() {
     this.mode = 'date';
@@ -54,6 +55,7 @@ export class RegisterUserComponent implements OnInit {
       console.log('valid');
       let regInfo = this.aggregateInfo();
       console.log(regInfo);
+      this.registerService.confirmCustomer(regInfo);
     } else {
       this.error = true;
     }

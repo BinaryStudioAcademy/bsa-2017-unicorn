@@ -14,7 +14,7 @@ export class RegisterService {
     private dataService: DataService) { }
 
   checkAuthorized(provider: string, uid: string): Promise<any> {
-    let url = `membership?provider=${provider}&uid=123`;
+    let url = `membership?provider=${provider}&uid=111`;
     return this.dataService.getFullRequest<string>(url);
   }
 
