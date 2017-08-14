@@ -80,7 +80,10 @@
     </div>
   </div>
   <div class="row container">
-    <div class="square">
+    <div class="map">
+      <agm-map [latitude]="lat" [longitude]="lng" [zoom]="18">
+      <agm-marker [latitude]="lat" [longitude]="lng" [title]="markerTitle"></agm-marker>
+    </agm-map>
     </div>
   </div>
 </div>
