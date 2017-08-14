@@ -8,5 +8,6 @@ namespace Unicorn.Core.Interfaces
     {
         Task<IEnumerable<RoleDTO>> GetAllAsync();
         Task<RoleDTO> GetById(int id);
+        Task<RoleDTO> GetByUserId(long uid);
     }
 }

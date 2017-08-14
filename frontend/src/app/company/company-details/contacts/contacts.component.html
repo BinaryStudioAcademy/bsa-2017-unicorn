@@ -1,64 +1,58 @@
 <div class="flex-contacts">
-  <div class="contact-desc">
-    <h3>Contact us to discuss your task and how we can help</h3>
-  </div>
-  <div class="ui cards contacts">
-    <div class="card">
-      <div class="content">
-        <p class="header">Phone</p>
-        <div class="description">
-          <p>+1 415 670 9788</p>
-          <p>+7 965 670 9788</p>
-          <p>+3 805 070 9788</p>
-        </div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="content">
-        <p class="header">Email</p>
-        <div class="description">
-          <p>Email: turbocat_9000@gmail.com</p>
-        </div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="content">
-        <p class="header">Messangers</p>
-        <div class="description">
-          <p>Skype: turbocat9000</p>
-        </div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="content">
-        <p class="header">Social</p>
-        <div class="description">
-          <p>Facebook: turbocat9000</p>
-        </div>
-      </div>
+  <div class="header" style="display: flex; justify-content: space-between; align-items: center;">
+    <div>Our contacts</div>
+    <div>
+      <button class="ui active button"> <i class="comments icon"></i> START A CHAT </button>
     </div>
   </div>
-</div>
-
-<div class="flex-buttons">
-  <div>
-    <button class="ui active button" (click)="openModal()"><i class="marker icon"></i> Find us </button>
+  <div class="phones">
+    <div class="header">Phones</div>
+    <div class="description flex-style">
+      <a class="ui label contact" style="margin-left: 0;">
+          <i class="colored call icon"></i>
+        +1 415 670 9788
+      </a>
+      <a class="ui label contact">
+            <i class="colored call icon"></i>
+          +7 965 670 9788
+      </a>
+      <a class="ui label contact">
+          <i class="colored call icon"></i>
+        +3 805 070 9788
+      </a>
+    </div>
   </div>
-  <div>
-    <button class="ui active button" (click)="openModal()"> <i class="comments icon"></i> Start a chat </button>
+  <div class="ui divider"></div>
+  <div class="emails">
+    <div class="header">Emails</div>
+    <div class="description flex-style">
+        <a class="ui label contact">
+            <i class="colored mail icon"></i>
+        turbocat_9000@gmail.com</a>
+    </div>
   </div>
-</div>
-
-
-<ng-template let-context let-modal="modal" #modalTemplate>
-  <div class="header">Our office</div>
-  <div class="content">
-    <agm-map [latitude]="lat" [longitude]="lng" [zoom]="18">
+  <div class="ui divider"></div>
+  <div class="messangers">
+    <div class="header">Messangers</div>
+    <div class="description flex-style">
+        <a class="ui label contact">
+            <i class="colored skype icon"></i>
+      turbocat9000</a>
+    </div>
+  </div>
+  <div class="ui divider"></div>
+  <div class="socials">
+    <div class="header">Socials</div>
+    <div class="description flex-style">
+        <a class="ui label contact">
+            <i class="colored facebook icon"></i>
+      turbocat9000</a>
+    </div>
+  </div>
+  <div class="ui divider"></div>
+  <div class="map">
+    <agm-map [latitude]="lat" [longitude]="lng" [zoom]="18" style="height: 300px;">
       <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
     </agm-map>
   </div>
-  <div class="actions">
-    <!-- <button class="ui red button" (click)="modal.deny('denied')">Cancel</button> -->
-    <button class="ui green button" (click)="modal.approve('approved')" autofocus>OK</button>
-  </div>
-</ng-template>
+</div>
