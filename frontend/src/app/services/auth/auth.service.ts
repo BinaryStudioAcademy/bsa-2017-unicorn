@@ -9,6 +9,7 @@ import { User } from './models/user';
 @Injectable()
 export class AuthService {
   constructor(public afAuth: AngularFireAuth, public httpService: DataService) {
+    httpService.setHeader('Content-Type', 'application/json');
   }
 
   private initializeUser(data): User {
@@ -60,6 +61,6 @@ export class AuthService {
   }
 
   public logout() {
-    this.afAuth.auth.signOut();    
+    this.afAuth.auth.signOut();
   }
 }
