@@ -20,17 +20,17 @@ import { CompanyEditComponent } from './company-edit/company-edit.component';
 import { DataService } from "../services/data.service";
 import { CompanyService } from "../services/company.service";
 import { NguiMapModule } from "@ngui/map";
-import { MapComponent } from "../map/map.component";
+import { MapModule } from "../map/map.module";
 
 @NgModule({
   imports: [    
-    NguiMapModule.forRoot({apiUrl: 'https://maps.google.com/maps/api/js?key='+ environment.googleMapsKey}),
     CommonModule,
     CompanyRoutingModule,
     FormsModule,
     BrowserModule,
     SuiModule,
-    BookModule  
+    BookModule,
+    MapModule 
   ],
   declarations: [
     CompanyComponent,
@@ -39,9 +39,8 @@ import { MapComponent } from "../map/map.component";
     ReviewsComponent,
     VendorsComponent,
     ContactsComponent,
-    CompanyEditComponent,
-    MapComponent 
-      ],
+    CompanyEditComponent
+  ],
   providers: [
     DataService,
     CompanyService

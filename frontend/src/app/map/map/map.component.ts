@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { MapModel } from "../models/map.model";
+
+import { MapModel } from "../../models/map.model";
 
 @Component({
   selector: 'app-map',
