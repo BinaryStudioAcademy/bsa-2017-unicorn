@@ -26,7 +26,7 @@
   <div class="emails">
     <div class="header">Emails</div>
     <div class="description flex-style">
-        <a class="ui label contact">
+      <a class="ui label contact">
             <i class="colored mail icon"></i>
         turbocat_9000@gmail.com</a>
     </div>
@@ -35,7 +35,7 @@
   <div class="messangers">
     <div class="header">Messangers</div>
     <div class="description flex-style">
-        <a class="ui label contact">
+      <a class="ui label contact">
             <i class="colored skype icon"></i>
       turbocat9000</a>
     </div>
@@ -44,15 +44,13 @@
   <div class="socials">
     <div class="header">Socials</div>
     <div class="description flex-style">
-        <a class="ui label contact">
+      <a class="ui label contact">
             <i class="colored facebook icon"></i>
       turbocat9000</a>
     </div>
   </div>
   <div class="ui divider"></div>
-  <div class="map">
-    <agm-map [latitude]="lat" [longitude]="lng" [zoom]="18" style="height: 300px;">
-      <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
-    </agm-map>
+  <div class="map">    
+          <app-map [inputMap]="map"></app-map>
   </div>
 </div>

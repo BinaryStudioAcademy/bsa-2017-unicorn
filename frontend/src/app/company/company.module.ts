@@ -16,19 +16,21 @@ import { Company } from "../models/company.model";
 import { Review } from "../models/review.model";
 import { Vendor } from "../models/vendor";
 import { environment } from "../../environments/environment";
-import { AgmCoreModule } from "@agm/core";
+import { CompanyEditComponent } from './company-edit/company-edit.component';
+import { DataService } from "../services/data.service";
+import { CompanyService } from "../services/company.service";
+import { NguiMapModule } from "@ngui/map";
+import { MapComponent } from "../map/map.component";
 
 @NgModule({
-  imports: [
-    AgmCoreModule.forRoot({
-      apiKey: environment.googleMapsKey
-    }), 
+  imports: [    
+    NguiMapModule.forRoot({apiUrl: 'https://maps.google.com/maps/api/js?key='+ environment.googleMapsKey}),
     CommonModule,
     CompanyRoutingModule,
     FormsModule,
     BrowserModule,
     SuiModule,
-    BookModule      
+    BookModule  
   ],
   declarations: [
     CompanyComponent,
@@ -36,7 +38,13 @@ import { AgmCoreModule } from "@agm/core";
     GeneralInformationComponent,
     ReviewsComponent,
     VendorsComponent,
-    ContactsComponent
+    ContactsComponent,
+    CompanyEditComponent,
+    MapComponent 
+      ],
+  providers: [
+    DataService,
+    CompanyService
   ]
 })
 export class CompanyModule { }

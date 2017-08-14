@@ -32,12 +32,12 @@ import { MenuComponent } from './menu/menu.component';
 
 
 @NgModule({
-  declarations: [
+  declarations: [    
     AppComponent,
     ShellComponent,
     MenuComponent
   ],
-  imports: [
+  imports: [    
     SuiModule,    
     BrowserModule,
     HttpClientModule,
