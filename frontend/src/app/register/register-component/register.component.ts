@@ -141,7 +141,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.activeModal.deny(''); 
   }
 
-  public openModal() {
+  private openModal() {
     const config = new TemplateModalConfig<IContext, string, string>(this.modalTemplate);
     let size = 'tiny';
     config.closeResult = "closed!";
