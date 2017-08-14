@@ -10,6 +10,7 @@ import { RegisterService } from '../../services/register.service';
 
 import { SuiModalService, TemplateModalConfig
   , ModalTemplate, ModalSize, SuiActiveModal } from 'ng2-semantic-ui';
+  import 'rxjs/add/operator/map';
 
 import { RegisterInfo } from '../models/register-info';
 
@@ -63,14 +64,16 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   saveToken(token: string) {
-    localStorage.setItem('Token', token);
+    console.log('token: ' + token);
+    localStorage.setItem('token', token);
   }
 
   handleResponse(resp: any): void {
+    console.log('resp: ' + resp);
     console.log('status: ' + resp.status);
     switch (resp.status) {
       case 204: this.isLogged = true; this.error = false; break;
-      case 200: this.saveToken(resp.headers.get('Token')); this.error = false; break;
+      case 200: this.saveToken(resp.headers.get('token')); console.log(resp.headers); this.error = false; break;
       default: this.handleErrorLogin(); break;
     }
   }
@@ -78,7 +81,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   checkRegistration(provider: string, uid: string) {
     this.registerService
       .checkAuthorized(provider, uid)
-      .then(resp => this.handleResponse(resp))
+      .then(resp => {this.handleResponse(resp)})
       .catch(err => {
         console.log('error: ' + err.status);
         this.handleErrorLogin();

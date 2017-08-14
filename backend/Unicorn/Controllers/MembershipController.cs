@@ -1,10 +1,12 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using Unicorn.Core.Interfaces;
 using Unicorn.Models;
+using Unicorn.Shared.DTOs.Register;
 
 namespace Unicorn.Controllers
 {
@@ -12,10 +14,14 @@ namespace Unicorn.Controllers
     public class MembershipController : ApiController
     {
         private IAuthService authService;
+        private ICustomerService customerService;
+        private IVendorService vendorService;
 
-        public MembershipController(IAuthService authService)
+        public MembershipController(IAuthService authService, ICustomerService customerService, IVendorService vendorService)
         {
             this.authService = authService;
+            this.customerService = customerService;
+            this.vendorService = vendorService;
         }
 
         // POST: Membership
@@ -31,7 +37,8 @@ namespace Unicorn.Controllers
             }
 
             //string token = await authService.GenerateJwtTokenAsync(provider, uid);
-            string token = "123_TEST";
+            //string token = "123_TEST";
+            string token = null;
 
             if (token == null)
             {
@@ -41,10 +48,33 @@ namespace Unicorn.Controllers
             }
 
             response = Request.CreateResponse(HttpStatusCode.OK);
+            response.Headers.Add("Access-Control-Expose-Headers", "Token");
             response.Headers.Add("Token", token);
 
             return response;
 
+        }
+
+        [Route("membership/customer")]
+        public async Task<CustomerRegisterDTO> ConfirmCustomer(CustomerRegisterDTO customer)
+        {
+
+            
+            return customer;
+        }
+
+        [Route("membership/vendor")]
+        public async Task<VendorRegisterDTO> ConfirmVendor(VendorRegisterDTO vendor)
+        {
+            
+            return vendor;
+        }
+
+        [Route("membership/company")]
+        public async Task<CompanyRegisterDTO> ConfirmCompany(CompanyRegisterDTO company)
+        {
+            
+            return company;
         }
     }
 }

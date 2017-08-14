@@ -16,21 +16,21 @@ export class RegisterService {
     }
 
   checkAuthorized(provider: string, uid: string): Promise<any> {
-    let url = `membership?provider=${provider}&uid=${uid}`;
-    console.log(uid);
-    return this.dataService.postFullRequest<string>('membership', {provider: provider, uid: uid});
+    //let url = `membership?provider=${provider}&uid=${uid}`;
+    //console.log(uid);
+    return this.dataService.postFullRequest<any>('membership', {provider: provider, uid: uid});
   }
 
   confirmCustomer(customer: Customer): Promise<any> {
-    return null;
+    return this.dataService.postFullRequest('membership/customer', customer);
   }
 
   confirmVendor(vendor: Vendor): Promise<any> {
-    return null;
+    return this.dataService.postFullRequest('membership/vendor', vendor);
   }
 
   confirmCompany(company: Company): Promise<any> {
-    return null;
+    return this.dataService.postFullRequest('membership/company', company);
   }
 
 }
