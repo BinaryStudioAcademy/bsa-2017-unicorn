@@ -36,6 +36,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
   modalSize: string;
   error: boolean = false;
 
+  public roles: {[role: string]: boolean} = {};
+
   social: any;
   sub: any;
 
@@ -119,6 +121,18 @@ export class RegisterComponent implements OnInit, OnDestroy {
       });
   }
 
+  clearRoles() {
+    for (let key in this.roles) {
+      this.roles[key] = false;
+    }
+  }
+
+  initRoles() {
+    this.roles['customer'] = false;
+    this.roles['vendor'] = false;
+    this.roles['company'] = false;
+  }
+
   ngOnInit() {
     this.mode = 'date';
     //this.modalSize = 'tiny';
@@ -132,6 +146,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
         this.checkRegistration(provider, uid);
       } 
     });
+
+    this.initRoles();
   }
 
   ngOnDestroy() {
@@ -148,7 +164,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
     config.context = {};
     config.size = ModalSize.Small;
     config.isInverted = true;
-    //config.mustScroll = true;
 
     this.activeModal = this.modalService
       .open(config)
@@ -160,6 +175,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
         this.isCustomer = false;
         this.roleSelected = false;
         this.social = undefined;
+        this.clearRoles();
       });
 
     this.afAuth.auth.signOut();
@@ -167,11 +183,13 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   selectRole(role: string) {
-    switch (role) {
-      case 'customer': this.isCustomer = true; break;
-      case 'vendor': this.isVendor = true; break;
-      case 'company': this.isCompany = true; break;
-    }
-    this.roleSelected = true;
+    // switch (role) {
+    //   case 'customer': this.isCustomer = true; break;
+    //   case 'vendor': this.isVendor = true; break;
+    //   case 'company': this.isCompany = true; break;
+    // }
+    // this.roleSelected = true;
+    this.clearRoles();
+    this.roles[role] = true;
   }
 }

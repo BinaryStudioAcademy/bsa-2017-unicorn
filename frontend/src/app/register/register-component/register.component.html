@@ -9,7 +9,7 @@
         </div>
         <div class="content">
 
-            <div class="social-buttons">
+            <div class="social-buttons" *ngIf="!isLogged">
                 <button class="ui facebook button" (click)="loginWithFacebook()">
         <i class="facebook icon"></i>
         Facebook
@@ -33,8 +33,8 @@
                 </sui-message>
             </div>
 
-            <div *ngIf="isLogged && !roleSelected">
-                <div class="ui segment">
+            <div *ngIf="isLogged">
+                <div class="roles">
                     <div class="question-lbl">
                         <label><b>Who are you?</b></label>
                     </div>
@@ -47,9 +47,9 @@
 
             </div>
 
-            <app-register-user *ngIf="isCustomer" [social]="currentUser"></app-register-user>
-            <app-register-vendor *ngIf="isVendor" [social]="currentUser"></app-register-vendor>
-            <app-register-company *ngIf="isCompany" [social]="currentUser"></app-register-company>
+            <app-register-user *ngIf="roles['customer']" [social]="currentUser"></app-register-user>
+            <app-register-vendor *ngIf="roles['vendor']" [social]="currentUser"></app-register-vendor>
+            <app-register-company *ngIf="roles['company']" [social]="currentUser"></app-register-company>
         </div>
     </ng-template>
 </div>
