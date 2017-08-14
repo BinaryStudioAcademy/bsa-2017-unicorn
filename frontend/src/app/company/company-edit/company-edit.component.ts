@@ -8,6 +8,7 @@ import { CompanyService } from "../../services/company.service";
   styleUrls: ['./company-edit.component.sass']
 })
 export class CompanyEditComponent implements OnInit {
+  isDimmed: boolean = false;
   company: Company;
   constructor(private companyService: CompanyService) { }
 
