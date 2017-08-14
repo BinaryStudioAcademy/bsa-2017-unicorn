@@ -1,4 +1,6 @@
 import { Component, OnInit,Input,OnDestroy  } from '@angular/core';
+import { FormsModule }   from '@angular/forms';
+
 import {SuiModule} from 'ng2-semantic-ui';
 import { ActivatedRoute, Params } from '@angular/router';
 import 'rxjs/add/operator/switchMap';
