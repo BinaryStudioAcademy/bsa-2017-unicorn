@@ -12,14 +12,30 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
+  private saveJWT(jwt: string) {
+    if (jwt) {
+      localStorage.setItem('token', jwt);
+    }
+  }
+
   loginWithGoogle() {
-    this.auth.loginWithGoogle();
+    this.auth.loginWithGoogle()
+      .then(resp => {
+        if (resp.status == 200) {
+          this.saveJWT(resp.headers.get('Token'));
+        }
+      })
+      .catch(err => {
+        alert(err);
+      });
   }
 
   loginWithFacebook() {
     this.auth.loginWithFacebook()
-      .then(user => {
-        console.log(user);
+      .then(resp => {
+        if (resp.status == 200) {
+          this.saveJWT(resp.headers.get('Token'));
+        }
       })
       .catch(err => {
         alert(err);
@@ -27,14 +43,31 @@ export class LoginComponent implements OnInit {
   }
 
   loginWithGithub() {
-    this.auth.loginWithGithub();
+    this.auth.loginWithGithub()
+      .then(resp => {
+        if (resp.status == 200) {
+          this.saveJWT(resp.headers.get('Token'));
+        }
+      })
+      .catch(err => {
+        alert(err);
+      });
   }
 
   loginWithTwitter() {
-    this.auth.loginWithTwitter();
+    this.auth.loginWithTwitter()
+      .then(resp => {
+        if (resp.status == 200) {
+          this.saveJWT(resp.headers.get('Token'));
+        }
+      })
+      .catch(err => {
+        alert(err);
+      });
   }
 
   logOut() {
+    localStorage.removeItem('token');
     this.auth.logout();
   }
 

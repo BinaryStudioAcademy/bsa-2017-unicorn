@@ -19,12 +19,6 @@ export class AuthService {
     return user;
   }
 
-  private saveJWT(jwt: string) {
-    if (jwt) {
-      localStorage.setItem('token', jwt);
-    }
-  }
-
   public loginWithGoogle() {
     return this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider())
       .then(data => {
@@ -66,7 +60,6 @@ export class AuthService {
   }
 
   public logout() {
-    this.afAuth.auth.signOut();
-    localStorage.removeItem('token');
+    this.afAuth.auth.signOut();    
   }
 }

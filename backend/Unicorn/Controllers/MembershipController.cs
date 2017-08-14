@@ -16,7 +16,7 @@ namespace Unicorn.Controllers
         }
 
         // POST: Membership
-        [HttpGet]
+        [HttpPost]
         public async Task<HttpResponseMessage> Post(string provider, string uid)
         {
             HttpResponseMessage response = null;
@@ -27,7 +27,8 @@ namespace Unicorn.Controllers
                 return response;
             }
 
-            string token = await authService.GenerateJwtTokenAsync(provider, uid);
+            //string token = await authService.GenerateJwtTokenAsync(provider, uid);
+            string token = "123_TEST";
 
             if (token == null)
             {
