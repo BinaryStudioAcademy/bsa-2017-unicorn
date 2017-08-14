@@ -20,7 +20,11 @@ export class VendorProfileContactsComponent implements OnInit, AfterViewChecked 
   constructor() { }
 
   ngAfterViewChecked() {
-    this.map.triggerResize();
+    this.map.triggerResize()
+      .then(() => {
+        this.map.latitude = this.lat;
+        this.map.longitude = this.lng;
+      });
   }
 
   ngOnInit() {
