@@ -25,16 +25,14 @@ namespace Unicorn.Core.Services
             return Mapper.Map<IEnumerable<Customer>, List<CustomerDTO>>(await _unitOfWork.CustomerRepository.GetAllAsync());
         }
 
-        public async Task<CustomerDTO> GetById(int id)
+        public async Task<CustomerDTO> GetById(long id)
         {
             var customer = await _unitOfWork.CustomerRepository.GetByIdAsync(id);
-            var person = await _unitOfWork.PersonRepository.GetByIdAsync(id);
-            var books = _bookservice.GetAllAsync();
-
+            var person = await _unitOfWork.PersonRepository.GetByIdAsync(customer.Person.Id);
+            var books = _unitOfWork.BookRepository.GetByIdAsync(customer.Id);
             var customerDto = new CustomerDTO()
             {
                 Id = customer.Id,
-                Books = (ICollection<BookDTO>)books,
                 Person = new PersonDTO()
                 {
                     Id = person.Id,
@@ -47,7 +45,5 @@ namespace Unicorn.Core.Services
             };
             return customerDto;
         }
-
-
     }
 }

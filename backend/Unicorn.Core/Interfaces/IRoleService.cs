@@ -7,7 +7,6 @@ namespace Unicorn.Core.Interfaces
     public interface IRoleService
     {
         Task<IEnumerable<RoleDTO>> GetAllAsync();
-        Task<RoleDTO> GetById(int id);
-        Task<RoleDTO> GetByUserId(long uid);
+        Task <RoleDTO> GetByIdAsync(long id);
     }
 }

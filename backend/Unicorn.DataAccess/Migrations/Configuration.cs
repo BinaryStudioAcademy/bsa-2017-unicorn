@@ -10,6 +10,7 @@ namespace Unicorn.DataAccess.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
+            ContextKey = "Unicorn.DataAccess.Context.AppContext";
         }
 
         protected override void Seed(Unicorn.DataAccess.Context.AppContext context)

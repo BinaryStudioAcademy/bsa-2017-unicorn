@@ -23,7 +23,7 @@ namespace Unicorn.Core.Services
             return Mapper.Map<IEnumerable<Work>, List<WorkDTO>>(await _unitOfWork.WorkRepository.GetAllAsync());
         }
 
-        public async Task<WorkDTO> GetById(int id)
+        public async Task<WorkDTO> GetById(long id)
         {
             var work = await _unitOfWork.WorkRepository.GetByIdAsync(id);
             var subcategory = await _unitOfWork.SubcategoryRepository.GetByIdAsync(id);

@@ -7,6 +7,6 @@ namespace Unicorn.Core.Interfaces
     public interface IBookService
     {
         Task<IEnumerable<BookDTO>> GetAllAsync();
-        Task<BookDTO> GetById(int id);
+        Task<BookDTO> GetById(long id);
     }
 }
