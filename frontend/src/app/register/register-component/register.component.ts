@@ -61,7 +61,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   saveToken(token: string) {
-    localStorage.setItem('token', token);
+    localStorage.setItem('Token', token);
   }
 
   handleResponse(resp: any): void {

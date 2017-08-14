@@ -69,6 +69,13 @@ export class DataService {
       .catch(this.handleError);
   }
 
+  postFullRequest<T>(url: string, payload: Object): Promise<T> {
+    return this.http
+      .post<T>(this.buildUrl(url), this.prepareData(payload), {headers: this.getHeaders(), observe: 'response'})
+      .toPromise()
+      .catch(this.handleError);
+  }
+
   putRequest<T>(url: string, payload: Object): Promise<T> {
     return this.http
       .put<T>(this.buildUrl(url), this.prepareData(payload), {headers: this.getHeaders()})
@@ -76,9 +83,23 @@ export class DataService {
       .catch(this.handleError);
   }
 
+  putFullRequest<T>(url: string, payload: Object): Promise<T> {
+    return this.http
+      .put<T>(this.buildUrl(url), this.prepareData(payload), {headers: this.getHeaders(), observe: 'response'})
+      .toPromise()
+      .catch(this.handleError);
+  }
+
   deleteRequest<T>(url: string, payload: Object): Promise<T> {
     return this.http
       .delete<T>(this.buildUrl(url), {headers: this.getHeaders()})
+      .toPromise()
+      .catch(this.handleError);
+  }
+
+  deleteFullRequest<T>(url: string, payload: Object): Promise<T> {
+    return this.http
+      .delete<T>(this.buildUrl(url), {headers: this.getHeaders(), observe: 'response'})
       .toPromise()
       .catch(this.handleError);
   }
