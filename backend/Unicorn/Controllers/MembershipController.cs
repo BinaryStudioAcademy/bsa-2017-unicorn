@@ -15,9 +15,9 @@ namespace Unicorn.Controllers
             this.authService = authService;
         }
 
-        // GET: membership?provider=facebook&uid=123456
+        // POST: Membership
         [HttpGet]
-        public async Task<HttpResponseMessage> Get(string provider, long uid)
+        public async Task<HttpResponseMessage> Post(string provider, string uid)
         {
             HttpResponseMessage response = null;
 
