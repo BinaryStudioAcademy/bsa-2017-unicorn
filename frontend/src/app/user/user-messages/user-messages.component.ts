@@ -10,6 +10,7 @@ import { DatePipe } from '@angular/common';
 export class UserMessagesComponent implements OnInit {
 
     constructor() {
+        
         this.dialogs[0] = new Dialog();
         this.dialogs[1] = new Dialog();
         this.dialogs[0].id = 0;
@@ -47,11 +48,13 @@ export class UserMessagesComponent implements OnInit {
     }
     dialogs: Dialog[] = new Array<Dialog>();
     selectedId: number = 0;
+    
     ngOnInit() {
     }
     onSelect(curId: number) {
         this.selectedId = curId;
     }
+    
 }
 export class Message {
     me: boolean;

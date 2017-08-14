@@ -1,33 +1,41 @@
 ﻿<div class="container">
-  <div class="users">
-    <div class="user" (click)="onSelect(dial.id)" *ngFor="let dial of dialogs">
-      <img class="ui avatar image" src="http://psand.ru/wp-content/uploads/2016/04/Kak-ustanovit-svoy-unikalnyiy-avatar-dlya-vseh-saytov-na-WordPress.png">
-      <div class="userName"> {{dial.userName}} </div>
-    </div>
-  </div>
-  <ul>
-    <div class="chat" *ngFor="let message of dialogs[selectedId].messages">
-      <div class="mes_block" *ngIf="message.me">
-        <div class="date-me">
-          {{message.date|date:'medium'}}
+    <div class="users">
+        <div (click)="onSelect(dial.id)" *ngFor="let dial of dialogs">
+            <div class="user" *ngIf="dial.id===selectedId" id="active">
+                <img class="ui avatar image" src="http://psand.ru/wp-content/uploads/2016/04/Kak-ustanovit-svoy-unikalnyiy-avatar-dlya-vseh-saytov-na-WordPress.png">
+                <div class="userName"> {{dial.userName}} </div>
+            </div>
+            <div class="user" *ngIf="dial.id!=selectedId">
+                <img class="ui avatar image" src="http://psand.ru/wp-content/uploads/2016/04/Kak-ustanovit-svoy-unikalnyiy-avatar-dlya-vseh-saytov-na-WordPress.png">
+                <div class="userName"> {{dial.userName}} </div>
+            </div>
         </div>
-        <li class="me">
-          {{message.messageText}}
-        </li>
-      </div>
-      <div class="mes_block" *ngIf="!message.me">
-        <div class="date-him">
-          {{message.date|date:'medium'}}
+    </div>
+    <ul>
+        <div class="chat" *ngFor="let message of dialogs[selectedId].messages">
+            <div class="mes_block" *ngIf="message.me">
+                <div class="date-me">
+                    {{message.date|date:'medium'}}
+                </div>
+                <li class="me">
+                    {{message.messageText}}
+                </li>
+            </div>
+            <div class="mes_block" *ngIf="!message.me">
+                <div class="date-him">
+                    {{message.date|date:'medium'}}
+                </div>
+                <li class="him">
+                    {{message.messageText}}
+                </li>
+            </div>
         </div>
-        <li class="him">
-          {{message.messageText}}
-        </li>
-      </div>
-    </div>
-    <div class="ui icon input" style="margin-top:5px;">
-      <input class="prompt" type="text" placeholder="Type here..." style="width: 580px; display:inline">
-      <i class="talk outline link icon"></i>
-    </div>
 
-  </ul>
+        <div class="ui icon input" style="margin-top:5px;">
+            <input class="prompt" type="text" placeholder="Type here..." style="display:inline">
+            <i class="talk outline link icon"></i>
+        </div>
+
+    </ul>
+
 </div>
