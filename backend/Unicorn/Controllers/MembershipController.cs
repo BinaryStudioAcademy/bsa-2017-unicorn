@@ -2,11 +2,13 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using Unicorn.Core.Interfaces;
 using Unicorn.Models;
 
 namespace Unicorn.Controllers
 {
+    [EnableCors("*", "*", "*")]
     public class MembershipController : ApiController
     {
         private IAuthService authService;

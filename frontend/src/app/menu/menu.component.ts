@@ -14,7 +14,7 @@ export class MenuComponent implements OnInit {
 
   ngOnInit() {
     this.addMenuItems();
-    this.isEnabled = false;
+    this.isEnabled = true;
   }
 
   openModal() {

@@ -9,7 +9,6 @@ import { RegisterRoutingModule } from './register-routing.module';
 
 import { SuiModule } from 'ng2-semantic-ui';
 
-import { providers } from './social-providers';
 import { RegisterUserComponent } from './register-user/register-user.component';
 import { RegisterVendorComponent } from './register-vendor/register-vendor.component';
 import { RegisterCompanyComponent } from './register-company/register-company.component';
@@ -19,7 +18,7 @@ import { RegisterCompanyComponent } from './register-company/register-company.co
     FormsModule,
     SuiModule,
     CommonModule,
-    RegisterRoutingModule    
+    RegisterRoutingModule
   ],
   declarations: [
     RegisterComponent,

@@ -1,29 +1,43 @@
 <link rel="stylesheet" href="https://unpkg.com/semantic-ui-calendar/dist/calendar.min.css">
-<diV *ngIf="enabled" class="modal-wrap">
-    <sui-modal id="register-form" [isClosable]="true" [isInverted]="true" [size]="modalSize" (dismissed)="modal.deny()" [mustScroll]=true #modal>
+<li><a (click)="openModal()" routerLinkActive="active">Registration</a></li>
+<!-- <diV *ngIf="enabled" class="modal-wrap"> -->
+<!-- <sui-modal id="register-form" [isClosable]="true" [isInverted]="true" [size]="modalSize" (dismissed)="modal.deny()" [mustScroll]=true #modal> -->
+<div id="custom">
+    <ng-template let-context let-modal="modal" #modalTemplate>
         <div class="header">
-            <p class="reg-header">Registration</p>
+            <p class="reg-header">REGISTRATION</p>
         </div>
         <div class="content">
 
             <div class="social-buttons">
-                <button class="ui facebook button" (click)="register('facebook')">
+                <button class="ui facebook button" (click)="loginWithFacebook()">
         <i class="facebook icon"></i>
         Facebook
       </button>
-                <button class="ui google plus button" (click)="register('google')">
+                <button class="ui google plus button" (click)="loginWithGoogle()">
         <i class="google plus icon"></i>
         Google 
       </button>
-                <button class="ui linkedin button">
-        <i class="linkedin icon"></i>
-        LinkedIn
+                <button class="ui twitter button" (click)="loginWithTwitter()">
+        <i class="twitter icon"></i>
+        Twitter
       </button>
+            </div>
+
+            <div *ngIf="error">
+                <sui-message class="error">
+                    <div class="header">
+                        Error
+                    </div>
+                    <p>Unable to authorize user</p>
+                </sui-message>
             </div>
 
             <div *ngIf="isLogged && !roleSelected">
                 <div class="ui segment">
-                    <label>Who are you?</label>
+                    <div class="question-lbl">
+                        <label><b>Who are you?</b></label>
+                    </div>
                     <div class="ui basic buttons role-buttons">
                         <button class="ui button" (click)="selectRole('customer')">Customer</button>
                         <button class="ui button" (click)="selectRole('vendor')">Vendor</button>
@@ -33,9 +47,11 @@
 
             </div>
 
-            <app-register-user *ngIf="isCustomer" [social]="user"></app-register-user>
-            <app-register-vendor *ngIf="isVendor" [social]="user"></app-register-vendor>
-            <app-register-company *ngIf="isCompany" [social]="user"></app-register-company>
+            <app-register-user *ngIf="isCustomer" [social]="currentUser"></app-register-user>
+            <app-register-vendor *ngIf="isVendor" [social]="currentUser"></app-register-vendor>
+            <app-register-company *ngIf="isCompany" [social]="currentUser"></app-register-company>
         </div>
-    </sui-modal>
-</diV>
+    </ng-template>
+</div>
+<!-- </sui-modal> -->
+<!-- </diV> -->

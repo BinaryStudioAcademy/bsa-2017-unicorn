@@ -1,30 +1,31 @@
 <div class="ui segment">
     <div class="ui form">
+
         <div class="field">
-            <label>Phone</label>
-            <input type="text" placeholder="Phone" [(ngModel)]="phone">
+            <input type="text" placeholder="FIRST NAME" [(ngModel)]="firstName">
         </div>
 
         <div class="field">
-            <label>Date</label>
+            <input type="text" placeholder="MIDDLE NAME" [(ngModel)]="middleName">
+        </div>
+
+        <div class="field">
+            <input type="text" placeholder="LAST NAME" [(ngModel)]="lastName">
+        </div>
+
+        <div class="field">
             <div class="ui left icon input">
                 <i class="calendar icon"></i>
-                <input suiDatepicker placeholder="Pick your birth" [(ngModel)]="birthday" [pickerMode]="mode">
+                <input suiDatepicker placeholder="BIRTHDAY" [(ngModel)]="birthday" [pickerMode]="mode">
             </div>
         </div>
 
         <div class="field">
-            <label>Gender</label>
-            <div class="gender-field">
-                <div class="ui radio checkbox gender-elem">
-                    <input type="radio" [(ngModel)]="gender" value="Male" checked="checked">
-                    <label>Male</label>
-                </div>
-                <div class="ui radio checkbox gender-elem">
-                    <input type="radio" value="Female" [(ngModel)]="gender">
-                    <label>Female</label>
-                </div>
-            </div>
+            <input type="text" placeholder="EMAIL" [(ngModel)]="email">
+        </div>
+
+        <div class="field">
+            <input type="text" placeholder="PHONE" [(ngModel)]="phone">
         </div>
 
         <div *ngIf="error" class="error-field">
@@ -36,7 +37,7 @@
             </sui-message>
         </div>
         <div class="confirm-div">
-            <a align=center class="ui button reg-btn" (click)="confirmRegister()">Register</a>
+            <a align=center class="ui button reg-btn" (click)="confirmRegister()">REGISTER</a>
         </div>
     </div>
 </div>
