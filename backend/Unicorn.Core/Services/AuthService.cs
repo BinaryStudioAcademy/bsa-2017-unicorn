@@ -24,7 +24,7 @@ namespace Unicorn.Core.Services
             return new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Properties.Settings.Default.PrivateKey));
         }
 
-        public async Task<string> GenerateJwtTokenAsync(string provider, long uid)
+        public async Task<string> GenerateJwtTokenAsync(string provider, string uid)
         {
             long accountId = await membershipProvider.VerifyUser(provider, uid);
 
