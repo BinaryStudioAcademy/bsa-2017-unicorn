@@ -1,5 +1,8 @@
-﻿<div class="user-header" id="user-header">
-    <i class="large wizard icon" (click)="enableTheme=true">
+﻿<div class="ui grid container">
+    <div class="row">
+        <div class="sixteen wide column container">
+            <div class="user-header" id="user-header">
+                <i class="large wizard icon" (click)="enableTheme=true">
         <div *ngIf="enableTheme">
         <sui-modal [isClosable]="true" size="mini" (dismissed)="alert($event)" (denied)="enableTheme=false" #modalTh>
             <div class="content">
@@ -19,44 +22,62 @@
         </sui-modal>
         </div>
     </i>
-    <div class="avatar" (click)="openModal()">
-        <div class="ui small circular image" suiPopup popupText="Click to update your photo">
-            <img src="{{fakeUser.avatarUrl}}" />
-        </div>
-    </div>
-    <div class="user-title">
-        <h3>{{fakeUser.firstName}} {{fakeUser.surName}}</h3>
-    </div>
-    <div *ngIf="enabled">
-        <sui-modal [isClosable]="true" size="mini" (dismissed)="alert($event)" (denied)="enabled=false" #modal>
-            <div class="content">
-                <image-upload (onFileUploadFinish)="saveImgButton=true" (onRemove)="saveImgButton=false" [max]="1" [dropBoxMessage]="'Set photo here'" [buttonCaption]="'Select Image'">
-                </image-upload>
-                <div *ngIf="saveImgButton">
-                    <button class="ui button" style="align-content: right"> Save</button>
+                <div class="avatar" (click)="openModal()">
+                    <div class="ui small circular image" suiPopup popupText="Click to update your photo">
+                        <img src="{{fakeUser.avatarUrl}}" />
+                    </div>
+                </div>
+                <div class="user-title">
+                    <h3>{{fakeUser.firstName}} {{fakeUser.surName}}</h3>
+                </div>
+                <div *ngIf="enabled">
+                    <sui-modal [isClosable]="true" size="mini" (dismissed)="alert($event)" (denied)="enabled=false" #modal>
+                        <div class="content">
+                            <image-upload (onFileUploadFinish)="saveImgButton=true" (onRemove)="saveImgButton=false" [max]="1" [dropBoxMessage]="'Set photo here'" [buttonCaption]="'Select Image'">
+                            </image-upload>
+                            <div *ngIf="saveImgButton">
+                                <button class="ui button" style="align-content: right"> Save</button>
+                            </div>
+                        </div>
+                    </sui-modal>
                 </div>
             </div>
-        </sui-modal>
+        </div>
+    </div>
+    <div class="sixteen wide column container">
+        <sui-tabset>
+            <div class="ui pointing secondary menu">
+                <a class="item" suiTabHeader="1">Profile</a>
+                <a class="item" suiTabHeader="2">Tasks</a>
+                <a class="item" suiTabHeader="3">Messages</a>
+                <a class="item" suiTabHeader="4">History</a>
+            </div>
+            <div class="row">
+                <div class="ui grid container">
+                    <div class="row">
+                        <div class="sixteen wide container column">
+                            <div class="ui segment" suiTabContent="1">
+                                <app-user-profile [user]="fakeUser"></app-user-profile>
+                            </div>
+                        </div>
+                        <div class="sixteen wide container column">
+                            <div class="ui segment" suiTabContent="2">
+                                <app-user-tasks [user]="fakeUser"></app-user-tasks>
+                            </div>
+                        </div>
+                        <div class="sixteen wide container column">
+                            <div class="ui segment" suiTabContent="3">
+                                <app-user-messages></app-user-messages>
+                            </div>
+                        </div>
+                        <div class="sixteen wide container column">
+                            <div class="ui segment" suiTabContent="4">
+                                <app-user-history [user]="fakeUser"></app-user-history>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </sui-tabset>
     </div>
 </div>
-
-<sui-tabset>
-    <div class="ui pointing secondary menu">
-        <a class="item" suiTabHeader="1">Profile</a>
-        <a class="item" suiTabHeader="2">Tasks</a>
-        <a class="item" suiTabHeader="3">Messages</a>
-        <a class="item" suiTabHeader="4">History</a>
-    </div>
-    <div class="ui segment" suiTabContent="1">
-        <app-user-profile [user]="fakeUser"></app-user-profile>
-    </div>
-    <div class="ui segment" suiTabContent="2">
-        <app-user-tasks [user]="fakeUser"></app-user-tasks>
-    </div>
-    <div class="ui segment" suiTabContent="3">
-        <app-user-messages></app-user-messages>
-    </div>
-    <div class="ui segment" suiTabContent="4">
-        <app-user-history [user]="fakeUser"></app-user-history>
-    </div>
-</sui-tabset>
