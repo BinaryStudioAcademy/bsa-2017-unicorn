@@ -18,19 +18,26 @@
         <i class="google plus icon"></i>
         Google 
       </button>
-                <button class="ui linkedin button">
-        <i class="linkedin icon"></i>
-        LinkedIn
+                <button class="ui twitter button" (click)="loginWithTwitter()">
+        <i class="twitter icon"></i>
+        Twitter
       </button>
             </div>
 
-            <div class="error">
-
+            <div *ngIf="error">
+                <sui-message class="error">
+                    <div class="header">
+                        Error
+                    </div>
+                    <p>Unable to authorize user</p>
+                </sui-message>
             </div>
 
             <div *ngIf="isLogged && !roleSelected">
                 <div class="ui segment">
-                    <label><b>Who are you?</b></label>
+                    <div class="question-lbl">
+                        <label><b>WHO ARE YOU?</b></label>
+                    </div>
                     <div class="ui basic buttons role-buttons">
                         <button class="ui button" (click)="selectRole('customer')">Customer</button>
                         <button class="ui button" (click)="selectRole('vendor')">Vendor</button>

@@ -82,3 +82,12 @@ a {
 #custom {
     display: inline-block;
 }
+
+.question-lbl {
+    display: flex;
+    justify-content: center;
+}
+
+.question-lbl>label {
+    font-weight: normal;
+}
