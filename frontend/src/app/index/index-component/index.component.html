@@ -1,19 +1,25 @@
 <div class="wrapper">
-  <div class="section1-wrapper">
-    <div class="section1">
+  <div class="section-wrapper">
+    <div class="section">
       <div class="slogan">
         <h1>{{title}}</h1>
         <p>{{slogan}}</p>
       </div>
       <div class="search-container">
-        <div class="settings-container">
-        <div class="item-search">
+        <div class="search-group1">
           <p>{{labelSearch}}</p>
           <div class="ui input fill-horizontal"> 
-            <input class="search-input" type="text" placeholder="{{placeholderSearch}}" [(ngModel)]="searchText">
+            <input class="search-input" type="text" placeholder="{{placeholderCategory}}" [(ngModel)]="searchCategory">            
           </div>
+          <!-- <div style='overflow:auto; width:200px;height:40px;'>
+            <div *ngFor="let category of categories | search:'id,text':searchText">{{category.text}}</div> 
+          </div> -->
+          <div class="ui input fill-horizontal"> 
+            <input class="search-input" type="text" placeholder="{{placeholderSubcategory}}" [(ngModel)]="searchSubcategory">
+          </div>          
+          
         </div>
-        <div class="item-date">
+        <div class="search-group2">
           <p>{{labelDate}}</p>
           <div class="ui left icon input">
                 <i class="calendar icon"></i>
@@ -22,78 +28,44 @@
                       [pickerMode]="mode"
                       [pickerFirstDayOfWeek]="firstDayOfWeek"
                       [pickerUseNativeOnMobile]="false">
-            </div>                                              
-        </div>
-        <div class="item-category">
-          <p>{{labelCategory}}</p>
-          <div class="ui segment">
-            <i class="dropdown icon"></i>
-            <div class="ui pointing dropdown link item" suiDropdown>
-              <div class="text">{{selCategory}}</div>              
-                <div class="menu" suiDropdownMenu>
-                  <div *ngFor="let category of categories" class="item" (click)="setCategory(category)">{{category}}</div>
-                </div>
-            </div>
+          </div> 
+          <div class="item-button"> 
+            <button class="ui button bg-color-main btn-search" (click)="searchVendor()">{{labelButton}}</button>  
+          </div>                                              
+        </div>           
+      </div>
+      <div class="section2-wrapper">
+        <popular-tasks></popular-tasks> 
+      </div>  
+      <div class="info-wrapper">
+      <div class="customer">
+        <div class="customer-section">
+          <div class="info-container">
+            <h4>For customers</h4>
+            <p>
+              If you have any problem in your house or you need 
+              to do some work you can find vendors here and delegate them all tasks. 
+            </p>
           </div>
         </div>
-        <div class="item-subcategory">
-          <p>{{labelSubcategory}}</p>
-          <div class="ui segment">
-            <i class="dropdown icon"></i>
-            <div class="ui pointing dropdown link item" suiDropdown>
-              <div class="text">{{selSubcategory}}</div>
-              <div class="menu" suiDropdownMenu>
-                <div *ngFor="let subcategory of subcategories" class="item" (click)="setSubcategory(subcategory)">{{subcategory}}</div>
-              </div>
-            </div>
+      </div>
+      
+      <div class="info-title">
+        <span>Unicorn</span>
+        <p>allows to connect customers and vendors</p>
+      </div>
+      <div class="vendor">
+        <div class="vendor-section">
+          <div class="info-container">
+            <h4>For vendors</h4>
+            <p>
+              At the same time, if you are vendor, here you can share you skills, 
+              be assigned to some companies and provide their services.
+            </p>
           </div>
         </div>
-        </div>
-        <div class="item-button"> 
-          <button class="ui button bg-color-main btn-search" (click)="searchVendor()">{{labelButton}}</button>  
-        </div>     
       </div>
-    </div>
-  </div>
-  <div class="section2-wrapper">
-    <popular-tasks></popular-tasks>
-  </div>
-  <div class="info-wrapper customer">
-    <div class="customer-section">
-      <div class="info-container">
-        <h4>For customers</h4>
-        <p>
-          If you have any problem in your house or you need 
-          to do some work you can find vendors here and delegate them all tasks. 
-        </p>
       </div>
-    </div>
-  </div>
-  <div class="info-title">
-    <span>Unicorn</span>
-    <p>allows to connect customers and vendors</p>
-  </div>
-  <div class="info-wrapper vendor">
-    <div class="vendor-section">
-      <div class="info-container">
-        <h4>For vendors</h4>
-        <p>
-          At the same time, if you are vendor, here you can share you skills, 
-          be assigned to some companies and provide their services.
-        </p>
-      </div>
-    </div>
-  </div>
-  <app-footer></app-footer>
-  <!--<base href="https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/">
-  <div id="slider">
-    <figure>
-      <img src="/assets/images/slider-01.jpg" alt>
-      <img src="/assets/images/slider-02.jpg" alt>
-      <img src="/assets/images/slider-03.jpg" alt>
-      <img src="/assets/images/slider-04.jpg" alt>
-      <img src="/assets/images/slider-01.jpg" alt>      
-    </figure>
-  </div>
-  <app-footer></app-footer> -->
+    </div>    
+  </div>  
 </div>

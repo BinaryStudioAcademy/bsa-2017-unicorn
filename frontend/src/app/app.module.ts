@@ -29,6 +29,7 @@ import { SuiModule } from 'ng2-semantic-ui';
 
 import { ShellComponent } from './shell/shell.component';
 import { MenuComponent } from './menu/menu.component';
+import { FooterComponent } from './footer/footer.component';
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import { MenuComponent } from './menu/menu.component';
     AppComponent,
     ShellComponent,
     MenuComponent,
+    FooterComponent
   ],
   imports: [
     SuiModule,    
