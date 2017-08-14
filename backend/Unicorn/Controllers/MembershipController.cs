@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Unicorn.Core.Interfaces;
+using Unicorn.Models;
 
 namespace Unicorn.Controllers
 {
@@ -17,11 +18,11 @@ namespace Unicorn.Controllers
 
         // POST: Membership
         [HttpPost]
-        public async Task<HttpResponseMessage> Post(string provider, string uid)
+        public async Task<HttpResponseMessage> Post([FromBody]UserSocial user)
         {
             HttpResponseMessage response = null;
 
-            if (string.IsNullOrWhiteSpace(provider))
+            if (user == null || (string.IsNullOrWhiteSpace(user.Provider) || string.IsNullOrWhiteSpace(user.Uid)))
             {
                 response = Request.CreateResponse(HttpStatusCode.NotFound, "Missing provider or uid");
                 return response;
