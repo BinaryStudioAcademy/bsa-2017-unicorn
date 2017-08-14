@@ -5,6 +5,7 @@ using Unicorn.Core.Interfaces;
 using Unicorn.DataAccess.Entities;
 using Unicorn.DataAccess.Interfaces;
 using Unicorn.Core.DTOs;
+using System.Linq;
 
 namespace Unicorn.Core.Services
 {
@@ -25,29 +26,62 @@ namespace Unicorn.Core.Services
             List<BookDTO> datareturn = new List<BookDTO>();
             foreach (var book in books)
             {
-                var work = await _unitOfWork.WorkRepository.GetByIdAsync(book.Id);
-                var subcategory = await _unitOfWork.SubcategoryRepository.GetByIdAsync(book.Work.Subcategory.Id);
                 var bookDto = new BookDTO()
                 {
                     Id = book.Id,
                     Date = book.Date,
                     Status = book.Status,
                     Description = book.Description,
-                    Location = await _location.GetByIdAsync(book.Id),
                     Work = new WorkDTO()
                     {
-                        Id = work.Id,
-                        Name = work.Name,
-                        Description = work.Description,
-                        Subcategory = new SubcategoryDTO()
-                        {
-                            Id = subcategory.Id,
-                            Name = subcategory.Name,
-                            Description = subcategory.Description
-                        }
+                        Id = book.Work.Id,
+                        Name = book.Work.Name,
+                        Description = book.Work.Description,
+                        Subcategory = new SubcategoryDTO() { Id = book.Work.Subcategory.Id, Category = new CategoryDTO() { Id = book.Work.Subcategory.Category.Id, Name = book.Work.Subcategory.Category.Name } }
+                    },
+                    Customer = new CustomerDTO()
+                    {
+                        Id = book.Customer.Id,
+                        Person = new PersonDTO() { Id = book.Customer.Person.Id, Name = book.Customer.Person.Name, SurnameName = book.Customer.Person.SurnameName, Phone = book.Customer.Person.Phone }
                     }
                 };
 
+                if (book.Location != null)
+                {
+                    bookDto.Location = new LocationDTO() { Id = book.Location.Id, Adress = book.Location.Adress, City = book.Location.City };
+                }
+
+                if (book.Vendor != null)
+                {
+                    bookDto.Vendor = new VendorDTO()
+                    {
+                        Id = book.Vendor.Id,
+                        Person = new PersonDTO()
+                        {
+                            Id = book.Vendor.Person.Id,
+                            Account = new AccountDTO()
+                            {
+                                Id = book.Vendor.Person.Account.Id,
+                                Rating = book.Vendor.Person.Account.Rating,
+                                Avatar = book.Vendor.Person.Account.Avatar
+                            },
+                            Name = book.Vendor.Person.Name,
+                            SurnameName = book.Vendor.Person.SurnameName,
+                            Phone = book.Vendor.Person.Phone
+                        },
+                        Experience = book.Vendor.Experience
+                    };
+                }
+                if (book.Company != null)
+                {
+                    bookDto.Company = new CompanyDTO()
+                    {
+                        Id = book.Company.Id,
+                        Account = new AccountDTO() { Id = book.Company.Account.Id, DateCreated = book.Company.Account.DateCreated, Rating = book.Company.Account.Rating },
+                        Staff = book.Company.Staff,
+                        Vendors = book.Company.Vendors.Select(x => new VendorDTO { Id = x.Id, Person = new PersonDTO() { Id = x.Person.Id, Name = x.Person.Name, SurnameName = x.Person.SurnameName } }).ToList()
+                    };
+                }
                 datareturn.Add(bookDto);
             }
             return datareturn;
@@ -56,41 +90,63 @@ namespace Unicorn.Core.Services
         public async Task<BookDTO> GetById(long id)
         {
             var book = await _unitOfWork.BookRepository.GetByIdAsync(id);
-            var work = await _unitOfWork.WorkRepository.GetByIdAsync(book.Work.Id);
-            var customer = await _unitOfWork.CategoryRepository.GetByIdAsync(book.Customer.Id);
-            var personcust = await _unitOfWork.PersonRepository.GetByIdAsync(book.Customer.Person.Id);
-            var vendor =  await _unitOfWork.VendorRepository.GetByIdAsync(book.Vendor.Id);     
-            var vendorPerson = await _unitOfWork.PersonRepository.GetByIdAsync(vendor.Person.Id);
-            var vendorAcc = await _unitOfWork.AccountRepository.GetByIdAsync(vendorPerson.Id);
             var bookDto = new BookDTO()
             {
                 Id = book.Id,
                 Date = book.Date,
                 Status = book.Status,
                 Description = book.Description,
-                Location = await _location.GetByIdAsync(id),
-                
                 Work = new WorkDTO()
                 {
-                    Id = work.Id,
-                    Name = work.Name,
-                    Description = work.Description
+                    Id = book.Work.Id,
+                    Name = book.Work.Name,
+                    Description = book.Work.Description,
+                    Subcategory = new SubcategoryDTO() { Id = book.Work.Subcategory.Id, Category = new CategoryDTO() { Id = book.Work.Subcategory.Category.Id, Name = book.Work.Subcategory.Category.Name } }
                 },
                 Customer = new CustomerDTO()
                 {
-                    Id = customer.Id,
-                    Person = new PersonDTO() { Id = personcust.Id, Name = personcust.Name, SurnameName = personcust.SurnameName, Phone = personcust.Phone }           
-                },
-                Vendor = new VendorDTO()
-                {
-                    Id = vendor.Id,
-                    Person = new PersonDTO() { Id = vendorPerson.Id, Account = new AccountDTO() { Id = vendorAcc.Id, Rating = vendorAcc.Rating }, Name = vendorPerson.Name, SurnameName = vendor.Person.SurnameName, Phone = vendor.Person.Phone },
-                    //    Company = new CompanyDTO() { Id = vendor.Id, Account = new AccountDTO() { Id = vendorComAcc.Id, DateCreated = vendorComAcc.DateCreated, Rating = vendorComAcc.Rating } },
-                    //    Experience = vendor.Experience             
+                    Id = book.Customer.Id,
+                    Person = new PersonDTO() { Id = book.Customer.Person.Id, Name = book.Customer.Person.Name, SurnameName = book.Customer.Person.SurnameName, Phone = book.Customer.Person.Phone }
                 }
             };
+
+            if (book.Location != null)
+            {
+                bookDto.Location = new LocationDTO() { Id = book.Location.Id, Adress = book.Location.Adress, City = book.Location.City };
+            }
+
+            if (book.Vendor != null)
+            {
+                bookDto.Vendor = new VendorDTO()
+                {
+                    Id = book.Vendor.Id,
+                    Person = new PersonDTO()
+                    {
+                        Id = book.Vendor.Person.Id,
+                        Account = new AccountDTO()
+                        {
+                            Id = book.Vendor.Person.Account.Id,
+                            Rating = book.Vendor.Person.Account.Rating,
+                            Avatar = book.Vendor.Person.Account.Avatar
+                        },
+                        Name = book.Vendor.Person.Name,
+                        SurnameName = book.Vendor.Person.SurnameName,
+                        Phone = book.Vendor.Person.Phone
+                    },
+                    Experience = book.Vendor.Experience
+                };
+            }
+            if (book.Company != null)
+            {
+                bookDto.Company = new CompanyDTO()
+                {
+                    Id = book.Company.Id,
+                    Account = new AccountDTO() { Id = book.Company.Account.Id, DateCreated = book.Company.Account.DateCreated, Rating = book.Company.Account.Rating },
+                    Staff = book.Company.Staff,
+                    Vendors = book.Company.Vendors.Select(x => new VendorDTO { Id = x.Id, Person = new PersonDTO() { Id = x.Person.Id, Name = x.Person.Name, SurnameName = x.Person.SurnameName } }).ToList()
+                };
+            }
             return bookDto;
         }
-
     }
 }

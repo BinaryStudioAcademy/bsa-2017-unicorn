@@ -17,6 +17,8 @@ namespace Unicorn.DataAccess.Entities
 
         public virtual Vendor Vendor { get; set; }
 
+        public virtual Company Company { get; set; } 
+
         public virtual Work Work { get; set; }
 
         public virtual Location Location { get; set; }

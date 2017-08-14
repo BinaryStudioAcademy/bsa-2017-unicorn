@@ -31,7 +31,7 @@ namespace Unicorn.Core.Services
                     DateCreated = account.DateCreated,
                     Email = account.Email,
                     EmailConfirmed = account.EmailConfirmed,
-                    SocialAccounts = account.SocialAccounts.Select(x => new SocialAccountDTO { Id = x.Id, Provider = x.Provider, Uid = x.Uid }).ToList(),
+                    SocialAccounts = account.SocialAccounts.Select(x => new SocialAccountDTO { Id = x.Id, Provider = x.Provider, Uid = x.Uid}).ToList(),
                     Permissions = account.Permissions.Select(x => new PermissionDTO { Id = x.Id, Name = x.Name }).ToList(),
                     Role = new RoleDTO { Id = role.Id, Name = role.Name }
                 };

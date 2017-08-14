@@ -45,7 +45,5 @@ namespace Unicorn.Core.Services
             };
             return customerDto;
         }
-
-
     }
 }

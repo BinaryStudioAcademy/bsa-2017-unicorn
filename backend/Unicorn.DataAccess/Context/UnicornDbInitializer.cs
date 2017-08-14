@@ -436,68 +436,7 @@ namespace Unicorn.DataAccess.Context
             context.Permissions.Add(permision11);
             context.SaveChanges();
 
-            Company company1 = new Company()
-            {
-                Id = 1,
-                Account = account1,
-                FoundationDate = new DateTime(2015, 08, 11, 00, 58, 16),
-                Staff = 7,
-                IsDeleted = false,
-                Location  = new Location()
-                {
-                    Id = 1,
-                    Adress = "Lebedeva-Kumacha 7a str.",
-                    City = "Kiev",
-                    CoordinateX = 50.437,
-                    CoordinateY = 30.439,
-                    IsDeleted = false,
-                    PostIndex = "03110"
-                }
-        };
 
-            Company company2 = new Company()
-            {
-                Id = 2,
-                Account = account4,
-                FoundationDate = new DateTime(2017, 08, 12, 10, 36, 16),
-                Staff = 36,
-                IsDeleted = false,
-                Location = new Location()
-                {
-                    Adress = "Akademica Palladina 7 pr.",
-                    City = "Kiev",
-                    CoordinateX = 50.461199,
-                    CoordinateY = 30.355651,
-                    IsDeleted = false,
-                    PostIndex = "03179"
-                },
-        };
-
-            Company company3 = new Company()
-            {
-                Id = 3,
-                Account = account6,
-                FoundationDate = new DateTime(2012, 08, 08, 13, 11, 16),
-                Staff = 2,
-                IsDeleted = false,
-                Location =new Location()
-                {
-                    Id = 6,
-                    Adress = "Shevchenko str.",
-                    City = "Boryspol",
-                    CoordinateX = 50.461199,
-                    CoordinateY = 30.355651,
-                    IsDeleted = false,
-                    PostIndex = "27123"
-                },
-            };
-
-            context.Companies.Add(company1);
-            context.SaveChanges();
-            context.Companies.Add(company2);
-            context.SaveChanges();
-            context.Companies.Add(company3);
-            context.SaveChanges();
 
 
             Category category1 = new Category()
@@ -532,6 +471,23 @@ namespace Unicorn.DataAccess.Context
                 Name = "Buider services"
             };
 
+            Category category5 = new Category()
+            {
+                Id = 5,
+                IsDeleted = false,
+                Description = "Photo and video processing",
+                Name = "Photo and Video"
+            };
+
+            Category category6 = new Category()
+            {
+                Id = 6,
+                IsDeleted = false,
+                Description = "Deveoping",
+                Name = "Developer Service"
+            };
+
+
 
             context.Categories.Add(category1);
             context.SaveChanges();
@@ -541,12 +497,16 @@ namespace Unicorn.DataAccess.Context
             context.SaveChanges();
             context.Categories.Add(category4);
             context.SaveChanges();
+            context.Categories.Add(category5);
+            context.SaveChanges();
+            context.Categories.Add(category6);
+            context.SaveChanges();
 
 
             Subcategory subcategory1 = new Subcategory()
             {
                 Id = 1,
-                Description = "Wash clothes wtith temperature 40",
+                Description = "Wash your clothes and dry clothes",
                 Name = "Washing",
                 IsDeleted = false,
                 Category = new Category() { Id = category1.Id, IsDeleted = false, Name = category1.Name, Description = category1.Description }
@@ -570,11 +530,45 @@ namespace Unicorn.DataAccess.Context
                 Category = new Category() { Id = category3.Id, IsDeleted = false, Name = category3.Name, Description = category3.Description }
             };
 
+            Subcategory subcategory4 = new Subcategory()
+            {
+                Id = 4,
+                Description = "Your appartment repair",
+                Name = "Painting and plastering work",
+                IsDeleted = false,
+                Category = new Category() { Id = category4.Id, IsDeleted = false, Name = category4.Name, Description = category4.Description }
+            };
+
+            Subcategory subcategory5 = new Subcategory()
+            {
+                Id = 5,
+                Description = "Make your own photoset",
+                Name = "Photosession",
+                IsDeleted = false,
+                Category = new Category() { Id = category5.Id, IsDeleted = false, Name = category5.Name, Description = category5.Description }
+            };
+
+            Subcategory subcategory6 = new Subcategory()
+            {
+                Id = 6,
+                Description = "Web Development",
+                Name = "Web Development",
+                IsDeleted = false,
+                Category = new Category() { Id = category6.Id, IsDeleted = false, Name = category6.Name, Description = category6.Description }
+            };
+
+
             context.Subcategories.Add(subcategory1);
             context.SaveChanges();
             context.Subcategories.Add(subcategory2);
             context.SaveChanges();
             context.Subcategories.Add(subcategory3);
+            context.SaveChanges();
+            context.Subcategories.Add(subcategory4);
+            context.SaveChanges();
+            context.Subcategories.Add(subcategory5);
+            context.SaveChanges();
+            context.Subcategories.Add(subcategory6);
             context.SaveChanges();
 
             Work work1 = new Work()
@@ -591,7 +585,8 @@ namespace Unicorn.DataAccess.Context
                 Id = 2,
                 Description = "Photosession, wedding photosessions etc.",
                 IsDeleted = false,
-                Name = "Photographer"
+                Name = "Photographer",
+                Subcategory = subcategory5
             };
 
             Work work3 = new Work()
@@ -608,7 +603,8 @@ namespace Unicorn.DataAccess.Context
                 Id = 4,
                 Description = "Appartmen repair",
                 IsDeleted = false,
-                Name = "Builder"
+                Name = "Builder",
+                Subcategory = subcategory4
             };
 
             Work work5 = new Work()
@@ -616,7 +612,8 @@ namespace Unicorn.DataAccess.Context
                 Id = 5,
                 Description = "Driving services",
                 IsDeleted = false,
-                Name = "Driver"
+                Name = "Driver",
+                Subcategory = subcategory3
             };
 
             Work work6 = new Work()
@@ -624,7 +621,8 @@ namespace Unicorn.DataAccess.Context
                 Id = 6,
                 Description = "C# senior dev",
                 IsDeleted = false,
-                Name = "Developer"
+                Name = "Developer",
+                Subcategory = subcategory6
             };
 
             context.Works.Add(work1);
@@ -832,13 +830,12 @@ namespace Unicorn.DataAccess.Context
             Vendor vendor1 = new Vendor()
             {
                 Id = 1,
-                Company = company1,
                 Experience = 7.5,
                 IsDeleted = false,
                 Position = "Head",
                 Works = new List<Work>() { work1 },
                 ExWork = "Dishwasher",
-                Person = person1,        
+                Person = person1        
             };
 
             Vendor vendor2 = new Vendor()
@@ -849,7 +846,7 @@ namespace Unicorn.DataAccess.Context
                 Position = "Photographer",
                 Works = new List<Work>() { work2 },
                 ExWork = "Photographer",
-                Person = person2,
+                Person = person2
             };
 
             Vendor vendor3 = new Vendor()
@@ -871,8 +868,7 @@ namespace Unicorn.DataAccess.Context
                 Position = "Builder",
                 Works = new List<Work>() { work4 },
                 ExWork = "Painter",
-                Person = person5,
-                Company = company2
+                Person = person5
             };
 
             Vendor vendor5 = new Vendor()
@@ -883,8 +879,7 @@ namespace Unicorn.DataAccess.Context
                 Position = "Uber Select driver",
                 Works = new List<Work>() { work5 },
                 ExWork = "lory driver",
-                Person = person6,
-                Company = company3
+                Person = person6
             };
 
             Vendor vendor6 = new Vendor()
@@ -911,6 +906,101 @@ namespace Unicorn.DataAccess.Context
             context.Vendors.Add(vendor6);
             context.SaveChanges();
 
+            Company company1 = new Company()
+            {
+                Id = 1,
+                Account = account1,
+                FoundationDate = new DateTime(2015, 08, 11, 00, 58, 16),
+                Staff = 7,
+                IsDeleted = false,
+                Location = new Location()
+                {
+                    Id = 1,
+                    Adress = "Lebedeva-Kumacha 7a str.",
+                    City = "Kiev",
+                    CoordinateX = 50.437,
+                    CoordinateY = 30.439,
+                    IsDeleted = false,
+                    PostIndex = "03110"
+                },
+                Vendors = new List<Vendor>() { vendor1 }
+        };
+
+            Company company2 = new Company()
+            {
+                Id = 2,
+                Account = account4,
+                FoundationDate = new DateTime(2017, 08, 12, 10, 36, 16),
+                Staff = 36,
+                IsDeleted = false,
+                Location = new Location()
+                {
+                    Adress = "Akademica Palladina 7 pr.",
+                    City = "Kiev",
+                    CoordinateX = 50.461199,
+                    CoordinateY = 30.355651,
+                    IsDeleted = false,
+                    PostIndex = "03179"
+                },
+                Vendors = new List<Vendor>() { vendor4 }
+            };
+
+            Company company3 = new Company()
+            {
+                Id = 3,
+                Account = account6,
+                FoundationDate = new DateTime(2012, 08, 08, 13, 11, 16),
+                Staff = 2,
+                IsDeleted = false,
+                Location =new Location()
+                {
+                    Id = 6,
+                    Adress = "Shevchenko str.",
+                    City = "Boryspol",
+                    CoordinateX = 50.461199,
+                    CoordinateY = 30.355651,
+                    IsDeleted = false,
+                    PostIndex = "27123"
+                },
+                Vendors = new List<Vendor>() { vendor5 }
+            };
+
+            context.Companies.Add(company1);
+            context.SaveChanges();
+            context.Companies.Add(company2);
+            context.SaveChanges();
+            context.Companies.Add(company3);
+            context.SaveChanges();
+
+            Customer customer1 = new Customer()
+            {
+                Id = 1,
+                IsDeleted = false,
+                Person = person3
+            };
+
+            Customer customer2 = new Customer()
+            {
+                Id = 2,
+                IsDeleted = false,
+                Person = person7
+            };
+
+            Customer customer3 = new Customer()
+            {
+                Id = 3,
+                IsDeleted = false,
+                Person = person8
+            };
+
+            context.Customers.Add(customer1);
+            context.SaveChanges();
+            context.Customers.Add(customer2);
+            context.SaveChanges();
+            context.Customers.Add(customer3);
+            context.SaveChanges();
+
+
             Book book1 = new Book()
             {
                 Id = 1,
@@ -918,8 +1008,9 @@ namespace Unicorn.DataAccess.Context
                 IsDeleted = false,
                 Work = work1,
                 Description = "clean clothes and irom it, output 3 spots ",
-                Vendor = vendor1,
-                Status = "in process"
+                Company = company1,
+                Status = "in process",
+                Customer = new Customer() { Id = customer1.Id, IsDeleted = false, Person = customer1.Person}
             };
 
             Book book2 = new Book()
@@ -928,9 +1019,9 @@ namespace Unicorn.DataAccess.Context
                 Date = new DateTime(2017, 08, 17, 5, 30, 00),
                 IsDeleted = false,
                 Work = work2,
-                Description = "Make i photoset when sunrise",
+                Description = "Make a photoset when sunrise",
                 Status = "Search",
-                Vendor = new Vendor()
+                Customer = new Customer() { Id = customer1.Id, IsDeleted = false, Person = customer1.Person }
             };
 
             Book book3 = new Book()
@@ -941,7 +1032,8 @@ namespace Unicorn.DataAccess.Context
                 Work = work3,
                 Description = "Care about cat",
                 Status = "Recorded at the reception",
-                Vendor = vendor3,                
+                Vendor = vendor3,
+                Customer = new Customer() { Id = customer2.Id, IsDeleted = false, Person = customer2.Person }
             };
 
             Book book4 = new Book()
@@ -952,7 +1044,8 @@ namespace Unicorn.DataAccess.Context
                 Work = work4,
                 Description = "rebuild 3 walls",
                 Status = "Confirmed",
-                Vendor = new Vendor()
+                Customer = new Customer() { Id = customer2.Id, IsDeleted = false, Person = customer2.Person },
+                Company = company2
             };
 
 
@@ -964,7 +1057,8 @@ namespace Unicorn.DataAccess.Context
                 Work = work5,
                 Description = "Take out the trash",
                 Status = "Confirmed",
-                Vendor = new Vendor()
+                Customer = new Customer() { Id = customer3.Id, IsDeleted = false, Person = customer3.Person },
+                Company = company3
             };
 
             Book book6 = new Book()
@@ -976,7 +1070,8 @@ namespace Unicorn.DataAccess.Context
                 Description = "Make asp.net core website",
                 Location = new Location(),
                 Status = "Confirmed",
-                Vendor = vendor6
+                Vendor = vendor6,
+                Customer = new Customer() { Id = customer3.Id, IsDeleted = false, Person = customer3.Person },
             };
 
             context.Books.Add(book1);
@@ -990,37 +1085,6 @@ namespace Unicorn.DataAccess.Context
             context.Books.Add(book5);
             context.SaveChanges();
             context.Books.Add(book6);
-            context.SaveChanges();
-
-            Customer customer1 = new Customer()
-            {
-                Id = 1,
-                IsDeleted = false,
-                Person = person3,
-                Books = new List<Book>() { book1, book2 }
-            };
-
-            Customer customer2 = new Customer()
-            {
-                Id = 2,
-                IsDeleted = false,
-                Person = person7,
-                Books = new List<Book>() { book3, book4 }
-            };
-
-            Customer customer3 = new Customer()
-            {
-                Id = 3,
-                IsDeleted = false,
-                Person = person8,
-                Books = new List<Book>() { book5, book6 }
-            };
-
-            context.Customers.Add(customer1);
-            context.SaveChanges();
-            context.Customers.Add(customer2);
-            context.SaveChanges();
-            context.Customers.Add(customer3);
             context.SaveChanges();
 
             context.SaveChanges();

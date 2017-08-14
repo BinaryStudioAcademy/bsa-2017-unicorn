@@ -17,6 +17,8 @@ namespace Unicorn.Core.DTOs
 
         public virtual VendorDTO Vendor { get; set; }
 
+        public virtual CompanyDTO Company { get; set; }
+
         public virtual WorkDTO Work { get; set; }
 
         public virtual LocationDTO Location { get; set; }

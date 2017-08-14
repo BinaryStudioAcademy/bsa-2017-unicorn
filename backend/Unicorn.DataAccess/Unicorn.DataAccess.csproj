@@ -87,6 +87,10 @@
     <Compile Include="Migrations\201708101212330_Authorization changed.Designer.cs">
       <DependentUpon>201708101212330_Authorization changed.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201708140827095_Added Company into Book.cs" />
+    <Compile Include="Migrations\201708140827095_Added Company into Book.Designer.cs">
+      <DependentUpon>201708140827095_Added Company into Book.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entities\Role.cs" />
@@ -108,6 +112,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201708101212330_Authorization changed.resx">
       <DependentUpon>201708101212330_Authorization changed.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708140827095_Added Company into Book.resx">
+      <DependentUpon>201708140827095_Added Company into Book.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
