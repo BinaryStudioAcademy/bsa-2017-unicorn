@@ -22,7 +22,5 @@ namespace Unicorn.DataAccess.Entities
         public virtual Role Role { get; set; }
 
         public virtual ICollection<SocialAccount> SocialAccounts { get; set; }
-
-        public virtual ICollection<Permission> Permissions { get; set; }
     }
 }

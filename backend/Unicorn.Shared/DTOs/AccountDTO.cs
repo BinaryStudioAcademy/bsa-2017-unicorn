@@ -20,7 +20,5 @@ namespace Unicorn.Core.DTOs
         public virtual RoleDTO Role { get; set; }
 
         public virtual ICollection<SocialAccountDTO> SocialAccounts { get; set; }
-
-        public virtual ICollection<PermissionDTO> Permissions { get; set; }
     }
 }

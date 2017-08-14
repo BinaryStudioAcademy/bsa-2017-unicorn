@@ -33,7 +33,6 @@ namespace Unicorn.Core.Services
             {
                 Id = permission.Id,
                 Name = permission.Name,
-                Accounts = (ICollection<AccountDTO>) permission.Accounts
             };
         }
     }

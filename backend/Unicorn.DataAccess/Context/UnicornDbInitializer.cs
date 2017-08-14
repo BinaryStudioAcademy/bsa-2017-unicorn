@@ -9,40 +9,184 @@ namespace Unicorn.DataAccess.Context
     {
         protected override void Seed(AppContext context)
         {
+            Permission permision1 = new Permission()
+            {
+                Id = 1,
+                Name = "Show all vendors(include search)",
+                IsDeleted = false
+            };
 
+            Permission permision2 = new Permission()
+            {
+                Id = 2,
+                Name = "Show all users(include search)",
+                IsDeleted = false
+            };
+
+            Permission permision3 = new Permission()
+            {
+                Id = 3,
+                Name = "Edit main vendor list",
+                IsDeleted = false
+            };
+
+            Permission permision4 = new Permission()
+            {
+                Id = 4,
+                Name = "Edit main vendor list",
+                IsDeleted = false
+            };
+
+            Permission permision5 = new Permission()
+            {
+                Id = 5,
+                Name = "Chat with users",
+                IsDeleted = false
+            };
+
+            Permission permision6 = new Permission()
+            {
+                Id = 6,
+                Name = "Chat with vendors",
+                IsDeleted = false
+            };
+
+            Permission permision7 = new Permission()
+            {
+                Id = 7,
+                Name = "Edit user info",
+                IsDeleted = false
+            };
+
+            Permission permision8 = new Permission()
+            {
+                Id = 8,
+                Name = "Edit vendor info",
+                IsDeleted = false
+            };
+
+            Permission permision9 = new Permission()
+            {
+                Id = 9,
+                Name = "Book vendor",
+                IsDeleted = false
+            };
+
+            Permission permision10 = new Permission()
+            {
+                Id = 10,
+                Name = "Describe vendor skills and services",
+                IsDeleted = false
+            };
+
+            Permission permision11 = new Permission()
+            {
+                Id = 11,
+                Name = "Edit own vendor list(for vendor company)",
+                IsDeleted = false
+            };
+
+            context.Permissions.Add(permision1);
+            context.SaveChanges();
+            context.Permissions.Add(permision2);
+            context.SaveChanges();
+            context.Permissions.Add(permision3);
+            context.SaveChanges();
+            context.Permissions.Add(permision4);
+            context.SaveChanges();
+            context.Permissions.Add(permision5);
+            context.SaveChanges();
+            context.Permissions.Add(permision6);
+            context.SaveChanges();
+            context.Permissions.Add(permision7);
+            context.SaveChanges();
+            context.Permissions.Add(permision8);
+            context.SaveChanges();
+            context.Permissions.Add(permision9);
+            context.SaveChanges();
+            context.Permissions.Add(permision10);
+            context.SaveChanges();
+            context.Permissions.Add(permision11);
+            context.SaveChanges();
             Role role1 = new Role()
             {
                 Id = 1,
                 IsDeleted = false,
-                Name = "Vendor"
+                Name = "Unregistered person",
+                Permissions = new List<Permission>
+                {
+                    permision1,
+                    permision2
+                }
             };
 
             Role role2 = new Role()
             {
                 Id = 2,
                 IsDeleted = false,
-                Name = "Simple User"
+                Name = "Simple User",
+                Permissions = new List<Permission>
+                {
+                    permision1,
+                    permision2,
+                    permision6,
+                    permision7,
+                    permision9
+                }
             };
 
             Role role3 = new Role()
             {
                 Id = 3,
                 IsDeleted = false,
-                Name = "Vendor Company"
+                Name = "Vendor",
+                Permissions = new List<Permission>
+                {
+                    permision1,
+                    permision2,
+                    permision5,
+                    permision8,
+                    permision10
+                }
             };
 
             Role role4 = new Role()
             {
                 Id =4,
                 IsDeleted = false,
-                Name = "Admin"
+                Name = "Vendor Company",
+                Permissions = new List<Permission>
+                {
+                    permision1,
+                    permision2,
+                    permision5,
+                    permision6,
+                    permision8,
+                    permision10,
+                    permision11
+                }
             };
 
             Role role5 = new Role()
             {
                 Id = 5,
                 IsDeleted = false,
-                Name = "Unregistered person"
+                Name = "Admin",
+                Permissions = new List<Permission>
+                {
+                    permision1,
+                    permision2,
+                    permision3,
+                    permision4,
+                    permision5,
+                    permision6,
+                    permision7,
+                    permision8,
+                    permision9,
+                    permision10,
+                    permision11
+
+                }
             };
 
             context.Roles.Add(role1);
@@ -319,125 +463,6 @@ namespace Unicorn.DataAccess.Context
             context.SaveChanges();
             context.SocialAccounts.Add(socialAccount11);
             context.SaveChanges();
-
-            // simple user          account3, account7, account8
-            // vendor               account2, account5, account9
-            // vendor company       account1, account4, account6
-            // admi                 acount10
-
-            Permission permision1 = new Permission()
-            {
-                Id = 1,
-                Name = "Show all vendors(include search)",
-                IsDeleted = false,
-                Accounts = new List<Account> { account1, account2, account3, account4, account5 , account6, account3, account8, account9, account10 }
-            };
-
-            Permission permision2 = new Permission()
-            {
-                Id = 2,
-                Name = "Show all users(include search)",
-                IsDeleted = false,
-                Accounts = new List<Account> { account1, account2, account3, account4, account5, account6, account7, account8, account9, account10 }
-            };
-
-            Permission permision3 = new Permission()
-            {
-                Id = 3,
-                Name = "Edit main vendor list",
-                IsDeleted = false,
-                Accounts = new List<Account> { account10 }
-            };
-
-            Permission permision4 = new Permission()
-            {
-                Id = 4,
-                Name = "Edit main vendor list",
-                IsDeleted = false,
-                Accounts = new List<Account> { account10 }
-            };
-
-            Permission permision5 = new Permission()
-            {
-                Id = 5,
-                Name = "Chat with users",
-                IsDeleted = false,
-                Accounts = new List<Account> { account10, account2, account5, account9, account1, account4, account6 }
-            };
-
-            Permission permision6 = new Permission()
-            {
-                Id = 6,
-                Name = "Chat with vendors",
-                IsDeleted = false,
-                Accounts = new List<Account> { account10, account3, account7, account8, account1, account4, account6 }
-            };
-
-            Permission permision7 = new Permission()
-            {
-                Id = 7,
-                Name = "Edit user info",
-                IsDeleted = false,
-                Accounts = new List<Account> { account10, account3, account7, account8 }
-            };
-
-            Permission permision8 = new Permission()
-            {
-                Id = 8,
-                Name = "Edit vendor info",
-                IsDeleted = false,
-                Accounts = new List<Account> { account10, account2, account5, account9, account1, account4, account6 }
-            };
-
-            Permission permision9 = new Permission()
-            {
-                Id = 9,
-                Name = "Book vendor",
-                IsDeleted = false,
-                Accounts = new List<Account> { account10, account3, account7, account8 }
-            };
-
-            Permission permision10 = new Permission()
-            {
-                Id = 10,
-                Name = "Describe vendor skills and services",
-                IsDeleted = false,
-                Accounts = new List<Account> { account10, account2, account5, account9, account1, account4, account6 }
-            };
-
-            Permission permision11 = new Permission()
-            {
-                Id = 11,
-                Name = "Edit own vendor list(for vendor company)",
-                IsDeleted = false,
-                Accounts = new List<Account> { account10, account1, account4, account6 }
-            };
-
-            context.Permissions.Add(permision1);
-            context.SaveChanges();
-            context.Permissions.Add(permision2);
-            context.SaveChanges();
-            context.Permissions.Add(permision3);
-            context.SaveChanges();
-            context.Permissions.Add(permision4);
-            context.SaveChanges();
-            context.Permissions.Add(permision5);
-            context.SaveChanges();
-            context.Permissions.Add(permision6);
-            context.SaveChanges();
-            context.Permissions.Add(permision7);
-            context.SaveChanges();
-            context.Permissions.Add(permision8);
-            context.SaveChanges();
-            context.Permissions.Add(permision9);
-            context.SaveChanges();
-            context.Permissions.Add(permision10);
-            context.SaveChanges();
-            context.Permissions.Add(permision11);
-            context.SaveChanges();
-
-
-
 
             Category category1 = new Category()
             {
