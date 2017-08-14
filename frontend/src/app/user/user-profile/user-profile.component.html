@@ -1,45 +1,28 @@
-<div class="container">
- <div class="column">
-   <div class="ui input">
-     <div class="elem">
-        <input type="text" value="{{user.firstName}}" placeholder="Name">
-        <input type="text" value="{{user.surName}}" placeholder="Lastname">
-        <input type="text" value="{{user.middleName}}" placeholder="Middlename">
-        <input type="text" value="{{user.email}}" placeholder="Email">
-        <input type="text" value="{{user.phone}}" placeholder="Phone">
-    </div> 
-  </div> 
-<div class="elem">
-  <div class="ui form">
-        <div class="inline fields" style="margin:1em;">
-       
-          <div class="field">
-              <div class="ui radio checkbox">
-                <input id="male" class="ui radio checkbox" type="radio" name="gender" checked="true">
-                <label for="male">Male</label>
-              </div>
-          </div>
-          <div class="field" style="padding-left:40px">
-            <div class="ui radio checkbox">
-              <input type="radio" name="gender"id="female">
-              <label for="female">Female</label>
-            </div>
-          </div>      
-        </div>
-      </div>  
+﻿<div class="container">
+  <div class="column">
+    <div class="ui input">
+      <div class="elem">
+        <input type="text" value="{{user.firstName}}" placeholder="NAME">
+        <input type="text" value="{{user.surName}}" placeholder="LASTNAME">
+        <input type="text" value="{{user.middleName}}" placeholder="MIDLENAME">
+        <input type="text" value="{{user.email}}" placeholder="EMAIL">
+        <input type="text" value="{{user.phone}}" placeholder="PHONE">
+      </div>
+    </div>
+    <div class="elem">
+      <div class="ui left icon input">
+        <i class="calendar icon" style="margin-left: 15px; margin-top: 10px;"></i>
+        <input suiDatepicker ng-model="birthday" pickerMode="date" placeholder="PICK YOUR BIRTH">
+      </div>
+    </div>
   </div>
-  <div class="elem">
-       <div class="ui left icon input">
-            <i class="calendar icon" style="margin-left:5px;"></i>
-            <input suiDatepicker
-                   ng-model="birthday"
-                   pickerMode="date"
-                   placeholder="Pick your birthday">
-       </div> 
-  </div> 
- </div>
- <div class="column">
-   <label class="gray_font">Your location:  {{user.location}}</label>
-   <div class="square"></div>
- </div>
+  <div class="column">
+    <button class="ui basic button" (click)="saveChanges()"><p style="color:#FF647A;">Save</p></button>
+    <label class="gray_font">Your location: {{user.location}}</label>
+    <div class="map">
+      <agm-map [latitude]="lat" [longitude]="lng" [zoom]="18" style="height: 300px;">
+        <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+      </agm-map>
+    </div>
+  </div>
 </div>
