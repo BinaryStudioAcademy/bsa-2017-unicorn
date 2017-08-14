@@ -24,6 +24,9 @@ import { UserModule } from './user/user.module';
 import { VendorModule } from './vendor/vendor.module';
 import { BookModule } from './book/book.module';
 import { IndexModule } from './index/index.module';
+import { ImageUploadModule } from "angular2-image-upload";
+
+
 
 import { SuiModule } from 'ng2-semantic-ui';
 
@@ -44,6 +47,7 @@ import { FooterComponent } from './footer/footer.component';
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
+    ImageUploadModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebase, 'unicorn-angular'),
     AngularFireAuthModule,
     CategoryModule,

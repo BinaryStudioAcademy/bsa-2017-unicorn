@@ -15,6 +15,7 @@ import { UserService } from '../services/user.service';
 import { DataService } from "../services/data.service";
 import { AgmCoreModule } from "@agm/core";
 import { environment } from "../../environments/environment";
+import { ImageUploadModule } from "angular2-image-upload";
 
 @NgModule({
     imports: [
@@ -23,7 +24,9 @@ import { environment } from "../../environments/environment";
         }),
         SuiModule,
         CommonModule,
-        UserRoutingModule
+        UserRoutingModule,
+        ImageUploadModule.forRoot()
+
     ],
     declarations: [
         UserComponent,
