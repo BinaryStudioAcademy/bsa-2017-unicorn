@@ -4,7 +4,7 @@
             <div class="user-header" id="user-header">
                 <i class="large wizard icon" (click)="enableTheme=true">
         <div *ngIf="enableTheme">
-        <sui-modal [isClosable]="true" size="mini" (dismissed)="alert($event)" (denied)="enableTheme=false" #modalTh>
+        <sui-modal [isClosable]="true" size="mini" (denied)="enableTheme=false" #modalTh>
             <div class="content">
                 <a class="ui big red empty circular label"(click)="modalTh.deny()" (click)="updateBg('red')"></a>
                 <a class="ui big orange empty circular label"(click)="modalTh.deny()"(click)="updateBg('orange')"></a>
@@ -31,7 +31,7 @@
                     <h3>{{fakeUser.firstName}} {{fakeUser.surName}}</h3>
                 </div>
                 <div *ngIf="enabled">
-                    <sui-modal [isClosable]="true" size="mini" (dismissed)="alert($event)" (denied)="enabled=false" #modal>
+                    <sui-modal [isClosable]="true" size="mini" (denied)="enabled=false" #modal>
                         <div class="content">
                             <image-upload (onFileUploadFinish)="saveImgButton=true" (onRemove)="saveImgButton=false" [max]="1" [dropBoxMessage]="'Set photo here'" [buttonCaption]="'Select Image'">
                             </image-upload>
