@@ -1,4 +1,4 @@
-wrapper {
+.wrapper {
     display: block;
     width: auto;
     max-width: 100%;
@@ -7,14 +7,34 @@ wrapper {
     text-align: left;
 }
 
+.header-wrapper {
+    top: 0px;
+    position: fixed;
+    background-color: white; 
+    width: 100%;
+    z-index: 1; 
+    display: block; 
+}
+
 #header {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-between;
+    /* min-height: 100px; */
     -webkit-box-shadow: 0px 1px 1px 1px rgba(0,0,0,0.25);
     -moz-box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.25);
     box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.25);
+}
+
+.stub {
+    height: 174px;
+}
+
+@media screen and (min-width: 560px) {
+    .stub {
+        height: 68px;
+    }
 }
 
 #search {
@@ -26,13 +46,22 @@ wrapper {
     margin: 10px 20px 0 0;
 }
 
-#content {
+/* #content {
     display: block;
     width: 960px;
     max-width: 100%;
     margin: 10px auto;
     padding: 5px;
     text-align: left;
+} */
+
+#content {
+    display: block;
+    width: 100%;
+    /* max-width: 100%; */
+    /* margin: 10px auto; */
+    /* padding: 5px; */
+    /* text-align: left; */
 }
 
 #footer {

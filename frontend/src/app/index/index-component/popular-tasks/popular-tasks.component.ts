@@ -19,23 +19,23 @@ export class PopularTasksComponent implements OnInit {
     this.popularVendors = [{
       id: 1,
       name: 'Company 1',
-      imgUrl: 'http://animal.ru/i/upload/137718097676.jpg'
+      imgUrl: 'http://hostaculous.net/wp-content/uploads/2016/10/shutterstock_246224482.jpg'
     }, {
       id: 2,
       name: 'Company 2',
-      imgUrl: 'http://animal.ru/i/upload/137718083819.jpg'
+      imgUrl: 'http://cdn.newsday.com/polopoly_fs/1.5805337.1481242059!/httpImage/image.jpg_gen/derivatives/display_960/image.jpg'
     }, {
       id: 3,
       name: 'Company 3',
-      imgUrl: 'http://s1.img.yan.vn//YanNews/2167221/201510/20151006-111922-8_520x346.jpg'
+      imgUrl: 'http://clv.h-cdn.co/assets/17/11/640x960/gallery-1489551165-home-town-ben-and-erin-napier-2.jpg'
     }, {
       id: 4,
       name: 'Company 4',
-      imgUrl: 'http://www.tinydog.ru/wp-content/uploads/2016/09/chistka-ushej-koshki-v-domashnix-usloviyax-8.jpg'
+      imgUrl: 'https://www.adn.com/resizer/hMqnHZI4RUAebymsbnCLn6OTnAE=/1200x0/s3.amazonaws.com/arc-wordpress-client-uploads/adn/wp-content/uploads/2016/06/21185739/marty-raney-1024x647.jpg'
     }, {
       id: 5,
       name: 'Company 5',
-      imgUrl: 'http://animal.ru/i/upload/137718089190.jpg'
+      imgUrl: 'http://i.huffpost.com/gen/872521/thumbs/o-MILLION-DOLLAR-DECORATORS-facebook.jpg'
     }];
 
     this.cleaningVendors = [{
