@@ -45,5 +45,19 @@ namespace Unicorn.Core.Services
             };
             return customerDto;
         }
+
+        public async Task CreateAsync(CustomerDTO customerDto)
+        {
+            Mapper.Initialize(cfg =>
+            {
+                cfg.CreateMap<SocialAccountDTO, SocialAccount>();
+                cfg.CreateMap<AccountDTO, Account>();
+                cfg.CreateMap<PersonDTO, Person>();
+                cfg.CreateMap<CustomerDTO, Customer>();
+            });
+            var customer = Mapper.Map<CustomerDTO, Customer>(customerDto);
+            _unitOfWork.CustomerRepository.Create(customer);
+            await _unitOfWork.SaveAsync();
+        }
     }
 }

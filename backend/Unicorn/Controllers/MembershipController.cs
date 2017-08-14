@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using Unicorn.Core.DTOs;
 using Unicorn.Core.Interfaces;
 using Unicorn.Models;
 using Unicorn.Shared.DTOs.Register;
@@ -56,11 +58,36 @@ namespace Unicorn.Controllers
         }
 
         [Route("membership/customer")]
-        public async Task<CustomerRegisterDTO> ConfirmCustomer(CustomerRegisterDTO customer)
+        public async Task<HttpResponseMessage> ConfirmCustomer(CustomerRegisterDTO customer)
         {
+            var customerDto = new CustomerDTO()
+            {
+                Person = new PersonDTO()
+                {
+                    //Birthday = customer.Birthday,
+                    Phone = customer.Phone,
+                    Name = customer.FirstName,
+                    MiddleName = customer.MiddleName,
+                    SurnameName = customer.LastName,
+                    Account = new AccountDTO()
+                    {
+                        Email = customer.Email,
+                        SocialAccounts = new List<SocialAccountDTO>
+                        {
+                            new SocialAccountDTO()
+                            {
+                                Provider = customer.Provider,
+                                Uid = customer.Uid
+                            }
+                        }
+                    }
 
+                }
+            };
+            await customerService.CreateAsync(customerDto);
+        
             
-            return customer;
+            return Request.CreateResponse(HttpStatusCode.OK, "Success saved");
         }
 
         [Route("membership/vendor")]
