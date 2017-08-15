@@ -29,7 +29,7 @@ export class IndexComponent implements OnInit {
 
   initContent() {
     this.title = 'Happy unicorn';
-    this.slogan = 'We can scratch your cat right now, because we can do it.';
+    this.slogan = 'We can do your work right now, because we can do it.';
 
     this.placeholderCategory = 'Scratch';
     this.placeholderSubcategory = 'cat';
