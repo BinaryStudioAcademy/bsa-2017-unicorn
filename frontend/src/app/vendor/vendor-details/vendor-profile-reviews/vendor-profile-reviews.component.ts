@@ -3,6 +3,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ReviewService } from '../../../services/review.service';
 
 import { Review } from '../../../models/review.model';
+import { Vendor } from "../../../models/vendor";
 
 @Component({
   selector: 'app-vendor-profile-reviews',
@@ -10,14 +11,13 @@ import { Review } from '../../../models/review.model';
   styleUrls: ['./vendor-profile-reviews.component.sass']
 })
 export class VendorProfileReviewsComponent implements OnInit {
-  @Input() vendorId: number;
+  @Input() private vendor: Vendor;
   
   reviews: Review[];
 
   constructor(private reviewService: ReviewService) { }
 
   ngOnInit() {
-    this.reviews = this.reviewService.getVendorReviews(this.vendorId);
   }
 
 }

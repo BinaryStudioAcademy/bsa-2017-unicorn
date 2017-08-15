@@ -7,7 +7,7 @@
         </div>
         <div class="vendor-title">
           <h3>{{vendor.fio}}</h3>
-          <p>{{vendor.location}}</p>
+          <p>{{vendor.city}}</p>
         </div>
       </div>
     </div>
@@ -31,17 +31,17 @@
                 </div>
                 <div class="ten wide container column">
                   <div class="ui segment" suiTabContent="2">
-                    <app-vendor-profile-portfolio [vendorId]="vendor.id"></app-vendor-profile-portfolio>
+                    <app-vendor-profile-portfolio [vendor]="vendor"></app-vendor-profile-portfolio>
                   </div>
                 </div>
                 <div class="ten wide container column">
                   <div class="ui segment" suiTabContent="3">
-                    <app-vendor-profile-reviews [vendorId]="vendor.id"></app-vendor-profile-reviews>
+                    <app-vendor-profile-reviews [vendor]="vendor"></app-vendor-profile-reviews>
                   </div>
                 </div>
                 <div class="ten wide container column">
                   <div class="ui segment" suiTabContent="4">
-                    <app-vendor-profile-contacts [vendorId]="vendor.id"></app-vendor-profile-contacts>
+                    <app-vendor-profile-contacts [vendor]="vendor"></app-vendor-profile-contacts>
                   </div>
                 </div>
               </div>

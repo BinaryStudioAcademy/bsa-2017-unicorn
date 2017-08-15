@@ -13,13 +13,12 @@ import { PortfolioItem } from '../../../models/portfolio-item.model';
   styleUrls: ['./vendor-profile-portfolio.component.sass']
 })
 export class VendorProfilePortfolioComponent implements OnInit {
-  @Input() vendorId: number;
+  @Input() private vendor: Vendor;
   portfolio: PortfolioItem[];
 
   constructor(private vendorService: VendorService) { }
 
   ngOnInit() {
-    this.portfolio = this.vendorService.getVendorPorfolio(this.vendorId);
   }
 
 }
