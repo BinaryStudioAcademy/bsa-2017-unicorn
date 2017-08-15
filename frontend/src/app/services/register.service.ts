@@ -22,15 +22,18 @@ export class RegisterService {
   }
 
   confirmCustomer(customer: Customer): Promise<any> {
-    return this.dataService.postFullRequest('membership/customer', customer);
+    return this.dataService.postFullRequest<any>('membership/customer', customer)
+      .catch(err => alert(err));
   }
 
   confirmVendor(vendor: Vendor): Promise<any> {
-    return this.dataService.postFullRequest('membership/vendor', vendor);
+    return this.dataService.postFullRequest<any>('membership/vendor', vendor)
+      .catch(err => alert(err));
   }
 
   confirmCompany(company: Company): Promise<any> {
-    return this.dataService.postFullRequest('membership/company', company);
+    return this.dataService.postFullRequest<any>('membership/company', company)
+      .catch(err => alert(err));
   }
 
 }

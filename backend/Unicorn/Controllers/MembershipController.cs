@@ -41,9 +41,9 @@ namespace Unicorn.Controllers
                 return response;
             }
 
-            //string token = await authService.GenerateJwtTokenAsync(provider, uid);
+            string token = await authService.GenerateJwtTokenAsync(user.Provider, user.Uid);
             //string token = "123_TEST";
-            string token = null;
+            //string token = null;
 
             if (token == null)
             {
@@ -92,10 +92,15 @@ namespace Unicorn.Controllers
 
                 }
             };
-            await customerService.CreateAsync(customerDto);
-        
-            
-            return Request.CreateResponse(HttpStatusCode.OK, "Success saved");
+            try
+            {
+                await customerService.CreateAsync(customerDto);
+            }
+            catch
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
+            return Request.CreateResponse(HttpStatusCode.OK);
         }
 
         [Route("membership/vendor")]
@@ -129,10 +134,15 @@ namespace Unicorn.Controllers
                 Position = vendor.Position,
                 ExWork = vendor.Speciality
             };
-            
-            await vendorService.Create(vendorDto);
-
-            return Request.CreateResponse(HttpStatusCode.OK, "Success saved");
+            try
+            {
+                await vendorService.Create(vendorDto);
+            }
+            catch
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
+            return Request.CreateResponse(HttpStatusCode.OK);
         }
 
         [Route("membership/company")]
@@ -156,9 +166,14 @@ namespace Unicorn.Controllers
                     }
                 }
             };
-
-            await companyService.Create(companyDto);
-
+            try
+            {
+                await companyService.Create(companyDto);
+            }
+            catch
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
             return Request.CreateResponse(HttpStatusCode.OK);
         }
     }

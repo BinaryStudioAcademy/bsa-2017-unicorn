@@ -26,7 +26,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   @ViewChild('modalTemplate')
   public modalTemplate: ModalTemplate<IContext, string, string>
-  private activeModal: SuiActiveModal<IContext, {}, string>;
+  public activeModal: SuiActiveModal<{}, {}, string>;
 
   private authState: Observable<firebase.User>
   private currentUser: firebase.User = null;
@@ -73,7 +73,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     console.log('status: ' + resp.status);
     switch (resp.status) {
       case 204: this.isLogged = true; this.error = false; break;
-      case 200: this.saveToken(resp.headers.get('token')); console.log(resp.headers); this.error = false; break;
+      case 200: this.saveToken(resp.headers.get('token')); this.error = false; this.redirect(); break;
       default: this.handleErrorLogin(); break;
     }
   }
@@ -156,12 +156,13 @@ export class RegisterComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
   }
 
-  private closeModal() {
+  private redirect() {
     this.activeModal.deny(''); 
+    this.router.navigate(['login']);
   }
 
   public openModal() {
-    const config = new TemplateModalConfig<IContext, string, string>(this.modalTemplate);
+    const config = new TemplateModalConfig<{}, string, string>(this.modalTemplate);
     let size = 'tiny';
     config.closeResult = "closed!";
     config.context = {};
