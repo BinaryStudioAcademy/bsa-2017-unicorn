@@ -14,6 +14,7 @@ namespace Unicorn.DataAccess.Entities
 
         public string Position { get; set; }
 
+        public string WorkLetter { get; set; }
 
         public virtual Company Company { get; set; }
 
@@ -21,10 +22,8 @@ namespace Unicorn.DataAccess.Entities
 
         public virtual ICollection<Work> Works { get; set; }
 
-        public IEnumerable<PortfolioItem> PortfolioItems { get; set; }
+        public virtual IEnumerable<PortfolioItem> PortfolioItems { get; set; }
 
-        public IEnumerable<Contact> Contacts { get; set; } 
-
-        public Location Location { get; set; }
+        public virtual IEnumerable<Contact> Contacts { get; set; } 
     }
 }

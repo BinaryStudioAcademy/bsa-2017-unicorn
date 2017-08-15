@@ -1,10 +1,13 @@
 ﻿using AutoMapper;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
+
 using Unicorn.Core.Interfaces;
 using Unicorn.DataAccess.Entities;
 using Unicorn.DataAccess.Interfaces;
 using Unicorn.Shared.DTOs;
+using Unicorn.Core.Converters;
 
 namespace Unicorn.Core.Services
 {
@@ -29,30 +32,7 @@ namespace Unicorn.Core.Services
             var company = await _unitOfWork.CompanyRepository.GetByIdAsync(id);
             var location = await _unitOfWork.LocationRepository.GetByIdAsync(id);
             var person = await _unitOfWork.PersonRepository.GetByIdAsync(id);
-            var vendorDto = new VendorDTO()
-            {
-                Id = vendor.Id,
-                Experience = vendor.Experience,
-                ExWork = vendor.ExWork,
-                Company = new CompanyDTO()
-                {
-                    Id = company.Id,
-                    Location = new LocationDTO()
-                    {
-                        Id = location.Id,
-                        City = location.City,
-                        Adress = location.Adress
-                    }
-                },
-                Person = new PersonDTO()
-                {
-                    Id = person.Id,
-                    Name = person.Name,
-                    SurnameName = person.SurnameName,
-                    Phone = person.Phone
-                },
-                Works = (ICollection<WorkDTO>)vendor.Works
-            };
+            var vendorDto = VendorDTOConverter.VendorToDTO(vendor);
             return vendorDto;
         }
     }

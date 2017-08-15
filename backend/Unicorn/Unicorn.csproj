@@ -206,6 +206,7 @@
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Controllers\VendorsController.cs" />
     <Compile Include="Filters\Helpers\AuthenticationFailureResult.cs" />
     <Compile Include="Filters\TokenAuthenticateAttribute.cs" />
     <Compile Include="Global.asax.cs">

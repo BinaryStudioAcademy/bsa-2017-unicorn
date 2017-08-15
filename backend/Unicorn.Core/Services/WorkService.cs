@@ -5,6 +5,7 @@ using Unicorn.Shared.DTOs;
 using Unicorn.Core.Interfaces;
 using Unicorn.DataAccess.Entities;
 using Unicorn.DataAccess.Interfaces;
+using Unicorn.Core.Converters;
 
 namespace Unicorn.Core.Services
 {
@@ -28,17 +29,7 @@ namespace Unicorn.Core.Services
             var work = await _unitOfWork.WorkRepository.GetByIdAsync(id);
             var subcategory = await _unitOfWork.SubcategoryRepository.GetByIdAsync(id);
 
-            var workDto = new WorkDTO()
-            {
-                Id = work.Id,
-                Name = work.Name,
-                Description = work.Description,
-
-                Subcategory = new SubcategoryDTO() {
-                    Id = subcategory.Id ,
-                    Name = subcategory.Name
-                }
-            };
+            var workDto = WorkDTOConverter.WorkToDTO(work);
             return workDto;
         }
 

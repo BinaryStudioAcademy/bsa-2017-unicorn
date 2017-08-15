@@ -16,6 +16,6 @@ namespace Unicorn.DataAccess.Entities
 
         public virtual Location Location { get; set; }
 
-        public virtual ICollection<Vendor> Vendors { get; set; }
+        public virtual IEnumerable<Vendor> Vendors { get; set; }
     }
 }

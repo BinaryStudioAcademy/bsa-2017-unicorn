@@ -12,7 +12,7 @@ namespace Unicorn.DataAccess.Entities
 
         public string Name { get; set; }
 
-        public string SurnameName { get; set; }
+        public string Surname { get; set; }
 
         public string MiddleName { get; set; }
 

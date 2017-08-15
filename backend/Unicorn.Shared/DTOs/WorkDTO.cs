@@ -10,8 +10,8 @@ namespace Unicorn.Shared.DTOs
 
         public string Description { get; set; }
 
-        public virtual SubcategoryDTO Subcategory { get; set; }
+        public string Category { get; set; }
 
-        public virtual ICollection<VendorDTO> Vendors { get; set; }
+        public string Subcategory { get; set; }
     }
 }

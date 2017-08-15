@@ -68,6 +68,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Converters\BookDTOConverter.cs" />
+    <Compile Include="Converters\CompanyDTOConverter.cs" />
+    <Compile Include="Converters\ContactDTOConverter.cs" />
+    <Compile Include="Converters\CustomerDTOConverter.cs" />
+    <Compile Include="Converters\PortfolioItemDTOConverter.cs" />
+    <Compile Include="Converters\VendorDTOConverter.cs" />
+    <Compile Include="Converters\WorkDTOConverter.cs" />
     <Compile Include="Interfaces\IAccountService.cs" />
     <Compile Include="Interfaces\IAuthService.cs" />
     <Compile Include="Interfaces\IBookService.cs" />

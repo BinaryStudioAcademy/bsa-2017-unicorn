@@ -16,6 +16,6 @@ namespace Unicorn.Shared.DTOs
 
         public virtual LocationDTO Location { get; set; }
 
-        public virtual ICollection<VendorDTO> Vendors { get; set; }
+        public virtual IEnumerable<VendorDTO> Vendors { get; set; }
     }
 }

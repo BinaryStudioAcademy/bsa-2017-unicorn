@@ -6,7 +6,7 @@ export interface Vendor {
 	fio: string;
 	avatarUrl: string;
 	location: string;
-	rang: string;
+	position: string;
 	workLetter: string;
 
 	workList: Work[];

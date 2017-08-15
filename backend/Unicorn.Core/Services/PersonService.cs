@@ -30,7 +30,7 @@ namespace Unicorn.Core.Services
                 {
                     Id = person.Id,
                     Name = person.Name,
-                    SurnameName = person.SurnameName,
+                    SurnameName = person.Surname,
                     MiddleName = person.MiddleName,
                     Birthday = person.Birthday,
                     Gender = person.Gender,
@@ -72,7 +72,7 @@ namespace Unicorn.Core.Services
             {
                 Id = person.Id,
                 Name = person.Name,
-                SurnameName = person.SurnameName,
+                SurnameName = person.Surname,
                 MiddleName = person.MiddleName,
                 Birthday = person.Birthday,
                 Gender = person.Gender,
