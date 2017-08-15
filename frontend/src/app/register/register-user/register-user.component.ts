@@ -3,6 +3,9 @@ import { Component, OnInit, Input } from '@angular/core';
 import * as firebase from 'firebase/app';
 import { RegisterService } from '../../services/register.service';
 
+import { SuiModalService, TemplateModalConfig
+  , ModalTemplate, ModalSize, SuiActiveModal } from 'ng2-semantic-ui';
+
 import { Customer } from '../models/customer';
 
 @Component({
@@ -14,8 +17,11 @@ export class RegisterUserComponent implements OnInit {
 
   @Input() social: firebase.User;
 
+  @Input() public modal: SuiActiveModal<{}, {}, string>;
+
   mode: string;
-  error: boolean = false;
+  error = false;
+  success = false;
   phone: string;
   birthday;
   firstName: string;
@@ -38,7 +44,7 @@ export class RegisterUserComponent implements OnInit {
     info.birthday = this.birthday;
     
     info.phone = this.phone;
-    info.email = this.social.email;
+    info.email = this.email;
     info.image = this.social.photoURL;
     info.firstName = this.firstName;
     info.middleName = this.middleName;
@@ -55,7 +61,7 @@ export class RegisterUserComponent implements OnInit {
       console.log('valid');
       let regInfo = this.aggregateInfo();
       console.log(regInfo);
-      this.registerService.confirmCustomer(regInfo);
+      this.registerService.confirmCustomer(regInfo).then(resp => {this.modal.deny('')});
     } else {
       this.error = true;
     }

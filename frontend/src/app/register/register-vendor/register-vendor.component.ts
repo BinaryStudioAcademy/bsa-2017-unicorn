@@ -2,7 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 
 import * as firebase from 'firebase/app';
 import { RegisterService } from '../../services/register.service';
-
+import { SuiModalService, TemplateModalConfig
+  , ModalTemplate, ModalSize, SuiActiveModal } from 'ng2-semantic-ui';
 import { Vendor } from '../models/vendor';
 
 @Component({
@@ -13,6 +14,8 @@ import { Vendor } from '../models/vendor';
 export class RegisterVendorComponent implements OnInit {
 
   @Input() social: firebase.User;
+
+  @Input() public modal: SuiActiveModal<{}, {}, string>;
 
   experience: number;
   position: string;
@@ -67,7 +70,7 @@ export class RegisterVendorComponent implements OnInit {
       console.log('valid');
       let regInfo = this.aggregateInfo();
       console.log(regInfo);
-      this.registerService.confirmVendor(regInfo);
+      this.registerService.confirmVendor(regInfo).then(resp => {this.modal.deny('')});
     } else {
       this.error = true;
     }

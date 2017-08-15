@@ -10,6 +10,7 @@ import { RegisterService } from '../../services/register.service';
 
 import { SuiModalService, TemplateModalConfig
   , ModalTemplate, ModalSize, SuiActiveModal } from 'ng2-semantic-ui';
+  import 'rxjs/add/operator/map';
 
 import { RegisterInfo } from '../models/register-info';
 
@@ -25,7 +26,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   @ViewChild('modalTemplate')
   public modalTemplate: ModalTemplate<IContext, string, string>
-  private activeModal: SuiActiveModal<IContext, {}, string>;
+  public activeModal: SuiActiveModal<{}, {}, string>;
 
   private authState: Observable<firebase.User>
   private currentUser: firebase.User = null;
@@ -35,6 +36,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
   mode: string;
   modalSize: string;
   error: boolean = false;
+
+  public roles: {[role: string]: boolean} = {};
 
   social: any;
   sub: any;
@@ -61,14 +64,16 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   saveToken(token: string) {
-    localStorage.setItem('Token', token);
+    console.log('token: ' + token);
+    localStorage.setItem('token', token);
   }
 
   handleResponse(resp: any): void {
+    console.log('resp: ' + resp);
     console.log('status: ' + resp.status);
     switch (resp.status) {
       case 204: this.isLogged = true; this.error = false; break;
-      case 200: this.saveToken(resp.headers.get('Token')); this.error = false; break;
+      case 200: this.saveToken(resp.headers.get('token')); this.error = false; this.redirect(); break;
       default: this.handleErrorLogin(); break;
     }
   }
@@ -76,7 +81,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   checkRegistration(provider: string, uid: string) {
     this.registerService
       .checkAuthorized(provider, uid)
-      .then(resp => this.handleResponse(resp))
+      .then(resp => {this.handleResponse(resp)})
       .catch(err => {
         console.log('error: ' + err.status);
         this.handleErrorLogin();
@@ -119,6 +124,18 @@ export class RegisterComponent implements OnInit, OnDestroy {
       });
   }
 
+  clearRoles() {
+    for (let key in this.roles) {
+      this.roles[key] = false;
+    }
+  }
+
+  initRoles() {
+    this.roles['customer'] = false;
+    this.roles['vendor'] = false;
+    this.roles['company'] = false;
+  }
+
   ngOnInit() {
     this.mode = 'date';
     //this.modalSize = 'tiny';
@@ -127,51 +144,58 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.authState.subscribe(user => {
       if (user) {
         this.currentUser = user;
-        let uid = user.providerData[0].providerId;
-        let provider = user.uid;
+        let provider = user.providerData[0].providerId;
+        let uid = user.uid;
         this.checkRegistration(provider, uid);
       } 
     });
+
+    this.initRoles();
   }
 
   ngOnDestroy() {
   }
 
-  private closeModal() {
+  private redirect() {
     this.activeModal.deny(''); 
+    this.router.navigate(['login']);
   }
 
   public openModal() {
-    const config = new TemplateModalConfig<IContext, string, string>(this.modalTemplate);
+    const config = new TemplateModalConfig<{}, string, string>(this.modalTemplate);
     let size = 'tiny';
     config.closeResult = "closed!";
     config.context = {};
     config.size = ModalSize.Small;
     config.isInverted = true;
-    //config.mustScroll = true;
 
     this.activeModal = this.modalService
       .open(config)
       .onApprove(result => { /* approve callback */ })
       .onDeny(result => {
+        this.error = false;
         this.isLogged = false;
         this.isCompany = false;
         this.isVendor = false;
         this.isCustomer = false;
         this.roleSelected = false;
         this.social = undefined;
+        this.clearRoles();
       });
 
     this.afAuth.auth.signOut();
     this.isLogged = false;
+    this.error = false;
   }
 
   selectRole(role: string) {
-    switch (role) {
-      case 'customer': this.isCustomer = true; break;
-      case 'vendor': this.isVendor = true; break;
-      case 'company': this.isCompany = true; break;
-    }
-    this.roleSelected = true;
+    // switch (role) {
+    //   case 'customer': this.isCustomer = true; break;
+    //   case 'vendor': this.isVendor = true; break;
+    //   case 'company': this.isCompany = true; break;
+    // }
+    // this.roleSelected = true;
+    this.clearRoles();  
+    this.roles[role] = true;
   }
 }

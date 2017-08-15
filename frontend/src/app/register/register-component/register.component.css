@@ -9,7 +9,11 @@
     justify-content: center;
 }
 
-.error-field {
+.roles {
+    margin-bottom: 10px;
+}
+
+.info-field {
     margin-bottom: 10px;
 }
 

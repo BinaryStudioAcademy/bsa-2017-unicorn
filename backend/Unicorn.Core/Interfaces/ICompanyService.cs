@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Unicorn.Core.DTOs;
+using Unicorn.Shared.DTOs.Register;
 
 namespace Unicorn.Core.Interfaces
 {
@@ -8,5 +9,6 @@ namespace Unicorn.Core.Interfaces
     {
         Task<IEnumerable<CompanyDTO>> GetAllAsync();
         Task<CompanyDTO> GetByIdAsync(long id);
+        Task Create(CompanyRegisterDTO r);
     }
 }
