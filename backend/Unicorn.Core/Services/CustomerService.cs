@@ -50,6 +50,9 @@ namespace Unicorn.Core.Services
         {
             Mapper.Initialize(cfg =>
             {
+                cfg.CreateMap<LocationDTO, Location>();
+                cfg.CreateMap<PermissionDTO, Permission>();
+                cfg.CreateMap<RoleDTO, Role>();
                 cfg.CreateMap<SocialAccountDTO, SocialAccount>();
                 cfg.CreateMap<AccountDTO, Account>();
                 cfg.CreateMap<PersonDTO, Person>();

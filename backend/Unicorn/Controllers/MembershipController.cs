@@ -18,12 +18,15 @@ namespace Unicorn.Controllers
         private IAuthService authService;
         private ICustomerService customerService;
         private IVendorService vendorService;
+        private ICompanyService companyService;
 
-        public MembershipController(IAuthService authService, ICustomerService customerService, IVendorService vendorService)
+        public MembershipController(IAuthService authService, ICustomerService customerService,
+            IVendorService vendorService, ICompanyService companyService)
         {
             this.authService = authService;
             this.customerService = customerService;
             this.vendorService = vendorService;
+            this.companyService = companyService;
         }
 
         // POST: Membership
@@ -62,15 +65,20 @@ namespace Unicorn.Controllers
         {
             var customerDto = new CustomerDTO()
             {
+                Books = new List<BookDTO>(),
                 Person = new PersonDTO()
                 {
-                    //Birthday = customer.Birthday,
+                    Location = new LocationDTO(),
+                    Birthday = customer.Birthday,
                     Phone = customer.Phone,
                     Name = customer.FirstName,
                     MiddleName = customer.MiddleName,
                     SurnameName = customer.LastName,
                     Account = new AccountDTO()
                     {
+                        Role = new RoleDTO(),
+                        Permissions = new List<PermissionDTO>(),
+                        DateCreated = DateTime.Now,
                         Email = customer.Email,
                         SocialAccounts = new List<SocialAccountDTO>
                         {
@@ -91,17 +99,67 @@ namespace Unicorn.Controllers
         }
 
         [Route("membership/vendor")]
-        public async Task<VendorRegisterDTO> ConfirmVendor(VendorRegisterDTO vendor)
+        public async Task<HttpResponseMessage> ConfirmVendor(VendorRegisterDTO vendor)
         {
+            var vendorDto = new VendorDTO()
+            {
+                Person = new PersonDTO()
+                {
+                    Birthday = vendor.Birthday,
+                    Phone = vendor.Phone,
+                    Name = vendor.FirstName,
+                    MiddleName = vendor.MiddleName,
+                    SurnameName = vendor.LastName,
+                    Account = new AccountDTO()
+                    {
+                        DateCreated = DateTime.Now,
+                        Email = vendor.Email,
+                        SocialAccounts = new List<SocialAccountDTO>
+                        {
+                            new SocialAccountDTO()
+                            {
+                                Provider = vendor.Provider,
+                                Uid = vendor.Uid
+                            }
+                        }
+                    }
+
+                },
+                Experience = vendor.Experience,
+                Position = vendor.Position,
+                ExWork = vendor.Speciality
+            };
             
-            return vendor;
+            await vendorService.Create(vendorDto);
+
+            return Request.CreateResponse(HttpStatusCode.OK, "Success saved");
         }
 
         [Route("membership/company")]
-        public async Task<CompanyRegisterDTO> ConfirmCompany(CompanyRegisterDTO company)
+        public async Task<HttpResponseMessage> ConfirmCompany(CompanyRegisterDTO company)
         {
-            
-            return company;
+            var companyDto = new CompanyDTO()
+            {
+                Staff = company.Stuff,
+                FoundationDate = company.Foundation,
+                Account = new AccountDTO()
+                {
+                    DateCreated = DateTime.Now,
+                    Email = company.Email,
+                    SocialAccounts = new List<SocialAccountDTO>
+                    {
+                        new SocialAccountDTO()
+                        {
+                            Provider = company.Provider,
+                            Uid = company.Uid
+                        }
+                    }
+                }
+            };
+
+            await companyService.Create(companyDto);
+
+            return Request.CreateResponse(HttpStatusCode.OK);
         }
     }
 }

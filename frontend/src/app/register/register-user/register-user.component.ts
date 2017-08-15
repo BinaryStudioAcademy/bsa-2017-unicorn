@@ -38,7 +38,7 @@ export class RegisterUserComponent implements OnInit {
     info.birthday = this.birthday;
     
     info.phone = this.phone;
-    info.email = this.social.email;
+    info.email = this.email;
     info.image = this.social.photoURL;
     info.firstName = this.firstName;
     info.middleName = this.middleName;

@@ -55,6 +55,23 @@ namespace Unicorn.Core.Services
             };
             return vendorDto;
         }
+
+        public async Task Create(VendorDTO vendorDto)
+        {
+            Mapper.Initialize(cfg =>
+            {
+                cfg.CreateMap<LocationDTO, Location>();
+                cfg.CreateMap<PermissionDTO, Permission>();
+                cfg.CreateMap<RoleDTO, Role>();
+                cfg.CreateMap<SocialAccountDTO, SocialAccount>();
+                cfg.CreateMap<AccountDTO, Account>();
+                cfg.CreateMap<PersonDTO, Person>();
+                cfg.CreateMap<VendorDTO, Vendor>();
+            });
+            var vendor = Mapper.Map<VendorDTO, Vendor>(vendorDto);
+            _unitOfWork.VendorRepository.Create(vendor);
+            await _unitOfWork.SaveAsync();
+        }
     }
 }
 
