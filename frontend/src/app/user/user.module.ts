@@ -15,7 +15,7 @@ import { UserService } from '../services/user.service';
 import { DataService } from "../services/data.service";
 import { AgmCoreModule } from "@agm/core";
 import { environment } from "../../environments/environment";
-import { ImageUploadModule } from "angular2-image-upload";
+import {ImageCropperComponent} from 'ng2-img-cropper';
 
 @NgModule({
     imports: [
@@ -24,8 +24,7 @@ import { ImageUploadModule } from "angular2-image-upload";
         }),
         SuiModule,
         CommonModule,
-        UserRoutingModule,
-        ImageUploadModule.forRoot()
+        UserRoutingModule
 
     ],
     declarations: [
@@ -34,7 +33,8 @@ import { ImageUploadModule } from "angular2-image-upload";
         UserProfileComponent,
         UserHistoryComponent,
         UserTasksComponent,
-        UserMessagesComponent
+        UserMessagesComponent,
+        ImageCropperComponent
     ],
     providers: [
         DataService,

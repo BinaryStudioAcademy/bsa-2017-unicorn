@@ -1,4 +1,4 @@
-import { Component, OnInit,Input,OnDestroy  } from '@angular/core';
+import { Component, OnInit,Input,OnDestroy, ViewChild } from '@angular/core';
 import { FormsModule }   from '@angular/forms';
 
 import {SuiModule} from 'ng2-semantic-ui';
@@ -8,7 +8,7 @@ import 'rxjs/add/operator/switchMap';
 import { User } from '../../models/user';
 
 import { UserService } from "../../services/user.service";
-import { ImageUploadModule } from "angular2-image-upload";
+import {ImageCropperComponent, CropperSettings} from 'ng2-img-cropper';
 
 @Component({
   selector: 'app-user-details',
@@ -17,11 +17,28 @@ import { ImageUploadModule } from "angular2-image-upload";
 })
 export class UserDetailsComponent implements OnInit {
   
+@ViewChild('cropper', undefined)
+ cropper:ImageCropperComponent;
   enabled: boolean = false;
   enableTheme: boolean = false;
   saveImgButton:boolean = false;
   fakeUser:User;
+
+  cropperSettings: CropperSettings;
+  data: any;
   constructor( private route: ActivatedRoute,private userService: UserService) { 
+     this.cropperSettings = new CropperSettings();
+        this.cropperSettings.width = 100;
+        this.cropperSettings.height = 100;
+        this.cropperSettings.croppedWidth =100;
+        this.cropperSettings.croppedHeight = 100;
+        this.cropperSettings.canvasWidth = 400;
+        this.cropperSettings.canvasHeight = 300;
+        
+        this.cropperSettings.noFileInput = true;
+        this.cropperSettings.rounded = true;
+        
+        this.data = {};
   }
   ngOnInit() {
     this.fakeUser = this.userService.getUser(0);
@@ -33,4 +50,17 @@ export class UserDetailsComponent implements OnInit {
  {
     document.getElementById("user-header").style.backgroundColor = color;
  }
+  fileChangeListener($event) {
+    var image:any = new Image();
+    var file:File = $event.target.files[0];
+    var myReader:FileReader = new FileReader();
+    var that = this;
+    myReader.onloadend = function (loadEvent:any) {
+        image.src = loadEvent.target.result;
+        that.cropper.setImage(image);
+
+    };
+
+    myReader.readAsDataURL(file);
+}
 }

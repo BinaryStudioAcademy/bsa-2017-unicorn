@@ -44,4 +44,9 @@ export class UserService {
     return user;
   }
 
+  updateUser(id:number, user:User)
+  {
+    this.dataService.postRequest("",user);
+  }
+
 }
