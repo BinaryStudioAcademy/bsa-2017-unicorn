@@ -6,16 +6,21 @@ namespace Unicorn.Core.DTOs
     public class CompanyDTO
     {
         public long Id { get; set; }
+        
+        public string Name { get; set; }
+
+        public string Description { get; set; }
 
         public DateTime FoundationDate { get; set; }
 
+        public AccountDTO Director { get; set; }
+
         public int Staff { get; set; }
 
+        public AccountDTO Account { get; set; }
 
-        public virtual AccountDTO Account { get; set; }
+        public LocationDTO Location { get; set; }
 
-        public virtual LocationDTO Location { get; set; }
-
-        public virtual ICollection<VendorDTO> Vendors { get; set; }
+        public ICollection<VendorDTO> Vendors { get; set; }
     }
 }

@@ -6,6 +6,8 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using AutoMapper;
+using Unicorn.Core.Infrastructure;
 
 namespace Unicorn
 {
@@ -16,6 +18,11 @@ namespace Unicorn
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+
+            //Mapper.Initialize(cfg =>
+            //{
+            //    cfg.AddProfile(new MapperProfile());
+            //});
         }
     }
 }

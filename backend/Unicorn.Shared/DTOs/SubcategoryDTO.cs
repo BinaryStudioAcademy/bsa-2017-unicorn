@@ -11,7 +11,7 @@ namespace Unicorn.Core.DTOs
         public string Description { get; set; }
 
 
-        public virtual CategoryDTO Category { get; set; }
+        public CategoryDTO Category { get; set; }
 
         public ICollection<WorkDTO> Works { get; set; }
     }
