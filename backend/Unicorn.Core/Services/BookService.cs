@@ -78,7 +78,6 @@ namespace Unicorn.Core.Services
                     {
                         Id = book.Company.Id,
                         Account = new AccountDTO() { Id = book.Company.Account.Id, DateCreated = book.Company.Account.DateCreated, Rating = book.Company.Account.Rating },
-                        Staff = book.Company.Staff,
                         Vendors = book.Company.Vendors.Select(x => new VendorDTO { Id = x.Id, Person = new PersonDTO() { Id = x.Person.Id, Name = x.Person.Name, SurnameName = x.Person.SurnameName } }).ToList()
                     };
                 }
@@ -142,7 +141,6 @@ namespace Unicorn.Core.Services
                 {
                     Id = book.Company.Id,
                     Account = new AccountDTO() { Id = book.Company.Account.Id, DateCreated = book.Company.Account.DateCreated, Rating = book.Company.Account.Rating },
-                    Staff = book.Company.Staff,
                     Vendors = book.Company.Vendors.Select(x => new VendorDTO { Id = x.Id, Person = new PersonDTO() { Id = x.Person.Id, Name = x.Person.Name, SurnameName = x.Person.SurnameName } }).ToList()
                 };
             }

@@ -1,8 +1,14 @@
-﻿namespace Unicorn.Core.DTOs
+﻿using System;
+
+namespace Unicorn.Core.DTOs
 {
     public class ReviewDTO
     {
         public long Id { get; set; }
+
+        public string Avatar { get; set; }
+
+        public DateTime Date { get; set; }
 
         public string From { get; set; }
 

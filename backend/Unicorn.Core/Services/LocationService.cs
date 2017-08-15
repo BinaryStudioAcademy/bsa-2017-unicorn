@@ -31,9 +31,8 @@ namespace Unicorn.Core.Services
                     Id = location.Id,
                     Adress = location.Adress,
                     City = location.City,
-                    CoordinateX = location.CoordinateX,
-                    CoordinateY = location.CoordinateY,
-                    PostIndex = location.PostIndex
+                    Longitude = location.CoordinateX,
+                    Latitude = location.CoordinateY
                 };
                 datareturn.Add(locationDto);
             }
@@ -48,9 +47,8 @@ namespace Unicorn.Core.Services
                 Id = location.Id,
                 Adress = location.Adress,
                 City = location.City,
-                CoordinateX = location.CoordinateX,
-                CoordinateY = location.CoordinateY,
-                PostIndex = location.PostIndex           
+                Longitude = location.CoordinateX,
+                Latitude = location.CoordinateY
             };
             return locationDto;
         }

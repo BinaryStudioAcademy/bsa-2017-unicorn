@@ -8,12 +8,12 @@ import { Company } from "../../../models/company.model";
 })
 export class GeneralInformationComponent implements OnInit {
 @Input()
-company: Company;
+company: any;
 
 
   constructor() { }
 
-  ngOnInit() {    
+  ngOnInit() {     
   }
 
 }

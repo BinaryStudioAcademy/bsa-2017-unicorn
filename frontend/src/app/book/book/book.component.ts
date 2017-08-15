@@ -25,6 +25,8 @@ export class BookComponent implements OnInit {
       status: "",
       workType: ""
     }
+
+    console.log(this.book);
   }
 
 }

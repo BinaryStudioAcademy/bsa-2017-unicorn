@@ -1,4 +1,5 @@
-﻿using Unicorn.DataAccess.Interfaces;
+﻿using System;
+using Unicorn.DataAccess.Interfaces;
 
 namespace Unicorn.DataAccess.Entities
 {
@@ -6,6 +7,10 @@ namespace Unicorn.DataAccess.Entities
     {
         public long Id { get; set; }
         public bool IsDeleted { get; set; }
+
+        public string Avatar { get; set; }
+
+        public DateTime Date { get; set; }
 
         public string From { get; set; }
 

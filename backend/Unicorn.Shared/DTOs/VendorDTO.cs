@@ -6,11 +6,13 @@ namespace Unicorn.Core.DTOs
     {
         public long Id { get; set; }
 
+        public string Avatar { get; set; }
+
         public double Experience { get; set; }
 
-        public string ExWork { get; set; }
-
         public string Position { get; set; }
+
+        public string FIO { get; set; }
 
 
         public CompanyDTO Company { get; set; }

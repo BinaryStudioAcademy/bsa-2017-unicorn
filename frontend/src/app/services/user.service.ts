@@ -31,7 +31,6 @@ export class UserService {
         fio: "Petr Petrov",
         avatar: "",
         experience: "",
-        exWork: "",
         position: "",
         }
     }],

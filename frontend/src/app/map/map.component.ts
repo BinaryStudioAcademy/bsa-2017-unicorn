@@ -10,8 +10,7 @@ export class MapComponent implements OnInit {
 @Input() inputMap: MapModel;
   constructor() { }
 
-  ngOnInit() {
-    console.log(this.inputMap);
+  ngOnInit() {    
   }
 
 }

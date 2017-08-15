@@ -8,10 +8,8 @@
 
         public string Adress { get; set; }
 
-        public string PostIndex { get; set; }
+        public double Latitude { get; set; }
 
-        public double CoordinateX { get; set; }
-
-        public double CoordinateY { get; set; }
+        public double Longitude { get; set; }
     }
 }

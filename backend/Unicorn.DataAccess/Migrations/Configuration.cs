@@ -9,7 +9,7 @@ namespace Unicorn.DataAccess.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
             ContextKey = "Unicorn.DataAccess.Context.AppContext";
         }
 

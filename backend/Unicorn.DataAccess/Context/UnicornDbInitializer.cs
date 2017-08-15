@@ -5,7 +5,7 @@ using Unicorn.DataAccess.Entities;
 
 namespace Unicorn.DataAccess.Context
 {
-    public class UnicornDbInitializer : DropCreateDatabaseIfModelChanges<AppContext>
+    public class UnicornDbInitializer : CreateDatabaseIfNotExists<AppContext>
     {
         protected override void Seed(AppContext context)
         {
