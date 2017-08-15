@@ -20,12 +20,23 @@
                 <div *ngIf="enabled">
                     <sui-modal [isClosable]="true" size="tiny" (denied)="enabled=false" #modal>
                         <div class="content" align="center">
-                            <div class="file-upload">
-                                <input id="custom-input" type="file" name="file" id="file" (change)="fileChangeListener($event)" class="inputfile">
-                                <label for="file">Choose a file</label>
+                            <div class="title">
+                                <label>Select your photo</label>
                             </div>
                             <img-cropper #cropper [image]="data" [settings]="cropperSettings"></img-cropper>
                             <br>
+                            <div class="ui padded grid centered">
+                                <div class="file-upload">
+                                    <input id="custom-input" type="file" name="file" id="file" (change)="fileChangeListener($event)" class="inputfile">
+                                    <label for="file">Upload image</label>
+                                </div>
+
+                                <div class="file-upload">
+                                    <input id="custom-input" type="file" name="file" id="file" (change)="fileChangeListener($event)" class="inputfile">
+                                    <label for="file">Save image</label>
+                                </div>
+                            </div>
+
                             <span class="result rounded" *ngIf="data.image">
     <img [src]="data.image" [width]="cropperSettings.croppedWidth" [height]="cropperSettings.croppedHeight">
 </span>
