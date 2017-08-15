@@ -15,7 +15,7 @@ namespace Unicorn.Core.DTOs
 
         public string Avatar { get; set; }
 
-        public int Rating { get; set; }
+        public double Rating { get; set; }
 
         public virtual RoleDTO Role { get; set; }
 

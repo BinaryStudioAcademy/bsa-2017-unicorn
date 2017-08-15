@@ -46,8 +46,7 @@ namespace Unicorn.Core.Services
                         Id = account.Id,
                         Rating = account.Rating,
                         EmailConfirmed = account.EmailConfirmed,
-                        Permissions = account.Permissions.Select(x => new PermissionDTO { Id = x.Id, Name = x.Name }).ToList(),
-                        Role = new RoleDTO {Id = account.Role.Id, Name = account.Role.Name},
+                        Role = new RoleDTO {Id = account.Role.Id, Name = account.Role.Name, Permissions = account.Role.Permissions.Select(x => new PermissionDTO { Id = x.Id, Name = x.Name }).ToList() },
                         SocialAccounts = account.SocialAccounts.Select(x => new SocialAccountDTO { Id = x.Id, Provider = x.Provider, Uid = x.Uid }).ToList()
                     },
 
@@ -58,8 +57,7 @@ namespace Unicorn.Core.Services
                         Id = director.Id,
                         Rating = director.Rating,
                         EmailConfirmed = director.EmailConfirmed,
-                        Permissions = director.Permissions.Select(x => new PermissionDTO { Id = x.Id, Name = x.Name }).ToList(),
-                        Role = new RoleDTO { Id = director.Role.Id, Name = director.Role.Name },
+                        Role = new RoleDTO { Id = director.Role.Id, Name = director.Role.Name, Permissions = director.Role.Permissions.Select(x => new PermissionDTO { Id = x.Id, Name = x.Name }).ToList() },
                         SocialAccounts = director.SocialAccounts.Select(x => new SocialAccountDTO { Id = x.Id, Provider = x.Provider, Uid = x.Uid }).ToList()
                     },
 

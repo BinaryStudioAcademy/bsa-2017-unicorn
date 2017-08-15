@@ -24,8 +24,8 @@ namespace Unicorn.Core.Infrastructure
                     .MapFrom(s => Mapper.Map<Role, RoleDTO>(s.Role)))
                 .ForMember(c => c.SocialAccounts, opt => opt
                     .MapFrom(s => Mapper.Map<ICollection<SocialAccount>, ICollection<SocialAccountDTO>>(s.SocialAccounts)))
-                .ForMember(c => c.Permissions, opt => opt
-                    .MapFrom(s => Mapper.Map<ICollection<Permission>, ICollection<PermissionDTO>>(s.Permissions)));
+                .ForMember(c => c.Role.Permissions, opt => opt
+                    .MapFrom(s => Mapper.Map<ICollection<Permission>, ICollection<PermissionDTO>>(s.Role.Permissions)));
 
             CreateMap<Book, BookDTO>()
                 .ForMember(c => c.Customer, opt => opt
@@ -49,9 +49,9 @@ namespace Unicorn.Core.Infrastructure
                 .ForMember(c => c.Books, opt => opt
                     .MapFrom(s => Mapper.Map<ICollection<Book>, ICollection<BookDTO>>(s.Books)));
 
-            CreateMap<Permission, PermissionDTO>()
+            /*CreateMap<Permission, PermissionDTO>()
                 .ForMember(c => c.Accounts, opt => opt
-                    .MapFrom(s => Mapper.Map<ICollection<Account>, ICollection<AccountDTO>>(s.Accounts)));
+                    .MapFrom(s => Mapper.Map<ICollection<Account>, ICollection<AccountDTO>>(s.Accounts)));*/
 
             CreateMap<Person, PersonDTO>()
                 .ForMember(c => c.Account, opt => opt
@@ -59,9 +59,9 @@ namespace Unicorn.Core.Infrastructure
                 .ForMember(c => c.Location, opt => opt
                     .MapFrom(s => Mapper.Map<Location, LocationDTO>(s.Location)));
 
-            CreateMap<Role, RoleDTO>()
+            /*CreateMap<Role, RoleDTO>()
                 .ForMember(c => c.Accounts, opt => opt
-                    .MapFrom(s => Mapper.Map<ICollection<Account>, ICollection<AccountDTO>>(s.Accounts)));
+                    .MapFrom(s => Mapper.Map<ICollection<Account>, ICollection<AccountDTO>>(s.Accounts)));*/
 
             CreateMap<SocialAccount, SocialAccountDTO>()
                 .ForMember(c => c.Account, opt => opt
