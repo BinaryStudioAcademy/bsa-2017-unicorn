@@ -19,7 +19,6 @@ export class IndexComponent implements OnInit {
   firstDayOfWeek: string;
   categories: {}[];
   subcategories: string[];
-  labelButton: string;
 
   constructor() { }
 
@@ -31,17 +30,17 @@ export class IndexComponent implements OnInit {
     this.title = 'Happy unicorn';
     this.slogan = 'We can do your work right now, because we can do it.';
 
-    this.placeholderCategory = 'Scratch';
-    this.placeholderSubcategory = 'cat';
+    this.placeholderCategory = 'DO';
+    this.placeholderSubcategory = 'WORK';
     this.searchCategory = '';
     this.searchSubcategory = '';
     /* labels */
     this.labelSearch = 'What to do';
     this.labelDate = 'When do it';
-    this.labelButton = 'Search';
     /* datepicker settings */
     this.mode = 'date';           /* select day */
     this.firstDayOfWeek = '1';    /* start calendar from first day of week */
+
     this.categories = [{id: 1, text: 'Category1'}, {id: 2, text: 'Category2'}, {id: 3, text: 'Category3'}];
     this.subcategories = ['Subcategory1', 'Subcategory2', 'Subcategory3'];
   }
@@ -54,7 +53,7 @@ export class IndexComponent implements OnInit {
       this.searchCategory = this.placeholderCategory;
     }
     if (this.searchSubcategory === '') {
-      this.searchSubcategory = this.searchSubcategory;
+      this.searchSubcategory = this.placeholderSubcategory;
     }
     console.log('"category: "' + this.searchCategory);
     console.log('"subcategory: "' + this.searchSubcategory);
