@@ -111,7 +111,7 @@ namespace Unicorn.Controllers
             };
             try
             {
-                await companyService.Create(companyDto);
+                await companyService.Create(company);
             }
             catch
             {
