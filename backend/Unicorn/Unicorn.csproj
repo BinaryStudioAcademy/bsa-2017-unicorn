@@ -206,6 +206,7 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
+    <Compile Include="Controllers\LocationController.cs" />
     <Compile Include="Controllers\MembershipController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\TestController.cs" />

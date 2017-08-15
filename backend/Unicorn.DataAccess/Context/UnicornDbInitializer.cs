@@ -827,6 +827,57 @@ namespace Unicorn.DataAccess.Context
             context.Persons.Add(person10);
             context.SaveChanges();
 
+
+            // Without setted id
+            Contact contact1 = new Contact
+            {
+                IsDeleted = false,
+                Type = "Phone",
+                Value = "+1 415 670 9788"
+            };
+            Contact contact2 = new Contact
+            {
+                IsDeleted = false,
+                Type = "Phone",
+                Value = "+1 415 670 9788"
+            };
+            Contact contact3 = new Contact
+            {
+                IsDeleted = false,
+                Type = "Phone",
+                Value = "+1 415 670 9788"
+            };
+            Contact contact4 = new Contact
+            {
+                IsDeleted = false,
+                Type = "Email",
+                Value = "turbocat_9000@gmail.com"
+            };
+            Contact contact5 = new Contact
+            {
+                IsDeleted = false,
+                Type = "Skype",
+                Value = "turbocat_9000"
+            };
+            Contact contact6 = new Contact
+            {
+                IsDeleted = false,
+                Type = "Telegram",
+                Value = "turbocat_9000"
+            };
+            Contact contact7 = new Contact
+            {
+                IsDeleted = false,
+                Type = "Facebook",
+                Value = "turbocat_9000"
+            };
+
+            PortfolioItem portfolioItem1 = new PortfolioItem()
+            {
+                Image = "https://camo.githubusercontent.com/f8ea5eab7494f955e90f60abc1d13f2ce2c2e540/68747470733a2f2f662e636c6f75642e6769746875622e636f6d2f6173736574732f323037383234352f3235393331332f35653833313336322d386362612d313165322d383435332d6536626439353663383961342e706e67",
+                IsDeleted = false
+            };
+
             Vendor vendor1 = new Vendor()
             {
                 Id = 1,
@@ -836,16 +887,17 @@ namespace Unicorn.DataAccess.Context
                 Works = new List<Work>() { work1 },
                 ExWork = "Dishwasher",
                 Person = person1,
-                Location = new Location()
+                Contacts = new List<Contact>()
                 {
-                    Id = 1,
-                    Adress = "Lebedeva-Kumacha 7a str.",
-                    City = "Kiev",
-                    CoordinateX = 50.437,
-                    CoordinateY = 30.439,
-                    IsDeleted = false,
-                    PostIndex = "03110"
-                }
+                    new Contact
+                    {
+                        IsDeleted = false,
+                        Type = "Phone",
+                        Value = "+1 415 670 9788"
+                    }
+                },
+                WorkLetter = "My name is Randy Patterson, and I’m currently looking for a job in youth services. I have 10 years of experience working with youth agencies. I have a bachelor’s degree in outdoor education. I raise money, train leaders, and organize units. I have raised over $100,000 each of the last six years. I consider myself a good public speaker, and I have a good sense of humor.",
+                PortfolioItems = new List<PortfolioItem>() { portfolioItem1 }
             };
 
             Vendor vendor2 = new Vendor()
@@ -857,15 +909,15 @@ namespace Unicorn.DataAccess.Context
                 Works = new List<Work>() { work2 },
                 ExWork = "Photographer",
                 Person = person2,
-                Location = new Location()
+                Contacts = new List<Contact>()
                 {
-                    Id = 1,
-                    Adress = "Lebedeva-Kumacha 7a str.",
-                    City = "Kiev",
-                    CoordinateX = 50.437,
-                    CoordinateY = 30.439,
-                    IsDeleted = false,
-                    PostIndex = "03110"
+                    contact1,
+                    contact2,
+                    contact3,
+                    contact4,
+                    contact5,
+                    contact6,
+                    contact7
                 }
             };
 
@@ -877,16 +929,16 @@ namespace Unicorn.DataAccess.Context
                 Position = "Vet",
                 Works = new List<Work>() { work3 },
                 ExWork = "Vet",
-                Person = person4,
-                Location = new Location()
+                Person = person3,
+                Contacts = new List<Contact>()
                 {
-                    Id = 1,
-                    Adress = "Lebedeva-Kumacha 7a str.",
-                    City = "Kiev",
-                    CoordinateX = 50.437,
-                    CoordinateY = 30.439,
-                    IsDeleted = false,
-                    PostIndex = "03110"
+                    contact1,
+                    contact2,
+                    contact3,
+                    contact4,
+                    contact5,
+                    contact6,
+                    contact7
                 }
             };
 
@@ -898,16 +950,16 @@ namespace Unicorn.DataAccess.Context
                 Position = "Builder",
                 Works = new List<Work>() { work4 },
                 ExWork = "Painter",
-                Person = person5,
-                Location = new Location()
+                Person = person4,
+                Contacts = new List<Contact>()
                 {
-                    Id = 1,
-                    Adress = "Lebedeva-Kumacha 7a str.",
-                    City = "Kiev",
-                    CoordinateX = 50.437,
-                    CoordinateY = 30.439,
-                    IsDeleted = false,
-                    PostIndex = "03110"
+                    contact1,
+                    contact2,
+                    contact3,
+                    contact4,
+                    contact5,
+                    contact6,
+                    contact7
                 }
             };
 
@@ -919,16 +971,16 @@ namespace Unicorn.DataAccess.Context
                 Position = "Uber Select driver",
                 Works = new List<Work>() { work5 },
                 ExWork = "lory driver",
-                Person = person6,
-                Location = new Location()
+                Person = person5,
+                Contacts = new List<Contact>()
                 {
-                    Id = 1,
-                    Adress = "Lebedeva-Kumacha 7a str.",
-                    City = "Kiev",
-                    CoordinateX = 50.437,
-                    CoordinateY = 30.439,
-                    IsDeleted = false,
-                    PostIndex = "03110"
+                    contact1,
+                    contact2,
+                    contact3,
+                    contact4,
+                    contact5,
+                    contact6,
+                    contact7
                 }
             };
 
@@ -940,16 +992,16 @@ namespace Unicorn.DataAccess.Context
                 Position = "C# Senior Dev",
                 Works = new List<Work>() { work6 },
                 ExWork = "Middle dev",
-                Person = person9,
-                Location = new Location()
+                Person = person6,
+                Contacts = new List<Contact>()
                 {
-                    Id = 1,
-                    Adress = "Lebedeva-Kumacha 7a str.",
-                    City = "Kiev",
-                    CoordinateX = 50.437,
-                    CoordinateY = 30.439,
-                    IsDeleted = false,
-                    PostIndex = "03110"
+                    contact1,
+                    contact2,
+                    contact3,
+                    contact4,
+                    contact5,
+                    contact6,
+                    contact7
                 }
             };
 

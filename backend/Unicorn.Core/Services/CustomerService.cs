@@ -37,7 +37,7 @@ namespace Unicorn.Core.Services
                 {
                     Id = person.Id,
                     Name = person.Name,
-                    SurnameName = person.Surname,
+                    Surname = person.Surname,
                     MiddleName = person.MiddleName,
                     Gender = person.Gender,
                     Phone = person.Phone

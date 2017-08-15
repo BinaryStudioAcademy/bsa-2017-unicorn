@@ -8,7 +8,6 @@ using Unicorn.Core.Interfaces;
 using Unicorn.DataAccess.Entities;
 using Unicorn.DataAccess.Interfaces;
 using Unicorn.Shared.DTOs;
-using Unicorn.Core.Converters;
 
 namespace Unicorn.Core.Services
 {
@@ -29,7 +28,26 @@ namespace Unicorn.Core.Services
             List<BookDTO> datareturn = new List<BookDTO>();
             foreach (var book in books)
             {
-                var bookDto = BookDTOConverter.BookToDTO(book);
+                var bookDto = new BookDTO()
+                {
+                    Id = book.Id,
+                    Date = book.Date,
+                    Status = book.Status,
+                    Description = book.Description,
+                    Work = new WorkDTO()
+                    {
+                        Id = book.Work.Id,
+                        Name = book.Work.Name,
+                        Description = book.Work.Description,
+                        Subcategory = book.Work.Subcategory.Name,
+                        SubcategoryId = book.Work.Subcategory.Id
+                    },
+                    Customer = new CustomerDTO()
+                    {
+                        Id = book.Customer.Id,
+                        Person = new PersonDTO() { Id = book.Customer.Person.Id, Name = book.Customer.Person.Name, Surname = book.Customer.Person.Surname, Phone = book.Customer.Person.Phone }
+                    }
+                };
 
                 if (book.Location != null)
                 {
@@ -38,11 +56,21 @@ namespace Unicorn.Core.Services
 
                 if (book.Vendor != null)
                 {
-                    bookDto.Vendor = VendorDTOConverter.VendorToDTO(book.Vendor);
+                    bookDto.Vendor = new VendorDTO()
+                    {
+                        Id = book.Vendor.Id,
+                        Experience = book.Vendor.Experience
+                    };
                 }
                 if (book.Company != null)
                 {
-                    bookDto.Company = CompanyDTOConverter.CompanyToDTO(book.Company);
+                    bookDto.Company = new CompanyDTO()
+                    {
+                        Id = book.Company.Id,
+                        Account = new AccountDTO() { Id = book.Company.Account.Id, DateCreated = book.Company.Account.DateCreated, Rating = book.Company.Account.Rating },
+                        Staff = book.Company.Staff,
+                        Vendors = book.Company.Vendors.Select(x => new VendorDTO { Id = x.Id }).ToList()
+                    };
                 }
                 datareturn.Add(bookDto);
             }
@@ -52,7 +80,26 @@ namespace Unicorn.Core.Services
         public async Task<BookDTO> GetById(long id)
         {
             var book = await _unitOfWork.BookRepository.GetByIdAsync(id);
-            var bookDto = BookDTOConverter.BookToDTO(book);
+            var bookDto = new BookDTO()
+            {
+                Id = book.Id,
+                Date = book.Date,
+                Status = book.Status,
+                Description = book.Description,
+                Work = new WorkDTO()
+                {
+                    Id = book.Work.Id,
+                    Name = book.Work.Name,
+                    Description = book.Work.Description,
+                    Subcategory = book.Work.Subcategory.Name,
+                    SubcategoryId = book.Work.Subcategory.Id
+                },
+                Customer = new CustomerDTO()
+                {
+                    Id = book.Customer.Id,
+                    Person = new PersonDTO() { Id = book.Customer.Person.Id, Name = book.Customer.Person.Name, Surname = book.Customer.Person.Surname, Phone = book.Customer.Person.Phone }
+                }
+            };
 
             if (book.Location != null)
             {
@@ -61,11 +108,21 @@ namespace Unicorn.Core.Services
 
             if (book.Vendor != null)
             {
-                bookDto.Vendor = VendorDTOConverter.VendorToDTO(book.Vendor);
+                bookDto.Vendor = new VendorDTO()
+                {
+                    Id = book.Vendor.Id,
+                    Experience = book.Vendor.Experience
+                };
             }
             if (book.Company != null)
             {
-                bookDto.Company = CompanyDTOConverter.CompanyToDTO(book.Company);
+                bookDto.Company = new CompanyDTO()
+                {
+                    Id = book.Company.Id,
+                    Account = new AccountDTO() { Id = book.Company.Account.Id, DateCreated = book.Company.Account.DateCreated, Rating = book.Company.Account.Rating },
+                    Staff = book.Company.Staff,
+                    Vendors = book.Company.Vendors.Select(x => new VendorDTO { Id = x.Id }).ToList()
+                };
             }
             return bookDto;
         }

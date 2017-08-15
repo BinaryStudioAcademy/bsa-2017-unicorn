@@ -10,7 +10,9 @@ namespace Unicorn.Shared.DTOs
 
         public string AvatarUrl { get; set; }
 
-        public LocationDTO Location { get; set; }
+        public string City { get; set; }
+
+        public long LocationId { get; set; }
 
         public double Experience { get; set; }
 
@@ -20,12 +22,8 @@ namespace Unicorn.Shared.DTOs
 
         public string Position { get; set; }
 
-        public ICollection<ContactDTO> Contacts { get; set; }
+        public string Company { get; set; }
 
-        public ICollection<PortfolioItemDTO> PortfolioItems { get; set; }
-
-        public CompanyDTO Company { get; set; }
-
-        public ICollection<WorkDTO> Works { get; set; }
+        public long? CompanyId { get; set; }
     }
 }

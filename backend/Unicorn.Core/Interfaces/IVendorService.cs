@@ -7,6 +7,6 @@ namespace Unicorn.Core.Interfaces
     public interface IVendorService
     {
         Task<IEnumerable<VendorDTO>> GetAllAsync();
-        Task<VendorDTO> GetById(long id);
+        Task<VendorDTO> GetByIdAsync(long id);
     }
 }

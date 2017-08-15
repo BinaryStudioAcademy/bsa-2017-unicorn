@@ -6,6 +6,7 @@ namespace Unicorn.DataAccess.Entities
     public class Vendor : IEntity
     {
         public long Id { get; set; }
+
         public bool IsDeleted { get; set; }
 
         public double Experience { get; set; }
@@ -19,8 +20,6 @@ namespace Unicorn.DataAccess.Entities
         public Company Company { get; set; }
 
         public Person Person { get; set; }
-
-        public Location Location { get; set; }
 
         public ICollection<Work> Works { get; set; }
 

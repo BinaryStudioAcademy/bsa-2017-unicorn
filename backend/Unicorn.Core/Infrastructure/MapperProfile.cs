@@ -75,9 +75,7 @@ namespace Unicorn.Core.Infrastructure
 
             CreateMap<Vendor, VendorDTO>()
                 .ForMember(c => c.Company, opt => opt
-                    .MapFrom(s => Mapper.Map<Company, CompanyDTO>(s.Company)))
-                .ForMember(c => c.Works, opt => opt
-                    .MapFrom(s => Mapper.Map<ICollection<Work>, ICollection<WorkDTO>>(s.Works)));
+                    .MapFrom(s => Mapper.Map<Company, CompanyDTO>(s.Company)));
 
             CreateMap<Work, WorkDTO>()
                 .ForMember(c => c.Subcategory, opt => opt

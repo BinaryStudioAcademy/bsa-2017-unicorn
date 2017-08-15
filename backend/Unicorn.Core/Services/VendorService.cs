@@ -6,7 +6,6 @@ using Unicorn.Core.Interfaces;
 using Unicorn.DataAccess.Entities;
 using Unicorn.DataAccess.Interfaces;
 using Unicorn.Shared.DTOs;
-using Unicorn.Core.Converters;
 
 namespace Unicorn.Core.Services
 {
@@ -23,17 +22,31 @@ namespace Unicorn.Core.Services
         {
             var vendors = await _unitOfWork.VendorRepository.GetAllAsync();
 
-            return vendors.Select(v => VendorDTOConverter.VendorToDTO(v));
+            return vendors.Select(v => VendorToDTO(v));
         }
 
-        public async Task<VendorDTO> GetById(long id)
+        public async Task<VendorDTO> GetByIdAsync(long id)
         {
             var vendor = await _unitOfWork.VendorRepository.GetByIdAsync(id);
-            var company = await _unitOfWork.CompanyRepository.GetByIdAsync(id);
-            var location = await _unitOfWork.LocationRepository.GetByIdAsync(id);
-            var person = await _unitOfWork.PersonRepository.GetByIdAsync(id);
-            var vendorDto = VendorDTOConverter.VendorToDTO(vendor);
-            return vendorDto;
+            return VendorToDTO(vendor);
+        }
+
+        private VendorDTO VendorToDTO(Vendor vendor)
+        {
+            return new VendorDTO()
+            {
+                AvatarUrl = vendor.Person.Account.Avatar,
+                Company = vendor.Company?.Name,
+                CompanyId = vendor.Company?.Id,
+                Experience = vendor.Experience,
+                ExWork = vendor.ExWork,
+                FIO = $"{vendor.Person.Name} {vendor.Person.Surname}",
+                Id = vendor.Id,
+                City = vendor.Person.Location.City,
+                LocationId = vendor.Person.Location.Id,
+                Position = vendor.Position,
+                WorkLetter = vendor.WorkLetter
+            };
         }
     }
 }
