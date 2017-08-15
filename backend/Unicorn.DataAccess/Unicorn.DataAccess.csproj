@@ -58,6 +58,8 @@
   <ItemGroup>
     <Compile Include="Context\UnicornDbInitializer.cs" />
     <Compile Include="Entities\Account.cs" />
+    <Compile Include="Entities\Contact.cs" />
+    <Compile Include="Entities\PortfolioItem.cs" />
     <Compile Include="Entities\SocialAccount.cs" />
     <Compile Include="Entities\Book.cs" />
     <Compile Include="Entities\Category.cs" />

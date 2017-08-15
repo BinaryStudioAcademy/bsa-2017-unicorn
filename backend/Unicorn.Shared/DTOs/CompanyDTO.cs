@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Unicorn.Core.DTOs
+namespace Unicorn.Shared.DTOs
 {
     public class CompanyDTO
     {

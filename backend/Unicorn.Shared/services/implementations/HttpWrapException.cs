@@ -5,7 +5,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Unicorn.Core.services
+namespace Unicorn.Shared.services
 {
     public class HttpWrapException : Exception
     {

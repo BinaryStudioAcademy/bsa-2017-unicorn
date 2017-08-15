@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Unicorn.Core.DTOs;
+using Unicorn.Shared.DTOs;
 
 namespace Unicorn.Core.Interfaces
 {

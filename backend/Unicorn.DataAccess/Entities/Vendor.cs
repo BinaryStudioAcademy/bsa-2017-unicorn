@@ -20,5 +20,11 @@ namespace Unicorn.DataAccess.Entities
         public virtual Person Person { get; set; }
 
         public virtual ICollection<Work> Works { get; set; }
+
+        public IEnumerable<PortfolioItem> PortfolioItems { get; set; }
+
+        public IEnumerable<Contact> Contacts { get; set; } 
+
+        public Location Location { get; set; }
     }
 }
