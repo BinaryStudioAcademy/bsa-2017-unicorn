@@ -26,5 +26,20 @@ namespace Unicorn.DataAccess.Context
         {
             Database.SetInitializer<AppContext>(new CreateDatabaseIfNotExists<AppContext>());
         }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+
+            modelBuilder.Entity<Role>()
+                .HasMany<Permission>(r => r.Permissions)
+                .WithMany(p => p.Roles)
+                .Map(cs =>
+                {
+                    cs.MapLeftKey("RoleId");
+                    cs.MapRightKey("PermissionId");
+                    cs.ToTable("RoleAndPermission");
+                });
+
+        }
     }
 }

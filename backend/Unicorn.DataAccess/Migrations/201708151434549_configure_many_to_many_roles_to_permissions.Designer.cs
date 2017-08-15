@@ -7,13 +7,13 @@ namespace Unicorn.DataAccess.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class InitialCreate : IMigrationMetadata
+    public sealed partial class configure_many_to_many_roles_to_permissions : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(InitialCreate));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(configure_many_to_many_roles_to_permissions));
         
         string IMigrationMetadata.Id
         {
-            get { return "201708141403061_InitialCreate"; }
+            get { return "201708151434549_configure_many_to_many_roles_to_permissions"; }
         }
         
         string IMigrationMetadata.Source

@@ -75,13 +75,9 @@
     <Compile Include="Interfaces\IGenericRepository.cs" />
     <Compile Include="Interfaces\IRepositoryFactory.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
-    <Compile Include="Migrations\201708141403061_InitialCreate.cs" />
-    <Compile Include="Migrations\201708141403061_InitialCreate.Designer.cs">
-      <DependentUpon>201708141403061_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201708142137204_change-roles.cs" />
-    <Compile Include="Migrations\201708142137204_change-roles.Designer.cs">
-      <DependentUpon>201708142137204_change-roles.cs</DependentUpon>
+    <Compile Include="Migrations\201708151434549_configure_many_to_many_roles_to_permissions.cs" />
+    <Compile Include="Migrations\201708151434549_configure_many_to_many_roles_to_permissions.Designer.cs">
+      <DependentUpon>201708151434549_configure_many_to_many_roles_to_permissions.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -96,11 +92,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201708141403061_InitialCreate.resx">
-      <DependentUpon>201708141403061_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201708142137204_change-roles.resx">
-      <DependentUpon>201708142137204_change-roles.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201708151434549_configure_many_to_many_roles_to_permissions.resx">
+      <DependentUpon>201708151434549_configure_many_to_many_roles_to_permissions.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

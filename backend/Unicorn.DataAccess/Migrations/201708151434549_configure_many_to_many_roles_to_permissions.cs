@@ -3,7 +3,7 @@ namespace Unicorn.DataAccess.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class InitialCreate : DbMigration
+    public partial class configure_many_to_many_roles_to_permissions : DbMigration
     {
         public override void Up()
         {
@@ -25,7 +25,7 @@ namespace Unicorn.DataAccess.Migrations
                 .Index(t => t.Role_Id);
             
             CreateTable(
-                "dbo.Permissions",
+                "dbo.Roles",
                 c => new
                     {
                         Id = c.Long(nullable: false, identity: true),
@@ -35,7 +35,7 @@ namespace Unicorn.DataAccess.Migrations
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
-                "dbo.Roles",
+                "dbo.Permissions",
                 c => new
                     {
                         Id = c.Long(nullable: false, identity: true),
@@ -238,17 +238,17 @@ namespace Unicorn.DataAccess.Migrations
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
-                "dbo.PermissionAccounts",
+                "dbo.RoleAndPermission",
                 c => new
                     {
-                        Permission_Id = c.Long(nullable: false),
-                        Account_Id = c.Long(nullable: false),
+                        RoleId = c.Long(nullable: false),
+                        PermissionId = c.Long(nullable: false),
                     })
-                .PrimaryKey(t => new { t.Permission_Id, t.Account_Id })
-                .ForeignKey("dbo.Permissions", t => t.Permission_Id, cascadeDelete: true)
-                .ForeignKey("dbo.Accounts", t => t.Account_Id, cascadeDelete: true)
-                .Index(t => t.Permission_Id)
-                .Index(t => t.Account_Id);
+                .PrimaryKey(t => new { t.RoleId, t.PermissionId })
+                .ForeignKey("dbo.Roles", t => t.RoleId, cascadeDelete: true)
+                .ForeignKey("dbo.Permissions", t => t.PermissionId, cascadeDelete: true)
+                .Index(t => t.RoleId)
+                .Index(t => t.PermissionId);
             
             CreateTable(
                 "dbo.WorkVendors",
@@ -285,12 +285,12 @@ namespace Unicorn.DataAccess.Migrations
             DropForeignKey("dbo.Companies", "Account_Id", "dbo.Accounts");
             DropForeignKey("dbo.SocialAccounts", "Account_Id", "dbo.Accounts");
             DropForeignKey("dbo.Accounts", "Role_Id", "dbo.Roles");
-            DropForeignKey("dbo.PermissionAccounts", "Account_Id", "dbo.Accounts");
-            DropForeignKey("dbo.PermissionAccounts", "Permission_Id", "dbo.Permissions");
+            DropForeignKey("dbo.RoleAndPermission", "PermissionId", "dbo.Permissions");
+            DropForeignKey("dbo.RoleAndPermission", "RoleId", "dbo.Roles");
             DropIndex("dbo.WorkVendors", new[] { "Vendor_Id" });
             DropIndex("dbo.WorkVendors", new[] { "Work_Id" });
-            DropIndex("dbo.PermissionAccounts", new[] { "Account_Id" });
-            DropIndex("dbo.PermissionAccounts", new[] { "Permission_Id" });
+            DropIndex("dbo.RoleAndPermission", new[] { "PermissionId" });
+            DropIndex("dbo.RoleAndPermission", new[] { "RoleId" });
             DropIndex("dbo.Customers", new[] { "Person_Id" });
             DropIndex("dbo.Subcategories", new[] { "Category_Id" });
             DropIndex("dbo.Works", new[] { "Subcategory_Id" });
@@ -308,7 +308,7 @@ namespace Unicorn.DataAccess.Migrations
             DropIndex("dbo.SocialAccounts", new[] { "Account_Id" });
             DropIndex("dbo.Accounts", new[] { "Role_Id" });
             DropTable("dbo.WorkVendors");
-            DropTable("dbo.PermissionAccounts");
+            DropTable("dbo.RoleAndPermission");
             DropTable("dbo.Reviews");
             DropTable("dbo.Histories");
             DropTable("dbo.Customers");
@@ -321,8 +321,8 @@ namespace Unicorn.DataAccess.Migrations
             DropTable("dbo.Companies");
             DropTable("dbo.Books");
             DropTable("dbo.SocialAccounts");
-            DropTable("dbo.Roles");
             DropTable("dbo.Permissions");
+            DropTable("dbo.Roles");
             DropTable("dbo.Accounts");
         }
     }
