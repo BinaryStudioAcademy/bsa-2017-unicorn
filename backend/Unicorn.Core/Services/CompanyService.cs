@@ -20,9 +20,38 @@ namespace Unicorn.Core.Services
             _unitOfWork = unitOfWork;
         }
 
-        public Task Create(CompanyRegisterDTO r)
-        {
-            throw new NotImplementedException();
+        public async Task Create(CompanyRegisterDTO companyDto)
+        {  
+            var account = new Account();
+            var role = new Role();
+            var permissions = new List<Permission>();
+            var socialAccounts = new List<SocialAccount>();
+            var socialAccount = new SocialAccount();
+            var company = new Company();
+
+            account.Role = role;
+            account.Permissions = permissions;
+            account.DateCreated = DateTime.Now;
+            account.Email = companyDto.Email;
+            account.SocialAccounts = socialAccounts;
+
+            role.Name = "company";
+
+            socialAccount.Provider = companyDto.Provider;
+            socialAccount.Uid = companyDto.Uid;
+            socialAccount.Account = account;
+
+            socialAccounts.Add(socialAccount);
+
+            company.Staff = companyDto.Staff;
+            company.Name = companyDto.Name;
+            company.Description = companyDto.Description;
+            company.Account = account;
+            company.FoundationDate = companyDto.Foundation;
+            company.Location = new Location();
+
+            _unitOfWork.CompanyRepository.Create(company);
+            await _unitOfWork.SaveAsync();
         }
 
         public async Task<IEnumerable<CompanyDTO>> GetAllAsync()

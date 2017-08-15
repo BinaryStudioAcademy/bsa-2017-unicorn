@@ -15,7 +15,7 @@ namespace Unicorn.Shared.DTOs.Register
         public string Provider { get; set; }
         public string Uid { get; set; }
         public string Name { get; set; }
-        public int Stuff { get; set; }
+        public int Staff { get; set; }
         public string Description { get; set; }
     }
 }

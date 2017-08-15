@@ -91,24 +91,6 @@ namespace Unicorn.Controllers
         [Route("membership/company")]
         public async Task<HttpResponseMessage> ConfirmCompany(CompanyRegisterDTO company)
         {
-            var companyDto = new CompanyDTO()
-            {
-                Staff = company.Stuff,
-                FoundationDate = company.Foundation,
-                Account = new AccountDTO()
-                {
-                    DateCreated = DateTime.Now,
-                    Email = company.Email,
-                    SocialAccounts = new List<SocialAccountDTO>
-                    {
-                        new SocialAccountDTO()
-                        {
-                            Provider = company.Provider,
-                            Uid = company.Uid
-                        }
-                    }
-                }
-            };
             try
             {
                 await companyService.Create(company);
