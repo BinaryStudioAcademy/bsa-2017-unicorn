@@ -8,6 +8,8 @@ import { Component, OnInit } from '@angular/core';
 export class PopularTasksComponent implements OnInit {
   popularVendors: MockVendor[];
   cleaningVendors: MockVendor[];
+  buildingVendors: MockVendor[];
+  geriatricVendors: MockVendor[];
 
   constructor() { }
 
@@ -58,6 +60,50 @@ export class PopularTasksComponent implements OnInit {
       id: 5,
       name: 'Company 5',
       imgUrl: 'http://fanhome.ru/wp-content/uploads/2012/03/uborka.jpg'
+    }];
+
+    this.buildingVendors = [{
+      id: 1,
+      name: 'Company 1',
+      imgUrl: 'http://www.comparequotes.net.au/Images/building/builder.jpg'
+    }, {
+      id: 2,
+      name: 'Company 2',
+      imgUrl: 'http://i.telegraph.co.uk/multimedia/archive/02676/Philippa_Amy_Tutti_2676616b.jpg'
+    }, {
+      id: 3,
+      name: 'Company 3',
+      imgUrl: 'https://wallpaperscraft.ru/image/stroitel_stroyka_kaska_planshet_79895_3840x2400.jpg'
+    }, {
+      id: 4,
+      name: 'Company 4',
+      imgUrl: 'http://i.telegraph.co.uk/multimedia/archive/02366/build_2366824b.jpg'
+    }, {
+      id: 5,
+      name: 'Company 5',
+      imgUrl: 'http://simsar.az/up/news/article/2015/04/10/150410_4966.jpg'
+    }];
+
+    this.geriatricVendors = [{
+      id: 1,
+      name: 'Company 1',
+      imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxUNWmsckgWas2YwDCmOHEZ4B5JR62bcobGiaLeE3TLJrI-k1c'
+    }, {
+      id: 2,
+      name: 'Company 2',
+      imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHFYvHdBO6iSRj5Lu87wZfSUwmXoMV6YDhuPDVRagJxjNMQ_2Y'
+    }, {
+      id: 3,
+      name: 'Company 3',
+      imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5BU45A_bjQ7wmHIMPnIetDgsjbCN_Z3gqbqbRKYCnS7d9NBUKtw'
+    }, {
+      id: 4,
+      name: 'Company 4',
+      imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAfWipS0ELuH3hLItRRE46bTw01qT7LNZG8pKY7S-urESf5Q1GKQ'
+    }, {
+      id: 5,
+      name: 'Company 5',
+      imgUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSla4VyL8i4Jd5KRq7LdBj7kNWxxid-S64F9QE6X_SX4nsYPg4k'
     }];
   }
 

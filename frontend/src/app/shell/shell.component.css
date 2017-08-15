@@ -27,14 +27,14 @@
     box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.25);
 }
 
-.stub {
-    height: 174px;
+.logo {
+    width: 64px;
+    height: 64px;
+    padding: 5px;
 }
 
-@media screen and (min-width: 560px) {
-    .stub {
-        height: 68px;
-    }
+.stub {
+    height: 68px;
 }
 
 #search {
