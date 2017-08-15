@@ -2,8 +2,8 @@ import { Component, OnInit, Input, AfterViewChecked, ViewChild } from '@angular/
 
 import { NguiMapModule, Marker } from "@ngui/map";
 
-import { MapModel } from "../../models/map.model";
-import { Vendor } from '../../models/vendor.model';
+import { MapModel } from "../../../models/map.model";
+import { Vendor } from '../../../models/vendor.model';
 
 @Component({
   selector: 'app-vendor-profile-contacts',

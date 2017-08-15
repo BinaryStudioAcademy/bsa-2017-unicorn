@@ -2,10 +2,10 @@ import { Component, OnInit, Input } from '@angular/core';
 
 import {SuiModule} from 'ng2-semantic-ui';
 
-import { VendorService } from "../../services/vendor.service";
+import { VendorService } from "../../../services/vendor.service";
 
-import { Vendor } from '../../models/vendor.model';
-import { PortfolioItem } from '../../models/portfolio-item.model';
+import { Vendor } from '../../../models/vendor.model';
+import { PortfolioItem } from '../../../models/portfolio-item.model';
 
 @Component({
   selector: 'app-vendor-profile-portfolio',

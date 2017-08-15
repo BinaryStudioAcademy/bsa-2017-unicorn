@@ -3,9 +3,9 @@ import { NgModel } from '@angular/forms';
 
 import {SuiModule} from 'ng2-semantic-ui';
 
-import { BookComponent } from '../../book/book/book.component';
+import { BookComponent } from '../../../book/book/book.component';
 
-import { Vendor } from '../../models/vendor.model';
+import { Vendor } from '../../../models/vendor.model';
 
 @Component({
   selector: 'app-vendor-profile-info',

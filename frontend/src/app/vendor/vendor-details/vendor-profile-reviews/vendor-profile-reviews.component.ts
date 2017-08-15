@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { ReviewService } from '../../services/review.service';
+import { ReviewService } from '../../../services/review.service';
 
-import { Review } from '../../models/review.model';
+import { Review } from '../../../models/review.model';
 
 @Component({
   selector: 'app-vendor-profile-reviews',

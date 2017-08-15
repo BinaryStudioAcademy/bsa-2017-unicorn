@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
 
@@ -22,8 +21,9 @@ namespace Unicorn.Core.Services
 
         public async Task<IEnumerable<VendorDTO>> GetAllAsync()
         {
-            Mapper.Initialize(cfg => cfg.CreateMap<Vendor, VendorDTO>());
-            return Mapper.Map<IEnumerable<Vendor>, List<VendorDTO>>(await _unitOfWork.VendorRepository.GetAllAsync());
+            var vendors = await _unitOfWork.VendorRepository.GetAllAsync();
+
+            return vendors.Select(v => VendorDTOConverter.VendorToDTO(v));
         }
 
         public async Task<VendorDTO> GetById(long id)

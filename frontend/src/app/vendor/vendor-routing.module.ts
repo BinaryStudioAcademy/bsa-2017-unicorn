@@ -3,10 +3,10 @@ import { RouterModule } from '@angular/router';
 
 import { VendorsComponent } from './vendors/vendors.component';
 import { VendorDetailsComponent } from './vendor-details/vendor-details.component';
-import { VendorProfileInfoComponent } from './vendor-profile-info/vendor-profile-info.component';
-import { VendorProfileContactsComponent } from './vendor-profile-contacts/vendor-profile-contacts.component';
-import { VendorProfileReviewsComponent } from './vendor-profile-reviews/vendor-profile-reviews.component';
-import { VendorProfilePortfolioComponent } from './vendor-profile-portfolio/vendor-profile-portfolio.component';
+import { VendorProfileInfoComponent } from './vendor-details/vendor-profile-info/vendor-profile-info.component';
+import { VendorProfileContactsComponent } from './vendor-details/vendor-profile-contacts/vendor-profile-contacts.component';
+import { VendorProfileReviewsComponent } from './vendor-details/vendor-profile-reviews/vendor-profile-reviews.component';
+import { VendorProfilePortfolioComponent } from './vendor-details/vendor-profile-portfolio/vendor-profile-portfolio.component';
 
 @NgModule({
   imports: [

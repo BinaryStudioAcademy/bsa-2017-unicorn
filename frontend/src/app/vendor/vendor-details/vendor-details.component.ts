@@ -21,7 +21,8 @@ export class VendorDetailsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.vendor = this.vendorService.getVendor(0);
+    this.vendorService.getVendor(0)
+      .then(vendor => this.vendor = vendor);
   }
 
 }
