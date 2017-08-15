@@ -6,32 +6,33 @@
         <p>{{slogan}}</p>
       </div>
       <div class="search-container">
-        <div class="search-group1">
+        <div class="search-item">
           <p>{{labelSearch}}</p>
           <div class="ui input fill-horizontal"> 
-            <input class="search-input" type="text" placeholder="{{placeholderCategory}}" [(ngModel)]="searchCategory">            
-          </div>
-          <!-- <div style='overflow:auto; width:200px;height:40px;'>
+            <input class="search-input" type="text" placeholder="{{placeholderCategory}}" [(ngModel)]="searchCategory">  
+            <!-- <div style='overflow:auto; width:200px;height:40px;'>
             <div *ngFor="let category of categories | search:'id,text':searchText">{{category.text}}</div> 
-          </div> -->
+            </div> -->          
+          </div>
+        </div>          
+        <div class="search-item">        
           <div class="ui input fill-horizontal"> 
             <input class="search-input" type="text" placeholder="{{placeholderSubcategory}}" [(ngModel)]="searchSubcategory">
-          </div>          
-          
+          </div>
         </div>
-        <div class="search-group2">
+        <div class="search-item">        
           <p>{{labelDate}}</p>
           <div class="ui left icon input">
                 <i class="calendar icon"></i>
-                <input class="datepicker" placeholder="Now" suiDatepicker
+                <input class="datepicker" placeholder="NOW" suiDatepicker
                       [(ngModel)]="searchDate"
                       [pickerMode]="mode"
                       [pickerFirstDayOfWeek]="firstDayOfWeek"
                       [pickerUseNativeOnMobile]="false">
           </div> 
-          <div class="item-button"> 
-            <button class="ui button bg-color-main btn-search" (click)="searchVendor()">{{labelButton}}</button>  
-          </div>                                              
+        </div>
+        <div class="search-item">   
+          <button class="ui button bg-color-main btn-search" (click)="searchVendor()">SEARCH</button>                  
         </div>           
       </div>
       <div class="section2-wrapper">
