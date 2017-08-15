@@ -3,6 +3,15 @@
     justify-content: center;
 }
 
+.control {
+    min-width: 100%;
+    margin-bottom: 10px;
+}
+
+.control input {
+    min-width: 100%;
+}
+
 .error-field {
     margin-bottom: 10px;
 }

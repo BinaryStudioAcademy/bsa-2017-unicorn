@@ -51,6 +51,9 @@
     <Compile Include="DTOs\LocationDTO.cs" />
     <Compile Include="DTOs\PermissionDTO.cs" />
     <Compile Include="DTOs\PersonDTO.cs" />
+    <Compile Include="DTOs\Register\CompanyRegisterDTO.cs" />
+    <Compile Include="DTOs\Register\CustomerRegisterDTO.cs" />
+    <Compile Include="DTOs\Register\VendorRegisterDTO.cs" />
     <Compile Include="DTOs\ReviewDTO.cs" />
     <Compile Include="DTOs\RoleDTO.cs" />
     <Compile Include="DTOs\SocialAccountDTO.cs" />
