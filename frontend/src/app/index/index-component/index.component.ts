@@ -57,7 +57,7 @@ export class IndexComponent implements OnInit {
     }
     console.log('"category: "' + this.searchCategory);
     console.log('"subcategory: "' + this.searchSubcategory);
-    console.log('"date: "' + this.searchDate);
+    console.log('"date: "' + this.searchDate.getTime());
   }
 
   // setCategory(category: string) {
