@@ -16,14 +16,15 @@ export class UserProfileComponent implements OnInit {
 
     @Input() user: User;
     @ViewChild(AgmMap) private map: any;
-    lat: number = 49.85711;
-    lng: number = 24.01980;
+    lat: number = 48.464921;
+    lng: number = 35.045798;
 
-    // constructor() { }
-    //  mapClicked($event: MouseEvent) {
-    //  this.lat = $event.coords.lat;
-    //  this.lng = $event.coords.lng;
-    //}
+    constructor() { }
+   mapClicked($event: MouseEvent){
+      this.lat=$event.clientX;
+      this.lng=$event.clientY;
+    
+  }
     ngOnInit() {
     }
 }

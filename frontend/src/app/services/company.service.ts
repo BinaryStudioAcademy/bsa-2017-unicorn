@@ -17,7 +17,11 @@ export class CompanyService {
             Phasellus eu velit imperdiet, congue felis non, condimentum velit. Lorem ipsum dolor sit amet,
               consectetur adipiscing elit. Mauris pretium arcu vitae mauris rutrum, et tempor est congue.`,
       foundationDate: new Date(Date.now()),
-      location: "Lviv, Ukraine",
+      location: {
+        adress: "Chernovola, 59",
+        city: "Lviv, Ukraine",
+        lat: 49.85711,
+        lng: 24.01980},
       reviews: [
       {
         avatar: "../../../assets/images/square-image.png",

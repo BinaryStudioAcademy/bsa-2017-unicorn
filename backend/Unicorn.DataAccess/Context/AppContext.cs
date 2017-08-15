@@ -24,7 +24,8 @@ namespace Unicorn.DataAccess.Context
 
         public AppContext() : base("DefaultConnection")
         {
-            Database.SetInitializer<AppContext>(new CreateDatabaseIfNotExists<AppContext>());
+            Database.SetInitializer(new UnicornDbInitializer());
+            Database.Initialize(true);
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

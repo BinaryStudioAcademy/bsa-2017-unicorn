@@ -6,7 +6,12 @@ export interface Company {
     name: string;
     description: string;
     foundationDate: Date;    
-    location: string;
+    location: {
+        adress: string;
+        city: string;
+        lat: number;
+        lng: number;        
+    };
     reviews: Review[];
     rating: number;
     vendors: Vendor[];
