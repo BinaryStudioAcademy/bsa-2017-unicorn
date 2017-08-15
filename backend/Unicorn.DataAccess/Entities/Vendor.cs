@@ -16,14 +16,16 @@ namespace Unicorn.DataAccess.Entities
 
         public string WorkLetter { get; set; }
 
-        public virtual Company Company { get; set; }
+        public Company Company { get; set; }
 
-        public virtual Person Person { get; set; }
+        public Person Person { get; set; }
 
-        public virtual ICollection<Work> Works { get; set; }
+        public Location Location { get; set; }
 
-        public virtual IEnumerable<PortfolioItem> PortfolioItems { get; set; }
+        public ICollection<Work> Works { get; set; }
 
-        public virtual IEnumerable<Contact> Contacts { get; set; } 
+        public ICollection<PortfolioItem> PortfolioItems { get; set; }
+
+        public ICollection<Contact> Contacts { get; set; }
     }
 }

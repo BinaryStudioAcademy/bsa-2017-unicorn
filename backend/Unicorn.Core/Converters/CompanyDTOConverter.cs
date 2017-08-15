@@ -14,7 +14,7 @@ namespace Unicorn.Core.Converters
                 Id = company.Id,
                 Account = new AccountDTO() { Id = company.Account.Id, DateCreated = company.Account.DateCreated, Rating = company.Account.Rating },
                 Staff = company.Staff,
-                Vendors = company.Vendors.Select(v => VendorDTOConverter.VendorToDTO(v))
+                Vendors = company.Vendors.Select(v => VendorDTOConverter.VendorToDTO(v)).ToList()
             };
         }
     }

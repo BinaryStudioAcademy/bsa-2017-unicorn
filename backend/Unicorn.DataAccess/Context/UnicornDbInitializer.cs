@@ -5,7 +5,7 @@ using Unicorn.DataAccess.Entities;
 
 namespace Unicorn.DataAccess.Context
 {
-    public class UnicornDbInitializer : CreateDatabaseIfNotExists<AppContext>
+    public class UnicornDbInitializer : DropCreateDatabaseIfModelChanges<AppContext>
     {
         protected override void Seed(AppContext context)
         {
@@ -62,8 +62,8 @@ namespace Unicorn.DataAccess.Context
                 Email = "cleanok_company@gmail.com",
                 EmailConfirmed = true,
                 DateCreated = new DateTime(2017, 08, 10, 22, 38, 15),
-                Avatar = "cleanok.jpg",
-                Rating = 5,
+                Avatar = "../../../assets/images/company_logo.png",
+                Rating = 4.7,
                 IsDeleted = false,
                 Role = new Role() { Id = role3.Id, Name = role3.Name, IsDeleted = false }
             };
@@ -99,8 +99,8 @@ namespace Unicorn.DataAccess.Context
                 Email = "catcare_company@gmail.com",
                 EmailConfirmed = true,
                 DateCreated = new DateTime(2017, 08, 11, 00, 58, 16),
-                Avatar = "catcare.jpg",
-                Rating = 4,
+                Avatar = "../../../assets/images/company_logo.png",
+                Rating = 3.7,
                 IsDeleted = false,
                 Role = new Role() { Id = role3.Id, Name = role3.Name, IsDeleted = false }
             };
@@ -123,8 +123,8 @@ namespace Unicorn.DataAccess.Context
                 Email = "driving_company@gmail.com",
                 EmailConfirmed = true,
                 DateCreated = new DateTime(2017, 08, 11, 22, 57, 15),
-                Avatar = "drivingcompany.jpg",
-                Rating = 4,
+                Avatar = "../../../assets/images/company_logo.png",
+                Rating = 2.7,
                 IsDeleted = false,
                 Role = new Role() { Id = role3.Id, Name = role3.Name, IsDeleted = false }
             };
@@ -835,7 +835,17 @@ namespace Unicorn.DataAccess.Context
                 Position = "Head",
                 Works = new List<Work>() { work1 },
                 ExWork = "Dishwasher",
-                Person = person1        
+                Person = person1,
+                Location = new Location()
+                {
+                    Id = 1,
+                    Adress = "Lebedeva-Kumacha 7a str.",
+                    City = "Kiev",
+                    CoordinateX = 50.437,
+                    CoordinateY = 30.439,
+                    IsDeleted = false,
+                    PostIndex = "03110"
+                }
             };
 
             Vendor vendor2 = new Vendor()
@@ -846,7 +856,17 @@ namespace Unicorn.DataAccess.Context
                 Position = "Photographer",
                 Works = new List<Work>() { work2 },
                 ExWork = "Photographer",
-                Person = person2
+                Person = person2,
+                Location = new Location()
+                {
+                    Id = 1,
+                    Adress = "Lebedeva-Kumacha 7a str.",
+                    City = "Kiev",
+                    CoordinateX = 50.437,
+                    CoordinateY = 30.439,
+                    IsDeleted = false,
+                    PostIndex = "03110"
+                }
             };
 
             Vendor vendor3 = new Vendor()
@@ -857,7 +877,17 @@ namespace Unicorn.DataAccess.Context
                 Position = "Vet",
                 Works = new List<Work>() { work3 },
                 ExWork = "Vet",
-                Person = person4
+                Person = person4,
+                Location = new Location()
+                {
+                    Id = 1,
+                    Adress = "Lebedeva-Kumacha 7a str.",
+                    City = "Kiev",
+                    CoordinateX = 50.437,
+                    CoordinateY = 30.439,
+                    IsDeleted = false,
+                    PostIndex = "03110"
+                }
             };
 
             Vendor vendor4 = new Vendor()
@@ -868,7 +898,17 @@ namespace Unicorn.DataAccess.Context
                 Position = "Builder",
                 Works = new List<Work>() { work4 },
                 ExWork = "Painter",
-                Person = person5
+                Person = person5,
+                Location = new Location()
+                {
+                    Id = 1,
+                    Adress = "Lebedeva-Kumacha 7a str.",
+                    City = "Kiev",
+                    CoordinateX = 50.437,
+                    CoordinateY = 30.439,
+                    IsDeleted = false,
+                    PostIndex = "03110"
+                }
             };
 
             Vendor vendor5 = new Vendor()
@@ -879,7 +919,17 @@ namespace Unicorn.DataAccess.Context
                 Position = "Uber Select driver",
                 Works = new List<Work>() { work5 },
                 ExWork = "lory driver",
-                Person = person6
+                Person = person6,
+                Location = new Location()
+                {
+                    Id = 1,
+                    Adress = "Lebedeva-Kumacha 7a str.",
+                    City = "Kiev",
+                    CoordinateX = 50.437,
+                    CoordinateY = 30.439,
+                    IsDeleted = false,
+                    PostIndex = "03110"
+                }
             };
 
             Vendor vendor6 = new Vendor()
@@ -890,7 +940,17 @@ namespace Unicorn.DataAccess.Context
                 Position = "C# Senior Dev",
                 Works = new List<Work>() { work6 },
                 ExWork = "Middle dev",
-                Person = person9
+                Person = person9,
+                Location = new Location()
+                {
+                    Id = 1,
+                    Adress = "Lebedeva-Kumacha 7a str.",
+                    City = "Kiev",
+                    CoordinateX = 50.437,
+                    CoordinateY = 30.439,
+                    IsDeleted = false,
+                    PostIndex = "03110"
+                }
             };
 
             context.Vendors.Add(vendor1);
@@ -910,7 +970,17 @@ namespace Unicorn.DataAccess.Context
             {
                 Id = 1,
                 Account = account1,
+                Name = "TURBOCAT 9000 Inc.",
+                Description = "Lorem ipsum dolor sit amet," +
+                              "consectetur adipiscing elit. Sed dignissim maximus fringilla.Ut tortor lectus," +
+                              "consequat sit amet ultricies ac, feugiat in libero.Sed augue diam," +
+                              "lacinia tincidunt sollicitudin sed, rhoncus id neque." +
+                              "Phasellus eu velit imperdiet, congue felis non," +
+                              "condimentum velit.Lorem ipsum dolor sit amet," +
+                              "consectetur adipiscing elit.Mauris pretium arcu vitae mauris rutrum," +
+                              "et tempor est congue.",
                 FoundationDate = new DateTime(2015, 08, 11, 00, 58, 16),
+                Director = account1,
                 Staff = 7,
                 IsDeleted = false,
                 Location = new Location()
@@ -923,14 +993,24 @@ namespace Unicorn.DataAccess.Context
                     IsDeleted = false,
                     PostIndex = "03110"
                 },
-                Vendors = new List<Vendor>() { vendor1 }
-        };
+                Vendors = new List<Vendor>() {vendor1}
+            };
 
             Company company2 = new Company()
             {
                 Id = 2,
+                Name = "CAT Inc.",
+                Description = "Lorem ipsum dolor sit amet," +
+                              "consectetur adipiscing elit. Sed dignissim maximus fringilla.Ut tortor lectus," +
+                              "consequat sit amet ultricies ac, feugiat in libero.Sed augue diam," +
+                              "lacinia tincidunt sollicitudin sed, rhoncus id neque." +
+                              "Phasellus eu velit imperdiet, congue felis non," +
+                              "condimentum velit.Lorem ipsum dolor sit amet," +
+                              "consectetur adipiscing elit.Mauris pretium arcu vitae mauris rutrum," +
+                              "et tempor est congue.",
                 Account = account4,
                 FoundationDate = new DateTime(2017, 08, 12, 10, 36, 16),
+                Director = account1,
                 Staff = 36,
                 IsDeleted = false,
                 Location = new Location()
@@ -948,8 +1028,18 @@ namespace Unicorn.DataAccess.Context
             Company company3 = new Company()
             {
                 Id = 3,
+                Name = "Tommy Catfilger Inc.",
+                Description = "Lorem ipsum dolor sit amet," +
+                              "consectetur adipiscing elit. Sed dignissim maximus fringilla.Ut tortor lectus," +
+                              "consequat sit amet ultricies ac, feugiat in libero.Sed augue diam," +
+                              "lacinia tincidunt sollicitudin sed, rhoncus id neque." +
+                              "Phasellus eu velit imperdiet, congue felis non," +
+                              "condimentum velit.Lorem ipsum dolor sit amet," +
+                              "consectetur adipiscing elit.Mauris pretium arcu vitae mauris rutrum," +
+                              "et tempor est congue.",
                 Account = account6,
                 FoundationDate = new DateTime(2012, 08, 08, 13, 11, 16),
+                Director = account1,
                 Staff = 2,
                 IsDeleted = false,
                 Location =new Location()
@@ -1086,6 +1176,8 @@ namespace Unicorn.DataAccess.Context
             context.SaveChanges();
             context.Books.Add(book6);
             context.SaveChanges();
+
+
 
             context.SaveChanges();
             base.Seed(context);
