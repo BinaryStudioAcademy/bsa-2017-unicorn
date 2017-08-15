@@ -25,6 +25,7 @@ import { VendorModule } from './vendor/vendor.module';
 import { BookModule } from './book/book.module';
 import { IndexModule } from './index/index.module';
 // import { ImageUploadModule } from "angular2-image-upload";
+import { SearchModule } from './search/search.module';
 
 
 
@@ -58,6 +59,7 @@ import { FooterComponent } from './footer/footer.component';
     UserModule,
     VendorModule,
     BookModule,
+    SearchModule,
     IndexModule // Must be the last module
   ],
   providers: [

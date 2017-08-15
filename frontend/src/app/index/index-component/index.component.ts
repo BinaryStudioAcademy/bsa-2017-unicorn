@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-index',
@@ -20,7 +21,9 @@ export class IndexComponent implements OnInit {
   categories: {}[];
   subcategories: string[];
 
-  constructor() { }
+  constructor(
+    private router: Router
+  ) { }
 
   ngOnInit() {
     this.initContent();
@@ -58,6 +61,10 @@ export class IndexComponent implements OnInit {
     console.log('"category: "' + this.searchCategory);
     console.log('"subcategory: "' + this.searchSubcategory);
     console.log('"date: "' + this.searchDate.getTime());
+
+    this.router.navigate(['search/', this.searchCategory.toLowerCase(),
+                                     this.searchSubcategory.toLocaleLowerCase(),
+                                     this.searchDate.getTime()]);
   }
 
   // setCategory(category: string) {
