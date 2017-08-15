@@ -3,6 +3,7 @@ import { RouterModule } from '@angular/router';
 
 import { CompanyComponent } from './company-component/company.component';
 import { CompanyDetailsComponent } from './company-details/company-details.component';
+import { CompanyEditComponent } from "./company-edit/company-edit.component";
 
 @NgModule({
   imports: [
@@ -24,6 +25,10 @@ import { CompanyDetailsComponent } from './company-details/company-details.compo
           {
             path: ':id',
             component: CompanyDetailsComponent,
+          },
+          {
+            path: ':id/:id',
+            component: CompanyEditComponent,
           }
         ]
       }

@@ -1,21 +1,83 @@
-﻿<div class="user-header">
-  <div class="ui small circular image">
-    <img src="{{fakeUser.avatarUrl}}" />
-  </div>
-  <div class="user-title">
-    <h3>{{fakeUser.firstName}} {{fakeUser.surName}}</h3>
-  </div>
+﻿<div class="ui grid container">
+    <div class="row">
+        <div class="sixteen wide column container">
+            <div class="user-header" id="user-header">
+                <i class="large wizard icon" (click)="enableTheme=true">
+        <div *ngIf="enableTheme">
+        <sui-modal [isClosable]="true" size="mini" (denied)="enableTheme=false" #modalTh>
+            <div class="content">
+                <a class="ui big red empty circular label"(click)="modalTh.deny()" (click)="updateBg('red')"></a>
+                <a class="ui big orange empty circular label"(click)="modalTh.deny()"(click)="updateBg('orange')"></a>
+                <a class="ui big yellow empty circular label"(click)="modalTh.deny()"(click)="updateBg('yellow')"></a>
+                <a class="ui big green empty circular label"(click)="modalTh.deny()"(click)="updateBg('green')"></a>
+                <a class="ui big teal empty circular label"(click)="modalTh.deny()"(click)="updateBg('teal')"></a>
+                <a class="ui big blue empty circular label"(click)="modalTh.deny()"(click)="updateBg('blue')"></a>
+                <a class="ui big violet empty circular label"(click)="modalTh.deny()"(click)="updateBg('violet')"></a>
+                <a class="ui big purple empty circular label"(click)="modalTh.deny()"(click)="updateBg('purple')"></a>
+                <a class="ui big pink empty circular label"(click)="modalTh.deny()"(click)="updateBg('pink')"></a>
+                <a class="ui big brown empty circular label"(click)="modalTh.deny()"(click)="updateBg('brown')"></a>
+                <a class="ui big grey empty circular label"(click)="modalTh.deny()"(click)="updateBg('grey')"></a>
+                <a class="ui big black empty circular label"(click)="modalTh.deny()"(click)="updateBg('black')"></a>
+            </div>
+        </sui-modal>
+        </div>
+    </i>
+                <div class="avatar" (click)="openModal()">
+                    <div class="ui small circular image" suiPopup popupText="Click to update your photo">
+                        <img src="{{fakeUser.avatarUrl}}" />
+                    </div>
+                </div>
+                <div class="user-title">
+                    <h3>{{fakeUser.firstName}} {{fakeUser.surName}}</h3>
+                </div>
+                <div *ngIf="enabled">
+                    <sui-modal [isClosable]="true" size="mini" (denied)="enabled=false" #modal>
+                        <div class="content">
+                            <image-upload (onFileUploadFinish)="saveImgButton=true" (onRemove)="saveImgButton=false" [max]="1" [dropBoxMessage]="'Set photo here'" [buttonCaption]="'Select Image'">
+                            </image-upload>
+                            <div *ngIf="saveImgButton">
+                                <button class="ui button" style="align-content: right"> Save</button>
+                            </div>
+                        </div>
+                    </sui-modal>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="sixteen wide column container">
+        <sui-tabset>
+            <div class="ui pointing secondary menu">
+                <a class="item" suiTabHeader="1">Profile</a>
+                <a class="item" suiTabHeader="2">Tasks</a>
+                <a class="item" suiTabHeader="3">Messages</a>
+                <a class="item" suiTabHeader="4">History</a>
+            </div>
+            <div class="row">
+                <div class="ui grid container">
+                    <div class="row">
+                        <div class="sixteen wide container column">
+                            <div class="ui segment" suiTabContent="1">
+                                <app-user-profile [user]="fakeUser"></app-user-profile>
+                            </div>
+                        </div>
+                        <div class="sixteen wide container column">
+                            <div class="ui segment" suiTabContent="2">
+                                <app-user-tasks [user]="fakeUser"></app-user-tasks>
+                            </div>
+                        </div>
+                        <div class="sixteen wide container column">
+                            <div class="ui segment" suiTabContent="3">
+                                <app-user-messages></app-user-messages>
+                            </div>
+                        </div>
+                        <div class="sixteen wide container column">
+                            <div class="ui segment" suiTabContent="4">
+                                <app-user-history [user]="fakeUser"></app-user-history>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </sui-tabset>
+    </div>
 </div>
-
-<sui-tabset>
-  <div class="ui pointing secondary menu">
-    <a class="item" suiTabHeader="1">Profile</a>
-    <a class="item" suiTabHeader="2">Tasks</a>
-    <a class="item" suiTabHeader="3">Messages</a>
-    <a class="item" suiTabHeader="4">History</a>
-  </div>
-  <div class="ui segment" suiTabContent="1"><app-user-profile [user]="fakeUser"></app-user-profile></div>
-  <div class="ui segment" suiTabContent="2"><app-user-tasks [user]="fakeUser"></app-user-tasks></div>
-  <div class="ui segment" suiTabContent="3"><app-user-messages></app-user-messages></div>
-  <div class="ui segment" suiTabContent="4"><app-user-history [user]="fakeUser"></app-user-history></div>
-</sui-tabset> 

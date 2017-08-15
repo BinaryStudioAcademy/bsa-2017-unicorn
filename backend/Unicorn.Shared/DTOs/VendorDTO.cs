@@ -13,10 +13,10 @@ namespace Unicorn.Core.DTOs
         public string Position { get; set; }
 
 
-        public virtual CompanyDTO Company { get; set; }
+        public CompanyDTO Company { get; set; }
 
-        public virtual PersonDTO Person { get; set; }
+        public PersonDTO Person { get; set; }
 
-        public virtual ICollection<WorkDTO> Works { get; set; }
+        public ICollection<WorkDTO> Works { get; set; }
     }
 }

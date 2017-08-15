@@ -8,6 +8,6 @@ namespace Unicorn.Core.DTOs
 
         public string Name { get; set; }
 
-        public virtual ICollection<AccountDTO> Accounts { get; set; }
+        public ICollection<AccountDTO> Accounts { get; set; }
     }
 }

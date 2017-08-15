@@ -2,16 +2,18 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    justify-content: center;
 }
 
 .vendor {
-    margin: 5px;
+    margin: 0px;
     color: gray;
 }
 
 .img-wrapper {
     width: 172px;
     height: 134px;
+    margin: 5px;
     overflow: hidden;
 }
 
@@ -27,6 +29,9 @@
     text-align: center;
 }
 
+.item {
+    text-transform: uppercase !important;
+}
 
 .ui.secondary.pointing.menu .active.item {
     background-color: transparent;

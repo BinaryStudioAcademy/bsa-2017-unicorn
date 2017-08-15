@@ -19,8 +19,8 @@ namespace Unicorn.Core.DTOs
         public string Phone { get; set; }
 
 
-        public virtual AccountDTO Account { get; set; }
+        public AccountDTO Account { get; set; }
 
-        public virtual LocationDTO Location { get; set; }
+        public LocationDTO Location { get; set; }
     }
 }

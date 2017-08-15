@@ -1,5 +1,7 @@
-import { Component, OnInit, ViewChild, AfterViewChecked, Input } from '@angular/core';
-import { AgmMap } from "@agm/core";
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { NguiMapModule, Marker } from "@ngui/map";
+import { MapModel } from "../../../models/map.model";
+
 
 export interface IContext {
     data:string;
@@ -10,25 +12,19 @@ export interface IContext {
   templateUrl: './contacts.component.html',
   styleUrls: ['./contacts.component.sass']
 })
-export class ContactsComponent implements OnInit, AfterViewChecked {  
-  @ViewChild(AgmMap) private map: any;
-  lat: number = 49.85711;
-  lng: number = 24.01980;  
-
+export class ContactsComponent implements OnInit {      
+  map: MapModel= {
+    center: {lat: 49.85711, lng: 24.01980},
+    zoom: 18,    
+    title: "Overcat 9000",
+    label: "Overcat 9000",
+    markerPos: {lat: 49.85711, lng: 24.01980}
+    
+    
+  } ;
 
   constructor() { }
 
-  ngOnInit() {     
-  }    
-
-
-  ngAfterViewChecked() {      
-    this.redrawMap();     
-  }
-
-  
-  private redrawMap() {    
-    this.map.triggerResize();
-      //  .then(() => this.map._mapsWrapper.setCenter({lat: this.lat, lng: this.lng}));
-  }  
+  ngOnInit() {    
+  }   
 }
