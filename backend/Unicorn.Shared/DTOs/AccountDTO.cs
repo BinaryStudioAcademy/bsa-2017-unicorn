@@ -15,12 +15,12 @@ namespace Unicorn.Core.DTOs
 
         public string Avatar { get; set; }
 
-        public int Rating { get; set; }
+        public double Rating { get; set; }
 
-        public virtual RoleDTO Role { get; set; }
+        public  RoleDTO Role { get; set; }
 
-        public virtual ICollection<SocialAccountDTO> SocialAccounts { get; set; }
+        public  ICollection<SocialAccountDTO> SocialAccounts { get; set; }
 
-        public virtual ICollection<PermissionDTO> Permissions { get; set; }
+        public  ICollection<PermissionDTO> Permissions { get; set; }
     }
 }

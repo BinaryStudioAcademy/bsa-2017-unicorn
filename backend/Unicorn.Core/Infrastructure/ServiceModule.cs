@@ -20,6 +20,7 @@ namespace Unicorn.Core.Infrastructure
             Bind<IWorkService>().To<WorkService>();
             Bind<IPersonService>().To<PersonService>();
             Bind<IPermissionService>().To<PermissionService>();
+            Bind<ICompanyService>().To<CompanyService>();
         }
     }
 }

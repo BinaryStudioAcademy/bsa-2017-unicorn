@@ -68,9 +68,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Infrastructure\MapperProfile.cs" />
     <Compile Include="Interfaces\IAccountService.cs" />
     <Compile Include="Interfaces\IAuthService.cs" />
     <Compile Include="Interfaces\IBookService.cs" />
+    <Compile Include="Interfaces\ICompanyService.cs" />
     <Compile Include="Interfaces\ICustomerService.cs" />
     <Compile Include="Interfaces\IMembershipProvider.cs" />
     <Compile Include="Infrastructure\ServiceModule.cs" />
@@ -82,6 +84,7 @@
     <Compile Include="Interfaces\IWorkService.cs" />
     <Compile Include="Services\AccountService.cs" />
     <Compile Include="Services\BookService.cs" />
+    <Compile Include="Services\CompanyService.cs" />
     <Compile Include="Services\CustomerService.cs" />
     <Compile Include="Services\LocationService.cs" />
     <Compile Include="Services\PermissionService.cs" />
