@@ -63,38 +63,9 @@ namespace Unicorn.Controllers
         [Route("membership/customer")]
         public async Task<HttpResponseMessage> ConfirmCustomer(CustomerRegisterDTO customer)
         {
-            var customerDto = new CustomerDTO()
-            {
-                Books = new List<BookDTO>(),
-                Person = new PersonDTO()
-                {
-                    Location = new LocationDTO(),
-                    Birthday = customer.Birthday,
-                    Phone = customer.Phone,
-                    Name = customer.FirstName,
-                    MiddleName = customer.MiddleName,
-                    SurnameName = customer.LastName,
-                    Account = new AccountDTO()
-                    {
-                        Role = new RoleDTO(),
-                        Permissions = new List<PermissionDTO>(),
-                        DateCreated = DateTime.Now,
-                        Email = customer.Email,
-                        SocialAccounts = new List<SocialAccountDTO>
-                        {
-                            new SocialAccountDTO()
-                            {
-                                Provider = customer.Provider,
-                                Uid = customer.Uid
-                            }
-                        }
-                    }
-
-                }
-            };
             try
             {
-                await customerService.CreateAsync(customerDto);
+                await customerService.CreateAsync(customer);
             }
             catch
             {
@@ -106,37 +77,9 @@ namespace Unicorn.Controllers
         [Route("membership/vendor")]
         public async Task<HttpResponseMessage> ConfirmVendor(VendorRegisterDTO vendor)
         {
-            var vendorDto = new VendorDTO()
-            {
-                Person = new PersonDTO()
-                {
-                    Birthday = vendor.Birthday,
-                    Phone = vendor.Phone,
-                    Name = vendor.FirstName,
-                    MiddleName = vendor.MiddleName,
-                    SurnameName = vendor.LastName,
-                    Account = new AccountDTO()
-                    {
-                        DateCreated = DateTime.Now,
-                        Email = vendor.Email,
-                        SocialAccounts = new List<SocialAccountDTO>
-                        {
-                            new SocialAccountDTO()
-                            {
-                                Provider = vendor.Provider,
-                                Uid = vendor.Uid
-                            }
-                        }
-                    }
-
-                },
-                Experience = vendor.Experience,
-                Position = vendor.Position,
-                ExWork = vendor.Speciality
-            };
             try
             {
-                await vendorService.Create(vendorDto);
+                await vendorService.Create(vendor);
             }
             catch
             {

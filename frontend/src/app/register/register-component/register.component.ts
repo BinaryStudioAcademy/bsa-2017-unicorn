@@ -144,8 +144,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.authState.subscribe(user => {
       if (user) {
         this.currentUser = user;
-        let uid = user.providerData[0].providerId;
-        let provider = user.uid;
+        let provider = user.providerData[0].providerId;
+        let uid = user.uid;
         this.checkRegistration(provider, uid);
       } 
     });
@@ -173,6 +173,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
       .open(config)
       .onApprove(result => { /* approve callback */ })
       .onDeny(result => {
+        this.error = false;
         this.isLogged = false;
         this.isCompany = false;
         this.isVendor = false;
@@ -184,6 +185,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
     this.afAuth.auth.signOut();
     this.isLogged = false;
+    this.error = false;
   }
 
   selectRole(role: string) {
