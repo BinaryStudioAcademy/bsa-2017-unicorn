@@ -5,12 +5,12 @@
 }
 
 .companies-container {
-    position: flex;
+    display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     width: 70%;
-    height: 800px;
-    background-color: yellow;
+    height: auto;
+    margin: 0 0 30px 0;
 }
 
 .filter-container {
@@ -20,16 +20,47 @@
 }
 
 .companies {
-    position: flex;
+    display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
+    flex-wrap: wrap;  
+    justify-content: flex-start;
+    margin: 20px;   
+}
+
+.page-container {
+    margin: 0 auto;
 }
 
 .company {
-    width: 100px;
-    height: 100px;
+    margin: 20px;
+    width: 250px;
+    height: 250px;
+    color: gray;
     background-color: white;
+}
+
+.company img {
+    width: 250px;
+    height: 180px; 
+    object-fit: cover;
+}
+
+.company-name {
+    margin: 10px 0;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.company-detail {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.company-detail p {
+    margin: 0;
 }
 
 .map-container {

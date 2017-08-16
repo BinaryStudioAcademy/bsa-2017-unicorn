@@ -2,10 +2,30 @@
   <div class="companies-container">
     <div class="filter-container">
     </div>
-    <div class="companies">
-      <div class="company" *ngFor="let company of companies"></div>
+    <div class="companies"> 
+      <div class="company" *ngFor="let company of companies.slice((selectedPage - 1) * pageSize, selectedPage * pageSize)">
+        <img src="{{company.avatar}}"/>
+        <div class="company-info">
+          <div class="company-name">
+            {{company.name}} ({{companies.indexOf(company)}})
+          </div>
+          <div class="company-detail">
+            <p>{{company.location.city}}</p>
+            <sui-rating class="star" [ngModel]="company.rating" [isReadonly]="true"></sui-rating> 
+            <p>{{company.reviews.length}} reviews</p>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
+    <div class="page-container"> 
+      <sui-pagination [collectionSize]="companies.length"
+                        [pageSize]="pageSize"
+                        [maxSize]="maxSize"
+                        [hasEllipses]="hasEllipses"
+                        [(page)]="selectedPage">
+      </sui-pagination>
+    </div> 
+  </div>  
   <div class="map-container">
   </div>
 </div>
