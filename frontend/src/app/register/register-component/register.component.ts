@@ -46,7 +46,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   social: any;
 
-  isLogged: boolean = false;
+  isLogged: boolean;
 
   roleSelected = false;
 
@@ -64,6 +64,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.authService.logout();
 
     this.authService.authState.subscribe(user => {
+      console.log('Event: ', Date.now());
       if (user) {
         this.currentUser = user;
       } else {
@@ -86,8 +87,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
     console.log('status: ' + resp.status);
     switch (resp.status) {
       case 204: {
-        this.isLogged = true;
         this.error = false;
+        this.isLogged = !this.isLogged;
         break;
       }
       case 200: {
@@ -163,7 +164,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.isCustomer = false;
     this.roleSelected = false;
     this.social = undefined;
-    this.clearRoles();
+    this.clearRoles();    
   }
 
   private redirect() {

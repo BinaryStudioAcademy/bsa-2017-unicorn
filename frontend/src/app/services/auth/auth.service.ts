@@ -20,8 +20,7 @@ export class AuthService {
       provider: data.providerData[0].providerId,     
       uid: data.uid
     }
-  }
-  
+  }  
 
   public loginWithGoogle() {
     return this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider())
