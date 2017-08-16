@@ -6,6 +6,7 @@ using Unicorn.Core.Interfaces;
 using Unicorn.DataAccess.Entities;
 using Unicorn.DataAccess.Interfaces;
 using Unicorn.Shared.DTOs;
+using System.Data.Entity;
 
 namespace Unicorn.Core.Services
 {
@@ -20,14 +21,28 @@ namespace Unicorn.Core.Services
 
         public async Task<IEnumerable<VendorDTO>> GetAllAsync()
         {
-            var vendors = await _unitOfWork.VendorRepository.GetAllAsync();
+            var vendors = await _unitOfWork.VendorRepository.Query
+                .Include(v => v.Person)
+                .Include(v => v.Person.Location)
+                .Include(v => v.PortfolioItems)
+                .Include(v => v.Works)
+                .Include(v => v.Contacts)
+                .Include(v => v.Company)
+                .ToListAsync();
 
             return vendors.Select(v => VendorToDTO(v));
         }
 
         public async Task<VendorDTO> GetByIdAsync(long id)
         {
-            var vendor = await _unitOfWork.VendorRepository.GetByIdAsync(id);
+            var vendor = await _unitOfWork.VendorRepository.Query
+                .Include(v => v.Person)
+                .Include(v => v.Person.Location)
+                .Include(v => v.PortfolioItems)
+                .Include(v => v.Works)
+                .Include(v => v.Contacts)
+                .Include(v => v.Company)
+                .SingleAsync(x => x.Id == id);
             return VendorToDTO(vendor);
         }
 
