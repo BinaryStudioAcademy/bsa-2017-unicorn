@@ -42,18 +42,6 @@ export class LoginComponent implements OnInit {
       });
   }
 
-  loginWithGithub() {
-    this.auth.loginWithGithub()
-      .then(resp => {
-        if (resp.status == 200) {
-          this.saveJWT(resp.headers.get('Token'));
-        }
-      })
-      .catch(err => {
-        alert(err);
-      });
-  }
-
   loginWithTwitter() {
     this.auth.loginWithTwitter()
       .then(resp => {

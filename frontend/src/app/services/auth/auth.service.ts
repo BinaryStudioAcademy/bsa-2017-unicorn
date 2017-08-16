@@ -22,6 +22,7 @@ export class AuthService {
   public loginWithGoogle() {
     return this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider())
       .then(data => {
+        console.log(data);
         return this.initializeUser(data.user);
       })
       .then(user => {
@@ -32,7 +33,8 @@ export class AuthService {
   public loginWithFacebook() {
     return this.afAuth.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider())
       .then(data => {
-        return this.initializeUser(data.user);
+        console.log(data);
+        return this.initializeUser(data.user);        
       })
       .then(user => {
         return this.httpService.postRequest('membership', user);
@@ -42,6 +44,7 @@ export class AuthService {
   public loginWithTwitter() {
     return this.afAuth.auth.signInWithPopup(new firebase.auth.TwitterAuthProvider())
       .then(data => {
+        console.log(data);
         return this.initializeUser(data.user);
       })
       .then(user => {
