@@ -68,8 +68,8 @@ namespace Unicorn.Core.Services
                         Id = location.Id,
                         Adress = location.Adress,
                         City = location.City,
-                        CoordinateX = location.CoordinateX,
-                        CoordinateY = location.CoordinateY,
+                        Latitude = location.Latitude,
+                        Longitude = location.Longitude,
                         PostIndex = location.PostIndex
                     },
 

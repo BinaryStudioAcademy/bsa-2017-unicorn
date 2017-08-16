@@ -2,6 +2,7 @@
 using AutoMapper;
 using Unicorn.Shared.DTOs;
 using Unicorn.DataAccess.Entities;
+using Unicorn.Shared.DTOs.Subcategory;
 
 namespace Unicorn.Core.Infrastructure
 {

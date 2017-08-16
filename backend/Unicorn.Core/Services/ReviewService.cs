@@ -28,9 +28,10 @@ namespace Unicorn.Core.Services
         public async Task<IEnumerable<ReviewDTO>> GetByReceiverIdAsync(long id)
         {
             var reviews = await _unitOfWork.ReviewRepository.GetAllAsync();
+
             return reviews
                 .Where(r => r.ToAccountId == id)
-                .Select(r => ReviewToDTO(r));
+                .Select(r => ReviewToDTO(r)).ToList();
 
         }
 
@@ -52,7 +53,7 @@ namespace Unicorn.Core.Services
             var reviews = await _unitOfWork.ReviewRepository.GetAllAsync();
             return reviews
                 .Where(r => r.FromAccountId == id)
-                .Select(r => ReviewToDTO(r));
+                .Select(r => ReviewToDTO(r)).ToList();
         }
 
         public async Task<IEnumerable<ReviewDTO>> GetByBookIdAsync(long id)
@@ -60,7 +61,7 @@ namespace Unicorn.Core.Services
             var reviews = await _unitOfWork.ReviewRepository.GetAllAsync();
             return reviews
                 .Where(r => r.BookId == id)
-                .Select(r => ReviewToDTO(r));
+                .Select(r => ReviewToDTO(r)).ToList();
         }
 
         private ReviewDTO ReviewToDTO(Review review)
@@ -74,7 +75,9 @@ namespace Unicorn.Core.Services
                 FromAccountId = review.FromAccountId,
                 To = review.To,
                 ToAccountId = review.ToAccountId,
-                Grade = review.Grade
+                Grade = review.Grade,
+                Date = review.Date,
+                Avatar = review.Avatar
             };
         }
 

@@ -21,6 +21,7 @@ import { VendorRoutingModule } from './vendor-routing.module';
 import { VendorService } from '../services/vendor.service';
 import { ReviewService } from '../services/review.service';
 import { DataService } from "../services/data.service";
+import { LocationService } from "../services/location.service";
 
 @NgModule({
   imports: [
@@ -42,6 +43,7 @@ import { DataService } from "../services/data.service";
   providers: [
     DataService,
     VendorService,
+    LocationService,
     ReviewService
   ]
 })

@@ -62,7 +62,7 @@ namespace Unicorn.DataAccess.Context
                 Email = "cleanok_company@gmail.com",
                 EmailConfirmed = true,
                 DateCreated = new DateTime(2017, 08, 10, 22, 38, 15),
-                Avatar = "../../../assets/images/company_logo.png",
+                Avatar = "https://image.flaticon.com/icons/png/512/78/78373.png",
                 Rating = 4.7,
                 IsDeleted = false,
                 Role = new Role() { Id = role3.Id, Name = role3.Name, IsDeleted = false }
@@ -654,8 +654,8 @@ namespace Unicorn.DataAccess.Context
                     Id = 1,
                     Adress = "Lebedeva-Kumacha 7a str.",
                     City = "Kiev",
-                    CoordinateX = 50.437,
-                    CoordinateY = 30.439,
+                    Latitude = 50.437,
+                    Longitude = 30.439,
                     IsDeleted = false,
                     PostIndex = "03110"
                 },
@@ -705,8 +705,8 @@ namespace Unicorn.DataAccess.Context
                     Id = 4,
                     Adress = "Akademica Palladina 7 pr.",
                     City = "Kiev",
-                    CoordinateX = 50.461199,
-                    CoordinateY = 30.355651,
+                    Latitude = 50.461199,
+                    Longitude = 30.355651,
                     IsDeleted = false,
                     PostIndex = "03179"
                 },
@@ -742,8 +742,8 @@ namespace Unicorn.DataAccess.Context
                     Id = 6,
                     Adress = "Shevchenko str.",
                     City = "Boryspol",
-                    CoordinateX = 50.461199,
-                    CoordinateY = 30.355651,
+                    Latitude = 50.461199,
+                    Longitude = 30.355651,
                     IsDeleted = false,
                     PostIndex = "27123"
                 },
@@ -1042,8 +1042,8 @@ namespace Unicorn.DataAccess.Context
                     Id = 1,
                     Adress = "Lebedeva-Kumacha 7a str.",
                     City = "Kiev",
-                    CoordinateX = 50.437,
-                    CoordinateY = 30.439,
+                    Latitude = 50.437,
+                    Longitude = 30.439,
                     IsDeleted = false,
                     PostIndex = "03110"
                 },
@@ -1071,8 +1071,8 @@ namespace Unicorn.DataAccess.Context
                 {
                     Adress = "Akademica Palladina 7 pr.",
                     City = "Kiev",
-                    CoordinateX = 50.461199,
-                    CoordinateY = 30.355651,
+                    Latitude = 50.461199,
+                    Longitude = 30.355651,
                     IsDeleted = false,
                     PostIndex = "03179"
                 },
@@ -1101,8 +1101,8 @@ namespace Unicorn.DataAccess.Context
                     Id = 6,
                     Adress = "Shevchenko str.",
                     City = "Boryspol",
-                    CoordinateX = 50.461199,
-                    CoordinateY = 30.355651,
+                    Latitude = 50.461199,
+                    Longitude = 30.355651,
                     IsDeleted = false,
                     PostIndex = "27123"
                 },
@@ -1240,7 +1240,9 @@ namespace Unicorn.DataAccess.Context
                 To = "NameSurname",
                 ToAccountId = 1,
                 IsDeleted = false,
-                Grade = 4
+                Grade = 4,
+                Date = DateTime.Now,
+                Avatar = "https://image.flaticon.com/icons/png/512/78/78373.png"
             };
             Review review2 = new Review()
             {
@@ -1251,7 +1253,9 @@ namespace Unicorn.DataAccess.Context
                 To = "NameSurname",
                 ToAccountId = 1,
                 IsDeleted = false,
-                Grade = 4
+                Grade = 4,
+                Date = DateTime.Now,
+                Avatar = "https://image.flaticon.com/icons/png/512/78/78373.png"
             };
             Review review3 = new Review()
             {
@@ -1262,7 +1266,9 @@ namespace Unicorn.DataAccess.Context
                 To = "NameSurname",
                 ToAccountId = 1,
                 IsDeleted = false,
-                Grade = 4
+                Grade = 4,
+                Date = DateTime.Now,
+                Avatar = "https://image.flaticon.com/icons/png/512/78/78373.png"
             };
             Review review4 = new Review()
             {
@@ -1273,7 +1279,9 @@ namespace Unicorn.DataAccess.Context
                 To = "NameSurname",
                 ToAccountId = 1,
                 IsDeleted = false,
-                Grade = 4
+                Grade = 4,
+                Date = DateTime.Now,
+                Avatar = "https://image.flaticon.com/icons/png/512/78/78373.png"
             };
             Review review5 = new Review()
             {
@@ -1284,7 +1292,9 @@ namespace Unicorn.DataAccess.Context
                 To = "NameSurname",
                 ToAccountId = 1,
                 IsDeleted = false,
-                Grade = 4
+                Grade = 4,
+                Date = DateTime.Now,
+                Avatar = "https://image.flaticon.com/icons/png/512/78/78373.png"
             };
 
             context.Reviews.Add(review1);

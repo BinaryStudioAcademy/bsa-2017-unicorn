@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, AfterContentInit } from '@angular/core';
 
 import {SuiModule} from 'ng2-semantic-ui';
 
@@ -12,17 +12,18 @@ import { PortfolioItem } from '../../../models/portfolio-item.model';
   templateUrl: './vendor-profile-portfolio.component.html',
   styleUrls: ['./vendor-profile-portfolio.component.sass']
 })
-export class VendorProfilePortfolioComponent implements OnInit {
+export class VendorProfilePortfolioComponent implements OnInit, AfterContentInit {
   @Input() private vendorId: number;
-  portfolio: any;
+  
+  portfolio: PortfolioItem[];
 
   constructor(private vendorService: VendorService) { }
 
-  ngOnInit() {
-    // this.vendorService.getVendorPorfolio(this.vendor.Id)
-    //   .then(portfolio => this.portfolio = portfolio);
+  ngAfterContentInit(): void {
+    this.vendorService.getVendorPorfolio(this.vendorId)
+      .then(portfolio => this.portfolio = portfolio);
   }
 
-
-
+  ngOnInit() {
+  }
 }

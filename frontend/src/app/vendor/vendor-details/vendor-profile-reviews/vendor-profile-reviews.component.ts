@@ -1,21 +1,27 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, AfterContentInit } from '@angular/core';
 
 import { ReviewService } from '../../../services/review.service';
 
 import { Review } from '../../../models/review.model';
 import { Vendor } from "../../../models/vendor";
+import { VendorService } from "../../../services/vendor.service";
 
 @Component({
   selector: 'app-vendor-profile-reviews',
   templateUrl: './vendor-profile-reviews.component.html',
   styleUrls: ['./vendor-profile-reviews.component.sass']
 })
-export class VendorProfileReviewsComponent implements OnInit {
+export class VendorProfileReviewsComponent implements OnInit, AfterContentInit {
   @Input() private vendorId: number;
   
   reviews: Review[];
 
-  constructor(private reviewService: ReviewService) { }
+  constructor(private vendorService: VendorService) { }
+
+  ngAfterContentInit(): void {
+    this.vendorService.getReviews(this.vendorId)
+      .then(reviews => this.reviews = reviews);
+  }
 
   ngOnInit() {
   }

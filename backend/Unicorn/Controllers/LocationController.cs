@@ -5,11 +5,13 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 using Unicorn.Core.Interfaces;
 
 namespace Unicorn.Controllers
 {
+    [EnableCors("*", "*", "*")]
     [RoutePrefix("location")]
     public class LocationController : ApiController
     {

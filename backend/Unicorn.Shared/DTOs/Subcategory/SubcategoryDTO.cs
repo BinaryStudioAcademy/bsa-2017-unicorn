@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Unicorn.Shared.DTOs
+namespace Unicorn.Shared.DTOs.Subcategory
 {
     public class SubcategoryDTO
     {

@@ -5,6 +5,9 @@ import { DataService } from './data.service';
 import { Vendor } from '../models/vendor.model';
 import { PortfolioItem } from '../models/portfolio-item.model';
 import { Rating } from "../models/rating.model";
+import { Review } from "../models/review.model";
+import { Subcategory } from "../models/subcategory.model";
+import { Contact } from "../models/contact.model";
 
 @Injectable()
 export class VendorService {
@@ -25,6 +28,18 @@ export class VendorService {
 
   getRating(id: number): Promise<Rating> {
     return this.dataService.getRequest<Rating>(`${this.resourceUrl}/${id}/rating`);
+  }
+
+  getSubcategories(id: number): Promise<Subcategory[]> {
+    return this.dataService.getRequest<Subcategory[]>(`${this.resourceUrl}/${id}/categories`);
+  }
+
+  getReviews(id: number): Promise<Review[]> {
+    return this.dataService.getRequest<Review[]>(`${this.resourceUrl}/${id}/reviews`);
+  }
+
+  getContacts(id: number): Promise<Contact[]> {
+    return this.dataService.getRequest<Contact[]>(`${this.resourceUrl}/${id}/contacts`);
   }
 
   getVendorPorfolio(vendorId: number): Promise<PortfolioItem[]> {

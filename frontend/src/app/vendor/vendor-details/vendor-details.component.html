@@ -3,9 +3,9 @@
     <div class="sixteen wide column container">
       <div class="vendor-header">
         <div class="vendor-avatar ui small circular image">
-          <img src="{{vendor.AvatarUrl}}" />
+          <img *ngIf="vendor !== undefined" src="{{vendor.AvatarUrl}}" />
         </div>
-        <div class="vendor-title">
+        <div *ngIf="vendor !== undefined" class="vendor-title">
           <h3>{{vendor.FIO}}</h3>
           <p>{{vendor.City}}</p>
         </div>
@@ -15,7 +15,7 @@
 
 
     <div class="sixteen wide column container">
-      <sui-tabset>
+      <sui-tabset *ngIf="vendor !== undefined">
         <div class="ui pointing secondary menu">
           <a class="item" suiTabHeader="1">INFO</a>
           <a class="item" suiTabHeader="2">PORTFOLIO</a>
@@ -41,7 +41,7 @@
                 </div>
                 <div class="ten wide container column">
                   <div class="ui segment" suiTabContent="4">
-                    <app-vendor-profile-contacts [vendorId]="vendor.Id"></app-vendor-profile-contacts>
+                    <app-vendor-profile-contacts [vendorId]="vendor.Id" [locationId]="vendor.LocationId"></app-vendor-profile-contacts>
                   </div>
                 </div>
               </div>

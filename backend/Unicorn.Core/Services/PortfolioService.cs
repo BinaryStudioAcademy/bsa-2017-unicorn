@@ -35,7 +35,7 @@ namespace Unicorn.Core.Services
                 .Where(i => i.Vendor.Id == id)
                 .ToListAsync();
 
-            return items.Select(i => PortfolioItemToDTO(i));
+            return items.Select(i => PortfolioItemToDTO(i)).ToList();
         }
 
         private PortfolioItemDTO PortfolioItemToDTO(PortfolioItem item)

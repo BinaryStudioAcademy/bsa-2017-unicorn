@@ -1,4 +1,6 @@
-﻿using Unicorn.DataAccess.Interfaces;
+﻿using System;
+
+using Unicorn.DataAccess.Interfaces;
 
 namespace Unicorn.DataAccess.Entities
 {
@@ -13,6 +15,10 @@ namespace Unicorn.DataAccess.Entities
 
         public long ToAccountId { get; set; }
         public string To {get; set; }
+
+        public string Avatar { get; set; }
+
+        public DateTime Date { get; set; }
 
         public double Grade { get; set; }
 

@@ -8,6 +8,7 @@ using System.Web.Http;
 using System.Web.Http.Cors;
 
 using Unicorn.Core.Interfaces;
+using Unicorn.Shared.DTOs.Subcategory;
 
 namespace Unicorn.Controllers
 {
@@ -47,7 +48,19 @@ namespace Unicorn.Controllers
         [Route("{id}/categories")]
         public async Task<HttpResponseMessage> GetVendorCategories(long id)
         {
-            var result = await _vendorService.GetByIdAsync(id);
+            var result = await _vendorService.GetVendorCategoriesAsync(id);
+
+            if (result == null)
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            else
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+        [HttpGet]
+        [Route("{id}/contacts")]
+        public async Task<HttpResponseMessage> GetVendorContacts(long id)
+        {
+            var result = await _vendorService.GetVendorContacts(id);
 
             if (result == null)
                 return Request.CreateResponse(HttpStatusCode.NotFound);
