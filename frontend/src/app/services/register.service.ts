@@ -13,13 +13,7 @@ export class RegisterService {
   constructor(
     private dataService: DataService) {
       this.dataService.setHeader('Content-Type', 'application/json');
-    }
-
-  checkAuthorized(provider: string, uid: string): Promise<any> {
-    //let url = `membership?provider=${provider}&uid=${uid}`;
-    //console.log(uid);
-    return this.dataService.postFullRequest<any>('membership', {provider: provider, uid: uid});
-  }
+    }  
 
   confirmCustomer(customer: Customer): Promise<any> {
     return this.dataService.postFullRequest<any>('membership/customer', customer)

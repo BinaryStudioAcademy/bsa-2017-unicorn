@@ -2,30 +2,33 @@ import { Component, OnInit, OnDestroy, Input, ViewChild, ChangeDetectorRef, forw
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
-import { AngularFireAuth } from 'angularfire2/auth';
+import { AuthService } from '../../services/auth/auth.service';
 import * as firebase from 'firebase/app';
 import { Observable } from 'rxjs/Observable';
 import { MenuComponent } from '../../menu/menu.component';
 
+// Helpers
+import { JwtHelper} from '../../helpers/jwthelper';
+import { RoleRouter } from '../../helpers/rolerouter';
+
 import { RegisterService } from '../../services/register.service';
 
-import { SuiModalService, TemplateModalConfig, SuiModal, ComponentModalConfig
-  , ModalTemplate, ModalSize, SuiActiveModal } from 'ng2-semantic-ui';
-  import 'rxjs/add/operator/map';
-
-import { RegisterInfo } from '../models/register-info';
+import {
+  SuiModalService, TemplateModalConfig, SuiModal, ComponentModalConfig
+  , ModalTemplate, ModalSize, SuiActiveModal
+} from 'ng2-semantic-ui';
 
 export interface IConfirmModalContext {
-    title:string;
-    question:string;
+  title: string;
+  question: string;
 }
 
 export class ConfirmModal extends ComponentModalConfig<IConfirmModalContext, void, void> {
-    constructor(title:string, question:string) {
-        super(RegisterComponent, { title, question });
-        this.size = ModalSize.Small;
-        this.isInverted = true;
-    }
+  constructor(title: string, question: string) {
+    super(RegisterComponent, { title, question });
+    this.size = ModalSize.Small;
+    this.isInverted = true;
+  }
 }
 
 @Component({
@@ -35,8 +38,6 @@ export class ConfirmModal extends ComponentModalConfig<IConfirmModalContext, voi
   providers: [RegisterService]
 })
 export class RegisterComponent implements OnInit, OnDestroy {
-
-  private authState: Observable<firebase.User>
   private currentUser: firebase.User = null;
 
   @Input() enabled: boolean;
@@ -45,12 +46,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
   modalSize: string;
   error: boolean = false;
 
-  public roles: {[role: string]: boolean} = {};
+  public roles: { [role: string]: boolean } = {};
 
   social: any;
-  sub: any;
 
-  isLogged: boolean = false;
+  isLogged: boolean;
 
   roleSelected = false;
 
@@ -62,24 +62,23 @@ export class RegisterComponent implements OnInit, OnDestroy {
     public modal: SuiModal<IConfirmModalContext, void, void>,
     public router: Router,
     public registerService: RegisterService,
-    public afAuth: AngularFireAuth) {
-
+    public authService: AuthService) {
 
     this.mode = 'date';
-    this.afAuth.auth.signOut();
-    this.authState = this.afAuth.authState;
-    
+    this.authService.logout();
+
+    this.authService.authState.subscribe(user => {
+      console.log('Event: ', Date.now());
+      if (user) {
+        this.currentUser = user;
+      } else {
+        this.currentUser = null;
+      }
+    });
+
     this.isLogged = false;
     this.error = false;
 
-    this.authState.subscribe(user => {
-      if (user) {
-        this.currentUser = user;
-        let provider = user.providerData[0].providerId;
-        let uid = user.uid;
-        this.checkRegistration(provider, uid);
-      } 
-    });
     this.initRoles();
   }
 
@@ -87,36 +86,32 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.error = true;
   }
 
-  saveToken(token: string) {
-    console.log('token: ' + token);
-    localStorage.setItem('token', token);
-  }
-
   handleResponse(resp: any): void {
     console.log('resp: ' + resp);
     console.log('status: ' + resp.status);
     switch (resp.status) {
-      case 204: this.isLogged = true; this.error = false; break;
-      case 200: this.saveToken(resp.headers.get('token')); this.error = false; this.redirect(); break;
-      default: this.handleErrorLogin(); break;
+      case 204: {
+        this.error = false;
+        this.isLogged = !this.isLogged;
+        break;
+      }
+      case 200: {
+        this.authService.saveJwt(resp.headers.get('token'));
+        this.error = false;
+        this.redirect();
+        break;
+      }
+      default: {
+        this.handleErrorLogin();
+        break;
+      }
     }
   }
 
-  checkRegistration(provider: string, uid: string) {
-    this.registerService
-      .checkAuthorized(provider, uid)
-      .then(resp => {this.handleResponse(resp)})
-      .catch(err => {
-        console.log(err);
-        this.handleErrorLogin();
-      });
-  }
-
   loginWithGoogle() {
-    this.afAuth.auth.signInWithPopup(
-      new firebase.auth.GoogleAuthProvider())
-      .then(x => {
-         console.log(x);
+    this.authService.loginWithGoogle()
+      .then(resp => {
+        this.handleResponse(resp);
       })
       .catch(err => {
         this.handleErrorLogin();
@@ -124,10 +119,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   loginWithFacebook() {
-    this.afAuth.auth.signInWithPopup(
-      new firebase.auth.FacebookAuthProvider())
-      .then(x => {
-        console.log(x);
+    this.authService.loginWithFacebook()
+      .then(resp => {
+        this.handleResponse(resp);
       })
       .catch(err => {
         this.handleErrorLogin();
@@ -135,10 +129,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   loginWithTwitter() {
-    this.afAuth.auth.signInWithPopup(
-      new firebase.auth.TwitterAuthProvider())
-      .then(x => {
-        console.log(x);
+    this.authService.loginWithTwitter()
+      .then(resp => {
+        this.handleResponse(resp);
       })
       .catch(err => {
         this.handleErrorLogin();
@@ -158,27 +151,35 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    
+    /*
+    this.authService.afAuth.auth.onAuthStateChanged(user => {
+      if (user) {
+        this.currentUser = user;
+      }
+    });
+    */
   }
 
   ngOnDestroy() {
     this.error = false;
-        this.isLogged = false;
-        this.isCompany = false;
-        this.isVendor = false;
-        this.isCustomer = false;
-        this.roleSelected = false;
-        this.social = undefined;
-        this.clearRoles();
+    this.isLogged = false;
+    this.isCompany = false;
+    this.isVendor = false;
+    this.isCustomer = false;
+    this.roleSelected = false;
+    this.social = undefined;
+    this.clearRoles();
   }
 
   private redirect() {
-    this.modal.deny(undefined); 
-    this.router.navigate(['login']);
-  }
+    this.modal.deny(undefined);
+    const userClaims = new JwtHelper().decodeToken(localStorage.getItem('token'));
+    let path = new RoleRouter().getRouteByRole(userClaims['roleid']);
+    this.router.navigate([path, userClaims['id']]);
+  }  
 
   selectRole(role: string) {
-    this.clearRoles();  
+    this.clearRoles();
     this.roles[role] = true;
   }
 }
