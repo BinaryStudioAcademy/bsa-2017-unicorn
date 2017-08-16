@@ -205,6 +205,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AvatarController.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\MembershipController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
