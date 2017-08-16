@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Unicorn.Shared.DTOs.Vendor;
 
 namespace Unicorn.Shared.DTOs
 {

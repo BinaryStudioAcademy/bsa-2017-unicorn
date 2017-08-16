@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-
-namespace Unicorn.Shared.DTOs
+﻿namespace Unicorn.Shared.Vendor.DTOs
 {
-    public class VendorDTO
+    public class ShortVendorDTO
     {
         public long Id { get; set; }
 

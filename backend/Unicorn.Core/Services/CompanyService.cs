@@ -10,6 +10,7 @@ using Unicorn.Core.Interfaces;
 using Unicorn.DataAccess.Entities;
 using Unicorn.DataAccess.Interfaces;
 using Unicorn.Shared.DTOs.Register;
+using Unicorn.Shared.DTOs.Vendor;
 
 namespace Unicorn.Core.Services
 {
@@ -90,8 +91,8 @@ namespace Unicorn.Core.Services
                             {
                                 Adress = company.Location?.Adress ?? "default",
                                 City = company.Location?.City ?? "default",
-                                Latitude = company.Location?.CoordinateX ?? 0,
-                                Longitude = company.Location?.CoordinateY ?? 0
+                                Latitude = company.Location?.Longitude ?? 0,
+                                Longitude = company.Location?.Latitude ?? 0
                             },
                             Reviews = reviews?.Where(p => p.To == company.Name)
                                 .Select(x => new ReviewDTO
@@ -159,8 +160,8 @@ namespace Unicorn.Core.Services
                     {
                         Adress = company.Location?.Adress ?? "default",
                         City = company.Location?.City ?? "default",
-                        Latitude = company.Location?.CoordinateX ?? 0,
-                        Longitude = company.Location?.CoordinateY ?? 0
+                        Latitude = company.Location?.Longitude ?? 0,
+                        Longitude = company.Location?.Latitude ?? 0
                     },
                     Reviews = reviews?.Where(p => p.To == company.Name)
                         .Select(x => new ReviewDTO

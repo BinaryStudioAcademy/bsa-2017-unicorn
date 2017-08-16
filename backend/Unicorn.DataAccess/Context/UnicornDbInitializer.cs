@@ -550,8 +550,8 @@ namespace Unicorn.DataAccess.Context
                 {
                     Adress = "Akademica Palladina 9 pr.",
                     City = "Kiev",
-                    CoordinateX = 50.461199,
-                    CoordinateY = 30.355651,
+                    Latitude = 50.461199,
+                    Longitude = 30.355651,
                     IsDeleted = false,
                     PostIndex = "03179"
                 },
@@ -572,8 +572,8 @@ namespace Unicorn.DataAccess.Context
                 {
                     Adress = "Main Square 8",
                     City = "Lviv",
-                    CoordinateX = 38.148089,
-                    CoordinateY = 63.114765,
+                    Latitude = 38.148089,
+                    Longitude = 63.114765,
                     IsDeleted = false,
                     PostIndex = "79013"
                 },
@@ -617,8 +617,8 @@ namespace Unicorn.DataAccess.Context
                 {
                     Adress = "Yawornitskogo st.8",
                     City = "Kharkiv",
-                    CoordinateX = 69.651308,
-                    CoordinateY = 75.084123,
+                    Longitude = 69.651308,
+                    Latitude = 75.084123,
                     IsDeleted = false,
                     PostIndex = "54136"
                 },
@@ -662,8 +662,8 @@ namespace Unicorn.DataAccess.Context
                 {
                     Adress = "Puliya 7 pr.",
                     City = "Dnipro",
-                    CoordinateX = 44.119637,
-                    CoordinateY = 99.131470,
+                    Longitude = 44.119637,
+                    Latitude = 99.131470,
                     IsDeleted = false,
                     PostIndex = "09304"
                 },
@@ -684,8 +684,8 @@ namespace Unicorn.DataAccess.Context
                 {
                     Adress = "Zamarstynivska 15a",
                     City = "Lviv",
-                    CoordinateX = 16.312059,
-                    CoordinateY = 22.963471,
+                    Longitude = 16.312059,
+                    Latitude = 22.963471,
                     IsDeleted = false,
                     PostIndex = "96341"
                 },
@@ -706,8 +706,8 @@ namespace Unicorn.DataAccess.Context
                 {
                     Adress = "Dom Kolotushkina",
                     City = "Boston",
-                    CoordinateX = 19.16348,
-                    CoordinateY = 99.11074,
+                    Longitude = 19.16348,
+                    Latitude = 99.11074,
                     IsDeleted = false,
                     PostIndex = "013279"
                 },
@@ -729,8 +729,8 @@ namespace Unicorn.DataAccess.Context
                 {
                     Adress = "Center 2a",
                     City = "Madrid",
-                    CoordinateX = 75.944219,
-                    CoordinateY = 71.124861,
+                    Longitude = 75.944219,
+                    Latitude = 71.124861,
                     IsDeleted = false,
                     PostIndex = "99304"
                 },

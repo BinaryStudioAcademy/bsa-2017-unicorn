@@ -5,7 +5,7 @@ import { PortfolioItem } from "./portfolio-item.model";
 export interface Vendor {
 	Id: number;
 	FIO: string;
-	AvatarUrl: string;
+	Avatar: string;
 	City: string;
 	LocationId: number;
 	Position: string;

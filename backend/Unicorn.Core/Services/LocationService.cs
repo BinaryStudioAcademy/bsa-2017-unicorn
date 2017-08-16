@@ -33,7 +33,6 @@ namespace Unicorn.Core.Services
                     City = location.City,
                     Latitude = location.Latitude,
                     Longitude = location.Longitude,
-                    PostIndex = location.PostIndex
                 };
                 datareturn.Add(locationDto);
             }
@@ -50,7 +49,6 @@ namespace Unicorn.Core.Services
                 City = location.City,
                 Latitude = location.Latitude,
                 Longitude = location.Longitude,
-                PostIndex = location.PostIndex           
             };
             return locationDto;
         }

@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 using Unicorn.Core.Interfaces;
 using Unicorn.DataAccess.Entities;
 using Unicorn.DataAccess.Interfaces;
-using Unicorn.Core.DTOs;
 using Unicorn.Shared.DTOs.Register;
 using System;
+using Unicorn.Shared.DTOs;
 
 namespace Unicorn.Core.Services
 {
@@ -39,7 +39,7 @@ namespace Unicorn.Core.Services
                 {
                     Id = person.Id,
                     Name = person.Name,
-                    SurnameName = person.SurnameName,
+                    Surname = person.Surname,
                     MiddleName = person.MiddleName,
                     Gender = person.Gender,
                     Phone = person.Phone
@@ -76,7 +76,7 @@ namespace Unicorn.Core.Services
             person.Phone = customerDto.Phone;
             person.Name = customerDto.FirstName;
             person.MiddleName = customerDto.MiddleName;
-            person.SurnameName = customerDto.LastName;
+            person.Surname = customerDto.LastName;
             person.Account = account;
             person.Location = new Location();
 

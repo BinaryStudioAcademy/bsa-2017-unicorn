@@ -10,6 +10,7 @@ using Unicorn.DataAccess.Interfaces;
 using Unicorn.Shared.DTOs;
 using Unicorn.Shared.DTOs.Subcategory;
 using Unicorn.Shared.DTOs.Register;
+using Unicorn.Shared.Vendor.DTOs;
 
 namespace Unicorn.Core.Services
 {
@@ -22,7 +23,7 @@ namespace Unicorn.Core.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<IEnumerable<VendorDTO>> GetAllAsync()
+        public async Task<IEnumerable<ShortVendorDTO>> GetAllAsync()
         {
             var vendors = await _unitOfWork.VendorRepository.Query
                 .Include(v => v.Person)
@@ -36,7 +37,7 @@ namespace Unicorn.Core.Services
             return vendors.Select(v => VendorToDTO(v));
         }
 
-        public async Task<VendorDTO> GetByIdAsync(long id)
+        public async Task<ShortVendorDTO> GetByIdAsync(long id)
         {
             var vendor = await _unitOfWork.VendorRepository.Query
                 .Include(v => v.Person)
@@ -89,11 +90,11 @@ namespace Unicorn.Core.Services
             return vendor.Person.Account.Id;
         }
 
-        private VendorDTO VendorToDTO(Vendor vendor)
+        private ShortVendorDTO VendorToDTO(Vendor vendor)
         {
-            return new VendorDTO()
+            return new ShortVendorDTO()
             {
-                AvatarUrl = vendor.Person.Account.Avatar,
+                Avatar = vendor.Person.Account.Avatar,
                 Company = vendor.Company?.Name,
                 CompanyId = vendor.Company?.Id,
                 Experience = vendor.Experience,
@@ -107,7 +108,7 @@ namespace Unicorn.Core.Services
             };
         }
 
-        public async Task Create(VendorRegisterDTO vendorDto)
+        public async Task Create(VendorRegisterDTO ShortVendorDTO)
         {
             //Mapper.Initialize(cfg =>
             //{
@@ -117,7 +118,7 @@ namespace Unicorn.Core.Services
             //    cfg.CreateMap<SocialAccountDTO, SocialAccount>();
             //    cfg.CreateMap<AccountDTO, Account>();
             //    cfg.CreateMap<PersonDTO, Person>();
-            //    cfg.CreateMap<VendorDTO, Vendor>();
+            //    cfg.CreateMap<ShortVendorDTO, Vendor>();
             //});
             var account = new Account();
             var role = new Role();
@@ -130,32 +131,37 @@ namespace Unicorn.Core.Services
             account.Role = role;
             account.Permissions = permissions;
             account.DateCreated = DateTime.Now;
-            account.Email = vendorDto.Email;
+            account.Email = ShortVendorDTO.Email;
             account.SocialAccounts = socialAccounts;
 
             role.Name = "vendor";
 
-            socialAccount.Provider = vendorDto.Provider;
-            socialAccount.Uid = vendorDto.Uid;
+            socialAccount.Provider = ShortVendorDTO.Provider;
+            socialAccount.Uid = ShortVendorDTO.Uid;
             socialAccount.Account = account;
 
             socialAccounts.Add(socialAccount);
 
-            person.Birthday = vendorDto.Birthday;
-            person.Phone = vendorDto.Phone;
-            person.Name = vendorDto.FirstName;
-            person.MiddleName = vendorDto.MiddleName;
-            person.SurnameName = vendorDto.LastName;
+            person.Birthday = ShortVendorDTO.Birthday;
+            person.Phone = ShortVendorDTO.Phone;
+            person.Name = ShortVendorDTO.FirstName;
+            person.MiddleName = ShortVendorDTO.MiddleName;
+            person.Surname = ShortVendorDTO.LastName;
             person.Account = account;
             person.Location = new Location();
 
             vendor.Person = person;
-            vendor.Experience = vendorDto.Experience;
-            vendor.Position = vendorDto.Position;
-            vendor.ExWork = vendorDto.Speciality;
+            vendor.Experience = ShortVendorDTO.Experience;
+            vendor.Position = ShortVendorDTO.Position;
+            vendor.ExWork = ShortVendorDTO.Speciality;
 
             _unitOfWork.VendorRepository.Create(vendor);
             await _unitOfWork.SaveAsync();
+        }
+
+        public Task<ShortVendorDTO> GetById(long id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

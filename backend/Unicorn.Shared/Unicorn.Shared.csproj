@@ -62,7 +62,8 @@
     <Compile Include="DTOs\SocialAccountDTO.cs" />
     <Compile Include="DTOs\Subcategory\SubcategoryDTO.cs" />
     <Compile Include="DTOs\Subcategory\SubcategoryShortDTO.cs" />
-    <Compile Include="DTOs\VendorDTO.cs" />
+    <Compile Include="DTOs\Vendor\ShortVendorDTO.cs" />
+    <Compile Include="DTOs\Vendor\VendorDTO.cs" />
     <Compile Include="DTOs\WorkDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="services\HttpWrapClientService.cs" />
