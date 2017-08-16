@@ -8,12 +8,26 @@ import { Company } from "../../../models/company.model";
 })
 export class GeneralInformationComponent implements OnInit {
 @Input()
-company: any;
+company: Company;
+isCompanyNull: boolean = false;
+reviewsLength: number = 0;
 
 
   constructor() { }
 
-  ngOnInit() {     
+  ngOnInit() {    
+    if(this.company === null){
+      this.isCompanyNull = true;
+    }
+    else{
+      this.isCompanyNull = false;
+      if(this.company.Reviews === null){
+        this.reviewsLength = 0;
+      }
+      else{
+        this.reviewsLength = this.company.Reviews.length;
+      }
+    }      
   }
 
 }

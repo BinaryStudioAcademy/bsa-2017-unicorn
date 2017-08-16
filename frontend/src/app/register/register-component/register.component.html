@@ -1,9 +1,3 @@
-<!-- <link rel="stylesheet" href="https://unpkg.com/semantic-ui-calendar/dist/calendar.min.css">
-<li><a (click)="openModal()" routerLinkActive="active">REGISTRATION</a></li> -->
-<!-- <diV *ngIf="enabled" class="modal-wrap"> -->
-<!-- <sui-modal id="register-form" [isClosable]="true" [isInverted]="true" [size]="modalSize" (dismissed)="modal.deny()" [mustScroll]=true #modal> -->
-<!-- <div id="custom">
-    <ng-template let-context let-modal="modal" #modalTemplate> -->
 <div class="header">
     <p class="reg-header">REGISTRATION</p>
 </div>
@@ -51,7 +45,3 @@
     <app-register-vendor *ngIf="roles['vendor']" [social]="currentUser" [modal]="modal"></app-register-vendor>
     <app-register-company *ngIf="roles['company']" [social]="currentUser" [modal]="modal"></app-register-company>
 </div>
-<!-- </ng-template>
-</div> -->
-<!-- </sui-modal> -->
-<!-- </diV> -->
