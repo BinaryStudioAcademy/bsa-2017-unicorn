@@ -22,20 +22,38 @@ namespace Unicorn.Controllers
         }
 
         [HttpPost]
-        [Route("avatar")]
-        public async Task<IHttpActionResult> UploadAvatar([FromBody] string imageUrl)
+        [Route("avatar/{id}")]
+        public async Task<IHttpActionResult> UploadAvatar([FromBody] string imageUrl, int id)
         {
             if (string.IsNullOrEmpty(imageUrl))
             {
                 return BadRequest();
             }
-
-            string token = Request.Headers.Authorization.Parameter;
             try
             {
-                await _avatarService.UploadAvatar(token, imageUrl);
+                await _avatarService.UploadAvatar(imageUrl, id);
             }
             catch(Exception ex)
+            {
+                return InternalServerError();
+            }
+
+            return Ok();
+        }
+
+        [HttpPost]
+        [Route("background/{id}")]
+        public async Task<IHttpActionResult> UploadBackground([FromBody] string imageUrl, int id)
+        {
+            if (string.IsNullOrEmpty(imageUrl))
+            {
+                return BadRequest();
+            }
+            try
+            {
+                await _avatarService.UploadBackground(imageUrl, id);
+            }
+            catch (Exception ex)
             {
                 return InternalServerError();
             }

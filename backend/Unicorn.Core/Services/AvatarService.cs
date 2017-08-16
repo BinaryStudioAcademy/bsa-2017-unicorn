@@ -19,12 +19,19 @@ namespace Unicorn.Core.Services
             _authService = authService;
             _unitOfWork = unitOfWork;
         }
-        public async Task UploadAvatar(string token, string imageUrl)
+
+        public async Task UploadAvatar(string imageUrl, long id)
         {
-            long accountId = Convert.ToInt64(_authService.GetClaimValue(token, "id").Value);
-            string role = _authService.GetClaimValue(token, "role").Value;
-            Account account = await _unitOfWork.AccountRepository.GetByIdAsync(accountId);
+            Account account = await _unitOfWork.AccountRepository.GetByIdAsync(id);
             account.Avatar = imageUrl;
+            _unitOfWork.AccountRepository.Update(account);
+            await _unitOfWork.SaveAsync();
+        }
+
+        public async Task UploadBackground(string imageUrl, long id)
+        {
+            Account account = await _unitOfWork.AccountRepository.GetByIdAsync(id);
+            account.Background = imageUrl;
             _unitOfWork.AccountRepository.Update(account);
             await _unitOfWork.SaveAsync();
         }

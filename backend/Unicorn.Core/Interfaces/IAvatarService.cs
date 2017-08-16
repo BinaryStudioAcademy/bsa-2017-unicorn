@@ -8,6 +8,7 @@ namespace Unicorn.Core.Interfaces
 {
     public interface IAvatarService
     {
-        Task UploadAvatar(string token, string imageUrl);
+        Task UploadAvatar(string imageUrl, long id);
+        Task UploadBackground(string imageUrl, long id);
     }
 }
