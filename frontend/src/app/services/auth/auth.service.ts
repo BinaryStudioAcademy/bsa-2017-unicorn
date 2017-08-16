@@ -4,7 +4,7 @@ import * as firebase from 'firebase/app';
 import { Observable } from 'rxjs/Observable';
 
 import { DataService } from '../data.service';
-import { User } from './models/user';
+import { UserAuth } from '../../models/userauth';
 
 @Injectable()
 export class AuthService {
@@ -12,12 +12,11 @@ export class AuthService {
     httpService.setHeader('Content-Type', 'application/json');
   }
 
-  private initializeUser(data): User {
-    let user = new User();
-    user.provider = data.providerData[0].providerId;
-    user.uid = data.uid;
-
-    return user;
+  private initializeUser(data): UserAuth {
+    return {
+      provider: data.providerData[0].providerId,
+      uid: data.uid
+    }
   }
 
   public loginWithGoogle() {
@@ -40,16 +39,6 @@ export class AuthService {
       });
   }
 
-  public loginWithGithub() {
-    return this.afAuth.auth.signInWithPopup(new firebase.auth.GithubAuthProvider())
-      .then(data => {
-        return this.initializeUser(data.user);
-      })
-      .then(user => {
-        return this.httpService.postRequest('membership', user);
-      });
-  }
-
   public loginWithTwitter() {
     return this.afAuth.auth.signInWithPopup(new firebase.auth.TwitterAuthProvider())
       .then(data => {
@@ -60,7 +49,14 @@ export class AuthService {
       });
   }
 
+  public saveJwt(token: string) {
+    if (token) {
+      localStorage.setItem('token', token);
+    }
+  }
+
   public logout() {
+    localStorage.removeItem('token');
     this.afAuth.auth.signOut();
   }
 }
