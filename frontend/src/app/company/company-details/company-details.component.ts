@@ -9,13 +9,17 @@ import { CompanyService } from "../../services/company.service";
   styleUrls: ['./company-details.component.sass']
 })
 export class CompanyDetailsComponent implements OnInit {
-company:Company;
+  company: Promise<Company>;
+  companyAvatar: string;
 
   constructor(private companyService: CompanyService) { }
 
   ngOnInit() {  
-    this.companyService.getCompany(1).then(res => {this.company = res; console.log(res) });
-  }  
-
+    this.company = this.companyService.getCompany(1).then(res => {
+      this.companyAvatar = res.Avatar;
+      console.log(res);
+      return res;});        
+    
+  }    
 }
 

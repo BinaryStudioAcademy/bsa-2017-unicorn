@@ -10,9 +10,16 @@ import { Review } from "../../../models/review.model";
 export class ReviewsComponent implements OnInit {
 @Input()
 reviews: Review[];
+isReviewsNull: boolean = true;
   constructor() { }
 
   ngOnInit() {
+    if(this.reviews !== null){
+      this.isReviewsNull = true;
+    }
+    else{
+      this.isReviewsNull = false;
+    }
   }
 
 }

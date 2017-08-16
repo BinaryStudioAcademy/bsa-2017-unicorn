@@ -1,6 +1,6 @@
 export interface Vendor{
-    avatar: string;
-    experience: string;
-    position: string;
-    fio: string;
+    Avatar: string;
+    Experience: number;
+    Position: string;
+    FIO: string;
 }

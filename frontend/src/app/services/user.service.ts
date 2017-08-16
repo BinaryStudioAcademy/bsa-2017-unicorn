@@ -28,10 +28,10 @@ export class UserService {
       address: "",
       contact: "",
       vendor: {
-        fio: "Petr Petrov",
-        avatar: "",
-        experience: "",
-        position: "",
+        FIO: "Petr Petrov",
+        Avatar: "",
+        Experience: 0,
+        Position: "",
         }
     }],
     gender: "",

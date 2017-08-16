@@ -10,9 +10,7 @@ export class CompanyService {
 
   getCompany(id: number):Promise<Company>{
     return this.dataService.getRequest<Company>(environment.apiUrl + "company/" + id)
-    .then(res => {
-      console.log(res);
-      return res}); 
+    .then(res => { return res }); 
       
     
 

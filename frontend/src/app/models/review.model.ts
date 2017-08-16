@@ -1,8 +1,8 @@
 export interface Review {
-    avatar: string;
-    date: Date;
-    from: string;
-    to: string;
-    grade: number;
-    description: string;
+    Avatar: string;
+    Date: Date;
+    From: string;
+    To: string;
+    Grade: number;
+    Description: string;
 }
