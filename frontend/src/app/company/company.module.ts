@@ -21,6 +21,9 @@ import { DataService } from "../services/data.service";
 import { CompanyService } from "../services/company.service";
 import { NguiMapModule } from "@ngui/map";
 import { MapComponent } from "../map/map.component";
+import { CompanyMainInformationComponent } from './company-edit/company-main-information/company-main-information.component';
+import { CompanyMessagesComponent } from './company-edit/company-messages/company-messages.component';
+import { CompanyOrdersComponent } from './company-edit/company-orders/company-orders.component';
 
 @NgModule({
   imports: [    
@@ -40,7 +43,10 @@ import { MapComponent } from "../map/map.component";
     VendorsComponent,
     ContactsComponent,
     CompanyEditComponent,
-    MapComponent 
+    MapComponent,
+    CompanyMainInformationComponent,
+    CompanyMessagesComponent,
+    CompanyOrdersComponent 
       ],
   providers: [
     DataService,
