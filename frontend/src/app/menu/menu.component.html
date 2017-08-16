@@ -2,7 +2,7 @@
     <ul>
         <li><a routerLink="#" routerLinkActive="active">Get task</a></li>
         <li><a routerLink="#" routerLinkActive="active">Vendors</a></li>
-        <app-register [enabled]="isEnabled"></app-register>
+        <li><a (click)="openModal()" routerLinkActive="active">REGISTRATION</a></li>
         <li><a routerLink="#" routerLinkActive="active">Sign in</a></li>
     </ul>
 </nav>

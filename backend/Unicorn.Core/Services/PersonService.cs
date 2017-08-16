@@ -94,9 +94,14 @@ namespace Unicorn.Core.Services
                     Id = location.Id,
                     Adress = location.Adress,
                     City = location.City,
+<<<<<<< HEAD
                     Latitude = location.Latitude,
                     Longitude = location.Longitude,
                     PostIndex = location.PostIndex
+=======
+                    Longitude = location.CoordinateX,
+                    Latitude = location.CoordinateY
+>>>>>>> develop
                 }
             };
             return persontDto;

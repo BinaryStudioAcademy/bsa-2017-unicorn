@@ -8,7 +8,7 @@ namespace Unicorn.Shared.DTOs
 
         public string FIO { get; set; }
 
-        public string AvatarUrl { get; set; }
+        public string Avatar { get; set; }
 
         public string City { get; set; }
 

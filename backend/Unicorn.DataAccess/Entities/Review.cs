@@ -9,8 +9,8 @@ namespace Unicorn.DataAccess.Entities
         public long Id { get; set; }
         public bool IsDeleted { get; set; }
 
-
         public long FromAccountId { get; set; }
+
         public string From { get; set; }
 
         public long ToAccountId { get; set; }

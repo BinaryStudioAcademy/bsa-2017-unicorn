@@ -1,19 +1,35 @@
-import { Component, OnInit, OnDestroy, Input, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, ViewChild, ChangeDetectorRef, forwardRef, Inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
-import { AngularFireAuth } from 'angularfire2/auth';
+import { AuthService } from '../../services/auth/auth.service';
 import * as firebase from 'firebase/app';
 import { Observable } from 'rxjs/Observable';
+import { MenuComponent } from '../../menu/menu.component';
+
+// Helpers
+import { JwtHelper} from '../../helpers/jwthelper';
+import { RoleRouter } from '../../helpers/rolerouter';
 
 import { RegisterService } from '../../services/register.service';
 
-import { SuiModalService, TemplateModalConfig
-  , ModalTemplate, ModalSize, SuiActiveModal } from 'ng2-semantic-ui';
+import {
+  SuiModalService, TemplateModalConfig, SuiModal, ComponentModalConfig
+  , ModalTemplate, ModalSize, SuiActiveModal
+} from 'ng2-semantic-ui';
 
-import { RegisterInfo } from '../models/register-info';
+export interface IConfirmModalContext {
+  title: string;
+  question: string;
+}
 
-export interface IContext { }
+export class ConfirmModal extends ComponentModalConfig<IConfirmModalContext, void, void> {
+  constructor(title: string, question: string) {
+    super(RegisterComponent, { title, question });
+    this.size = ModalSize.Small;
+    this.isInverted = true;
+  }
+}
 
 @Component({
   selector: 'app-register',
@@ -22,12 +38,6 @@ export interface IContext { }
   providers: [RegisterService]
 })
 export class RegisterComponent implements OnInit, OnDestroy {
-
-  @ViewChild('modalTemplate')
-  public modalTemplate: ModalTemplate<IContext, string, string>
-  private activeModal: SuiActiveModal<IContext, {}, string>;
-
-  private authState: Observable<firebase.User>
   private currentUser: firebase.User = null;
 
   @Input() enabled: boolean;
@@ -36,10 +46,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
   modalSize: string;
   error: boolean = false;
 
-  social: any;
-  sub: any;
+  public roles: { [role: string]: boolean } = {};
 
-  isLogged: boolean = false;
+  social: any;
+
+  isLogged: boolean;
 
   roleSelected = false;
 
@@ -48,49 +59,59 @@ export class RegisterComponent implements OnInit, OnDestroy {
   isCompany = false;
 
   constructor(
-    public modalService: SuiModalService,
+    public modal: SuiModal<IConfirmModalContext, void, void>,
     public router: Router,
     public registerService: RegisterService,
-    public afAuth: AngularFireAuth,
-    public ref: ChangeDetectorRef) {
+    public authService: AuthService) {
 
+    this.mode = 'date';
+    this.authService.logout();
+
+    this.authService.authState.subscribe(user => {
+      console.log('Event: ', Date.now());
+      if (user) {
+        this.currentUser = user;
+      } else {
+        this.currentUser = null;
+      }
+    });
+
+    this.isLogged = false;
+    this.error = false;
+
+    this.initRoles();
   }
 
   handleErrorLogin() {
     this.error = true;
   }
 
-  saveToken(token: string) {
-    localStorage.setItem('Token', token);
-  }
-
   handleResponse(resp: any): void {
+    console.log('resp: ' + resp);
     console.log('status: ' + resp.status);
     switch (resp.status) {
-      case 204: this.isLogged = true; this.error = false; break;
-      case 200: this.saveToken(resp.headers.get('Token')); this.error = false; break;
-      default: this.handleErrorLogin(); break;
+      case 204: {
+        this.error = false;
+        this.isLogged = !this.isLogged;
+        break;
+      }
+      case 200: {
+        this.authService.saveJwt(resp.headers.get('token'));
+        this.error = false;
+        this.redirect();
+        break;
+      }
+      default: {
+        this.handleErrorLogin();
+        break;
+      }
     }
   }
 
-  checkRegistration(provider: string, uid: string) {
-    this.registerService
-      .checkAuthorized(provider, uid)
-      .then(resp => this.handleResponse(resp))
-      .catch(err => {
-        console.log('error: ' + err.status);
-        this.handleErrorLogin();
-      });
-  }
-
   loginWithGoogle() {
-    this.afAuth.auth.signInWithPopup(
-      new firebase.auth.GoogleAuthProvider())
-      .then(x => {
-         console.log(x);
-        // let uid = x.user.providerData[0].uid;
-        // let provider = x.additionalUserInfo.providerId;
-        // this.checkRegistration(provider, uid);
+    this.authService.loginWithGoogle()
+      .then(resp => {
+        this.handleResponse(resp);
       })
       .catch(err => {
         this.handleErrorLogin();
@@ -98,10 +119,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   loginWithFacebook() {
-    this.afAuth.auth.signInWithPopup(
-      new firebase.auth.FacebookAuthProvider())
-      .then(x => {
-        console.log(x);
+    this.authService.loginWithFacebook()
+      .then(resp => {
+        this.handleResponse(resp);
       })
       .catch(err => {
         this.handleErrorLogin();
@@ -109,69 +129,57 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   loginWithTwitter() {
-    this.afAuth.auth.signInWithPopup(
-      new firebase.auth.TwitterAuthProvider())
-      .then(x => {
-        console.log(x);
+    this.authService.loginWithTwitter()
+      .then(resp => {
+        this.handleResponse(resp);
       })
       .catch(err => {
         this.handleErrorLogin();
       });
   }
 
-  ngOnInit() {
-    this.mode = 'date';
-    //this.modalSize = 'tiny';
+  clearRoles() {
+    for (let key in this.roles) {
+      this.roles[key] = false;
+    }
+  }
 
-    this.authState = this.afAuth.authState;
-    this.authState.subscribe(user => {
+  initRoles() {
+    this.roles['customer'] = false;
+    this.roles['vendor'] = false;
+    this.roles['company'] = false;
+  }
+
+  ngOnInit() {
+    /*
+    this.authService.afAuth.auth.onAuthStateChanged(user => {
       if (user) {
         this.currentUser = user;
-        let uid = user.providerData[0].providerId;
-        let provider = user.uid;
-        this.checkRegistration(provider, uid);
-      } 
+      }
     });
+    */
   }
 
   ngOnDestroy() {
-  }
-
-  private closeModal() {
-    this.activeModal.deny(''); 
-  }
-
-  public openModal() {
-    const config = new TemplateModalConfig<IContext, string, string>(this.modalTemplate);
-    let size = 'tiny';
-    config.closeResult = "closed!";
-    config.context = {};
-    config.size = ModalSize.Small;
-    config.isInverted = true;
-    //config.mustScroll = true;
-
-    this.activeModal = this.modalService
-      .open(config)
-      .onApprove(result => { /* approve callback */ })
-      .onDeny(result => {
-        this.isLogged = false;
-        this.isCompany = false;
-        this.isVendor = false;
-        this.isCustomer = false;
-        this.roleSelected = false;
-        this.social = undefined;
-      });
-
-    this.afAuth.auth.signOut();
+    this.error = false;
     this.isLogged = false;
+    this.isCompany = false;
+    this.isVendor = false;
+    this.isCustomer = false;
+    this.roleSelected = false;
+    this.social = undefined;
+    this.clearRoles();
   }
+
+  private redirect() {
+    this.modal.deny(undefined);
+    const userClaims = new JwtHelper().decodeToken(localStorage.getItem('token'));
+    let path = new RoleRouter().getRouteByRole(userClaims['roleid']);
+    this.router.navigate([path, userClaims['id']]);
+  }  
 
   selectRole(role: string) {
-    switch (role) {
-      case 'customer': this.isCustomer = true; break;
-      case 'vendor': this.isVendor = true; break;
-      case 'company': this.isCompany = true; break;
-    }
-    this.roleSelected = true;
+    this.clearRoles();
+    this.roles[role] = true;
   }
 }

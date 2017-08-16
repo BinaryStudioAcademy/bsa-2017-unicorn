@@ -1,13 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
+using System.Data.Entity;
 
 using Unicorn.Core.Interfaces;
 using Unicorn.DataAccess.Entities;
 using Unicorn.DataAccess.Interfaces;
 using Unicorn.Shared.DTOs;
 using Unicorn.Shared.DTOs.Subcategory;
-using System.Data.Entity;
+using Unicorn.Shared.DTOs.Register;
 
 namespace Unicorn.Core.Services
 {
@@ -103,6 +105,57 @@ namespace Unicorn.Core.Services
                 Position = vendor.Position,
                 WorkLetter = vendor.WorkLetter
             };
+        }
+
+        public async Task Create(VendorRegisterDTO vendorDto)
+        {
+            //Mapper.Initialize(cfg =>
+            //{
+            //    cfg.CreateMap<LocationDTO, Location>();
+            //    cfg.CreateMap<PermissionDTO, Permission>();
+            //    cfg.CreateMap<RoleDTO, Role>();
+            //    cfg.CreateMap<SocialAccountDTO, SocialAccount>();
+            //    cfg.CreateMap<AccountDTO, Account>();
+            //    cfg.CreateMap<PersonDTO, Person>();
+            //    cfg.CreateMap<VendorDTO, Vendor>();
+            //});
+            var account = new Account();
+            var role = new Role();
+            var permissions = new List<Permission>();
+            var socialAccounts = new List<SocialAccount>();
+            var socialAccount = new SocialAccount();
+            var vendor = new Vendor();
+            var person = new Person();
+
+            account.Role = role;
+            account.Permissions = permissions;
+            account.DateCreated = DateTime.Now;
+            account.Email = vendorDto.Email;
+            account.SocialAccounts = socialAccounts;
+
+            role.Name = "vendor";
+
+            socialAccount.Provider = vendorDto.Provider;
+            socialAccount.Uid = vendorDto.Uid;
+            socialAccount.Account = account;
+
+            socialAccounts.Add(socialAccount);
+
+            person.Birthday = vendorDto.Birthday;
+            person.Phone = vendorDto.Phone;
+            person.Name = vendorDto.FirstName;
+            person.MiddleName = vendorDto.MiddleName;
+            person.SurnameName = vendorDto.LastName;
+            person.Account = account;
+            person.Location = new Location();
+
+            vendor.Person = person;
+            vendor.Experience = vendorDto.Experience;
+            vendor.Position = vendorDto.Position;
+            vendor.ExWork = vendorDto.Speciality;
+
+            _unitOfWork.VendorRepository.Create(vendor);
+            await _unitOfWork.SaveAsync();
         }
     }
 }

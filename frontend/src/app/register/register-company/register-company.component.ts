@@ -2,8 +2,10 @@ import { Component, OnInit, Input } from '@angular/core';
 
 import * as firebase from 'firebase/app';
 import { RegisterService } from '../../services/register.service';
-
+import { SuiModalService, TemplateModalConfig
+  , ModalTemplate, ModalSize, SuiActiveModal } from 'ng2-semantic-ui';
 import { Company } from '../models/company';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register-company',
@@ -14,6 +16,8 @@ export class RegisterCompanyComponent implements OnInit {
 
   @Input() social: firebase.User;
 
+  @Input() public modal: SuiActiveModal<{}, {}, string>;
+
   name: string;
   mode: string;
   error: boolean = false;
@@ -23,7 +27,8 @@ export class RegisterCompanyComponent implements OnInit {
   email: string;
   foundation: any;
 
-  constructor(private registerService: RegisterService) { }
+  constructor(private registerService: RegisterService,
+    private router: Router) { }
 
   ngOnInit() {
     this.mode = 'date';
@@ -55,7 +60,10 @@ export class RegisterCompanyComponent implements OnInit {
       console.log('valid');
       let regInfo = this.aggregateInfo();
       console.log(regInfo);
-      this.registerService.confirmCompany(regInfo);
+      this.registerService.confirmCompany(regInfo).then(resp => {
+        this.modal.deny('');
+        this.router.navigate(['company/1']);
+      });
     } else {
       this.error = true;
     }

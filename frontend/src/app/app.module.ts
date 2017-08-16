@@ -18,7 +18,6 @@ import { AppComponent } from './app.component';
 import { CategoryModule } from './category/category.module';
 import { CompanyModule } from './company/company.module';
 import { DashboardModule } from './dashboard/dashboard.module';
-import { LoginModule } from './login/login.module';
 import { RegisterModule } from './register/register.module';
 import { UserModule } from './user/user.module';
 import { VendorModule } from './vendor/vendor.module';
@@ -34,6 +33,7 @@ import { ShellComponent } from './shell/shell.component';
 import { MenuComponent } from './menu/menu.component';
 import { FooterComponent } from './footer/footer.component';
 
+import { RegisterComponent } from './register/register-component/register.component';
 
 @NgModule({
   declarations: [    
@@ -53,7 +53,6 @@ import { FooterComponent } from './footer/footer.component';
     CategoryModule,
     CompanyModule,
     DashboardModule,
-    LoginModule,
     RegisterModule,
     UserModule,
     VendorModule,
@@ -63,6 +62,7 @@ import { FooterComponent } from './footer/footer.component';
   providers: [
     AuthService
   ],
+  entryComponents: [RegisterComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

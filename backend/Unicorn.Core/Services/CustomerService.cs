@@ -1,10 +1,12 @@
-﻿using AutoMapper;
+using AutoMapper;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Unicorn.Core.Interfaces;
 using Unicorn.DataAccess.Entities;
 using Unicorn.DataAccess.Interfaces;
-using Unicorn.Shared.DTOs;
+using Unicorn.Core.DTOs;
+using Unicorn.Shared.DTOs.Register;
+using System;
 
 namespace Unicorn.Core.Services
 {
@@ -37,13 +39,52 @@ namespace Unicorn.Core.Services
                 {
                     Id = person.Id,
                     Name = person.Name,
-                    Surname = person.Surname,
+                    SurnameName = person.SurnameName,
                     MiddleName = person.MiddleName,
                     Gender = person.Gender,
                     Phone = person.Phone
                 }
             };
             return customerDto;
+        }
+
+        public async Task CreateAsync(CustomerRegisterDTO customerDto)
+        {
+            var account = new Account();
+            var role = new Role();
+            var permissions = new List<Permission>();
+            var socialAccounts = new List<SocialAccount>();
+            var socialAccount = new SocialAccount();
+            var customer = new Customer();
+            var person = new Person();
+
+            account.Role = role;
+            account.Permissions = permissions;
+            account.DateCreated = DateTime.Now;
+            account.Email = customerDto.Email;
+            account.SocialAccounts = socialAccounts;
+
+            role.Name = "customer";
+
+            socialAccount.Provider = customerDto.Provider;
+            socialAccount.Uid = customerDto.Uid;
+            socialAccount.Account = account;
+
+            socialAccounts.Add(socialAccount);
+
+            person.Birthday = customerDto.Birthday;
+            person.Phone = customerDto.Phone;
+            person.Name = customerDto.FirstName;
+            person.MiddleName = customerDto.MiddleName;
+            person.SurnameName = customerDto.LastName;
+            person.Account = account;
+            person.Location = new Location();
+
+            customer.Person = person;
+            customer.Books = new List<Book>();
+
+            _unitOfWork.CustomerRepository.Create(customer);
+            await _unitOfWork.SaveAsync();
         }
     }
 }

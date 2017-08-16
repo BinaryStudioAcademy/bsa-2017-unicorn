@@ -2,19 +2,22 @@ import { Review } from "./review.model";
 import { Vendor } from "./vendor";
 
 export interface Company {
-    avatar:string;
-    name: string;
-    description: string;
-    foundationDate: Date;    
-    location: {
-        adress: string;
-        city: string;
-        lat: number;
-        lng: number;        
+    Avatar:string;
+    Name: string;
+    Description: string;
+    FoundationDate: Date;    
+    Location: {
+        Adress: string;
+        City: string;
+        Latitude: number;
+        Longitude: number;        
     };
-    reviews: Review[];
-    rating: number;
-    vendors: Vendor[];
-    director: string;
-    features: string[];
+    Rating: number;
+    Reviews: Review[];    
+    Vendors: Vendor[];
+    Director: string;
+    Categories:{
+        Icon: string,
+        Name: string
+    }[];
 }
