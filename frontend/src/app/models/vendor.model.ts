@@ -6,16 +6,11 @@ export interface Vendor {
 	Id: number;
 	FIO: string;
 	AvatarUrl: string;
-	Location: {
-		Adress: string;
-		City: string;
-		Lat: number;
-		ng: number;        
-	};
-	position: string;
-	workLetter: string;
-	portfolioItems: PortfolioItem,
-	workList: Work[];
-	rating: number;
-	reviews: Review[];
+	City: string;
+	LocationId: number;
+	Position: string;
+	WorkLetter: string;
+	ExWork: string;
+	Company: string;
+	CompanyId: number;
 }
