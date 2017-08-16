@@ -23,9 +23,9 @@ export interface IConfirmModalContext {
 }
 
 export class ConfirmModal extends ComponentModalConfig<IConfirmModalContext, void, void> {
-    constructor(title:string, question:string, size = ModalSize.Small) {
+    constructor(title:string, question:string) {
         super(RegisterComponent, { title, question });
-        this.size = size;
+        this.size = ModalSize.Small;
         this.isInverted = true;
     }
 }
