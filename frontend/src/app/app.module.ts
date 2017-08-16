@@ -8,6 +8,7 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 
 import { AuthService } from './services/auth/auth.service';
+import { ModalService } from './services/modal.service';
 
 // Routing
 import { AppRoutingModule } from './app-routing/app-routing.module';

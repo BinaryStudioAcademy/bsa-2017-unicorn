@@ -15,6 +15,8 @@ import { SuiModalService, TemplateModalConfig, SuiModal, ComponentModalConfig
 
 import { RegisterInfo } from '../models/register-info';
 
+import { ModalService } from '../../services/modal.service';
+
 export interface IConfirmModalContext {
     title:string;
     question:string;
@@ -34,7 +36,7 @@ export interface IContext { }
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
-  providers: [RegisterService]
+  providers: [RegisterService, ModalService]
 })
 export class RegisterComponent implements OnInit, OnDestroy {
 
@@ -70,7 +72,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
     public router: Router,
     public registerService: RegisterService,
     public afAuth: AngularFireAuth,
-    public ref: ChangeDetectorRef) {
+    public ref: ChangeDetectorRef,
+    public regModalService: ModalService) {
 
 
       this.mode = 'date';
@@ -116,7 +119,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
       .checkAuthorized(provider, uid)
       .then(resp => {this.handleResponse(resp)})
       .catch(err => {
-        console.log('error: ' + err.status);
+        console.log(err);
         this.handleErrorLogin();
       });
   }
@@ -182,7 +185,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   private redirect() {
-    //this.activeModal.deny(''); 
+    //this.regModalService.close();
+    this.modal.deny(undefined); 
     this.router.navigate(['login']);
   }
 

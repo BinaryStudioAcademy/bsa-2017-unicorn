@@ -47,9 +47,9 @@
 
     </div>
 
-    <app-register-user *ngIf="roles['customer']" [social]="currentUser" [modal]="activeModal"></app-register-user>
-    <app-register-vendor *ngIf="roles['vendor']" [social]="currentUser" [modal]="activeModal"></app-register-vendor>
-    <app-register-company *ngIf="roles['company']" [social]="currentUser" [modal]="activeModal"></app-register-company>
+    <app-register-user *ngIf="roles['customer']" [social]="currentUser" [modal]="modal"></app-register-user>
+    <app-register-vendor *ngIf="roles['vendor']" [social]="currentUser" [modal]="modal"></app-register-vendor>
+    <app-register-company *ngIf="roles['company']" [social]="currentUser" [modal]="modal"></app-register-company>
 </div>
 <!-- </ng-template>
 </div> -->
