@@ -10,6 +10,11 @@ import { User } from '../../models/user';
 import { UserService } from "../../services/user.service";
 import {ImageCropperComponent, CropperSettings} from 'ng2-img-cropper';
 
+import { SuiModalService, TemplateModalConfig
+  , ModalTemplate, ModalSize, SuiActiveModal } from 'ng2-semantic-ui';
+
+export interface IContext { }
+
 @Component({
   selector: 'app-user-details',
   templateUrl: './user-details.component.html',
@@ -17,6 +22,10 @@ import {ImageCropperComponent, CropperSettings} from 'ng2-img-cropper';
 })
 export class UserDetailsComponent implements OnInit {
   
+  @ViewChild('modalTemplate')
+  public modalTemplate: ModalTemplate<IContext, string, string>;
+  private activeModal: SuiActiveModal<IContext, {}, string>;
+
 @ViewChild('cropper', undefined)
  cropper:ImageCropperComponent;
   enabled: boolean = false;
@@ -24,9 +33,14 @@ export class UserDetailsComponent implements OnInit {
   saveImgButton:boolean = false;
   fakeUser:User;
 
+  modalSize: string;
+
+
   cropperSettings: CropperSettings;
   data: any;
-  constructor( private route: ActivatedRoute,private userService: UserService) { 
+  constructor( private route: ActivatedRoute,
+    private userService: UserService,
+    public modalService: SuiModalService) { 
      this.cropperSettings = new CropperSettings();
         this.cropperSettings.width = 100;
         this.cropperSettings.height = 100;
@@ -43,9 +57,7 @@ export class UserDetailsComponent implements OnInit {
   ngOnInit() {
     this.fakeUser = this.userService.getUser(0);
   }
- openModal() {
-    this.enabled = true;
-  }
+
  updateBg(color:string)
  {
     document.getElementById("user-header").style.backgroundColor = color;
@@ -63,4 +75,23 @@ export class UserDetailsComponent implements OnInit {
 
     myReader.readAsDataURL(file);
 }
+  private closeModal() {
+    this.activeModal.deny(''); 
+  }
+
+  public openModal() {
+    const config = new TemplateModalConfig<IContext, string, string>(this.modalTemplate);
+    config.closeResult = "closed!";
+    config.context = {};
+    config.size = ModalSize.Normal;
+    config.isInverted = true;
+    //config.mustScroll = true;
+
+    this.activeModal = this.modalService
+      .open(config)
+      .onApprove(result => { /* approve callback */ })
+      .onDeny(result => {
+        
+      });
+  }
 }
