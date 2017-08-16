@@ -34,7 +34,7 @@ import { ShellComponent } from './shell/shell.component';
 import { MenuComponent } from './menu/menu.component';
 import { FooterComponent } from './footer/footer.component';
 
-
+import { RegisterComponent } from './register/register-component/register.component';
 @NgModule({
   declarations: [    
     AppComponent,
@@ -62,7 +62,7 @@ import { FooterComponent } from './footer/footer.component';
   ],
   providers: [
     AuthService
-  ],
+  ],entryComponents:[RegisterComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
