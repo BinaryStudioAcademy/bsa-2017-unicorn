@@ -9,10 +9,12 @@ import { UserAuth } from '../../models/userauth';
 @Injectable()
 export class AuthService {  
   public authState: Observable<firebase.User>
+  private apiController:string;
 
   constructor(public afAuth: AngularFireAuth, public httpService: DataService) {
     httpService.setHeader('Content-Type', 'application/json');
     this.authState = this.afAuth.authState;    
+    this.apiController = 'membership';
   }
 
   public initializeUser(data): UserAuth {
@@ -29,7 +31,7 @@ export class AuthService {
         return this.initializeUser(data.user);
       })
       .then(user => {
-        return this.httpService.postFullRequest('membership', user);
+        return this.httpService.postFullRequest(this.apiController, user);
       });
   }
 
@@ -40,7 +42,7 @@ export class AuthService {
         return this.initializeUser(data.user);
       })
       .then(user => {
-        return this.httpService.postFullRequest('membership', user);
+        return this.httpService.postFullRequest(this.apiController, user);
       });
   }
 
@@ -51,7 +53,7 @@ export class AuthService {
         return this.initializeUser(data.user);
       })
       .then(user => {
-        return this.httpService.postFullRequest('membership', user);
+        return this.httpService.postFullRequest(this.apiController, user);
       });
   }
 
