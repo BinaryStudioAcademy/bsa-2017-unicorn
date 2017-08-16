@@ -14,7 +14,7 @@ company:Company;
   constructor(private companyService: CompanyService) { }
 
   ngOnInit() {  
-    this.company = this.companyService.getCompany();
+    this.companyService.getCompany(1).then(res => {this.company = res; console.log(res) });
   }  
 
 }

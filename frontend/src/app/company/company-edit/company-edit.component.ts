@@ -13,7 +13,7 @@ export class CompanyEditComponent implements OnInit {
   constructor(private companyService: CompanyService) { }
 
   ngOnInit() {
-    this.company = this.companyService.getCompany();
+    //this.company = this.companyService.getCompany(1);
   }
 
 }

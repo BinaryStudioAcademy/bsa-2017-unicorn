@@ -35,7 +35,6 @@ namespace Unicorn.Core.Services
             {
                 Id = vendor.Id,
                 Experience = vendor.Experience,
-                ExWork = vendor.ExWork,
                 Company = new CompanyDTO()
                 {
                     Id = company.Id,

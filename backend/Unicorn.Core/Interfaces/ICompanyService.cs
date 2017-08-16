@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections;
 using System.Threading.Tasks;
 using Unicorn.Core.DTOs;
 using Unicorn.Shared.DTOs.Register;
@@ -7,8 +7,8 @@ namespace Unicorn.Core.Interfaces
 {
     public interface ICompanyService
     {
-        Task<IEnumerable<CompanyDTO>> GetAllAsync();
-        Task<CompanyDTO> GetByIdAsync(long id);
-        Task Create(CompanyRegisterDTO r);
+        Task<IEnumerable> GetAllCompaniesAsync();
+        Task<object> GetCompanyByIdAsync(long id);
+        Task Create(CompanyRegisterDTO companyDto);
     }
 }

@@ -16,5 +16,8 @@ export interface Company {
     rating: number;
     vendors: Vendor[];
     director: string;
-    features: string[];
+    categories:{
+        icon: string,
+        category: string
+    }[];
 }
