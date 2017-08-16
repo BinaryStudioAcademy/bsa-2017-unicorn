@@ -7,6 +7,10 @@ import * as firebase from 'firebase/app';
 import { Observable } from 'rxjs/Observable';
 import { MenuComponent } from '../../menu/menu.component';
 
+// Helpers
+import { JwtHelper} from '../../helpers/jwthelper';
+import { RoleRouter } from '../../helpers/rolerouter';
+
 import { RegisterService } from '../../services/register.service';
 
 import {
@@ -164,14 +168,15 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.isCustomer = false;
     this.roleSelected = false;
     this.social = undefined;
-    this.clearRoles();    
+    this.clearRoles();
   }
 
   private redirect() {
     this.modal.deny(undefined);
-    // TODO initialize role and redirect to spec. page (/account, /vendor etc.)
-    this.router.navigate(['index']);
-  }
+    const userClaims = new JwtHelper().decodeToken(localStorage.getItem('token'));
+    let path = new RoleRouter().getRouteByRole(userClaims['roleid']);
+    this.router.navigate([path, userClaims['id']]);
+  }  
 
   selectRole(role: string) {
     this.clearRoles();
