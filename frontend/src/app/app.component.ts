@@ -13,7 +13,5 @@ export class AppComponent {
 
   constructor(private dataService: DataService) {
     this.title = 'app';
-
-    dataService.getData().subscribe((data) => this.data = data);
   }
 }

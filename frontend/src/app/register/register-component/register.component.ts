@@ -1,20 +1,32 @@
-import { Component, OnInit, OnDestroy, Input, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, ViewChild, ChangeDetectorRef, forwardRef, Inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 import { Observable } from 'rxjs/Observable';
+import { MenuComponent } from '../../menu/menu.component';
 
 import { RegisterService } from '../../services/register.service';
 
-import { SuiModalService, TemplateModalConfig
+import { SuiModalService, TemplateModalConfig, SuiModal, ComponentModalConfig
   , ModalTemplate, ModalSize, SuiActiveModal } from 'ng2-semantic-ui';
   import 'rxjs/add/operator/map';
 
 import { RegisterInfo } from '../models/register-info';
 
-export interface IContext { }
+export interface IConfirmModalContext {
+    title:string;
+    question:string;
+}
+
+export class ConfirmModal extends ComponentModalConfig<IConfirmModalContext, void, void> {
+    constructor(title:string, question:string) {
+        super(RegisterComponent, { title, question });
+        this.size = ModalSize.Small;
+        this.isInverted = true;
+    }
+}
 
 @Component({
   selector: 'app-register',
@@ -23,10 +35,6 @@ export interface IContext { }
   providers: [RegisterService]
 })
 export class RegisterComponent implements OnInit, OnDestroy {
-
-  @ViewChild('modalTemplate')
-  public modalTemplate: ModalTemplate<IContext, string, string>
-  public activeModal: SuiActiveModal<{}, {}, string>;
 
   private authState: Observable<firebase.User>
   private currentUser: firebase.User = null;
@@ -51,12 +59,28 @@ export class RegisterComponent implements OnInit, OnDestroy {
   isCompany = false;
 
   constructor(
-    public modalService: SuiModalService,
+    public modal: SuiModal<IConfirmModalContext, void, void>,
     public router: Router,
     public registerService: RegisterService,
-    public afAuth: AngularFireAuth,
-    public ref: ChangeDetectorRef) {
+    public afAuth: AngularFireAuth) {
 
+
+    this.mode = 'date';
+    this.afAuth.auth.signOut();
+    this.authState = this.afAuth.authState;
+    
+    this.isLogged = false;
+    this.error = false;
+
+    this.authState.subscribe(user => {
+      if (user) {
+        this.currentUser = user;
+        let provider = user.providerData[0].providerId;
+        let uid = user.uid;
+        this.checkRegistration(provider, uid);
+      } 
+    });
+    this.initRoles();
   }
 
   handleErrorLogin() {
@@ -83,7 +107,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
       .checkAuthorized(provider, uid)
       .then(resp => {this.handleResponse(resp)})
       .catch(err => {
-        console.log('error: ' + err.status);
+        console.log(err);
         this.handleErrorLogin();
       });
   }
@@ -93,9 +117,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
       new firebase.auth.GoogleAuthProvider())
       .then(x => {
          console.log(x);
-        // let uid = x.user.providerData[0].uid;
-        // let provider = x.additionalUserInfo.providerId;
-        // this.checkRegistration(provider, uid);
       })
       .catch(err => {
         this.handleErrorLogin();
@@ -137,43 +158,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.mode = 'date';
-    //this.modalSize = 'tiny';
-
-    this.authState = this.afAuth.authState;
-    this.authState.subscribe(user => {
-      if (user) {
-        this.currentUser = user;
-        let provider = user.providerData[0].providerId;
-        let uid = user.uid;
-        this.checkRegistration(provider, uid);
-      } 
-    });
-
-    this.initRoles();
+    
   }
 
   ngOnDestroy() {
-  }
-
-  private redirect() {
-    this.activeModal.deny(''); 
-    this.router.navigate(['login']);
-  }
-
-  public openModal() {
-    const config = new TemplateModalConfig<{}, string, string>(this.modalTemplate);
-    let size = 'tiny';
-    config.closeResult = "closed!";
-    config.context = {};
-    config.size = ModalSize.Small;
-    config.isInverted = true;
-
-    this.activeModal = this.modalService
-      .open(config)
-      .onApprove(result => { /* approve callback */ })
-      .onDeny(result => {
-        this.error = false;
+    this.error = false;
         this.isLogged = false;
         this.isCompany = false;
         this.isVendor = false;
@@ -181,20 +170,14 @@ export class RegisterComponent implements OnInit, OnDestroy {
         this.roleSelected = false;
         this.social = undefined;
         this.clearRoles();
-      });
+  }
 
-    this.afAuth.auth.signOut();
-    this.isLogged = false;
-    this.error = false;
+  private redirect() {
+    this.modal.deny(undefined); 
+    this.router.navigate(['login']);
   }
 
   selectRole(role: string) {
-    // switch (role) {
-    //   case 'customer': this.isCustomer = true; break;
-    //   case 'vendor': this.isVendor = true; break;
-    //   case 'company': this.isCompany = true; break;
-    // }
-    // this.roleSelected = true;
     this.clearRoles();  
     this.roles[role] = true;
   }
