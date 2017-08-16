@@ -3,11 +3,11 @@
     <div class="sixteen wide column container">
       <div class="vendor-header">
         <div class="vendor-avatar ui small circular image">
-          <img src="{{vendor.avatarUrl}}" />
+          <img src="{{vendor.AvatarUrl}}" />
         </div>
         <div class="vendor-title">
-          <h3>{{vendor.fio}}</h3>
-          <p>{{vendor.city}}</p>
+          <h3>{{vendor.FIO}}</h3>
+          <p>{{vendor.City}}</p>
         </div>
       </div>
     </div>
@@ -31,17 +31,17 @@
                 </div>
                 <div class="ten wide container column">
                   <div class="ui segment" suiTabContent="2">
-                    <app-vendor-profile-portfolio [vendor]="vendor"></app-vendor-profile-portfolio>
+                    <app-vendor-profile-portfolio [vendorId]="vendor.Id"></app-vendor-profile-portfolio>
                   </div>
                 </div>
                 <div class="ten wide container column">
                   <div class="ui segment" suiTabContent="3">
-                    <app-vendor-profile-reviews [vendor]="vendor"></app-vendor-profile-reviews>
+                    <app-vendor-profile-reviews [vendorId]="vendor.Id"></app-vendor-profile-reviews>
                   </div>
                 </div>
                 <div class="ten wide container column">
                   <div class="ui segment" suiTabContent="4">
-                    <app-vendor-profile-contacts [vendor]="vendor"></app-vendor-profile-contacts>
+                    <app-vendor-profile-contacts [vendorId]="vendor.Id"></app-vendor-profile-contacts>
                   </div>
                 </div>
               </div>

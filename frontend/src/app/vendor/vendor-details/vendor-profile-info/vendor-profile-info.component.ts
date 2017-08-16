@@ -8,6 +8,7 @@ import { BookComponent } from '../../../book/book/book.component';
 import { Vendor } from '../../../models/vendor.model';
 import { Category } from "../../../models/category.model";
 import { Work } from "../../../models/work.model";
+import { VendorService } from "../../../services/vendor.service";
 
 @Component({
   selector: 'app-vendor-profile-info',
@@ -15,15 +16,18 @@ import { Work } from "../../../models/work.model";
   styleUrls: ['./vendor-profile-info.component.sass']
 })
 export class VendorProfileInfoComponent implements OnInit {
-  @Input() vendor: Vendor;
-
+  @Input() vendor: any;
+  
+  rating: any;
   workCategories: Category[];
 
-  constructor() { }
+  constructor(private vendorService: VendorService) { }
 
   ngOnInit() {
-    this.workCategories = [];
-    this.vendor.workList.forEach(w => this.workCategories.push(w.category));
+    this.vendorService.getRating(1)
+      .then(rating => this.rating = rating);
+    // this.workCategories = [];
+    // this.vendor.workList.forEach(w => this.workCategories.push(w.category));
     // select only unique categories
   }
 

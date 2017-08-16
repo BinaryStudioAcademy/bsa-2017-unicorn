@@ -46,6 +46,15 @@ namespace Unicorn.Core.Services
             return VendorToDTO(vendor);
         }
 
+        public async Task<long> GetVendorAccountIdAsync(long id)
+        {
+            var vendor = await _unitOfWork.VendorRepository.Query
+                .Include(v => v.Person)
+                .Include(v => v.Person.Account)
+                .SingleAsync(x => x.Id == id);
+            return vendor.Person.Account.Id;
+        }
+
         private VendorDTO VendorToDTO(Vendor vendor)
         {
             return new VendorDTO()

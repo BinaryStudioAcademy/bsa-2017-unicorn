@@ -11,7 +11,7 @@ import { Vendor } from "../../../models/vendor";
   styleUrls: ['./vendor-profile-reviews.component.sass']
 })
 export class VendorProfileReviewsComponent implements OnInit {
-  @Input() private vendor: Vendor;
+  @Input() private vendorId: number;
   
   reviews: Review[];
 

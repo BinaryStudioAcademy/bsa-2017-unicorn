@@ -3,14 +3,14 @@ import { Work } from './work.model';
 import { PortfolioItem } from "./portfolio-item.model";
 
 export interface Vendor {
-	id: number;
-	fio: string;
-	avatarUrl: string;
-	location: {
-		adress: string;
-		city: string;
-		lat: number;
-		lng: number;        
+	Id: number;
+	FIO: string;
+	AvatarUrl: string;
+	Location: {
+		Adress: string;
+		City: string;
+		Lat: number;
+		ng: number;        
 	};
 	position: string;
 	workLetter: string;

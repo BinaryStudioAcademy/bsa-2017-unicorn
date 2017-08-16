@@ -5,12 +5,14 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 using Unicorn.Core.Interfaces;
 
 namespace Unicorn.Controllers
 {
     [RoutePrefix("vendors")]
+    [EnableCors("*", "*", "*")]
     public class VendorsController : ApiController
     {
         public VendorsController(IVendorService vendorService, IReviewService reviewService, IPortfolioService portfolioService)
@@ -63,6 +65,21 @@ namespace Unicorn.Controllers
                 return Request.CreateResponse(HttpStatusCode.NotFound);
             else
                 return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+        [HttpGet]
+        [Route("{id}/rating")]
+        public async Task<HttpResponseMessage> GetVendorRating(long id)
+        {
+            var accountId = await _vendorService.GetVendorAccountIdAsync(id);
+            var result = await _reviewService.GetReceiverRatingAsync(accountId);
+
+            if (result == null)
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
         }
 
         [HttpGet]

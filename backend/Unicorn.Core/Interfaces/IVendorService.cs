@@ -8,5 +8,6 @@ namespace Unicorn.Core.Interfaces
     {
         Task<IEnumerable<VendorDTO>> GetAllAsync();
         Task<VendorDTO> GetByIdAsync(long id);
+        Task<long> GetVendorAccountIdAsync(long id);
     }
 }

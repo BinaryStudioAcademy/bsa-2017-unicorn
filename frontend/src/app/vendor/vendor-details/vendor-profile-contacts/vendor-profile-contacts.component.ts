@@ -11,14 +11,14 @@ import { Vendor } from '../../../models/vendor.model';
   styleUrls: ['./vendor-profile-contacts.component.sass'],
 })
 export class VendorProfileContactsComponent implements OnInit {
-  @Input() private vendor: Vendor;
+  @Input() private vendorId: number;
 
   map: MapModel= {
-    center: {lat: this.vendor.location.lat, lng: this.vendor.location.lng},
+    center: {lat: 123, lng: 0},
     zoom: 18,    
     title: "Overcat 9000",
     label: "Overcat 9000",
-    markerPos: {lat: this.vendor.location.lat, lng: this.vendor.location.lng}
+    markerPos: {lat: 123, lng: 0}
   };
 
   constructor() { }

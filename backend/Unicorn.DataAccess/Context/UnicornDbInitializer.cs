@@ -1231,7 +1231,72 @@ namespace Unicorn.DataAccess.Context
             context.Books.Add(book6);
             context.SaveChanges();
 
+            Review review1 = new Review()
+            {
+                BookId = 1,
+                Description = "qwert",
+                From = "NameSurname",
+                FromAccountId = 2,
+                To = "NameSurname",
+                ToAccountId = 1,
+                IsDeleted = false,
+                Grade = 4
+            };
+            Review review2 = new Review()
+            {
+                BookId = 1,
+                Description = "qwert",
+                From = "NameSurname",
+                FromAccountId = 2,
+                To = "NameSurname",
+                ToAccountId = 1,
+                IsDeleted = false,
+                Grade = 4
+            };
+            Review review3 = new Review()
+            {
+                BookId = 1,
+                Description = "qwert",
+                From = "NameSurname",
+                FromAccountId = 2,
+                To = "NameSurname",
+                ToAccountId = 1,
+                IsDeleted = false,
+                Grade = 4
+            };
+            Review review4 = new Review()
+            {
+                BookId = 1,
+                Description = "qwert",
+                From = "NameSurname",
+                FromAccountId = 2,
+                To = "NameSurname",
+                ToAccountId = 1,
+                IsDeleted = false,
+                Grade = 4
+            };
+            Review review5 = new Review()
+            {
+                BookId = 1,
+                Description = "qwert",
+                From = "NameSurname",
+                FromAccountId = 2,
+                To = "NameSurname",
+                ToAccountId = 1,
+                IsDeleted = false,
+                Grade = 4
+            };
 
+            context.Reviews.Add(review1);
+            context.SaveChanges();
+            context.Reviews.Add(review2);
+            context.SaveChanges();
+            context.Reviews.Add(review3);
+            context.SaveChanges();
+            context.Reviews.Add(review4);
+            context.SaveChanges();
+            context.Reviews.Add(review5);
+            context.SaveChanges();
 
             context.SaveChanges();
             base.Seed(context);

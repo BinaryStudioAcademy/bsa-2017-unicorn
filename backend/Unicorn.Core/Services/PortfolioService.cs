@@ -40,8 +40,6 @@ namespace Unicorn.Core.Services
 
         private PortfolioItemDTO PortfolioItemToDTO(PortfolioItem item)
         {
-            var historyEntry = _unitOfWork.HistoryRepository.GetByIdAsync(item.HistoryEntryId);
-
             return new PortfolioItemDTO()
             {
                 Id = item.Id,

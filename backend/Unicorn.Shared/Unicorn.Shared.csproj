@@ -53,6 +53,7 @@
     <Compile Include="DTOs\PermissionDTO.cs" />
     <Compile Include="DTOs\PersonDTO.cs" />
     <Compile Include="DTOs\PortfolioItemDTO.cs" />
+    <Compile Include="DTOs\RatingDTO.cs" />
     <Compile Include="DTOs\ReviewDTO.cs" />
     <Compile Include="DTOs\RoleDTO.cs" />
     <Compile Include="DTOs\SocialAccountDTO.cs" />
