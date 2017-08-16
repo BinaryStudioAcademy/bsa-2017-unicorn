@@ -18,7 +18,6 @@ import { AppComponent } from './app.component';
 import { CategoryModule } from './category/category.module';
 import { CompanyModule } from './company/company.module';
 import { DashboardModule } from './dashboard/dashboard.module';
-import { LoginModule } from './login/login.module';
 import { RegisterModule } from './register/register.module';
 import { UserModule } from './user/user.module';
 import { VendorModule } from './vendor/vendor.module';
@@ -54,7 +53,6 @@ import { RegisterComponent } from './register/register-component/register.compon
     CategoryModule,
     CompanyModule,
     DashboardModule,
-    LoginModule,
     RegisterModule,
     UserModule,
     VendorModule,

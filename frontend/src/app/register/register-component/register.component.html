@@ -3,7 +3,7 @@
 </div>
 <div class="content">
 
-    <div class="social-buttons" *ngIf="!isLogged">
+    <div class="social-buttons" *ngIf="!isLogged;else authorized">
         <button class="ui facebook button" (click)="loginWithFacebook()">
         <i class="facebook icon"></i>
         Facebook
@@ -27,7 +27,7 @@
         </sui-message>
     </div>
 
-    <div *ngIf="isLogged">
+    <ng-template #authorized>
         <div class="roles">
             <div class="question-lbl">
                 <label><b>Who are you?</b></label>
@@ -38,8 +38,7 @@
                 <button class="ui button" [ngClass]="{'active': roles['company']}" (click)="selectRole('company')">Company</button>
             </div>
         </div>
-
-    </div>
+    </ng-template>    
 
     <app-register-user *ngIf="roles['customer']" [social]="currentUser" [modal]="modal"></app-register-user>
     <app-register-vendor *ngIf="roles['vendor']" [social]="currentUser" [modal]="modal"></app-register-vendor>

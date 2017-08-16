@@ -4,63 +4,67 @@ import * as firebase from 'firebase/app';
 import { Observable } from 'rxjs/Observable';
 
 import { DataService } from '../data.service';
-import { User } from './models/user';
+import { UserAuth } from '../../models/userauth';
 
 @Injectable()
-export class AuthService {
+export class AuthService {  
+  public authState: Observable<firebase.User>
+  private apiController:string;
+
   constructor(public afAuth: AngularFireAuth, public httpService: DataService) {
     httpService.setHeader('Content-Type', 'application/json');
+    this.authState = this.afAuth.authState;    
+    this.apiController = 'membership';
   }
 
-  private initializeUser(data): User {
-    let user = new User();
-    user.provider = data.providerData[0].providerId;
-    user.uid = data.uid;
-
-    return user;
-  }
+  public initializeUser(data): UserAuth {
+    return {
+      provider: data.providerData[0].providerId,     
+      uid: data.uid
+    }
+  }  
 
   public loginWithGoogle() {
     return this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider())
       .then(data => {
+        console.log(data);
         return this.initializeUser(data.user);
       })
       .then(user => {
-        return this.httpService.postRequest('membership', user);
+        return this.httpService.postFullRequest(this.apiController, user);
       });
   }
 
   public loginWithFacebook() {
     return this.afAuth.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider())
       .then(data => {
+        console.log(data);
         return this.initializeUser(data.user);
       })
       .then(user => {
-        return this.httpService.postRequest('membership', user);
-      });
-  }
-
-  public loginWithGithub() {
-    return this.afAuth.auth.signInWithPopup(new firebase.auth.GithubAuthProvider())
-      .then(data => {
-        return this.initializeUser(data.user);
-      })
-      .then(user => {
-        return this.httpService.postRequest('membership', user);
+        return this.httpService.postFullRequest(this.apiController, user);
       });
   }
 
   public loginWithTwitter() {
     return this.afAuth.auth.signInWithPopup(new firebase.auth.TwitterAuthProvider())
       .then(data => {
+        console.log(data);
         return this.initializeUser(data.user);
       })
       .then(user => {
-        return this.httpService.postRequest('membership', user);
+        return this.httpService.postFullRequest(this.apiController, user);
       });
   }
 
+  public saveJwt(token: string) {
+    if (token) {
+      localStorage.setItem('token', token);
+    }
+  }
+
   public logout() {
+    localStorage.removeItem('token');
     this.afAuth.auth.signOut();
   }
 }
