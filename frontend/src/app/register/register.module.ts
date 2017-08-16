@@ -13,8 +13,6 @@ import { RegisterUserComponent } from './register-user/register-user.component';
 import { RegisterVendorComponent } from './register-vendor/register-vendor.component';
 import { RegisterCompanyComponent } from './register-company/register-company.component';
 
-import { ModalService } from '../services/modal.service';
-
 @NgModule({
   imports: [
     FormsModule,

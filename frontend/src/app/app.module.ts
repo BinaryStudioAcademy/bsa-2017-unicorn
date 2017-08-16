@@ -8,7 +8,6 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 
 import { AuthService } from './services/auth/auth.service';
-import { ModalService } from './services/modal.service';
 
 // Routing
 import { AppRoutingModule } from './app-routing/app-routing.module';
@@ -36,6 +35,7 @@ import { MenuComponent } from './menu/menu.component';
 import { FooterComponent } from './footer/footer.component';
 
 import { RegisterComponent } from './register/register-component/register.component';
+
 @NgModule({
   declarations: [    
     AppComponent,
@@ -63,7 +63,8 @@ import { RegisterComponent } from './register/register-component/register.compon
   ],
   providers: [
     AuthService
-  ],entryComponents:[RegisterComponent],
+  ],
+  entryComponents: [RegisterComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

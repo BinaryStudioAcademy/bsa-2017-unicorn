@@ -15,8 +15,6 @@ import { SuiModalService, TemplateModalConfig, SuiModal, ComponentModalConfig
 
 import { RegisterInfo } from '../models/register-info';
 
-import { ModalService } from '../../services/modal.service';
-
 export interface IConfirmModalContext {
     title:string;
     question:string;
@@ -30,19 +28,13 @@ export class ConfirmModal extends ComponentModalConfig<IConfirmModalContext, voi
     }
 }
 
-export interface IContext { }
-
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
-  providers: [RegisterService, ModalService]
+  providers: [RegisterService]
 })
 export class RegisterComponent implements OnInit, OnDestroy {
-
-  @ViewChild('modalTemplate')
-  public modalTemplate: ModalTemplate<IContext, string, string>
-  public activeModal: SuiActiveModal<{}, {}, string>;
 
   private authState: Observable<firebase.User>
   private currentUser: firebase.User = null;
@@ -68,16 +60,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   constructor(
     public modal: SuiModal<IConfirmModalContext, void, void>,
-    public modalService: SuiModalService,
     public router: Router,
     public registerService: RegisterService,
-    public afAuth: AngularFireAuth,
-    public ref: ChangeDetectorRef,
-    public regModalService: ModalService) {
+    public afAuth: AngularFireAuth) {
 
 
-      this.mode = 'date';
-    //this.modalSize = 'tiny';
+    this.mode = 'date';
     this.afAuth.auth.signOut();
     this.authState = this.afAuth.authState;
     
@@ -185,45 +173,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   private redirect() {
-    //this.regModalService.close();
     this.modal.deny(undefined); 
     this.router.navigate(['login']);
   }
 
-  public openModal() {
-    const config = new TemplateModalConfig<{}, string, string>(this.modalTemplate);
-    let size = 'tiny';
-    config.closeResult = "closed!";
-    config.context = {};
-    config.size = ModalSize.Small;
-    config.isInverted = true;
-
-    this.activeModal = this.modalService
-      .open(config)
-      .onApprove(result => { /* approve callback */ })
-      .onDeny(result => {
-        this.error = false;
-        this.isLogged = false;
-        this.isCompany = false;
-        this.isVendor = false;
-        this.isCustomer = false;
-        this.roleSelected = false;
-        this.social = undefined;
-        this.clearRoles();
-      });
-
-    this.afAuth.auth.signOut();
-    this.isLogged = false;
-    this.error = false;
-  }
-
   selectRole(role: string) {
-    // switch (role) {
-    //   case 'customer': this.isCustomer = true; break;
-    //   case 'vendor': this.isVendor = true; break;
-    //   case 'company': this.isCompany = true; break;
-    // }
-    // this.roleSelected = true;
     this.clearRoles();  
     this.roles[role] = true;
   }

@@ -6,8 +6,6 @@ import { SuiModalService, TemplateModalConfig, SuiModal, ComponentModalConfig
   , ModalTemplate, ModalSize, SuiActiveModal } from 'ng2-semantic-ui';
 import { ConfirmModal, IConfirmModalContext } from '../register/register-component/register.component';
 
-import { ModalService } from '../services/modal.service';
-
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
@@ -17,7 +15,6 @@ import { ModalService } from '../services/modal.service';
 export class MenuComponent implements OnInit {
   items: MenuItem[];
   isEnabled: boolean;
-  public activeModal: SuiActiveModal<IConfirmModalContext, {}, void>;
   constructor(private modalService: SuiModalService) { }
 
   ngOnInit() {
@@ -26,11 +23,10 @@ export class MenuComponent implements OnInit {
   }
 
   openModal() {
-    //this.modService.open();
-    this.activeModal = this.modalService
-    .open(new ConfirmModal("Are you sure?", "Are you sure about accepting this?"))
-    .onApprove(() => alert("User has accepted."))
-    .onDeny(() => (''));
+    this.modalService
+      .open(new ConfirmModal("Are you sure?", "Are you sure about accepting this?"))
+      .onApprove(() => alert("User has accepted."))
+      .onDeny(() => (''));
     
   }
 
