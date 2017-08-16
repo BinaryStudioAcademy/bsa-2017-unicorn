@@ -7,17 +7,21 @@ import { DataService } from '../data.service';
 import { UserAuth } from '../../models/userauth';
 
 @Injectable()
-export class AuthService {
+export class AuthService {  
+  public authState: Observable<firebase.User>
+
   constructor(public afAuth: AngularFireAuth, public httpService: DataService) {
     httpService.setHeader('Content-Type', 'application/json');
+    this.authState = this.afAuth.authState;    
   }
 
-  private initializeUser(data): UserAuth {
+  public initializeUser(data): UserAuth {
     return {
-      provider: data.providerData[0].providerId,
+      provider: data.providerData[0].providerId,     
       uid: data.uid
     }
   }
+  
 
   public loginWithGoogle() {
     return this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider())
@@ -26,7 +30,7 @@ export class AuthService {
         return this.initializeUser(data.user);
       })
       .then(user => {
-        return this.httpService.postRequest('membership', user);
+        return this.httpService.postFullRequest('membership', user);
       });
   }
 
@@ -34,10 +38,10 @@ export class AuthService {
     return this.afAuth.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider())
       .then(data => {
         console.log(data);
-        return this.initializeUser(data.user);        
+        return this.initializeUser(data.user);
       })
       .then(user => {
-        return this.httpService.postRequest('membership', user);
+        return this.httpService.postFullRequest('membership', user);
       });
   }
 
@@ -48,7 +52,7 @@ export class AuthService {
         return this.initializeUser(data.user);
       })
       .then(user => {
-        return this.httpService.postRequest('membership', user);
+        return this.httpService.postFullRequest('membership', user);
       });
   }
 
