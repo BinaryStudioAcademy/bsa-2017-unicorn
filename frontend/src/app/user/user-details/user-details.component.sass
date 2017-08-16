@@ -72,18 +72,23 @@ a
     font-weight: 700;
     color: $primary-color;
     display: inline-block;
-    border: 2px solid  $primary-color;
 
 
-.inputfile:focus + label,
-.inputfile + label:hover 
-    background-color: $primary-color;
-    color: white;
+//.inputfile:focus + label,
+.ui.active.button:hover .btnText
+    color: #4b0f31;
+
+.ui.active.button:hover svg path
+    fill: #4b0f31;
+
+.ui.active.button:hover
+    border: solid 2px #4b0f31;
+
 .inputfile + label 
 	cursor: pointer; 
-.inputfile:focus + label 
-	outline: 1px dotted #000;
-	outline: -webkit-focus-ring-color auto 5px;
+// .inputfile:focus + label 
+//  	outline: 1px dotted #000;
+//  	outline: -webkit-focus-ring-color auto 5px;
 
 
 
@@ -95,3 +100,19 @@ a
 
 .title
     font-size: 2.5em;
+
+.ui.active.button
+    background: transparent;
+    color: $primary-color;
+    border: solid 2px $primary-color;
+    font-size: 12px;
+    margin: 0em 2em;
+
+.svgImage
+    margin-right: 1em;
+
+.file-upload-save > label   
+    font-size: 1.3em;
+
+svg path
+    fill: $primary-color;
