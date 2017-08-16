@@ -6,7 +6,7 @@
         <div class="ui grid container">
             <div class="row">
                 <div class="sixteen wide column container without-padd">
-                    <sui-tabset>
+                    <sui-tabset *ngIf="company !== undefined">
                         <div class="ui pointing secondary menu">
                             <a class="item" suiTabHeader="1">General information</a>
                             <a class="item" suiTabHeader="2">Reviews</a>
@@ -18,13 +18,13 @@
                                 <div class="row">
                                     <div class="ten wide column">
                                         <div class="ui segment" suiTabContent="1">
-                                            <company-general-information [company]="company | async"></company-general-information>
+                                            <company-general-information [company]="company"></company-general-information>
                                         </div>
                                         <div class="ui segment" suiTabContent="2">
-                                            <company-reviews [reviews]="company.Reviews | async"></company-reviews>
+                                            <company-reviews [reviews]="company.Reviews"></company-reviews>
                                         </div>
                                         <div class="ui segment" suiTabContent="3">
-                                            <company-vendors [vendors]="company.Vendors | async"></company-vendors>
+                                            <company-vendors [vendors]="company.Vendors"></company-vendors>
                                         </div>
                                         <div class="ui segment" suiTabContent="4">
                                             <company-contacts></company-contacts>

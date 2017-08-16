@@ -1,4 +1,4 @@
-<div class="ui medium comments">
+<div class="ui medium comments" *ngIf="!isReviewsEmpty">
     <div *ngFor="let review of reviews" class="comment">
         <a class="avatar">
             <img src={{review.Avatar}}>
@@ -13,6 +13,6 @@
         </div>
     </div>
 </div>
-<div *ngIf="!isReviewNull" class="no-reviews">
+<div *ngIf="isReviewsEmpty" class="no-reviews">
     There are no reviews
 </div>
