@@ -43,9 +43,7 @@
             </div>
         </div>
     </div>
-</div>
-<div *ngIf="company === undefined" class="ui segment">
-    <div class="ui active inverted dimmer" style="padding: 50px 0; margin: 0;">
+    <div *ngIf="company === undefined" class="ui active inverted dimmer" style="z-index: 0;">
         <div class="ui text loader">Loading</div>
     </div>
     <p></p>

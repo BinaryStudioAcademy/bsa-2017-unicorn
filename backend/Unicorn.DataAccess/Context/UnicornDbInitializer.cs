@@ -9,6 +9,8 @@ namespace Unicorn.DataAccess.Context
     {
         protected override void Seed(AppContext context)
         {
+            #region Roles
+
             Role role1 = new Role()
             {
                 Id = 1,
@@ -45,6 +47,10 @@ namespace Unicorn.DataAccess.Context
             };
 
             context.Roles.AddRange(new List<Role>() { role1, role2, role3, role4, role5 });
+
+            #endregion
+
+            #region Accounts
 
             Account account1 = new Account()
             {
@@ -169,6 +175,11 @@ namespace Unicorn.DataAccess.Context
 
             context.Accounts.AddRange(new List<Account>() { account1, account2, account3, account4, account5, account6, account7, account8, account9, account10 });
 
+
+            #endregion
+
+            #region SocialAccounts
+
             SocialAccount socialAccount1 = new SocialAccount()
             {
                 Id = 1,
@@ -261,6 +272,10 @@ namespace Unicorn.DataAccess.Context
 
             context.SocialAccounts.AddRange(new List<SocialAccount>() { socialAccount1, socialAccount2, socialAccount3, socialAccount4, socialAccount5, socialAccount6, socialAccount7, socialAccount8, socialAccount9, socialAccount10 });
 
+            #endregion
+
+            #region Permissions
+
             Permission permision1 = new Permission()
             {
                 Id = 1,
@@ -351,6 +366,11 @@ namespace Unicorn.DataAccess.Context
 
             context.Permissions.AddRange(new List<Permission>() { permision1, permision2, permision3, permision4, permision5, permision6, permision7, permision8, permision9, permision10, permision11 });
 
+
+            #endregion
+
+            #region Categories
+
             Category category1 = new Category()
             {
                 Id = 1,
@@ -395,11 +415,16 @@ namespace Unicorn.DataAccess.Context
             {
                 Id = 6,
                 IsDeleted = false,
-                Description = "Deveoping",
+                Description = "Developing",
                 Name = "Developer Service"
             };
 
             context.Categories.AddRange(new List<Category>() { category1, category2, category3, category4, category5, category6 });
+
+
+            #endregion
+
+            #region Subcategories
 
             Subcategory subcategory1 = new Subcategory()
             {
@@ -457,6 +482,11 @@ namespace Unicorn.DataAccess.Context
 
             context.Subcategories.AddRange(new List<Subcategory>() { subcategory1, subcategory2, subcategory3, subcategory4, subcategory5, subcategory6 });
 
+
+            #endregion
+
+            #region Works
+
             Work work1 = new Work()
             {
                 Id = 1,
@@ -512,6 +542,11 @@ namespace Unicorn.DataAccess.Context
             };
 
             context.Works.AddRange(new List<Work>() { work1, work2, work3, work4, work5, work6 });
+
+
+            #endregion
+
+            #region Persons
 
             Person person1 = new Person()
             {
@@ -739,6 +774,10 @@ namespace Unicorn.DataAccess.Context
             context.Persons.AddRange(new List<Person>() { person1, person2, person3, person4, person5, person6, person7, person8, person9, person10 });
 
 
+            #endregion
+
+            #region Contacts
+
             // Without setted id
             Contact contact1 = new Contact
             {
@@ -783,6 +822,10 @@ namespace Unicorn.DataAccess.Context
                 Value = "turbocat_9000"
             };
 
+            #endregion
+
+            #region PortfolioItems
+
             PortfolioItem portfolioItem1 = new PortfolioItem()
             {
                 Image = "https://camo.githubusercontent.com/f8ea5eab7494f955e90f60abc1d13f2ce2c2e540/68747470733a2f2f662e636c6f75642e6769746875622e636f6d2f6173736574732f323037383234352f3235393331332f35653833313336322d386362612d313165322d383435332d6536626439353663383961342e706e67",
@@ -790,6 +833,10 @@ namespace Unicorn.DataAccess.Context
                 Subcategory = subcategory1,
                 WorkType = work1
             };
+
+            #endregion
+
+            #region Vendors
 
             Vendor vendor1 = new Vendor()
             {
@@ -920,6 +967,11 @@ namespace Unicorn.DataAccess.Context
 
             context.Vendors.AddRange(new List<Vendor>() { vendor1, vendor2, vendor3, vendor4, vendor5, vendor6 });
 
+
+            #endregion
+
+            #region Companies
+
             Company company1 = new Company()
             {
                 Id = 1,
@@ -1011,6 +1063,11 @@ namespace Unicorn.DataAccess.Context
 
             context.Companies.AddRange(new List<Company>() { company1, company2, company3 });
 
+
+            #endregion
+
+            #region Customers
+
             Customer customer1 = new Customer()
             {
                 Id = 1,
@@ -1033,6 +1090,11 @@ namespace Unicorn.DataAccess.Context
             };
 
             context.Customers.AddRange(new List<Customer>() { customer1, customer2, customer3 });
+
+
+            #endregion
+
+            #region Books
 
             Book book1 = new Book()
             {
@@ -1109,6 +1171,11 @@ namespace Unicorn.DataAccess.Context
 
             context.Books.AddRange(new List<Book>() { book1, book2, book3, book4, book5, book6 });
 
+
+            #endregion
+
+            #region Reviews
+
             Review review1 = new Review()
             {
                 BookId = 1,
@@ -1175,9 +1242,11 @@ namespace Unicorn.DataAccess.Context
                 Avatar = "https://image.flaticon.com/icons/png/512/78/78373.png"
             };
 
-            context.Reviews.AddRange(new List<Review>(){review1, review2, review3, review4, review5});
-            
-            context.SaveChanges();
+            context.Reviews.AddRange(new List<Review>() { review1, review2, review3, review4, review5 });
+
+
+            #endregion
+
 
             context.SaveChanges();
 
