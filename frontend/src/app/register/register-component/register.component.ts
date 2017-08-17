@@ -82,8 +82,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
         break;
       }
       case 200: {
+        this.modal.deny(undefined);
         this.authService.saveJwt(resp.headers.get('token'));
-        this.error = false;
+        this.error = false;        
         this.helperService.redirectAfterAuthentication();
         break;
       }
