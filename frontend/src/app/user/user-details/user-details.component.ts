@@ -43,6 +43,7 @@ export class UserDetailsComponent implements OnInit {
   cropperSettings: CropperSettings;
   data: any;
   file: File;
+  imageUploaded: boolean;  
 
   constructor( 
     private route: ActivatedRoute,
@@ -61,6 +62,7 @@ export class UserDetailsComponent implements OnInit {
         this.cropperSettings.rounded = true;
         
         this.data = {};
+        this.imageUploaded = false;
   }
   ngOnInit() {
     this.fakeUser = this.userService.getUser(0);
@@ -96,48 +98,45 @@ export class UserDetailsComponent implements OnInit {
         that.cropper.setImage(image);
 
     };
-
+    this.imageUploaded = true;
     myReader.readAsDataURL(this.file);
 }
 
   fileSaveListener(){
-    debugger;
-    if (!this.file)
+    if (!this.data)
     {
       console.log("file not upload");
       return;
     }
 
     this.photoService.uploadToImgur(this.file).then(resp => {
-      debugger;
       let path = resp.data.link;
       console.log(path);
       this.photoService.saveAvatar(path)
       .then(resp => {
-        (<HTMLImageElement>document.getElementById("user-avatar")).src = `url('${path}')`;
+        (<HTMLImageElement>document.getElementById("user-avatar")).src = this.data.image;
       })
       .catch(err => console.log(err));
     }).catch(err => {
       console.log(err);
     });
   }
-  private closeModal() {
-    this.activeModal.deny(''); 
-  }
 
   public openModal() {
     const config = new TemplateModalConfig<IContext, string, string>(this.modalTemplate);
-    config.closeResult = "closed!";
+    //config.closeResult = "closed!";
     config.context = {};
     config.size = ModalSize.Normal;
     config.isInverted = true;
     //config.mustScroll = true;
+    let that = this;
 
     this.activeModal = this.modalService
       .open(config)
       .onApprove(result => { /* approve callback */ })
       .onDeny(result => {
-        
+        debugger;
+        that.imageUploaded = false;
       });
   }
 }
