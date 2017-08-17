@@ -1,0 +1,49 @@
+<div class="ui equal width grid container">
+  <div class="row">
+    <div class="eight wide column">
+      <div class="ui equal width grid">
+        <div class="row">
+          <div class="column">
+            <div class="ui form">
+              <div class="field">
+                <label>Name</label>
+                <div class="three fields">
+                  <div class="field">
+                    <input type="text" [(ngModel)]="vendor.Name" name="first-name" placeholder="FIRST NAME">
+                  </div>
+                  <div class="field">
+                    <input type="text" [(ngModel)]="vendor.Surname" name="second-name" placeholder="SURNAME">
+                  </div>
+                  <div class="field">
+                    <input type="text" [(ngModel)]="vendor.MiddleName" name="middle-name" placeholder="MIDDLE NAME">
+                  </div>
+                </div>
+              </div>
+              <div class="field">
+                <label>My position</label>
+                <input type="text" [(ngModel)]="vendor.Position" name="position" placeholder="MIDDLE .NET DEVELOPER">
+              </div>
+              <div class="ui divider"></div>
+              <div class="field">
+                <label>About me</label>
+                <textarea [(ngModel)]="vendor.WorkLetter" name="workLetter" placeholder="FEW WORDS ABOUT YOU AND YOUR WORK"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ui container column">
+      <h4>Help customers find you</h4>
+      <div *ngIf="map != undefined" class="map">
+        <app-map [inputMap]="map"></app-map>
+      </div>
+    </div>
+  </div>
+  <div class="centered row">
+    <div class="ui divider"></div>
+      <div class="three wide column">
+          <button class="ui basic button"><h5>Save</h5></button>
+        </div>
+      </div>
+  </div>

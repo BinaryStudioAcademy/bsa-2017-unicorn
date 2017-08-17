@@ -4,7 +4,9 @@ import { PortfolioItem } from "./portfolio-item.model";
 
 export interface Vendor {
 	Id: number;
-	FIO: string;
+	Name: string;
+	Surname: string;
+	MiddleName: string;
 	Avatar: string;
 	City: string;
 	LocationId: number;

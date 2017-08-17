@@ -15,17 +15,17 @@
     <div class="sixteen wide column container">
       <sui-tabset *ngIf="vendor !== undefined">
         <div class="ui pointing secondary menu">
-          <a class="item" suiTabHeader="1">INFO</a>
+          <a class="item" suiTabHeader="1">GENERAL</a>
           <a class="item" suiTabHeader="2">PORTFOLIO</a>
           <a class="item" suiTabHeader="3">REVIEWS</a>
           <a class="item" suiTabHeader="4">CONTACTS</a>
         </div>
         <div class="row">
-          <div class="ui equal width grid container">
+          <div class="ui grid equal width container">
             <div class="row">
               <div class="container column">
                 <div class="ui segment" suiTabContent="1">
-                  <app-vendor-profile-info [vendor]="vendor"></app-vendor-profile-info>
+                  <app-vendor-edit-info [vendor]="vendor"></app-vendor-edit-info>
                 </div>
                 <div class="container column">
                   <div class="ui segment" suiTabContent="2">
@@ -41,11 +41,6 @@
                   <div class="ui segment" suiTabContent="4">
                     <app-vendor-profile-contacts [vendorId]="vendor.Id" [locationId]="vendor.LocationId"></app-vendor-profile-contacts>
                   </div>
-                </div>
-              </div>
-              <div class="six wide column">
-                <div class="ui segment">
-                  <app-book></app-book>
                 </div>
               </div>
             </div>

@@ -17,6 +17,7 @@ import { VendorService } from "../../../services/vendor.service";
 export class VendorProfileContactsComponent implements OnInit {
   @Input() private vendorId: number;
   @Input() private locationId: number;
+  
   contacts: Contact[];
   location: Location;
   map: MapModel;
