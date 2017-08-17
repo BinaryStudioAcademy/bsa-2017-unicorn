@@ -1,0 +1,35 @@
+<div class="search-wrapper">
+  <div class="companies-container">
+    <div class="filter-container">
+    </div>
+    <div class="separator-horiz"></div>
+    <div class="companies"> 
+      <div class="company" *ngFor="let company of companies.slice((selectedPage - 1) * pageSize, selectedPage * pageSize)">
+        <a href="#">
+          <img src="{{company.avatar}}"/>
+          <div class="company-info">
+            <div class="company-name">
+              {{company.name}} ({{companies.indexOf(company)}})
+            </div>
+            <div class="company-detail">
+              <p>{{company.location.city}}</p>
+              <sui-rating class="star" [ngModel]="company.rating" [isReadonly]="true"></sui-rating> 
+              <p>{{company.reviews.length}} reviews</p>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="page-container"> 
+      <sui-pagination [collectionSize]="companies.length"
+                        [pageSize]="pageSize"
+                        [maxSize]="maxSize"
+                        [hasEllipses]="hasEllipses"
+                        [(page)]="selectedPage">
+      </sui-pagination>
+    </div> 
+  </div>  
+  <div class="map-container">
+    <ngui-map class="map" [options]="mapOptions"></ngui-map>
+  </div>
+</div>
