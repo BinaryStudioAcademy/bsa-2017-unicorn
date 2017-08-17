@@ -16,7 +16,7 @@ namespace Unicorn.DataAccess.Entities
 
         public DateTime FoundationDate { get; set; }
 
-        public Account Director { get; set; }
+        public string Director { get; set; }
         
         public int Staff { get; set; }
 

@@ -1082,7 +1082,7 @@ namespace Unicorn.DataAccess.Context
                               "consectetur adipiscing elit.Mauris pretium arcu vitae mauris rutrum," +
                               "et tempor est congue.",
                 FoundationDate = new DateTime(2015, 08, 11, 00, 58, 16),
-                Director = account1,
+                Director = "Kolya",
                 Staff = 7,
                 IsDeleted = false,
                 Location = new Location()
@@ -1112,7 +1112,7 @@ namespace Unicorn.DataAccess.Context
                               "et tempor est congue.",
                 Account = account4,
                 FoundationDate = new DateTime(2017, 08, 12, 10, 36, 16),
-                Director = account1,
+                Director = "Anton",
                 Staff = 36,
                 IsDeleted = false,
                 Location = new Location()
@@ -1141,7 +1141,7 @@ namespace Unicorn.DataAccess.Context
                               "et tempor est congue.",
                 Account = account6,
                 FoundationDate = new DateTime(2012, 08, 08, 13, 11, 16),
-                Director = account1,
+                Director = "Ruslan",
                 Staff = 2,
                 IsDeleted = false,
                 Location = new Location()

@@ -3,6 +3,7 @@ import { Vendor } from "./vendor";
 import { Contact } from "./contact.model";
 
 export interface Company {
+    Id: number,
     Avatar:string;
     Name: string;
     Description: string;
