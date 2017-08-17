@@ -51,7 +51,7 @@ export class PopularTasksComponent implements OnInit {
     }, {
       id: 3,
       name: 'Company 3',
-      imgUrl: 'http://toantamgroup.net/kcfinder/upload/images/z13.jpg'
+      imgUrl: 'http://unmaidsservices.polakpiotr.com/wp-content/uploads/2015/04/Fort-Lauderdale-Cleaning-Services-1.jpg'
     }, {
       id: 4,
       name: 'Company 4',
