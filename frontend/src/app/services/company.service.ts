@@ -9,7 +9,7 @@ export class CompanyService {
   constructor(private dataService: DataService) { }
 
   getCompany(id: number):Promise<Company>{
-    return this.dataService.getRequest<Company>(environment.apiUrl + "company/" + id)
+    return this.dataService.getRequest<Company>("company/" + id)
     .then(res => { return res }); 
       
     
