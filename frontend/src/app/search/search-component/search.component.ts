@@ -40,15 +40,9 @@ export class SearchComponent implements OnInit, OnDestroy {
   }
 
   getParameters() {
-    this.subscription = this.route.params
-      .subscribe(params => {
-        this.category = params['category'];
-        this.subcategory = params['subcategory'];
-        this.date = this.convertDate(params['date']);
-        console.log('"category: "' + this.category);
-        console.log('"subcategory: "' + this.subcategory);
-        console.log('"date: "' + this.date);
-      });
+    this.category = this.route.snapshot.queryParams['category'];
+    this.subcategory = this.route.snapshot.queryParams['subcategory'];
+    this.date = this.convertDate(this.route.snapshot.queryParams['date']);
   }
 
   convertDate(date: number) {

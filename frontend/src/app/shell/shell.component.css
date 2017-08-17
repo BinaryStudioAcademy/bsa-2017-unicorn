@@ -52,9 +52,9 @@
 #content {
     display: block;
     width: 100%;
-    min-height: 80.4vh;
+    min-height: 100vh;
 }
 
-#footer {
-  box-shadow: 0px 500px 0px 500px white;
+#footer {    
+    box-shadow: 0px 500px 0px 500px white;
 }
