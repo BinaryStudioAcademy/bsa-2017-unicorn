@@ -1,4 +1,4 @@
-<div class="ui grid container">
+<div *ngIf="vendor !== undefined" class="ui grid container">
   <div class="row">
     <div class="sixteen wide column container">
       <div class="vendor-header">
@@ -17,8 +17,7 @@
         <div class="ui pointing secondary menu">
           <a class="item" suiTabHeader="1">GENERAL</a>
           <a class="item" suiTabHeader="2">PORTFOLIO</a>
-          <a class="item" suiTabHeader="3">REVIEWS</a>
-          <a class="item" suiTabHeader="4">CONTACTS</a>
+          <a class="item" suiTabHeader="3">CONTACTS</a>
         </div>
         <div class="row">
           <div class="ui grid equal width container">
@@ -34,11 +33,6 @@
                 </div>
                 <div class="container column">
                   <div class="ui segment" suiTabContent="3">
-                    <app-vendor-profile-reviews [vendorId]="vendor.Id"></app-vendor-profile-reviews>
-                  </div>
-                </div>
-                <div class="container column">
-                  <div class="ui segment" suiTabContent="4">
                     <app-vendor-profile-contacts [vendorId]="vendor.Id" [locationId]="vendor.LocationId"></app-vendor-profile-contacts>
                   </div>
                 </div>
@@ -50,3 +44,6 @@
     </div>
   </div>
 </div>
+<div *ngIf="vendor === undefined" class="ui active inverted dimmer" style="z-index: 0;">
+        <div class="ui text loader">Loading</div>
+    </div>

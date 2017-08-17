@@ -39,4 +39,9 @@ export class VendorEditInfoComponent implements OnInit {
       });
   }
 
+  saveVendor(): void {
+    this.vendorService.updateVendor(this.vendor)
+      .then(resp => this.vendor = resp.body as Vendor);
+  }
+
 }

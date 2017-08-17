@@ -1,4 +1,4 @@
-<div class="ui grid container">
+<div *ngIf="vendor !== undefined" class="ui grid container">
   <div class="row">
     <div class="sixteen wide column container">
       <div class="vendor-header">
@@ -55,3 +55,6 @@
     </div>
   </div>
 </div>
+<div *ngIf="vendor === undefined" class="ui active inverted dimmer" style="z-index: 0;">
+        <div class="ui text loader">Loading</div>
+    </div>
