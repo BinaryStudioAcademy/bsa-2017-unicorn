@@ -41,8 +41,6 @@ namespace Unicorn.Controllers
             }
 
             string token = await authService.GenerateJwtTokenAsync(user.Provider, user.Uid);
-            //string token = "123_TEST";
-            //string token = null;
 
             if (token == null)
             {
@@ -56,7 +54,6 @@ namespace Unicorn.Controllers
             response.Headers.Add("Token", token);
 
             return response;
-
         }
 
         [Route("membership/customer")]

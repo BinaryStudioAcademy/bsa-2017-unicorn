@@ -59,7 +59,6 @@ namespace Unicorn.Core.Services
             var person = new Person();
 
             account.Role = role;
-            account.Permissions = permissions;
             account.DateCreated = DateTime.Now;
             account.Email = customerDto.Email;
             account.SocialAccounts = socialAccounts;

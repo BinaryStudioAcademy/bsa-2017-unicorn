@@ -60,10 +60,8 @@ export class RegisterUserComponent implements OnInit {
   confirmRegister() {
     if (this.valid()) {
       this.error = false;
-      console.log('valid');
       let regInfo = this.aggregateInfo();
-      console.log(regInfo);
-      this.registerService.confirmCustomer(regInfo).then(resp => {
+      this.registerService.confirmCustomer(regInfo).then(resp => {      
         this.modal.deny('');
         this.router.navigate(['user/1']);
       });

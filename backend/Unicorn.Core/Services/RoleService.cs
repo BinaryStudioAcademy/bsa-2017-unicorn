@@ -51,8 +51,13 @@ namespace Unicorn.Core.Services
             if (account == null)
                 return null;
 
-            Mapper.Initialize(cfg => cfg.CreateMap<Role, RoleDTO>());
-            return Mapper.Map<Role, RoleDTO>(account.Role);
+            Mapper.Initialize(cfg => cfg.CreateMap<Permission, PermissionDTO>());
+            return new RoleDTO
+            {
+                Id = account.Role.Id,
+                Name = account.Role.Name,
+                Permissions = Mapper.Map<IEnumerable<Permission>, List<PermissionDTO>>(account.Role.Permissions)
+        };
         }
     }
 }

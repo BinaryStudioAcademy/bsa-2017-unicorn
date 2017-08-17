@@ -8,6 +8,6 @@ namespace Unicorn.Shared.DTOs
 
         public string Name { get; set; }
 
-        public ICollection<AccountDTO> Accounts { get; set; }
+        public virtual ICollection<PermissionDTO> Permissions { get; set; }
     }
 }

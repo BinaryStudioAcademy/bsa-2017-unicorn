@@ -9,41 +9,167 @@ namespace Unicorn.DataAccess.Context
     {
         protected override void Seed(AppContext context)
         {
-            #region Roles
+            #region Permissions
+            Permission permision1 = new Permission()
+            {
+                Id = 1,
+                Name = "Show all vendors(include search)",
+                IsDeleted = false
+            };
 
+            Permission permision2 = new Permission()
+            {
+                Id = 2,
+                Name = "Show all users(include search)",
+                IsDeleted = false
+            };
+
+            Permission permision3 = new Permission()
+            {
+                Id = 3,
+                Name = "Edit main vendor list",
+                IsDeleted = false
+            };
+
+            Permission permision4 = new Permission()
+            {
+                Id = 4,
+                Name = "Edit main vendor list",
+                IsDeleted = false
+            };
+
+            Permission permision5 = new Permission()
+            {
+                Id = 5,
+                Name = "Chat with users",
+                IsDeleted = false
+            };
+
+            Permission permision6 = new Permission()
+            {
+                Id = 6,
+                Name = "Chat with vendors",
+                IsDeleted = false
+            };
+
+            Permission permision7 = new Permission()
+            {
+                Id = 7,
+                Name = "Edit user info",
+                IsDeleted = false
+            };
+
+            Permission permision8 = new Permission()
+            {
+                Id = 8,
+                Name = "Edit vendor info",
+                IsDeleted = false
+            };
+
+            Permission permision9 = new Permission()
+            {
+                Id = 9,
+                Name = "Book vendor",
+                IsDeleted = false
+            };
+
+            Permission permision10 = new Permission()
+            {
+                Id = 10,
+                Name = "Describe vendor skills and services",
+                IsDeleted = false
+            };
+
+            Permission permision11 = new Permission()
+            {
+                Id = 11,
+                Name = "Edit own vendor list(for vendor company)",
+                IsDeleted = false
+            };
+        
+            context.Permissions.AddRange(new List<Permission>() { permision1, permision2, permision3, permision4, permision5, permision6, permision7, permision8, permision9, permision10, permision11 });
+
+            #endregion
+
+            #region Roles
             Role role1 = new Role()
             {
                 Id = 1,
                 IsDeleted = false,
-                Name = "Guest"
+                Name = "Guest",
+                Permissions = new List<Permission>
+                {
+                    permision1,
+                    permision2
+                }
             };
 
             Role role2 = new Role()
             {
                 Id = 2,
                 IsDeleted = false,
-                Name = "User"
+                Name = "User",
+                Permissions = new List<Permission>
+                {
+                    permision1,
+                    permision2,
+                    permision6,
+                    permision7,
+                    permision9
+                }
             };
 
             Role role3 = new Role()
             {
                 Id = 3,
                 IsDeleted = false,
-                Name = "Vendor"
+                Name = "Vendor",
+                Permissions = new List<Permission>
+                {
+                    permision1,
+                    permision2,
+                    permision5,
+                    permision8,
+                    permision10
+                }
             };
 
             Role role4 = new Role()
             {
                 Id = 4,
                 IsDeleted = false,
-                Name = "Company"
+                Name = "Company",
+                Permissions = new List<Permission>
+                {
+                    permision1,
+                    permision2,
+                    permision5,
+                    permision6,
+                    permision8,
+                    permision10,
+                    permision11
+                }
             };
 
             Role role5 = new Role()
             {
                 Id = 5,
                 IsDeleted = false,
-                Name = "Admin"
+                Name = "Admin",
+                Permissions = new List<Permission>
+                {
+                    permision1,
+                    permision2,
+                    permision3,
+                    permision4,
+                    permision5,
+                    permision6,
+                    permision7,
+                    permision8,
+                    permision9,
+                    permision10,
+                    permision11
+                }
             };
 
             context.Roles.AddRange(new List<Role>() { role1, role2, role3, role4, role5 });
@@ -443,102 +569,7 @@ namespace Unicorn.DataAccess.Context
 
             context.SocialAccounts.AddRange(new List<SocialAccount>() { socialAccount1, socialAccount2, socialAccount3, socialAccount4, socialAccount5, socialAccount6, socialAccount7, socialAccount8, socialAccount9, socialAccount10 });
 
-            #endregion
-
-            #region Permissions
-
-            Permission permision1 = new Permission()
-            {
-                Id = 1,
-                Name = "Show all vendors(include search)",
-                IsDeleted = false,
-                Accounts = new List<Account> { account1, account2, account3, account4, account5, account6, account3, account8, account9, account10 }
-            };
-
-            Permission permision2 = new Permission()
-            {
-                Id = 2,
-                Name = "Show all users(include search)",
-                IsDeleted = false,
-                Accounts = new List<Account> { account1, account2, account3, account4, account5, account6, account7, account8, account9, account10 }
-            };
-
-            Permission permision3 = new Permission()
-            {
-                Id = 3,
-                Name = "Edit main vendor list",
-                IsDeleted = false,
-                Accounts = new List<Account> { account10 }
-            };
-
-            Permission permision4 = new Permission()
-            {
-                Id = 4,
-                Name = "Edit main vendor list",
-                IsDeleted = false,
-                Accounts = new List<Account> { account10 }
-            };
-
-            Permission permision5 = new Permission()
-            {
-                Id = 5,
-                Name = "Chat with users",
-                IsDeleted = false,
-                Accounts = new List<Account> { account10, account2, account5, account9, account1, account4, account6 }
-            };
-
-            Permission permision6 = new Permission()
-            {
-                Id = 6,
-                Name = "Chat with vendors",
-                IsDeleted = false,
-                Accounts = new List<Account> { account10, account3, account7, account8, account1, account4, account6 }
-            };
-
-            Permission permision7 = new Permission()
-            {
-                Id = 7,
-                Name = "Edit user info",
-                IsDeleted = false,
-                Accounts = new List<Account> { account10, account3, account7, account8 }
-            };
-
-            Permission permision8 = new Permission()
-            {
-                Id = 8,
-                Name = "Edit vendor info",
-                IsDeleted = false,
-                Accounts = new List<Account> { account10, account2, account5, account9, account1, account4, account6 }
-            };
-
-            Permission permision9 = new Permission()
-            {
-                Id = 9,
-                Name = "Book vendor",
-                IsDeleted = false,
-                Accounts = new List<Account> { account10, account3, account7, account8 }
-            };
-
-            Permission permision10 = new Permission()
-            {
-                Id = 10,
-                Name = "Describe vendor skills and services",
-                IsDeleted = false,
-                Accounts = new List<Account> { account10, account2, account5, account9, account1, account4, account6 }
-            };
-
-            Permission permision11 = new Permission()
-            {
-                Id = 11,
-                Name = "Edit own vendor list(for vendor company)",
-                IsDeleted = false,
-                Accounts = new List<Account> { account10, account1, account4, account6 }
-            };
-
-            context.Permissions.AddRange(new List<Permission>() { permision1, permision2, permision3, permision4, permision5, permision6, permision7, permision8, permision9, permision10, permision11 });
-
-
-            #endregion
+            #endregion     
 
             #region Categories
 

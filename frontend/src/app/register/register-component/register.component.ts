@@ -8,7 +8,7 @@ import { Observable } from 'rxjs/Observable';
 import { MenuComponent } from '../../menu/menu.component';
 
 // Helpers
-import { JwtHelper} from '../../helpers/jwthelper';
+import { JwtHelper } from '../../helpers/jwthelper';
 import { RoleRouter } from '../../helpers/rolerouter';
 
 import { RegisterService } from '../../services/register.service';
@@ -68,15 +68,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.mode = 'date';
     this.authService.logout();
 
-    this.authService.authState.subscribe(user => {
-      console.log('Event: ', Date.now());
-      if (user) {
-        this.currentUser = user;
-      } else {
-        this.currentUser = null;
-      }
-    });
-
     this.isLogged = false;
     this.error = false;
 
@@ -84,12 +75,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   handleErrorLogin() {
-    this.error = true;
+    this.zone.run(() => this.error = true);
   }
 
   handleResponse(resp: any): void {
-    console.log('resp: ' + resp);
-    console.log('status: ' + resp.status);
     switch (resp.status) {
       case 204: {
         this.error = false;
@@ -152,13 +141,13 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    /*
-    this.authService.afAuth.auth.onAuthStateChanged(user => {
+    this.authService.authState.subscribe(user => {
       if (user) {
         this.currentUser = user;
+      } else {
+        this.currentUser = null;
       }
     });
-    */
   }
 
   ngOnDestroy() {
@@ -177,7 +166,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     const userClaims = new JwtHelper().decodeToken(localStorage.getItem('token'));
     let path = new RoleRouter().getRouteByRole(userClaims['roleid']);
     this.router.navigate([path, userClaims['id']]);
-  }  
+  }
 
   selectRole(role: string) {
     this.clearRoles();
