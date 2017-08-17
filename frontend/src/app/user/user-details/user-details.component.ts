@@ -45,7 +45,8 @@ export class UserDetailsComponent implements OnInit {
   constructor( 
     private route: ActivatedRoute,
     private userService: UserService,
-    private photoService: PhotoService) { 
+    private photoService: PhotoService,
+    public modalService: SuiModalService) { 
      this.cropperSettings = new CropperSettings();
         this.cropperSettings.width = 100;
         this.cropperSettings.height = 100;
