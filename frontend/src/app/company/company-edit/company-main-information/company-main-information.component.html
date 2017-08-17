@@ -1,25 +1,20 @@
 <link rel="stylesheet" href="https://unpkg.com/semantic-ui-calendar/dist/calendar.min.css">
 
 <div class="container">
-    <div class="ui fluid icon input">
-        <div>
+    <div class="ui form">
+        <div class="field">
             <label>Company name</label>
             <input type="text" [(ngModel)]="company.Name">
         </div>
-        <div>
+        <div class="field">
             <label>Description</label>
-            <textarea [(ngModel)]="company.Description" class="text-area">
-                </textarea>
+            <textarea [(ngModel)]="company.Description"></textarea>
         </div>
-        <div>
-            <div class="ui form">
-                <div class="field">
-                    <label>Foundation date</label>
-                    <div class="ui left icon input">
-                        <i class="calendar icon"></i>
-                        <input suiDatepicker [(ngModel)]="company.FoundationDate" [pickerMode]="date">
-                    </div>
-                </div>
+        <div class="field">
+            <label>Foundation date</label>
+            <div class="ui left icon input">
+                <i class="calendar icon"></i>
+                <input suiDatepicker [(ngModel)]="company.FoundationDate" [pickerMode]="date">
             </div>
         </div>
         <div>
@@ -27,6 +22,6 @@
             <input type="text" [(ngModel)]="company.Director">
         </div>
     </div>
-    <div></div>
 
 </div>
+<div></div>
