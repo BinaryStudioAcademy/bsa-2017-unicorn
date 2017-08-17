@@ -5,81 +5,49 @@
         <h4>Contacts</h4>
         <button class="ui active button"> <i class="comments icon"></i> START A CHAT </button> 
       </div>
-      <div class="row">
-        <div class="four wide column">
-          <h4>Phone</h4>
+      <div class="phones">
+        <div class="header">Phone</div>
+        <div class="description flex-style">
+            <div *ngFor="let contact of contacts">
+                <a class="ui label contact" *ngIf="contact.Type === 'Phone'">
+                    <i class="colored call icon"></i> {{contact.Value}}
+                </a>
+            </div>
         </div>
-      </div>
-      <div class="ui stackable grid">      
-        <div class="row">
-            <div class="column container"> 
-              <a class="ui label contact">
-                <i class="colored call icon"></i>
-                +1 415 670 9788
-              </a>
-              <a class="ui label contact">
-                <i class="colored call icon"></i>
-                +1 415 670 9788
-              </a>
-              <a class="ui label contact">
-                <i class="colored call icon"></i>
-                +1 415 670 9788
-              </a>
-            </div> 
+    </div>
+    <div class="ui divider"></div>
+    <div class="emails">
+        <div class="header">Email</div>
+        <div class="description flex-style">
+            <div *ngFor="let contact of contacts">
+                <a class="ui label contact" *ngIf="contact.Type === 'Email'">
+                    <i class="colored mail icon"></i> {{contact.Value}}
+                </a>
+            </div>
         </div>
-      </div>
-      <div class="ui divider"></div>
-      <div class="row">
-        <div class="four wide column">
-          <h4>Email</h4>
+    </div>
+    <div class="ui divider"></div>
+    <div class="messangers">
+        <div class="header">Messengers</div>
+        <div class="description flex-style">
+            <div *ngFor="let contact of contacts">
+                <a class="ui label contact" *ngIf="contact.Type === 'Messenger'">
+                    <i class="colored {{contact.Provider}} icon"></i> {{contact.Value}}
+                </a>
+            </div>
         </div>
-      </div>
-      <div class="ui stackable grid">      
-        <div class="row">
-          <div class="column container">
-            <a class="ui label contact">
-              <i class="colored mail icon"></i>
-              turbocat_9000@gmail.com
-            </a>
-          </div>
+    </div>
+    <div class="ui divider"></div>
+    <div class="socials">
+        <div class="header">Socials</div>
+        <div class="description flex-style">
+            <div *ngFor="let contact of contacts">
+                <a class="ui label contact" *ngIf="contact.Type === 'Social'">
+                    <i class="colored {{contact.Provider}} icon"></i> {{contact.Value}}
+                </a>
+            </div>
         </div>
-      </div>
-      <div class="ui divider"></div>
-      <div class="row">
-        <div class="four wide column">
-          <h4>Messangers</h4>
-        </div>
-      </div>
-      <div class="ui stackable grid">      
-        <div class="row">
-          <div class="column container">
-            <a class="ui label contact">
-                <i class="colored skype icon"></i>
-                turbocat9000
-            </a>
-            <a class="ui label contact">
-               <i class="colored telegram icon"></i>
-               turbocat9000
-            </a>
-          </div>
-        </div>
-      </div>
-      <div class="ui divider"></div>
-      <div class="row">
-        <div class="four wide column">
-          <h4>Social</h4>
-        </div>
-      </div>
-      <div class="ui stackable grid">      
-        <div class="row">
-          <div class="column container">
-            <a class="ui label contact">
-                <i class="colored facebook f icon"></i>
-                turbocat9000
-              </a>
-          </div>
-        </div>
-      </div>
+    </div>
     </div>
   </div>
   <div class="row container">
@@ -88,3 +56,4 @@
     </div>
   </div>
 </div>
+

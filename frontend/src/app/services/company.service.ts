@@ -193,6 +193,7 @@ export class CompanyService {
       }],
       Contacts: [
         {
+          Id: 1,
           Value: "+380666666666",
           Type: "phone",
           Provider: "phone"

@@ -52,6 +52,7 @@ namespace Unicorn.Core.Services
         public async Task<IEnumerable<ContactShortDTO>> GetVendorContacts(long id)
         {
             var vendor = await _unitOfWork.VendorRepository.Query
+                .Include(v => v.Person)
                 .SingleAsync(x => x.Id == id);
 
 
