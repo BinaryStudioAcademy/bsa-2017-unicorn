@@ -65,7 +65,7 @@ export class UserDetailsComponent implements OnInit {
       console.log(path);
       this.photoService.saveBanner(path)
       .then(resp => {
-        document.getElementById("user-header").style.background = `url('${path}')`;
+        document.getElementById("user-header").style.backgroundImage = `url('${path}')`;
       })
       .catch(err => console.log(err));
     }).catch(err => {

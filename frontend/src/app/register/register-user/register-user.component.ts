@@ -3,6 +3,10 @@ import { Component, OnInit, Input } from '@angular/core';
 import * as firebase from 'firebase/app';
 import { RegisterService } from '../../services/register.service';
 
+// Helpers
+import { JwtHelper } from '../../helpers/jwthelper';
+import { RoleRouter } from '../../helpers/rolerouter';
+
 import { SuiModalService, TemplateModalConfig
   , ModalTemplate, ModalSize, SuiActiveModal } from 'ng2-semantic-ui';
 
@@ -60,16 +64,21 @@ export class RegisterUserComponent implements OnInit {
   confirmRegister() {
     if (this.valid()) {
       this.error = false;
-      console.log('valid');
       let regInfo = this.aggregateInfo();
-      console.log(regInfo);
-      this.registerService.confirmCustomer(regInfo).then(resp => {
+      this.registerService.confirmCustomer(regInfo).then(resp => {      
         this.modal.deny('');
-        this.router.navigate(['user/1']);
+        localStorage.setItem('token', resp.headers.get('token'));
+        this.redirect();
       });
     } else {
       this.error = true;
     }
+  }
+
+  private redirect() {    
+    const userClaims = new JwtHelper().decodeToken(localStorage.getItem('token'));
+    let path = new RoleRouter().getRouteByRole(userClaims['roleid']);
+    this.router.navigate([path, userClaims['id']]);
   }
 
 }

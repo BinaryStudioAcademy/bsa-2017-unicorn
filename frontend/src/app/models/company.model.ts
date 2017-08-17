@@ -1,23 +1,26 @@
 import { Review } from "./review.model";
 import { Vendor } from "./vendor";
+import { Contact } from "./contact.model";
 
 export interface Company {
+    Id: number,
     Avatar:string;
     Name: string;
     Description: string;
-    FoundationDate: Date;    
+    Rating: number;
+    FoundationDate: Date;   
+    Director: string; 
     Location: {
         Adress: string;
         City: string;
         Latitude: number;
         Longitude: number;        
-    };
-    Rating: number;
+    };    
     Reviews: Review[];    
-    Vendors: Vendor[];
-    Director: string;
+    Vendors: Vendor[];    
     Categories:{
         Icon: string,
         Name: string
     }[];
+    Contacts: Contact[];
 }

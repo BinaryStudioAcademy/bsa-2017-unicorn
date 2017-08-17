@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Unicorn.Core.services.interfaces
+namespace Unicorn.Shared.services.interfaces
 {
     internal interface IQueryStringBuilder
     {

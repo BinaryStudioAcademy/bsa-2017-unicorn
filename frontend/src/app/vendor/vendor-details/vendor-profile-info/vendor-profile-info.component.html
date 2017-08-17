@@ -7,8 +7,8 @@
             <div class="ui form">
               <div class="field">
                 <h4>{{vendor.rang}}</h4>
-                <sui-rating [(ngModel)]="vendor.rating" [isReadonly]="true"></sui-rating>
-                <p>Reviews: {{vendor.reviewsCount}}</p>
+                <sui-rating [(ngModel)]="rating.Average" [isReadonly]="true"></sui-rating>
+                <p>Reviews: {{rating.ReviewsCount}}</p>
               </div>
             </div>
           </div>
@@ -16,14 +16,14 @@
         <div class="row">
           <div class="column">
             <h4>About</h4>
-            <p>{{vendor.workLetter}}</p>
+            <p>{{vendor.WorkLetter}}</p>
           </div>
         </div>
         <div class="ui divider"></div>
          <div class="four column stackable row">
-            <div *ngFor="let feature of vendor.features" class="column flex-feature">
+            <div *ngFor="let category of workSubcategories" class="three wide column flex-feature">
               <img class="ui tiny circular image image-feature" src="../../../assets/images/square-image.png">
-              <h5>{{feature}}</h5>
+              <h5>{{category.Name}}</h5>
             </div>
         </div> 
         <div class="ui divider"></div>

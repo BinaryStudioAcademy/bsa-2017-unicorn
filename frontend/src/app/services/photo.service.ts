@@ -41,12 +41,12 @@ export class PhotoService {
 
     saveBanner(imageUrl: string): Promise<any> {
         console.log('savebanner');
-        return this.dataService.postFullRequest('background/11', imageUrl);
+        return this.dataService.postFullRequest('background/1', imageUrl);
     }
 
     saveAvatar(imageUrl: string): Promise<any> {
         console.log('saveavatar');
-        return this.dataService.postFullRequest('avatar/11', imageUrl);
+        return this.dataService.postFullRequest('avatar/1', imageUrl);
     }
 }
 

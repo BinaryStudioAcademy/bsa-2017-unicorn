@@ -2,6 +2,11 @@ import { Component, OnInit, Input } from '@angular/core';
 
 import * as firebase from 'firebase/app';
 import { RegisterService } from '../../services/register.service';
+
+// Helpers
+import { JwtHelper } from '../../helpers/jwthelper';
+import { RoleRouter } from '../../helpers/rolerouter';
+
 import { SuiModalService, TemplateModalConfig
   , ModalTemplate, ModalSize, SuiActiveModal } from 'ng2-semantic-ui';
 import { Company } from '../models/company';
@@ -56,17 +61,22 @@ export class RegisterCompanyComponent implements OnInit {
 
   confirmRegister() {
     if (this.valid()) {
-      this.error = false;
-      console.log('valid');
-      let regInfo = this.aggregateInfo();
-      console.log(regInfo);
+      this.error = false;      
+      let regInfo = this.aggregateInfo();      
       this.registerService.confirmCompany(regInfo).then(resp => {
         this.modal.deny('');
-        this.router.navigate(['company/1']);
+        localStorage.setItem('token', resp.headers.get('token'));        
+        this.redirect();
       });
     } else {
       this.error = true;
     }
+  }
+
+  private redirect() {   
+    const userClaims = new JwtHelper().decodeToken(localStorage.getItem('token'));
+    let path = new RoleRouter().getRouteByRole(userClaims['roleid']);
+    this.router.navigate([path, userClaims['id']]);
   }
 
 }

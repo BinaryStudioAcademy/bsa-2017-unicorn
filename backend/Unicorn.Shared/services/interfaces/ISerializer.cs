@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace Unicorn.Core.services.interfaces
+namespace Unicorn.Shared.services.interfaces
 {
     public interface ISerializer
     {
