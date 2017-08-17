@@ -2,16 +2,12 @@ import { Component, OnInit, Input } from '@angular/core';
 
 import * as firebase from 'firebase/app';
 import { RegisterService } from '../../services/register.service';
-
-// Helpers
-import { JwtHelper } from '../../helpers/jwthelper';
-import { RoleRouter } from '../../helpers/rolerouter';
+import { HelperService } from '../../services/helper/helper.service';
 
 import { SuiModalService, TemplateModalConfig
   , ModalTemplate, ModalSize, SuiActiveModal } from 'ng2-semantic-ui';
 
 import { Customer } from '../models/customer';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register-user',
@@ -35,7 +31,7 @@ export class RegisterUserComponent implements OnInit {
   email: string;
 
   constructor(private registerService: RegisterService,
-    private router: Router) { }
+    private helperService: HelperService) { }
 
   ngOnInit() {
     this.mode = 'date';
@@ -68,17 +64,11 @@ export class RegisterUserComponent implements OnInit {
       this.registerService.confirmCustomer(regInfo).then(resp => {      
         this.modal.deny('');
         localStorage.setItem('token', resp.headers.get('token'));
-        this.redirect();
+        this.helperService.redirectAfterAuthentication();
       });
     } else {
       this.error = true;
     }
-  }
-
-  private redirect() {    
-    const userClaims = new JwtHelper().decodeToken(localStorage.getItem('token'));
-    let path = new RoleRouter().getRouteByRole(userClaims['roleid']);
-    this.router.navigate([path, userClaims['id']]);
   }
 
 }
