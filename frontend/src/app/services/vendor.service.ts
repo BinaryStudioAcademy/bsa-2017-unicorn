@@ -15,6 +15,7 @@ export class VendorService {
 
   constructor(private dataService: DataService) 
   { 
+    dataService.setHeader('Content-Type', 'application/json');
     this.apiController = "vendors";
   }
 
@@ -52,7 +53,7 @@ export class VendorService {
   }
 
   updateVendor(vendor: Vendor): Promise<any> {
-    return this.dataService.putFullRequest<Vendor>(this.apiController, vendor)
+    return this.dataService.putFullRequest<Vendor>(`${this.apiController}/${vendor.Id}`, vendor)
       .catch(err => alert(err));
   }
 

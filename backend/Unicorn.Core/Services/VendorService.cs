@@ -161,6 +161,26 @@ namespace Unicorn.Core.Services
         {
             throw new NotImplementedException();
         }
+
+        public async Task Update(ShortVendorDTO vendorDto)
+        {
+            var vendor = await _unitOfWork.VendorRepository.Query
+                .Include(v => v.Person)
+                .Include(v => v.Person.Account)
+                .Include(v => v.Works)
+                .Include(v => v.Company)
+                .SingleAsync(x => x.Id == vendorDto.Id);
+
+            vendor.WorkLetter = vendorDto.WorkLetter;
+            vendor.Position = vendorDto.Position;
+            vendor.Person.Birthday = vendorDto.Birthday;
+            vendor.Person.Name = vendorDto.Name;
+            vendor.Person.Surname = vendorDto.Surname;
+            vendor.Person.MiddleName = vendorDto.MiddleName;
+
+            _unitOfWork.VendorRepository.Update(vendor);
+            await _unitOfWork.SaveAsync();
+        }
     }
 }
 

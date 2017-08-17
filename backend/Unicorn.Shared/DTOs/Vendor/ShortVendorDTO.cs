@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 using Unicorn.Shared.DTOs.Contact;
 
@@ -31,6 +32,8 @@ namespace Unicorn.Shared.DTOs.Vendor
         public string Company { get; set; }
 
         public long? CompanyId { get; set; }
+
+        public DateTime Birthday { get; set; }
 
         public ICollection<WorkDTO> Works { get; set; }
 

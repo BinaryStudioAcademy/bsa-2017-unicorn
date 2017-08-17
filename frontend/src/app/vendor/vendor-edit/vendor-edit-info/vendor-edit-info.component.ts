@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 import { NguiMapModule, Marker } from "@ngui/map";
+import {SuiModule} from 'ng2-semantic-ui';
 
 import { Location } from "../../../models/location.model"
 import { Vendor } from "../../../models/vendor.model";

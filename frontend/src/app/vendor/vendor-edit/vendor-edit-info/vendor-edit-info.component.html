@@ -20,7 +20,15 @@
                 </div>
               </div>
               <div class="field">
-                <label>My position</label>
+                <label>Birthday</label>
+                <div class="ui left icon input">
+                  <i class="calendar icon"></i>
+                  <input suiDatepicker [pickerMode]="date" [(ngModel)]="vendor.Birthday" name="birthday" [pickerUseNativeOnMobile]="false"
+                    placeholder="PICK YOUR BIRTH">
+                </div>
+              </div>
+              <div class="field">
+                <label>Position</label>
                 <input type="text" [(ngModel)]="vendor.Position" name="position" placeholder="MIDDLE .NET DEVELOPER">
               </div>
               <div class="ui divider"></div>
@@ -34,16 +42,11 @@
       </div>
     </div>
     <div class="ui container column">
+      <button (click)="saveVendor()" class="ui basic button"><h5>Save</h5></button>
       <h4>Help customers find you</h4>
       <div *ngIf="map != undefined" class="map">
         <app-map [inputMap]="map"></app-map>
       </div>
     </div>
   </div>
-  <div class="centered row">
-    <div class="ui divider"></div>
-      <div class="three wide column">
-          <button class="ui basic button"><h5>Save</h5></button>
-        </div>
-      </div>
-  </div>
+</div>

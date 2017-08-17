@@ -18,5 +18,6 @@ namespace Unicorn.Core.Interfaces
         Task<IEnumerable<ContactShortDTO>> GetVendorContacts(long id);
         Task<ShortVendorDTO> GetById(long id);
         Task Create(VendorRegisterDTO vendorDto);
+        Task Update(ShortVendorDTO vendorDto);
     }
 }
