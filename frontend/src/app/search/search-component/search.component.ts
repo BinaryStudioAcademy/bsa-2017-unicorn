@@ -58,7 +58,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   createMockCompanies(num: number) {
     let i: number;
     for (i = num; i >= 1; i--) {
-      this.companies.push(this.companyService.getCompany());
+      this.companies.push(this.companyService.getMockCompany());
     }
   }
 

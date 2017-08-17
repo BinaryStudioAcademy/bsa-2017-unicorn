@@ -6,15 +6,15 @@
     <div class="companies"> 
       <div class="company" *ngFor="let company of companies.slice((selectedPage - 1) * pageSize, selectedPage * pageSize)">
         <a href="#">
-          <img src="{{company.avatar}}"/>
+          <img src="{{company.Avatar}}"/>
           <div class="company-info">
             <div class="company-name">
-              {{company.name}} ({{companies.indexOf(company)}})
+              {{company.Name}} ({{companies.indexOf(company)}})
             </div>
             <div class="company-detail">
-              <p>{{company.location.city}}</p>
+              <p>{{company.Location.City}}</p>
               <sui-rating class="star" [ngModel]="company.rating" [isReadonly]="true"></sui-rating> 
-              <p>{{company.reviews.length}} reviews</p>
+              <p>{{company.Reviews.length}} reviews</p>
             </div>
           </div>
         </a>
