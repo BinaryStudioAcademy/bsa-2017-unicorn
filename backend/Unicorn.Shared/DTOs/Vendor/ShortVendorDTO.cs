@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 
+using Unicorn.Shared.DTOs.Contact;
+
 namespace Unicorn.Shared.DTOs.Vendor
 {
     public class ShortVendorDTO
@@ -31,5 +33,7 @@ namespace Unicorn.Shared.DTOs.Vendor
         public long? CompanyId { get; set; }
 
         public ICollection<WorkDTO> Works { get; set; }
+
+        public ICollection<ContactShortDTO> Contacts { get; set; }
     }
 }

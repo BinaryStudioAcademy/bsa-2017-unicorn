@@ -33,10 +33,15 @@ export class VendorEditInfoComponent implements OnInit {
           center: {lat: this.location.Latitude, lng: this.location.Longitude},
           zoom: 18,    
           title: "Overcat 9000",
-          label: "Overcat 9000",
+          label: "",
           markerPos: {lat: this.location.Latitude, lng: this.location.Longitude}
         };
       });
+  }
+
+  saveVendor(): void {
+    this.vendorService.updateVendor(this.vendor)
+      .then(resp => this.vendor = resp.body as Vendor);
   }
 
 }

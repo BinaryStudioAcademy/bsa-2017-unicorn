@@ -1,6 +1,7 @@
 import { Review } from './review.model';
 import { Work } from './work.model';
 import { PortfolioItem } from "./portfolio-item.model";
+import { Contact } from "./contact.model";
 
 export interface Vendor {
 	Id: number;
