@@ -1,15 +1,11 @@
 import { Component, OnInit, OnDestroy, Input, ViewChild, forwardRef, Inject, NgZone } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { AuthService } from '../../services/auth/auth.service';
 import * as firebase from 'firebase/app';
 import { Observable } from 'rxjs/Observable';
 import { MenuComponent } from '../../menu/menu.component';
-
-// Helpers
-import { JwtHelper } from '../../helpers/jwthelper';
-import { RoleRouter } from '../../helpers/rolerouter';
+import { HelperService } from '../../services/helper/helper.service';
 
 import { RegisterService } from '../../services/register.service';
 
@@ -61,7 +57,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   constructor(
     public modal: SuiModal<IConfirmModalContext, void, void>,
     private zone: NgZone,
-    public router: Router,
+    private helperService: HelperService,
     public registerService: RegisterService,
     public authService: AuthService) {
 
@@ -86,9 +82,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
         break;
       }
       case 200: {
+        this.modal.deny(undefined);
         this.authService.saveJwt(resp.headers.get('token'));
-        this.error = false;
-        this.redirect();
+        this.error = false;        
+        this.helperService.redirectAfterAuthentication();
         break;
       }
       default: {
@@ -159,13 +156,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.roleSelected = false;
     this.social = undefined;
     this.clearRoles();
-  }
-
-  private redirect() {
-    this.modal.deny(undefined);
-    const userClaims = new JwtHelper().decodeToken(localStorage.getItem('token'));
-    let path = new RoleRouter().getRouteByRole(userClaims['roleid']);
-    this.router.navigate([path, userClaims['id']]);
   }
 
   selectRole(role: string) {

@@ -8,6 +8,7 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 
 import { AuthService } from './services/auth/auth.service';
+import { HelperService } from './services/helper/helper.service';
 
 // Routing
 import { AppRoutingModule } from './app-routing/app-routing.module';
@@ -62,7 +63,8 @@ import { RegisterComponent } from './register/register-component/register.compon
     IndexModule // Must be the last module
   ],
   providers: [
-    AuthService
+    AuthService,
+    HelperService
   ],
   entryComponents: [RegisterComponent],
   bootstrap: [AppComponent]

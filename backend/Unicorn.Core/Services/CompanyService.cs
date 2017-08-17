@@ -31,11 +31,16 @@ namespace Unicorn.Core.Services
             return result;
         }
 
-        public async Task<object> GetCompanyByIdAsync(long id)
+        public async Task<CompanyDTO> GetCompanyByIdAsync(long id)
         {
             var result = await GetCompany(id);
 
             return result;
+        }
+
+        public async Task SaveCompany(CompanyDTO companyDTO)
+        {
+            await Save(companyDTO);
         }
 
         public async Task Create(CompanyRegisterDTO companyDto)
@@ -80,12 +85,13 @@ namespace Unicorn.Core.Services
                     company =>
                         new CompanyDTO
                         {
+                            Id = company.Id,
                             Avatar = company.Account?.Avatar ?? "default",
                             Name = company.Name,
                             Description = company.Description,
                             FoundationDate = company.FoundationDate,
                             Rating = company.Account?.Rating ?? 0,
-                            Director = company.Director?.Avatar ?? "default",
+                            Director = company.Director,
                             Location = new LocationDTO
                             {
                                 Adress = company.Location?.Adress ?? "default",
@@ -148,7 +154,7 @@ namespace Unicorn.Core.Services
             return null;
         }
 
-        private async Task<object> GetCompany(long id)
+        private async Task<CompanyDTO> GetCompany(long id)
         {
             var company = await _unitOfWork.CompanyRepository.GetByIdAsync(id);
             var reviews = await _unitOfWork.ReviewRepository.GetAllAsync();
@@ -157,12 +163,13 @@ namespace Unicorn.Core.Services
             {
                 var companyDTO = new CompanyDTO
                 {
+                    Id = company.Id,
                     Avatar = company.Account?.Avatar ?? "default",
                     Name = company.Name,
                     Description = company.Description,
                     FoundationDate = company.FoundationDate,
                     Rating = company.Account?.Rating ?? 0,
-                    Director = company.Director?.Avatar ?? "default",
+                    Director = company.Director,
                     Location = new LocationDTO
                     {
                         Adress = company.Location?.Adress ?? "default",
@@ -222,6 +229,22 @@ namespace Unicorn.Core.Services
                 return companyDTO;
             }
             return null;
+        }
+
+        private async Task Save(CompanyDTO companyDTO)
+        {
+            var company = await _unitOfWork.CompanyRepository.GetByIdAsync(companyDTO.Id);
+
+            if (company != null)
+            {
+                company.Name = companyDTO.Name;
+                company.Description = companyDTO.Description;
+                company.FoundationDate = companyDTO.FoundationDate;
+                company.Director = companyDTO.Director;
+
+                _unitOfWork.CompanyRepository.Update(company);
+                await _unitOfWork.SaveAsync();
+            }
         }
     }
 }
