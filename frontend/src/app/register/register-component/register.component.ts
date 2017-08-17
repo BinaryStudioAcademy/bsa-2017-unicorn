@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input, ViewChild, ChangeDetectorRef, forwardRef, Inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, ViewChild, forwardRef, Inject, NgZone } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
@@ -60,6 +60,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   constructor(
     public modal: SuiModal<IConfirmModalContext, void, void>,
+    private zone: NgZone,
     public router: Router,
     public registerService: RegisterService,
     public authService: AuthService) {
@@ -92,7 +93,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     switch (resp.status) {
       case 204: {
         this.error = false;
-        this.isLogged = !this.isLogged;
+        this.zone.run(() => this.isLogged = !this.isLogged);
         break;
       }
       case 200: {
