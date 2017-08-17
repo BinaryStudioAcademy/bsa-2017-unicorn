@@ -36,7 +36,8 @@ import {ImageCropperComponent} from 'ng2-img-cropper';
         UserProfileComponent,
         UserHistoryComponent,
         UserTasksComponent,
-        UserMessagesComponent
+        UserMessagesComponent,
+        ImageCropperComponent
     ],
     providers: [
         DataService,
