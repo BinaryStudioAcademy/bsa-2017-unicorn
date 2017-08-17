@@ -3,16 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Unicorn.DataAccess.Interfaces;
 
-namespace Unicorn.DataAccess.Entities
+namespace Unicorn.Shared.DTOs.Contact
 {
-    public class Contact : IEntity
+    public class ContactShortDTO
     {
         public long Id { get; set; }
-        public ContactProvider Provider { get; set; }
+        public string Provider { get; set; }
+        public string Type { get; set; }
         public string Value { get; set; }
-
-        public bool IsDeleted { get; set; }
     }
 }

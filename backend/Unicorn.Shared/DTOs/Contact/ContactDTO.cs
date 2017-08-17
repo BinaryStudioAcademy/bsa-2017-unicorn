@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Unicorn.Shared.DTOs
+namespace Unicorn.Shared.DTOs.Contact
 {
     public class ContactDTO
     {
         public long Id { get; set; }
-        public string Type { get; set; }
+        public ContactProviderDTO Provider { get; set; }
         public string Value { get; set; }
     }
 }
