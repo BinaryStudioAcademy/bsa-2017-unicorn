@@ -21,7 +21,7 @@ namespace Unicorn.Controllers
         }
 
         // GET: /Company
-        [Route("company")]
+        [Route("api/company")]
         public async Task<IHttpActionResult> Get()
         {
             var result = await _companyService.GetAllCompaniesAsync();
@@ -32,7 +32,7 @@ namespace Unicorn.Controllers
 
 
         // GET: api/Company/5
-        [Route("company/{id}")]
+        [Route("api/company/{id}")]
         public async Task<IHttpActionResult> Get(int id)
         {
             var result = await _companyService.GetCompanyByIdAsync(id);

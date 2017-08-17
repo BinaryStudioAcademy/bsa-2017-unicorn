@@ -31,7 +31,6 @@ namespace Unicorn.Core.Services
                 .Include(v => v.Person.Location)
                 .Include(v => v.PortfolioItems)
                 .Include(v => v.Works)
-                .Include(v => v.Contacts)
                 .Include(v => v.Company)
                 .ToListAsync();
 
@@ -45,7 +44,6 @@ namespace Unicorn.Core.Services
                 .Include(v => v.Person.Location)
                 .Include(v => v.PortfolioItems)
                 .Include(v => v.Works)
-                .Include(v => v.Contacts)
                 .Include(v => v.Company)
                 .SingleAsync(x => x.Id == id);
             return VendorToDTO(vendor);
@@ -54,10 +52,9 @@ namespace Unicorn.Core.Services
         public async Task<IEnumerable<ContactShortDTO>> GetVendorContacts(long id)
         {
             var vendor = await _unitOfWork.VendorRepository.Query
-                .Include(v => v.Contacts)
                 .SingleAsync(x => x.Id == id);
 
-            return vendor.Contacts.Select(c => new ContactShortDTO() {
+            return vendor.Person.Account.Contacts.Select(c => new ContactShortDTO() {
                 Id = c.Id,
                 Type = c.Provider.Type,
                 Provider = c.Provider.Name,

@@ -50,6 +50,167 @@ namespace Unicorn.DataAccess.Context
 
             #endregion
 
+            #region ContactProviders
+
+            ContactProvider skype = new ContactProvider()
+            {
+                Name = "skype",
+                IsDeleted = false,
+                Type = "Messenger"
+            };
+
+            ContactProvider telegram = new ContactProvider()
+            {
+                Name = "telegram",
+                IsDeleted = false,
+                Type = "Messenger"
+            };
+
+            ContactProvider viber = new ContactProvider()
+            {
+                Name = "viber",
+                IsDeleted = false,
+                Type = "Messenger"
+            };
+
+            ContactProvider facebook = new ContactProvider()
+            {
+                Name = "facebook",
+                IsDeleted = false,
+                Type = "Social"
+            };
+
+            ContactProvider vk = new ContactProvider()
+            {
+                Name = "vk",
+                IsDeleted = false,
+                Type = "Social"
+            };
+
+            ContactProvider linkedin = new ContactProvider()
+            {
+                Name = "linkedIn",
+                IsDeleted = false,
+                Type = "Social"
+            };
+
+            ContactProvider email = new ContactProvider()
+            {
+                Name = "email",
+                IsDeleted = false,
+                Type = "Email"
+            };
+
+            ContactProvider phone = new ContactProvider()
+            {
+                Name = "phone",
+                IsDeleted = false,
+                Type = "Phone"
+            };
+
+            context.ContactProviders.AddRange(new List<ContactProvider>() { phone, email, skype, telegram, facebook, viber, vk, linkedin });
+
+
+            #endregion
+
+            #region Contacts
+
+            Contact contact1 = new Contact { IsDeleted = false, Provider = phone, Value = "+1 415 670 9788" };
+            Contact contact2 = new Contact { IsDeleted = false, Provider = phone, Value = "+1 415 670 9788" };
+            Contact contact3 = new Contact { IsDeleted = false, Provider = phone, Value = "+1 415 670 9788" };
+            Contact contact4 = new Contact { IsDeleted = false, Provider = email, Value = "turbocat_9000@gmail.com" };
+            Contact contact5 = new Contact { IsDeleted = false, Provider = skype, Value = "turbocat_9000" };
+            Contact contact6 = new Contact { IsDeleted = false, Provider = telegram, Value = "turbocat_9000" };
+            Contact contact7 = new Contact { IsDeleted = false, Provider = facebook, Value = "turbocat_9000" };
+
+            Contact contact8 = new Contact { IsDeleted = false, Provider = phone, Value = "+1 415 670 9788" };
+            Contact contact9 = new Contact { IsDeleted = false, Provider = phone, Value = "+1 415 670 9788" };
+            Contact contact10 = new Contact { IsDeleted = false, Provider = phone, Value = "+1 415 670 9788" };
+            Contact contact11 = new Contact { IsDeleted = false, Provider = email, Value = "turbocat_9000@gmail.com" };
+            Contact contact12 = new Contact { IsDeleted = false, Provider = skype, Value = "turbocat_9000" };
+            Contact contact13 = new Contact { IsDeleted = false, Provider = telegram, Value = "turbocat_9000" };
+            Contact contact14 = new Contact { IsDeleted = false, Provider = facebook, Value = "turbocat_9000" };
+
+            Contact contact15 = new Contact { IsDeleted = false, Provider = phone, Value = "+1 415 670 9788" };
+            Contact contact16 = new Contact { IsDeleted = false, Provider = phone, Value = "+1 415 670 9788" };
+            Contact contact17 = new Contact { IsDeleted = false, Provider = phone, Value = "+1 415 670 9788" };
+            Contact contact18 = new Contact { IsDeleted = false, Provider = email, Value = "turbocat_9000@gmail.com" };
+            Contact contact19 = new Contact { IsDeleted = false, Provider = skype, Value = "turbocat_9000" };
+            Contact contact20 = new Contact { IsDeleted = false, Provider = telegram, Value = "turbocat_9000" };
+            Contact contact21 = new Contact { IsDeleted = false, Provider = facebook, Value = "turbocat_9000" };
+
+            Contact contact22 = new Contact { IsDeleted = false, Provider = phone, Value = "+1 415 670 9788" };
+            Contact contact23 = new Contact { IsDeleted = false, Provider = phone, Value = "+1 415 670 9788" };
+            Contact contact24 = new Contact { IsDeleted = false, Provider = phone, Value = "+1 415 670 9788" };
+            Contact contact25 = new Contact { IsDeleted = false, Provider = email, Value = "turbocat_9000@gmail.com" };
+            Contact contact26 = new Contact { IsDeleted = false, Provider = skype, Value = "turbocat_9000" };
+            Contact contact27 = new Contact { IsDeleted = false, Provider = telegram, Value = "turbocat_9000" };
+            Contact contact28 = new Contact { IsDeleted = false, Provider = facebook, Value = "turbocat_9000" };
+
+            Contact contact29 = new Contact { IsDeleted = false, Provider = phone, Value = "+1 415 670 9788" };
+            Contact contact30 = new Contact { IsDeleted = false, Provider = phone, Value = "+1 415 670 9788" };
+            Contact contact31 = new Contact { IsDeleted = false, Provider = phone, Value = "+1 415 670 9788" };
+            Contact contact32 = new Contact { IsDeleted = false, Provider = email, Value = "turbocat_9000@gmail.com" };
+            Contact contact33 = new Contact { IsDeleted = false, Provider = skype, Value = "turbocat_9000" };
+            Contact contact34 = new Contact { IsDeleted = false, Provider = telegram, Value = "turbocat_9000" };
+            Contact contact35 = new Contact { IsDeleted = false, Provider = facebook, Value = "turbocat_9000" };
+
+            Contact contact36 = new Contact { IsDeleted = false, Provider = phone, Value = "+1 415 670 9788" };
+            Contact contact37 = new Contact { IsDeleted = false, Provider = phone, Value = "+1 415 670 9788" };
+            Contact contact38 = new Contact { IsDeleted = false, Provider = phone, Value = "+1 415 670 9788" };
+            Contact contact39 = new Contact { IsDeleted = false, Provider = email, Value = "turbocat_9000@gmail.com" };
+            Contact contact40 = new Contact { IsDeleted = false, Provider = skype, Value = "turbocat_9000" };
+            Contact contact41 = new Contact { IsDeleted = false, Provider = telegram, Value = "turbocat_9000" };
+            Contact contact42 = new Contact { IsDeleted = false, Provider = facebook, Value = "turbocat_9000" };
+
+            Contact contact43 = new Contact { IsDeleted = false, Provider = phone, Value = "+1 415 670 9788" };
+            Contact contact44 = new Contact { IsDeleted = false, Provider = phone, Value = "+1 415 670 9788" };
+            Contact contact45 = new Contact { IsDeleted = false, Provider = phone, Value = "+1 415 670 9788" };
+            Contact contact46 = new Contact { IsDeleted = false, Provider = email, Value = "turbocat_9000@gmail.com" };
+            Contact contact47 = new Contact { IsDeleted = false, Provider = skype, Value = "turbocat_9000" };
+            Contact contact48 = new Contact { IsDeleted = false, Provider = telegram, Value = "turbocat_9000" };
+            Contact contact49 = new Contact { IsDeleted = false, Provider = facebook, Value = "turbocat_9000" };
+
+            Contact contact50 = new Contact { IsDeleted = false, Provider = phone, Value = "+1 415 670 9788" };
+            Contact contact51 = new Contact { IsDeleted = false, Provider = phone, Value = "+1 415 670 9788" };
+            Contact contact52 = new Contact { IsDeleted = false, Provider = phone, Value = "+1 415 670 9788" };
+            Contact contact53 = new Contact { IsDeleted = false, Provider = email, Value = "turbocat_9000@gmail.com" };
+            Contact contact54 = new Contact { IsDeleted = false, Provider = skype, Value = "turbocat_9000" };
+            Contact contact55 = new Contact { IsDeleted = false, Provider = telegram, Value = "turbocat_9000" };
+            Contact contact56 = new Contact { IsDeleted = false, Provider = facebook, Value = "turbocat_9000" };
+
+            Contact contact57 = new Contact { IsDeleted = false, Provider = phone, Value = "+1 415 670 9788" };
+            Contact contact58 = new Contact { IsDeleted = false, Provider = phone, Value = "+1 415 670 9788" };
+            Contact contact59 = new Contact { IsDeleted = false, Provider = phone, Value = "+1 415 670 9788" };
+            Contact contact60 = new Contact { IsDeleted = false, Provider = email, Value = "turbocat_9000@gmail.com" };
+            Contact contact61 = new Contact { IsDeleted = false, Provider = skype, Value = "turbocat_9000" };
+            Contact contact62 = new Contact { IsDeleted = false, Provider = telegram, Value = "turbocat_9000" };
+            Contact contact63 = new Contact { IsDeleted = false, Provider = facebook, Value = "turbocat_9000" };
+
+            Contact contact64 = new Contact { IsDeleted = false, Provider = phone, Value = "+1 415 670 9788" };
+            Contact contact65 = new Contact { IsDeleted = false, Provider = phone, Value = "+1 415 670 9788" };
+            Contact contact66 = new Contact { IsDeleted = false, Provider = phone, Value = "+1 415 670 9788" };
+            Contact contact67 = new Contact { IsDeleted = false, Provider = email, Value = "turbocat_9000@gmail.com" };
+            Contact contact68 = new Contact { IsDeleted = false, Provider = skype, Value = "turbocat_9000" };
+            Contact contact69 = new Contact { IsDeleted = false, Provider = telegram, Value = "turbocat_9000" };
+            Contact contact70 = new Contact { IsDeleted = false, Provider = facebook, Value = "turbocat_9000" };
+
+            context.Contacts.AddRange(new List<Contact>()
+            {
+                contact1,  contact11, contact21, contact31, contact41, contact51, contact61,
+                contact2,  contact12, contact22, contact32, contact42, contact52, contact62,
+                contact3,  contact13, contact23, contact33, contact43, contact53, contact63,
+                contact4,  contact14, contact24, contact34, contact44, contact54, contact64,
+                contact5,  contact15, contact25, contact35, contact45, contact55, contact65,
+                contact6,  contact16, contact26, contact36, contact46, contact56, contact66,
+                contact7,  contact17, contact27, contact37, contact47, contact57, contact67,
+                contact8,  contact18, contact28, contact38, contact48, contact58, contact68,
+                contact9,  contact19, contact29, contact39, contact49, contact59, contact69,
+                contact10, contact20, contact30, contact40, contact50, contact60, contact70
+            });
+
+            #endregion
+
             #region Accounts
 
             Account account1 = new Account()
@@ -61,7 +222,8 @@ namespace Unicorn.DataAccess.Context
                 Avatar = "https://image.flaticon.com/icons/png/512/78/78373.png",
                 Rating = 4.7,
                 IsDeleted = false,
-                Role = role3
+                Role = role3,
+                Contacts = new List<Contact> { contact1, contact2, contact3, contact4, contact5, contact6, contact7}
             };
 
             Account account2 = new Account()
@@ -73,7 +235,8 @@ namespace Unicorn.DataAccess.Context
                 Avatar = "andriy.jpg",
                 Rating = 5,
                 IsDeleted = false,
-                Role = role1
+                Role = role1,
+                Contacts = new List<Contact> { contact8, contact9, contact10, contact11, contact12, contact13, contact14 }
             };
 
             Account account3 = new Account()
@@ -85,7 +248,8 @@ namespace Unicorn.DataAccess.Context
                 Avatar = "shnurenko.jpg",
                 Rating = 2,
                 IsDeleted = false,
-                Role = role2
+                Role = role2,
+                Contacts = new List<Contact> { contact15, contact16, contact17, contact18, contact19, contact20, contact21 }
 
             };
 
@@ -98,7 +262,8 @@ namespace Unicorn.DataAccess.Context
                 Avatar = "../../../assets/images/company_logo.png",
                 Rating = 3.7,
                 IsDeleted = false,
-                Role = role3
+                Role = role3,
+                Contacts = new List<Contact> { contact22, contact23, contact24, contact25, contact26, contact27, contact28 }
             };
 
             Account account5 = new Account()
@@ -110,7 +275,8 @@ namespace Unicorn.DataAccess.Context
                 Avatar = "abkprostir.jpg",
                 Rating = 1,
                 IsDeleted = false,
-                Role = role1
+                Role = role1,
+                Contacts = new List<Contact> { contact29, contact30, contact31, contact32, contact33, contact34, contact35 }
             };
 
             Account account6 = new Account()
@@ -122,7 +288,8 @@ namespace Unicorn.DataAccess.Context
                 Avatar = "../../../assets/images/company_logo.png",
                 Rating = 2.7,
                 IsDeleted = false,
-                Role = role3
+                Role = role3,
+                Contacts = new List<Contact> { contact36, contact37, contact38, contact39, contact40, contact41, contact42 }
             };
 
             Account account7 = new Account()
@@ -134,7 +301,8 @@ namespace Unicorn.DataAccess.Context
                 Avatar = "andrewsany_worker.jpg",
                 Rating = 4,
                 IsDeleted = false,
-                Role = role4
+                Role = role4,
+                Contacts = new List<Contact> { contact43, contact44, contact45, contact46, contact47, contact48, contact49 }
             };
 
             Account account8 = new Account()
@@ -146,7 +314,8 @@ namespace Unicorn.DataAccess.Context
                 Avatar = "shmirmasha_worker.jpg",
                 Rating = 3,
                 IsDeleted = false,
-                Role = role2
+                Role = role2,
+                Contacts = new List<Contact> { contact50, contact51, contact52, contact53, contact54, contact55, contact56 }
             };
 
             Account account9 = new Account()
@@ -158,7 +327,8 @@ namespace Unicorn.DataAccess.Context
                 Avatar = "vitykostyuban_vendor.jpg",
                 Rating = 5,
                 IsDeleted = false,
-                Role = role1
+                Role = role1,
+                Contacts = new List<Contact> { contact57, contact58, contact59, contact60, contact61, contact62, contact63 }
             };
 
             Account account10 = new Account()
@@ -170,7 +340,8 @@ namespace Unicorn.DataAccess.Context
                 Avatar = "admin.jpg",
                 Rating = 5,
                 IsDeleted = false,
-                Role = role5
+                Role = role5,
+                Contacts = new List<Contact> { contact64, contact65, contact66, contact67, contact68, contact69, contact70 }
             };
 
             context.Accounts.AddRange(new List<Account>() { account1, account2, account3, account4, account5, account6, account7, account8, account9, account10 });
@@ -774,119 +945,7 @@ namespace Unicorn.DataAccess.Context
             context.Persons.AddRange(new List<Person>() { person1, person2, person3, person4, person5, person6, person7, person8, person9, person10 });
 
             #endregion
-
-            #region ContactProviders
-
-            ContactProvider skype = new ContactProvider()
-            {
-                Name = "Skype",
-                IsDeleted = false,
-                Type = "Messenger"
-            };
-
-            ContactProvider telegram = new ContactProvider()
-            {
-                Name = "Telegram",
-                IsDeleted = false,
-                Type = "Messenger"
-            };
-
-            ContactProvider viber = new ContactProvider()
-            {
-                Name = "Viber",
-                IsDeleted = false,
-                Type = "Messenger"
-            };
-
-            ContactProvider facebook = new ContactProvider()
-            {
-                Name = "Facebook",
-                IsDeleted = false,
-                Type = "Social"
-            };
-
-            ContactProvider vk = new ContactProvider()
-            {
-                Name = "Vk",
-                IsDeleted = false,
-                Type = "Social"
-            };
-
-            ContactProvider linkedin = new ContactProvider()
-            {
-                Name = "LinkedIn",
-                IsDeleted = false,
-                Type = "Social"
-            };
-
-            ContactProvider email = new ContactProvider()
-            {
-                Name = "Email",
-                IsDeleted = false,
-                Type = "Email"
-            };
-
-            ContactProvider phone = new ContactProvider()
-            {
-                Name = "Phone",
-                IsDeleted = false,
-                Type = "Phone"
-            };
-
-            context.ContactProviders.AddRange(new List<ContactProvider>() { phone, email, skype, telegram, facebook, viber, vk, linkedin });
-
-
-            #endregion
-
-            #region Contacts
-
-            Contact contact1 = new Contact
-            {
-                IsDeleted = false,
-                Provider = phone,
-                Value = "+1 415 670 9788"
-            };
-            Contact contact2 = new Contact
-            {
-                IsDeleted = false,
-                Provider = phone,
-                Value = "+1 415 670 9788"
-            };
-            Contact contact3 = new Contact
-            {
-                IsDeleted = false,
-                Provider = phone,
-                Value = "+1 415 670 9788"
-            };
-            Contact contact4 = new Contact
-            {
-                IsDeleted = false,
-                Provider = email,
-                Value = "turbocat_9000@gmail.com"
-            };
-            Contact contact5 = new Contact
-            {
-                IsDeleted = false,
-                Provider = skype,
-                Value = "turbocat_9000"
-            };
-            Contact contact6 = new Contact
-            {
-                IsDeleted = false,
-                Provider = telegram,
-                Value = "turbocat_9000"
-            };
-            Contact contact7 = new Contact
-            {
-                IsDeleted = false,
-                Provider = facebook,
-                Value = "turbocat_9000"
-            };
-
-            context.Contacts.AddRange(new List<Contact>() { contact1, contact2, contact3, contact4, contact5, contact6, contact7 });
-
-            #endregion
-
+            
             #region PortfolioItems
             
             PortfolioItem portfolioItem1 = new PortfolioItem()
@@ -912,15 +971,6 @@ namespace Unicorn.DataAccess.Context
                 Works = new List<Work>() { work1 },
                 ExWork = "Dishwasher",
                 Person = person1,
-                Contacts = new List<Contact>()
-                {
-                    new Contact
-                    {
-                        IsDeleted = false,
-                        Provider = phone,
-                        Value = "+1 415 670 9788"
-                    }
-                },
                 WorkLetter = "My name is Randy Patterson, and I’m currently looking for a job in youth services. I have 10 years of experience working with youth agencies. I have a bachelor’s degree in outdoor education. I raise money, train leaders, and organize units. I have raised over $100,000 each of the last six years. I consider myself a good public speaker, and I have a good sense of humor.",
                 PortfolioItems = new List<PortfolioItem>() { portfolioItem1 }
             };
@@ -934,16 +984,6 @@ namespace Unicorn.DataAccess.Context
                 Works = new List<Work>() { work2 },
                 ExWork = "Photographer",
                 Person = person2,
-                Contacts = new List<Contact>()
-                {
-                    contact1,
-                    contact2,
-                    contact3,
-                    contact4,
-                    contact5,
-                    contact6,
-                    contact7
-                }
             };
 
             Vendor vendor3 = new Vendor()
@@ -955,16 +995,6 @@ namespace Unicorn.DataAccess.Context
                 Works = new List<Work>() { work3 },
                 ExWork = "Vet",
                 Person = person3,
-                Contacts = new List<Contact>()
-                {
-                    contact1,
-                    contact2,
-                    contact3,
-                    contact4,
-                    contact5,
-                    contact6,
-                    contact7
-                }
             };
 
             Vendor vendor4 = new Vendor()
@@ -976,16 +1006,6 @@ namespace Unicorn.DataAccess.Context
                 Works = new List<Work>() { work4 },
                 ExWork = "Painter",
                 Person = person4,
-                Contacts = new List<Contact>()
-                {
-                    contact1,
-                    contact2,
-                    contact3,
-                    contact4,
-                    contact5,
-                    contact6,
-                    contact7
-                }
             };
 
             Vendor vendor5 = new Vendor()
@@ -997,16 +1017,6 @@ namespace Unicorn.DataAccess.Context
                 Works = new List<Work>() { work5 },
                 ExWork = "lory driver",
                 Person = person5,
-                Contacts = new List<Contact>()
-                {
-                    contact1,
-                    contact2,
-                    contact3,
-                    contact4,
-                    contact5,
-                    contact6,
-                    contact7
-                }
             };
 
             Vendor vendor6 = new Vendor()
@@ -1018,16 +1028,6 @@ namespace Unicorn.DataAccess.Context
                 Works = new List<Work>() { work6 },
                 ExWork = "Middle dev",
                 Person = person6,
-                Contacts = new List<Contact>()
-                {
-                    contact1,
-                    contact2,
-                    contact3,
-                    contact4,
-                    contact5,
-                    contact6,
-                    contact7
-                }
             };
 
             context.Vendors.AddRange(new List<Vendor>() { vendor1, vendor2, vendor3, vendor4, vendor5, vendor6 });

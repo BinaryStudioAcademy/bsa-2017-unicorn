@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,6 +10,7 @@ using Unicorn.Shared.DTOs;
 using Unicorn.Core.Interfaces;
 using Unicorn.DataAccess.Entities;
 using Unicorn.DataAccess.Interfaces;
+using Unicorn.Shared.DTOs.Contact;
 using Unicorn.Shared.DTOs.Register;
 using Unicorn.Shared.DTOs.Vendor;
 
@@ -74,6 +76,8 @@ namespace Unicorn.Core.Services
         private async Task<IEnumerable<CompanyDTO>> GetCompanies()
         {
             var companies = await _unitOfWork.CompanyRepository.GetAllAsync();
+                
+
             var reviews = await _unitOfWork.ReviewRepository.GetAllAsync();
             if (companies.Any())
             {
@@ -134,7 +138,14 @@ namespace Unicorn.Core.Services
                                     Icon = company.Account?.Avatar ?? "default",
                                     Name = "Category4"
                                 }
-                            }
+                            },
+                            Contacts = company.Account?.Contacts.Select(x => new ContactShortDTO
+                            {
+                                Id = x.Id,
+                                Provider = x.Provider.Name,
+                                Type = x.Provider.Type,
+                                Value = x.Value
+                            }).ToList()
                         }).ToList();
 
                 return companiesDTO;
@@ -203,7 +214,14 @@ namespace Unicorn.Core.Services
                             Icon = company.Account?.Avatar ?? "default",
                             Name = "Category4"
                         }
-                    }
+                    },
+                    Contacts = company.Account?.Contacts.Select(x => new ContactShortDTO
+                    {
+                        Id = x.Id,
+                        Provider = x.Provider.Name,
+                        Type = x.Provider.Type,
+                        Value = x.Value
+                    }).ToList()
                 };
                 return companyDTO;
             }
