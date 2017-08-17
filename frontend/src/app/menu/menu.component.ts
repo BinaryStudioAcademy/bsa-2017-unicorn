@@ -35,7 +35,7 @@ export class MenuComponent implements OnInit {
   addMenuItems() {
     this.items = [{
       name: 'Search',
-      route: '#'
+      route: 'search'
     }, {
       name: 'Vendors',
       route: '#'

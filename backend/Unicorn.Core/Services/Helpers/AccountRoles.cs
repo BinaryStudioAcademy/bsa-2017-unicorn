@@ -2,7 +2,7 @@
 {
     public enum AccountRoles
     {
-        Guest,
+        Guest = 1,
         Customer,
         Vendor,
         Company,
