@@ -1,32 +1,33 @@
-<div class="sixteen wide column container">
-  <div class="ui segment" (mouseenter)="isDimmed = !isDimmed" (mouseleave)="isDimmed = !isDimmed">
-    <img class="ui fluid image" src={{company.avatar}}>
-    <sui-dimmer [(isDimmed)]="isDimmed" [isClickable]="false">
-      <h4 class="ui inverted header"><i class=" photo icon"></i></h4>
-    </sui-dimmer>
-  </div>
-</div>
-
-<div class="ui grid container">
-  <div class="row">
+<div *ngIf="company !== undefined" class="main-content">
     <div class="sixteen wide column container">
-      <sui-tabset>
-        <div class="ui pointing secondary menu">
-          <a class="item" suiTabHeader="1">Edit</a>
-          <a class="item" suiTabHeader="2">Messages</a>
-          <a class="item" suiTabHeader="3">Orders</a>          
+        <div class="ui segment" (mouseenter)="isDimmed = !isDimmed" (mouseleave)="isDimmed = !isDimmed">
+            <img class="ui fluid image" src={{company.Avatar}}>
+            <sui-dimmer [(isDimmed)]="isDimmed" [isClickable]="false">
+                <h4 class="ui inverted header"><i class=" photo icon"></i></h4>
+            </sui-dimmer>
         </div>
-        <div class="ui segment" suiTabContent="1">
-          edit
-        </div>
-        <div class="ui segment" suiTabContent="2">
-          messages
-        </div>
-        <div class="ui segment" suiTabContent="3">
-          orders
-        </div>
-      </sui-tabset>
     </div>
-  </div>
-</div>
 
+    <div class="ui grid container">
+        <div class="row">
+            <div class="sixteen wide column container">
+                <sui-tabset>
+                    <div class="ui pointing secondary menu">
+                        <a class="item" suiTabHeader="1">Edit</a>
+                        <a class="item" suiTabHeader="2">Messages</a>
+                        <a class="item" suiTabHeader="3">Orders</a>
+                    </div>
+                    <div class="ui segment" suiTabContent="1">
+                        <app-company-main-information [company]="company"></app-company-main-information>
+                    </div>
+                    <div class="ui segment" suiTabContent="2">
+                        <app-company-messages></app-company-messages>
+                    </div>
+                    <div class="ui segment" suiTabContent="3">
+                        <app-company-orders></app-company-orders>
+                    </div>
+                </sui-tabset>
+            </div>
+        </div>
+    </div>
+</div>

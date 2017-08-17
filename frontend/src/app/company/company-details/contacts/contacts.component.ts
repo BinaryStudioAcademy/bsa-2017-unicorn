@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
-import { NguiMapModule, Marker } from "@ngui/map";
 import { MapModel } from "../../../models/map.model";
 
 

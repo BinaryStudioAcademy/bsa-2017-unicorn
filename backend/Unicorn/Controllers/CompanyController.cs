@@ -5,10 +5,12 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using Unicorn.Core.Interfaces;
 
 namespace Unicorn.Controllers
 {
+    [EnableCors("*", "*", "*")]
     public class CompanyController : ApiController
     {
         private readonly ICompanyService _companyService;
@@ -22,8 +24,10 @@ namespace Unicorn.Controllers
         [Route("company")]
         public async Task<IHttpActionResult> Get()
         {
-            var result = await _companyService.GetAllAsync();
-            return Ok(result);
+            var result = await _companyService.GetAllCompaniesAsync();
+            if (result != null)
+                return Json(result);
+            return NotFound();
         }
 
 
@@ -31,8 +35,10 @@ namespace Unicorn.Controllers
         [Route("company/{id}")]
         public async Task<IHttpActionResult> Get(int id)
         {
-            var result = await _companyService.GetByIdAsync(id);
-            return Ok(result);
+            var result = await _companyService.GetCompanyByIdAsync(id);
+            if (result != null)
+                return Json(result);
+            return NotFound();
         }
 
         // POST: api/Company

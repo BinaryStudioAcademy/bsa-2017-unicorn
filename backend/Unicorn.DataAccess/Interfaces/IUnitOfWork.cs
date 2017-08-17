@@ -20,7 +20,9 @@ namespace Unicorn.DataAccess.Interfaces
         IGenericRepository<Subcategory> SubcategoryRepository { get; }
         IGenericRepository<Vendor> VendorRepository { get; }
         IGenericRepository<Work> WorkRepository { get; }
-        IGenericRepository<SocialAccount> SocialAccountRepository { get; }      
+        IGenericRepository<SocialAccount> SocialAccountRepository { get; }
+        IGenericRepository<PortfolioItem> PortfolioRepository { get; }
+        IGenericRepository<Contact> ContactRepository { get; }
         Task SaveAsync();
     }
 }

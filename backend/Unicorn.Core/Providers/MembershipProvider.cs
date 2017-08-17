@@ -24,7 +24,7 @@ namespace Unicorn.Core.Providers
             var claims = new List<Claim>
                 {
                     new Claim("id", account.Id.ToString()),
-                    new Claim("role", account.Role.Name)
+                    new Claim("roleid", account.Role.Id.ToString())
                 };
 
             return new ClaimsIdentity(claims, "Token");

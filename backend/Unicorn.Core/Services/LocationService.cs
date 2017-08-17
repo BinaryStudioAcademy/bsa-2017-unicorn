@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Unicorn.DataAccess.Interfaces;
-using Unicorn.Core.DTOs;
+using Unicorn.Shared.DTOs;
 using Unicorn.DataAccess.Entities;
 using Unicorn.Core.Interfaces;
 
@@ -31,9 +31,8 @@ namespace Unicorn.Core.Services
                     Id = location.Id,
                     Adress = location.Adress,
                     City = location.City,
-                    CoordinateX = location.CoordinateX,
-                    CoordinateY = location.CoordinateY,
-                    PostIndex = location.PostIndex
+                    Latitude = location.Latitude,
+                    Longitude = location.Longitude,
                 };
                 datareturn.Add(locationDto);
             }
@@ -48,9 +47,8 @@ namespace Unicorn.Core.Services
                 Id = location.Id,
                 Adress = location.Adress,
                 City = location.City,
-                CoordinateX = location.CoordinateX,
-                CoordinateY = location.CoordinateY,
-                PostIndex = location.PostIndex           
+                Latitude = location.Latitude,
+                Longitude = location.Longitude,
             };
             return locationDto;
         }

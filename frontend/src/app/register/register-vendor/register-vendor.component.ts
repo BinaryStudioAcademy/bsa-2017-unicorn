@@ -5,6 +5,7 @@ import { RegisterService } from '../../services/register.service';
 import { SuiModalService, TemplateModalConfig
   , ModalTemplate, ModalSize, SuiActiveModal } from 'ng2-semantic-ui';
 import { Vendor } from '../models/vendor';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register-vendor',
@@ -32,7 +33,8 @@ export class RegisterVendorComponent implements OnInit {
   phone: string;
   birthday;
 
-  constructor(private registerService: RegisterService) { }
+  constructor(private registerService: RegisterService,
+    private router: Router) { }
 
   ngOnInit() {
     this.mode = 'date';
@@ -70,7 +72,10 @@ export class RegisterVendorComponent implements OnInit {
       console.log('valid');
       let regInfo = this.aggregateInfo();
       console.log(regInfo);
-      this.registerService.confirmVendor(regInfo).then(resp => {this.modal.deny('')});
+      this.registerService.confirmVendor(regInfo).then(resp => {
+        this.modal.deny('');
+        this.router.navigate(['vendor/1']);
+      });
     } else {
       this.error = true;
     }

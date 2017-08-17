@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using AutoMapper;
-using Unicorn.Core.DTOs;
+using Unicorn.Shared.DTOs;
 using Unicorn.DataAccess.Entities;
+using Unicorn.Shared.DTOs.Subcategory;
 
 namespace Unicorn.Core.Infrastructure
 {
@@ -75,17 +76,11 @@ namespace Unicorn.Core.Infrastructure
 
             CreateMap<Vendor, VendorDTO>()
                 .ForMember(c => c.Company, opt => opt
-                    .MapFrom(s => Mapper.Map<Company, CompanyDTO>(s.Company)))
-                .ForMember(c => c.Person, opt => opt
-                    .MapFrom(s => Mapper.Map<Person, PersonDTO>(s.Person)))
-                .ForMember(c => c.Works, opt => opt
-                    .MapFrom(s => Mapper.Map<ICollection<Work>, ICollection<WorkDTO>>(s.Works)));
+                    .MapFrom(s => Mapper.Map<Company, CompanyDTO>(s.Company)));
 
             CreateMap<Work, WorkDTO>()
                 .ForMember(c => c.Subcategory, opt => opt
-                    .MapFrom(s => Mapper.Map<Subcategory, SubcategoryDTO>(s.Subcategory)))
-                .ForMember(c => c.Vendors, opt => opt
-                    .MapFrom(s => Mapper.Map<ICollection<Vendor>, ICollection<VendorDTO>>(s.Vendors)));
+                    .MapFrom(s => Mapper.Map<Subcategory, SubcategoryDTO>(s.Subcategory)));
 
             CreateMap<History, HistoryDTO>();
             CreateMap<Location, LocationDTO>();

@@ -24,7 +24,7 @@ export class BookComponent implements OnInit {
       vendor: null,
       status: "",
       workType: ""
-    }
+    }    
   }
 
 }
