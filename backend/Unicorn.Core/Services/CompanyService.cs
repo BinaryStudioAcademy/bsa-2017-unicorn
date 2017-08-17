@@ -2,22 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-<<<<<<< HEAD
-=======
-using System;
-using System.Data.Entity;
->>>>>>> feature/company-profile
 using System.Linq;
 using System.Threading.Tasks;
 using Unicorn.Core.Interfaces;
 using Unicorn.Core.Services.Helpers;
 using Unicorn.DataAccess.Entities;
 using Unicorn.DataAccess.Interfaces;
-<<<<<<< HEAD
 using Unicorn.Shared.DTOs;
-=======
 using Unicorn.Shared.DTOs.Contact;
->>>>>>> feature/company-profile
 using Unicorn.Shared.DTOs.Register;
 using Unicorn.Shared.DTOs.Vendor;
 

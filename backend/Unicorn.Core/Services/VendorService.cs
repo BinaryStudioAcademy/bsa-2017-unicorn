@@ -54,12 +54,8 @@ namespace Unicorn.Core.Services
             var vendor = await _unitOfWork.VendorRepository.Query
                 .SingleAsync(x => x.Id == id);
 
-<<<<<<< HEAD
-            return vendor.Contacts.Select(c => new ContactDTO()
-            {
-=======
+
             return vendor.Person.Account.Contacts.Select(c => new ContactShortDTO() {
->>>>>>> feature/company-profile
                 Id = c.Id,
                 Type = c.Provider.Type,
                 Provider = c.Provider.Name,
