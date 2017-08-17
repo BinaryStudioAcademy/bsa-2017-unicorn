@@ -21,6 +21,8 @@ namespace Unicorn.DataAccess.Context
         public DbSet<Vendor> Vendors { get; set; }
         public DbSet<Work> Works { get; set; }
         public DbSet<SocialAccount> SocialAccounts { get; set; }
+        public DbSet<Contact> Contacts { get; set; }
+        public DbSet<PortfolioItem> PortfolioItems { get; set; }
 
         public AppContext() : base("DefaultConnection")
         {

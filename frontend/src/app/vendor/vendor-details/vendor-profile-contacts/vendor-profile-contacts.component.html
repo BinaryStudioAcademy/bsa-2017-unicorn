@@ -84,9 +84,7 @@
   </div>
   <div class="row container">
     <div class="map">
-      <agm-map [latitude]="lat" [longitude]="lng" [zoom]="18">
-      <agm-marker [latitude]="lat" [longitude]="lng" [title]="markerTitle"></agm-marker>
-      </agm-map>
+      <app-map [inputMap]="map"></app-map>
     </div>
   </div>
 </div>
