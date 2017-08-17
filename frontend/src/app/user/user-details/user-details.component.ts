@@ -42,6 +42,8 @@ export class UserDetailsComponent implements OnInit {
 
   cropperSettings: CropperSettings;
   data: any;
+  file: File;
+
   constructor( 
     private route: ActivatedRoute,
     private userService: UserService,
@@ -86,7 +88,7 @@ export class UserDetailsComponent implements OnInit {
 
   fileChangeListener($event) {
     var image:any = new Image();
-    var file:File = $event.target.files[0];
+    this.file = $event.target.files[0];
     var myReader:FileReader = new FileReader();
     var that = this;
     myReader.onloadend = function (loadEvent:any) {
@@ -95,11 +97,29 @@ export class UserDetailsComponent implements OnInit {
 
     };
 
-    myReader.readAsDataURL(file);
+    myReader.readAsDataURL(this.file);
 }
 
-  fileSaveListener($event){
-    
+  fileSaveListener(){
+    debugger;
+    if (!this.file)
+    {
+      console.log("file not upload");
+      return;
+    }
+
+    this.photoService.uploadToImgur(this.file).then(resp => {
+      debugger;
+      let path = resp.data.link;
+      console.log(path);
+      this.photoService.saveAvatar(path)
+      .then(resp => {
+        (<HTMLImageElement>document.getElementById("user-avatar")).src = `url('${path}')`;
+      })
+      .catch(err => console.log(err));
+    }).catch(err => {
+      console.log(err);
+    });
   }
   private closeModal() {
     this.activeModal.deny(''); 
