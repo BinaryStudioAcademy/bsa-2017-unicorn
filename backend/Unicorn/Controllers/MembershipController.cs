@@ -56,7 +56,7 @@ namespace Unicorn.Controllers
             return response;
         }
 
-        [Route("api/membership/customer")]
+        [Route("membership/customer")]
         public async Task<HttpResponseMessage> ConfirmCustomer(CustomerRegisterDTO customer)
         {
             try
@@ -70,7 +70,7 @@ namespace Unicorn.Controllers
             return Request.CreateResponse(HttpStatusCode.OK);
         }
 
-        [Route("api/membership/vendor")]
+        [Route("membership/vendor")]
         public async Task<HttpResponseMessage> ConfirmVendor(VendorRegisterDTO vendor)
         {
             try
@@ -84,7 +84,7 @@ namespace Unicorn.Controllers
             return Request.CreateResponse(HttpStatusCode.OK);
         }
 
-        [Route("api/membership/company")]
+        [Route("membership/company")]
         public async Task<HttpResponseMessage> ConfirmCompany(CompanyRegisterDTO company)
         {
             try
