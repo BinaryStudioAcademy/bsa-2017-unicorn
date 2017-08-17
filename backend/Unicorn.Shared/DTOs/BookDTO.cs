@@ -1,6 +1,7 @@
 ﻿using System;
+using Unicorn.Shared.DTOs.Vendor;
 
-namespace Unicorn.Core.DTOs
+namespace Unicorn.Shared.DTOs
 {
     public class BookDTO
     {
@@ -13,14 +14,14 @@ namespace Unicorn.Core.DTOs
         public string Description { get; set; }
 
 
-        public virtual CustomerDTO Customer { get; set; }
+        public CustomerDTO Customer { get; set; }
 
-        public virtual VendorDTO Vendor { get; set; }
+        public VendorDTO Vendor { get; set; }
 
-        public virtual CompanyDTO Company { get; set; }
+        public CompanyDTO Company { get; set; }
 
-        public virtual WorkDTO Work { get; set; }
+        public WorkDTO Work { get; set; }
 
-        public virtual LocationDTO Location { get; set; }
+        public LocationDTO Location { get; set; }
     }
 }

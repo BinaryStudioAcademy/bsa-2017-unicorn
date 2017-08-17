@@ -1,11 +1,14 @@
-﻿using AutoMapper;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
+
+using AutoMapper;
+
 using Unicorn.Core.Interfaces;
 using Unicorn.DataAccess.Entities;
 using Unicorn.DataAccess.Interfaces;
-using Unicorn.Core.DTOs;
-using System.Linq;
+using Unicorn.Shared.DTOs;
+using Unicorn.Shared.DTOs.Vendor;
 
 namespace Unicorn.Core.Services
 {
@@ -37,12 +40,13 @@ namespace Unicorn.Core.Services
                         Id = book.Work.Id,
                         Name = book.Work.Name,
                         Description = book.Work.Description,
-                        Subcategory = new SubcategoryDTO() { Id = book.Work.Subcategory.Id, Category = new CategoryDTO() { Id = book.Work.Subcategory.Category.Id, Name = book.Work.Subcategory.Category.Name } }
+                        Subcategory = book.Work.Subcategory.Name,
+                        SubcategoryId = book.Work.Subcategory.Id
                     },
                     Customer = new CustomerDTO()
                     {
                         Id = book.Customer.Id,
-                        Person = new PersonDTO() { Id = book.Customer.Person.Id, Name = book.Customer.Person.Name, SurnameName = book.Customer.Person.SurnameName, Phone = book.Customer.Person.Phone }
+                        Person = new PersonDTO() { Id = book.Customer.Person.Id, Name = book.Customer.Person.Name, Surname = book.Customer.Person.Surname, Phone = book.Customer.Person.Phone }
                     }
                 };
 
@@ -56,19 +60,6 @@ namespace Unicorn.Core.Services
                     bookDto.Vendor = new VendorDTO()
                     {
                         Id = book.Vendor.Id,
-                        Person = new PersonDTO()
-                        {
-                            Id = book.Vendor.Person.Id,
-                            Account = new AccountDTO()
-                            {
-                                Id = book.Vendor.Person.Account.Id,
-                                Rating = book.Vendor.Person.Account.Rating,
-                                Avatar = book.Vendor.Person.Account.Avatar
-                            },
-                            Name = book.Vendor.Person.Name,
-                            SurnameName = book.Vendor.Person.SurnameName,
-                            Phone = book.Vendor.Person.Phone
-                        },
                         Experience = book.Vendor.Experience
                     };
                 }
@@ -78,8 +69,7 @@ namespace Unicorn.Core.Services
                     {
                         Id = book.Company.Id,
                         Account = new AccountDTO() { Id = book.Company.Account.Id, DateCreated = book.Company.Account.DateCreated, Rating = book.Company.Account.Rating },
-                        Staff = book.Company.Staff,
-                        Vendors = book.Company.Vendors.Select(x => new VendorDTO { Id = x.Id, Person = new PersonDTO() { Id = x.Person.Id, Name = x.Person.Name, SurnameName = x.Person.SurnameName } }).ToList()
+                        Vendors = book.Company.Vendors.Select(x => new VendorDTO { Id = x.Id, Person = new PersonDTO() { Id = x.Person.Id, Name = x.Person.Name, Surname = x.Person.Surname } }).ToList()
                     };
                 }
                 datareturn.Add(bookDto);
@@ -101,12 +91,13 @@ namespace Unicorn.Core.Services
                     Id = book.Work.Id,
                     Name = book.Work.Name,
                     Description = book.Work.Description,
-                    Subcategory = new SubcategoryDTO() { Id = book.Work.Subcategory.Id, Category = new CategoryDTO() { Id = book.Work.Subcategory.Category.Id, Name = book.Work.Subcategory.Category.Name } }
+                    Subcategory = book.Work.Subcategory.Name,
+                    SubcategoryId = book.Work.Subcategory.Id
                 },
                 Customer = new CustomerDTO()
                 {
                     Id = book.Customer.Id,
-                    Person = new PersonDTO() { Id = book.Customer.Person.Id, Name = book.Customer.Person.Name, SurnameName = book.Customer.Person.SurnameName, Phone = book.Customer.Person.Phone }
+                    Person = new PersonDTO() { Id = book.Customer.Person.Id, Name = book.Customer.Person.Name, Surname = book.Customer.Person.Surname, Phone = book.Customer.Person.Phone }
                 }
             };
 
@@ -120,19 +111,6 @@ namespace Unicorn.Core.Services
                 bookDto.Vendor = new VendorDTO()
                 {
                     Id = book.Vendor.Id,
-                    Person = new PersonDTO()
-                    {
-                        Id = book.Vendor.Person.Id,
-                        Account = new AccountDTO()
-                        {
-                            Id = book.Vendor.Person.Account.Id,
-                            Rating = book.Vendor.Person.Account.Rating,
-                            Avatar = book.Vendor.Person.Account.Avatar
-                        },
-                        Name = book.Vendor.Person.Name,
-                        SurnameName = book.Vendor.Person.SurnameName,
-                        Phone = book.Vendor.Person.Phone
-                    },
                     Experience = book.Vendor.Experience
                 };
             }
@@ -142,8 +120,7 @@ namespace Unicorn.Core.Services
                 {
                     Id = book.Company.Id,
                     Account = new AccountDTO() { Id = book.Company.Account.Id, DateCreated = book.Company.Account.DateCreated, Rating = book.Company.Account.Rating },
-                    Staff = book.Company.Staff,
-                    Vendors = book.Company.Vendors.Select(x => new VendorDTO { Id = x.Id, Person = new PersonDTO() { Id = x.Person.Id, Name = x.Person.Name, SurnameName = x.Person.SurnameName } }).ToList()
+                    Vendors = book.Company.Vendors.Select(x => new VendorDTO { Id = x.Id, Person = new PersonDTO() { Id = x.Person.Id, Name = x.Person.Name, Surname = x.Person.Surname } }).ToList()
                 };
             }
             return bookDto;

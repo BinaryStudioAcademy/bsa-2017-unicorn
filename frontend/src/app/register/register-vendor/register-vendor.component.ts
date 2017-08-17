@@ -3,7 +3,12 @@ import { Component, OnInit, Input } from '@angular/core';
 import * as firebase from 'firebase/app';
 import { RegisterService } from '../../services/register.service';
 
+import {
+  SuiModalService, TemplateModalConfig
+  , ModalTemplate, ModalSize, SuiActiveModal
+} from 'ng2-semantic-ui';
 import { Vendor } from '../models/vendor';
+import { HelperService } from '../../services/helper/helper.service';
 
 @Component({
   selector: 'app-register-vendor',
@@ -13,6 +18,8 @@ import { Vendor } from '../models/vendor';
 export class RegisterVendorComponent implements OnInit {
 
   @Input() social: firebase.User;
+
+  @Input() public modal: SuiActiveModal<{}, {}, string>;
 
   experience: number;
   position: string;
@@ -29,19 +36,20 @@ export class RegisterVendorComponent implements OnInit {
   phone: string;
   birthday;
 
-  constructor(private registerService: RegisterService) { }
+  constructor(private registerService: RegisterService,
+    private helperService: HelperService) { }
 
   ngOnInit() {
     this.mode = 'date';
   }
 
   valid(): boolean {
-    return this.birthday !== undefined && this.phone != undefined 
+    return this.birthday !== undefined && this.phone != undefined
       && this.experience !== undefined && this.position !== undefined
       && this.speciality !== undefined;
   }
 
-  aggregateInfo(): Vendor{
+  aggregateInfo(): Vendor {
     let info = new Vendor();
     info.birthday = this.birthday;
     info.phone = this.phone;
@@ -64,13 +72,14 @@ export class RegisterVendorComponent implements OnInit {
   confirmRegister() {
     if (this.valid()) {
       this.error = false;
-      console.log('valid');
       let regInfo = this.aggregateInfo();
-      console.log(regInfo);
-      this.registerService.confirmVendor(regInfo);
+      this.registerService.confirmVendor(regInfo).then(resp => {
+        this.modal.deny('');
+        localStorage.setItem('token', resp.headers.get('token'));
+        this.helperService.redirectAfterAuthentication();
+      });
     } else {
       this.error = true;
     }
   }
-
 }

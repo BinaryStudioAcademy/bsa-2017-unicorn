@@ -6,8 +6,9 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
-using Unicorn.Core.DTOs;
+using Unicorn.Shared.DTOs;
 using Unicorn.Core.Interfaces;
+using Unicorn.DataAccess.Interfaces;
 
 namespace Unicorn.Controllers
 {
@@ -25,7 +26,7 @@ namespace Unicorn.Controllers
         [Route("roles/{uid}")]
         public async Task<IHttpActionResult> GetRole(long uid)
         {
-            var result = await _roleService.GetByIdAsync(uid);
+            var result = await _roleService.GetByUserId(uid);
             if (result == null)
                 return NotFound();
 

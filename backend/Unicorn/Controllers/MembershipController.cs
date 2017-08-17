@@ -5,6 +5,7 @@ using System.Web.Http;
 using System.Web.Http.Cors;
 using Unicorn.Core.Interfaces;
 using Unicorn.Models;
+using Unicorn.Shared.DTOs.Register;
 
 namespace Unicorn.Controllers
 {
@@ -12,10 +13,17 @@ namespace Unicorn.Controllers
     public class MembershipController : ApiController
     {
         private IAuthService authService;
+        private ICustomerService customerService;
+        private IVendorService vendorService;
+        private ICompanyService companyService;
 
-        public MembershipController(IAuthService authService)
+        public MembershipController(IAuthService authService, ICustomerService customerService,
+            IVendorService vendorService, ICompanyService companyService)
         {
             this.authService = authService;
+            this.customerService = customerService;
+            this.vendorService = vendorService;
+            this.companyService = companyService;
         }
 
         // POST: Membership
@@ -30,8 +38,7 @@ namespace Unicorn.Controllers
                 return response;
             }
 
-            //string token = await authService.GenerateJwtTokenAsync(provider, uid);
-            string token = "123_TEST";
+            string token = await authService.GenerateJwtTokenAsync(user.Provider, user.Uid);
 
             if (token == null)
             {
@@ -41,10 +48,75 @@ namespace Unicorn.Controllers
             }
 
             response = Request.CreateResponse(HttpStatusCode.OK);
+            response.Headers.Add("Access-Control-Expose-Headers", "Token");
             response.Headers.Add("Token", token);
 
             return response;
+        }
 
+        [Route("membership/customer")]
+        public async Task<HttpResponseMessage> ConfirmCustomer(CustomerRegisterDTO customer)
+        {
+            string token = null;
+            try
+            {
+                await customerService.CreateAsync(customer);
+                token = await authService.GenerateJwtTokenAsync(customer.Provider, customer.Uid);
+            }
+            catch
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
+
+            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK);
+            response.Headers.Add("Access-Control-Expose-Headers", "Token");
+            response.Headers.Add("Token", token);
+
+            return response;
+        }
+
+        [Route("membership/vendor")]
+        public async Task<HttpResponseMessage> ConfirmVendor(VendorRegisterDTO vendor)
+        {
+            string token = null;
+
+            try
+            {
+                await vendorService.Create(vendor);
+                token = await authService.GenerateJwtTokenAsync(vendor.Provider, vendor.Uid);
+            }
+            catch
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
+
+            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK);
+            response.Headers.Add("Access-Control-Expose-Headers", "Token");
+            response.Headers.Add("Token", token);
+
+            return response;
+        }
+
+        [Route("membership/company")]
+        public async Task<HttpResponseMessage> ConfirmCompany(CompanyRegisterDTO company)
+        {
+            string token = null;
+
+            try
+            {
+                await companyService.Create(company);
+                token = await authService.GenerateJwtTokenAsync(company.Provider, company.Uid);
+            }
+            catch
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
+
+            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK);
+            response.Headers.Add("Access-Control-Expose-Headers", "Token");
+            response.Headers.Add("Token", token);
+
+            return response;
         }
     }
 }

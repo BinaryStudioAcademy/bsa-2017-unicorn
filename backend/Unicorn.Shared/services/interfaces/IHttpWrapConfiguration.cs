@@ -5,7 +5,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Unicorn.Core.services.interfaces
+namespace Unicorn.Shared.services.interfaces
 {
     public interface IHttpWrapConfiguration
     {

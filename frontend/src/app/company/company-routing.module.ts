@@ -27,7 +27,7 @@ import { CompanyEditComponent } from "./company-edit/company-edit.component";
             component: CompanyDetailsComponent,
           },
           {
-            path: ':id/:id',
+            path: ':id/edit',
             component: CompanyEditComponent,
           }
         ]

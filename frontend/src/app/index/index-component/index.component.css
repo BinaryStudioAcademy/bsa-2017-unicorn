@@ -2,6 +2,7 @@
     padding: 0;
 }
 
+
 /* ------------ Main Section ----------- */
 
 .section-wrapper {
@@ -10,9 +11,9 @@
     align-items: center;
     background-image: url(../../../assets/images/housework-dollar-paid.jpg);
     background-repeat: no-repeat;
-    background-size:cover;
-    background-position:center center;
-    background-attachment:fixed;
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
 }
 
 .section {
@@ -22,15 +23,15 @@
     justify-content: space-around;
     /* width: 910px; */
     height: auto;
-    margin: 50px 5px 100px 5px;
-    background-color: rgba(255,255,255,1.0);
-    border: 1px solid rgba(255,255,255,0.0);
+    margin: 50px 10px 100px 10px;
+    background-color: rgba(255, 255, 255, 1.0);
+    border: 1px solid rgba(255, 255, 255, 0.0);
 }
 
 .slogan {
     width: auto;
-    max-width: 510px;
-    margin: 30px;
+    max-width: 610px;
+    margin: 50px 50px 30px 50px;
     font-family: 'Century Gothic', 'Calibri', 'Trebuchet MS', sans-serif;
 }
 
@@ -49,22 +50,24 @@
         color: #FF647A;
         font-size: 60px;
     }
-
     .slogan p {
         color: gray;
         font-size: 40px;
     }
 }
 
+
+/* ------------ Search Section ----------- */
+
 .search-container {
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap; 
+    flex-wrap: wrap;
     justify-content: center;
-    align-items: center; 
+    align-items: flex-end;
     width: auto;
     max-width: 910px;
-    margin: 50px auto;
+    margin: 50px 50px 80px 50px;
     padding: 20px;
     font-family: 'Verdana', 'Calibri', 'Trebuchet MS', sans-serif;
     border: 1px solid lightgray;
@@ -76,71 +79,36 @@
     color: gray;
 }
 
-.search-group1 {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    /* width: 500px;  */
-    margin: 5px 20px;
-}
-.search-group2 {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    /* width: 200px;  */
-    margin: 5px 20px;    
+.search-item {
+    width: 190px;
+    margin: 13px;
 }
 
 .search-input {
     height: 49px;
-    width: 350px; 
-    margin: 5px 0 !important; 
+    width: 190px;
 }
 
 .datepicker {
-    margin: 5px 0 !important;
-    width: 150px;
+    width: 190px;
     height: 49px !important;
 }
 
-.item-date {
-    width: 150px;
-    margin: 10px 20px; 
-}
-
-.item-button {
-    display: flex;
-}
-
-.fill-horizontal {
-    width: 100%;
-} 
-
-.datepicker {
-    height: 45px;
-}
-
 .btn-search {
-    margin: 5px 0;
-    width: 150px;    
+    width: 190px;
     height: 49px;
     color: white;
     background-color: #FF647A;
-    font-size: 16px; 
-} 
+    font-size: 16px;
+}
+
 
 /* ------------ Section 2 ----------- */
 
- .section2-wrapper {
-    /* display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-    min-height: 465px; */
-    margin: 50px auto 100px auto;
+.section2-wrapper {
+    margin: 10px auto 100px auto;
 }
+
 
 /* ------------ Information ----------- */
 
@@ -171,7 +139,7 @@
 .customer-section {
     display: flex;
     flex-direction: row;
-    align-items: flex-end; 
+    align-items: flex-end;
     justify-content: flex-start;
     height: 765px;
     margin: 0 10px;
@@ -202,7 +170,7 @@
 .vendor-section {
     display: flex;
     flex-direction: row;
-    align-items: flex-start; 
+    align-items: flex-start;
     justify-content: flex-start;
     height: 765px;
     margin: 0 10px;
@@ -213,8 +181,8 @@
     margin: 20px;
     padding: 20px;
     color: #606060;
-    background-color: rgba(255,255,255,0.6);
-    border: 1px solid rgba(255,255,255,0.0);
+    background-color: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.0);
     font-family: 'Century Gothic', 'Calibri', 'Trebuchet MS', sans-serif;
 }
 
@@ -228,41 +196,9 @@
 
 @media screen and (min-width: 490px) {
     .info-container h4 {
-    font-size: 44px;
+        font-size: 44px;
     }
     .info-container p {
         font-size: 32px;
     }
 }
-
-/* ---------- Slider ----------- */
-
-/* #slider {
-    margin: 100px 0;
-}
-
-@keyframes slidy {
-0% { left: 0%; }
-20% { left: 0%; }
-25% { left: -100%; }
-45% { left: -100%; }
-50% { left: -200%; }
-70% { left: -200%; }
-75% { left: -300%; }
-95% { left: -300%; }
-100% { left: -400%; }
-}
-
-body { margin: 0; } 
-div#slider { overflow: hidden; }
-div#slider figure img { width: 20%; float: left; }
-div#slider figure { 
-  position: relative;
-  width: 500%;
-  margin: 0;
-  left: 0;
-  text-align: left;
-  font-size: 0;
-  animation: 30s slidy infinite; 
-} */
-

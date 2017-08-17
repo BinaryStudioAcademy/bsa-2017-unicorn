@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Unicorn.Core.DTOs
+namespace Unicorn.Shared.DTOs
 {
     public class AccountDTO
     {
@@ -15,12 +15,10 @@ namespace Unicorn.Core.DTOs
 
         public string Avatar { get; set; }
 
-        public int Rating { get; set; }
+        public double Rating { get; set; }
 
         public virtual RoleDTO Role { get; set; }
 
         public virtual ICollection<SocialAccountDTO> SocialAccounts { get; set; }
-
-        public virtual ICollection<PermissionDTO> Permissions { get; set; }
     }
 }

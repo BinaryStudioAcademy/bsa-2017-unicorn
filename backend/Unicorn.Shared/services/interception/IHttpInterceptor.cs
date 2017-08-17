@@ -5,7 +5,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Unicorn.Core.services.interception
+namespace Unicorn.Shared.services.interception
 {
     public interface IHttpInterceptor
     {

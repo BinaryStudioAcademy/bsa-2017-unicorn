@@ -10,6 +10,6 @@ namespace Unicorn.DataAccess.Entities
 
         public string Name { get; set; }
 
-        public virtual ICollection<Account> Accounts { get; set; }
+        public virtual ICollection<Permission> Permissions { get; set; }
     }
 }

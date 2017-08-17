@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-index',
@@ -19,9 +20,10 @@ export class IndexComponent implements OnInit {
   firstDayOfWeek: string;
   categories: {}[];
   subcategories: string[];
-  labelButton: string;
 
-  constructor() { }
+  constructor(
+    private router: Router
+  ) { }
 
   ngOnInit() {
     this.initContent();
@@ -29,19 +31,19 @@ export class IndexComponent implements OnInit {
 
   initContent() {
     this.title = 'Happy unicorn';
-    this.slogan = 'We can scratch your cat right now, because we can do it.';
+    this.slogan = 'We scratch your cat right now, because we can.';
 
-    this.placeholderCategory = 'Scratch';
-    this.placeholderSubcategory = 'cat';
+    this.placeholderCategory = 'SCRATCH';
+    this.placeholderSubcategory = 'MY CAT';
     this.searchCategory = '';
     this.searchSubcategory = '';
     /* labels */
     this.labelSearch = 'What to do';
     this.labelDate = 'When do it';
-    this.labelButton = 'Search';
     /* datepicker settings */
     this.mode = 'date';           /* select day */
     this.firstDayOfWeek = '1';    /* start calendar from first day of week */
+
     this.categories = [{id: 1, text: 'Category1'}, {id: 2, text: 'Category2'}, {id: 3, text: 'Category3'}];
     this.subcategories = ['Subcategory1', 'Subcategory2', 'Subcategory3'];
   }
@@ -49,24 +51,25 @@ export class IndexComponent implements OnInit {
   searchVendor() {
     if (this.searchDate === undefined) {
       this.searchDate = new Date();
+      this.searchDate.setHours(0);
+      this.searchDate.setMinutes(0);
+      this.searchDate.setSeconds(0);
+      this.searchDate.setMilliseconds(0);
     }
     if (this.searchCategory === '') {
       this.searchCategory = this.placeholderCategory;
     }
     if (this.searchSubcategory === '') {
-      this.searchSubcategory = this.searchSubcategory;
+      this.searchSubcategory = this.placeholderSubcategory;
     }
-    console.log('"category: "' + this.searchCategory);
-    console.log('"subcategory: "' + this.searchSubcategory);
-    console.log('"date: "' + this.searchDate);
+
+    this.router.navigate(['/search'], {
+      queryParams: {
+        'category': this.searchCategory.toLowerCase(),
+        'subcategory': this.searchSubcategory.toLocaleLowerCase(),
+        'date': this.searchDate.getTime() / 1000
+      }
+    });
   }
-
-  // setCategory(category: string) {
-  //   this.selCategory = category;
-  // }
-
-  // setSubcategory(subcategory: string) {
-  //   this.selSubcategory = subcategory;
-  // }
 
 }

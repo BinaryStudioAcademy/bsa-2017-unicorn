@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Unicorn.Core.DTOs;
+using Unicorn.Shared.DTOs;
 using Unicorn.Core.Interfaces;
 using Unicorn.DataAccess.Entities;
 using Unicorn.DataAccess.Interfaces;
@@ -30,7 +30,7 @@ namespace Unicorn.Core.Services
                 {
                     Id = person.Id,
                     Name = person.Name,
-                    SurnameName = person.SurnameName,
+                    Surname = person.Surname,
                     MiddleName = person.MiddleName,
                     Birthday = person.Birthday,
                     Gender = person.Gender,
@@ -43,7 +43,6 @@ namespace Unicorn.Core.Services
                          DateCreated = account.DateCreated,
                          Email = account.Email,
                          EmailConfirmed = account.EmailConfirmed,
-                         Permissions = account.Permissions.Select(x => new PermissionDTO { Id = x.Id, Name = x.Name }).ToList(),
                          Rating = account.Rating,
                          SocialAccounts = account.SocialAccounts.Select(x => new SocialAccountDTO { Id = x.Id, Provider = x.Provider, Uid = x.Uid }).ToList()
                      },
@@ -52,9 +51,8 @@ namespace Unicorn.Core.Services
                         Id = location.Id,
                         Adress = location.Adress,
                         City = location.City,
-                        CoordinateX = location.CoordinateX,
-                        CoordinateY = location.CoordinateY,
-                        PostIndex = location.PostIndex
+                        Latitude = location.Latitude,
+                        Longitude = location.Longitude,
                     }
                 };
                 dataReturn.Add(persontDto);
@@ -72,7 +70,7 @@ namespace Unicorn.Core.Services
             {
                 Id = person.Id,
                 Name = person.Name,
-                SurnameName = person.SurnameName,
+                Surname = person.Surname,
                 MiddleName = person.MiddleName,
                 Birthday = person.Birthday,
                 Gender = person.Gender,
@@ -85,7 +83,6 @@ namespace Unicorn.Core.Services
                     DateCreated = account.DateCreated,
                     Email = account.Email,
                     EmailConfirmed = account.EmailConfirmed,
-                    Permissions = account.Permissions.Select(x => new PermissionDTO { Id = x.Id, Name = x.Name }).ToList(),
                     Rating = account.Rating,
                     SocialAccounts = account.SocialAccounts.Select(x => new SocialAccountDTO { Id = x.Id, Provider = x.Provider, Uid = x.Uid }).ToList()
                 },
@@ -94,9 +91,8 @@ namespace Unicorn.Core.Services
                     Id = location.Id,
                     Adress = location.Adress,
                     City = location.City,
-                    CoordinateX = location.CoordinateX,
-                    CoordinateY = location.CoordinateY,
-                    PostIndex = location.PostIndex
+                    Latitude = location.Latitude,
+                    Longitude = location.Longitude,
                 }
             };
             return persontDto;

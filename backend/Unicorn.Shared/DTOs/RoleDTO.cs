@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Unicorn.Core.DTOs
+namespace Unicorn.Shared.DTOs
 {
     public class RoleDTO
     {
@@ -8,6 +8,6 @@ namespace Unicorn.Core.DTOs
 
         public string Name { get; set; }
 
-        public virtual ICollection<AccountDTO> Accounts { get; set; }
+        public virtual ICollection<PermissionDTO> Permissions { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Vendor } from "../../../models/vendor";
+import { Company } from "../../../models/company.model";
 
 @Component({
   selector: 'company-vendors',
@@ -13,6 +14,7 @@ vendors: Vendor[];
   constructor() { }
 
   ngOnInit() {
+    console.log(this.vendors);
   }
 
 }

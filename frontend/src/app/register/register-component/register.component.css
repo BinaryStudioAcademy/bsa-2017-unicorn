@@ -4,12 +4,20 @@
     margin-bottom: 8px;
 }
 
+.social-buttons[hidden] {
+    display: none !important;
+}
+
 .role-buttons {
     display: flex;
     justify-content: center;
 }
 
-.error-field {
+.roles {
+    margin-bottom: 10px;
+}
+
+.info-field {
     margin-bottom: 10px;
 }
 
@@ -56,6 +64,7 @@
     font-family: 'Verdana', 'Century Gothic', 'Calibri', 'Trebuchet MS', sans-serif;
     font-size: 18px;
     font-weight: normal;
+    text-transform: uppercase;
 }
 
 li {
@@ -86,6 +95,7 @@ a {
 .question-lbl {
     display: flex;
     justify-content: center;
+    margin-bottom: 1em;
 }
 
 .question-lbl>label {
