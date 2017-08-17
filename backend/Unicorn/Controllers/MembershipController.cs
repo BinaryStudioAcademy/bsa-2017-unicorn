@@ -41,8 +41,6 @@ namespace Unicorn.Controllers
             }
 
             string token = await authService.GenerateJwtTokenAsync(user.Provider, user.Uid);
-            //string token = "123_TEST";
-            //string token = null;
 
             if (token == null)
             {
@@ -56,10 +54,9 @@ namespace Unicorn.Controllers
             response.Headers.Add("Token", token);
 
             return response;
-
         }
 
-        [Route("membership/customer")]
+        [Route("api/membership/customer")]
         public async Task<HttpResponseMessage> ConfirmCustomer(CustomerRegisterDTO customer)
         {
             try
@@ -73,7 +70,7 @@ namespace Unicorn.Controllers
             return Request.CreateResponse(HttpStatusCode.OK);
         }
 
-        [Route("membership/vendor")]
+        [Route("api/membership/vendor")]
         public async Task<HttpResponseMessage> ConfirmVendor(VendorRegisterDTO vendor)
         {
             try
@@ -87,7 +84,7 @@ namespace Unicorn.Controllers
             return Request.CreateResponse(HttpStatusCode.OK);
         }
 
-        [Route("membership/company")]
+        [Route("api/membership/company")]
         public async Task<HttpResponseMessage> ConfirmCompany(CompanyRegisterDTO company)
         {
             try

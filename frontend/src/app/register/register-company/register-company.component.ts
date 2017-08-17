@@ -56,10 +56,8 @@ export class RegisterCompanyComponent implements OnInit {
 
   confirmRegister() {
     if (this.valid()) {
-      this.error = false;
-      console.log('valid');
-      let regInfo = this.aggregateInfo();
-      console.log(regInfo);
+      this.error = false;      
+      let regInfo = this.aggregateInfo();      
       this.registerService.confirmCompany(regInfo).then(resp => {
         this.modal.deny('');
         this.router.navigate(['company/1']);
