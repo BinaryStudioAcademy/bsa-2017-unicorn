@@ -14,7 +14,7 @@ using Unicorn.Shared.DTOs.Vendor;
 
 namespace Unicorn.Core.Services
 {
-    public class CompanyService:ICompanyService
+    public class CompanyService : ICompanyService
     {
         private readonly IUnitOfWork _unitOfWork;
 
@@ -36,18 +36,16 @@ namespace Unicorn.Core.Services
 
             return result;
         }
-        
+
         public async Task Create(CompanyRegisterDTO companyDto)
-        {  
+        {
             var account = new Account();
-            var role = new Role();
-            var permissions = new List<Permission>();
+            var role = new Role();            
             var socialAccounts = new List<SocialAccount>();
             var socialAccount = new SocialAccount();
             var company = new Company();
 
             account.Role = role;
-            account.Permissions = permissions;
             account.DateCreated = DateTime.Now;
             account.Email = companyDto.Email;
             account.SocialAccounts = socialAccounts;
@@ -146,6 +144,7 @@ namespace Unicorn.Core.Services
         {
             var company = await _unitOfWork.CompanyRepository.GetByIdAsync(id);
             var reviews = await _unitOfWork.ReviewRepository.GetAllAsync();
+
             if (company != null)
             {
                 var companyDTO = new CompanyDTO
@@ -208,8 +207,6 @@ namespace Unicorn.Core.Services
                 return companyDTO;
             }
             return null;
-
-
         }
     }
 }

@@ -17,10 +17,8 @@ namespace Unicorn.Shared.DTOs
 
         public double Rating { get; set; }
 
-        public  RoleDTO Role { get; set; }
+        public virtual RoleDTO Role { get; set; }
 
-        public  ICollection<SocialAccountDTO> SocialAccounts { get; set; }
-
-        public  ICollection<PermissionDTO> Permissions { get; set; }
+        public virtual ICollection<SocialAccountDTO> SocialAccounts { get; set; }
     }
 }
