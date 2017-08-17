@@ -5,7 +5,7 @@ using Unicorn.DataAccess.Entities;
 
 namespace Unicorn.DataAccess.Context
 {
-    public class UnicornDbInitializer : CreateDatabaseIfNotExists<AppContext>
+    public class UnicornDbInitializer : DropCreateDatabaseIfModelChanges<AppContext>
     {
         protected override void Seed(AppContext context)
         {
@@ -52,7 +52,7 @@ namespace Unicorn.DataAccess.Context
                 Email = "cleanok_company@gmail.com",
                 EmailConfirmed = true,
                 DateCreated = new DateTime(2017, 08, 10, 22, 38, 15),
-                Avatar = "../../../assets/images/company_logo.png",
+                Avatar = "https://image.flaticon.com/icons/png/512/78/78373.png",
                 Rating = 4.7,
                 IsDeleted = false,
                 Role = role3
@@ -519,7 +519,7 @@ namespace Unicorn.DataAccess.Context
                 Account = account1,
                 Name = "Vasylysa",
                 MiddleName = "Sergeevna",
-                SurnameName = "Kuchma",
+                Surname = "Kuchma",
                 Birthday = new DateTime(1976, 08, 08),
                 Gender = "female",
                 IsDeleted = false,
@@ -528,8 +528,8 @@ namespace Unicorn.DataAccess.Context
                     Id = 1,
                     Adress = "Lebedeva-Kumacha 7a str.",
                     City = "Kiev",
-                    CoordinateX = 50.437,
-                    CoordinateY = 30.439,
+                    Latitude = 50.437,
+                    Longitude = 30.439,
                     IsDeleted = false,
                     PostIndex = "03110"
                 },
@@ -542,7 +542,7 @@ namespace Unicorn.DataAccess.Context
                 Account = account2,
                 Name = "Andriy",
                 MiddleName = "Myloyovych",
-                SurnameName = "Kravchuk",
+                Surname = "Kravchuk",
                 Birthday = new DateTime(1989, 08, 11),
                 Gender = "male",
                 IsDeleted = false,
@@ -550,8 +550,8 @@ namespace Unicorn.DataAccess.Context
                 {
                     Adress = "Akademica Palladina 9 pr.",
                     City = "Kiev",
-                    CoordinateX = 50.461199,
-                    CoordinateY = 30.355651,
+                    Latitude = 50.461199,
+                    Longitude = 30.355651,
                     IsDeleted = false,
                     PostIndex = "03179"
                 },
@@ -564,7 +564,7 @@ namespace Unicorn.DataAccess.Context
                 Account = account3,
                 Name = "Shnurenko",
                 MiddleName = "Oleksandrovych",
-                SurnameName = "Vasil",
+                Surname = "Vasil",
                 Birthday = new DateTime(1995, 01, 10),
                 Gender = "male",
                 IsDeleted = false,
@@ -572,8 +572,8 @@ namespace Unicorn.DataAccess.Context
                 {
                     Adress = "Main Square 8",
                     City = "Lviv",
-                    CoordinateX = 38.148089,
-                    CoordinateY = 63.114765,
+                    Latitude = 38.148089,
+                    Longitude = 63.114765,
                     IsDeleted = false,
                     PostIndex = "79013"
                 },
@@ -586,17 +586,17 @@ namespace Unicorn.DataAccess.Context
                 Account = account4,
                 Name = "Misha",
                 MiddleName = "Petrovych",
-                SurnameName = "Bakun",
+                Surname = "Bakun",
                 Birthday = new DateTime(1985, 05, 12),
                 Gender = "male",
                 IsDeleted = false,
                 Location = new Location()
                 {
                     Id = 4,
-                    Adress = "Akademica Palladina 19 pr.",
-                    City = "Lviv",
-                    CoordinateX = 12.631879,
-                    CoordinateY = 16.138890,
+                    Adress = "Akademica Palladina 7 pr.",
+                    City = "Kiev",
+                    Latitude = 50.461199,
+                    Longitude = 30.355651,
                     IsDeleted = false,
                     PostIndex = "79053"
                 },
@@ -609,7 +609,7 @@ namespace Unicorn.DataAccess.Context
                 Account = account5,
                 Name = "Larysa",
                 MiddleName = "Alexandrovna",
-                SurnameName = "Yashkina",
+                Surname = "Yashkina",
                 Birthday = new DateTime(1989, 09, 11),
                 Gender = "female",
                 IsDeleted = false,
@@ -617,8 +617,8 @@ namespace Unicorn.DataAccess.Context
                 {
                     Adress = "Yawornitskogo st.8",
                     City = "Kharkiv",
-                    CoordinateX = 69.651308,
-                    CoordinateY = 75.084123,
+                    Longitude = 69.651308,
+                    Latitude = 75.084123,
                     IsDeleted = false,
                     PostIndex = "54136"
                 },
@@ -631,7 +631,7 @@ namespace Unicorn.DataAccess.Context
                 Account = account6,
                 Name = "Sergey",
                 MiddleName = "Mykolayovich",
-                SurnameName = "Stasenko",
+                Surname = "Stasenko",
                 Birthday = new DateTime(1977, 09, 23),
                 Gender = "male",
                 IsDeleted = false,
@@ -640,8 +640,8 @@ namespace Unicorn.DataAccess.Context
                     Id = 6,
                     Adress = "Shevchenko str.",
                     City = "Boryspol",
-                    CoordinateX = 50.461199,
-                    CoordinateY = 30.355651,
+                    Latitude = 50.461199,
+                    Longitude = 30.355651,
                     IsDeleted = false,
                     PostIndex = "27123"
                 },
@@ -654,7 +654,7 @@ namespace Unicorn.DataAccess.Context
                 Account = account7,
                 Name = "Andrey",
                 MiddleName = "Ivanovich",
-                SurnameName = "Panchuk",
+                Surname = "Panchuk",
                 Birthday = new DateTime(1998, 11, 10),
                 Gender = "male",
                 IsDeleted = false,
@@ -662,8 +662,8 @@ namespace Unicorn.DataAccess.Context
                 {
                     Adress = "Puliya 7 pr.",
                     City = "Dnipro",
-                    CoordinateX = 44.119637,
-                    CoordinateY = 99.131470,
+                    Longitude = 44.119637,
+                    Latitude = 99.131470,
                     IsDeleted = false,
                     PostIndex = "09304"
                 },
@@ -676,7 +676,7 @@ namespace Unicorn.DataAccess.Context
                 Account = account8,
                 Name = "Masha",
                 MiddleName = "Edgarivna",
-                SurnameName = "Shmir",
+                Surname = "Shmir",
                 Birthday = new DateTime(1995, 2, 27),
                 Gender = "male",
                 IsDeleted = false,
@@ -684,8 +684,8 @@ namespace Unicorn.DataAccess.Context
                 {
                     Adress = "Zamarstynivska 15a",
                     City = "Lviv",
-                    CoordinateX = 16.312059,
-                    CoordinateY = 22.963471,
+                    Longitude = 16.312059,
+                    Latitude = 22.963471,
                     IsDeleted = false,
                     PostIndex = "96341"
                 },
@@ -698,7 +698,7 @@ namespace Unicorn.DataAccess.Context
                 Account = account9,
                 Name = "Victor",
                 MiddleName = "Olexsandrovych",
-                SurnameName = "Kotsyuban",
+                Surname = "Kotsyuban",
                 Birthday = new DateTime(1995, 2, 27),
                 Gender = "male",
                 IsDeleted = false,
@@ -706,8 +706,8 @@ namespace Unicorn.DataAccess.Context
                 {
                     Adress = "Dom Kolotushkina",
                     City = "Boston",
-                    CoordinateX = 19.16348,
-                    CoordinateY = 99.11074,
+                    Longitude = 19.16348,
+                    Latitude = 99.11074,
                     IsDeleted = false,
                     PostIndex = "013279"
                 },
@@ -720,7 +720,7 @@ namespace Unicorn.DataAccess.Context
                 Account = account10,
                 Name = "Admin",
                 MiddleName = "Admin",
-                SurnameName = "Admin",
+                Surname = "Admin",
                 Birthday = new DateTime(1992, 1, 20),
                 Gender = "male",
                 IsDeleted = false,
@@ -729,14 +729,67 @@ namespace Unicorn.DataAccess.Context
                 {
                     Adress = "Center 2a",
                     City = "Madrid",
-                    CoordinateX = 75.944219,
-                    CoordinateY = 71.124861,
+                    Longitude = 75.944219,
+                    Latitude = 71.124861,
                     IsDeleted = false,
                     PostIndex = "99304"
                 },
             };
 
             context.Persons.AddRange(new List<Person>() { person1, person2, person3, person4, person5, person6, person7, person8, person9, person10 });
+
+
+            // Without setted id
+            Contact contact1 = new Contact
+            {
+                IsDeleted = false,
+                Type = "Phone",
+                Value = "+1 415 670 9788"
+            };
+            Contact contact2 = new Contact
+            {
+                IsDeleted = false,
+                Type = "Phone",
+                Value = "+1 415 670 9788"
+            };
+            Contact contact3 = new Contact
+            {
+                IsDeleted = false,
+                Type = "Phone",
+                Value = "+1 415 670 9788"
+            };
+            Contact contact4 = new Contact
+            {
+                IsDeleted = false,
+                Type = "Email",
+                Value = "turbocat_9000@gmail.com"
+            };
+            Contact contact5 = new Contact
+            {
+                IsDeleted = false,
+                Type = "Skype",
+                Value = "turbocat_9000"
+            };
+            Contact contact6 = new Contact
+            {
+                IsDeleted = false,
+                Type = "Telegram",
+                Value = "turbocat_9000"
+            };
+            Contact contact7 = new Contact
+            {
+                IsDeleted = false,
+                Type = "Facebook",
+                Value = "turbocat_9000"
+            };
+
+            PortfolioItem portfolioItem1 = new PortfolioItem()
+            {
+                Image = "https://camo.githubusercontent.com/f8ea5eab7494f955e90f60abc1d13f2ce2c2e540/68747470733a2f2f662e636c6f75642e6769746875622e636f6d2f6173736574732f323037383234352f3235393331332f35653833313336322d386362612d313165322d383435332d6536626439353663383961342e706e67",
+                IsDeleted = false,
+                Subcategory = subcategory1,
+                WorkType = work1
+            };
 
             Vendor vendor1 = new Vendor()
             {
@@ -746,7 +799,18 @@ namespace Unicorn.DataAccess.Context
                 Position = "Head",
                 Works = new List<Work>() { work1 },
                 ExWork = "Dishwasher",
-                Person = person1
+                Person = person1,
+                Contacts = new List<Contact>()
+                {
+                    new Contact
+                    {
+                        IsDeleted = false,
+                        Type = "Phone",
+                        Value = "+1 415 670 9788"
+                    }
+                },
+                WorkLetter = "My name is Randy Patterson, and I’m currently looking for a job in youth services. I have 10 years of experience working with youth agencies. I have a bachelor’s degree in outdoor education. I raise money, train leaders, and organize units. I have raised over $100,000 each of the last six years. I consider myself a good public speaker, and I have a good sense of humor.",
+                PortfolioItems = new List<PortfolioItem>() { portfolioItem1 }
             };
 
             Vendor vendor2 = new Vendor()
@@ -757,7 +821,17 @@ namespace Unicorn.DataAccess.Context
                 Position = "Photographer",
                 Works = new List<Work>() { work2 },
                 ExWork = "Photographer",
-                Person = person2
+                Person = person2,
+                Contacts = new List<Contact>()
+                {
+                    contact1,
+                    contact2,
+                    contact3,
+                    contact4,
+                    contact5,
+                    contact6,
+                    contact7
+                }
             };
 
             Vendor vendor3 = new Vendor()
@@ -768,7 +842,17 @@ namespace Unicorn.DataAccess.Context
                 Position = "Vet",
                 Works = new List<Work>() { work3 },
                 ExWork = "Vet",
-                Person = person4
+                Person = person3,
+                Contacts = new List<Contact>()
+                {
+                    contact1,
+                    contact2,
+                    contact3,
+                    contact4,
+                    contact5,
+                    contact6,
+                    contact7
+                }
             };
 
             Vendor vendor4 = new Vendor()
@@ -779,7 +863,17 @@ namespace Unicorn.DataAccess.Context
                 Position = "Builder",
                 Works = new List<Work>() { work4 },
                 ExWork = "Painter",
-                Person = person5
+                Person = person4,
+                Contacts = new List<Contact>()
+                {
+                    contact1,
+                    contact2,
+                    contact3,
+                    contact4,
+                    contact5,
+                    contact6,
+                    contact7
+                }
             };
 
             Vendor vendor5 = new Vendor()
@@ -790,7 +884,17 @@ namespace Unicorn.DataAccess.Context
                 Position = "Uber Select driver",
                 Works = new List<Work>() { work5 },
                 ExWork = "lory driver",
-                Person = person6
+                Person = person5,
+                Contacts = new List<Contact>()
+                {
+                    contact1,
+                    contact2,
+                    contact3,
+                    contact4,
+                    contact5,
+                    contact6,
+                    contact7
+                }
             };
 
             Vendor vendor6 = new Vendor()
@@ -801,7 +905,17 @@ namespace Unicorn.DataAccess.Context
                 Position = "C# Senior Dev",
                 Works = new List<Work>() { work6 },
                 ExWork = "Middle dev",
-                Person = person9
+                Person = person6,
+                Contacts = new List<Contact>()
+                {
+                    contact1,
+                    contact2,
+                    contact3,
+                    contact4,
+                    contact5,
+                    contact6,
+                    contact7
+                }
             };
 
             context.Vendors.AddRange(new List<Vendor>() { vendor1, vendor2, vendor3, vendor4, vendor5, vendor6 });
@@ -828,8 +942,8 @@ namespace Unicorn.DataAccess.Context
                     Id = 1,
                     Adress = "Stepana Bandery 7",
                     City = "Lviv",
-                    CoordinateX = 56.357890,
-                    CoordinateY = 118.13458,
+                    Latitude = 56.357890,
+                    Longitude = 118.13458,
                     IsDeleted = false,
                     PostIndex = "79054"
                 },
@@ -857,8 +971,8 @@ namespace Unicorn.DataAccess.Context
                 {
                     Adress = "Akademica Palladina 7 pr.",
                     City = "Kiev",
-                    CoordinateX = 50.461199,
-                    CoordinateY = 30.355651,
+                    Latitude = 50.461199,
+                    Longitude = 30.355651,
                     IsDeleted = false,
                     PostIndex = "03179"
                 },
@@ -887,8 +1001,8 @@ namespace Unicorn.DataAccess.Context
                     Id = 6,
                     Adress = "Shevchenko str.",
                     City = "Boryspol",
-                    CoordinateX = 50.461199,
-                    CoordinateY = 30.355651,
+                    Latitude = 50.461199,
+                    Longitude = 30.355651,
                     IsDeleted = false,
                     PostIndex = "27123"
                 },
@@ -994,6 +1108,77 @@ namespace Unicorn.DataAccess.Context
             };
 
             context.Books.AddRange(new List<Book>() { book1, book2, book3, book4, book5, book6 });
+
+            Review review1 = new Review()
+            {
+                BookId = 1,
+                Description = "qwert",
+                From = "NameSurname",
+                FromAccountId = 2,
+                To = "NameSurname",
+                ToAccountId = 6,
+                IsDeleted = false,
+                Grade = 4,
+                Date = DateTime.Now,
+                Avatar = "https://image.flaticon.com/icons/png/512/78/78373.png"
+            };
+            Review review2 = new Review()
+            {
+                BookId = 1,
+                Description = "qwert",
+                From = "NameSurname",
+                FromAccountId = 2,
+                To = "NameSurname",
+                ToAccountId = 1,
+                IsDeleted = false,
+                Grade = 4,
+                Date = DateTime.Now,
+                Avatar = "https://image.flaticon.com/icons/png/512/78/78373.png"
+            };
+            Review review3 = new Review()
+            {
+                BookId = 1,
+                Description = "qwert",
+                From = "NameSurname",
+                FromAccountId = 2,
+                To = "NameSurname",
+                ToAccountId = 6,
+                IsDeleted = false,
+                Grade = 4,
+                Date = DateTime.Now,
+                Avatar = "https://image.flaticon.com/icons/png/512/78/78373.png"
+            };
+            Review review4 = new Review()
+            {
+                BookId = 1,
+                Description = "qwert",
+                From = "NameSurname",
+                FromAccountId = 2,
+                To = "NameSurname",
+                ToAccountId = 6,
+                IsDeleted = false,
+                Grade = 4,
+                Date = DateTime.Now,
+                Avatar = "https://image.flaticon.com/icons/png/512/78/78373.png"
+            };
+            Review review5 = new Review()
+            {
+                BookId = 1,
+                Description = "qwert",
+                From = "NameSurname",
+                FromAccountId = 2,
+                To = "NameSurname",
+                ToAccountId = 1,
+                IsDeleted = false,
+                Grade = 4,
+                Date = DateTime.Now,
+                Avatar = "https://image.flaticon.com/icons/png/512/78/78373.png"
+            };
+
+            context.Reviews.AddRange(new List<Review>(){review1, review2, review3, review4, review5});
+            
+            context.SaveChanges();
+
             context.SaveChanges();
 
             base.Seed(context);

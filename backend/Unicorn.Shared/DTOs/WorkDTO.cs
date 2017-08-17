@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Unicorn.Core.DTOs
+namespace Unicorn.Shared.DTOs
 {
     public class WorkDTO
     {
@@ -10,8 +10,8 @@ namespace Unicorn.Core.DTOs
 
         public string Description { get; set; }
 
-        public SubcategoryDTO Subcategory { get; set; }
+        public string Subcategory { get; set; }
 
-        public ICollection<VendorDTO> Vendors { get; set; }
+        public long SubcategoryId { get; set; }
     }
 }

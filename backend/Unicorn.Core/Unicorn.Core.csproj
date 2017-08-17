@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -80,6 +80,9 @@
     <Compile Include="Interfaces\IPermissionService.cs" />
     <Compile Include="Interfaces\IPersonService.cs" />
     <Compile Include="Interfaces\IRoleService.cs" />
+    <Compile Include="Interfaces\IReviewService.cs" />
+    <Compile Include="Interfaces\IPortfolioService.cs" />
+    <Compile Include="Interfaces\IContactService.cs" />
     <Compile Include="Interfaces\IVendorService.cs" />
     <Compile Include="Interfaces\IWorkService.cs" />
     <Compile Include="Services\AccountService.cs" />
@@ -91,6 +94,8 @@
     <Compile Include="Services\PermissionService.cs" />
     <Compile Include="Services\PersonService.cs" />
     <Compile Include="Services\RoleService.cs" />
+    <Compile Include="Services\ReviewService.cs" />
+    <Compile Include="Services\PortfolioService.cs" />
     <Compile Include="Services\VendorService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">

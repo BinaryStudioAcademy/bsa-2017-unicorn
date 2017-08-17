@@ -6,7 +6,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
-using Unicorn.Core.DTOs;
+using Unicorn.Shared.DTOs;
 using Unicorn.Core.Interfaces;
 
 namespace Unicorn.Controllers

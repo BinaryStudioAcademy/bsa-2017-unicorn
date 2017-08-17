@@ -1,6 +1,7 @@
 ﻿using System;
+using Unicorn.Shared.DTOs.Vendor;
 
-namespace Unicorn.Core.DTOs
+namespace Unicorn.Shared.DTOs
 {
     public class BookDTO
     {

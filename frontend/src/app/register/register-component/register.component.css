@@ -4,6 +4,10 @@
     margin-bottom: 8px;
 }
 
+.social-buttons[hidden] {
+    display: none !important;
+}
+
 .role-buttons {
     display: flex;
     justify-content: center;
@@ -91,6 +95,7 @@ a {
 .question-lbl {
     display: flex;
     justify-content: center;
+    margin-bottom: 1em;
 }
 
 .question-lbl>label {
