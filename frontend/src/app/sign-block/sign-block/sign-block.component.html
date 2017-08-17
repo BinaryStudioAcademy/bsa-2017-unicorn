@@ -3,10 +3,9 @@
         <div class="field">
             <label>Want to order?</label>
         </div>
-        <div style="display: flex; justify-content:space-around">
-            <button class="ui basic button" type="submit"><p style="color:#FF647A;">SIGN IN</p></button>
-            <p class="text">or</p>
-            <button class="ui basic button" type="submit"><p style="color:#FF647A;">REGISTER</p></button>
-        </div>
+
     </form>
+    <div style="display: flex; flex-direction:column;">
+        <button (click)="sign()" class="ui basic button"><p style="color:#FF647A;">SIGN IN</p></button>
+    </div>
 </div>
