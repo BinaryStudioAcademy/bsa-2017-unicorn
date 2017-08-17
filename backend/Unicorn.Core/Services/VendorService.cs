@@ -54,7 +54,7 @@ namespace Unicorn.Core.Services
         public async Task<IEnumerable<ContactShortDTO>> GetVendorContacts(long id)
         {
             var vendor = await _unitOfWork.VendorRepository.Query
-                .Include(v => v.Contacts)
+                .Include(v => v.Contacts.Select(c => c.Provider))
                 .SingleAsync(x => x.Id == id);
 
             return vendor.Contacts.Select(c => new ContactShortDTO() {
@@ -106,7 +106,15 @@ namespace Unicorn.Core.Services
                 City = vendor.Person.Location.City,
                 LocationId = vendor.Person.Location.Id,
                 Position = vendor.Position,
-                WorkLetter = vendor.WorkLetter
+                WorkLetter = vendor.WorkLetter,
+                Works = vendor.Works.Select(w => new WorkDTO()
+                {
+                    Id = w.Id,
+                    Description = w.Description,
+                    Name = w.Name,
+                    Subcategory = w.Subcategory.Name,
+                    SubcategoryId = w.Subcategory.Id
+                }).ToList()
             };
         }
 

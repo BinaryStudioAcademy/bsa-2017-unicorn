@@ -13,4 +13,5 @@ export interface Vendor {
 	ExWork: string;
 	Company: string;
 	CompanyId: number;
+	Works: Work[];
 }

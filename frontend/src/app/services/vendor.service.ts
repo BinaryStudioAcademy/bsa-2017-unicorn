@@ -11,38 +11,38 @@ import { Contact } from "../models/contact.model";
 
 @Injectable()
 export class VendorService {
-  private resourceUrl: string;
+  private apiController: string;
 
   constructor(private dataService: DataService) 
   { 
-    this.resourceUrl = dataService.buildUrl("vendors");
+    this.apiController = "vendors";
   }
 
   getAllVendors() : Promise<Vendor[]> {
-    return this.dataService.getRequest<Vendor[]>(this.resourceUrl);
+    return this.dataService.getFullRequest<Vendor[]>(this.apiController);
   }
 
-  getVendor(id: number) : Promise<Vendor> {
-    return this.dataService.getRequest<Vendor>(`${this.resourceUrl}/${id}`);
+  getVendor(id: number) : Promise<any> {
+    return this.dataService.getFullRequest<Vendor>(`${this.apiController}/${id}`);
   }
 
-  getRating(id: number): Promise<Rating> {
-    return this.dataService.getRequest<Rating>(`${this.resourceUrl}/${id}/rating`);
+  getRating(id: number): Promise<any> {
+    return this.dataService.getFullRequest<Rating>(`${this.apiController}/${id}/rating`);
   }
 
-  getSubcategories(id: number): Promise<Subcategory[]> {
-    return this.dataService.getRequest<Subcategory[]>(`${this.resourceUrl}/${id}/categories`);
+  getSubcategories(id: number): Promise<any> {
+    return this.dataService.getFullRequest<Subcategory[]>(`${this.apiController}/${id}/categories`);
   }
 
-  getReviews(id: number): Promise<Review[]> {
-    return this.dataService.getRequest<Review[]>(`${this.resourceUrl}/${id}/reviews`);
+  getReviews(id: number): Promise<any> {
+    return this.dataService.getFullRequest<Review[]>(`${this.apiController}/${id}/reviews`);
   }
 
-  getContacts(id: number): Promise<Contact[]> {
-    return this.dataService.getRequest<Contact[]>(`${this.resourceUrl}/${id}/contacts`);
+  getContacts(id: number): Promise<any> {
+    return this.dataService.getFullRequest<Contact[]>(`${this.apiController}/${id}/contacts`);
   }
 
-  getVendorPorfolio(vendorId: number): Promise<PortfolioItem[]> {
-    return this.dataService.getRequest<PortfolioItem[]>(`${this.resourceUrl}/${vendorId}/portfolio`);
+  getVendorPorfolio(vendorId: number): Promise<any> {
+    return this.dataService.getFullRequest<PortfolioItem[]>(`${this.apiController}/${vendorId}/portfolio`);
   }
 }

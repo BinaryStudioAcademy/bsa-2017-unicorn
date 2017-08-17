@@ -23,7 +23,7 @@ export class VendorDetailsComponent implements OnInit {
   ngOnInit() {
     this.route.params
       .switchMap((params: Params) => this.vendorService.getVendor(params['id']))
-      .subscribe(vendor => this.vendor = vendor);
+      .subscribe(resp => this.vendor = resp.body as Vendor);
   }
 
 }

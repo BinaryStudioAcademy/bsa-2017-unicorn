@@ -1,6 +1,11 @@
 import { Category } from "./category.model";
+import { Subcategory } from "./subcategory.model";
 
 export interface Work {
-	category: Category;
-	description: string;
+	Id: number;
+	Name: string;
+	Category: Category;
+	Subcategory: string;
+	SubcategoryId: number;
+	Description: string;
 }

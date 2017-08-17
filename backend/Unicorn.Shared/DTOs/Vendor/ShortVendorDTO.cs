@@ -1,4 +1,6 @@
-﻿namespace Unicorn.Shared.DTOs.Vendor
+﻿using System.Collections.Generic;
+
+namespace Unicorn.Shared.DTOs.Vendor
 {
     public class ShortVendorDTO
     {
@@ -23,5 +25,7 @@
         public string Company { get; set; }
 
         public long? CompanyId { get; set; }
+
+        public ICollection<WorkDTO> Works { get; set; }
     }
 }

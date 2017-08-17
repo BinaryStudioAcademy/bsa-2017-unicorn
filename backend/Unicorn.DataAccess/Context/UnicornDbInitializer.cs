@@ -859,7 +859,7 @@ namespace Unicorn.DataAccess.Context
                 Experience = 7.5,
                 IsDeleted = false,
                 Position = "Head",
-                Works = new List<Work>() { work1 },
+                Works = new List<Work>() { work1, work2, work3 },
                 ExWork = "Dishwasher",
                 Person = person1,
                 Contacts = new List<Contact>()

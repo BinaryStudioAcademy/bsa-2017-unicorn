@@ -28,10 +28,10 @@ export class VendorProfileContactsComponent implements OnInit {
 
   ngOnInit() {
     this.vendorService.getContacts(this.vendorId)
-      .then(contacts => this.contacts = contacts);
+      .then(resp => this.contacts = resp.body as Contact[]);
     this.locationService.getById(this.locationId)
-      .then(location => { 
-        this.location = location;
+      .then(resp => { 
+        this.location = resp.body as Location;
         this.map = {
           center: {lat: this.location.Latitude, lng: this.location.Longitude},
           zoom: 18,    
