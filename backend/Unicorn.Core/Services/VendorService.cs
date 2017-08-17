@@ -109,17 +109,7 @@ namespace Unicorn.Core.Services
         }
 
         public async Task Create(VendorRegisterDTO ShortVendorDTO)
-        {
-            //Mapper.Initialize(cfg =>
-            //{
-            //    cfg.CreateMap<LocationDTO, Location>();
-            //    cfg.CreateMap<PermissionDTO, Permission>();
-            //    cfg.CreateMap<RoleDTO, Role>();
-            //    cfg.CreateMap<SocialAccountDTO, SocialAccount>();
-            //    cfg.CreateMap<AccountDTO, Account>();
-            //    cfg.CreateMap<PersonDTO, Person>();
-            //    cfg.CreateMap<ShortVendorDTO, Vendor>();
-            //});
+        {           
             var account = new Account();
             var role = new Role();
             var permissions = new List<Permission>();
@@ -128,8 +118,7 @@ namespace Unicorn.Core.Services
             var vendor = new Vendor();
             var person = new Person();
 
-            account.Role = role;
-            account.Permissions = permissions;
+            account.Role = role;            
             account.DateCreated = DateTime.Now;
             account.Email = ShortVendorDTO.Email;
             account.SocialAccounts = socialAccounts;
