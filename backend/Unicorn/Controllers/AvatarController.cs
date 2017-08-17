@@ -33,7 +33,7 @@ namespace Unicorn.Controllers
             {
                 await _avatarService.UploadAvatar(imageUrl, id);
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 return InternalServerError();
             }
@@ -53,7 +53,7 @@ namespace Unicorn.Controllers
             {
                 await _avatarService.UploadBackground(imageUrl, id);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return InternalServerError();
             }

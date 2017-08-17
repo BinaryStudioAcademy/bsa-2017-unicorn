@@ -24,7 +24,5 @@ namespace Unicorn.DataAccess.Entities
         public ICollection<Work> Works { get; set; }
 
         public ICollection<PortfolioItem> PortfolioItems { get; set; }
-
-        public ICollection<Contact> Contacts { get; set; }
     }
 }
