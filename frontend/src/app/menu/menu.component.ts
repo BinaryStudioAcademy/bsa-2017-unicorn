@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 
 import { MenuItem } from './menu-item/menu-item';
 
-import { SuiModalService, TemplateModalConfig, SuiModal, ComponentModalConfig
-  , ModalTemplate, ModalSize, SuiActiveModal } from 'ng2-semantic-ui';
+import {
+  SuiModalService, TemplateModalConfig, SuiModal, ComponentModalConfig
+  , ModalTemplate, ModalSize, SuiActiveModal
+} from 'ng2-semantic-ui';
 import { ConfirmModal, IConfirmModalContext } from '../register/register-component/register.component';
 
 @Component({
@@ -27,22 +29,19 @@ export class MenuComponent implements OnInit {
       .open(new ConfirmModal("Are you sure?", "Are you sure about accepting this?"))
       .onApprove(() => alert("User has accepted."))
       .onDeny(() => (''));
-    
+
   }
 
   addMenuItems() {
     this.items = [{
-      name: 'Get task',
+      name: 'Search',
       route: '#'
     }, {
       name: 'Vendors',
       route: '#'
     }, {
-      name: 'Registration',
+      name: 'Sign in',
       route: 'register'
-    }, {
-      name: 'Log in',
-      route: '#'
     }];
   }
 }
