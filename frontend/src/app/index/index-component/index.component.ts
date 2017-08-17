@@ -51,6 +51,10 @@ export class IndexComponent implements OnInit {
   searchVendor() {
     if (this.searchDate === undefined) {
       this.searchDate = new Date();
+      this.searchDate.setHours(0);
+      this.searchDate.setMinutes(0);
+      this.searchDate.setSeconds(0);
+      this.searchDate.setMilliseconds(0);
     }
     if (this.searchCategory === '') {
       this.searchCategory = this.placeholderCategory;
@@ -58,21 +62,10 @@ export class IndexComponent implements OnInit {
     if (this.searchSubcategory === '') {
       this.searchSubcategory = this.placeholderSubcategory;
     }
-    console.log('"category: "' + this.searchCategory);
-    console.log('"subcategory: "' + this.searchSubcategory);
-    console.log('"date: "' + this.searchDate.getTime());
 
     this.router.navigate(['search/', this.searchCategory.toLowerCase(),
                                      this.searchSubcategory.toLocaleLowerCase(),
-                                     this.searchDate.getTime()]);
+                                     this.searchDate.getTime() / 1000]);
   }
-
-  // setCategory(category: string) {
-  //   this.selCategory = category;
-  // }
-
-  // setSubcategory(subcategory: string) {
-  //   this.selSubcategory = subcategory;
-  // }
 
 }

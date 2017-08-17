@@ -12,16 +12,21 @@ import { Vendor } from '../models/vendor';
 import { environment } from '../../environments/environment';
 import { CompanyService } from '../services/company.service';
 import { NguiMapModule } from '@ngui/map';
-import { MapComponent } from '../map/map.component';
+// import { MapComponent } from '../map/map.component';
+
 
 @NgModule({
   imports: [
+    NguiMapModule.forRoot({apiUrl: 'https://maps.google.com/maps/api/js?key=' + environment.googleMapsKey}),
     CommonModule,
     SearchRoutingModule,
     FormsModule,
     SuiModule
   ],
-  declarations: [SearchComponent],
+  declarations: [
+    SearchComponent,
+    // MapComponent
+  ],
   providers: [
     CompanyService
   ]
