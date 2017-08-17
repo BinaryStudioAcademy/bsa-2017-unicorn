@@ -1,20 +1,17 @@
 export class RoleRouter {
-    public getRouteByRole(roleId: number) {
+    public getRouteByRole(roleId) {
         let path = 'index';
         switch (roleId) {
-            default:
-            case 1:
-                break;
-            case 2:
+            case '2':
                 path = 'user';
                 break;
-            case 3:
+            case '3':
                 path = 'vendor';
                 break;
-            case 4:
+            case '4':
                 path = 'company';
                 break;
-            case 5:
+            case '5':
                 path = 'admin';
                 break;
         }

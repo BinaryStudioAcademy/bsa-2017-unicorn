@@ -104,7 +104,7 @@ namespace Unicorn.DataAccess.Context
             {
                 Id = 2,
                 IsDeleted = false,
-                Name = "User",
+                Name = "Customer",
                 Permissions = new List<Permission>
                 {
                     permision1,
