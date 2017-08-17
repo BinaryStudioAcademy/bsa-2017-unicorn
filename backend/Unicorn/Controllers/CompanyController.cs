@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using Unicorn.Core.Interfaces;
+using Unicorn.Shared.DTOs;
 
 namespace Unicorn.Controllers
 {
@@ -42,8 +43,10 @@ namespace Unicorn.Controllers
         }
 
         // POST: api/Company
-        public void Post([FromBody]string value)
+        [Route("company")]
+        public async Task Post([FromBody]CompanyDTO company)
         {
+            await _companyService.SaveCompany(company);
         }
 
         // PUT: api/Company/5
