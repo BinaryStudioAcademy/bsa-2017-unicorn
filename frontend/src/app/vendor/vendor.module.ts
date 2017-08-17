@@ -6,6 +6,8 @@ import { SuiModule } from 'ng2-semantic-ui';
 import { environment } from '../../environments/environment';
 import { NguiMapModule } from "@ngui/map/dist";
 
+
+import { SignBlockModule } from '../sign-block/sign-block.module';
 import { BookModule } from '../book/book.module';
 import { MapModule } from '../map/map.module';
 
@@ -32,7 +34,8 @@ import { VendorEditInfoComponent } from './vendor-edit/vendor-edit-info/vendor-e
     FormsModule,
     SuiModule,
     BookModule,
-    MapModule
+    MapModule,
+    SignBlockModule
   ],
   declarations: [
     VendorDetailsComponent,
