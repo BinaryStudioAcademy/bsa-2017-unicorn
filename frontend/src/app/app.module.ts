@@ -22,8 +22,8 @@ import { RegisterModule } from './register/register.module';
 import { UserModule } from './user/user.module';
 import { VendorModule } from './vendor/vendor.module';
 import { BookModule } from './book/book.module';
+import { SignBlockModule } from './sign-block/sign-block.module';
 import { IndexModule } from './index/index.module';
-// import { ImageUploadModule } from "angular2-image-upload";
 import { SearchModule } from './search/search.module';
 
 
@@ -48,7 +48,7 @@ import { RegisterComponent } from './register/register-component/register.compon
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    // ImageUploadModule.forRoot(),
+    SignBlockModule,
     AngularFireModule.initializeApp(environment.firebase, 'unicorn-angular'),
     AngularFireAuthModule,
     CategoryModule,
