@@ -190,7 +190,14 @@ export class CompanyService {
       Categories: [{
         Icon: "../../../assets/images/square-image.png",
         Name: "Category"
-      }]
+      }],
+      Contacts: [
+        {
+          Value: "+380666666666",
+          Type: "phone",
+          Provider: "phone"
+        }
+      ]
     };
   }
 
