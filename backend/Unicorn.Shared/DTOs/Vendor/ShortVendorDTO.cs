@@ -1,4 +1,4 @@
-﻿namespace Unicorn.Shared.Vendor.DTOs
+﻿namespace Unicorn.Shared.DTOs.Vendor
 {
     public class ShortVendorDTO
     {

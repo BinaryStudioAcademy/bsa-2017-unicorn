@@ -739,49 +739,109 @@ namespace Unicorn.DataAccess.Context
             context.Persons.AddRange(new List<Person>() { person1, person2, person3, person4, person5, person6, person7, person8, person9, person10 });
 
 
-            // Without setted id
+
+            ContactProvider skype = new ContactProvider()
+            {
+                Name = "Skype",
+                IsDeleted = false,
+                Type = "Messenger"
+            };
+
+            ContactProvider telegram = new ContactProvider()
+            {
+                Name = "Telegram",
+                IsDeleted = false,
+                Type = "Messenger"
+            };
+
+            ContactProvider viber = new ContactProvider()
+            {
+                Name = "Viber",
+                IsDeleted = false,
+                Type = "Messenger"
+            };
+
+            ContactProvider facebook = new ContactProvider()
+            {
+                Name = "Facebook",
+                IsDeleted = false,
+                Type = "Social"
+            };
+
+            ContactProvider vk = new ContactProvider()
+            {
+                Name = "Vk",
+                IsDeleted = false,
+                Type = "Social"
+            };
+
+            ContactProvider linkedin = new ContactProvider()
+            {
+                Name = "LinkedIn",
+                IsDeleted = false,
+                Type = "Social"
+            };
+
+            ContactProvider email = new ContactProvider()
+            {
+                Name = "Email",
+                IsDeleted = false,
+                Type = "Email"
+            };
+
+            ContactProvider phone = new ContactProvider()
+            {
+                Name = "Phone",
+                IsDeleted = false,
+                Type = "Phone"
+            };
+
+            context.ContactProviders.AddRange(new List<ContactProvider>() { phone, email, skype, telegram, facebook, viber, vk, linkedin });
+
             Contact contact1 = new Contact
             {
                 IsDeleted = false,
-                Type = "Phone",
+                Provider = phone,
                 Value = "+1 415 670 9788"
             };
             Contact contact2 = new Contact
             {
                 IsDeleted = false,
-                Type = "Phone",
+                Provider = phone,
                 Value = "+1 415 670 9788"
             };
             Contact contact3 = new Contact
             {
                 IsDeleted = false,
-                Type = "Phone",
+                Provider = phone,
                 Value = "+1 415 670 9788"
             };
             Contact contact4 = new Contact
             {
                 IsDeleted = false,
-                Type = "Email",
+                Provider = email,
                 Value = "turbocat_9000@gmail.com"
             };
             Contact contact5 = new Contact
             {
                 IsDeleted = false,
-                Type = "Skype",
+                Provider = skype,
                 Value = "turbocat_9000"
             };
             Contact contact6 = new Contact
             {
                 IsDeleted = false,
-                Type = "Telegram",
+                Provider = telegram,
                 Value = "turbocat_9000"
             };
             Contact contact7 = new Contact
             {
                 IsDeleted = false,
-                Type = "Facebook",
+                Provider = facebook,
                 Value = "turbocat_9000"
             };
+
+            context.Contacts.AddRange(new List<Contact>() { contact1, contact2, contact3, contact4, contact5, contact6, contact7 });
 
             PortfolioItem portfolioItem1 = new PortfolioItem()
             {
@@ -790,6 +850,8 @@ namespace Unicorn.DataAccess.Context
                 Subcategory = subcategory1,
                 WorkType = work1
             };
+
+            context.PortfolioItems.AddRange(new List<PortfolioItem>() { portfolioItem1 });
 
             Vendor vendor1 = new Vendor()
             {
@@ -805,7 +867,7 @@ namespace Unicorn.DataAccess.Context
                     new Contact
                     {
                         IsDeleted = false,
-                        Type = "Phone",
+                        Provider = phone,
                         Value = "+1 415 670 9788"
                     }
                 },

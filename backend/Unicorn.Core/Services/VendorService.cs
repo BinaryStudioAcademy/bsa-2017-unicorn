@@ -10,7 +10,8 @@ using Unicorn.DataAccess.Interfaces;
 using Unicorn.Shared.DTOs;
 using Unicorn.Shared.DTOs.Subcategory;
 using Unicorn.Shared.DTOs.Register;
-using Unicorn.Shared.Vendor.DTOs;
+using Unicorn.Shared.DTOs.Vendor;
+using Unicorn.Shared.DTOs.Contact;
 
 namespace Unicorn.Core.Services
 {
@@ -50,15 +51,16 @@ namespace Unicorn.Core.Services
             return VendorToDTO(vendor);
         }
 
-        public async Task<IEnumerable<ContactDTO>> GetVendorContacts(long id)
+        public async Task<IEnumerable<ContactShortDTO>> GetVendorContacts(long id)
         {
             var vendor = await _unitOfWork.VendorRepository.Query
                 .Include(v => v.Contacts)
                 .SingleAsync(x => x.Id == id);
 
-            return vendor.Contacts.Select(c => new ContactDTO() {
+            return vendor.Contacts.Select(c => new ContactShortDTO() {
                 Id = c.Id,
-                Type = c.Type,
+                Type = c.Provider.Type,
+                Provider = c.Provider.Name,
                 Value = c.Value
             });
         }
