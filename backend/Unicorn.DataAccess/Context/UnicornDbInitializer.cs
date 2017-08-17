@@ -999,7 +999,7 @@ namespace Unicorn.DataAccess.Context
                 Experience = 7.5,
                 IsDeleted = false,
                 Position = "Head",
-                Works = new List<Work>() { work1 },
+                Works = new List<Work>() { work1, work2, work3 },
                 ExWork = "Dishwasher",
                 Person = person1,
                 WorkLetter = "My name is Randy Patterson, and I’m currently looking for a job in youth services. I have 10 years of experience working with youth agencies. I have a bachelor’s degree in outdoor education. I raise money, train leaders, and organize units. I have raised over $100,000 each of the last six years. I consider myself a good public speaker, and I have a good sense of humor.",

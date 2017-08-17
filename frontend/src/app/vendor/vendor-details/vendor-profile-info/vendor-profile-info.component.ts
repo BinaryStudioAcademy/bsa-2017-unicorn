@@ -21,15 +21,27 @@ export class VendorProfileInfoComponent implements OnInit {
   @Input() vendor: Vendor;
   
   rating: Rating;
+  workPreviews: Work[]; 
   workSubcategories: Subcategory[];
+  selectedSubcategory: Subcategory;
 
   constructor(private vendorService: VendorService) { }
 
   ngOnInit() {
+    this.workPreviews = this.vendor.Works;
     this.vendorService.getRating(this.vendor.Id)
-      .then(rating => this.rating = rating);
+      .then(resp => this.rating = resp.body as Rating);
     this.vendorService.getSubcategories(this.vendor.Id)
-      .then(categories => this.workSubcategories = categories);
+      .then(resp => {
+        this.workSubcategories = resp.body as Subcategory[];
+        this.selectedSubcategory = this.workSubcategories[0];
+        this.workPreviews = this.vendor.Works.filter(w => w.SubcategoryId === this.selectedSubcategory.Id);
+      });
+  }
+
+  onSubcategorySelect(subcategory: Subcategory): void {
+    this.selectedSubcategory = subcategory;
+    this.workPreviews = this.vendor.Works.filter(w => w.SubcategoryId === this.selectedSubcategory.Id);
   }
 
 }

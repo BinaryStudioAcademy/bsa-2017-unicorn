@@ -8,14 +8,14 @@ import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class LocationService {
-	private resourceUrl: string
+	private apiController: string
 
 	constructor(private dataService: DataService) {
-		this.resourceUrl = dataService.buildUrl("location");
+		this.apiController = "location";
 	}
 
-	getById(id: number): Promise<Location> {
-		return this.dataService.getRequest<Location>(`${this.resourceUrl}/${id}`);
+	getById(id: number): Promise<any> {
+		return this.dataService.getFullRequest<Location>(`${this.apiController}/${id}`);
 	}
 
 }
