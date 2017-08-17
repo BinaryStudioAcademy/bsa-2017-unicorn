@@ -23,11 +23,13 @@ export class VendorService {
   }
 
   getVendor(id: number) : Promise<any> {
-    return this.dataService.getFullRequest<Vendor>(`${this.apiController}/${id}`);
+    return this.dataService.getFullRequest<Vendor>(`${this.apiController}/${id}`)
+      .catch(err => alert(err));
   }
 
   getRating(id: number): Promise<any> {
-    return this.dataService.getFullRequest<Rating>(`${this.apiController}/${id}/rating`);
+    return this.dataService.getFullRequest<Rating>(`${this.apiController}/${id}/rating`)
+      .catch(err => alert(err));
   }
 
   getSubcategories(id: number): Promise<any> {
@@ -35,14 +37,32 @@ export class VendorService {
   }
 
   getReviews(id: number): Promise<any> {
-    return this.dataService.getFullRequest<Review[]>(`${this.apiController}/${id}/reviews`);
+    return this.dataService.getFullRequest<Review[]>(`${this.apiController}/${id}/reviews`)
+      .catch(err => alert(err));
   }
 
   getContacts(id: number): Promise<any> {
-    return this.dataService.getFullRequest<Contact[]>(`${this.apiController}/${id}/contacts`);
+    return this.dataService.getFullRequest<Contact[]>(`${this.apiController}/${id}/contacts`)
+      .catch(err => alert(err));;
   }
 
   getVendorPorfolio(vendorId: number): Promise<any> {
-    return this.dataService.getFullRequest<PortfolioItem[]>(`${this.apiController}/${vendorId}/portfolio`);
+    return this.dataService.getFullRequest<PortfolioItem[]>(`${this.apiController}/${vendorId}/portfolio`)
+      .catch(err => alert(err));
+  }
+
+  updateVendor(vendor: Vendor): Promise<any> {
+    return this.dataService.putFullRequest<Vendor>(this.apiController, vendor)
+      .catch(err => alert(err));
+  }
+
+  updateVendorPortfolio(vendorId: number, portfolio: PortfolioItem[]): Promise<any> {
+    return this.dataService.putFullRequest<PortfolioItem[]>(`${this.apiController}/${vendorId}/portfolio`, portfolio)
+      .catch(err => alert(err));
+  }
+
+  updateContacts(id: number, contacts: Contact[]): Promise<any> {
+    return this.dataService.putFullRequest<Contact[]>(`${this.apiController}/${id}/contacts`, contacts)
+      .catch(err => alert(err));;
   }
 }
