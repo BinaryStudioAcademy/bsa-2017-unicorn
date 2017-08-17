@@ -11,7 +11,7 @@ using Unicorn.Filters;
 namespace Unicorn.Controllers
 {
     [EnableCors("*", "*", "*")]
-    [TokenAuthenticate]
+    //[TokenAuthenticate]
     public class AvatarController : ApiController
     {
         private readonly IAvatarService _avatarService;
@@ -33,7 +33,7 @@ namespace Unicorn.Controllers
             {
                 await _avatarService.UploadAvatar(imageUrl, id);
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 return InternalServerError();
             }
@@ -53,7 +53,7 @@ namespace Unicorn.Controllers
             {
                 await _avatarService.UploadBackground(imageUrl, id);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return InternalServerError();
             }

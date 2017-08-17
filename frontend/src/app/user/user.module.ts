@@ -1,5 +1,6 @@
 ﻿import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HttpModule } from '@angular/http';
 
 import { UserComponent } from './user-component/user.component';
 import { UserDetailsComponent } from './user-details/user-details.component';
@@ -11,11 +12,12 @@ import { UserHistoryComponent } from './user-history/user-history.component';
 import { UserTasksComponent } from './user-tasks/user-tasks.component';
 import { UserMessagesComponent } from './user-messages/user-messages.component';
 
+import { PhotoService, Ng2ImgurUploader } from '../services/photo.service';
 import { UserService } from '../services/user.service';
 import { DataService } from "../services/data.service";
 import { AgmCoreModule } from "@agm/core";
 import { environment } from "../../environments/environment";
-import { ImageUploadModule } from "angular2-image-upload";
+import {ImageCropperComponent} from 'ng2-img-cropper';
 
 @NgModule({
     imports: [
@@ -25,7 +27,7 @@ import { ImageUploadModule } from "angular2-image-upload";
         SuiModule,
         CommonModule,
         UserRoutingModule,
-        ImageUploadModule.forRoot()
+        HttpModule
 
     ],
     declarations: [
@@ -34,7 +36,8 @@ import { ImageUploadModule } from "angular2-image-upload";
         UserProfileComponent,
         UserHistoryComponent,
         UserTasksComponent,
-        UserMessagesComponent
+        UserMessagesComponent,
+        ImageCropperComponent
     ],
     providers: [
         DataService,

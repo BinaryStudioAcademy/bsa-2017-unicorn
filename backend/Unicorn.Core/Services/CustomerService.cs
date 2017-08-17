@@ -1,11 +1,13 @@
 using AutoMapper;
+using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Unicorn.Core.Interfaces;
+using Unicorn.Core.Services.Helpers;
 using Unicorn.DataAccess.Entities;
 using Unicorn.DataAccess.Interfaces;
 using Unicorn.Shared.DTOs.Register;
-using System;
 using Unicorn.Shared.DTOs;
 
 namespace Unicorn.Core.Services
@@ -31,7 +33,10 @@ namespace Unicorn.Core.Services
         {
             var customer = await _unitOfWork.CustomerRepository.GetByIdAsync(id);
             var person = await _unitOfWork.PersonRepository.GetByIdAsync(customer.Person.Id);
-            var books = _unitOfWork.BookRepository.GetByIdAsync(customer.Id);
+
+            var books = await _unitOfWork.BookRepository.GetAllAsync();
+            var sortedBooks = books.Where(x => x.Customer.Id == id);
+
             var customerDto = new CustomerDTO()
             {
                 Id = customer.Id,
@@ -43,7 +48,8 @@ namespace Unicorn.Core.Services
                     MiddleName = person.MiddleName,
                     Gender = person.Gender,
                     Phone = person.Phone
-                }
+                },
+                Books = Mapper.Map<List<BookDTO>>(sortedBooks)
             };
             return customerDto;
         }
@@ -51,26 +57,22 @@ namespace Unicorn.Core.Services
         public async Task CreateAsync(CustomerRegisterDTO customerDto)
         {
             var account = new Account();
-            var role = new Role();
-            var permissions = new List<Permission>();
+            var role = await _unitOfWork.RoleRepository.GetByIdAsync((long)AccountRoles.Customer);
             var socialAccounts = new List<SocialAccount>();
             var socialAccount = new SocialAccount();
             var customer = new Customer();
             var person = new Person();
 
             account.Role = role;
-            account.Permissions = permissions;
             account.DateCreated = DateTime.Now;
             account.Email = customerDto.Email;
-            account.SocialAccounts = socialAccounts;
-
-            role.Name = "customer";
 
             socialAccount.Provider = customerDto.Provider;
             socialAccount.Uid = customerDto.Uid;
             socialAccount.Account = account;
 
             socialAccounts.Add(socialAccount);
+            account.SocialAccounts = socialAccounts;
 
             person.Birthday = customerDto.Birthday;
             person.Phone = customerDto.Phone;

@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
 using System.Data.Entity;
-
 using Unicorn.Core.Interfaces;
+using Unicorn.Core.Services.Helpers;
 using Unicorn.DataAccess.Entities;
 using Unicorn.DataAccess.Interfaces;
 using Unicorn.Shared.DTOs;
@@ -31,7 +31,6 @@ namespace Unicorn.Core.Services
                 .Include(v => v.Person.Location)
                 .Include(v => v.PortfolioItems)
                 .Include(v => v.Works)
-                .Include(v => v.Contacts)
                 .Include(v => v.Company)
                 .ToListAsync();
 
@@ -45,7 +44,6 @@ namespace Unicorn.Core.Services
                 .Include(v => v.Person.Location)
                 .Include(v => v.PortfolioItems)
                 .Include(v => v.Works)
-                .Include(v => v.Contacts)
                 .Include(v => v.Company)
                 .SingleAsync(x => x.Id == id);
             return VendorToDTO(vendor);
@@ -54,10 +52,10 @@ namespace Unicorn.Core.Services
         public async Task<IEnumerable<ContactShortDTO>> GetVendorContacts(long id)
         {
             var vendor = await _unitOfWork.VendorRepository.Query
-                .Include(v => v.Contacts.Select(c => c.Provider))
                 .SingleAsync(x => x.Id == id);
 
-            return vendor.Contacts.Select(c => new ContactShortDTO() {
+
+            return vendor.Person.Account.Contacts.Select(c => new ContactShortDTO() {
                 Id = c.Id,
                 Type = c.Provider.Type,
                 Provider = c.Provider.Name,
@@ -74,13 +72,13 @@ namespace Unicorn.Core.Services
             var works = vendor.Works;
             return works.GroupBy(w => w.Subcategory)
                 .Select(g => new SubcategoryShortDTO()
-                    {
-                        Id = g.Key.Id,
-                        Name = g.Key.Name,
-                        Category = g.Key.Category.Name,
-                        CategoryId = g.Key.Category.Id,
-                        Description = g.Key.Description
-                    }).ToList();
+                {
+                    Id = g.Key.Id,
+                    Name = g.Key.Name,
+                    Category = g.Key.Category.Name,
+                    CategoryId = g.Key.Category.Id,
+                    Description = g.Key.Description
+                }).ToList();
         }
 
         public async Task<long> GetVendorAccountIdAsync(long id)
@@ -122,18 +120,8 @@ namespace Unicorn.Core.Services
 
         public async Task Create(VendorRegisterDTO ShortVendorDTO)
         {
-            //Mapper.Initialize(cfg =>
-            //{
-            //    cfg.CreateMap<LocationDTO, Location>();
-            //    cfg.CreateMap<PermissionDTO, Permission>();
-            //    cfg.CreateMap<RoleDTO, Role>();
-            //    cfg.CreateMap<SocialAccountDTO, SocialAccount>();
-            //    cfg.CreateMap<AccountDTO, Account>();
-            //    cfg.CreateMap<PersonDTO, Person>();
-            //    cfg.CreateMap<ShortVendorDTO, Vendor>();
-            //});
             var account = new Account();
-            var role = new Role();
+            var role = await _unitOfWork.RoleRepository.GetByIdAsync((long)AccountRoles.Vendor);
             var permissions = new List<Permission>();
             var socialAccounts = new List<SocialAccount>();
             var socialAccount = new SocialAccount();
@@ -141,18 +129,15 @@ namespace Unicorn.Core.Services
             var person = new Person();
 
             account.Role = role;
-            account.Permissions = permissions;
             account.DateCreated = DateTime.Now;
             account.Email = ShortVendorDTO.Email;
-            account.SocialAccounts = socialAccounts;
-
-            role.Name = "vendor";
 
             socialAccount.Provider = ShortVendorDTO.Provider;
             socialAccount.Uid = ShortVendorDTO.Uid;
             socialAccount.Account = account;
 
             socialAccounts.Add(socialAccount);
+            account.SocialAccounts = socialAccounts;
 
             person.Birthday = ShortVendorDTO.Birthday;
             person.Phone = ShortVendorDTO.Phone;

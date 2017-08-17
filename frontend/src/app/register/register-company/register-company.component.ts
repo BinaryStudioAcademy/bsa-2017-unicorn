@@ -2,10 +2,11 @@ import { Component, OnInit, Input } from '@angular/core';
 
 import * as firebase from 'firebase/app';
 import { RegisterService } from '../../services/register.service';
+
 import { SuiModalService, TemplateModalConfig
   , ModalTemplate, ModalSize, SuiActiveModal } from 'ng2-semantic-ui';
 import { Company } from '../models/company';
-import { Router } from '@angular/router';
+import { HelperService } from '../../services/helper/helper.service';
 
 @Component({
   selector: 'app-register-company',
@@ -28,7 +29,7 @@ export class RegisterCompanyComponent implements OnInit {
   foundation: any;
 
   constructor(private registerService: RegisterService,
-    private router: Router) { }
+    private helperService: HelperService) { }
 
   ngOnInit() {
     this.mode = 'date';
@@ -56,17 +57,15 @@ export class RegisterCompanyComponent implements OnInit {
 
   confirmRegister() {
     if (this.valid()) {
-      this.error = false;
-      console.log('valid');
-      let regInfo = this.aggregateInfo();
-      console.log(regInfo);
+      this.error = false;      
+      let regInfo = this.aggregateInfo();      
       this.registerService.confirmCompany(regInfo).then(resp => {
         this.modal.deny('');
-        this.router.navigate(['company/1']);
+        localStorage.setItem('token', resp.headers.get('token'));        
+        this.helperService.redirectAfterAuthentication();
       });
     } else {
       this.error = true;
     }
   }
-
 }

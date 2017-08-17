@@ -12,7 +12,7 @@ using Unicorn.Shared.DTOs.Subcategory;
 
 namespace Unicorn.Controllers
 {
-    [RoutePrefix("api/vendors")]
+    [RoutePrefix("vendors")]
     [EnableCors("*", "*", "*")]
     public class VendorsController : ApiController
     {

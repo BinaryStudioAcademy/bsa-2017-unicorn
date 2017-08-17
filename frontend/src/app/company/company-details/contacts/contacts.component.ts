@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { MapModel } from "../../../models/map.model";
+import { Contact } from "../../../models/contact.model";
 
 
 export interface IContext {
@@ -11,7 +12,10 @@ export interface IContext {
   templateUrl: './contacts.component.html',
   styleUrls: ['./contacts.component.sass']
 })
-export class ContactsComponent implements OnInit {      
+export class ContactsComponent implements OnInit {    
+  @Input()
+  contacts:Contact[];
+  
   map: MapModel= {
     center: {lat: 49.85711, lng: 24.01980},
     zoom: 18,    

@@ -1,5 +1,5 @@
 export interface Review {
-    Id: number
+    Id: number;
     Avatar: string;
     Date: Date;
     FromAccountId: number;
