@@ -1,5 +1,6 @@
 ﻿import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HttpModule } from '@angular/http';
 
 import { UserComponent } from './user-component/user.component';
 import { UserDetailsComponent } from './user-details/user-details.component';
@@ -11,6 +12,7 @@ import { UserHistoryComponent } from './user-history/user-history.component';
 import { UserTasksComponent } from './user-tasks/user-tasks.component';
 import { UserMessagesComponent } from './user-messages/user-messages.component';
 
+import { PhotoService, Ng2ImgurUploader } from '../services/photo.service';
 import { UserService } from '../services/user.service';
 import { DataService } from "../services/data.service";
 import { AgmCoreModule } from "@agm/core";
@@ -24,7 +26,8 @@ import {ImageCropperComponent} from 'ng2-img-cropper';
         }),
         SuiModule,
         CommonModule,
-        UserRoutingModule
+        UserRoutingModule,
+        HttpModule
 
     ],
     declarations: [

@@ -2,13 +2,14 @@
     <div class="row">
         <div class="sixteen wide column container">
             <div class="user-header" id="user-header">
-                <i class="large wizard icon" (click)="enableTheme=true">
-        <div *ngIf="enableTheme">
+                <input type="file" id="banner-loader" accept="image/*" (change)="bannerListener($event)">
+                <!-- <i class="large wizard icon" (click)="enableTheme=true"> 
+                 <div *ngIf="enableTheme">
         <sui-modal [isClosable]="true" size="mini" (denied)="enableTheme=false" #modalTh>
            erdftgyuhjiklo;
         </sui-modal>
-        </div>
-                </i>
+        </div> 
+                </i>-->
                 <div class="avatar" (click)="openModal()">
                     <div class="ui small circular image" suiPopup popupText="Click to update your photo">
                         <img src="{{fakeUser.avatarUrl}}" />

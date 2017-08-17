@@ -8,12 +8,16 @@ import 'rxjs/add/operator/switchMap';
 import { User } from '../../models/user';
 
 import { UserService } from "../../services/user.service";
+import { PhotoService, Ng2ImgurUploader } from '../../services/photo.service';
 import {ImageCropperComponent, CropperSettings} from 'ng2-img-cropper';
 
 @Component({
   selector: 'app-user-details',
   templateUrl: './user-details.component.html',
-  styleUrls: ['./user-details.component.sass']
+  styleUrls: ['./user-details.component.sass'],
+  providers: [
+        PhotoService,
+        Ng2ImgurUploader]
 })
 export class UserDetailsComponent implements OnInit {
   
@@ -26,7 +30,10 @@ export class UserDetailsComponent implements OnInit {
 
   cropperSettings: CropperSettings;
   data: any;
-  constructor( private route: ActivatedRoute,private userService: UserService) { 
+  constructor( 
+    private route: ActivatedRoute,
+    private userService: UserService,
+    private photoService: PhotoService) { 
      this.cropperSettings = new CropperSettings();
         this.cropperSettings.width = 100;
         this.cropperSettings.height = 100;
@@ -50,6 +57,20 @@ export class UserDetailsComponent implements OnInit {
  {
     document.getElementById("user-header").style.backgroundColor = color;
  }
+
+ bannerListener($event) {
+    let file: File = $event.target.files[0];
+    this.photoService.uploadToImgur(file).then(resp => {
+      let path = resp.data.link;
+      console.log(path);
+      this.photoService.saveBanner(path)
+      .then(resp => {})
+      .catch(err => console.log(err));
+    }).catch(err => {
+      console.log(err);
+    });
+ }
+
   fileChangeListener($event) {
     var image:any = new Image();
     var file:File = $event.target.files[0];
