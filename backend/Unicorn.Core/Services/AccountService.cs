@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Unicorn.Core.DTOs;
+using Unicorn.Shared.DTOs;
 using Unicorn.Core.Interfaces;
 using Unicorn.DataAccess.Interfaces;
 
@@ -31,7 +31,6 @@ namespace Unicorn.Core.Services
                     Email = account.Email,
                     EmailConfirmed = account.EmailConfirmed,
                     SocialAccounts = account.SocialAccounts.Select(x => new SocialAccountDTO { Id = x.Id, Provider = x.Provider, Uid = x.Uid}).ToList(),
-                    Permissions = account.Permissions.Select(x => new PermissionDTO { Id = x.Id, Name = x.Name }).ToList(),
                     Role = new RoleDTO { Id = account.Role.Id, Name = account.Role.Name }
                 };
                 allaccountsData.Add(accountDto);
@@ -51,7 +50,6 @@ namespace Unicorn.Core.Services
                 Email = account.Email,
                 EmailConfirmed =account.EmailConfirmed,
                 SocialAccounts = account.SocialAccounts.Select(x => new SocialAccountDTO { Id = x.Id, Provider = x.Provider, Uid= x.Uid}).ToList(),
-                Permissions = account.Permissions.Select(x => new PermissionDTO { Id = x.Id, Name =x.Name}).ToList(),
                 Role = new RoleDTO { Id = account.Role.Id, Name = account.Role.Name }
             };
             return accountDto;

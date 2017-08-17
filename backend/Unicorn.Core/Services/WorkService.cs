@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Unicorn.Core.DTOs;
+using System.Linq;
+
+using Unicorn.Shared.DTOs;
 using Unicorn.Core.Interfaces;
 using Unicorn.DataAccess.Entities;
 using Unicorn.DataAccess.Interfaces;
@@ -19,28 +21,26 @@ namespace Unicorn.Core.Services
 
         public async Task<IEnumerable<WorkDTO>> GetAllAsync()
         {
-            Mapper.Initialize(cfg => cfg.CreateMap<Work, WorkDTO>());
-            return Mapper.Map<IEnumerable<Work>, List<WorkDTO>>(await _unitOfWork.WorkRepository.GetAllAsync());
+            var workList = await _unitOfWork.WorkRepository.GetAllAsync();
+            return workList.Select(w => WorkToDTO(w));
         }
 
         public async Task<WorkDTO> GetById(long id)
         {
             var work = await _unitOfWork.WorkRepository.GetByIdAsync(id);
-            var subcategory = await _unitOfWork.SubcategoryRepository.GetByIdAsync(id);
-
-            var workDto = new WorkDTO()
-            {
-                Id = work.Id,
-                Name = work.Name,
-                Description = work.Description,
-
-                Subcategory = new SubcategoryDTO() {
-                    Id = subcategory.Id ,
-                    Name = subcategory.Name
-                }
-            };
-            return workDto;
+            return WorkToDTO(work);
         }
 
+        private WorkDTO WorkToDTO(Work work)
+        {
+            return new WorkDTO()
+            {
+                Name = work.Name,
+                Description = work.Description,
+                Subcategory = work.Subcategory.Name,
+                SubcategoryId = work.Subcategory.Id,
+                Id = work.Id
+            };
+        }
     }
 }

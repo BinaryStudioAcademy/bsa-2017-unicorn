@@ -4,9 +4,9 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Unicorn.Core.services.interfaces;
+using Unicorn.Shared.services.interfaces;
 
-namespace Unicorn.Core.services
+namespace Unicorn.Shared.services
 {
     class JsonRequestContent : IRequestContent
     {

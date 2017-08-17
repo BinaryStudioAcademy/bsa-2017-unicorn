@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using Unicorn.Shared.DTOs.Contact;
+using Unicorn.Shared.DTOs.Vendor;
 
-namespace Unicorn.Core.DTOs
+namespace Unicorn.Shared.DTOs
 {
     public class CompanyDTO
     {
@@ -27,7 +29,7 @@ namespace Unicorn.Core.DTOs
 
         public ICollection<CategoryDTO> Categories { get; set; }
 
-
+        public ICollection<ContactShortDTO> Contacts { get; set; }
 
 
 

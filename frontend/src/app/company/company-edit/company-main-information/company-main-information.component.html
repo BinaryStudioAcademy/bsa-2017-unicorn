@@ -1,14 +1,27 @@
+<link rel="stylesheet" href="https://unpkg.com/semantic-ui-calendar/dist/calendar.min.css">
+
 <div class="container">
-    <div class="ui fluid icon input">
-        <div>
+    <div class="ui form">
+        <div class="field">
             <label>Company name</label>
             <input type="text" [(ngModel)]="company.Name">
         </div>
-        <div>
+        <div class="field">
             <label>Description</label>
-            <input type="text" [(ngModel)]="company.Description">
+            <textarea [(ngModel)]="company.Description"></textarea>
+        </div>
+        <div class="field">
+            <label>Foundation date</label>
+            <div class="ui left icon input">
+                <i class="calendar icon"></i>
+                <input suiDatepicker [(ngModel)]="company.FoundationDate" [pickerMode]="date">
+            </div>
+        </div>
+        <div>
+            <label>CEO</label>
+            <input type="text" [(ngModel)]="company.Director">
         </div>
     </div>
-    <div></div>
 
 </div>
+<div></div>
