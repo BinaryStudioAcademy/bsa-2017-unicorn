@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Unicorn.Core.DTOs;
+using Unicorn.Shared.DTOs;
 using Unicorn.Core.Interfaces;
 using Unicorn.DataAccess.Entities;
 using Unicorn.DataAccess.Interfaces;
@@ -30,7 +30,7 @@ namespace Unicorn.Core.Services
                 {
                     Id = person.Id,
                     Name = person.Name,
-                    SurnameName = person.SurnameName,
+                    Surname = person.Surname,
                     MiddleName = person.MiddleName,
                     Birthday = person.Birthday,
                     Gender = person.Gender,
@@ -52,8 +52,8 @@ namespace Unicorn.Core.Services
                         Id = location.Id,
                         Adress = location.Adress,
                         City = location.City,
-                        Longitude = location.CoordinateX,
-                        Latitude = location.CoordinateY
+                        Latitude = location.Latitude,
+                        Longitude = location.Longitude,
                     }
                 };
                 dataReturn.Add(persontDto);
@@ -71,7 +71,7 @@ namespace Unicorn.Core.Services
             {
                 Id = person.Id,
                 Name = person.Name,
-                SurnameName = person.SurnameName,
+                Surname = person.Surname,
                 MiddleName = person.MiddleName,
                 Birthday = person.Birthday,
                 Gender = person.Gender,
@@ -93,8 +93,8 @@ namespace Unicorn.Core.Services
                     Id = location.Id,
                     Adress = location.Adress,
                     City = location.City,
-                    Longitude = location.CoordinateX,
-                    Latitude = location.CoordinateY
+                    Latitude = location.Latitude,
+                    Longitude = location.Longitude,
                 }
             };
             return persontDto;

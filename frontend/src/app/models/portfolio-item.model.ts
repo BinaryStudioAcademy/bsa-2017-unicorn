@@ -1,9 +1,8 @@
 export interface PortfolioItem {
-	category: string;
-	workType: string;
-	image: string;
-	rating: number;
+	Id: number;
+	Category: string;
+	WorkType: string;
+	Image: string;
 	
-	reviewId: number;
-	historyId: number;
+	HistoryEntryId: number;
 }

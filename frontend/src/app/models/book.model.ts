@@ -8,6 +8,4 @@ export interface Book {
 	vendor: Vendor;
 	status: string;
 	workType: string;
-
-
 }
