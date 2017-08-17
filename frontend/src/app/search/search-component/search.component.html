@@ -5,7 +5,7 @@
     <div class="separator-horiz"></div>
     <div class="companies"> 
       <div class="company" *ngFor="let company of companies.slice((selectedPage - 1) * pageSize, selectedPage * pageSize)">
-        <a href="#">
+        <a href="/company/1">
           <img src="{{company.Avatar}}"/>
           <div class="company-info">
             <div class="company-name">
@@ -13,7 +13,7 @@
             </div>
             <div class="company-detail">
               <p>{{company.Location.City}}</p>
-              <sui-rating class="star" [ngModel]="company.rating" [isReadonly]="true"></sui-rating> 
+              <sui-rating class="star" [ngModel]="company.Rating" [isReadonly]="true"></sui-rating> 
               <p>{{company.Reviews.length}} reviews</p>
             </div>
           </div>

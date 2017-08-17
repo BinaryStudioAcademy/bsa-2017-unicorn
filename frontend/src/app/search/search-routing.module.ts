@@ -8,7 +8,7 @@ import { SearchComponent } from './search-component/search.component';
   imports: [
     RouterModule.forRoot([
       {
-        path: 'search/:category/:subcategory/:date',
+        path: 'search',
         component: SearchComponent,
       }
     ])
