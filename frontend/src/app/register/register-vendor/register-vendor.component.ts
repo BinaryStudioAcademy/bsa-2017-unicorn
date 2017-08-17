@@ -3,14 +3,12 @@ import { Component, OnInit, Input } from '@angular/core';
 import * as firebase from 'firebase/app';
 import { RegisterService } from '../../services/register.service';
 
-// Helpers
-import { JwtHelper } from '../../helpers/jwthelper';
-import { RoleRouter } from '../../helpers/rolerouter';
-
-import { SuiModalService, TemplateModalConfig
-  , ModalTemplate, ModalSize, SuiActiveModal } from 'ng2-semantic-ui';
+import {
+  SuiModalService, TemplateModalConfig
+  , ModalTemplate, ModalSize, SuiActiveModal
+} from 'ng2-semantic-ui';
 import { Vendor } from '../models/vendor';
-import { Router } from '@angular/router';
+import { HelperService } from '../../services/helper/helper.service';
 
 @Component({
   selector: 'app-register-vendor',
@@ -39,19 +37,19 @@ export class RegisterVendorComponent implements OnInit {
   birthday;
 
   constructor(private registerService: RegisterService,
-    private router: Router) { }
+    private helperService: HelperService) { }
 
   ngOnInit() {
     this.mode = 'date';
   }
 
   valid(): boolean {
-    return this.birthday !== undefined && this.phone != undefined 
+    return this.birthday !== undefined && this.phone != undefined
       && this.experience !== undefined && this.position !== undefined
       && this.speciality !== undefined;
   }
 
-  aggregateInfo(): Vendor{
+  aggregateInfo(): Vendor {
     let info = new Vendor();
     info.birthday = this.birthday;
     info.phone = this.phone;
@@ -73,22 +71,15 @@ export class RegisterVendorComponent implements OnInit {
 
   confirmRegister() {
     if (this.valid()) {
-      this.error = false;      
-      let regInfo = this.aggregateInfo();      
+      this.error = false;
+      let regInfo = this.aggregateInfo();
       this.registerService.confirmVendor(regInfo).then(resp => {
         this.modal.deny('');
-        localStorage.setItem('token', resp.headers.get('token'));   
-        this.redirect();     
-      });      
+        localStorage.setItem('token', resp.headers.get('token'));
+        this.helperService.redirectAfterAuthentication();
+      });
     } else {
       this.error = true;
     }
   }
-
-  private redirect() {    
-    const userClaims = new JwtHelper().decodeToken(localStorage.getItem('token'));
-    let path = new RoleRouter().getRouteByRole(userClaims['roleid']);
-    this.router.navigate([path, userClaims['id']]);
-  }
-
 }
