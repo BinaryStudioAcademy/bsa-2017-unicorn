@@ -75,6 +75,10 @@ export class UserDetailsComponent implements OnInit {
 
     myReader.readAsDataURL(file);
 }
+
+  fileSaveListener($event){
+    
+  }
   private closeModal() {
     this.activeModal.deny(''); 
   }
