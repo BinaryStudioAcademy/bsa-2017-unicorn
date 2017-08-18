@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input, ViewChild, forwardRef, Inject, NgZone } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, ViewChild, forwardRef, Inject, NgZone, EventEmitter, Output } from '@angular/core';
 import { Location } from '@angular/common';
 
 import { AuthService } from '../../services/auth/auth.service';
@@ -8,6 +8,8 @@ import { MenuComponent } from '../../menu/menu.component';
 import { HelperService } from '../../services/helper/helper.service';
 
 import { RegisterService } from '../../services/register.service';
+
+import { LoginService }   from '../../services/events/login.service';
 
 import {
   SuiModalService, TemplateModalConfig, SuiModal, ComponentModalConfig
@@ -36,8 +38,6 @@ export class ConfirmModal extends ComponentModalConfig<IConfirmModalContext, voi
 export class RegisterComponent implements OnInit, OnDestroy {
   private currentUser: firebase.User = null;
 
-  @Input() enabled: boolean;
-
   mode: string;
   modalSize: string;
   error: boolean = false;
@@ -54,12 +54,15 @@ export class RegisterComponent implements OnInit, OnDestroy {
   isVendor = false;
   isCompany = false;
 
+  // @Output() onUserLoggedIn = new EventEmitter<void>();  
+
   constructor(
     public modal: SuiModal<IConfirmModalContext, void, void>,
     private zone: NgZone,
     private helperService: HelperService,
     public registerService: RegisterService,
-    public authService: AuthService) {
+    public authService: AuthService,
+    private loginEventService: LoginService) {
 
     this.mode = 'date';
     this.authService.logout();
@@ -84,7 +87,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
       case 200: {
         this.modal.deny(undefined);
         this.authService.saveJwt(resp.headers.get('token'));
-        this.error = false;        
+        this.error = false;
+        
+        //this.onUserLoggedIn.emit();
+
+        this.loginEventService.login(true);
+
         this.helperService.redirectAfterAuthentication();
         break;
       }

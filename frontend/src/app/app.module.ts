@@ -37,6 +37,8 @@ import { FooterComponent } from './footer/footer.component';
 
 import { RegisterComponent } from './register/register-component/register.component';
 
+import { LoginService } from './services/events/login.service';
+
 @NgModule({
   declarations: [    
     AppComponent,
@@ -63,7 +65,8 @@ import { RegisterComponent } from './register/register-component/register.compon
   ],
   providers: [
     AuthService,
-    HelperService
+    HelperService,
+    LoginService
   ],
   entryComponents: [RegisterComponent],
   bootstrap: [AppComponent]
