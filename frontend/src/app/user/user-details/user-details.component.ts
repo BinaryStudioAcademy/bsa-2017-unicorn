@@ -53,8 +53,8 @@ export class UserDetailsComponent implements OnInit {
      this.cropperSettings = new CropperSettings();
         this.cropperSettings.width = 100;
         this.cropperSettings.height = 100;
-        this.cropperSettings.croppedWidth =100;
-        this.cropperSettings.croppedHeight = 100;
+        this.cropperSettings.croppedWidth =140;
+        this.cropperSettings.croppedHeight = 140;
         this.cropperSettings.canvasWidth = 400;
         this.cropperSettings.canvasHeight = 300;
         
