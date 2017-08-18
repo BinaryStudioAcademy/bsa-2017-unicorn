@@ -67,6 +67,9 @@
     <Compile Include="DTOs\SocialAccountDTO.cs" />
     <Compile Include="DTOs\Subcategory\SubcategoryDTO.cs" />
     <Compile Include="DTOs\Subcategory\SubcategoryShortDTO.cs" />
+    <Compile Include="DTOs\User\BookShortDto.cs" />
+    <Compile Include="DTOs\User\UserShortDTO.cs" />
+    <Compile Include="DTOs\User\VendorShortDto.cs" />
     <Compile Include="DTOs\Vendor\ShortVendorDTO.cs" />
     <Compile Include="DTOs\Vendor\VendorDTO.cs" />
     <Compile Include="DTOs\WorkDTO.cs" />

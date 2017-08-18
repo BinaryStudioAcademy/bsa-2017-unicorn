@@ -9,6 +9,7 @@ using Unicorn.DataAccess.Entities;
 using Unicorn.DataAccess.Interfaces;
 using Unicorn.Shared.DTOs.Register;
 using Unicorn.Shared.DTOs;
+using Unicorn.Shared.DTOs.User;
 
 namespace Unicorn.Core.Services
 {
@@ -23,35 +24,10 @@ namespace Unicorn.Core.Services
             _bookservice = bookservice;
         }
 
-        public async Task<IEnumerable<CustomerDTO>> GetAllAsync()
+        public async Task<object> GetById(long id)
         {
-            Mapper.Initialize(cfg => cfg.CreateMap<Customer, CustomerDTO>());
-            return Mapper.Map<IEnumerable<Customer>, List<CustomerDTO>>(await _unitOfWork.CustomerRepository.GetAllAsync());
-        }
-
-        public async Task<CustomerDTO> GetById(long id)
-        {
-            var customer = await _unitOfWork.CustomerRepository.GetByIdAsync(id);
-            var person = await _unitOfWork.PersonRepository.GetByIdAsync(customer.Person.Id);
-
-            var books = await _unitOfWork.BookRepository.GetAllAsync();
-            var sortedBooks = books.Where(x => x.Customer.Id == id);
-
-            var customerDto = new CustomerDTO()
-            {
-                Id = customer.Id,
-                Person = new PersonDTO()
-                {
-                    Id = person.Id,
-                    Name = person.Name,
-                    Surname = person.Surname,
-                    MiddleName = person.MiddleName,
-                    Gender = person.Gender,
-                    Phone = person.Phone
-                },
-                Books = Mapper.Map<List<BookDTO>>(sortedBooks)
-            };
-            return customerDto;
+            var result = await GetCustomerAsync(id);
+            return result;
         }
 
         public async Task CreateAsync(CustomerRegisterDTO customerDto)
@@ -87,6 +63,38 @@ namespace Unicorn.Core.Services
 
             _unitOfWork.CustomerRepository.Create(customer);
             await _unitOfWork.SaveAsync();
+        }
+
+
+        public async Task<object> GetCustomerAsync(long id)
+        {
+            var customer = await _unitOfWork.CustomerRepository.GetByIdAsync(id);
+            if (customer != null)
+            {
+                var customerDto = new UserShortDTO()
+                {
+                    Id = customer.Id,
+                    Name = customer.Person.Name,
+                    SurName = customer.Person.Surname,
+                    MiddleName = customer.Person.MiddleName,
+                    LocationId = customer.Person.Location.Id,
+                    Birthday = customer.Person.Birthday,
+                    Phone = customer.Person.Phone,
+                    Avatar = customer.Person.Account.Avatar,
+                    Email = customer.Person.Account.Email,
+                    Books = customer.Books.Select(x => new BookShortDto()
+                    {
+                        Adress = x.Location?.Adress,
+                        Date = x.Date,
+                        Description = x.Description,
+                        //    Vendor = new VendorShortDto() { Avatar = x?.Vendor.Person.Account.Avatar, FIO = x?.Vendor.Person.Name + " " + x?.Vendor.Person.SurnameName, Position = x?.Vendor.Position },
+                        Sratus = x.Status,
+                        workType = x.Work.Subcategory?.Name
+                    }).ToList()
+                };
+                return customerDto;
+            }
+            return null;
         }
     }
 }

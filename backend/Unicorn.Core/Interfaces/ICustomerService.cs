@@ -8,8 +8,7 @@ namespace Unicorn.Core.Interfaces
 {
     public interface ICustomerService
     {
-        Task<IEnumerable<CustomerDTO>> GetAllAsync();
-        Task<CustomerDTO> GetById(long id);
+        Task<object> GetById(long id);
         Task CreateAsync(CustomerRegisterDTO customerDto);
     }
 }
