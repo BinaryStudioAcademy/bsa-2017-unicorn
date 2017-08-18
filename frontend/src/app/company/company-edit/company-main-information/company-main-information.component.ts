@@ -10,13 +10,16 @@ import { CompanyService } from "../../../services/company.service";
 export class CompanyMainInformationComponent implements OnInit {
 @Input()
   company: Company;
+  isLoaded: boolean = false;
+
   constructor(private companyService: CompanyService) { }
 
   ngOnInit() {
   }
 
   save(){
-    this.companyService.saveCompany(this.company);
+    this.isLoaded = true;
+    this.companyService.saveCompany(this.company).then(() => {this.isLoaded = false});
   }
   
 

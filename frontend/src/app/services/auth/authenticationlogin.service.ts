@@ -5,13 +5,14 @@ import { Observable } from 'rxjs/Observable';
 
 import { DataService } from '../data.service';
 import { UserAuth } from '../../models/userauth';
+import { AuthenticationEventService } from '../events/authenticationevent.service';
 
 @Injectable()
-export class AuthService {
+export class AuthenticationLoginService {
   public authState: Observable<firebase.User>
   private apiController: string;
 
-  constructor(public afAuth: AngularFireAuth, public httpService: DataService) {
+  constructor(public afAuth: AngularFireAuth, public httpService: DataService, private authEventService: AuthenticationEventService) {
     httpService.setHeader('Content-Type', 'application/json');
     this.authState = this.afAuth.authState;
 
@@ -61,8 +62,9 @@ export class AuthService {
     }
   }
 
-  public logout() {
+  public signOut() {
     localStorage.removeItem('token');
     this.afAuth.auth.signOut();
+    this.authEventService.signOut();
   }
 }

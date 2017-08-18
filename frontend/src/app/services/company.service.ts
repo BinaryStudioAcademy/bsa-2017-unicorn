@@ -15,8 +15,8 @@ export class CompanyService {
     .then(res => { return res });    
   }
 
-  saveCompany(company: Company){
-    this.dataService.postRequest("company", company);
+  saveCompany(company: Company):Promise<Company>{
+    return this.dataService.postRequest("company", company);
   }
 
   getMockCompany(): Company{
