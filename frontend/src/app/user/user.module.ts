@@ -1,6 +1,7 @@
 ﻿import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';
+import { FormsModule } from '@angular/forms';
 
 import { UserComponent } from './user-component/user.component';
 import { UserDetailsComponent } from './user-details/user-details.component';
@@ -27,7 +28,8 @@ import {ImageCropperComponent} from 'ng2-img-cropper';
         SuiModule,
         CommonModule,
         UserRoutingModule,
-        HttpModule
+        HttpModule,
+        FormsModule
 
     ],
     declarations: [

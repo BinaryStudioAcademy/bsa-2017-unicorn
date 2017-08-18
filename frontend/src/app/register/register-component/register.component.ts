@@ -1,28 +1,20 @@
-import { Component, OnInit, OnDestroy, Input, ViewChild, forwardRef, Inject, NgZone, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
 import { Location } from '@angular/common';
 
 import { AuthenticationLoginService } from '../../services/auth/authenticationlogin.service';
+import { AuthenticationEventService } from '../../services/events/authenticationevent.service';
+
 import * as firebase from 'firebase/app';
-import { Observable } from 'rxjs/Observable';
-import { MenuComponent } from '../../menu/menu.component';
+
 import { HelperService } from '../../services/helper/helper.service';
 
 import { RegisterService } from '../../services/register.service';
-import { AuthenticationEventService } from '../../services/events/authenticationevent.service';
 
-import {
-  SuiModalService, TemplateModalConfig, SuiModal, ComponentModalConfig
-  , ModalTemplate, ModalSize, SuiActiveModal
-} from 'ng2-semantic-ui';
+import { ComponentModalConfig, ModalSize, SuiModal } from 'ng2-semantic-ui';
 
-export interface IConfirmModalContext {
-  title: string;
-  question: string;
-}
-
-export class ConfirmModal extends ComponentModalConfig<IConfirmModalContext, void, void> {
-  constructor(title: string, question: string) {
-    super(RegisterComponent, { title, question });
+export class RegisterModal extends ComponentModalConfig<void> {
+  constructor() {
+    super(RegisterComponent);
     this.size = ModalSize.Small;
     this.isInverted = true;
   }
@@ -38,7 +30,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
   private currentUser: firebase.User = null;
 
   mode: string;
-  modalSize: string;
   error: boolean = false;
 
   public roles: { [role: string]: boolean } = {};
@@ -54,7 +45,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   isCompany = false;
 
   constructor(
-    public modal: SuiModal<IConfirmModalContext, void, void>,
+    public modal: SuiModal<void>,
     private zone: NgZone,
     private helperService: HelperService,
     public registerService: RegisterService,
@@ -85,10 +76,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
         this.modal.deny(undefined);
         this.authLoginService.saveJwt(resp.headers.get('token'));
         this.error = false;
-
         this.authEventService.signIn();
-        this.helperService.redirectAfterAuthentication();
-
+        this.zone.run(() => this.helperService.redirectAfterAuthentication());
         break;
       }
       default: {

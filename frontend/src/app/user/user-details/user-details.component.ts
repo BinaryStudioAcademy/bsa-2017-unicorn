@@ -41,6 +41,7 @@ export class UserDetailsComponent implements OnInit {
   backgroundUrl: SafeResourceUrl;
   uploading: boolean;
   isOwner: boolean;
+  user:User;
 
   modalSize: string;
 
@@ -72,8 +73,14 @@ export class UserDetailsComponent implements OnInit {
         this.imageUploaded = false;
   }
   ngOnInit() {
-    this.fakeUser = this.userService.getUser(0);
+    //this.fakeUser = this.userService.getUser(0);
     this.initOwnerParam();
+    this.route.params
+    .switchMap((params: Params) => this.userService.getUser(params['id']))
+    .subscribe(resp => {
+      this.user = resp as User;
+      this.backgroundUrl = this.buildSafeUrl(this.user.Avatar);
+    });
   }
 
   initOwnerParam(): void {
@@ -86,6 +93,10 @@ export class UserDetailsComponent implements OnInit {
     console.log(this.tokenHelper.getClaimByName('id'));
   }
 
+  buildSafeUrl(link: string): SafeResourceUrl {
+    return this.sanitizer.bypassSecurityTrustStyle(`url('${link}')`);
+  }
+
   bannerListener($event) {
       let file: File = $event.target.files[0];
       this.uploading = true;
@@ -93,7 +104,7 @@ export class UserDetailsComponent implements OnInit {
         console.log(link);
         return this.photoService.saveBanner(link);
       }).then(link => {
-        this.backgroundUrl = this.sanitizer.bypassSecurityTrustStyle(`url('${link}')`);
+        this.backgroundUrl = this.buildSafeUrl(link);
         this.uploading = false;
       }).catch(err => {
         console.log(err);
@@ -156,6 +167,6 @@ export class UserDetailsComponent implements OnInit {
 
   getImage() : string {
     debugger;
-    return this.data.image ? this.data.image : this.fakeUser.avatarUrl;
+    return this.data.image ? this.data.image : ''; // prev. was fake user prop
   }
 }

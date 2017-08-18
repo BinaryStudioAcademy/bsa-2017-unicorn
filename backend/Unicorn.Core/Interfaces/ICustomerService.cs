@@ -1,15 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-
-using Unicorn.Shared.DTOs;
+﻿using System.Threading.Tasks;
 using Unicorn.Shared.DTOs.Register;
+using Unicorn.Shared.DTOs.User;
 
 namespace Unicorn.Core.Interfaces
 {
     public interface ICustomerService
     {
-        Task<IEnumerable<CustomerDTO>> GetAllAsync();
-        Task<CustomerDTO> GetById(long id);
+        Task<object> GetById(long id);
         Task CreateAsync(CustomerRegisterDTO customerDto);
+        Task UpdateCustomerAsync(UserShortDTO userDTO);    
     }
 }
