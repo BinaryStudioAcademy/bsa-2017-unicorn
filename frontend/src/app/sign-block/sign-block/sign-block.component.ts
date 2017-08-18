@@ -2,7 +2,7 @@ import { Component, OnInit} from '@angular/core';
 import { NgModel } from '@angular/forms';
 import {SuiModule} from 'ng2-semantic-ui';
 import * as firebase from 'firebase/app';
-import { AuthService } from '../../services/auth/auth.service';
+import { AuthenticationLoginService } from '../../services/auth/authenticationlogin.service';
 import { ConfirmModal, IConfirmModalContext } from '../../register/register-component/register.component';
 import { SuiModalService, TemplateModalConfig, SuiModal, ComponentModalConfig
   , ModalTemplate, ModalSize, SuiActiveModal } from 'ng2-semantic-ui';

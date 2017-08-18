@@ -11,6 +11,11 @@ import { UserService } from "../../services/user.service";
 import { PhotoService, Ng2ImgurUploader } from '../../services/photo.service';
 import {ImageCropperComponent, CropperSettings} from 'ng2-img-cropper';
 
+import { SuiModalService, TemplateModalConfig
+  , ModalTemplate, ModalSize, SuiActiveModal } from 'ng2-semantic-ui';
+
+export interface IContext { }
+
 @Component({
   selector: 'app-user-details',
   templateUrl: './user-details.component.html',
@@ -21,6 +26,10 @@ import {ImageCropperComponent, CropperSettings} from 'ng2-img-cropper';
 })
 export class UserDetailsComponent implements OnInit {
   
+  @ViewChild('modalTemplate')
+  public modalTemplate: ModalTemplate<IContext, string, string>;
+  private activeModal: SuiActiveModal<IContext, {}, string>;
+
 @ViewChild('cropper', undefined)
  cropper:ImageCropperComponent;
   enabled: boolean = false;
@@ -28,17 +37,24 @@ export class UserDetailsComponent implements OnInit {
   saveImgButton:boolean = false;
   user:User;
 
+  modalSize: string;
+
+
   cropperSettings: CropperSettings;
   data: any;
+  file: File;
+  imageUploaded: boolean;  
+
   constructor( 
     private route: ActivatedRoute,
     private userService: UserService,
-    private photoService: PhotoService) { 
+    private photoService: PhotoService,
+    public modalService: SuiModalService) { 
      this.cropperSettings = new CropperSettings();
         this.cropperSettings.width = 100;
         this.cropperSettings.height = 100;
-        this.cropperSettings.croppedWidth =100;
-        this.cropperSettings.croppedHeight = 100;
+        this.cropperSettings.croppedWidth =140;
+        this.cropperSettings.croppedHeight = 140;
         this.cropperSettings.canvasWidth = 400;
         this.cropperSettings.canvasHeight = 300;
         
@@ -46,6 +62,7 @@ export class UserDetailsComponent implements OnInit {
         this.cropperSettings.rounded = true;
         
         this.data = {};
+        this.imageUploaded = false;
   }
   ngOnInit() {
     this.route.params
@@ -54,9 +71,7 @@ export class UserDetailsComponent implements OnInit {
            
 
   }
- openModal() {
-    this.enabled = true;
-  }
+
  updateBg(color:string)
  {
     document.getElementById("user-header").style.backgroundColor = color;
@@ -79,7 +94,7 @@ export class UserDetailsComponent implements OnInit {
 
   fileChangeListener($event) {
     var image:any = new Image();
-    var file:File = $event.target.files[0];
+    this.file = $event.target.files[0];
     var myReader:FileReader = new FileReader();
     var that = this;
     myReader.onloadend = function (loadEvent:any) {
@@ -87,7 +102,51 @@ export class UserDetailsComponent implements OnInit {
         that.cropper.setImage(image);
 
     };
-
-    myReader.readAsDataURL(file);
+    this.imageUploaded = true;
+    myReader.readAsDataURL(this.file);
 }
+
+  fileSaveListener(){
+    if (!this.data)
+    {
+      console.log("file not upload");
+      return;
+    }
+
+    this.photoService.uploadToImgur(this.file).then(resp => {
+      let path = resp.data.link;
+      console.log(path);
+      this.photoService.saveAvatar(path)
+      .then(resp => {
+        this.activeModal.deny('');        
+      })
+      .catch(err => console.log(err));
+    }).catch(err => {
+      console.log(err);
+    });
+
+  }
+
+  public openModal() {
+    const config = new TemplateModalConfig<IContext, string, string>(this.modalTemplate);
+    //config.closeResult = "closed!";
+    
+    config.context = {};
+    config.size = ModalSize.Normal;
+    config.isInverted = true;
+    //config.mustScroll = true;
+    let that = this;
+
+    this.activeModal = this.modalService
+      .open(config)
+      .onApprove(result => { /* approve callback */ })
+      .onDeny(result => {
+        that.imageUploaded = false;
+      });
+  }
+
+  getImage() : string {
+    debugger;
+    return this.data.image ? this.data.image : this.fakeUser.avatarUrl;
+  }
 }
