@@ -147,6 +147,6 @@ export class UserDetailsComponent implements OnInit {
 
   getImage() : string {
     debugger;
-    return this.data.image ? this.data.image : this.fakeUser.avatarUrl;
+    return this.data.image ? this.data.image : ''; // prev. was fake user prop
   }
 }
