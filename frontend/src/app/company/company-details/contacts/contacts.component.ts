@@ -26,6 +26,10 @@ export class ContactsComponent implements OnInit {
     
   } ;
 
+  ngOnChanges(){
+    // this.phones = this.contacts.filter(x => x.)
+  }
+
   constructor() { }
 
   ngOnInit() {    

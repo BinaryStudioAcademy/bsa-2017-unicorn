@@ -21,7 +21,7 @@ export class VendorProfilePortfolioComponent implements OnInit, AfterContentInit
 
   ngAfterContentInit(): void {
     this.vendorService.getVendorPorfolio(this.vendorId)
-      .then(portfolio => this.portfolio = portfolio);
+      .then(resp => this.portfolio = resp.body as PortfolioItem[]);
   }
 
   ngOnInit() {

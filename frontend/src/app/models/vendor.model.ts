@@ -1,10 +1,13 @@
 import { Review } from './review.model';
 import { Work } from './work.model';
 import { PortfolioItem } from "./portfolio-item.model";
+import { Contact } from "./contact.model";
 
 export interface Vendor {
 	Id: number;
-	FIO: string;
+	Name: string;
+	Surname: string;
+	MiddleName: string;
 	Avatar: string;
 	City: string;
 	LocationId: number;
@@ -13,4 +16,6 @@ export interface Vendor {
 	ExWork: string;
 	Company: string;
 	CompanyId: number;
+	Works: Work[];
+	Birthday: Date;
 }

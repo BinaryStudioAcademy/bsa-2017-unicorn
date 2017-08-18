@@ -52,6 +52,7 @@ namespace Unicorn.Core.Services
         public async Task<IEnumerable<ContactShortDTO>> GetVendorContacts(long id)
         {
             var vendor = await _unitOfWork.VendorRepository.Query
+                .Include(v => v.Person)
                 .SingleAsync(x => x.Id == id);
 
 
@@ -63,21 +64,28 @@ namespace Unicorn.Core.Services
             });
         }
 
-        public async Task<IEnumerable<SubcategoryShortDTO>> GetVendorCategoriesAsync(long id)
+        public async Task<IEnumerable<CategoryDTO>> GetVendorCategoriesAsync(long id)
         {
             var vendor = await _unitOfWork.VendorRepository.Query
                 .Include(v => v.Works)
                 .SingleAsync(x => x.Id == id);
 
             var works = vendor.Works;
-            return works.GroupBy(w => w.Subcategory)
-                .Select(g => new SubcategoryShortDTO()
+            return works.GroupBy(w => w.Subcategory.Category)
+                .Select(g => new CategoryDTO()
                 {
                     Id = g.Key.Id,
                     Name = g.Key.Name,
-                    Category = g.Key.Category.Name,
-                    CategoryId = g.Key.Category.Id,
-                    Description = g.Key.Description
+                    Description = g.Key.Description,
+                    Subcategories = g.Key.Subcategories
+                        .Select(s => new SubcategoryShortDTO()
+                        {
+                            Category = g.Key.Name,
+                            CategoryId = g.Key.Id,
+                            Name = s.Name,
+                            Id = s.Id,
+                            Description = s.Description
+                        }).ToList()
                 }).ToList();
         }
 
@@ -99,12 +107,23 @@ namespace Unicorn.Core.Services
                 CompanyId = vendor.Company?.Id,
                 Experience = vendor.Experience,
                 ExWork = vendor.ExWork,
-                FIO = $"{vendor.Person.Name} {vendor.Person.Surname}",
+                Name = vendor.Person.Name,
+                Surname = vendor.Person.Surname,
+                MiddleName = vendor.Person.MiddleName,
                 Id = vendor.Id,
                 City = vendor.Person.Location.City,
                 LocationId = vendor.Person.Location.Id,
                 Position = vendor.Position,
-                WorkLetter = vendor.WorkLetter
+                WorkLetter = vendor.WorkLetter,
+                Birthday = vendor.Person.Birthday,
+                Works = vendor.Works.Select(w => new WorkDTO()
+                {
+                    Id = w.Id,
+                    Description = w.Description,
+                    Name = w.Name,
+                    Subcategory = w.Subcategory.Name,
+                    SubcategoryId = w.Subcategory.Id
+                }).ToList()
             };
         }
 
@@ -146,9 +165,24 @@ namespace Unicorn.Core.Services
             await _unitOfWork.SaveAsync();
         }
 
-        public Task<ShortVendorDTO> GetById(long id)
+        public async Task Update(ShortVendorDTO vendorDto)
         {
-            throw new NotImplementedException();
+            var vendor = await _unitOfWork.VendorRepository.Query
+                .Include(v => v.Person)
+                .Include(v => v.Person.Account)
+                .Include(v => v.Works)
+                .Include(v => v.Company)
+                .SingleAsync(x => x.Id == vendorDto.Id);
+
+            vendor.WorkLetter = vendorDto.WorkLetter;
+            vendor.Position = vendorDto.Position;
+            vendor.Person.Birthday = vendorDto.Birthday.AddDays(1); // Dirty hack, fix this later
+            vendor.Person.Name = vendorDto.Name;
+            vendor.Person.Surname = vendorDto.Surname;
+            vendor.Person.MiddleName = vendorDto.MiddleName;
+
+            _unitOfWork.VendorRepository.Update(vendor);
+            await _unitOfWork.SaveAsync();
         }
     }
 }

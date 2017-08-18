@@ -20,7 +20,7 @@ export class VendorProfileReviewsComponent implements OnInit, AfterContentInit {
 
   ngAfterContentInit(): void {
     this.vendorService.getReviews(this.vendorId)
-      .then(reviews => this.reviews = reviews);
+      .then(resp => this.reviews = resp.body as Review[]);
   }
 
   ngOnInit() {

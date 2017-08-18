@@ -7,6 +7,7 @@ import { VendorProfileInfoComponent } from './vendor-details/vendor-profile-info
 import { VendorProfileContactsComponent } from './vendor-details/vendor-profile-contacts/vendor-profile-contacts.component';
 import { VendorProfileReviewsComponent } from './vendor-details/vendor-profile-reviews/vendor-profile-reviews.component';
 import { VendorProfilePortfolioComponent } from './vendor-details/vendor-profile-portfolio/vendor-profile-portfolio.component';
+import { VendorEditComponent } from "./vendor-edit/vendor-edit.component";
 
 @NgModule({
   imports: [
@@ -27,7 +28,11 @@ import { VendorProfilePortfolioComponent } from './vendor-details/vendor-profile
           },
           {
             path: ':id',
-            component: VendorDetailsComponent,
+            component: VendorDetailsComponent
+          },
+          {
+            path: ':id/edit',
+            component: VendorEditComponent
           }
         ]
       }

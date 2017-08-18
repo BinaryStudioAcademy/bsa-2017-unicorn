@@ -17,6 +17,7 @@ import { VendorService } from "../../../services/vendor.service";
 export class VendorProfileContactsComponent implements OnInit {
   @Input() private vendorId: number;
   @Input() private locationId: number;
+  
   contacts: Contact[];
   location: Location;
   map: MapModel;
@@ -28,15 +29,15 @@ export class VendorProfileContactsComponent implements OnInit {
 
   ngOnInit() {
     this.vendorService.getContacts(this.vendorId)
-      .then(contacts => this.contacts = contacts);
+      .then(resp => this.contacts = resp.body as Contact[]);
     this.locationService.getById(this.locationId)
-      .then(location => { 
-        this.location = location;
+      .then(resp => { 
+        this.location = resp.body as Location;
         this.map = {
           center: {lat: this.location.Latitude, lng: this.location.Longitude},
           zoom: 18,    
           title: "Overcat 9000",
-          label: "Overcat 9000",
+          label: "",
           markerPos: {lat: this.location.Latitude, lng: this.location.Longitude}
         };
       });

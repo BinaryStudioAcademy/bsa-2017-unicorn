@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+
 using Unicorn.DataAccess.Interfaces;
 
 namespace Unicorn.DataAccess.Entities

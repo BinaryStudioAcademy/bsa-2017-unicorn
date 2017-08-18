@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms'
 import {SuiModule} from 'ng2-semantic-ui';
 import { BookModule } from '../book/book.module';
+import { SignBlockModule } from '../sign-block/sign-block.module';
 
 import { CompanyComponent } from './company-component/company.component';
 import { CompanyDetailsComponent } from './company-details/company-details.component';
@@ -33,6 +34,7 @@ import { CompanyOrdersComponent } from './company-edit/company-orders/company-or
     BrowserModule,
     SuiModule,
     BookModule,
+    SignBlockModule,
     MapModule 
   ],
   declarations: [

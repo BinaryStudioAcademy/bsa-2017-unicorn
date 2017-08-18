@@ -26,5 +26,4 @@ export class BookComponent implements OnInit {
       workType: ""
     }    
   }
-
 }
