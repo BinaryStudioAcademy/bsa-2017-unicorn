@@ -2,13 +2,11 @@ import { Component, OnInit, Input } from '@angular/core';
 
 import * as firebase from 'firebase/app';
 import { RegisterService } from '../../services/register.service';
+
+import { SuiActiveModal } from 'ng2-semantic-ui';
+import { Customer } from '../models/customer';
 import { HelperService } from '../../services/helper/helper.service';
 import { AuthenticationEventService } from '../../services/events/authenticationevent.service';
-
-import { SuiModalService, TemplateModalConfig
-  , ModalTemplate, ModalSize, SuiActiveModal } from 'ng2-semantic-ui';
-
-import { Customer } from '../models/customer';
 
 @Component({
   selector: 'app-register-user',
@@ -18,8 +16,7 @@ import { Customer } from '../models/customer';
 export class RegisterUserComponent implements OnInit {
 
   @Input() social: firebase.User;
-
-  @Input() public modal: SuiActiveModal<{}, {}, string>;
+  @Input() public modal: SuiActiveModal<void, void, void>;
 
   mode: string;
   error = false;
@@ -43,10 +40,10 @@ export class RegisterUserComponent implements OnInit {
     return this.birthday !== undefined && this.phone != undefined;
   }
 
-  aggregateInfo(): Customer{
+  aggregateInfo(): Customer {
     let info = new Customer();
     info.birthday = this.birthday;
-    
+
     info.phone = this.phone;
     info.email = this.email;
     info.image = this.social.photoURL;
@@ -63,8 +60,8 @@ export class RegisterUserComponent implements OnInit {
     if (this.valid()) {
       this.error = false;
       let regInfo = this.aggregateInfo();
-      this.registerService.confirmCustomer(regInfo).then(resp => {      
-        this.modal.deny('');
+      this.registerService.confirmCustomer(regInfo).then(resp => {
+        this.modal.deny(null);
         localStorage.setItem('token', resp.headers.get('token'));
         this.authEventService.signIn();
         this.helperService.redirectAfterAuthentication();

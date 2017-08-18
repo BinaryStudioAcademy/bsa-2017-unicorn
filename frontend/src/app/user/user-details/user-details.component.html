@@ -1,19 +1,19 @@
 ﻿<div class="ui grid container">
-    <div class="row">
+    <div class="row" *ngIf="user !== undefined">
         <div class="sixteen wide column container">
-            <div class="user-header" id="user-header">
-                <label id="banner-loader" for="banner-input" class="ui icon button basic">
-                    <i class="icon upload pink"></i>
+            <div class="user-header" id="user-header" [style.backgroundImage]="backgroundUrl">
+                <label *ngIf="isOwner" id="banner-loader" for="banner-input" class="ui icon button basic" [ngClass]="{'loading': uploading}">
+                    <i class="icon pink" [ngClass]="{'upload': !uploading}"></i>
                 </label>
                 <input type="file" id="banner-input" accept="image/*" (change)="bannerListener($event)">
 
-                <div class="avatar" (click)="openModal()">
+                <div class="avatar" (click)="openModal()" *ngIf="user!== undefined">
                     <div class="ui small circular image" suiPopup popupText="Click to update your photo">
                         <img id="user-avatar" src="{{getImage()}}" />
                     </div>
                 </div>
-                <div class="user-title">
-                    <h3>{{fakeUser.firstName}} {{fakeUser.surName}}</h3>
+                <div class="user-title" *ngIf="user!== undefined"  >
+                    <h3>{{user.Name}} {{user.SurName}}</h3>
                 </div>
                 <ng-template class="modalImage" let-context let-modal="modal" #modalTemplate>
                     <div class="content">
@@ -83,12 +83,12 @@
                     <div class="row">
                         <div class="sixteen wide container column">
                             <div class="ui segment" suiTabContent="1">
-                                <app-user-profile [user]="fakeUser"></app-user-profile>
+                                <app-user-profile [user]="user"></app-user-profile>
                             </div>
                         </div>
                         <div class="sixteen wide container column">
                             <div class="ui segment" suiTabContent="2">
-                                <app-user-tasks [user]="fakeUser"></app-user-tasks>
+                                <app-user-tasks [user]="user"></app-user-tasks>
                             </div>
                         </div>
                         <div class="sixteen wide container column">
@@ -98,7 +98,7 @@
                         </div>
                         <div class="sixteen wide container column">
                             <div class="ui segment" suiTabContent="4">
-                                <app-user-history [user]="fakeUser"></app-user-history>
+                                <app-user-history [user]="user"></app-user-history>
                             </div>
                         </div>
                     </div>

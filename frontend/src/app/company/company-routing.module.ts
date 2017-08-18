@@ -5,6 +5,8 @@ import { CompanyComponent } from './company-component/company.component';
 import { CompanyDetailsComponent } from './company-details/company-details.component';
 import { CompanyEditComponent } from "./company-edit/company-edit.component";
 
+import { AuthGuard } from '../guards/auth.guard';
+
 @NgModule({
   imports: [
     RouterModule.forRoot([
@@ -29,6 +31,7 @@ import { CompanyEditComponent } from "./company-edit/company-edit.component";
           {
             path: ':id/edit',
             component: CompanyEditComponent,
+            canActivate: [AuthGuard]
           }
         ]
       }
@@ -36,6 +39,7 @@ import { CompanyEditComponent } from "./company-edit/company-edit.component";
   ],
   exports: [
     RouterModule
-  ]
+  ],
+  providers: [AuthGuard]
 })
 export class CompanyRoutingModule { }
