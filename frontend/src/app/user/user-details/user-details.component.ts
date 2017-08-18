@@ -48,11 +48,11 @@ export class UserDetailsComponent implements OnInit {
         this.data = {};
   }
   ngOnInit() {
-    // this.fakeUser = this.userService.getUser(0);
-    this.userService.getUser(3).then(res => {
-      this.user = res;      
-      console.log(this.user);
-      });     
+    this.route.params
+    .switchMap((params: Params) => this.userService.getUser(params['id']))
+    .subscribe(resp => this.user = resp as User);
+           
+
   }
  openModal() {
     this.enabled = true;

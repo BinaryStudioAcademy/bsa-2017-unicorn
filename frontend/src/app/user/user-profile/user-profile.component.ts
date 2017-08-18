@@ -2,6 +2,9 @@
 import { NgModel } from '@angular/forms';
 import { User } from '../../models/user';
 import { AgmMap } from "@agm/core";
+import { NguiMapModule, Marker } from "@ngui/map";
+
+import { UserService } from "../../services/user.service";
 export interface IContext {
     data: string;
 }
@@ -19,7 +22,7 @@ export class UserProfileComponent implements OnInit {
     lat: number = 48.464921;
     lng: number = 35.045798;
 
-    constructor() { }
+    constructor(private userService: UserService) { }
    mapClicked($event: MouseEvent){
       this.lat=$event.clientX;
       this.lng=$event.clientY;
@@ -27,4 +30,10 @@ export class UserProfileComponent implements OnInit {
   }
     ngOnInit() {
     }
+
+    updateUser(): void {
+        this.userService.updateUser(this.user)
+          .then(resp => this.user = resp.body as User);
+      }
 }
+

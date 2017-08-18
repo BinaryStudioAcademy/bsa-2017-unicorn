@@ -2,17 +2,17 @@
     <div class="column">
         <div class="ui input">
             <div class="elem">
-                <input type="text" [(ngModel)]="user.Name"placeholder="NAME">
-                <input type="text" value="{{user.surName}}" placeholder="LASTNAME">
-                <input type="text" value="{{user.middleName}}" placeholder="MIDLENAME">
-                <input type="text" value="{{user.email}}" placeholder="EMAIL">
-                <input type="text" value="{{user.phone}}" placeholder="PHONE">
+                <input type="text" [(ngModel)]="user.Name" name="name" placeholder="NAME">
+                <input type="text" [(ngModel)]="user.surName" name="surname" placeholder="LASTNAME">
+                <input type="text" [(ngModel)]="user.middleName" name="middlename" placeholder="MIDLENAME">
+                <input type="text" [(ngModel)]="user.email" name="email" placeholder="EMAIL">
+                <input type="text" [(ngModel)]="user.phone" name="phone" placeholder="PHONE">
             </div>
         </div>
         <div class="elem">
             <div class="ui left icon input">
                 <i class="calendar icon" style="margin-left: 15px; margin-top: 10px;"></i>
-                <input suiDatepicker ng-model="birthday" pickerMode="date" placeholder="PICK YOUR BIRTH">
+                <input suiDatepicker [(ngModel)]="user.birthday" name="birthday" pickerMode="date" placeholder="PICK YOUR BIRTH">
             </div>
         </div>
     </div>
