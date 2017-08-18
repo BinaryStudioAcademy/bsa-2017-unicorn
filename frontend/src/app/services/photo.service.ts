@@ -42,9 +42,7 @@ export class PhotoService {
     saveBanner(imageUrl: string): Promise<string> {
         console.log('savebanner');
         return this.dataService.postFullRequest('background/1', imageUrl)
-            .then(() => {
-                return imageUrl;
-            });
+            .then(() => {return imageUrl;});
     }
 
     saveAvatar(imageUrl: string): Promise<any> {
