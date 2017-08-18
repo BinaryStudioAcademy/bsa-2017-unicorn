@@ -1,9 +1,65 @@
 <div class="search-wrapper">
   <div class="companies-container">
-    <div class="filter-container">
-    </div>
+     <div class="ui grid">
+      <div class="four column row">
+        <div class="column">
+          {{labelSearch}}
+        </div>
+        <div class="column"></div>
+        <div class="column">
+          {{labelDate}}
+        </div>
+        <div class="column"></div>
+      </div>
+      <div class="four column row">
+        <div class="column ui input">
+          <input class="search-input" type="text" placeholder="{{placeholderCategory}}" [(ngModel)]="searchCategory">
+        </div>
+        <div class="column ui input">
+          <input class="search-input" type="text" placeholder="{{placeholderSubcategory}}" [(ngModel)]="searchSubcategory">
+        </div>
+        <div class="column">
+          <div class="ui left icon input">
+            <i class="calendar icon"></i>
+            <input class="datepicker" placeholder="RIGHT NOW" suiDatepicker [(ngModel)]="searchDate" [pickerMode]="mode" [pickerFirstDayOfWeek]="firstDayOfWeek" [pickerUseNativeOnMobile]="false">
+          </div>
+        </div>
+        <div class="column search-item">
+          <button class="ui button btn-search" (click)="searchVendor()">SEARCH</button>
+        </div>
+      </div>
+    </div> 
+    <!-- <sui-tabset>
+        <div class="ui pointing secondary menu">
+          <a class="item" suiTabHeader="1">By rating</a>
+          <a class="item" suiTabHeader="2">By popularity</a>
+          <a class="item" suiTabHeader="2">By cration date</a>
+      </div>
+    </sui-tabset> -->
+    <!-- <div class="filter-container">
+      <div class="search-container">
+        <div class="search-item">
+          <p>{{labelSearch}}</p>
+          <div class="ui input fill-horizontal">
+            <input class="search-input" type="text" placeholder="{{placeholderCategory}}" [(ngModel)]="searchCategory">
+          </div>
+          </div>
+          <div class="search-item">
+          <div class="ui input fill-horizontal">
+            <input class="search-input" type="text" placeholder="{{placeholderSubcategory}}" [(ngModel)]="searchSubcategory">
+          </div>
+        </div>
+        <div class="search-item">
+          <p>{{labelDate}}</p>
+          <div class="ui left icon input">
+            <i class="calendar icon"></i>
+            <input class="datepicker" placeholder="RIGHT NOW" suiDatepicker [(ngModel)]="searchDate" [pickerMode]="mode" [pickerFirstDayOfWeek]="firstDayOfWeek" [pickerUseNativeOnMobile]="false">
+          </div>
+        </div>
+      </div>
+    </div> -->
     <div class="separator-horiz"></div>
-    <div class="companies"> 
+     <div class="companies"> 
       <div class="company" *ngFor="let company of companies.slice((selectedPage - 1) * pageSize, selectedPage * pageSize)">
         <a href="/company/1">
           <img src="{{company.Avatar}}"/>
@@ -19,7 +75,7 @@
           </div>
         </a>
       </div>
-    </div>
+    </div> 
     <div class="page-container"> 
       <sui-pagination [collectionSize]="companies.length"
                         [pageSize]="pageSize"
@@ -30,6 +86,15 @@
     </div> 
   </div>  
   <div class="map-container">
-    <ngui-map class="map" [options]="mapOptions"></ngui-map>
+    <!-- <ngui-map class="map" [options]="mapOptions"></ngui-map> -->
+    <ngui-map class="map" zoom="14" center="Brampton, Canada">
+      <marker *ngFor="let marker of markers" 
+          [position]="marker.pos"
+          [title]="marker.title"></marker>
+      </ngui-map>
+      <!-- <marker *ngFor="let pos of positions" 
+        [position]="pos"
+        [title]="labelDate"></marker>
+    </ngui-map> -->
   </div>
 </div>
