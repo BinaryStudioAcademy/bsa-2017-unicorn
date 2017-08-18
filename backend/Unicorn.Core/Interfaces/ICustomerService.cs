@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-
-using Unicorn.Shared.DTOs;
+﻿using System.Threading.Tasks;
 using Unicorn.Shared.DTOs.Register;
+using Unicorn.Shared.DTOs.User;
 
 namespace Unicorn.Core.Interfaces
 {
@@ -10,5 +8,6 @@ namespace Unicorn.Core.Interfaces
     {
         Task<object> GetById(long id);
         Task CreateAsync(CustomerRegisterDTO customerDto);
+        Task UpdateCustomerAsync(UserShortDTO userDTO);    
     }
 }

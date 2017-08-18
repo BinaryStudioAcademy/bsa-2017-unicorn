@@ -65,6 +65,23 @@ namespace Unicorn.Core.Services
             await _unitOfWork.SaveAsync();
         }
 
+        public async Task UpdateCustomerAsync(UserShortDTO userDTO)
+        {
+            var customer = await _unitOfWork.CustomerRepository.GetByIdAsync(userDTO.Id);
+
+            if (customer != null)
+            {
+                customer.Person.Name = userDTO.Name;
+                customer.Person.Surname = userDTO.SurName;
+                customer.Person.MiddleName = userDTO.MiddleName;
+                customer.Person.Account.Email = userDTO.Email;
+                customer.Person.Phone = userDTO.Phone;
+                customer.Person.Birthday = userDTO.Birthday;
+
+                _unitOfWork.CustomerRepository.Update(customer);
+                await _unitOfWork.SaveAsync();
+            }
+        }
 
         public async Task<object> GetCustomerAsync(long id)
         {
