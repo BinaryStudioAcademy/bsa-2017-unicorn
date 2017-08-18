@@ -23,6 +23,7 @@ namespace Unicorn.Controllers
             _customerService = customerService;
         }
         
+        [HttpGet]
         [Route("{id}")]
         public async Task<IHttpActionResult> Get(long id)
         {
