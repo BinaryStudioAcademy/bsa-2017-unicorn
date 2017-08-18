@@ -49,6 +49,7 @@
     <Compile Include="DTOs\BookDTO.cs" />
     <Compile Include="DTOs\CategoryDTO.cs" />
     <Compile Include="DTOs\CompanyDTO.cs" />
+    <Compile Include="DTOs\Company\ShortCompanyDTO.cs" />
     <Compile Include="DTOs\ContactProviderDTO.cs" />
     <Compile Include="DTOs\Contact\ContactDTO.cs" />
     <Compile Include="DTOs\Contact\ContactShortDTO.cs" />

@@ -7,6 +7,7 @@ import { Observable, Subject } from 'rxjs';
 
 import { DataService } from '../services/data.service';
 import { FileReaderUtils } from './file-utils';
+import { TokenHelperService } from './helper/tokenhelper.service';
 
 
 export type ImgurUploadOptions = {
@@ -25,28 +26,41 @@ export type ImgurUploadResponse = {
 
 @Injectable()
 export class PhotoService {
-    constructor(private http: Http, private dataService: DataService){
+    constructor(
+        private http: Http, 
+        private dataService: DataService,
+        private tokenHelper: TokenHelperService){
         this.dataService.setHeader('Content-Type', 'application/json');
     }
 
-    uploadToImgur(image: Blob): Promise<ImgurUploadResponse> {
+    uploadToImgur(image: Blob): Promise<string> {
+        if (!this.tokenHelper.isTokenValid()) {
+            return Promise.reject('Not authenticated');
+        }
         let up = new Ng2ImgurUploader(this.http);
         let op: ImgurUploadOptions = {
             clientId: imgurenvironment.client_id,
             title: 'title',
             imageData: image
         };
-        return up.upload(op).toPromise();
+        return up.upload(op).toPromise().then(resp => resp.data.link);
     }
 
-    saveBanner(imageUrl: string): Promise<any> {
+    private getId(): string {
+        console.log(this.tokenHelper.getAllClaims());
+        return this.tokenHelper.getClaimByName('id');
+    }
+
+    saveBanner(imageUrl: string): Promise<string> {
         console.log('savebanner');
-        return this.dataService.postFullRequest('background/1', imageUrl);
+        return this.dataService.postFullRequest(`background/${this.getId()}`, imageUrl)
+            .then(() => {return imageUrl;});
     }
 
     saveAvatar(imageUrl: string): Promise<any> {
         console.log('saveavatar');
-        return this.dataService.postFullRequest('avatar/1', imageUrl);
+        return this.dataService.postFullRequest(`avatar/${this.getId()}`, imageUrl)
+            .then(() => {return imageUrl;});
     }
 }
 
@@ -120,97 +134,3 @@ export class Ng2ImgurUploader {
         return result;
     }
 }
-
-
-
-
-
-
-// export type ImgurUploadOptions = {
-//   clientId: string,
-//   imageData: Blob,
-//   title?: string
-// };
-
-// export type ImgurUploadResponse = {
-//   data?: {
-//       link: string,
-//       deleteHash: string
-//   },
-//   success: boolean
-// };
-
-
-// @Injectable()
-// export class PhotoService {
-
-//   refresh_token: string = imgurenvironment.refresh_token;
-//   client_id: string = imgurenvironment.client_id;
-//   client_secret: string = imgurenvironment.client_secret;
-//   url: string;
-
-//   upload(uploadOptions: ImgurUploadOptions) {
-//     let result = new Subject<ImgurUploadResponse>();
-
-//     PhotoutilService.imageDataToBase64(uploadOptions.imageData)
-//         .subscribe(
-//             (imageBase64: string) => {
-//                 this.sendImgurRequest(imageBase64, uploadOptions, result);
-//             },
-//             (error: string) => {
-//                 result.error(error);
-//             }
-//         );
-
-//     return result;
-// }
-
-//   constructor(private dataService: DataService) {
-//   }  
-
-//   private buildRequestOptions(clientId) {
-//     let headers = new Headers({
-//         Authorization: 'Client-ID ' + clientId,
-//         Accept: 'application/json'
-//     });
-//     return new RequestOptions({headers: headers});
-// }
-
-// delete(clientId: string, deleteHash: string): Observable<string> {
-//   let options = this.buildRequestOptions(clientId);
-//   return this.dataService.deleteFullRequest(`https://api.imgur.com/3/image/${deleteHash}`, options).then(x =>(res: Response) => res.text() );
-// }
-
-//   private sendImgurRequest(
-//     imageBase64: string,
-//     uploadOptions: ImgurUploadOptions,
-//     result: Subject<ImgurUploadResponse>
-// ): Observable<ImgurUploadResponse> {
-//     let options = this.buildRequestOptions(uploadOptions.clientId);
-//     let body = {
-//         image: imageBase64,
-//         title: uploadOptions.title,
-//         type: 'base64'
-//     };
-    
-//     this.dataService.postFullRequest<string>('https://api.imgur.com/3/image', body).then(
-//       request=>  (res: Response) => {
-//       let responseData = res.json().data;
-//       result.next({
-//           data: {
-//               link: responseData.link,
-//               deleteHash: responseData.deletehash
-//           },
-//           success: true
-//       });
-//       result.complete();
-//   },
-//   (err: Response) => {
-//       result.error('error uploading image: ' + err.text());
-//   }) ;
-
-//   return result;
-//   }
-
-
-// }
