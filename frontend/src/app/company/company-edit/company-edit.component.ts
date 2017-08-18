@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Company } from "../../models/company.model";
 import { CompanyService } from "../../services/company.service";
+import { Params, ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: 'app-company-edit',
@@ -10,13 +11,16 @@ import { CompanyService } from "../../services/company.service";
 export class CompanyEditComponent implements OnInit {
   isDimmed: boolean = false;
   company: Company;
-  constructor(private companyService: CompanyService) { }
+  
+  constructor(private companyService: CompanyService,
+    private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.companyService.getCompany(2).then(res => {
+    this.route.params
+    .switchMap((params: Params) => this.companyService.getCompany(params['id'])).subscribe(res => {
       this.company = res;      
-      console.log(res);
-      });    
+      // console.log(res);
+      });        
   }
 
 }
