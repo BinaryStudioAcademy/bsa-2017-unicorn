@@ -23,8 +23,10 @@
                 <label>Birthday</label>
                 <div class="ui left icon input">
                   <i class="calendar icon"></i>
-                  <input suiDatepicker [pickerMode]="date" [(ngModel)]="vendor.Birthday" name="birthday" [pickerUseNativeOnMobile]="false"
-                    placeholder="PICK YOUR BIRTH">
+                  <input suiDatepicker pickerMode="date" 
+                  [(ngModel)]="birthday" name="birthday" 
+                  [pickerUseNativeOnMobile]="false"
+                  placeholder="PICK YOUR BIRTH">
                 </div>
               </div>
               <div class="field">
@@ -42,7 +44,8 @@
       </div>
     </div>
     <div class="ui container column">
-      <button (click)="saveVendor()" class="ui basic button"><h5>Save</h5></button>
+      <button *ngIf="dataLoaded" (click)="saveVendor()" class="ui basic button"><h5>Save</h5></button>
+      <button *ngIf="!dataLoaded" class="ui loading button">Loading</button>
       <h4>Help customers find you</h4>
       <div *ngIf="map != undefined" class="map">
         <app-map [inputMap]="map"></app-map>

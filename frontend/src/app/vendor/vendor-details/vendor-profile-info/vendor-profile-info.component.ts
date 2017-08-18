@@ -21,8 +21,12 @@ export class VendorProfileInfoComponent implements OnInit {
   @Input() vendor: Vendor;
   
   rating: Rating;
+  
   workPreviews: Work[]; 
+  workCategories: Category[];
   workSubcategories: Subcategory[];
+
+  selectedCategory: Category;
   selectedSubcategory: Subcategory;
 
   constructor(private vendorService: VendorService) { }
@@ -31,12 +35,15 @@ export class VendorProfileInfoComponent implements OnInit {
     this.workPreviews = this.vendor.Works;
     this.vendorService.getRating(this.vendor.Id)
       .then(resp => this.rating = resp.body as Rating);
-    this.vendorService.getSubcategories(this.vendor.Id)
-      .then(resp => {
-        this.workSubcategories = resp.body as Subcategory[];
-        this.selectedSubcategory = this.workSubcategories[0];
-        this.workPreviews = this.vendor.Works.filter(w => w.SubcategoryId === this.selectedSubcategory.Id);
-      });
+    this.vendorService.getCategories(this.vendor.Id)
+      .then(resp => this.workCategories = resp.body as Category[])
+      .then(() => this.onCategorySelect(this.workCategories[0]));
+  }
+
+  onCategorySelect(category: Category): void {
+    this.selectedCategory = category;
+    this.workSubcategories = category.Subcategories;
+    this.onSubcategorySelect(this.workSubcategories[0]);
   }
 
   onSubcategorySelect(subcategory: Subcategory): void {

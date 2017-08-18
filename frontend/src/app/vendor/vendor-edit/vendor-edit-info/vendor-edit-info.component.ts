@@ -18,8 +18,10 @@ import { LocationService } from "../../../services/location.service";
 export class VendorEditInfoComponent implements OnInit {
   @Input() vendor: Vendor;
   
+  birthday: Date;
   location: Location;
   map: MapModel;
+  dataLoaded: boolean;
   
   constructor(
     private locationService: LocationService, 
@@ -27,22 +29,29 @@ export class VendorEditInfoComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.dataLoaded = true;
     this.locationService.getById(this.vendor.LocationId)
-      .then(resp => { 
-        this.location = resp.body as Location;
-        this.map = {
+      .then(resp => this.location = resp.body as Location)
+      .then(() => this.map = {
           center: {lat: this.location.Latitude, lng: this.location.Longitude},
           zoom: 18,    
           title: "Overcat 9000",
           label: "",
           markerPos: {lat: this.location.Latitude, lng: this.location.Longitude}
-        };
-      });
+        })
+        .then(() => this.birthday = this.vendor.Birthday);
+  }
+
+  onDateSelected(date: Date): void {
+    console.log(date.getDate());
   }
 
   saveVendor(): void {
+    this.dataLoaded = false;
+    this.vendor.Birthday = this.birthday;
     this.vendorService.updateVendor(this.vendor)
-      .then(resp => this.vendor = resp.body as Vendor);
+      .then(resp => this.vendor = resp.body as Vendor)
+      .then(() => this.dataLoaded = true);
   }
 
 }

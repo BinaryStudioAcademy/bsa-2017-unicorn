@@ -64,21 +64,28 @@ namespace Unicorn.Core.Services
             });
         }
 
-        public async Task<IEnumerable<SubcategoryShortDTO>> GetVendorCategoriesAsync(long id)
+        public async Task<IEnumerable<CategoryDTO>> GetVendorCategoriesAsync(long id)
         {
             var vendor = await _unitOfWork.VendorRepository.Query
                 .Include(v => v.Works)
                 .SingleAsync(x => x.Id == id);
 
             var works = vendor.Works;
-            return works.GroupBy(w => w.Subcategory)
-                .Select(g => new SubcategoryShortDTO()
+            return works.GroupBy(w => w.Subcategory.Category)
+                .Select(g => new CategoryDTO()
                 {
                     Id = g.Key.Id,
                     Name = g.Key.Name,
-                    Category = g.Key.Category.Name,
-                    CategoryId = g.Key.Category.Id,
-                    Description = g.Key.Description
+                    Description = g.Key.Description,
+                    Subcategories = g.Key.Subcategories
+                        .Select(s => new SubcategoryShortDTO()
+                        {
+                            Category = g.Key.Name,
+                            CategoryId = g.Key.Id,
+                            Name = s.Name,
+                            Id = s.Id,
+                            Description = s.Description
+                        }).ToList()
                 }).ToList();
         }
 
@@ -108,6 +115,7 @@ namespace Unicorn.Core.Services
                 LocationId = vendor.Person.Location.Id,
                 Position = vendor.Position,
                 WorkLetter = vendor.WorkLetter,
+                Birthday = vendor.Person.Birthday,
                 Works = vendor.Works.Select(w => new WorkDTO()
                 {
                     Id = w.Id,

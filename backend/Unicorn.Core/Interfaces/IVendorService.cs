@@ -14,7 +14,7 @@ namespace Unicorn.Core.Interfaces
         Task<IEnumerable<ShortVendorDTO>> GetAllAsync();
         Task<ShortVendorDTO> GetByIdAsync(long id);
         Task<long> GetVendorAccountIdAsync(long id);
-        Task<IEnumerable<SubcategoryShortDTO>> GetVendorCategoriesAsync(long id);
+        Task<IEnumerable<CategoryDTO>> GetVendorCategoriesAsync(long id);
         Task<IEnumerable<ContactShortDTO>> GetVendorContacts(long id);
         Task<ShortVendorDTO> GetById(long id);
         Task Create(VendorRegisterDTO vendorDto);
