@@ -65,17 +65,11 @@ export class UserDetailsComponent implements OnInit {
         this.imageUploaded = false;
   }
   ngOnInit() {
+    
     this.route.params
     .switchMap((params: Params) => this.userService.getUser(params['id']))
-    .subscribe(resp => this.user = resp as User);
-           
-
+    .subscribe(resp => this.user = resp.body as User);
   }
-
- updateBg(color:string)
- {
-    document.getElementById("user-header").style.backgroundColor = color;
- }
 
  bannerListener($event) {
     let file: File = $event.target.files[0];
@@ -115,7 +109,8 @@ export class UserDetailsComponent implements OnInit {
 
     this.photoService.uploadToImgur(this.file).then(resp => {
       let path = resp.data.link;
-      console.log(path);
+      this.user.Avatar=path;
+      console.log(this.user);
       this.photoService.saveAvatar(path)
       .then(resp => {
         this.activeModal.deny('');        
@@ -124,7 +119,6 @@ export class UserDetailsComponent implements OnInit {
     }).catch(err => {
       console.log(err);
     });
-
   }
 
   public openModal() {
@@ -146,7 +140,6 @@ export class UserDetailsComponent implements OnInit {
   }
 
   getImage() : string {
-    debugger;
     return this.data.image ? this.data.image : this.user.Avatar;
   }
 }

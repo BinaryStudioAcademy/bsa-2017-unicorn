@@ -12,6 +12,7 @@ using Unicorn.Shared.DTOs.User;
 
 namespace Unicorn.Controllers
 {
+    [RoutePrefix("users")]
     [EnableCors("*", "*", "*")]
     public class UserController : ApiController
     {
@@ -21,9 +22,8 @@ namespace Unicorn.Controllers
         {
             _customerService = customerService;
         }
-
-        // GET: api/User/5
-        [Route("user/{id}")]
+        
+        [Route("{id}")]
         public async Task<IHttpActionResult> Get(long id)
         {
             var result = await _customerService.GetById(id);

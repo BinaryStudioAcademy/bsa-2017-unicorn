@@ -1,7 +1,7 @@
 import {Book} from './book.model'
 export interface User
 {
-	id: number;
+	Id: number;
 	Name: string;
 	MiddleName: string;
 	SurName: string;
