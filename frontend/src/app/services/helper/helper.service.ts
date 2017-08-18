@@ -1,19 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
-// Helpers
-import { JwtHelper } from '../../helpers/jwthelper';
 import { RoleRouter } from '../../helpers/rolerouter';
+import { TokenHelperService } from './tokenhelper.service';
 
 @Injectable()
 export class HelperService {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private tokenHelper: TokenHelperService) { }
 
   public redirectAfterAuthentication() {
-    const userClaims = new JwtHelper().decodeToken(localStorage.getItem('token'));
+    const userClaims = this.tokenHelper.getAllClaims();
     let path = new RoleRouter().getRouteByRole(userClaims['roleid']);
     this.router.navigate([path, userClaims['id']]);
   }
-
 }

@@ -3,6 +3,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import * as firebase from 'firebase/app';
 import { RegisterService } from '../../services/register.service';
 import { HelperService } from '../../services/helper/helper.service';
+import { AuthenticationEventService } from '../../services/events/authenticationevent.service';
 
 import { SuiModalService, TemplateModalConfig
   , ModalTemplate, ModalSize, SuiActiveModal } from 'ng2-semantic-ui';
@@ -31,7 +32,8 @@ export class RegisterUserComponent implements OnInit {
   email: string;
 
   constructor(private registerService: RegisterService,
-    private helperService: HelperService) { }
+    private helperService: HelperService,
+    private authEventService: AuthenticationEventService) { }
 
   ngOnInit() {
     this.mode = 'date';
@@ -64,6 +66,7 @@ export class RegisterUserComponent implements OnInit {
       this.registerService.confirmCustomer(regInfo).then(resp => {      
         this.modal.deny('');
         localStorage.setItem('token', resp.headers.get('token'));
+        this.authEventService.signIn();
         this.helperService.redirectAfterAuthentication();
       });
     } else {
