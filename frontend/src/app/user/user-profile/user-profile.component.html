@@ -1,18 +1,18 @@
-﻿<div   *ngIf="user !== undefined"  class="container">
+﻿<div class="container">
     <div class="column">
         <div class="ui input" *ngIf="user !== undefined">
             <div class="elem">
-                <input type="text" [(ngModel)]="user.Name" name="name" placeholder="NAME">
-                <input type="text" [(ngModel)]="user.surName" name="surname" placeholder="LASTNAME">
-                <input type="text" [(ngModel)]="user.middleName" name="middlename" placeholder="MIDLENAME">
-                <input type="text" [(ngModel)]="user.email" name="email" placeholder="EMAIL">
-                <input type="text" [(ngModel)]="user.phone" name="phone" placeholder="PHONE">
+                <input type="text" [(ngModel)]="user.Name" name="Name" placeholder="NAME">
+                <input type="text" [(ngModel)]="user.SurName" name="SurName" placeholder="LASTNAME">
+                <input type="text" [(ngModel)]="user.MiddleName" name="MiddleName" placeholder="MIDLENAME">
+                <input type="text" [(ngModel)]="user.Email" name="Email" placeholder="EMAIL">
+                <input type="text" [(ngModel)]="user.Phone" name="Phone" placeholder="PHONE">
             </div>
         </div>
-        <div class="elem">
+        <div class="elem" *ngIf="user !== undefined">
             <div class="ui left icon input">
                 <i class="calendar icon" style="margin-left: 15px; margin-top: 10px;"></i>
-                <input suiDatepicker [(ngModel)]="user.birthday" name="birthday" pickerMode="date" placeholder="PICK YOUR BIRTH">
+                <input suiDatepicker [(ngModel)]="user.Birthday" name="Birthday" pickerMode="date" placeholder="PICK YOUR BIRTH">
             </div>
         </div>
     </div>

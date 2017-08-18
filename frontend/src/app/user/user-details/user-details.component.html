@@ -7,13 +7,13 @@
                 </label>
                 <input type="file" id="banner-input" accept="image/*" (change)="bannerListener($event)">
 
-                <div class="avatar" (click)="openModal()">
+                <div class="avatar" (click)="openModal()" *ngIf="user!== undefined">
                     <div class="ui small circular image" suiPopup popupText="Click to update your photo">
                         <img src="{{user.Avatar}}" />
                     </div>
                 </div>
-                <div class="user-title" >
-                    <h3>{{user.Name}} {{user.surName}}</h3>
+                <div class="user-title" *ngIf="user!== undefined"  >
+                    <h3>{{user.Name}} {{user.SurName}}</h3>
                 </div>
                 <div *ngIf="enabled">
                     <sui-modal [isClosable]="true" size="tiny" (denied)="enabled=false" #modal>
