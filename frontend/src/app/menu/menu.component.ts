@@ -2,15 +2,17 @@ import { Component, OnInit } from '@angular/core';
 
 import { MenuItem } from './menu-item/menu-item';
 
-import { LoginService } from '../services/events/login.service';
+import { AuthenticationEventService } from '../services/events/authenticationevent.service';
+import { AuthenticationLoginService } from '../services/auth/authenticationlogin.service';
+
 import { Subscription } from 'rxjs/Subscription';
+import { TokenHelperService } from '../services/helper/tokenhelper.service';
 
 import {
   SuiModalService, TemplateModalConfig, SuiModal, ComponentModalConfig
   , ModalTemplate, ModalSize, SuiActiveModal
 } from 'ng2-semantic-ui';
 import { ConfirmModal, IConfirmModalContext } from '../register/register-component/register.component';
-import { AuthService } from '../services/auth/auth.service';
 
 @Component({
   selector: 'app-menu',
@@ -22,24 +24,36 @@ export class MenuComponent implements OnInit {
   items: MenuItem[];
   isEnabled: boolean;
   isLogged: boolean;
-  subscription: Subscription;
 
-  constructor(private modalService: SuiModalService, private eventLoginService: LoginService, private authService: AuthService) {
-    this.isLogged = localStorage.getItem('token') != null;
+  onLogIn: Subscription;
+  onLogOut: Subscription;
+
+  constructor(
+    private modalService: SuiModalService,
+    private authEventService: AuthenticationEventService,
+    private authLoginService: AuthenticationLoginService,
+    private tokenHelper: TokenHelperService) {
+    this.isLogged = this.tokenHelper.isTokenValid() && this.tokenHelper.isTokenNotExpired();
   }
 
   ngOnInit() {
     this.addMenuItems();
     this.isEnabled = true;
 
-    this.subscription = this.eventLoginService.loginEvent$
-      .subscribe(x => {
-        this.isLogged = x;
+    this.onLogIn = this.authEventService.loginEvent$
+      .subscribe(() => {
+        this.isLogged = true;
+      });
+
+    this.onLogOut = this.authEventService.logoutEvent$
+      .subscribe(() => {
+        this.isLogged = false;
       });
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.onLogIn.unsubscribe();
+    this.onLogOut.unsubscribe();
   }
 
   openModal() {
@@ -63,7 +77,6 @@ export class MenuComponent implements OnInit {
   }
 
   signOut() {
-    this.authService.logout();
-    this.isLogged = false;
+    this.authLoginService.signOut();
   }
 }

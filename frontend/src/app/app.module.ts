@@ -7,7 +7,9 @@ import { environment } from '../environments/environment.prod';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 
-import { AuthService } from './services/auth/auth.service';
+import { AuthenticationLoginService } from './services/auth/authenticationlogin.service';
+import { AuthenticationEventService } from './services/events/authenticationevent.service';
+
 import { HelperService } from './services/helper/helper.service';
 
 // Routing
@@ -36,19 +38,17 @@ import { MenuComponent } from './menu/menu.component';
 import { FooterComponent } from './footer/footer.component';
 
 import { RegisterComponent } from './register/register-component/register.component';
-
-import { LoginService } from './services/events/login.service';
 import { TokenHelperService } from './services/helper/tokenhelper.service';
 
 @NgModule({
-  declarations: [    
+  declarations: [
     AppComponent,
     ShellComponent,
     MenuComponent,
     FooterComponent
   ],
-  imports: [    
-    SuiModule,    
+  imports: [
+    SuiModule,
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
@@ -65,9 +65,9 @@ import { TokenHelperService } from './services/helper/tokenhelper.service';
     IndexModule // Must be the last module
   ],
   providers: [
-    AuthService,
+    AuthenticationLoginService,
+    AuthenticationEventService,
     HelperService,
-    LoginService,
     TokenHelperService
   ],
   entryComponents: [RegisterComponent],

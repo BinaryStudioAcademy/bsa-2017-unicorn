@@ -1,14 +1,14 @@
 import { Component, OnInit, OnDestroy, Input, ViewChild, forwardRef, Inject, NgZone, EventEmitter, Output } from '@angular/core';
 import { Location } from '@angular/common';
 
-import { AuthService } from '../../services/auth/auth.service';
+import { AuthenticationLoginService } from '../../services/auth/authenticationlogin.service';
 import * as firebase from 'firebase/app';
 import { Observable } from 'rxjs/Observable';
 import { MenuComponent } from '../../menu/menu.component';
 import { HelperService } from '../../services/helper/helper.service';
 
 import { RegisterService } from '../../services/register.service';
-import { LoginService }   from '../../services/events/login.service';
+import { AuthenticationEventService } from '../../services/events/authenticationevent.service';
 
 import {
   SuiModalService, TemplateModalConfig, SuiModal, ComponentModalConfig
@@ -58,11 +58,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
     private zone: NgZone,
     private helperService: HelperService,
     public registerService: RegisterService,
-    public authService: AuthService,
-    private loginEventService: LoginService) {
+    public authLoginService: AuthenticationLoginService,
+    private authEventService: AuthenticationEventService) {
 
     this.mode = 'date';
-    this.authService.logout();
+    this.authLoginService.signOut();
 
     this.isLogged = false;
     this.error = false;
@@ -83,10 +83,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
       }
       case 200: {
         this.modal.deny(undefined);
-        this.authService.saveJwt(resp.headers.get('token'));
+        this.authLoginService.saveJwt(resp.headers.get('token'));
         this.error = false;
 
-        this.loginEventService.login(true);
+        this.authEventService.signIn();
         this.helperService.redirectAfterAuthentication();
 
         break;
@@ -99,7 +99,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   loginWithGoogle() {
-    this.authService.loginWithGoogle()
+    this.authLoginService.loginWithGoogle()
       .then(resp => {
         this.handleResponse(resp);
       })
@@ -109,7 +109,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   loginWithFacebook() {
-    this.authService.loginWithFacebook()
+    this.authLoginService.loginWithFacebook()
       .then(resp => {
         this.handleResponse(resp);
       })
@@ -119,7 +119,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   loginWithTwitter() {
-    this.authService.loginWithTwitter()
+    this.authLoginService.loginWithTwitter()
       .then(resp => {
         this.handleResponse(resp);
       })
@@ -141,7 +141,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.authService.authState.subscribe(user => {
+    this.authLoginService.authState.subscribe(user => {
       if (user) {
         this.currentUser = user;
       } else {

@@ -44,4 +44,8 @@ export class TokenHelperService {
     let claim = this.getAllClaims();
     return claim == null ? null : claim[name];
   }
+
+  public getToken(): string {
+    return localStorage.getItem('token');
+  }
 }
