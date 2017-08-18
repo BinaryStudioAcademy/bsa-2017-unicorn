@@ -10,7 +10,7 @@ import { Params, ActivatedRoute } from "@angular/router";
 })
 export class CompanyEditComponent implements OnInit {
   isDimmed: boolean = false;
-  company: Company;
+  company: Company;  
   
   constructor(private companyService: CompanyService,
     private route: ActivatedRoute) { }
