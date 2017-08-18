@@ -8,6 +8,7 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 
 import { AuthService } from './services/auth/auth.service';
+import { HelperService } from './services/helper/helper.service';
 
 // Routing
 import { AppRoutingModule } from './app-routing/app-routing.module';
@@ -22,8 +23,8 @@ import { RegisterModule } from './register/register.module';
 import { UserModule } from './user/user.module';
 import { VendorModule } from './vendor/vendor.module';
 import { BookModule } from './book/book.module';
+import { SignBlockModule } from './sign-block/sign-block.module';
 import { IndexModule } from './index/index.module';
-// import { ImageUploadModule } from "angular2-image-upload";
 import { SearchModule } from './search/search.module';
 
 
@@ -48,7 +49,7 @@ import { RegisterComponent } from './register/register-component/register.compon
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    // ImageUploadModule.forRoot(),
+    SignBlockModule,
     AngularFireModule.initializeApp(environment.firebase, 'unicorn-angular'),
     AngularFireAuthModule,
     CategoryModule,
@@ -62,7 +63,8 @@ import { RegisterComponent } from './register/register-component/register.compon
     IndexModule // Must be the last module
   ],
   providers: [
-    AuthService
+    AuthService,
+    HelperService
   ],
   entryComponents: [RegisterComponent],
   bootstrap: [AppComponent]

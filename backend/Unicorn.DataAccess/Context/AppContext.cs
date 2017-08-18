@@ -22,6 +22,7 @@ namespace Unicorn.DataAccess.Context
         public DbSet<Work> Works { get; set; }
         public DbSet<SocialAccount> SocialAccounts { get; set; }
         public DbSet<Contact> Contacts { get; set; }
+        public DbSet<ContactProvider> ContactProviders { get; set; }
         public DbSet<PortfolioItem> PortfolioItems { get; set; }
 
         public AppContext() : base("DefaultConnection")
@@ -42,6 +43,9 @@ namespace Unicorn.DataAccess.Context
                     cs.MapRightKey("PermissionId");
                     cs.ToTable("RoleAndPermission");
                 });
+            modelBuilder.Entity<Person>()
+               .Property(f => f.Birthday)
+               .HasColumnType("datetime2");
 
         }
     }

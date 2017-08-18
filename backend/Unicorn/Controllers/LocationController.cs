@@ -12,7 +12,7 @@ using Unicorn.Core.Interfaces;
 namespace Unicorn.Controllers
 {
     [EnableCors("*", "*", "*")]
-    [RoutePrefix("api/location")]
+    [RoutePrefix("location")]
     public class LocationController : ApiController
     {
         public LocationController(ILocationService locationService)

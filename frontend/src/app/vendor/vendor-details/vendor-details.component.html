@@ -1,4 +1,4 @@
-<div class="ui grid container">
+<div *ngIf="vendor !== undefined" class="ui grid container">
   <div class="row">
     <div class="sixteen wide column container">
       <div class="vendor-header">
@@ -6,13 +6,11 @@
           <img *ngIf="vendor !== undefined" src="{{vendor.Avatar}}" />
         </div>
         <div *ngIf="vendor !== undefined" class="vendor-title">
-          <h3>{{vendor.FIO}}</h3>
+          <h3>{{vendor.Name}} {{vendor.Surname}}</h3>
           <p>{{vendor.City}}</p>
         </div>
       </div>
     </div>
-    <!-- </div> -->
-
 
     <div class="sixteen wide column container">
       <sui-tabset *ngIf="vendor !== undefined">
@@ -23,23 +21,23 @@
           <a class="item" suiTabHeader="4">CONTACTS</a>
         </div>
         <div class="row">
-          <div class="ui grid container">
+          <div class="ui equal width grid container">
             <div class="row">
-              <div class="ten wide container column">
+              <div class="container column">
                 <div class="ui segment" suiTabContent="1">
                   <app-vendor-profile-info [vendor]="vendor"></app-vendor-profile-info>
                 </div>
-                <div class="ten wide container column">
+                <div class="container column">
                   <div class="ui segment" suiTabContent="2">
                     <app-vendor-profile-portfolio [vendorId]="vendor.Id"></app-vendor-profile-portfolio>
                   </div>
                 </div>
-                <div class="ten wide container column">
+                <div class="container column">
                   <div class="ui segment" suiTabContent="3">
                     <app-vendor-profile-reviews [vendorId]="vendor.Id"></app-vendor-profile-reviews>
                   </div>
                 </div>
-                <div class="ten wide container column">
+                <div class="container column">
                   <div class="ui segment" suiTabContent="4">
                     <app-vendor-profile-contacts [vendorId]="vendor.Id" [locationId]="vendor.LocationId"></app-vendor-profile-contacts>
                   </div>
@@ -47,7 +45,8 @@
               </div>
               <div class="six wide column">
                 <div class="ui segment">
-                  <app-book></app-book>
+                 <app-sign-block *ngIf="isGuest"></app-sign-block>
+                  <app-book *ngIf="!isGuest"></app-book>
                 </div>
               </div>
             </div>
@@ -57,3 +56,6 @@
     </div>
   </div>
 </div>
+<div *ngIf="vendor === undefined" class="ui active inverted dimmer" style="z-index: 0;">
+        <div class="ui text loader">Loading</div>
+    </div>

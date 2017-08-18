@@ -9,10 +9,11 @@ using System.Web.Http.Cors;
 
 using Unicorn.Core.Interfaces;
 using Unicorn.Shared.DTOs.Subcategory;
+using Unicorn.Shared.DTOs.Vendor;
 
 namespace Unicorn.Controllers
 {
-    [RoutePrefix("api/vendors")]
+    [RoutePrefix("vendors")]
     [EnableCors("*", "*", "*")]
     public class VendorsController : ApiController
     {
@@ -36,6 +37,20 @@ namespace Unicorn.Controllers
         [Route("{id}")]
         public async Task<HttpResponseMessage> GetById(long id)
         {
+            var result = await _vendorService.GetByIdAsync(id);
+
+            if (result == null)
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            else
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+        [HttpPut]
+        [Route("{id}")]
+        public async Task<HttpResponseMessage> UpdateVendor(long id, [FromBody]ShortVendorDTO vendor)
+        {
+            await _vendorService.Update(vendor);
+
             var result = await _vendorService.GetByIdAsync(id);
 
             if (result == null)

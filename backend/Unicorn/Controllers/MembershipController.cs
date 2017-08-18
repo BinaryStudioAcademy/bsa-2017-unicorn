@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net;
+﻿using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -59,43 +57,66 @@ namespace Unicorn.Controllers
         [Route("membership/customer")]
         public async Task<HttpResponseMessage> ConfirmCustomer(CustomerRegisterDTO customer)
         {
+            string token = null;
             try
             {
                 await customerService.CreateAsync(customer);
+                token = await authService.GenerateJwtTokenAsync(customer.Provider, customer.Uid);
             }
             catch
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
-            return Request.CreateResponse(HttpStatusCode.OK);
+
+            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK);
+            response.Headers.Add("Access-Control-Expose-Headers", "Token");
+            response.Headers.Add("Token", token);
+
+            return response;
         }
 
         [Route("membership/vendor")]
         public async Task<HttpResponseMessage> ConfirmVendor(VendorRegisterDTO vendor)
         {
+            string token = null;
+
             try
             {
                 await vendorService.Create(vendor);
+                token = await authService.GenerateJwtTokenAsync(vendor.Provider, vendor.Uid);
             }
             catch
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
-            return Request.CreateResponse(HttpStatusCode.OK);
+
+            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK);
+            response.Headers.Add("Access-Control-Expose-Headers", "Token");
+            response.Headers.Add("Token", token);
+
+            return response;
         }
 
         [Route("membership/company")]
         public async Task<HttpResponseMessage> ConfirmCompany(CompanyRegisterDTO company)
         {
+            string token = null;
+
             try
             {
                 await companyService.Create(company);
+                token = await authService.GenerateJwtTokenAsync(company.Provider, company.Uid);
             }
             catch
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
-            return Request.CreateResponse(HttpStatusCode.OK);
+
+            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK);
+            response.Headers.Add("Access-Control-Expose-Headers", "Token");
+            response.Headers.Add("Token", token);
+
+            return response;
         }
     }
 }

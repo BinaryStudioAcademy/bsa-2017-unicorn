@@ -11,3 +11,9 @@ export const environment = {
     messagingSenderId: "550179912079"
   }
 };
+
+export const imgurenvironment = {
+  refresh_token : 'a96528ee6f5b45e66cf9a6eb38bec2f2b7202786',
+  client_id: 'adf5f3d3e25f0d4',
+  client_secret : 'af7df343e9cd63bda658696984c03e5725afa20f'
+};

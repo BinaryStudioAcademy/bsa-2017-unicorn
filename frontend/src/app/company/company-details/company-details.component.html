@@ -1,6 +1,6 @@
 <div class="main-content">
-    <div *ngIf="company !== undefined">
-        <div class="sixteen wide column container">
+    <div *ngIf="company !== undefined" class="flex-content">
+        <div class="sixteen wide column container ">
             <img class="ui fluid image" src={{company.Avatar}}>
         </div>
         <div class="ui grid container">
@@ -27,12 +27,13 @@
                                             <company-vendors [vendors]="company.Vendors"></company-vendors>
                                         </div>
                                         <div class="ui segment" suiTabContent="4">
-                                            <company-contacts></company-contacts>
+                                            <company-contacts [contacts]="company.Contacts"></company-contacts>
                                         </div>
                                     </div>
                                     <div class="six wide column">
                                         <div class="ui segment">
-                                            <app-book></app-book>
+                                            <app-sign-block *ngIf="isGuest"></app-sign-block>
+                                            <app-book *ngIf="!isGuest"></app-book>
                                         </div>
                                     </div>
                                 </div>
@@ -43,9 +44,7 @@
             </div>
         </div>
     </div>
-</div>
-<div *ngIf="company === undefined" class="ui segment">
-    <div class="ui active inverted dimmer" style="padding: 50px 0; margin: 0;">
+    <div *ngIf="company === undefined" class="ui active inverted dimmer" style="z-index: 0;">
         <div class="ui text loader">Loading</div>
     </div>
     <p></p>

@@ -6,6 +6,8 @@ import { SuiModule } from 'ng2-semantic-ui';
 import { environment } from '../../environments/environment';
 import { NguiMapModule } from "@ngui/map/dist";
 
+
+import { SignBlockModule } from '../sign-block/sign-block.module';
 import { BookModule } from '../book/book.module';
 import { MapModule } from '../map/map.module';
 
@@ -22,6 +24,8 @@ import { VendorService } from '../services/vendor.service';
 import { ReviewService } from '../services/review.service';
 import { DataService } from "../services/data.service";
 import { LocationService } from "../services/location.service";
+import { VendorEditComponent } from './vendor-edit/vendor-edit.component';
+import { VendorEditInfoComponent } from './vendor-edit/vendor-edit-info/vendor-edit-info.component';
 
 @NgModule({
   imports: [
@@ -30,7 +34,8 @@ import { LocationService } from "../services/location.service";
     FormsModule,
     SuiModule,
     BookModule,
-    MapModule
+    MapModule,
+    SignBlockModule
   ],
   declarations: [
     VendorDetailsComponent,
@@ -39,6 +44,8 @@ import { LocationService } from "../services/location.service";
     VendorProfileReviewsComponent,
     VendorProfilePortfolioComponent,
     VendorsComponent,
+    VendorEditComponent,
+    VendorEditInfoComponent,
   ],
   providers: [
     DataService,
