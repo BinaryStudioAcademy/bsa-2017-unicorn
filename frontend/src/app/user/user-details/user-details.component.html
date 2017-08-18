@@ -2,26 +2,11 @@
     <div class="row">
         <div class="sixteen wide column container">
             <div class="user-header" id="user-header">
-                <i class="large wizard icon" (click)="enableTheme=true">
-        <div *ngIf="enableTheme">
-        <sui-modal [isClosable]="true" size="mini" (denied)="enableTheme=false" #modalTh>
-            <div class="content">
-                <a class="ui big red empty circular label"(click)="modalTh.deny()" (click)="updateBg('red')"></a>
-                <a class="ui big orange empty circular label"(click)="modalTh.deny()"(click)="updateBg('orange')"></a>
-                <a class="ui big yellow empty circular label"(click)="modalTh.deny()"(click)="updateBg('yellow')"></a>
-                <a class="ui big green empty circular label"(click)="modalTh.deny()"(click)="updateBg('green')"></a>
-                <a class="ui big teal empty circular label"(click)="modalTh.deny()"(click)="updateBg('teal')"></a>
-                <a class="ui big blue empty circular label"(click)="modalTh.deny()"(click)="updateBg('blue')"></a>
-                <a class="ui big violet empty circular label"(click)="modalTh.deny()"(click)="updateBg('violet')"></a>
-                <a class="ui big purple empty circular label"(click)="modalTh.deny()"(click)="updateBg('purple')"></a>
-                <a class="ui big pink empty circular label"(click)="modalTh.deny()"(click)="updateBg('pink')"></a>
-                <a class="ui big brown empty circular label"(click)="modalTh.deny()"(click)="updateBg('brown')"></a>
-                <a class="ui big grey empty circular label"(click)="modalTh.deny()"(click)="updateBg('grey')"></a>
-                <a class="ui big black empty circular label"(click)="modalTh.deny()"(click)="updateBg('black')"></a>
-            </div>
-        </sui-modal>
-        </div>
-    </i>
+                <label id="banner-loader" for="banner-input" class="ui icon button basic">
+                    <i class="icon upload pink"></i>
+                </label>
+                <input type="file" id="banner-input" accept="image/*" (change)="bannerListener($event)">
+
                 <div class="avatar" (click)="openModal()">
                     <div class="ui small circular image" suiPopup popupText="Click to update your photo">
                         <img src="{{fakeUser.avatarUrl}}" />
@@ -31,13 +16,17 @@
                     <h3>{{fakeUser.firstName}} {{fakeUser.surName}}</h3>
                 </div>
                 <div *ngIf="enabled">
-                    <sui-modal [isClosable]="true" size="mini" (denied)="enabled=false" #modal>
-                        <div class="content">
-                            <image-upload (onFileUploadFinish)="saveImgButton=true" (onRemove)="saveImgButton=false" [max]="1" [dropBoxMessage]="'Set photo here'" [buttonCaption]="'Select Image'">
-                            </image-upload>
-                            <div *ngIf="saveImgButton">
-                                <button class="ui button" style="align-content: right"> Save</button>
+                    <sui-modal [isClosable]="true" size="tiny" (denied)="enabled=false" #modal>
+                        <div class="content" align="center">
+                            <div class="file-upload">
+                                <input id="custom-input" type="file" name="file" id="file" (change)="fileChangeListener($event)" class="inputfile">
+                                <label for="file">Choose a file</label>
                             </div>
+                            <img-cropper #cropper [image]="data" [settings]="cropperSettings"></img-cropper>
+                            <br>
+                            <span class="result rounded" *ngIf="data.image">
+    <img [src]="data.image" [width]="cropperSettings.croppedWidth" [height]="cropperSettings.croppedHeight">
+</span>
                         </div>
                     </sui-modal>
                 </div>

@@ -32,7 +32,8 @@
                                     </div>
                                     <div class="six wide column">
                                         <div class="ui segment">
-                                            <app-book></app-book>
+                                            <app-sign-block *ngIf="isGuest"></app-sign-block>
+                                            <app-book *ngIf="!isGuest"></app-book>
                                         </div>
                                     </div>
                                 </div>

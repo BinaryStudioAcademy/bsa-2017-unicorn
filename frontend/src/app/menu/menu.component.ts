@@ -17,19 +17,20 @@ import { ConfirmModal, IConfirmModalContext } from '../register/register-compone
 export class MenuComponent implements OnInit {
   items: MenuItem[];
   isEnabled: boolean;
+  
   constructor(private modalService: SuiModalService) { }
 
   ngOnInit() {
     this.addMenuItems();
     this.isEnabled = true;
+  
   }
-
+  
   openModal() {
-    this.modalService
+   this.modalService
       .open(new ConfirmModal("Are you sure?", "Are you sure about accepting this?"))
       .onApprove(() => alert("User has accepted."))
       .onDeny(() => (''));
-
   }
 
   addMenuItems() {

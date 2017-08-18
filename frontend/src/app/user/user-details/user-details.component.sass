@@ -9,9 +9,22 @@
 	align-items: center;
 	justify-content: center;
 	flex-direction: column;
+    
 .large.wizard.icon
   align-self: flex-start; 
   padding: 10px;
+
+#banner-loader
+    position: absolute;
+    right: 5px;
+    top: 5px;
+
+.user-header
+    position: relative;
+    background-size: cover;
+
+#banner-input
+    display: none;
 
 .large.wizard.icon:hover
    color: $primary-color
@@ -62,21 +75,30 @@ a
     color: #FF647A;
     
 
-.fileUpload
-    position: relative;
-    overflow: hidden;
-    margin: 10px;
+.inputfile
 
-.fileUpload input.upload 
-    position: absolute;
-    top: 0;
-    right: 0;
-    margin: 0;
-    padding: 0;
-    font-size: 20px;
-    cursor: pointer;
-    opacity: 0;
-    filter: alpha(opacity=0);
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+.inputfile + label 
+    font-size: 1.25em;
+    font-weight: 700;
+    color: $primary-color;
+    display: inline-block;
+    border: 2px solid  $primary-color;
+
+
+.inputfile:focus + label,
+.inputfile + label:hover 
+    background-color: $primary-color;
+    color: white;
+.inputfile + label 
+	cursor: pointer; 
+.inputfile:focus + label 
+	outline: 1px dotted #000;
+	outline: -webkit-focus-ring-color auto 5px;
+
+
 
 .avatar:hover
    cursor: pointer;
