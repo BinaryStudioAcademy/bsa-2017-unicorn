@@ -36,7 +36,7 @@
     padding: 5px;
 }
 
-.stub {
+.content-offset {
     height: 68px;
 }
 
@@ -50,9 +50,9 @@
 }
 
 #content {
-    display: block;
+    display: block; 
     width: 100%;
-    min-height: 100vh;
+    min-height: calc(100vh - 68px - 45px - 23px);
 }
 
 #footer {    
