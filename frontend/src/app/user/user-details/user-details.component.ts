@@ -74,7 +74,6 @@ export class UserDetailsComponent implements OnInit {
  }
 
  bannerListener($event) {
-   debugger;
     let file: File = $event.target.files[0];
     this.photoService.uploadToImgur(file).then(resp => {
       let path = resp.data.link;
@@ -90,7 +89,6 @@ export class UserDetailsComponent implements OnInit {
  }
 
   fileChangeListener($event) {
-    debugger;
     var image:any = new Image();
     this.file = $event.target.files[0];
     var myReader:FileReader = new FileReader();
@@ -116,7 +114,6 @@ export class UserDetailsComponent implements OnInit {
       console.log(path);
       this.photoService.saveAvatar(path)
       .then(resp => {
-        (<HTMLImageElement>document.getElementById("user-avatar")).src = this.data.image;
         this.activeModal.deny('');        
       })
       .catch(err => console.log(err));
@@ -142,5 +139,10 @@ export class UserDetailsComponent implements OnInit {
       .onDeny(result => {
         that.imageUploaded = false;
       });
+  }
+
+  getImage() : string {
+    debugger;
+    return this.data.image ? this.data.image : this.fakeUser.avatarUrl;
   }
 }
