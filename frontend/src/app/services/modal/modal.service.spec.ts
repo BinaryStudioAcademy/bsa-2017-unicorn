@@ -2,7 +2,7 @@ import { TestBed, inject } from '@angular/core/testing';
 
 import { CropService } from './crop.service';
 
-describe('CompanyService', () => {
+describe('CropService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [CropService]

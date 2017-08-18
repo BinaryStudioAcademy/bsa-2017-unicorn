@@ -8,7 +8,7 @@ import 'rxjs/add/operator/switchMap';
 import { User } from '../../models/user';
 
 import { UserService } from "../../services/user.service";
-import { CropService } from "../../services/crop.service";
+import { ModalService } from "../../services/modal/modal.service";
 import { PhotoService, Ng2ImgurUploader } from '../../services/photo.service';
 import {ImageCropperComponent, CropperSettings} from 'ng2-img-cropper';
 
@@ -22,7 +22,8 @@ import { SuiModalService, TemplateModalConfig
   styleUrls: ['./user-details.component.sass'],
   providers: [
         PhotoService,
-        Ng2ImgurUploader]
+        Ng2ImgurUploader,
+        ModalService]
 })
 export class UserDetailsComponent implements OnInit {
   
@@ -47,7 +48,7 @@ export class UserDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private userService: UserService,
     private photoService: PhotoService,
-    public modalService: SuiModalService) { 
+    private modalService: ModalService) { 
      this.cropperSettings = new CropperSettings();
         this.cropperSettings.width = 100;
         this.cropperSettings.height = 100;
@@ -98,6 +99,10 @@ export class UserDetailsComponent implements OnInit {
  }
 
   fileChangeListener($event) {
+    debugger;
+    // let file: File = $event.target.files[0];
+    // this.cropService.fileChange(file, this.cropper);
+    // this.imageUploaded = true;
     var image:any = new Image();
     this.file = $event.target.files[0];
     var myReader:FileReader = new FileReader();
@@ -133,21 +138,22 @@ export class UserDetailsComponent implements OnInit {
   }
 
   public openModal() {
-    const config = new TemplateModalConfig<IContext, string, string>(this.modalTemplate);
-    //config.closeResult = "closed!";
+    this.modalService.openModal(this.modalTemplate);
+    // const config = new TemplateModalConfig<IContext, string, string>(this.modalTemplate);
+    // //config.closeResult = "closed!";
     
-    config.context = {};
-    config.size = ModalSize.Normal;
-    config.isInverted = true;
-    //config.mustScroll = true;
-    let that = this;
+    // config.context = {};
+    // config.size = ModalSize.Normal;
+    // config.isInverted = true;
+    // //config.mustScroll = true;
+    // let that = this;
 
-    this.activeModal = this.modalService
-      .open(config)
-      .onApprove(result => { /* approve callback */ })
-      .onDeny(result => {
-        that.imageUploaded = false;
-      });
+    // this.activeModal = this.modalService
+    //   .open(config)
+    //   .onApprove(result => { /* approve callback */ })
+    //   .onDeny(result => {
+    //     that.imageUploaded = false;
+    //   });
   }
 
   getImage() : string {

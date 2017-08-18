@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { DataService } from "./data.service";
-import { environment } from "../../environments/environment";
+import { DataService } from ".././data.service";
+import { environment } from "../../../environments/environment";
 import {SuiModule} from 'ng2-semantic-ui';
 import {ImageCropperComponent, CropperSettings} from 'ng2-img-cropper';
 
@@ -10,15 +10,17 @@ import { SuiModalService, TemplateModalConfig
 export interface IContext { }
 
 @Injectable()
-export class CropService { 
+export class ModalService { 
 
-  imageUploaded: boolean;  
+  imageUploaded: boolean;
+  private activeModal: SuiActiveModal<IContext, {}, string>; 
 
-  constructor(private dataService: DataService) {
+  constructor(private dataService: DataService, private suiModalService: SuiModalService) {
     dataService.setHeader('Content-Type', 'application/json');
    }
 
    fileChange(file: File, cropper:ImageCropperComponent) {
+     debugger;
         var image:any = new Image();
         var myReader:FileReader = new FileReader();
         var that = this;
@@ -32,21 +34,21 @@ export class CropService {
     }
 
     public openModal(modalTemplate: ModalTemplate<IContext, string, string>) {
-    const config = new TemplateModalConfig<IContext, string, string>(modalTemplate);
-    //config.closeResult = "closed!";
-    
-    config.context = {};
-    config.size = ModalSize.Normal;
-    config.isInverted = true;
-    //config.mustScroll = true;
-    let that = this;
+      const config = new TemplateModalConfig<IContext, string, string>(modalTemplate);
+      //config.closeResult = "closed!";
+      
+      config.context = {};
+      config.size = ModalSize.Normal;
+      config.isInverted = true;
+      //config.mustScroll = true;
+      let that = this;
 
-    // this.activeModal = this.modalService
-    //   .open(config)
-    //   .onApprove(result => { /* approve callback */ })
-    //   .onDeny(result => {
-    //     that.imageUploaded = false;
-    //   });
+      this.activeModal = this.suiModalService
+        .open(config)
+        .onApprove(result => { /* approve callback */ })
+        .onDeny(result => {
+          this.imageUploaded = false;
+        });
   }
 
 }

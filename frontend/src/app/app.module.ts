@@ -9,6 +9,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 
 import { AuthService } from './services/auth/auth.service';
 import { HelperService } from './services/helper/helper.service';
+import { ModalService } from "./services/modal/modal.service";
 
 // Routing
 import { AppRoutingModule } from './app-routing/app-routing.module';
@@ -64,7 +65,8 @@ import { RegisterComponent } from './register/register-component/register.compon
   ],
   providers: [
     AuthService,
-    HelperService
+    HelperService,
+    ModalService
   ],
   entryComponents: [RegisterComponent],
   bootstrap: [AppComponent]
