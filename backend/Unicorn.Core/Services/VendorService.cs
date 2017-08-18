@@ -165,11 +165,6 @@ namespace Unicorn.Core.Services
             await _unitOfWork.SaveAsync();
         }
 
-        public Task<ShortVendorDTO> GetById(long id)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task Update(ShortVendorDTO vendorDto)
         {
             var vendor = await _unitOfWork.VendorRepository.Query
@@ -181,7 +176,7 @@ namespace Unicorn.Core.Services
 
             vendor.WorkLetter = vendorDto.WorkLetter;
             vendor.Position = vendorDto.Position;
-            vendor.Person.Birthday = vendorDto.Birthday;
+            vendor.Person.Birthday = vendorDto.Birthday.AddDays(1); // Dirty hack, fix this later
             vendor.Person.Name = vendorDto.Name;
             vendor.Person.Surname = vendorDto.Surname;
             vendor.Person.MiddleName = vendorDto.MiddleName;
