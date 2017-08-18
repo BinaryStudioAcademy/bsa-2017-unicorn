@@ -358,8 +358,8 @@ namespace Unicorn.DataAccess.Context
                 Email = "andriy_vendor@gmail.com",
                 EmailConfirmed = true,
                 DateCreated = new DateTime(2017, 08, 11, 00, 55, 16),
-                Avatar = "andriy.jpg",
-                Rating = 5,
+                Avatar = "https://image.flaticon.com/icons/png/512/78/78373.png",
+                Rating = 4.7,
                 IsDeleted = false,
                 Role = role1,
                 Contacts = new List<Contact> { contact8, contact9, contact10, contact11, contact12, contact13, contact14 }
@@ -753,7 +753,7 @@ namespace Unicorn.DataAccess.Context
             Person person1 = new Person()
             {
                 Id = 1,
-                Account = account1,
+                Account = account2,
                 Name = "Vasylysa",
                 MiddleName = "Sergeevna",
                 Surname = "Kuchma",
