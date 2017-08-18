@@ -1,5 +1,5 @@
 ﻿<div class="ui grid container">
-    <div class="row">
+    <div class="row" *ngIf="user !== undefined">
         <div class="sixteen wide column container">
             <div class="user-header" id="user-header">
                 <label id="banner-loader" for="banner-input" class="ui icon button basic">
@@ -9,10 +9,10 @@
 
                 <div class="avatar" (click)="openModal()">
                     <div class="ui small circular image" suiPopup popupText="Click to update your photo">
-                        <img src="{{user.avatarUrl}}" />
+                        <img src="{{user.Avatar}}" />
                     </div>
                 </div>
-                <div class="user-title">
+                <div class="user-title" >
                     <h3>{{user.Name}} {{user.surName}}</h3>
                 </div>
                 <div *ngIf="enabled">

@@ -1,6 +1,6 @@
-﻿<div class="container">
+﻿<div   *ngIf="user !== undefined"  class="container">
     <div class="column">
-        <div class="ui input">
+        <div class="ui input" *ngIf="user !== undefined">
             <div class="elem">
                 <input type="text" [(ngModel)]="user.Name" name="name" placeholder="NAME">
                 <input type="text" [(ngModel)]="user.surName" name="surname" placeholder="LASTNAME">
