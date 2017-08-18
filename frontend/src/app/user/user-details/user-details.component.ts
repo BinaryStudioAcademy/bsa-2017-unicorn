@@ -35,7 +35,7 @@ export class UserDetailsComponent implements OnInit {
   enabled: boolean = false;
   enableTheme: boolean = false;
   saveImgButton:boolean = false;
-  fakeUser:User;
+  user:User;
 
   modalSize: string;
 
@@ -65,7 +65,18 @@ export class UserDetailsComponent implements OnInit {
         this.imageUploaded = false;
   }
   ngOnInit() {
-    this.fakeUser = this.userService.getUser(0);
+    this.user = this.userService.getUser(1);
+    // this.route.params
+    //   .switchMap((params: Params) => 
+    //   { 
+    //     debugger; 
+    //     return this.userService.getUser(params['id']);
+    //   })
+    //   .subscribe(resp => 
+    //     {
+    //       debugger;
+    //       this.user = resp.body as User;
+    //     });
   }
 
  updateBg(color:string)
@@ -142,7 +153,6 @@ export class UserDetailsComponent implements OnInit {
   }
 
   getImage() : string {
-    debugger;
-    return this.data.image ? this.data.image : this.fakeUser.avatarUrl;
+    return this.data.image ? this.data.image : this.user.avatarUrl;
   }
 }

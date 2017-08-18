@@ -13,7 +13,7 @@
                     </div>
                 </div>
                 <div class="user-title">
-                    <h3>{{fakeUser.firstName}} {{fakeUser.surName}}</h3>
+                    <h3>{{user.firstName}} {{user.surName}}</h3>
                 </div>
                 <ng-template class="modalImage" let-context let-modal="modal" #modalTemplate>
                     <div class="content">
@@ -83,12 +83,12 @@
                     <div class="row">
                         <div class="sixteen wide container column">
                             <div class="ui segment" suiTabContent="1">
-                                <app-user-profile [user]="fakeUser"></app-user-profile>
+                                <app-user-profile [user]="user"></app-user-profile>
                             </div>
                         </div>
                         <div class="sixteen wide container column">
                             <div class="ui segment" suiTabContent="2">
-                                <app-user-tasks [user]="fakeUser"></app-user-tasks>
+                                <app-user-tasks [user]="user"></app-user-tasks>
                             </div>
                         </div>
                         <div class="sixteen wide container column">
@@ -98,7 +98,7 @@
                         </div>
                         <div class="sixteen wide container column">
                             <div class="ui segment" suiTabContent="4">
-                                <app-user-history [user]="fakeUser"></app-user-history>
+                                <app-user-history [user]="user"></app-user-history>
                             </div>
                         </div>
                     </div>

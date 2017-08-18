@@ -9,9 +9,17 @@ import {Vendor} from '../models/vendor'
 @Injectable()
 export class UserService {
 
-  constructor(private dataService: DataService) { }
+  private apiController: string;
+  constructor(private dataService: DataService) { 
+    this.apiController = "user";
+  }
 
- 
+  // getUser(id: number) : Promise<any> {
+  //   debugger;
+  //   return this.dataService.getFullRequest<User>(`${this.apiController}/${id}`)
+  //     .catch(err => console.log(err));
+  // }
+
   getUser(id: number) : User {
     var user: User = {
     id: 0,
