@@ -17,4 +17,5 @@ export interface Vendor {
 	Company: string;
 	CompanyId: number;
 	Works: Work[];
+	Birthday: Date;
 }

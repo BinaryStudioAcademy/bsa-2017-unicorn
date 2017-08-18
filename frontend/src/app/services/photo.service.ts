@@ -47,7 +47,8 @@ export class PhotoService {
 
     saveAvatar(imageUrl: string): Promise<any> {
         console.log('saveavatar');
-        return this.dataService.postFullRequest('avatar/1', imageUrl);
+        return this.dataService.postFullRequest('avatar/1', imageUrl)
+            .then(() => {return imageUrl;});
     }
 }
 

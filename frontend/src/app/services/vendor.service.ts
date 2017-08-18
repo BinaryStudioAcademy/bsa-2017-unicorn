@@ -8,6 +8,7 @@ import { Rating } from "../models/rating.model";
 import { Review } from "../models/review.model";
 import { Subcategory } from "../models/subcategory.model";
 import { Contact } from "../models/contact.model";
+import { Category } from "../models/category.model";
 
 @Injectable()
 export class VendorService {
@@ -15,6 +16,7 @@ export class VendorService {
 
   constructor(private dataService: DataService) 
   { 
+    dataService.setHeader('Content-Type', 'application/json');
     this.apiController = "vendors";
   }
 
@@ -32,8 +34,8 @@ export class VendorService {
       .catch(err => alert(err));
   }
 
-  getSubcategories(id: number): Promise<any> {
-    return this.dataService.getFullRequest<Subcategory[]>(`${this.apiController}/${id}/categories`);
+  getCategories(id: number): Promise<any> {
+    return this.dataService.getFullRequest<Category[]>(`${this.apiController}/${id}/categories`);
   }
 
   getReviews(id: number): Promise<any> {
@@ -52,7 +54,7 @@ export class VendorService {
   }
 
   updateVendor(vendor: Vendor): Promise<any> {
-    return this.dataService.putFullRequest<Vendor>(this.apiController, vendor)
+    return this.dataService.putFullRequest<Vendor>(`${this.apiController}/${vendor.Id}`, vendor)
       .catch(err => alert(err));
   }
 
