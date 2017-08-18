@@ -7,6 +7,7 @@ import { SuiModalService, TemplateModalConfig
   , ModalTemplate, ModalSize, SuiActiveModal } from 'ng2-semantic-ui';
 import { Company } from '../models/company';
 import { HelperService } from '../../services/helper/helper.service';
+import { AuthenticationEventService } from '../../services/events/authenticationevent.service';
 
 @Component({
   selector: 'app-register-company',
@@ -29,7 +30,8 @@ export class RegisterCompanyComponent implements OnInit {
   foundation: any;
 
   constructor(private registerService: RegisterService,
-    private helperService: HelperService) { }
+    private helperService: HelperService,
+    private authEventService: AuthenticationEventService) { }
 
   ngOnInit() {
     this.mode = 'date';
@@ -61,7 +63,8 @@ export class RegisterCompanyComponent implements OnInit {
       let regInfo = this.aggregateInfo();      
       this.registerService.confirmCompany(regInfo).then(resp => {
         this.modal.deny('');
-        localStorage.setItem('token', resp.headers.get('token'));        
+        localStorage.setItem('token', resp.headers.get('token'));
+        this.authEventService.signIn();   
         this.helperService.redirectAfterAuthentication();
       });
     } else {

@@ -2,6 +2,12 @@ import { Component, OnInit } from '@angular/core';
 
 import { MenuItem } from './menu-item/menu-item';
 
+import { AuthenticationEventService } from '../services/events/authenticationevent.service';
+import { AuthenticationLoginService } from '../services/auth/authenticationlogin.service';
+
+import { Subscription } from 'rxjs/Subscription';
+import { TokenHelperService } from '../services/helper/tokenhelper.service';
+
 import {
   SuiModalService, TemplateModalConfig, SuiModal, ComponentModalConfig
   , ModalTemplate, ModalSize, SuiActiveModal
@@ -17,13 +23,37 @@ import { ConfirmModal, IConfirmModalContext } from '../register/register-compone
 export class MenuComponent implements OnInit {
   items: MenuItem[];
   isEnabled: boolean;
-  
-  constructor(private modalService: SuiModalService) { }
+  isLogged: boolean;
+
+  onLogIn: Subscription;
+  onLogOut: Subscription;
+
+  constructor(
+    private modalService: SuiModalService,
+    private authEventService: AuthenticationEventService,
+    private authLoginService: AuthenticationLoginService,
+    private tokenHelper: TokenHelperService) {
+    this.isLogged = this.tokenHelper.isTokenValid() && this.tokenHelper.isTokenNotExpired();
+  }
 
   ngOnInit() {
     this.addMenuItems();
     this.isEnabled = true;
-  
+
+    this.onLogIn = this.authEventService.loginEvent$
+      .subscribe(() => {
+        this.isLogged = true;
+      });
+
+    this.onLogOut = this.authEventService.logoutEvent$
+      .subscribe(() => {
+        this.isLogged = false;
+      });
+  }
+
+  ngOnDestroy() {
+    this.onLogIn.unsubscribe();
+    this.onLogOut.unsubscribe();
   }
   
   openModal() {
@@ -44,5 +74,9 @@ export class MenuComponent implements OnInit {
       name: 'Sign in',
       route: 'register'
     }];
+  }
+
+  signOut() {
+    this.authLoginService.signOut();
   }
 }

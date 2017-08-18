@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="https://unpkg.com/semantic-ui-calendar/dist/calendar.min.css">
+
 <div class="ui equal width grid container">
   <div class="row">
     <div class="eight wide column">
@@ -23,10 +25,9 @@
                 <label>Birthday</label>
                 <div class="ui left icon input">
                   <i class="calendar icon"></i>
-                  <input suiDatepicker pickerMode="date" 
+                  <input suiDatepicker pickerMode="date"
                   [(ngModel)]="birthday" name="birthday" 
-                  [pickerUseNativeOnMobile]="false"
-                  placeholder="PICK YOUR BIRTH">
+                  [placeholder]="vendor.Birthday | date:'shortDate'">
                 </div>
               </div>
               <div class="field">

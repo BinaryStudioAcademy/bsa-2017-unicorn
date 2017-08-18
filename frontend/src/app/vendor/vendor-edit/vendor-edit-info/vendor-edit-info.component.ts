@@ -38,8 +38,7 @@ export class VendorEditInfoComponent implements OnInit {
           title: "Overcat 9000",
           label: "",
           markerPos: {lat: this.location.Latitude, lng: this.location.Longitude}
-        })
-        .then(() => this.birthday = this.vendor.Birthday);
+        });
   }
 
   onDateSelected(date: Date): void {
