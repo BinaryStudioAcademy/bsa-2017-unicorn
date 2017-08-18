@@ -2,7 +2,7 @@
     <div class="row">
         <div class="sixteen wide column container">
             <div class="user-header" id="user-header" [style.backgroundImage]="backgroundUrl">
-                <label id="banner-loader" for="banner-input" class="ui icon button basic" [ngClass]="{'loading': uploading}">
+                <label *ngIf="isOwner" id="banner-loader" for="banner-input" class="ui icon button basic" [ngClass]="{'loading': uploading}">
                     <i class="icon pink" [ngClass]="{'upload': !uploading}"></i>
                 </label>
                 <input type="file" id="banner-input" accept="image/*" (change)="bannerListener($event)">

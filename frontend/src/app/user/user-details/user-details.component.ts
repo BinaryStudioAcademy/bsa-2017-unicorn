@@ -3,11 +3,12 @@ import { FormsModule }   from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 import {SuiModule} from 'ng2-semantic-ui';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, ParamMap } from '@angular/router';
 import 'rxjs/add/operator/switchMap';
 
 import { User } from '../../models/user';
 
+import { TokenHelperService } from '../../services/helper/tokenhelper.service';
 import { UserService } from "../../services/user.service";
 import { PhotoService, Ng2ImgurUploader } from '../../services/photo.service';
 import {ImageCropperComponent, CropperSettings} from 'ng2-img-cropper';
@@ -39,6 +40,7 @@ export class UserDetailsComponent implements OnInit {
   fakeUser:User;
   backgroundUrl: SafeResourceUrl;
   uploading: boolean;
+  isOwner: boolean;
 
   modalSize: string;
 
@@ -53,7 +55,8 @@ export class UserDetailsComponent implements OnInit {
     private userService: UserService,
     private photoService: PhotoService,
     private sanitizer: DomSanitizer, 
-    public modalService: SuiModalService) { 
+    public modalService: SuiModalService,
+    private tokenHelper: TokenHelperService) { 
      this.cropperSettings = new CropperSettings();
         this.cropperSettings.width = 100;
         this.cropperSettings.height = 100;
@@ -70,27 +73,33 @@ export class UserDetailsComponent implements OnInit {
   }
   ngOnInit() {
     this.fakeUser = this.userService.getUser(0);
+    this.initOwnerParam();
   }
 
- updateBg(color:string)
- {
-    document.getElementById("user-header").style.backgroundColor = color;
- }
+  initOwnerParam(): void {
+    let id = this.route.snapshot.paramMap.get('id');
+    if (this.tokenHelper.getClaimByName('id') === id) {
+      console.log('owner');
+      this.isOwner = true;
+    }
+    console.log(id);
+    console.log(this.tokenHelper.getClaimByName('id'));
+  }
 
- bannerListener($event) {
-    let file: File = $event.target.files[0];
-    this.uploading = true;
-    this.photoService.uploadToImgur(file).then(link => {
-      console.log(link);
-      return this.photoService.saveBanner(link);
-    }).then(link => {
-      this.backgroundUrl = this.sanitizer.bypassSecurityTrustStyle(`url('${link}')`);
-      this.uploading = false;
-    }).catch(err => {
-      console.log(err);
-      this.uploading = false;
-    });
- }
+  bannerListener($event) {
+      let file: File = $event.target.files[0];
+      this.uploading = true;
+      this.photoService.uploadToImgur(file).then(link => {
+        console.log(link);
+        return this.photoService.saveBanner(link);
+      }).then(link => {
+        this.backgroundUrl = this.sanitizer.bypassSecurityTrustStyle(`url('${link}')`);
+        this.uploading = false;
+      }).catch(err => {
+        console.log(err);
+        this.uploading = false;
+      });
+  }
 
   fileChangeListener($event) {
     var image:any = new Image();
@@ -112,17 +121,6 @@ export class UserDetailsComponent implements OnInit {
       console.log("file not upload");
       return;
     }
-
-    // this.photoService.uploadToImgur(this.file).then(link => {
-    //   console.log(link);
-    //   return this.photoService.saveAvatar(link);
-    // }).then(link => {
-    //   this.backgroundUrl = this.sanitizer.bypassSecurityTrustStyle(`url('${link}')`);
-    //   this.uploading = false;
-    // }).catch(err => {
-    //   console.log(err);
-    //   this.uploading = false;
-    // });
 
     this.photoService.uploadToImgur(this.file).then(resp => {
       let path = resp;

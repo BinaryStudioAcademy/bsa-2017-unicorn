@@ -7,6 +7,7 @@ import { Observable, Subject } from 'rxjs';
 
 import { DataService } from '../services/data.service';
 import { FileReaderUtils } from './file-utils';
+import { TokenHelperService } from './helper/tokenhelper.service';
 
 
 export type ImgurUploadOptions = {
@@ -25,11 +26,17 @@ export type ImgurUploadResponse = {
 
 @Injectable()
 export class PhotoService {
-    constructor(private http: Http, private dataService: DataService){
+    constructor(
+        private http: Http, 
+        private dataService: DataService,
+        private tokenHelper: TokenHelperService){
         this.dataService.setHeader('Content-Type', 'application/json');
     }
 
     uploadToImgur(image: Blob): Promise<string> {
+        if (!this.tokenHelper.isTokenValid()) {
+            return Promise.reject('Not authenticated');
+        }
         let up = new Ng2ImgurUploader(this.http);
         let op: ImgurUploadOptions = {
             clientId: imgurenvironment.client_id,
@@ -39,15 +46,20 @@ export class PhotoService {
         return up.upload(op).toPromise().then(resp => resp.data.link);
     }
 
+    private getId(): string {
+        console.log(this.tokenHelper.getAllClaims());
+        return this.tokenHelper.getClaimByName('id');
+    }
+
     saveBanner(imageUrl: string): Promise<string> {
         console.log('savebanner');
-        return this.dataService.postFullRequest('background/1', imageUrl)
+        return this.dataService.postFullRequest(`background/${this.getId()}`, imageUrl)
             .then(() => {return imageUrl;});
     }
 
     saveAvatar(imageUrl: string): Promise<any> {
         console.log('saveavatar');
-        return this.dataService.postFullRequest('avatar/1', imageUrl)
+        return this.dataService.postFullRequest(`avatar/${this.getId()}`, imageUrl)
             .then(() => {return imageUrl;});
     }
 }
