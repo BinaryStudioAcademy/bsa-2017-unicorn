@@ -35,7 +35,7 @@ export class UserDetailsComponent implements OnInit {
   enabled: boolean = false;
   enableTheme: boolean = false;
   saveImgButton:boolean = false;
-  fakeUser:User;
+  user:User;
 
   modalSize: string;
 
@@ -65,7 +65,11 @@ export class UserDetailsComponent implements OnInit {
         this.imageUploaded = false;
   }
   ngOnInit() {
-    this.fakeUser = this.userService.getUser(0);
+    this.route.params
+    .switchMap((params: Params) => this.userService.getUser(params['id']))
+    .subscribe(resp => this.user = resp as User);
+           
+
   }
 
  updateBg(color:string)
