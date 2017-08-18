@@ -73,7 +73,7 @@ export class UserDetailsComponent implements OnInit {
         this.imageUploaded = false;
   }
   ngOnInit() {
-    //this.fakeUser = this.userService.getUser(0);
+
     this.initOwnerParam();
     this.route.params
     .switchMap((params: Params) => this.userService.getUser(params['id']))
@@ -112,6 +112,7 @@ export class UserDetailsComponent implements OnInit {
       });
   }
 
+
   fileChangeListener($event) {
     var image:any = new Image();
     this.file = $event.target.files[0];
@@ -134,6 +135,7 @@ export class UserDetailsComponent implements OnInit {
     }
 
     this.photoService.uploadToImgur(this.file).then(resp => {
+
       let path = resp;
       console.log(path);
       this.photoService.saveAvatar(path)
@@ -144,7 +146,6 @@ export class UserDetailsComponent implements OnInit {
     }).catch(err => {
       console.log(err);
     });
-
   }
 
   public openModal() {
@@ -166,7 +167,9 @@ export class UserDetailsComponent implements OnInit {
   }
 
   getImage() : string {
+
     debugger;
     return this.data.image ? this.data.image : ''; // prev. was fake user prop
+
   }
 }

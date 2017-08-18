@@ -18,8 +18,7 @@ export class CompanyEditComponent implements OnInit {
   ngOnInit() {
     this.route.params
     .switchMap((params: Params) => this.companyService.getCompany(params['id'])).subscribe(res => {
-      this.company = res;      
-      // console.log(res);
+      this.company = res;
       });        
   }
 
