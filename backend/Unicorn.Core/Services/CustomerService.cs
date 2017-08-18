@@ -101,11 +101,11 @@ namespace Unicorn.Core.Services
                     Email = customer.Person.Account.Email,
                     Books = customer.Books.Select(x => new BookShortDto()
                     {
-                        Adress = x.Location?.Adress,
-                        Date = x.Date,
-                        Description = x.Description,
-                        //    Vendor = new VendorShortDto() { Avatar = x?.Vendor.Person.Account.Avatar, FIO = x?.Vendor.Person.Name + " " + x?.Vendor.Person.SurnameName, Position = x?.Vendor.Position },
-                        Sratus = x.Status,
+                        address = x.Location?.Adress,
+                        date = x.Date,
+                        description = x.Description,
+                        vendor = x?.Vendor?.Person?.Surname,
+                        status = x.Status,
                         workType = x.Work.Subcategory?.Name
                     }).ToList()
                 };
