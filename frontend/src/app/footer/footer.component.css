@@ -11,7 +11,8 @@
 }
 
 .separator-horiz {
-    margin: 20px;
+    margin-bottom: 20px;
+    height: 3px;
     background-color: #DEDEDE;
     border-bottom: 2px solid #EFEFEF;
 }
