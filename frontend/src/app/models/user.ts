@@ -13,4 +13,5 @@ export interface User
 	email:string;
 	phone:string;
 	dateCreated: Date;
+	birthday: Date;
 }
