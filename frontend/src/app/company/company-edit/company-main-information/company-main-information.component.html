@@ -14,7 +14,7 @@
             <label>Foundation date</label>
             <div class="ui left icon input">
                 <i class="calendar icon"></i>
-                <input suiDatepicker [(ngModel)]="company.FoundationDate" [pickerMode]="date">
+                <input suiDatepicker [(ngModel)]="foundation-date" name="foundation-date" pickerMode="date" [placeholder]="company.FoundationDate | date:'shortDate'">
             </div>
         </div>
         <div>

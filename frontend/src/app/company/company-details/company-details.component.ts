@@ -3,6 +3,7 @@ import { Company } from "../../models/company.model";
 import { Review } from "../../models/review.model";
 import { CompanyService } from "../../services/company.service";
 import { JwtHelper } from '../../helpers/jwthelper';
+import { ActivatedRoute, Params } from "@angular/router";
 
 @Component({
   selector: 'app-company-details',
@@ -11,11 +12,13 @@ import { JwtHelper } from '../../helpers/jwthelper';
 })
 export class CompanyDetailsComponent implements OnInit {
   company: Company;  
-  isGuest: boolean;
-  constructor(private companyService: CompanyService) { }
+  isGuest: boolean;  
+  constructor(private companyService: CompanyService,
+    private route: ActivatedRoute) { }
 
   ngOnInit() {  
-    this.companyService.getCompany(2).then(res => {
+    this.route.params
+    .switchMap((params: Params) => this.companyService.getCompany(params['id'])).subscribe(res => {
       this.company = res;      
       console.log(res);
       });        

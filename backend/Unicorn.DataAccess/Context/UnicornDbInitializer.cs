@@ -345,7 +345,7 @@ namespace Unicorn.DataAccess.Context
                 Email = "cleanok_company@gmail.com",
                 EmailConfirmed = true,
                 DateCreated = new DateTime(2017, 08, 10, 22, 38, 15),
-                Avatar = "https://image.flaticon.com/icons/png/512/78/78373.png",
+                Avatar = "../../../assets/images/company_logo.png",
                 Rating = 4.7,
                 IsDeleted = false,
                 Role = role3,
