@@ -43,6 +43,9 @@ namespace Unicorn.DataAccess.Context
                     cs.MapRightKey("PermissionId");
                     cs.ToTable("RoleAndPermission");
                 });
+            modelBuilder.Entity<Person>()
+               .Property(f => f.Birthday)
+               .HasColumnType("datetime2");
 
         }
     }

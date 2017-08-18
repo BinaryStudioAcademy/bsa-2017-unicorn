@@ -2,13 +2,14 @@ import { Component, OnInit, Input } from '@angular/core';
 
 import * as firebase from 'firebase/app';
 import { RegisterService } from '../../services/register.service';
+import { HelperService } from '../../services/helper/helper.service';
+import { AuthenticationEventService } from '../../services/events/authenticationevent.service';
 
 import {
   SuiModalService, TemplateModalConfig
   , ModalTemplate, ModalSize, SuiActiveModal
 } from 'ng2-semantic-ui';
 import { Vendor } from '../models/vendor';
-import { HelperService } from '../../services/helper/helper.service';
 
 @Component({
   selector: 'app-register-vendor',
@@ -37,7 +38,8 @@ export class RegisterVendorComponent implements OnInit {
   birthday;
 
   constructor(private registerService: RegisterService,
-    private helperService: HelperService) { }
+    private helperService: HelperService,
+    private authEventService: AuthenticationEventService) { }
 
   ngOnInit() {
     this.mode = 'date';
@@ -76,6 +78,7 @@ export class RegisterVendorComponent implements OnInit {
       this.registerService.confirmVendor(regInfo).then(resp => {
         this.modal.deny('');
         localStorage.setItem('token', resp.headers.get('token'));
+        this.authEventService.signIn();
         this.helperService.redirectAfterAuthentication();
       });
     } else {
