@@ -1,5 +1,6 @@
 import { Component, OnInit,Input,OnDestroy, ViewChild } from '@angular/core';
 import { FormsModule }   from '@angular/forms';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 import {SuiModule} from 'ng2-semantic-ui';
 import { ActivatedRoute, Params } from '@angular/router';
@@ -27,13 +28,16 @@ export class UserDetailsComponent implements OnInit {
   enableTheme: boolean = false;
   saveImgButton:boolean = false;
   fakeUser:User;
+  backgroundUrl: SafeResourceUrl;
+  uploading: boolean;
 
   cropperSettings: CropperSettings;
   data: any;
   constructor( 
     private route: ActivatedRoute,
     private userService: UserService,
-    private photoService: PhotoService) { 
+    private photoService: PhotoService,
+    private sanitizer: DomSanitizer) { 
      this.cropperSettings = new CropperSettings();
         this.cropperSettings.width = 100;
         this.cropperSettings.height = 100;
@@ -53,23 +57,19 @@ export class UserDetailsComponent implements OnInit {
  openModal() {
     this.enabled = true;
   }
- updateBg(color:string)
- {
-    document.getElementById("user-header").style.backgroundColor = color;
- }
 
  bannerListener($event) {
     let file: File = $event.target.files[0];
-    this.photoService.uploadToImgur(file).then(resp => {
-      let path = resp.data.link;
-      console.log(path);
-      this.photoService.saveBanner(path)
-      .then(resp => {
-        document.getElementById("user-header").style.backgroundImage = `url('${path}')`;
-      })
-      .catch(err => console.log(err));
+    this.uploading = true;
+    this.photoService.uploadToImgur(file).then(link => {
+      console.log(link);
+      return this.photoService.saveBanner(link);
+    }).then(link => {
+      this.backgroundUrl = this.sanitizer.bypassSecurityTrustStyle(`url('${link}')`);
+      this.uploading = false;
     }).catch(err => {
       console.log(err);
+      this.uploading = false;
     });
  }
 
