@@ -23,7 +23,8 @@ export class UserProfileComponent implements OnInit {
 
     lat: number = 48.464921;
     lng: number = 35.045798;
-
+    birthday: Date;
+    dataLoaded: boolean;
     constructor(private userService: UserService, private locationService : LocationService) { }
    mapClicked($event: MouseEvent){
       this.lat=$event.clientX;
@@ -31,11 +32,10 @@ export class UserProfileComponent implements OnInit {
     
   }
     ngOnInit() {
-        // this.locationService.getById(this.user.LocationId)
-        // .then(resp =>
     }
 
     updateUser(): void {
+        this.user.Birthday=this.birthday;
         this.userService.updateUser(this.user)
           .then(resp => this.user = resp.body as User);
       }

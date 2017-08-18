@@ -14,17 +14,16 @@ export class UserService {
      dataService.setHeader('Content-Type', 'application/json');
     }
 
-  getUser(id: number):Promise<User>{
-    return this.dataService.getFullRequest<User>("user/" + id)
+
+  getUser(id: number):Promise<any>{
+    return this.dataService.getFullRequest<User>("users/" + id)
     .then(res => { return res }); }
 
 
   updateUser(user: User): Promise<any> {
-    return this.dataService.putFullRequest<User>(`${"user"}/${user.id}`, user)
+
+    return this.dataService.putFullRequest<User>('users/'+ user.Id, user)
       .catch(err => alert(err));
-  }
-  saveUser(user: User){
-    this.dataService.postRequest("user", user);
   }
   
 }
