@@ -26,7 +26,7 @@ export class UserDetailsComponent implements OnInit {
   enabled: boolean = false;
   enableTheme: boolean = false;
   saveImgButton:boolean = false;
-  fakeUser:User;
+  user:User;
 
   cropperSettings: CropperSettings;
   data: any;
@@ -48,7 +48,11 @@ export class UserDetailsComponent implements OnInit {
         this.data = {};
   }
   ngOnInit() {
-    this.fakeUser = this.userService.getUser(0);
+    // this.fakeUser = this.userService.getUser(0);
+    this.userService.getUser(3).then(res => {
+      this.user = res;      
+      console.log(this.user);
+      });     
   }
  openModal() {
     this.enabled = true;
