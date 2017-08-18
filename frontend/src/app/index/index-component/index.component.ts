@@ -39,7 +39,7 @@ export class IndexComponent implements OnInit {
     this.searchSubcategory = '';
     /* labels */
     this.labelSearch = 'What to do';
-    this.labelDate = 'When do it';
+    this.labelDate = 'When to do it';
     /* datepicker settings */
     this.mode = 'date';           /* select day */
     this.firstDayOfWeek = '1';    /* start calendar from first day of week */
