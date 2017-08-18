@@ -2,14 +2,11 @@ import { Component, OnInit, Input } from '@angular/core';
 
 import * as firebase from 'firebase/app';
 import { RegisterService } from '../../services/register.service';
+
+import { SuiActiveModal } from 'ng2-semantic-ui';
+import { Vendor } from '../models/vendor';
 import { HelperService } from '../../services/helper/helper.service';
 import { AuthenticationEventService } from '../../services/events/authenticationevent.service';
-
-import {
-  SuiModalService, TemplateModalConfig
-  , ModalTemplate, ModalSize, SuiActiveModal
-} from 'ng2-semantic-ui';
-import { Vendor } from '../models/vendor';
 
 @Component({
   selector: 'app-register-vendor',
@@ -19,8 +16,7 @@ import { Vendor } from '../models/vendor';
 export class RegisterVendorComponent implements OnInit {
 
   @Input() social: firebase.User;
-
-  @Input() public modal: SuiActiveModal<{}, {}, string>;
+  @Input() public modal: SuiActiveModal<void, void, void>;
 
   experience: number;
   position: string;
@@ -76,7 +72,7 @@ export class RegisterVendorComponent implements OnInit {
       this.error = false;
       let regInfo = this.aggregateInfo();
       this.registerService.confirmVendor(regInfo).then(resp => {
-        this.modal.deny('');
+        this.modal.deny(null);
         localStorage.setItem('token', resp.headers.get('token'));
         this.authEventService.signIn();
         this.helperService.redirectAfterAuthentication();
