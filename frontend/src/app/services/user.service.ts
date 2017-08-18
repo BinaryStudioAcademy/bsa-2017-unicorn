@@ -15,7 +15,7 @@ export class UserService {
     }
 
   getUser(id: number):Promise<User>{
-    return this.dataService.getRequest<User>(environment.apiUrl + "user/" + id)
+    return this.dataService.getRequest<User>("user/" + id)
     .then(res => { return res }); }
 
 
