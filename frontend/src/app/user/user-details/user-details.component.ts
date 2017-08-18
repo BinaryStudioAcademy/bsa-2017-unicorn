@@ -8,14 +8,14 @@ import 'rxjs/add/operator/switchMap';
 import { User } from '../../models/user';
 
 import { UserService } from "../../services/user.service";
+import { CropService } from "../../services/crop.service";
 import { PhotoService, Ng2ImgurUploader } from '../../services/photo.service';
 import {ImageCropperComponent, CropperSettings} from 'ng2-img-cropper';
 
 import { SuiModalService, TemplateModalConfig
   , ModalTemplate, ModalSize, SuiActiveModal } from 'ng2-semantic-ui';
 
-export interface IContext { }
-
+  export interface IContext { }
 @Component({
   selector: 'app-user-details',
   templateUrl: './user-details.component.html',
@@ -38,8 +38,6 @@ export class UserDetailsComponent implements OnInit {
   user:User;
 
   modalSize: string;
-
-
   cropperSettings: CropperSettings;
   data: any;
   file: File;
