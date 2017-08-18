@@ -15,12 +15,12 @@ export class UserService {
     }
 
   getUser(id: number):Promise<User>{
-    return this.dataService.getRequest<User>("user/" + id)
+    return this.dataService.getFullRequest<User>("user/" + id)
     .then(res => { return res }); }
 
 
   updateUser(user: User): Promise<any> {
-    return this.dataService.putFullRequest<User>(`${"users"}/${user.id}`, user)
+    return this.dataService.putFullRequest<User>(`${"user"}/${user.id}`, user)
       .catch(err => alert(err));
   }
   saveUser(user: User){
