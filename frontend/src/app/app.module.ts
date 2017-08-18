@@ -38,6 +38,7 @@ import { FooterComponent } from './footer/footer.component';
 import { RegisterComponent } from './register/register-component/register.component';
 
 import { LoginService } from './services/events/login.service';
+import { TokenHelperService } from './services/helper/tokenhelper.service';
 
 @NgModule({
   declarations: [    
@@ -66,7 +67,8 @@ import { LoginService } from './services/events/login.service';
   providers: [
     AuthService,
     HelperService,
-    LoginService
+    LoginService,
+    TokenHelperService
   ],
   entryComponents: [RegisterComponent],
   bootstrap: [AppComponent]

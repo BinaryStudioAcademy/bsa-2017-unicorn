@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { MenuItem } from './menu-item/menu-item';
 
-import { LoginService }   from '../services/events/login.service';
+import { LoginService } from '../services/events/login.service';
 import { Subscription } from 'rxjs/Subscription';
 
 import {
@@ -10,7 +10,7 @@ import {
   , ModalTemplate, ModalSize, SuiActiveModal
 } from 'ng2-semantic-ui';
 import { ConfirmModal, IConfirmModalContext } from '../register/register-component/register.component';
-import { DataService } from '../services/data.service';
+import { AuthService } from '../services/auth/auth.service';
 
 @Component({
   selector: 'app-menu',
@@ -22,9 +22,9 @@ export class MenuComponent implements OnInit {
   items: MenuItem[];
   isEnabled: boolean;
   isLogged: boolean;
-  subscription:Subscription;
+  subscription: Subscription;
 
-  constructor(private modalService: SuiModalService, private eventLoginService: LoginService) { 
+  constructor(private modalService: SuiModalService, private eventLoginService: LoginService, private authService: AuthService) {
     this.isLogged = localStorage.getItem('token') != null;
   }
 
@@ -33,13 +33,12 @@ export class MenuComponent implements OnInit {
     this.isEnabled = true;
 
     this.subscription = this.eventLoginService.loginEvent$
-    .subscribe( x => {
-      console.log('EVENT:', x);
-      this.isLogged = x;
-    } );
+      .subscribe(x => {
+        this.isLogged = x;
+      });
   }
 
-  ngOnDestroy() {   
+  ngOnDestroy() {
     this.subscription.unsubscribe();
   }
 
@@ -63,16 +62,8 @@ export class MenuComponent implements OnInit {
     }];
   }
 
-  getUserName(){
-    
-  }
-
-  userLogged(){
-    alert('its work!');
-  }
-
   signOut() {
-    localStorage.removeItem('token');
+    this.authService.logout();
     this.isLogged = false;
   }
 }

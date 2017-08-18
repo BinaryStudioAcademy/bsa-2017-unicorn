@@ -8,7 +8,6 @@ import { MenuComponent } from '../../menu/menu.component';
 import { HelperService } from '../../services/helper/helper.service';
 
 import { RegisterService } from '../../services/register.service';
-
 import { LoginService }   from '../../services/events/login.service';
 
 import {
@@ -54,8 +53,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
   isVendor = false;
   isCompany = false;
 
-  // @Output() onUserLoggedIn = new EventEmitter<void>();  
-
   constructor(
     public modal: SuiModal<IConfirmModalContext, void, void>,
     private zone: NgZone,
@@ -88,12 +85,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
         this.modal.deny(undefined);
         this.authService.saveJwt(resp.headers.get('token'));
         this.error = false;
-        
-        //this.onUserLoggedIn.emit();
 
         this.loginEventService.login(true);
-
         this.helperService.redirectAfterAuthentication();
+
         break;
       }
       default: {
