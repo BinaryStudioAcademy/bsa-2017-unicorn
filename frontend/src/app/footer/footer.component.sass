@@ -1,23 +1,19 @@
-.footer-wrapper {
+@import "../../global-style-variables.sass";
+
+.footer-wrapper 
     width: auto; 
     max-width: 510px;
-    height: 45px;
+    height: $footer-height;
     margin: 0 auto;
     background-color: white;
-}
 
-.separator-margin {
-    margin: 20px;
-}
-
-.separator-horiz {
-    margin-bottom: 20px;
-    height: 3px;
+.separator-horiz 
+    margin-bottom: $separator-margin;
+    height: $separator-height;
     background-color: #DEDEDE;
     border-bottom: 2px solid #EFEFEF;
-}
 
-.footer-container {
+.footer-container 
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -26,21 +22,17 @@
     margin: auto auto;
     width: 100%;
     color: gray;
-}
 
-.footer-container p {
+.footer-container p 
     margin: 0;
-}
 
-.icons-container {
+.icons-container 
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
     width: 100px; 
-}
 
-.icons-container a {
+.icons-container a 
     text-decoration: none;
     color: gray;
-}
