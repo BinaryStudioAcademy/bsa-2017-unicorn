@@ -30,7 +30,10 @@ export class VendorEditComponent implements OnInit {
   ngOnInit() {
     this.route.params
       .switchMap((params: Params) => this.vendorService.getVendor(params['id']))
-      .subscribe(resp => this.vendor = resp.body as Vendor);
+      .subscribe(resp => {
+        this.vendor = resp.body as Vendor;
+        this.backgroundUrl = this.buildSafeUrl(this.vendor.Background);
+      });
   }
 
   buildSafeUrl(link: string): SafeResourceUrl {
