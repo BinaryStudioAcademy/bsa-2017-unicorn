@@ -1,4 +1,148 @@
-<div class="search-wrapper">
+<div class="ui grid remove-margin-top-bottom">
+  <div class="ten wide column settings-container">
+      <div class="row remove-padding-top">
+          <div class="ui grid">
+              <div class="eight wide column remove-padding-bottom">
+                <label>What to do</label>
+              </div>
+              <div class="eight wide column remove-padding-bottom">
+                <label>When to do it</label>                  
+              </div>
+              <div class="four wide column ui input">
+                <input type="text" placeholder="{{placeholderCategory}}" [(ngModel)]="searchCategory">
+              </div>
+              <div class="four wide column  ui input">
+                <input type="text" placeholder="{{placeholderSubcategory}}" [(ngModel)]="searchSubcategory">
+              </div>
+              <div class="four wide column ui left icon input">
+                  <i class="calendar icon"></i>
+                  <input class="datepicker" placeholder="RIGHT NOW" suiDatepicker 
+                          [(ngModel)]="searchDate" 
+                          [pickerMode]="mode" 
+                          [pickerFirstDayOfWeek]="firstDayOfWeek" 
+                          [pickerUseNativeOnMobile]="false">
+              </div>
+              <div class="four wide column">
+                <button class="ui button btn-search" (click)="searchVendor()">SEARCH</button>
+              </div>
+              <div class="sixteen wide column remove-padding-top">
+                <sui-accordion class="fluid">
+                  <sui-accordion-panel>
+                    <div title>
+                      <i class="dropdown icon"></i>
+                      <label class="gray">Additional filters</label>
+                    </div>
+                    <div content>
+                      <div class="ui grid container segment">
+                        <div class="eight wide column remove-padding-bottom">  
+                            <div class="ui icon input">                        
+                              <input type="text" placeholder="Company name..." [(ngModel)]="searchCategory">
+                              <i class="search icon"></i>
+                            </div>
+                        </div>
+                        <div class="eight wide column remove-padding-bottom">
+                          <sui-multi-select [(ngModel)]="selected"
+                                            [options]="options"
+                                            labelField="name"
+                                            [maxSelected]="5"
+                                            icon="list"
+                                            placeholder="Categories..."
+                                            #select>
+                            <div class="ui icon search input">
+                                <i class="search icon"></i>
+                                <input suiSelectSearch type="text" placeholder="Search options...">
+                            </div>
+                            <div class="divider"></div>
+                            <div class="header">
+                                <i class="list icon"></i>
+                                Categories
+                            </div>
+                            <div class="scrolling menu">
+                                <sui-select-option *ngFor="let o of select.filteredOptions" [value]="o"></sui-select-option>
+                            </div>
+                          </sui-multi-select>
+                        </div>
+                        <div class="eight wide column remove-padding-bottom">  
+                          <div class="ui checkbox">
+                            <input type="checkbox" name="example">
+                            <label class="checkbox-position">Only with reviews</label>
+                          </div>
+                        </div>
+                        <div class="eight wide column remove-padding-bottom">
+                          <sui-multi-select [(ngModel)]="selected"
+                                            [options]="options"
+                                            labelField="name"
+                                            [maxSelected]="5"
+                                            icon="list"
+                                            placeholder="Subcategories..."
+                                            #select>
+                            <div class="ui icon search input">
+                                <i class="search icon"></i>
+                                <input suiSelectSearch type="text" placeholder="Search options...">
+                            </div>
+                            <div class="divider"></div>
+                            <div class="header">
+                                <i class="list icon"></i>
+                                Subcategories
+                            </div>
+                            <div class="scrolling menu">
+                                <sui-select-option *ngFor="let o of select.filteredOptions" [value]="o"></sui-select-option>
+                            </div>
+                          </sui-multi-select>
+                        </div>
+                        <div class="sixteen wide column remove-padding-top">
+                          <button class="ui button button-right" (click)="searchVendor()">Apply</button>
+                        </div>
+                      </div>
+                    </div>
+                  </sui-accordion-panel> 
+                </sui-accordion>     
+              </div>
+              <div class="twelve wide column remove-padding-top">
+                <h5 class="ui header">                  
+                  <div class="content">
+                    <i class="sort content descending icon"></i>
+                    Sort by
+                    <sui-select class="inline" [(ngModel)]="selectedRange">
+                      <div class="header">Type</div>
+                      <sui-select-option value="rating"></sui-select-option>
+                      <sui-select-option value="name"></sui-select-option>
+                      <sui-select-option value="foundation"></sui-select-option>
+                    </sui-select>
+                  </div>
+                </h5>
+              </div>
+              <div class="four wide column remove-padding-top">
+                <h5 class="ui header">                  
+                  <div class="content">
+                    <i class="sort icon"></i>
+                    Order
+                    <sui-select class="inline" [(ngModel)]="selectedRange2">
+                      <div class="header">Type</div>
+                      <sui-select-option value="ascending"></sui-select-option>
+                      <sui-select-option value="descending"></sui-select-option>
+                    </sui-select>
+                  </div>
+                </h5>              
+              </div>
+          </div>
+      </div>
+      <div class="ui divider"></div>
+  </div>
+  <div class="six wide column">
+    <div class="row">
+      <div class="map-container">
+        <ngui-map zoom="14" center="Brampton, Canada">
+          <marker *ngFor="let marker of markers" 
+              [position]="marker.pos"
+              [title]="marker.title"></marker>
+        </ngui-map>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="search-wrapper">
   <div class="companies-container">
      <div class="ui grid">
       <div class="four column row">
@@ -29,35 +173,29 @@
         </div>
       </div>
     </div> 
-    <!-- <sui-tabset>
-        <div class="ui pointing secondary menu">
-          <a class="item" suiTabHeader="1">By rating</a>
-          <a class="item" suiTabHeader="2">By popularity</a>
-          <a class="item" suiTabHeader="2">By cration date</a>
-      </div>
-    </sui-tabset> -->
-    <!-- <div class="filter-container">
-      <div class="search-container">
-        <div class="search-item">
-          <p>{{labelSearch}}</p>
-          <div class="ui input fill-horizontal">
-            <input class="search-input" type="text" placeholder="{{placeholderCategory}}" [(ngModel)]="searchCategory">
+    <sui-accordion class="fluid">
+      <sui-accordion-panel>
+          <div title>
+              <i class="dropdown icon"></i>
+              Additional filters
           </div>
+          <div content>
+              <p>Using <code>[isOpen]</code> sets the panel to be expanded.</p>
+              <p>Use <code>(isOpenChange)</code> to catch when the panel is toggled.</p>
+              <p>Supports <code>[(isOpen)]</code> syntax.</p>
           </div>
-          <div class="search-item">
-          <div class="ui input fill-horizontal">
-            <input class="search-input" type="text" placeholder="{{placeholderSubcategory}}" [(ngModel)]="searchSubcategory">
-          </div>
-        </div>
-        <div class="search-item">
-          <p>{{labelDate}}</p>
-          <div class="ui left icon input">
-            <i class="calendar icon"></i>
-            <input class="datepicker" placeholder="RIGHT NOW" suiDatepicker [(ngModel)]="searchDate" [pickerMode]="mode" [pickerFirstDayOfWeek]="firstDayOfWeek" [pickerUseNativeOnMobile]="false">
-          </div>
-        </div>
-      </div>
-    </div> -->
+      </sui-accordion-panel>
+    </sui-accordion>
+    <label>Sort</label>
+    <div class="ui basic buttons">
+      <div class="ui button active">by rating</div>
+      <div class="ui button">by name</div>
+      <div class="ui button">by foundation</div>
+    </div>
+    <label>Order</label>
+    <button class="ui button active">ascending</button>
+    <button class="ui button">descending</button>
+    
     <div class="separator-horiz"></div>
      <div class="companies"> 
       <div class="company" *ngFor="let company of companies.slice((selectedPage - 1) * pageSize, selectedPage * pageSize)">
@@ -86,15 +224,10 @@
     </div> 
   </div>  
   <div class="map-container">
-    <!-- <ngui-map class="map" [options]="mapOptions"></ngui-map> -->
     <ngui-map class="map" zoom="14" center="Brampton, Canada">
       <marker *ngFor="let marker of markers" 
           [position]="marker.pos"
           [title]="marker.title"></marker>
       </ngui-map>
-      <!-- <marker *ngFor="let pos of positions" 
-        [position]="pos"
-        [title]="labelDate"></marker>
-    </ngui-map> -->
   </div>
-</div>
+</div> -->
