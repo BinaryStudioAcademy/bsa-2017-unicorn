@@ -1,5 +1,5 @@
-﻿<div class="ui grid container">
-    <div class="row" *ngIf="user !== undefined">
+﻿<div class="ui grid container remove-margin-top-bottom">
+    <div class="row remove-padding-top" *ngIf="user !== undefined">
         <div class="sixteen wide column container">
             <div class="user-header" id="user-header" [style.backgroundImage]="backgroundUrl">
                 <label *ngIf="isOwner" id="banner-loader" for="banner-input" class="ui icon button basic" [ngClass]="{'loading': uploading}">
