@@ -1,11 +1,15 @@
 <div class="main-content">
     <div *ngIf="company !== undefined">
         <div class="sixteen wide column container">
-            <div class="ui segment" (mouseenter)="isDimmed = !isDimmed" (mouseleave)="isDimmed = !isDimmed">
+            <div id="header" class="ui segment" (mouseenter)="isDimmed = !isDimmed" (mouseleave)="isDimmed = !isDimmed">
                 <img class="ui fluid image" src={{company.Avatar}}>
-                <sui-dimmer [(isDimmed)]="isDimmed" [isClickable]="false">
+                <!-- <sui-dimmer [(isDimmed)]="isDimmed" [isClickable]="false">
                     <h4 class="ui inverted header"><i class=" photo icon"></i></h4>
-                </sui-dimmer>
+                </sui-dimmer> -->
+                <label id="banner-loader" for="banner-input" class="ui icon button basic" [ngClass]="{'loading': uploading}">
+                    <i class="icon pink" [ngClass]="{'upload': !uploading}"></i>
+                </label>
+                <input type="file" id="banner-input" accept="image/*" (change)="bannerListener($event)">
             </div>
         </div>
         <div class="ui grid container">
