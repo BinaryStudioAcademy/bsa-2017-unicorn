@@ -1,22 +1,24 @@
 ﻿<table class="ui single line table">
-  <thead>
-    <tr>
-      <th>Date of request</th>
-      <th>Type of work</th>
-      <th>Description</th>
-      <th>Vendor</th>
-      <th>Done date</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>20.07.2017</td>
-      <td>Plumbing</td>
-      <td>Fix dripping tap</td>
-      <td><a>Petr Petrov</a></td>
-      <td>23.07.2017</td>
-      <td><button class="ui basic button"><p style="color:#FF647A;">Feedback</p></button></td>
-    </tr>
-  </tbody>
+    <thead>
+        <tr>
+            <th>Date of request</th>
+            <th>Type of work</th>
+            <th>Work description</th>
+            <th>Book description</th>
+            <th>Vendor</th>
+            <th>Done date</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of user.History">
+            <td>{{item.date|date:fullDate}}</td>
+            <td>{{item.categoryName}}</td>
+            <td>{{item.workDescription}}</td>
+            <td>{{item.bookDescription}}</td>
+            <td><a>{{item.vendor}}</a></td>
+            <td>{{item.dateFinished|date:fullDate}}</td>
+            <td><button class="ui basic button"><p style="color:#FF647A;">Feedback</p></button></td>
+        </tr>
+    </tbody>
 </table>

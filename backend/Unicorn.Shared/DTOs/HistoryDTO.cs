@@ -1,4 +1,5 @@
 ﻿using System;
+using Unicorn.Shared.DTOs.Vendor;
 
 namespace Unicorn.Shared.DTOs
 {
@@ -6,15 +7,17 @@ namespace Unicorn.Shared.DTOs
     {
         public long Id { get; set; }
 
-        public long CustomerId { get; set; }
+        public CustomerDTO Customer { get; set; }
 
-        public string CustomerName { get; set; }
+        public VendorDTO Vendor { get; set; }
 
-        public long VendorId { get; set; }
+        public ReviewDTO Review { get; set; }
 
-        public string VendorName { get; set; }
+        public CompanyDTO Company { get; set; }
 
         public DateTime Date { get; set; }
+
+        public DateTime DateFinished { get; set; }
 
         public string BookDescription { get; set; }
 
