@@ -10,6 +10,10 @@ namespace Unicorn.Shared.DTOs
 
         public string Description { get; set; }
 
+        public string Category { get; set; }
+
+        public long CategoryId { get; set; }
+
         public string Subcategory { get; set; }
 
         public long SubcategoryId { get; set; }

@@ -1,7 +1,11 @@
 <nav class="navbar">
     <ul>
         <li><a routerLink="/search" routerLinkActive="active">Search</a></li>
-        <li><a routerLink="#" routerLinkActive="active">Vendors</a></li>       
-        <li><a (click)="openModal()" routerLinkActive="active">Sign in</a></li>
+        <li><a routerLink="#" routerLinkActive="active">Vendors</a></li>
+        <li *ngIf="!isLogged;else authorized"><a (click)="openModal()" routerLinkActive="active">Sign In</a></li>
+        <ng-template #authorized>
+            <li><span>UserName</span></li>
+            <li><a (click)="signOut()" routerLinkActive="active">Sign Out</a></li>
+        </ng-template>
     </ul>
 </nav>

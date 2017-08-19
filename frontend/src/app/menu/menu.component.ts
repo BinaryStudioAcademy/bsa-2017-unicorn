@@ -2,11 +2,14 @@ import { Component, OnInit } from '@angular/core';
 
 import { MenuItem } from './menu-item/menu-item';
 
-import {
-  SuiModalService, TemplateModalConfig, SuiModal, ComponentModalConfig
-  , ModalTemplate, ModalSize, SuiActiveModal
-} from 'ng2-semantic-ui';
-import { ConfirmModal, IConfirmModalContext } from '../register/register-component/register.component';
+import { AuthenticationEventService } from '../services/events/authenticationevent.service';
+import { AuthenticationLoginService } from '../services/auth/authenticationlogin.service';
+
+import { Subscription } from 'rxjs/Subscription';
+import { TokenHelperService } from '../services/helper/tokenhelper.service';
+
+import { SuiModalService } from 'ng2-semantic-ui';
+import { RegisterModal } from '../register/register-component/register.component';
 
 @Component({
   selector: 'app-menu',
@@ -17,20 +20,41 @@ import { ConfirmModal, IConfirmModalContext } from '../register/register-compone
 export class MenuComponent implements OnInit {
   items: MenuItem[];
   isEnabled: boolean;
-  
-  constructor(private modalService: SuiModalService) { }
+  isLogged: boolean;
+
+  onLogIn: Subscription;
+  onLogOut: Subscription;
+
+  constructor(
+    private modalService: SuiModalService,
+    private authEventService: AuthenticationEventService,
+    private authLoginService: AuthenticationLoginService,
+    private tokenHelper: TokenHelperService) {
+    this.isLogged = this.tokenHelper.isTokenValid() && this.tokenHelper.isTokenNotExpired();
+  }
 
   ngOnInit() {
     this.addMenuItems();
     this.isEnabled = true;
-  
+
+    this.onLogIn = this.authEventService.loginEvent$
+      .subscribe(() => {
+        this.isLogged = true;
+      });
+
+    this.onLogOut = this.authEventService.logoutEvent$
+      .subscribe(() => {
+        this.isLogged = false;
+      });
   }
-  
+
+  ngOnDestroy() {
+    this.onLogIn.unsubscribe();
+    this.onLogOut.unsubscribe();
+  }
+
   openModal() {
-   this.modalService
-      .open(new ConfirmModal("Are you sure?", "Are you sure about accepting this?"))
-      .onApprove(() => alert("User has accepted."))
-      .onDeny(() => (''));
+    this.modalService.open(new RegisterModal());
   }
 
   addMenuItems() {
@@ -44,5 +68,9 @@ export class MenuComponent implements OnInit {
       name: 'Sign in',
       route: 'register'
     }];
+  }
+
+  signOut() {
+    this.authLoginService.signOut();
   }
 }

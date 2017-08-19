@@ -121,6 +121,8 @@ namespace Unicorn.Core.Services
                     Id = w.Id,
                     Description = w.Description,
                     Name = w.Name,
+                    Category = w.Subcategory.Category.Name,
+                    CategoryId = w.Subcategory.Category.Id,
                     Subcategory = w.Subcategory.Name,
                     SubcategoryId = w.Subcategory.Id
                 }).ToList()

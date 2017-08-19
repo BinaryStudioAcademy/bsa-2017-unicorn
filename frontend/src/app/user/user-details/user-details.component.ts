@@ -1,12 +1,14 @@
 import { Component, OnInit,Input,OnDestroy, ViewChild } from '@angular/core';
 import { FormsModule }   from '@angular/forms';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 import {SuiModule} from 'ng2-semantic-ui';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, ParamMap } from '@angular/router';
 import 'rxjs/add/operator/switchMap';
 
 import { User } from '../../models/user';
 
+import { TokenHelperService } from '../../services/helper/tokenhelper.service';
 import { UserService } from "../../services/user.service";
 import { ModalService } from "../../services/modal/modal.service";
 import { PhotoService, Ng2ImgurUploader } from '../../services/photo.service';
@@ -36,6 +38,10 @@ export class UserDetailsComponent implements OnInit {
   enabled: boolean = false;
   enableTheme: boolean = false;
   saveImgButton:boolean = false;
+  fakeUser:User;
+  backgroundUrl: SafeResourceUrl;
+  uploading: boolean;
+  isOwner: boolean;
   user:User;
 
   modalSize: string;
@@ -48,7 +54,9 @@ export class UserDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private userService: UserService,
     private photoService: PhotoService,
-    private modalService: ModalService) { 
+    private sanitizer: DomSanitizer, 
+    public modalService: SuiModalService,
+    private tokenHelper: TokenHelperService) { 
      this.cropperSettings = new CropperSettings();
         this.cropperSettings.width = 100;
         this.cropperSettings.height = 100;
@@ -64,39 +72,45 @@ export class UserDetailsComponent implements OnInit {
         this.imageUploaded = false;
   }
   ngOnInit() {
-    this.user = this.userService.getUser(1);
-    // this.route.params
-    //   .switchMap((params: Params) => 
-    //   { 
-    //     debugger; 
-    //     return this.userService.getUser(params['id']);
-    //   })
-    //   .subscribe(resp => 
-    //     {
-    //       debugger;
-    //       this.user = resp.body as User;
-    //     });
+
+    this.initOwnerParam();
+    this.route.params
+    .switchMap((params: Params) => this.userService.getUser(params['id']))
+    .subscribe(resp => {
+      this.user = resp.body as User;
+      this.backgroundUrl = this.buildSafeUrl(this.user.Avatar);
+    });
   }
 
- updateBg(color:string)
- {
-    document.getElementById("user-header").style.backgroundColor = color;
- }
+  initOwnerParam(): void {
+    let id = this.route.snapshot.paramMap.get('id');
+    if (this.tokenHelper.getClaimByName('id') === id) {
+      console.log('owner');
+      this.isOwner = true;
+    }
+    console.log(id);
+    console.log(this.tokenHelper.getClaimByName('id'));
+  }
 
- bannerListener($event) {
-    let file: File = $event.target.files[0];
-    this.photoService.uploadToImgur(file).then(resp => {
-      let path = resp.data.link;
-      console.log(path);
-      this.photoService.saveBanner(path)
-      .then(resp => {
-        document.getElementById("user-header").style.backgroundImage = `url('${path}')`;
-      })
-      .catch(err => console.log(err));
-    }).catch(err => {
-      console.log(err);
-    });
- }
+  buildSafeUrl(link: string): SafeResourceUrl {
+    return this.sanitizer.bypassSecurityTrustStyle(`url('${link}')`);
+  }
+
+  bannerListener($event) {
+      let file: File = $event.target.files[0];
+      this.uploading = true;
+      this.photoService.uploadToImgur(file).then(link => {
+        console.log(link);
+        return this.photoService.saveBanner(link);
+      }).then(link => {
+        this.backgroundUrl = this.buildSafeUrl(link);
+        this.uploading = false;
+      }).catch(err => {
+        console.log(err);
+        this.uploading = false;
+      });
+  }
+
 
   fileChangeListener($event) {
     debugger;
@@ -124,7 +138,8 @@ export class UserDetailsComponent implements OnInit {
     }
 
     this.photoService.uploadToImgur(this.file).then(resp => {
-      let path = resp.data.link;
+
+      let path = resp;
       console.log(path);
       this.photoService.saveAvatar(path)
       .then(resp => {
@@ -134,7 +149,6 @@ export class UserDetailsComponent implements OnInit {
     }).catch(err => {
       console.log(err);
     });
-
   }
 
   public openModal() {
@@ -157,6 +171,9 @@ export class UserDetailsComponent implements OnInit {
   }
 
   getImage() : string {
-    return this.data.image ? this.data.image : this.user.avatarUrl;
+
+    debugger;
+    return this.data.image ? this.data.image : ''; // prev. was fake user prop
+
   }
 }

@@ -3,10 +3,10 @@ import { Component, OnInit, Input } from '@angular/core';
 import * as firebase from 'firebase/app';
 import { RegisterService } from '../../services/register.service';
 
-import { SuiModalService, TemplateModalConfig
-  , ModalTemplate, ModalSize, SuiActiveModal } from 'ng2-semantic-ui';
+import { SuiActiveModal } from 'ng2-semantic-ui';
 import { Company } from '../models/company';
 import { HelperService } from '../../services/helper/helper.service';
+import { AuthenticationEventService } from '../../services/events/authenticationevent.service';
 
 @Component({
   selector: 'app-register-company',
@@ -16,8 +16,7 @@ import { HelperService } from '../../services/helper/helper.service';
 export class RegisterCompanyComponent implements OnInit {
 
   @Input() social: firebase.User;
-
-  @Input() public modal: SuiActiveModal<{}, {}, string>;
+  @Input() public modal: SuiActiveModal<void, void, void>;
 
   name: string;
   mode: string;
@@ -29,7 +28,8 @@ export class RegisterCompanyComponent implements OnInit {
   foundation: any;
 
   constructor(private registerService: RegisterService,
-    private helperService: HelperService) { }
+    private helperService: HelperService,
+    private authEventService: AuthenticationEventService) { }
 
   ngOnInit() {
     this.mode = 'date';
@@ -57,11 +57,12 @@ export class RegisterCompanyComponent implements OnInit {
 
   confirmRegister() {
     if (this.valid()) {
-      this.error = false;      
-      let regInfo = this.aggregateInfo();      
+      this.error = false;
+      let regInfo = this.aggregateInfo();
       this.registerService.confirmCompany(regInfo).then(resp => {
-        this.modal.deny('');
-        localStorage.setItem('token', resp.headers.get('token'));        
+        this.modal.deny(null);
+        localStorage.setItem('token', resp.headers.get('token'));
+        this.authEventService.signIn();
         this.helperService.redirectAfterAuthentication();
       });
     } else {

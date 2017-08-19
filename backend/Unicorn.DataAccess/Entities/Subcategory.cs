@@ -8,6 +8,8 @@ namespace Unicorn.DataAccess.Entities
         public long Id { get; set; }
         public bool IsDeleted { get; set; }
 
+        public string Avatar { get; set; }
+
         public string Name { get; set; }
 
         public string Description { get; set; }

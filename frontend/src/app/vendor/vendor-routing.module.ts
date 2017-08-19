@@ -9,6 +9,8 @@ import { VendorProfileReviewsComponent } from './vendor-details/vendor-profile-r
 import { VendorProfilePortfolioComponent } from './vendor-details/vendor-profile-portfolio/vendor-profile-portfolio.component';
 import { VendorEditComponent } from "./vendor-edit/vendor-edit.component";
 
+import { AuthGuard } from '../guards/auth.guard';
+
 @NgModule({
   imports: [
     RouterModule.forRoot([
@@ -32,7 +34,8 @@ import { VendorEditComponent } from "./vendor-edit/vendor-edit.component";
           },
           {
             path: ':id/edit',
-            component: VendorEditComponent
+            component: VendorEditComponent,
+            canActivate: [AuthGuard]
           }
         ]
       }
@@ -40,6 +43,7 @@ import { VendorEditComponent } from "./vendor-edit/vendor-edit.component";
   ],
   exports: [
     RouterModule
-  ]
+  ],
+  providers: [AuthGuard]
 })
 export class VendorRoutingModule { }

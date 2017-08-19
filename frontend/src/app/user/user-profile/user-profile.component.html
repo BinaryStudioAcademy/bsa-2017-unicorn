@@ -1,24 +1,25 @@
 ﻿<div class="container">
     <div class="column">
-        <div class="ui input">
+        <div class="ui input" *ngIf="user !== undefined">
             <div class="elem">
-                <input type="text" value="{{user.firstName}}" placeholder="NAME">
-                <input type="text" value="{{user.surName}}" placeholder="LASTNAME">
-                <input type="text" value="{{user.middleName}}" placeholder="MIDLENAME">
-                <input type="text" value="{{user.email}}" placeholder="EMAIL">
-                <input type="text" value="{{user.phone}}" placeholder="PHONE">
+                <input type="text" [(ngModel)]="user.Name" name="Name" placeholder="NAME">
+                <input type="text" [(ngModel)]="user.SurName" name="SurName" placeholder="LASTNAME">
+                <input type="text" [(ngModel)]="user.MiddleName" name="MiddleName" placeholder="MIDLENAME">
+                <input type="text" [(ngModel)]="user.Email" name="Email" placeholder="EMAIL">
+                <input type="text" [(ngModel)]="user.Phone" name="Phone" placeholder="PHONE">
             </div>
         </div>
-        <div class="elem">
+        <div class="elem" *ngIf="user !== undefined">
             <div class="ui left icon input">
                 <i class="calendar icon" style="margin-left: 15px; margin-top: 10px;"></i>
-                <input suiDatepicker ng-model="birthday" pickerMode="date" placeholder="PICK YOUR BIRTH">
+                <input suiDatepicker [(ngModel)]="birthday" name="birthday" pickerMode="date" [placeholder]="user.Birthday | date:'shortDate'">
             </div>
+
         </div>
     </div>
     <div class="column">
-        <button class="ui basic button"><p style="color:#FF647A;">Save</p></button>
-        <label class="gray_font">Your location: {{user.location}}</label>
+        <button class="ui basic button" (click)="updateUser()"><p style="color:#FF647A;">Save</p></button>
+        <label class="gray_font">Your location:</label>
         <div class="map">
             <agm-map [latitude]="lat" [longitude]="lng" [zoom]="18" style="height: 16em;">
                 <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>

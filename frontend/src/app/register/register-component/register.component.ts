@@ -1,27 +1,20 @@
-import { Component, OnInit, OnDestroy, Input, ViewChild, forwardRef, Inject, NgZone } from '@angular/core';
+import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
 import { Location } from '@angular/common';
 
-import { AuthService } from '../../services/auth/auth.service';
+import { AuthenticationLoginService } from '../../services/auth/authenticationlogin.service';
+import { AuthenticationEventService } from '../../services/events/authenticationevent.service';
+
 import * as firebase from 'firebase/app';
-import { Observable } from 'rxjs/Observable';
-import { MenuComponent } from '../../menu/menu.component';
+
 import { HelperService } from '../../services/helper/helper.service';
 
 import { RegisterService } from '../../services/register.service';
 
-import {
-  SuiModalService, TemplateModalConfig, SuiModal, ComponentModalConfig
-  , ModalTemplate, ModalSize, SuiActiveModal
-} from 'ng2-semantic-ui';
+import { ComponentModalConfig, ModalSize, SuiModal } from 'ng2-semantic-ui';
 
-export interface IConfirmModalContext {
-  title: string;
-  question: string;
-}
-
-export class ConfirmModal extends ComponentModalConfig<IConfirmModalContext, void, void> {
-  constructor(title: string, question: string) {
-    super(RegisterComponent, { title, question });
+export class RegisterModal extends ComponentModalConfig<void> {
+  constructor() {
+    super(RegisterComponent);
     this.size = ModalSize.Small;
     this.isInverted = true;
   }
@@ -36,10 +29,7 @@ export class ConfirmModal extends ComponentModalConfig<IConfirmModalContext, voi
 export class RegisterComponent implements OnInit, OnDestroy {
   private currentUser: firebase.User = null;
 
-  @Input() enabled: boolean;
-
   mode: string;
-  modalSize: string;
   error: boolean = false;
 
   public roles: { [role: string]: boolean } = {};
@@ -55,14 +45,15 @@ export class RegisterComponent implements OnInit, OnDestroy {
   isCompany = false;
 
   constructor(
-    public modal: SuiModal<IConfirmModalContext, void, void>,
+    public modal: SuiModal<void>,
     private zone: NgZone,
     private helperService: HelperService,
     public registerService: RegisterService,
-    public authService: AuthService) {
+    public authLoginService: AuthenticationLoginService,
+    private authEventService: AuthenticationEventService) {
 
     this.mode = 'date';
-    this.authService.logout();
+    this.authLoginService.signOut();
 
     this.isLogged = false;
     this.error = false;
@@ -82,10 +73,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
         break;
       }
       case 200: {
-        this.modal.deny(undefined);
-        this.authService.saveJwt(resp.headers.get('token'));
-        this.error = false;        
-        this.helperService.redirectAfterAuthentication();
+        this.modal.deny(null);
+        this.authLoginService.saveJwt(resp.headers.get('token'));
+        this.error = false;
+        this.authEventService.signIn();
+        this.zone.run(() => this.helperService.redirectAfterAuthentication());
         break;
       }
       default: {
@@ -96,7 +88,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   loginWithGoogle() {
-    this.authService.loginWithGoogle()
+    this.authLoginService.loginWithGoogle()
       .then(resp => {
         this.handleResponse(resp);
       })
@@ -106,7 +98,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   loginWithFacebook() {
-    this.authService.loginWithFacebook()
+    this.authLoginService.loginWithFacebook()
       .then(resp => {
         this.handleResponse(resp);
       })
@@ -116,7 +108,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   loginWithTwitter() {
-    this.authService.loginWithTwitter()
+    this.authLoginService.loginWithTwitter()
       .then(resp => {
         this.handleResponse(resp);
       })
@@ -138,7 +130,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.authService.authState.subscribe(user => {
+    this.authLoginService.authState.subscribe(user => {
       if (user) {
         this.currentUser = user;
       } else {

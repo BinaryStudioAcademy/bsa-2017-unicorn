@@ -15,8 +15,8 @@ export class CompanyService {
     .then(res => { return res });    
   }
 
-  saveCompany(company: Company){
-    this.dataService.postRequest("company", company);
+  saveCompany(company: Company):Promise<Company>{
+    return this.dataService.postRequest("company", company);
   }
 
   getMockCompany(): Company{
@@ -33,8 +33,8 @@ export class CompanyService {
       Location: {
         Adress: "Chornovola 2",
         City: "Lviv",
-        Latitude: 49.85711,
-        Longitude: 24.01980,
+        Latitude: Math.random() * 0.0099 + 43.7250,
+        Longitude: Math.random() * 0.0099 + -79.7699,
       },
       Reviews: [
       {
