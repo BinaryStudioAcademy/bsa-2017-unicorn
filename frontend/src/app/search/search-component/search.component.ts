@@ -29,6 +29,11 @@ export class SearchComponent implements OnInit, OnDestroy {
   searchDate: Date;
   mode: string;
   firstDayOfWeek: string;
+  /* multi-select */
+  selCat: string[];
+  filterCat: string[];
+  selSubcat: string[];
+  filterSubcat: string[];
   /* pagination */
   pageSize = 12;
   maxSize = 3;
@@ -48,6 +53,7 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getParameters();
+    this.createMockSettings();
     this.createMockCompanies(20);
     this.initContent();
   }
@@ -60,6 +66,11 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   convertDate(date: number) {
     return new Date(1000 * date);
+  }
+
+  createMockSettings() {
+    this.filterCat  = ['Category 1', 'Category 2', 'Category 3', 'Category 4', 'Category 5', 'Category 6'];
+    this.filterSubcat  = ['Subategory 1', 'Subategory 2', 'Subategory 3', 'Subategory 4', 'Subategory 5', 'Subategory 6'];
   }
 
   createMockCompanies(num: number) {

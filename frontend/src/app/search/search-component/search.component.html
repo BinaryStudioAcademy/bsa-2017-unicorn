@@ -36,17 +36,16 @@
                       <div class="ui grid container segment">
                         <div class="eight wide column remove-padding-bottom">  
                             <div class="ui icon input">                        
-                              <input type="text" placeholder="Company name..." [(ngModel)]="searchCategory">
+                              <input type="text" placeholder="COMPANY NAME" [(ngModel)]="searchCategory">
                               <i class="search icon"></i>
                             </div>
                         </div>
                         <div class="eight wide column remove-padding-bottom">
-                          <sui-multi-select [(ngModel)]="selected"
-                                            [options]="options"
-                                            labelField="name"
+                          <sui-multi-select [(ngModel)]="selCat"
+                                            [options]="filterCat"                                            
                                             [maxSelected]="5"
                                             icon="list"
-                                            placeholder="Categories..."
+                                            placeholder="CATEGORIES"
                                             #select>
                             <div class="ui icon search input">
                                 <i class="search icon"></i>
@@ -58,7 +57,7 @@
                                 Categories
                             </div>
                             <div class="scrolling menu">
-                                <sui-select-option *ngFor="let o of select.filteredOptions" [value]="o"></sui-select-option>
+                                <sui-select-option *ngFor="let o of filterCat" [value]="o">{{o}}</sui-select-option>
                             </div>
                           </sui-multi-select>
                         </div>
@@ -69,12 +68,11 @@
                           </div>
                         </div>
                         <div class="eight wide column remove-padding-bottom">
-                          <sui-multi-select [(ngModel)]="selected"
-                                            [options]="options"
-                                            labelField="name"
+                          <sui-multi-select [(ngModel)]="selSubat"
+                                            [options]="filterSubcat"
                                             [maxSelected]="5"
                                             icon="list"
-                                            placeholder="Subcategories..."
+                                            placeholder="SUBCATEGORIES"
                                             #select>
                             <div class="ui icon search input">
                                 <i class="search icon"></i>
@@ -86,7 +84,7 @@
                                 Subcategories
                             </div>
                             <div class="scrolling menu">
-                                <sui-select-option *ngFor="let o of select.filteredOptions" [value]="o"></sui-select-option>
+                                <sui-select-option *ngFor="let o of filterSubcat" [value]="o"></sui-select-option>
                             </div>
                           </sui-multi-select>
                         </div>
