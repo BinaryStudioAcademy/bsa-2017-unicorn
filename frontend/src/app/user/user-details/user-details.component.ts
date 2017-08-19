@@ -79,7 +79,7 @@ export class UserDetailsComponent implements OnInit {
     .switchMap((params: Params) => this.userService.getUser(params['id']))
     .subscribe(resp => {
       this.user = resp.body as User;
-      this.backgroundUrl = this.buildSafeUrl(this.user.Avatar);
+      this.backgroundUrl = this.buildSafeUrl(this.user.Background);
     });
   }
 
@@ -140,7 +140,8 @@ export class UserDetailsComponent implements OnInit {
       console.log(path);
       this.photoService.saveAvatar(path)
       .then(resp => {
-        this.activeModal.deny('');        
+        this.activeModal.deny('');
+        this.user.Avatar = path;     
       })
       .catch(err => console.log(err));
     }).catch(err => {
@@ -169,7 +170,7 @@ export class UserDetailsComponent implements OnInit {
   getImage() : string {
 
     debugger;
-    return this.data.image ? this.data.image : ''; // prev. was fake user prop
+    return this.user.Avatar ? this.user.Avatar : ''; // prev. was fake user prop
 
   }
 }

@@ -42,6 +42,7 @@ namespace Unicorn.Core.Services
             account.Role = role;
             account.DateCreated = DateTime.Now;
             account.Email = customerDto.Email;
+            account.Avatar = "http://static.1927.kiev.ua/images/default_avatar.jpg";
 
             socialAccount.Provider = customerDto.Provider;
             socialAccount.Uid = customerDto.Uid;
@@ -98,6 +99,7 @@ namespace Unicorn.Core.Services
                     Birthday = customer.Person.Birthday,
                     Phone = customer.Person.Phone,
                     Avatar = customer.Person.Account.Avatar,
+                    Background = customer.Person.Account.Background,
                     Email = customer.Person.Account.Email,
                     Books = customer.Books.Select(x => new BookShortDto()
                     {
