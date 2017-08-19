@@ -55,7 +55,8 @@ export class UserDetailsComponent implements OnInit {
     private userService: UserService,
     private photoService: PhotoService,
     private sanitizer: DomSanitizer, 
-    public modalService: SuiModalService,
+    public suimodalService: SuiModalService,
+    public modalService: ModalService,    
     private tokenHelper: TokenHelperService) { 
      this.cropperSettings = new CropperSettings();
         this.cropperSettings.width = 100;
