@@ -1,6 +1,6 @@
-import {Vendor} from './vendor'
 import {User} from './user'
 import {Review} from './review.model'
+import { Vendor } from "./company-page/vendor";
 
 export interface History {
     date: Date;

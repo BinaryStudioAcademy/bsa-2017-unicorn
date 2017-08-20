@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="https://unpkg.com/semantic-ui-calendar/dist/calendar.min.css">
 
-<div class="container">
+<div class="container" *ngIf="company !== undefined">
     <div class="ui form">
         <div class="field">
             <label>Company name</label>
@@ -26,4 +26,7 @@
         <button class="ui basic button" (click)="save()" [ngClass]="{'loading':isLoaded}">
             <p *ngIf="!isLoaded" style="color:#FF647A;">Save</p></button>
     </div>
+</div>
+<div *ngIf="company === undefined" class="ui active inverted dimmer" style="background-color: rgba(255,255,255,.85)">
+    <div class="ui text loader">Loading</div>
 </div>

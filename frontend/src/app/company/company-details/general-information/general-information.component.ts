@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Company } from "../../../models/company.model";
+import { CompanyDetails } from "../../../models/company-page/company-details.model";
+import { CompanyService } from "../../../services/company-services/company.service";
+import { ActivatedRoute, Params } from "@angular/router";
 
 @Component({
   selector: 'company-general-information',
@@ -7,27 +9,18 @@ import { Company } from "../../../models/company.model";
   styleUrls: ['./general-information.component.sass']
 })
 export class GeneralInformationComponent implements OnInit {
-@Input()
-company: Company;
-isCompanyNull: boolean = false;
-reviewsLength: number = 0;
 
+company: CompanyDetails;
 
-  constructor() { }
+constructor(private companyService: CompanyService,
+  private route: ActivatedRoute) { }
 
   ngOnInit() {    
-    if(this.company === null){
-      this.isCompanyNull = true;
-    }
-    else{
-      this.isCompanyNull = false;
-      if(this.company.Reviews === null){
-        this.reviewsLength = 0;
-      }
-      else{
-        this.reviewsLength = this.company.Reviews.length;
-      }
-    }      
+    this.route.params
+    .switchMap((params: Params) => this.companyService.getCompanyDetails(params['id']))
+    .subscribe(res => {
+      this.company = res;
+    });   
   }
 
 }

@@ -1,6 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Company } from "../../../models/company.model";
-import { CompanyService } from "../../../services/company.service";
+import { Component, OnInit } from '@angular/core';
+import { CompanyDetails } from "../../../models/company-page/company-details.model";
+import { CompanyService } from "../../../services/company-services/company.service";
+import { ActivatedRoute, Params } from "@angular/router";
 
 @Component({
   selector: 'app-company-main-information',
@@ -8,18 +9,23 @@ import { CompanyService } from "../../../services/company.service";
   styleUrls: ['./company-main-information.component.sass']
 })
 export class CompanyMainInformationComponent implements OnInit {
-@Input()
-  company: Company;
+
+  company: CompanyDetails;
   isLoaded: boolean = false;
 
-  constructor(private companyService: CompanyService) { }
+  constructor(private companyService: CompanyService,
+    private route: ActivatedRoute,) { }
 
   ngOnInit() {
+    this.route.params
+    .switchMap((params: Params) => this.companyService.getCompanyDetails(params['id'])).subscribe(res => {
+      this.company = res;
+      });
   }
 
   save(){
     this.isLoaded = true;
-    this.companyService.saveCompany(this.company).then(() => {this.isLoaded = false});
+    this.companyService.saveCompanyDetails(this.company).then(() => {this.isLoaded = false});
   }
   
 

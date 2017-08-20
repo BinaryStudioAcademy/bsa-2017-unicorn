@@ -16,6 +16,6 @@ namespace Unicorn.DataAccess.Entities
 
         public virtual Category Category { get; set; }
 
-        public ICollection<Work> Works { get; set; }
+        public virtual ICollection<Work> Works { get; set; }
     }
 }

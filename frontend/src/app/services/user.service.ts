@@ -4,7 +4,6 @@ import { DataService } from './data.service';
 
 import { User } from '../models/user'
 import {Book} from '../models/book.model'
-import {Vendor} from '../models/vendor'
 import { environment } from "../../environments/environment";
 
 @Injectable()
