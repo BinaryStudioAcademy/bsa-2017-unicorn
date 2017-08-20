@@ -9,7 +9,7 @@ export interface User
 	Avatar: string;
 	LocationId : string;
 	Books: Book[];
-	History: History[]
+	History: History[];
 	Email:string;
 	Phone:string;
 	DateCreated: Date;

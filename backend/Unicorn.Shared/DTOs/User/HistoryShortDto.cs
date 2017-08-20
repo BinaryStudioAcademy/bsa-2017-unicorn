@@ -14,7 +14,7 @@ namespace Unicorn.Shared.DTOs.User
         public DateTime dateFinished { get; set; }
         public string bookDescription { get; set; }
         public string workDescription { get; set; }
-        public VendorDTO vendor { get; set; }
+        public string vendor { get; set; }
         public string categoryName { get; set; }
         public string subcategoryName { get; set; }
     }

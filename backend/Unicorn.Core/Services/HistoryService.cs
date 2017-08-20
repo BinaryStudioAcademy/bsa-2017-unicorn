@@ -13,7 +13,6 @@ namespace Unicorn.Core.Services
     public class HistoryService: IHistoryService
     {
         private readonly IUnitOfWork _unitOfWork;
-
         public HistoryService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
@@ -53,12 +52,15 @@ namespace Unicorn.Core.Services
 
                 if (element.Vendor != null)
                 {
-                    historyDto.Vendor = new VendorDTO()
+                    historyDto.Vendor = new ShortVendorDTO()
                     {
                         Id = element.Vendor.Id,
-                        Experience = element.Vendor.Experience
+                        Birthday = element.Vendor.Person.Birthday,
+                        Avatar = element.Vendor.Person.Account.Avatar,
+                        Name = element.Vendor.Person.Name
                     };
                 }
+
                 if (element.Company != null)
                 {
                     historyDto.Company = new CompanyDTO()
@@ -120,10 +122,9 @@ namespace Unicorn.Core.Services
             }
             if (history.Vendor != null)
             {
-                historyDto.Vendor = new VendorDTO()
+                historyDto.Vendor = new ShortVendorDTO()
                 {
-                    Id = history.Vendor.Id,
-                    Experience = history.Vendor.Experience
+                    Name = "ololo"
                 };
             }
             if (history.Company != null)

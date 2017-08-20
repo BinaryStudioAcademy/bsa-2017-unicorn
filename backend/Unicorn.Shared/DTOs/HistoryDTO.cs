@@ -9,7 +9,7 @@ namespace Unicorn.Shared.DTOs
 
         public CustomerDTO Customer { get; set; }
 
-        public VendorDTO Vendor { get; set; }
+        public ShortVendorDTO Vendor { get; set; }
 
         public ReviewDTO Review { get; set; }
 

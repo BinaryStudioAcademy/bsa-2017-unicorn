@@ -1260,7 +1260,7 @@ namespace Unicorn.DataAccess.Context
                 Description = "Care about cat",
                 Status = "Recorded at the reception",
                 Vendor = vendor3,
-                Customer = customer2
+                Customer = customer3
             };
 
             Book book4 = new Book()
@@ -1294,7 +1294,7 @@ namespace Unicorn.DataAccess.Context
                 Date = new DateTime(2017, 08, 20, 18, 04, 00),
                 IsDeleted = false,
                 Work = work6,
-                Description = "Make asp.net core website",
+                Description = "Make a website",
                 Location = new Location(),
                 Status = "Confirmed",
                 Vendor = vendor6,
@@ -1387,14 +1387,14 @@ namespace Unicorn.DataAccess.Context
                 DateFinished = new DateTime(2017,05,13,11,11,11),
                 BookDescription = "fix dripping tap toworrow",
                 WorkDescription = "fix tap",
-                CategoryName = "HouseWork",
-                Vendor =vendor1,
+                CategoryName = "House Work",
+                Vendor = vendor1,
                 IsDeleted = false,
                 Review = review1,
                 SubcategoryName = "",
                 Customer = customer1
             };
-            context.Histories.AddRange(new List<History>() { history1});
+            context.Histories.AddRange(new List<History>() { history1 });
 
             #endregion
             context.SaveChanges();

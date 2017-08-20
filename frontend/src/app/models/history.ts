@@ -7,7 +7,7 @@ export interface History {
    dateFinished: Date 
    bookDescription: string 
    workDescription: string 
-   vendor: Vendor 
+   vendor: string
    categoryName: string 
    subcategoryName: string  
 }
