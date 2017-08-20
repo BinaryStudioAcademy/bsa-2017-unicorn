@@ -1,63 +1,130 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using Unicorn.Core.Interfaces;
-using Unicorn.Shared.DTOs;
 using Unicorn.Shared.DTOs.Company;
+using Unicorn.Shared.DTOs.CompanyPage;
 
 namespace Unicorn.Controllers
 {
     [EnableCors("*", "*", "*")]
     public class CompanyController : ApiController
     {
-        private readonly ICompanyService _companyService;
+        private readonly ICompanyPageService _companyService;
 
-        public CompanyController(ICompanyService companyService)
+        public CompanyController(ICompanyPageService companyService)
         {
             _companyService = companyService;
         }
 
-        // GET: /Company
+        // GET: /company
+        [HttpGet]
         [Route("company")]
-        public async Task<IHttpActionResult> Get()
+        public async Task<IHttpActionResult> GetAllCompanies()
         {
-            var result = await _companyService.GetAllCompaniesAsync();
+            var result = await _companyService.GetAllCompanies();
+            if (result != null)
+                return Json(result);
+            return NotFound();
+        }
+
+        // GET: /company-short
+        [HttpGet]
+        [Route("company-short/{id}")]
+        public async Task<IHttpActionResult> GetCompanyShort(long id)
+        {
+            var result = await _companyService.GetCompanyShort(id);
             if (result != null)
                 return Json(result);
             return NotFound();
         }
 
 
-        // GET: api/Company/5
-        [Route("company/{id}")]
-        public async Task<IHttpActionResult> Get(int id)
+        // GET: company-details/5
+        [HttpGet]
+        [Route("company-details/{id}")]
+        public async Task<IHttpActionResult> GetCompanyDetails(int id)
         {
-            var result = await _companyService.GetCompanyByIdAsync(id);
+            var result = await _companyService.GetCompanyDetails(id);
             if (result != null)
                 return Json(result);
             return NotFound();
         }
 
-        // POST: api/Company
-        [Route("company")]
-        public async Task Post([FromBody]ShortCompanyDTO company)
+        // POST: company-details
+        [HttpPost]
+        [Route("company-details")]
+        public async Task PostCompanyDetails([FromBody]CompanyDetails company)
         {
-            await _companyService.SaveCompany(company);
+            await _companyService.SaveCompanyDetails(company);
         }
 
-        // PUT: api/Company/5
-        public void Put(int id, [FromBody]string value)
+        // GET: company-reviews/5
+        [HttpGet]
+        [Route("company-reviews/{id}")]
+        public async Task<IHttpActionResult> GetCompanyReviews(int id)
         {
+            var result = await _companyService.GetCompanyReviews(id);
+            if (result != null)
+                return Json(result);
+            return NotFound();
         }
 
-        // DELETE: api/Company/5
-        public void Delete(int id)
+        // POST: company-reviews
+        [HttpPost]
+        [Route("company-reviews")]
+        public async Task PostCompanyReviews([FromBody]CompanyReviews company)
         {
+            await _companyService.SaveCompanyReviews(company);
         }
+
+        // GET: company-vendors/5
+        [HttpGet]
+        [Route("company-vendors/{id}")]
+        public async Task<IHttpActionResult> GetCompanyVendors(int id)
+        {
+            var result = await _companyService.GetCompanyVendors(id);
+            if (result != null)
+                return Json(result);
+            return NotFound();
+        }
+
+        // POST: company-vendors
+        [HttpPost]
+        [Route("company-vendors")]
+        public async Task PostCompanyVendors([FromBody]CompanyVendors company)
+        {
+            await _companyService.SaveCompanyVendors(company);
+        }
+
+        // GET: company-contacts/5
+        [HttpGet]
+        [Route("company-contacts/{id}")]
+        public async Task<IHttpActionResult> GetCompanyContacts(int id)
+        {
+            var result = await _companyService.GetCompanyContacts(id);
+            if (result != null)
+                return Json(result);
+            return NotFound();
+        }
+
+        // POST: company-contacts
+        [HttpPost]
+        [Route("company-contacts")]
+        public async Task PostCompanyContacts([FromBody]CompanyContacts company)
+        {
+            await _companyService.SaveCompanyContacts(company);
+        }
+
+
+        //// PUT: api/Company/5
+        //public void Put(int id, [FromBody]string value)
+        //{
+        //}
+
+        //// DELETE: api/Company/5
+        //public void Delete(int id)
+        //{
+        //}
     }
 }

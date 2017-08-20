@@ -11,6 +11,7 @@ import { AuthenticationLoginService } from './services/auth/authenticationlogin.
 import { AuthenticationEventService } from './services/events/authenticationevent.service';
 
 import { HelperService } from './services/helper/helper.service';
+import { ModalService } from "./services/modal/modal.service";
 
 // Routing
 import { AppRoutingModule } from './app-routing/app-routing.module';

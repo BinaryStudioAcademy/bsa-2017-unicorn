@@ -10,6 +10,7 @@ import { User } from '../../models/user';
 
 import { TokenHelperService } from '../../services/helper/tokenhelper.service';
 import { UserService } from "../../services/user.service";
+import { ModalService } from "../../services/modal/modal.service";
 import { PhotoService, Ng2ImgurUploader } from '../../services/photo.service';
 import {ImageCropperComponent, CropperSettings} from 'ng2-img-cropper';
 
@@ -24,7 +25,8 @@ export interface IContext { }
   styleUrls: ['./user-details.component.sass'],
   providers: [
         PhotoService,
-        Ng2ImgurUploader]
+        Ng2ImgurUploader,
+        ModalService]
 })
 export class UserDetailsComponent implements OnInit {
   
@@ -37,15 +39,12 @@ export class UserDetailsComponent implements OnInit {
   enabled: boolean = false;
   enableTheme: boolean = false;
   saveImgButton:boolean = false;
-  fakeUser:User;
   backgroundUrl: SafeResourceUrl;
   uploading: boolean;
   isOwner: boolean;
   user:User;
 
   modalSize: string;
-
-
   cropperSettings: CropperSettings;
   data: any;
   file: File;
@@ -55,22 +54,13 @@ export class UserDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private userService: UserService,
     private photoService: PhotoService,
-    private sanitizer: DomSanitizer, 
-    public modalService: SuiModalService,
+    private sanitizer: DomSanitizer,
+    private suiModalService: SuiModalService,
+    private modalService: ModalService,    
     private tokenHelper: TokenHelperService) { 
-     this.cropperSettings = new CropperSettings();
-        this.cropperSettings.width = 100;
-        this.cropperSettings.height = 100;
-        this.cropperSettings.croppedWidth =140;
-        this.cropperSettings.croppedHeight = 140;
-        this.cropperSettings.canvasWidth = 400;
-        this.cropperSettings.canvasHeight = 300;
-        
-        this.cropperSettings.noFileInput = true;
-        this.cropperSettings.rounded = true;
-        
-        this.data = {};
-        this.imageUploaded = false;
+      this.cropperSettings = modalService.cropperSettings;
+      this.data = {};
+      this.imageUploaded = false;
   }
   ngOnInit() {
 
@@ -79,7 +69,7 @@ export class UserDetailsComponent implements OnInit {
     .switchMap((params: Params) => this.userService.getUser(params['id']))
     .subscribe(resp => {
       this.user = resp.body as User;
-      this.backgroundUrl = this.buildSafeUrl(this.user.Background);
+      //this.backgroundUrl = this.buildSafeUrl(this.user.Avatar);
     });
   }
 
@@ -133,15 +123,14 @@ export class UserDetailsComponent implements OnInit {
       console.log("file not upload");
       return;
     }
-
     this.photoService.uploadToImgur(this.file).then(resp => {
 
       let path = resp;
       console.log(path);
       this.photoService.saveAvatar(path)
       .then(resp => {
-        this.activeModal.deny('');
-        this.user.Avatar = path;     
+        this.activeModal.deny('');        
+        this.user.Avatar = this.data.image;
       })
       .catch(err => console.log(err));
     }).catch(err => {
@@ -150,27 +139,6 @@ export class UserDetailsComponent implements OnInit {
   }
 
   public openModal() {
-    const config = new TemplateModalConfig<IContext, string, string>(this.modalTemplate);
-    //config.closeResult = "closed!";
-    
-    config.context = {};
-    config.size = ModalSize.Normal;
-    config.isInverted = true;
-    //config.mustScroll = true;
-    let that = this;
-
-    this.activeModal = this.modalService
-      .open(config)
-      .onApprove(result => { /* approve callback */ })
-      .onDeny(result => {
-        that.imageUploaded = false;
-      });
-  }
-
-  getImage() : string {
-
-    debugger;
-    return this.user.Avatar ? this.user.Avatar : ''; // prev. was fake user prop
-
+    this.modalService.openModal(this.modalTemplate, this.activeModal);
   }
 }

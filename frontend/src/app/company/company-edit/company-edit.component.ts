@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Company } from "../../models/company.model";
-import { CompanyService } from "../../services/company.service";
 import { PhotoService } from '../../services/photo.service';
 import { Params, ActivatedRoute } from "@angular/router";
+import { CompanyShort } from "../../models/company-page/company-short.model";
+import { CompanyService } from "../../services/company-services/company.service";
 
 @Component({
   selector: 'app-company-edit',
@@ -11,7 +11,7 @@ import { Params, ActivatedRoute } from "@angular/router";
 })
 export class CompanyEditComponent implements OnInit {
   isDimmed: boolean = false;
-  company: Company;  
+  company: CompanyShort;  
 
   uploading: boolean;
   
@@ -21,7 +21,7 @@ export class CompanyEditComponent implements OnInit {
 
   ngOnInit() {
     this.route.params
-    .switchMap((params: Params) => this.companyService.getCompany(params['id'])).subscribe(res => {
+    .switchMap((params: Params) => this.companyService.getCompanyShort(params['id'])).subscribe(res => {
       this.company = res;
       });        
   }
