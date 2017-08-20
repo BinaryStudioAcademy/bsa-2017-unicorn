@@ -50,6 +50,7 @@
     <Compile Include="DTOs\Book\VendorBookDTO.cs" />
     <Compile Include="DTOs\CategoryDTO.cs" />
     <Compile Include="DTOs\CompanyDTO.cs" />
+    <Compile Include="DTOs\Company\ShortCompanyDTO.cs" />
     <Compile Include="DTOs\ContactProviderDTO.cs" />
     <Compile Include="DTOs\Contact\ContactDTO.cs" />
     <Compile Include="DTOs\Contact\ContactShortDTO.cs" />
@@ -68,6 +69,8 @@
     <Compile Include="DTOs\SocialAccountDTO.cs" />
     <Compile Include="DTOs\Subcategory\SubcategoryDTO.cs" />
     <Compile Include="DTOs\Subcategory\SubcategoryShortDTO.cs" />
+    <Compile Include="DTOs\User\BookShortDto.cs" />
+    <Compile Include="DTOs\User\UserShortDTO.cs" />
     <Compile Include="DTOs\Vendor\ShortVendorDTO.cs" />
     <Compile Include="DTOs\Vendor\VendorDTO.cs" />
     <Compile Include="DTOs\WorkDTO.cs" />

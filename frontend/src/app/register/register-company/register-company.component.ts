@@ -3,8 +3,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import * as firebase from 'firebase/app';
 import { RegisterService } from '../../services/register.service';
 
-import { SuiModalService, TemplateModalConfig
-  , ModalTemplate, ModalSize, SuiActiveModal } from 'ng2-semantic-ui';
+import { SuiActiveModal } from 'ng2-semantic-ui';
 import { Company } from '../models/company';
 import { HelperService } from '../../services/helper/helper.service';
 import { AuthenticationEventService } from '../../services/events/authenticationevent.service';
@@ -17,8 +16,7 @@ import { AuthenticationEventService } from '../../services/events/authentication
 export class RegisterCompanyComponent implements OnInit {
 
   @Input() social: firebase.User;
-
-  @Input() public modal: SuiActiveModal<{}, {}, string>;
+  @Input() public modal: SuiActiveModal<void, void, void>;
 
   name: string;
   mode: string;
@@ -59,12 +57,12 @@ export class RegisterCompanyComponent implements OnInit {
 
   confirmRegister() {
     if (this.valid()) {
-      this.error = false;      
-      let regInfo = this.aggregateInfo();      
+      this.error = false;
+      let regInfo = this.aggregateInfo();
       this.registerService.confirmCompany(regInfo).then(resp => {
-        this.modal.deny('');
+        this.modal.deny(null);
         localStorage.setItem('token', resp.headers.get('token'));
-        this.authEventService.signIn();   
+        this.authEventService.signIn();
         this.helperService.redirectAfterAuthentication();
       });
     } else {

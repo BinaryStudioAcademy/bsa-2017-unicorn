@@ -20,6 +20,7 @@ export class CompanyDetailsComponent implements OnInit {
     this.route.params
     .switchMap((params: Params) => this.companyService.getCompany(params['id'])).subscribe(res => {
       this.company = res;  
+      console.log(res.Reviews);
       this.company.Vendors.forEach(element => {
         if(element.Avatar == "default"){
           element.Avatar = "https://image.flaticon.com/icons/png/512/78/78373.png";

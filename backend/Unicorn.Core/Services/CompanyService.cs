@@ -9,6 +9,7 @@ using Unicorn.Core.Services.Helpers;
 using Unicorn.DataAccess.Entities;
 using Unicorn.DataAccess.Interfaces;
 using Unicorn.Shared.DTOs;
+using Unicorn.Shared.DTOs.Company;
 using Unicorn.Shared.DTOs.Contact;
 using Unicorn.Shared.DTOs.Register;
 using Unicorn.Shared.DTOs.Vendor;
@@ -38,7 +39,7 @@ namespace Unicorn.Core.Services
             return result;
         }
 
-        public async Task SaveCompany(CompanyDTO companyDTO)
+        public async Task SaveCompany(ShortCompanyDTO companyDTO)
         {
             await Save(companyDTO);
         }
@@ -52,6 +53,7 @@ namespace Unicorn.Core.Services
             var company = new Company();
 
             account.Role = role;
+            account.Avatar = "http://www.yupptv.in/images/banner-default.jpg";
             account.DateCreated = DateTime.Now;
             account.Email = companyDto.Email;           
 
@@ -117,29 +119,11 @@ namespace Unicorn.Core.Services
                                     Position = x.Position,
                                     FIO = x.Person?.Name ?? "Name" + " " + x.Person?.MiddleName
                                 }).ToList(),
-                            Categories = new Collection<CategoryDTO>
+                            Categories = company.Categories.Select(x => new CategoryDTO
                             {
-                                new CategoryDTO
-                                {
-                                    Icon = company.Account?.Avatar ?? "default",
-                                    Name = "Category1"
-                                },
-                                new CategoryDTO
-                                {
-                                    Icon = company.Account?.Avatar ?? "default",
-                                    Name = "Category2"
-                                },
-                                new CategoryDTO
-                                {
-                                    Icon = company.Account?.Avatar ?? "default",
-                                    Name = "Category3"
-                                },
-                                new CategoryDTO
-                                {
-                                    Icon = company.Account?.Avatar ?? "default",
-                                    Name = "Category4"
-                                }
-                            },
+                                Icon = x.Icon,
+                                Name = x.Name
+                            }).ToList(),
                             Contacts = company.Account?.Contacts.Select(x => new ContactShortDTO
                             {
                                 Id = x.Id,
@@ -150,6 +134,53 @@ namespace Unicorn.Core.Services
                         }).ToList();
 
                 return companiesDTO;
+            }
+            return null;
+        }
+
+        private async Task<ShortCompanyDTO> GetShortCompany(long id)
+        {
+            var company = await _unitOfWork.CompanyRepository.GetByIdAsync(id);
+
+            if (company != null)
+            {
+                var companyDTO = new ShortCompanyDTO()
+                {
+                    Id = company.Id,
+                    Avatar = company.Account?.Avatar ?? "default",
+                    Name = company.Name,
+                    Description = company.Description,
+                    FoundationDate = company.FoundationDate,
+                    Director = company.Director,
+                    Location = new LocationDTO
+                    {
+                        Adress = company.Location?.Adress ?? "default",
+                        City = company.Location?.City ?? "default",
+                        Latitude = company.Location?.Longitude ?? 0,
+                        Longitude = company.Location?.Latitude ?? 0
+                    },
+                    Vendors = company.Vendors?.Where(v => v.Company.Id == company.Id)
+                        .Select(x => new VendorDTO
+                        {
+                            Avatar = x.Person?.Account?.Avatar ?? "default",
+                            Experience = x.Experience,
+                            Position = x.Position,
+                            FIO = x.Person?.Name ?? "Name" + " " + x.Person?.MiddleName
+                        }).ToList(),
+                    Categories = company.Categories.Select(x => new CategoryDTO
+                    {
+                        Icon = x.Icon,
+                        Name = x.Name
+                    }).ToList(),
+                    Contacts = company.Account?.Contacts.Select(x => new ContactShortDTO
+                    {
+                        Id = x.Id,
+                        Provider = x.Provider.Name,
+                        Type = x.Provider.Type,
+                        Value = x.Value
+                    }).ToList()
+                };
+                return companyDTO;
             }
             return null;
         }
@@ -195,29 +226,11 @@ namespace Unicorn.Core.Services
                             Position = x.Position,
                             FIO = x.Person?.Name ?? "Name" + " " + x.Person?.MiddleName
                         }).ToList(),
-                    Categories = new Collection<CategoryDTO>
+                    Categories = company.Categories.Select(x => new CategoryDTO
                     {
-                        new CategoryDTO
-                        {
-                            Icon = company.Account?.Avatar ?? "default",
-                            Name = "Category1"
-                        },
-                        new CategoryDTO
-                        {
-                            Icon = company.Account?.Avatar ?? "default",
-                            Name = "Category2"
-                        },
-                        new CategoryDTO
-                        {
-                            Icon = company.Account?.Avatar ?? "default",
-                            Name = "Category3"
-                        },
-                        new CategoryDTO
-                        {
-                            Icon = company.Account?.Avatar ?? "default",
-                            Name = "Category4"
-                        }
-                    },
+                        Icon = x.Icon,
+                        Name = x.Name
+                    }).ToList(),
                     Contacts = company.Account?.Contacts.Select(x => new ContactShortDTO
                     {
                         Id = x.Id,
@@ -231,7 +244,10 @@ namespace Unicorn.Core.Services
             return null;
         }
 
-        private async Task Save(CompanyDTO companyDTO)
+
+
+
+        private async Task Save(ShortCompanyDTO companyDTO)
         {
             var company = await _unitOfWork.CompanyRepository.GetByIdAsync(companyDTO.Id);
 

@@ -20,6 +20,7 @@ import { VendorProfilePortfolioComponent } from './vendor-details/vendor-profile
 
 import { VendorRoutingModule } from './vendor-routing.module';
 
+import { PhotoService } from '../services/photo.service';
 import { VendorService } from '../services/vendor.service';
 import { ReviewService } from '../services/review.service';
 import { DataService } from "../services/data.service";
@@ -55,7 +56,8 @@ import { EnumKeysPipe } from "../pipes/enum.pipe";
     DataService,
     VendorService,
     LocationService,
-    ReviewService
+    ReviewService,
+    PhotoService
   ]
 })
 export class VendorModule { }

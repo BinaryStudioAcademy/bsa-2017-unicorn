@@ -33,8 +33,8 @@ export class CompanyService {
       Location: {
         Adress: "Chornovola 2",
         City: "Lviv",
-        Latitude: 49.85711,
-        Longitude: 24.01980,
+        Latitude: Math.random() * 0.0099 + 43.7250,
+        Longitude: Math.random() * 0.0099 + -79.7699,
       },
       Reviews: [
       {
@@ -78,16 +78,19 @@ export class CompanyService {
       Vendors: [
       {
         Avatar: "../../../assets/images/square-image.png",
+        Background: "",
         Experience: 5,
         Position: '',
         FIO: 'Vasya Pupkin',
       }, {
         Avatar: "../../../assets/images/square-image.png",
+        Background: "",
         Experience: 5,
         Position: '',
         FIO: 'Vasya Pupkin',
       }, {
         Avatar: "../../../assets/images/square-image.png",
+        Background: "",
         Experience: 5,
         Position: '',
         FIO: 'Vasya Pupkin',
