@@ -8,9 +8,6 @@ namespace Unicorn.Core.Interfaces
 {
     public interface ICompanyService
     {
-        Task<IEnumerable> GetAllCompaniesAsync();
-        Task<CompanyDTO> GetCompanyByIdAsync(long id);
-        Task SaveCompany(ShortCompanyDTO companyDTO);
         Task Create(CompanyRegisterDTO companyDto);
     }
 }

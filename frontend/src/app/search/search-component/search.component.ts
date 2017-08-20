@@ -1,13 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 
-import { Company } from '../../models/company.model';
 import { Review } from '../../models/review.model';
-import { CompanyService } from '../../services/company.service';
 import { NguiMapModule, Marker } from '@ngui/map';
 // import { MapModel } from '../../models/map.model';
 
 import { ISubscription } from 'rxjs/Subscription';
+import { CompanyService } from "../../services/company-services/company.service";
+import { CompanyShort } from "../../models/company-page/company-short.model";
 
 @Component({
   selector: 'app-search',
@@ -34,7 +34,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   maxSize = 3;
   hasEllipses = true;
   selectedPage = 1;
-  companies: Company[] = [];
+  companies: CompanyShort[] = [];
   /* map */
   positions = [];
   markers = [];

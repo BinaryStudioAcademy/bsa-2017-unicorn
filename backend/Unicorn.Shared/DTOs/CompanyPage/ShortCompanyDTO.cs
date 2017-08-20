@@ -13,18 +13,6 @@ namespace Unicorn.Shared.DTOs.Company
 
         public string Name { get; set; }
 
-        public string Description { get; set; }
-
-        public DateTime FoundationDate { get; set; }
-
-        public string Director { get; set; }
-
         public LocationDTO Location { get; set; }
-
-        public ICollection<VendorDTO> Vendors { get; set; }
-
-        public ICollection<CategoryDTO> Categories { get; set; }
-
-        public ICollection<ContactShortDTO> Contacts { get; set; }
     }
 }
