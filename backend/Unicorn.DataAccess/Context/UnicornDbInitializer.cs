@@ -1379,7 +1379,24 @@ namespace Unicorn.DataAccess.Context
 
             #endregion
 
+            #region History
+           History history1 = new History()
+            {
+                Id = 1,
+                Date = new DateTime(2017, 05, 12, 16, 46, 16),
+                DateFinished = new DateTime(2017,05,13,11,11,11),
+                BookDescription = "fix dripping tap toworrow",
+                WorkDescription = "fix tap",
+                CategoryName = "HouseWork",
+                Vendor =vendor1,
+                IsDeleted = false,
+                Review = review1,
+                SubcategoryName = "",
+                Customer = customer1
+            };
+            context.Histories.AddRange(new List<History>() { history1});
 
+            #endregion
             context.SaveChanges();
 
             base.Seed(context);
