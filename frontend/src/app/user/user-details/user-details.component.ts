@@ -169,7 +169,7 @@ export class UserDetailsComponent implements OnInit {
 
   getImage() : string {
 
-    debugger;
+    //debugger;
     return this.user.Avatar ? this.user.Avatar : ''; // prev. was fake user prop
 
   }
