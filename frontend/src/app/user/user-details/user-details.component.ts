@@ -54,7 +54,8 @@ export class UserDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private userService: UserService,
     private photoService: PhotoService,
-    private sanitizer: DomSanitizer, 
+    private sanitizer: DomSanitizer,
+    private suiModalService: SuiModalService,
     private modalService: ModalService,    
     private tokenHelper: TokenHelperService) { 
       this.cropperSettings = modalService.cropperSettings;
@@ -68,7 +69,7 @@ export class UserDetailsComponent implements OnInit {
     .switchMap((params: Params) => this.userService.getUser(params['id']))
     .subscribe(resp => {
       this.user = resp.body as User;
-      this.backgroundUrl = this.buildSafeUrl(this.user.Avatar);
+      //this.backgroundUrl = this.buildSafeUrl(this.user.Avatar);
     });
   }
 
@@ -122,7 +123,6 @@ export class UserDetailsComponent implements OnInit {
       console.log("file not upload");
       return;
     }
-
     this.photoService.uploadToImgur(this.file).then(resp => {
 
       let path = resp;
@@ -130,6 +130,7 @@ export class UserDetailsComponent implements OnInit {
       this.photoService.saveAvatar(path)
       .then(resp => {
         this.activeModal.deny('');        
+        this.user.Avatar = this.data.image;
       })
       .catch(err => console.log(err));
     }).catch(err => {
@@ -138,10 +139,6 @@ export class UserDetailsComponent implements OnInit {
   }
 
   public openModal() {
-    this.modalService.openModal(this.modalTemplate);
-  }
-
-  getImage() : string {
-    return this.data.image ? this.data.image : ''; // prev. was fake user prop
+    this.modalService.openModal(this.modalTemplate, this.activeModal);
   }
 }

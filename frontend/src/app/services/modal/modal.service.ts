@@ -45,17 +45,17 @@ export class ModalService {
         myReader.readAsDataURL(file);
     }
 
-    public openModal(modalTemplate: ModalTemplate<IContext, string, string>) {
+    public openModal(modalTemplate: ModalTemplate<IContext, string, string>, activeModal: SuiActiveModal<IContext, {}, string>) {
       const config = new TemplateModalConfig<IContext, string, string>(modalTemplate);
       //config.closeResult = "closed!";
-      
+
       config.context = {};
       config.size = ModalSize.Normal;
       config.isInverted = true;
       //config.mustScroll = true;
       let that = this;
 
-      this.activeModal = this.suiModalService
+      activeModal = this.suiModalService
         .open(config)
         .onApprove(result => { /* approve callback */ })
         .onDeny(result => {

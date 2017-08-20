@@ -67,7 +67,9 @@ export class VendorDetailsComponent implements OnInit {
   ngOnInit() {
     this.route.params
       .switchMap((params: Params) => this.vendorService.getVendor(params['id']))
-      .subscribe(resp => this.vendor = resp.body as Vendor);
+      .subscribe(resp => {
+        this.vendor = resp.body as Vendor
+      });
   }
   getCurrentRole()
   {
@@ -130,6 +132,7 @@ export class VendorDetailsComponent implements OnInit {
       console.log(path);
       this.photoService.saveAvatar(path)
       .then(resp => {
+        this.vendor.Avatar = this.data.image;
         this.activeModal.deny('');    
       })
       .catch(err => console.log(err));
@@ -139,12 +142,6 @@ export class VendorDetailsComponent implements OnInit {
   }
 
   public openModal() {
-    debugger;
-    this.modalService.openModal(this.modalTemplate);
+    this.modalService.openModal(this.modalTemplate, this.activeModal);
   }
-
-  getImage() : string {
-    return this.data.image ? this.data.image : ''; // prev. was fake user prop
-  }
-
 }

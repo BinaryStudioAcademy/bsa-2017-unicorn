@@ -2,9 +2,12 @@
     <div class="row remove-padding-top">
         <div class="sixteen wide column container">
             <div class="vendor-header">
-                <div class="vendor-avatar ui small circular image" (click)="openModal()">
-                    <img *ngIf="vendor !== undefined" src="{{vendor.Avatar}}" />
+                <div class="avatar" (click)="openModal()" *ngIf="vendor!== undefined">
+                    <div class="ui small circular image">
+                        <img id="vendor-avatar" src="{{vendor.Avatar}}" />
+                    </div>
                 </div>
+
                 <div *ngIf="vendor !== undefined" class="vendor-title">
                     <h3>{{vendor.Name}} {{vendor.Surname}}</h3>
                     <p>{{vendor.City}}</p>
