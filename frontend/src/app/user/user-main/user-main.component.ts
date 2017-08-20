@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, ViewChild  } from '@angular/core';
 import { UserService } from "../../services/user.service";
 import { ActivatedRoute, Params, ParamMap } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
