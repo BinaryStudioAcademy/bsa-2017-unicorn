@@ -29,7 +29,7 @@
                 <sui-accordion class="fluid">
                   <sui-accordion-panel>
                     <div title>
-                      <i class="dropdown icon"></i>
+                      <i class="filter icon"></i>
                       <label class="gray">Additional filters</label>
                     </div>
                     <div content>
@@ -89,7 +89,7 @@
                           </sui-multi-select>
                         </div>
                         <div class="sixteen wide column remove-padding-top">
-                          <button class="ui button button-right" (click)="searchVendor()">Apply</button>
+                          <button class="ui button button-right" (click)="searchVendor()">APPLY</button>
                         </div>
                       </div>
                     </div>
@@ -126,6 +126,33 @@
           </div>
       </div>
       <div class="ui divider"></div>
+      <div class="ui grid">
+        <div class="three column row">
+          <div class="column company" *ngFor="let company of companies.slice((selectedPage - 1) * pageSize, selectedPage * pageSize)">
+            <a href="/company/1" class="ui medium image">
+              <img class="ui fluid image" src="{{company.Avatar}}"/>
+              <div class="company-info">
+                <div class="company-name">
+                  {{company.Name}} ({{companies.indexOf(company)}})
+                </div>
+                <div class="company-detail">
+                  <p>{{company.Location.City}}</p>
+                  <sui-rating class="star" [ngModel]="company.Rating" [isReadonly]="true"></sui-rating> 
+                  <p>{{company.Reviews.length}} reviews</p>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="row centered"> 
+        <sui-pagination [collectionSize]="companies.length"
+                        [pageSize]="pageSize"
+                        [maxSize]="maxSize"
+                        [hasEllipses]="hasEllipses"
+                        [(page)]="selectedPage">
+        </sui-pagination>
+      </div> 
   </div>
   <div class="six wide column">
     <div class="row">
