@@ -17,16 +17,52 @@
                 <input suiDatepicker [(ngModel)]="foundation-date" name="foundation-date" pickerMode="date" [placeholder]="company.FoundationDate | date:'shortDate'">
             </div>
         </div>
-        <div>
+        <div class="field">
             <label>CEO</label>
             <input type="text" [(ngModel)]="company.Director">
+        </div>
+    </div>
+    <div>
+        <div class="ui form">
+            <div class="field">
+                <label>Select or remove needed works</label>
+                <sui-accordion class="styled fluid">
+                    <sui-accordion-panel *ngFor="let category of company.Categories">
+                        <div title>
+                            <img class="ui avatar image" src="{{category.Icon}}"> {{category.Name}}
+                            <i class="dropdown icon"></i>
+                        </div>
+                        <div content>
+                            <sui-accordion-panel class="styled fluid" *ngFor="let subcategory of category.Subcategories">
+                                <div title>
+                                    {{subcategory.Name}}
+                                    <i class="dropdown icon"></i>
+                                </div>
+                                <div content>
+                                    <div class="ui form">
+                                        <div class="inline field" *ngFor="let work of subcategory.Works">
+                                            <div class="ui toggle checkbox">
+                                                <input type="checkbox" tabindex="0">
+                                                <label>{{work.Name}}</label>
+                                            </div>
+                                            <div class="ui divider"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ui divider"></div>
+                            </sui-accordion-panel>
+                        </div>
+                        <div class="ui divider"></div>
+                    </sui-accordion-panel>
+                </sui-accordion>
+            </div>
         </div>
     </div>
     <div>
         <button class="ui basic button" (click)="save()" [ngClass]="{'loading':isLoaded}">
             <p *ngIf="!isLoaded" style="color:#FF647A;">Save</p></button>
     </div>
-</div>
-<div *ngIf="company === undefined" class="ui active inverted dimmer" style="background-color: rgba(255,255,255,.85)">
-    <div class="ui text loader">Loading</div>
-</div>
+
+    <div *ngIf="company === undefined" class="ui active inverted dimmer" style="background-color: rgba(255,255,255,.85)">
+        <div class="ui text loader">Loading</div>
+    </div>

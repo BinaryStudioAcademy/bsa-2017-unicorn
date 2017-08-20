@@ -24,6 +24,8 @@ namespace Unicorn.Shared.DTOs.CompanyPage
 
         public int ReviewsCount { get; set; }
 
-        public ICollection<CategoryDTO> Categories { get; set; }
+        public LocationDTO Location { get; set; }
+
+        public ICollection<CompanyCategory> Categories { get; set; }
     }
 }

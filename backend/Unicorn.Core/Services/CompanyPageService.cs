@@ -8,6 +8,7 @@ using Unicorn.Shared.DTOs;
 using Unicorn.Shared.DTOs.Company;
 using Unicorn.Shared.DTOs.CompanyPage;
 using Unicorn.Shared.DTOs.Contact;
+using Unicorn.Shared.DTOs.Subcategory;
 using Unicorn.Shared.DTOs.Vendor;
 
 namespace Unicorn.Core.Services
@@ -147,12 +148,33 @@ namespace Unicorn.Core.Services
                     Rating = company.Account.Rating,
                     City = company.Location.City,
                     ReviewsCount = reviews.Count(p => p.ToAccountId == company.Account.Id),
-                    Categories = company.Categories.Select(x => new CategoryDTO
+                    Categories = company.Categories.Select(x => new CompanyCategory()
                     {
                         Id = x.Id,
+                        Description = x.Description,
                         Icon = x.Icon,
-                        Name = x.Name
-                    }).ToList()
+                        Name = x.Name,
+                        Subcategories = x.Subcategories.Select(y => new CompanySubcategory()
+                        {
+                            Id = y.Id,
+                            Name = y.Name,
+                            Description = y.Description,
+                            Works = y.Works.Select(z => new CompanyWork
+                            {
+                                Id = z.Id,
+                                Description = z.Description,
+                                Name = z.Name
+                            }).ToList()
+                        }).ToList(),
+                    }).ToList(),
+                    Location = new LocationDTO
+                    {
+                        Id = company.Location.Id,
+                        Adress = company.Location?.Adress ?? "default",
+                        City = company.Location?.City ?? "default",
+                        Latitude = company.Location?.Latitude ?? 0,
+                        Longitude = company.Location?.Longitude ?? 0
+                    },
                 };
 
                 return companyDetails;
@@ -287,7 +309,7 @@ namespace Unicorn.Core.Services
                         City = company.Location?.City ?? "default",
                         Latitude = company.Location?.Latitude ?? 0,
                         Longitude = company.Location?.Longitude ?? 0
-                    },
+                    }
                 };
 
                 return companyContacts;

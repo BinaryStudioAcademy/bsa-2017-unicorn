@@ -20,6 +20,7 @@ export class CompanyMainInformationComponent implements OnInit {
     this.route.params
     .switchMap((params: Params) => this.companyService.getCompanyDetails(params['id'])).subscribe(res => {
       this.company = res;
+      console.log(res);
       });
   }
 
