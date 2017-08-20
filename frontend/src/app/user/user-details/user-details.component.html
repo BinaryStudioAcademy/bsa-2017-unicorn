@@ -7,9 +7,11 @@
                 </label>
                 <input type="file" id="banner-input" accept="image/*" (change)="bannerListener($event)">
 
-                <div class="avatar" (click)="openModal()" *ngIf="user!== undefined">
+                <div (click)="openModal()" *ngIf="user!== undefined">
                     <div class="ui small circular image">
-                        <img id="user-avatar" src="{{user.Avatar}}" />
+                        <div class="avatar">
+                            <img id="user-avatar" src="{{user.Avatar}}" />
+                        </div>
                     </div>
                 </div>
                 <div class="user-title" *ngIf="user!== undefined">

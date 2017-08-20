@@ -2,9 +2,11 @@
     <div class="row remove-padding-top">
         <div class="sixteen wide column container">
             <div class="vendor-header">
-                <div class="avatar" (click)="openModal()" *ngIf="vendor!== undefined">
+                <div (click)="openModal()" *ngIf="vendor!== undefined">
                     <div class="ui small circular image">
-                        <img id="vendor-avatar" src="{{vendor.Avatar}}" />
+                        <div class="avatar">
+                            <img id="vendor-avatar" src="{{vendor.Avatar}}" />
+                        </div>
                     </div>
                 </div>
 
