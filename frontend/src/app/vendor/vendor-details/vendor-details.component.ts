@@ -130,7 +130,7 @@ export class VendorDetailsComponent implements OnInit {
       console.log(path);
       this.photoService.saveAvatar(path)
       .then(resp => {
-        this.activeModal.deny('');        
+        this.activeModal.deny('');    
       })
       .catch(err => console.log(err));
     }).catch(err => {

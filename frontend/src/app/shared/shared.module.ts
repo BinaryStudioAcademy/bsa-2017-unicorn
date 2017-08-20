@@ -7,10 +7,10 @@ imports:[
     CommonModule
 ],
 declarations: [
-    //ImageCropperComponent
+    ImageCropperComponent
 ],
 exports:[
-
+    ImageCropperComponent
 ]
 })
 export class SharedModule { }

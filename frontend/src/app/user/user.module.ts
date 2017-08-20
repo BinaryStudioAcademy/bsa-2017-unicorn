@@ -19,7 +19,6 @@ import { DataService } from "../services/data.service";
 import { AgmCoreModule } from "@agm/core";
 import { environment } from "../../environments/environment";
 import { SharedModule } from "../shared/shared.module";
-import {ImageCropperComponent} from 'ng2-img-cropper';
 
 @NgModule({
     imports: [
@@ -39,8 +38,7 @@ import {ImageCropperComponent} from 'ng2-img-cropper';
         UserProfileComponent,
         UserHistoryComponent,
         UserTasksComponent,
-        UserMessagesComponent,
-        ImageCropperComponent
+        UserMessagesComponent
     ],
     providers: [
         DataService,
