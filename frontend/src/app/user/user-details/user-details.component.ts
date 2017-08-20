@@ -17,7 +17,8 @@ import {ImageCropperComponent, CropperSettings} from 'ng2-img-cropper';
 import { SuiModalService, TemplateModalConfig
   , ModalTemplate, ModalSize, SuiActiveModal } from 'ng2-semantic-ui';
 
-  export interface IContext { }
+export interface IContext { }
+
 @Component({
   selector: 'app-user-details',
   templateUrl: './user-details.component.html',
@@ -38,7 +39,6 @@ export class UserDetailsComponent implements OnInit {
   enabled: boolean = false;
   enableTheme: boolean = false;
   saveImgButton:boolean = false;
-  fakeUser:User;
   backgroundUrl: SafeResourceUrl;
   uploading: boolean;
   isOwner: boolean;
@@ -55,22 +55,11 @@ export class UserDetailsComponent implements OnInit {
     private userService: UserService,
     private photoService: PhotoService,
     private sanitizer: DomSanitizer, 
-    public suimodalService: SuiModalService,
-    public modalService: ModalService,    
+    private modalService: ModalService,    
     private tokenHelper: TokenHelperService) { 
-     this.cropperSettings = new CropperSettings();
-        this.cropperSettings.width = 100;
-        this.cropperSettings.height = 100;
-        this.cropperSettings.croppedWidth =140;
-        this.cropperSettings.croppedHeight = 140;
-        this.cropperSettings.canvasWidth = 400;
-        this.cropperSettings.canvasHeight = 300;
-        
-        this.cropperSettings.noFileInput = true;
-        this.cropperSettings.rounded = true;
-        
-        this.data = {};
-        this.imageUploaded = false;
+      this.cropperSettings = modalService.cropperSettings;
+      this.data = {};
+      this.imageUploaded = false;
   }
   ngOnInit() {
 
@@ -114,10 +103,6 @@ export class UserDetailsComponent implements OnInit {
 
 
   fileChangeListener($event) {
-    debugger;
-    // let file: File = $event.target.files[0];
-    // this.cropService.fileChange(file, this.cropper);
-    // this.imageUploaded = true;
     var image:any = new Image();
     this.file = $event.target.files[0];
     var myReader:FileReader = new FileReader();
@@ -154,27 +139,9 @@ export class UserDetailsComponent implements OnInit {
 
   public openModal() {
     this.modalService.openModal(this.modalTemplate);
-    // const config = new TemplateModalConfig<IContext, string, string>(this.modalTemplate);
-    // //config.closeResult = "closed!";
-    
-    // config.context = {};
-    // config.size = ModalSize.Normal;
-    // config.isInverted = true;
-    // //config.mustScroll = true;
-    // let that = this;
-
-    // this.activeModal = this.modalService
-    //   .open(config)
-    //   .onApprove(result => { /* approve callback */ })
-    //   .onDeny(result => {
-    //     that.imageUploaded = false;
-    //   });
   }
 
   getImage() : string {
-
-    debugger;
     return this.data.image ? this.data.image : ''; // prev. was fake user prop
-
   }
 }

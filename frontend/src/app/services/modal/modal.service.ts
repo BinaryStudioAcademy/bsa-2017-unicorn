@@ -13,10 +13,22 @@ export interface IContext { }
 export class ModalService { 
 
   imageUploaded: boolean;
+  cropperSettings: CropperSettings;
   private activeModal: SuiActiveModal<IContext, {}, string>; 
 
   constructor(private dataService: DataService, private suiModalService: SuiModalService) {
     dataService.setHeader('Content-Type', 'application/json');
+
+    this.cropperSettings = new CropperSettings();
+    this.cropperSettings.width = 100;
+    this.cropperSettings.height = 100;
+    this.cropperSettings.croppedWidth =140;
+    this.cropperSettings.croppedHeight = 140;
+    this.cropperSettings.canvasWidth = 400;
+    this.cropperSettings.canvasHeight = 300;
+
+    this.cropperSettings.noFileInput = true;
+    this.cropperSettings.rounded = true;
    }
 
    fileChange(file: File, cropper:ImageCropperComponent) {
