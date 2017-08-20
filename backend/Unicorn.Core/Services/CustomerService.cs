@@ -10,6 +10,7 @@ using Unicorn.DataAccess.Interfaces;
 using Unicorn.Shared.DTOs.Register;
 using Unicorn.Shared.DTOs;
 using Unicorn.Shared.DTOs.User;
+using System.Data.Entity;
 
 namespace Unicorn.Core.Services
 {
@@ -88,7 +89,9 @@ namespace Unicorn.Core.Services
 
         public async Task<object> GetCustomerAsync(long id)
         {
-            var customer = await _unitOfWork.CustomerRepository.GetByIdAsync(id);
+            var customer = await _unitOfWork.CustomerRepository.
+                Query.Include(c => c.History.Select(h => h.Vendor.Person)).
+                SingleAsync(c => c.Id == id);
             if (customer != null)
             {
                 var customerDto = new UserShortDTO()
@@ -110,7 +113,7 @@ namespace Unicorn.Core.Services
                         date = x.Date,
                         dateFinished = x.DateFinished,
                         subcategoryName = x.SubcategoryName,
-                        vendor = x?.Vendor?.Person?.Surname,
+                        vendor = x?.Vendor?.Person?.Name,
                         workDescription = x.WorkDescription
                     }).ToList(),
                     Books = customer.Books.Select(x => new BookShortDto()
@@ -118,7 +121,7 @@ namespace Unicorn.Core.Services
                         address = x.Location?.Adress,
                         date = x.Date,
                         description = x.Description,
-                        vendor = x?.Vendor?.Person?.Surname,
+                        vendor = x?.Vendor?.Person?.Name,
                         status = x.Status,
                         workType = x.Work.Subcategory?.Name
                     }).ToList()
