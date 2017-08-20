@@ -15,7 +15,7 @@ export class VendorEditOrdersComponent implements OnInit {
 
   orders: VendorBook[];
   bookStatus = BookStatus;
-  selectedStatus: BookStatus;
+
   constructor(private vendorService: VendorService) { }
 
   ngOnInit() {

@@ -43,13 +43,5 @@ export class VendorProfileInfoComponent implements OnInit {
   onCategorySelect(category: Category): void {
     this.selectedCategory = category;
     this.workPreviews = this.vendor.Works.filter(w => w.CategoryId === this.selectedCategory.Id);
-    // this.workSubcategories = category.Subcategories;
-    // this.onSubcategorySelect(this.workSubcategories[0]);
   }
-
-  // onSubcategorySelect(subcategory: Subcategory): void {
-  //   this.selectedSubcategory = subcategory;
-  //   this.workPreviews = this.vendor.Works.filter(w => w.SubcategoryId === this.selectedSubcategory.Id);
-  // }
-
 }

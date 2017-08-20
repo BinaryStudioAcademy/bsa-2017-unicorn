@@ -1,11 +1,14 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 import { NguiMapModule, Marker } from "@ngui/map";
-import {SuiModule} from 'ng2-semantic-ui';
+import { SuiModule } from 'ng2-semantic-ui';
 
 import { Location } from "../../../models/location.model"
 import { Vendor } from "../../../models/vendor.model";
 import { MapModel } from "../../../models/map.model";
+import { Work } from "../../../models/work.model";
+import { Category } from "../../../models/category.model";
+import { Subcategory } from "../../../models/subcategory.model";
 
 import { VendorService } from "../../../services/vendor.service";
 import { LocationService } from "../../../services/location.service";
@@ -23,6 +26,11 @@ export class VendorEditInfoComponent implements OnInit {
   map: MapModel;
   dataLoaded: boolean;
   
+  newWork: Work;
+  categories: Category[];
+  works: Work[];
+  subcategoryWorks: Work[];
+
   constructor(
     private locationService: LocationService, 
     private vendorService: VendorService
@@ -30,6 +38,15 @@ export class VendorEditInfoComponent implements OnInit {
 
   ngOnInit() {
     this.dataLoaded = true;
+    this.newWork = {
+      CategoryId: null,
+      Category: "",
+      Subcategory: "",
+      Description: "",
+      Id: null,
+      SubcategoryId: null,
+      Name: ""
+    };
     this.locationService.getById(this.vendor.LocationId)
       .then(resp => this.location = resp.body as Location)
       .then(() => this.map = {
