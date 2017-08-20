@@ -3,6 +3,7 @@ import { RouterModule } from '@angular/router';
 
 import { UserComponent } from './user-component/user.component';
 import { UserDetailsComponent } from './user-details/user-details.component';
+import { UserMainComponent} from './user-main/user-main.component';
 
 @NgModule({
   imports: [
@@ -24,6 +25,10 @@ import { UserDetailsComponent } from './user-details/user-details.component';
           {
             path: ':id/edit',
             component: UserDetailsComponent,
+          },
+          {
+            path: ':id',
+            component: UserMainComponent,
           }
         ]
       }

@@ -37,7 +37,6 @@ export class UserDetailsComponent implements OnInit {
   enabled: boolean = false;
   enableTheme: boolean = false;
   saveImgButton:boolean = false;
-  fakeUser:User;
   backgroundUrl: SafeResourceUrl;
   uploading: boolean;
   isOwner: boolean;
@@ -169,7 +168,6 @@ export class UserDetailsComponent implements OnInit {
 
   getImage() : string {
 
-    debugger;
     return this.user.Avatar ? this.user.Avatar : ''; // prev. was fake user prop
 
   }
