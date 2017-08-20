@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+
 using Unicorn.Shared.DTOs;
+using Unicorn.Shared.DTOs.Book;
 
 namespace Unicorn.Core.Interfaces
 {
@@ -8,5 +10,6 @@ namespace Unicorn.Core.Interfaces
     {
         Task<IEnumerable<BookDTO>> GetAllAsync();
         Task<BookDTO> GetById(long id);
+        Task<IEnumerable<VendorBookDTO>> GetVendorOrdersAsync(long vendorId);
     }
 }

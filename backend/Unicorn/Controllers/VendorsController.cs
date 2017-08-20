@@ -17,11 +17,16 @@ namespace Unicorn.Controllers
     [EnableCors("*", "*", "*")]
     public class VendorsController : ApiController
     {
-        public VendorsController(IVendorService vendorService, IReviewService reviewService, IPortfolioService portfolioService)
+        public VendorsController(
+            IVendorService vendorService, 
+            IReviewService reviewService, 
+            IPortfolioService portfolioService, 
+            IBookService bookService)
         {
             _vendorService = vendorService;
             _reviewService = reviewService;
             _portfolioService = portfolioService;
+            _bookService = bookService;
         }
 
         [HttpGet]
@@ -64,6 +69,18 @@ namespace Unicorn.Controllers
         public async Task<HttpResponseMessage> GetVendorCategories(long id)
         {
             var result = await _vendorService.GetVendorCategoriesAsync(id);
+
+            if (result == null)
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            else
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+        [HttpGet]
+        [Route("{id}/orders")]
+        public async Task<HttpResponseMessage> GetVendorOrders(long id)
+        {
+            var result = await _bookService.GetVendorOrdersAsync(id);
 
             if (result == null)
                 return Request.CreateResponse(HttpStatusCode.NotFound);
@@ -125,5 +142,6 @@ namespace Unicorn.Controllers
         IVendorService _vendorService;
         IReviewService _reviewService;
         IPortfolioService _portfolioService;
+        IBookService _bookService;
     }
 }

@@ -46,7 +46,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DTOs\AccountDTO.cs" />
-    <Compile Include="DTOs\BookDTO.cs" />
+    <Compile Include="DTOs\Book\BookDTO.cs" />
+    <Compile Include="DTOs\Book\VendorBookDTO.cs" />
     <Compile Include="DTOs\CategoryDTO.cs" />
     <Compile Include="DTOs\CompanyDTO.cs" />
     <Compile Include="DTOs\ContactProviderDTO.cs" />
@@ -86,7 +87,12 @@
     <Compile Include="services\implementations\JsonRequestContent.cs" />
     <Compile Include="services\implementations\QueryStringBuilder.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Unicorn.DataAccess\Unicorn.DataAccess.csproj">
+      <Project>{3CD69EAE-0362-4F57-91FA-84507C885797}</Project>
+      <Name>Unicorn.DataAccess</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>

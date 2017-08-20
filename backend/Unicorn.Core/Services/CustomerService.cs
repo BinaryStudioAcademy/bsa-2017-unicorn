@@ -1,14 +1,17 @@
-using AutoMapper;
 using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+
+using AutoMapper;
+
 using Unicorn.Core.Interfaces;
 using Unicorn.Core.Services.Helpers;
 using Unicorn.DataAccess.Entities;
 using Unicorn.DataAccess.Interfaces;
 using Unicorn.Shared.DTOs.Register;
 using Unicorn.Shared.DTOs;
+using Unicorn.Shared.DTOs.Book;
 
 namespace Unicorn.Core.Services
 {

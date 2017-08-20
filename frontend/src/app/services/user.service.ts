@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { DataService } from './data.service';
 
 import { User } from '../models/user'
-import {Book} from '../models/book.model'
+import {Book} from '../models/book/book.model'
 import {Vendor} from '../models/vendor'
 
 @Injectable()
@@ -20,20 +20,22 @@ export class UserService {
     middleName: "",
     surName: "Pupkin",
     location: "Dnipro",
-    books: [{
-      date: new Date(Date.now()),
-      description: "fix dripping tap",
-      status: "In Progress",
-      workType: "House work",
-      address: "",
-      contact: "",
-      vendor: {
-        FIO: "Petr Petrov",
-        Avatar: "",
-        Experience: 0,
-        Position: "",
-        }
-    }],
+    books: [
+    //   {
+    //   date: new Date(Date.now()),
+    //   description: "fix dripping tap",
+    //   status: "In Progress",
+    //   workType: "House work",
+    //   address: "",
+    //   contact: "",
+    //   vendor: {
+    //     FIO: "Petr Petrov",
+    //     Avatar: "",
+    //     Experience: 0,
+    //     Position: "",
+    //     }
+    // }
+    ],
     gender: "",
     email: "",
     phone: "",

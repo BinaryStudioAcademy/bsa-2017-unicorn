@@ -9,6 +9,7 @@ import { Review } from "../models/review.model";
 import { Subcategory } from "../models/subcategory.model";
 import { Contact } from "../models/contact.model";
 import { Category } from "../models/category.model";
+import { VendorBook } from "../models/book/vendor-book.model";
 
 @Injectable()
 export class VendorService {
@@ -35,7 +36,13 @@ export class VendorService {
   }
 
   getCategories(id: number): Promise<any> {
-    return this.dataService.getFullRequest<Category[]>(`${this.apiController}/${id}/categories`);
+    return this.dataService.getFullRequest<Category[]>(`${this.apiController}/${id}/categories`)
+      .catch(err => alert(err));
+  }
+
+  getOrders(id: number): Promise<any> {
+    return this.dataService.getFullRequest<VendorBook>(`${this.apiController}/${id}/orders`)
+      .catch(err => alert(err));
   }
 
   getReviews(id: number): Promise<any> {

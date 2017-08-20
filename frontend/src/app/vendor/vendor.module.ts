@@ -26,6 +26,8 @@ import { DataService } from "../services/data.service";
 import { LocationService } from "../services/location.service";
 import { VendorEditComponent } from './vendor-edit/vendor-edit.component';
 import { VendorEditInfoComponent } from './vendor-edit/vendor-edit-info/vendor-edit-info.component';
+import { VendorEditOrdersComponent } from './vendor-edit/vendor-edit-orders/vendor-edit-orders.component';
+import { EnumKeysPipe } from "../pipes/enum.pipe";
 
 @NgModule({
   imports: [
@@ -46,6 +48,8 @@ import { VendorEditInfoComponent } from './vendor-edit/vendor-edit-info/vendor-e
     VendorsComponent,
     VendorEditComponent,
     VendorEditInfoComponent,
+    VendorEditOrdersComponent,
+    EnumKeysPipe
   ],
   providers: [
     DataService,

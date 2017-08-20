@@ -1,0 +1,41 @@
+<table class="ui single line table">
+  <thead>
+    <tr>
+      <th>Date of request</th>
+      <th>Type of work</th>
+      <th>Description</th>
+      <th>Customer</th>
+      <th>Status</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let order of orders">
+      <td>{{order.Date | date:'shortDate'}}</td>
+      <td>{{order.Work.Name}}</td>
+      <td>{{order.Description}}</td>
+      <td>{{order.Customer}}</td>
+      <td>
+        <sui-select class="selection"
+                    [(ngModel)]="order.Status"
+                    [options]="bookStatus | enum"
+                    labelField="value"
+                    valueField="key"
+                    placeholder="{{bookStatus[order.Status]}}"
+                    #select>
+            <sui-select-option *ngFor="let status of bookStatus | enum"
+                               [value]="status">
+            </sui-select-option>
+        </sui-select>
+      </td>
+      <td>       
+        <div class="ui vertical animated button" tabindex="0">
+          <div class="hidden content" style="color:#FF647A;">Chat</div>
+          <div class="visible content">
+            <i class="mail outline icon" style="color:#FF647A;"></i>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
