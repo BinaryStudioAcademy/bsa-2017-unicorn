@@ -17,6 +17,8 @@ namespace Unicorn.Shared.DTOs.Vendor
 
         public string Avatar { get; set; }
 
+        public string Background { get; set; }
+
         public string City { get; set; }
 
         public long LocationId { get; set; }

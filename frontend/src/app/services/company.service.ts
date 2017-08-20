@@ -78,16 +78,19 @@ export class CompanyService {
       Vendors: [
       {
         Avatar: "../../../assets/images/square-image.png",
+        Background: "",
         Experience: 5,
         Position: '',
         FIO: 'Vasya Pupkin',
       }, {
         Avatar: "../../../assets/images/square-image.png",
+        Background: "",
         Experience: 5,
         Position: '',
         FIO: 'Vasya Pupkin',
       }, {
         Avatar: "../../../assets/images/square-image.png",
+        Background: "",
         Experience: 5,
         Position: '',
         FIO: 'Vasya Pupkin',

@@ -9,6 +9,7 @@ export interface Vendor {
 	Surname: string;
 	MiddleName: string;
 	Avatar: string;
+	Background: string;
 	City: string;
 	LocationId: number;
 	Position: string;

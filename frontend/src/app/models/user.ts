@@ -6,6 +6,7 @@ export interface User
 	MiddleName: string;
 	SurName: string;
 	Avatar: string;
+	Background: string;
 	LocationId : string;
 	Books: Book[];
 	Email:string;
