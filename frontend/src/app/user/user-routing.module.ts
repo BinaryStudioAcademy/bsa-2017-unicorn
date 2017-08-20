@@ -22,7 +22,7 @@ import { UserDetailsComponent } from './user-details/user-details.component';
             pathMatch: 'full'
           },
           {
-            path: ':id',
+            path: ':id/edit',
             component: UserDetailsComponent,
           }
         ]
