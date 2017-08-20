@@ -91,6 +91,7 @@ namespace Unicorn.Core.Services
         {
             var customer = await _unitOfWork.CustomerRepository.
                 Query.Include(c => c.History.Select(h => h.Vendor.Person)).
+                Include(c=>c.Books.Select(h=>h.Vendor.Person)).
                 SingleAsync(c => c.Id == id);
             if (customer != null)
             {
