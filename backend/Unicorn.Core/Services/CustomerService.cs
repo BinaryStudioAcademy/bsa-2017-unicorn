@@ -124,15 +124,15 @@ namespace Unicorn.Core.Services
                         vendor = x?.Vendor?.Person?.Name,
                         workDescription = x.WorkDescription
                     }).ToList(),
-                    Books = customer.Books.Select(x => new BookShortDto()
-                    {
-                        address = x.Location?.Adress,
-                        date = x.Date,
-                        description = x.Description,
-                        vendor = x?.Vendor?.Person?.Name,
-                        status = x.Status,
-                        workType = x.Work.Subcategory?.Name
-                    }).ToList()
+                    //Books = customer.Books?.Select(x => new BookShortDto()
+                    //{
+                    //    Address = x.Location?.Adress,
+                    //    Date = x.Date,
+                    //    Description = x.Description,
+                    //    Vendor = x?.Vendor?.Person?.Name,
+                    //    Status = x.Status,
+                    //    WorkType = x.Work.Subcategory?.Name
+                    //}).ToList()
                 };
                 return customerDto;
             }
