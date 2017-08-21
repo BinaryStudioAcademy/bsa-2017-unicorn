@@ -21,7 +21,7 @@ export class UserProfileComponent implements OnInit {
     @ViewChild(AgmMap) private map: any;
       location: Location;
 
-    @ViewChild('userForm') userForm: NgForm;
+    @ViewChild('userForm') public userForm: NgForm;
     lat: number = 48.464921;
     lng: number = 35.045798;
     birthday: Date;

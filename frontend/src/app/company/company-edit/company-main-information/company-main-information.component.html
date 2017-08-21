@@ -4,11 +4,13 @@
     <div class="ui form">
         <div class="field">
             <label>Company name</label>
-            <input type="text" [(ngModel)]="company.Name">
+            <input required type="text" name="name" [(ngModel)]="company.Name" #compname="ngModel">
+            <div *ngIf="compname.invalid && (compname.dirty)" class="valid-error">* Required</div>
         </div>
         <div class="field">
             <label>Description</label>
-            <textarea [(ngModel)]="company.Description"></textarea>
+            <textarea required name="description" [(ngModel)]="company.Description" #desc="ngModel"></textarea>
+            <div *ngIf="desc.invalid && (desc.dirty)" class="valid-error">* Required</div>
         </div>
         <div class="field">
             <label>Foundation date</label>
@@ -19,7 +21,8 @@
         </div>
         <div class="field">
             <label>CEO</label>
-            <input type="text" [(ngModel)]="company.Director">
+            <input required name="director" type="text" [(ngModel)]="company.Director" #dir="ngModel">
+            <div *ngIf="dir.invalid && (dir.dirty)" class="valid-error">* Required</div>
         </div>
     </div>
     <div>
