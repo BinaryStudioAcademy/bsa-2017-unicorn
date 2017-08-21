@@ -10,6 +10,7 @@ import { NguiMapModule } from "@ngui/map/dist";
 import { SignBlockModule } from '../sign-block/sign-block.module';
 import { BookModule } from '../book/book.module';
 import { MapModule } from '../map/map.module';
+import { SharedModule } from "../shared/shared.module";
 
 import { VendorsComponent } from './vendors/vendors.component';
 import { VendorDetailsComponent } from './vendor-details/vendor-details.component';
@@ -33,6 +34,7 @@ import { ReviewService } from '../services/review.service';
 import { DataService } from "../services/data.service";
 import { LocationService } from "../services/location.service";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { VendorEditComponent } from './vendor-edit/vendor-edit.component';
 import { VendorEditInfoComponent } from './vendor-edit/vendor-edit-info/vendor-edit-info.component';
 import { SharedModule } from "../shared/shared.module";
@@ -40,6 +42,10 @@ import { SharedModule } from "../shared/shared.module";
 import { CategoryService } from "../services/category.service";
 import { WorkService } from "../services/work.service";
 >>>>>>> feature/vendor-profile
+=======
+import { CategoryService } from "../services/category.service";
+import { WorkService } from "../services/work.service";
+>>>>>>> develop
 
 @NgModule({
   imports: [
@@ -61,14 +67,20 @@ import { WorkService } from "../services/work.service";
     VendorsComponent,
     VendorEditComponent,
 <<<<<<< HEAD
+<<<<<<< HEAD
     VendorEditInfoComponent
 =======
+=======
+>>>>>>> develop
     VendorEditInfoComponent,
     VendorEditOrdersComponent,
     VendorEditPortfolioComponent,
     VendorEditWorksComponent,
     EnumKeysPipe
+<<<<<<< HEAD
 >>>>>>> feature/vendor-profile
+=======
+>>>>>>> develop
   ],
   providers: [
     DataService,

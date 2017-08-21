@@ -14,6 +14,7 @@ namespace Unicorn.Core.Infrastructure
             Bind<IAuthService>().To<AuthJWTService>();
             Bind<IAccountService>().To<AccountService>();
             Bind<IBookService>().To<BookService>();
+            Bind<IHistoryService>().To<HistoryService>();
             Bind<ICustomerService>().To<CustomerService>();
             Bind<IVendorService>().To<VendorService>();
             Bind<IRoleService>().To<RoleService>();
@@ -24,6 +25,7 @@ namespace Unicorn.Core.Infrastructure
             Bind<IAvatarService>().To<AvatarService>();
             Bind<IPortfolioService>().To<PortfolioService>();
             Bind<IReviewService>().To<ReviewService>();
+            Bind<ICategoryService>().To<CategoryService>();
             Bind<ICompanyPageService>().To<CompanyPageService>();
             //Bind<IContactService>().To<ContactService>();
         }
