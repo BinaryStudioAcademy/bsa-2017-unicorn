@@ -1,5 +1,5 @@
 <div *ngIf="book !== undefined">
-    <form class="ui form book-form">
+    <form class="ui form book-form" name="bookForm" #bookForm="ngForm">
         <div class="field">
             <label>Choose work</label>
             <select class="ui fluid dropdown">
@@ -28,7 +28,7 @@
             </div>
         </div>
         <div style="display: flex; justify-content: center;">
-            <button class="ui button" type="submit">ORDER</button>
+            <button class="ui button" type="submit" (click)="makeOrder()">ORDER</button>
         </div>
     </form>
 </div>

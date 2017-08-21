@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { CompanyDetails } from "../../../models/company-page/company-details.model";
 import { CompanyService } from "../../../services/company-services/company.service";
 import { ActivatedRoute, Params } from "@angular/router";
@@ -13,6 +14,8 @@ export class CompanyMainInformationComponent implements OnInit {
   company: CompanyDetails;
   isLoaded: boolean = false;
 
+  @ViewChild('companyForm') public companyForm: NgForm;
+
   constructor(private companyService: CompanyService,
     private route: ActivatedRoute,) { }
 
@@ -25,6 +28,9 @@ export class CompanyMainInformationComponent implements OnInit {
   }
 
   save(){
+    if (this.companyForm.invalid) {
+      return;
+    }
     this.isLoaded = true;
     this.companyService.saveCompanyDetails(this.company).then(() => {this.isLoaded = false});
   }
