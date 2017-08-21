@@ -16,6 +16,11 @@
     margin-top: 7px;
 }
 
+.valid-error {
+    color: red;
+    font-size: 10px;
+}
+
 .reg-btn {
     width: 100%;
     font-size: 16px;

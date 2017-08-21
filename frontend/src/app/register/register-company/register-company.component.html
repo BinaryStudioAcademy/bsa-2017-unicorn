@@ -1,44 +1,56 @@
 <div class="">
     <div class="ui form">
 
-        <div class="field">
-            <input type="text" placeholder="NAME" [(ngModel)]="name">
-        </div>
-
-        <div class="field">
-            <textarea rows="3" placeholder="DESCRIPTION" [(ngModel)]="description"></textarea>
-        </div>
-
-        <div class="field">
-            <input type="text" placeholder="EMAIL" [(ngModel)]="email">
-        </div>
-
-        <div class="field">
-            <input type="text" placeholder="PHONE" [(ngModel)]="phone">
-        </div>
-
-        <div class="field">
-            <input type="text" placeholder="STAFF" [(ngModel)]="staff">
-        </div>
-
-        <div class="field">
-            <div class="ui left icon input">
-                <i class="calendar icon"></i>
-                <input suiDatepicker placeholder="FOUNDATION" [(ngModel)]="foundation" [pickerMode]="mode">
+        <form name="companyForm" #companyForm="ngForm">
+            <div class="field">
+                <input required type="text" name="compname" placeholder="NAME" [(ngModel)]="name" #compname="ngModel">
+                <div *ngIf="compname.invalid && (compname.dirty)" class="valid-error">required</div>
             </div>
-        </div>
 
-        <div *ngIf="error" class="error-field">
-            <sui-message class="error">
-                <div class="header">
-                    Error
+            <div class="field">
+                <textarea required rows="3" name="desc" placeholder="DESCRIPTION" [(ngModel)]="description" #desc="ngModel"></textarea>
+                <div *ngIf="desc.invalid && (desc.dirty)" class="valid-error">required</div>
+            </div>
+
+            <div class="field">
+                <input required pattern="\S+@\S+\.\S+" type="text" name="mail" placeholder="EMAIL" [(ngModel)]="email" #mail="ngModel">
+                <div *ngIf="mail.invalid && (mail.dirty)">
+                    <div *ngIf="mail.errors.required" class="valid-error">required</div>
+                    <div *ngIf="mail.errors.pattern" class="valid-error">invalid mail</div>
                 </div>
-                <p>You must fill all fields</p>
-            </sui-message>
-        </div>
-        <div class="confirm-div">
-            <a align=center class="ui button reg-btn" (click)="confirmRegister()">REGISTER</a>
-        </div>
+            </div>
 
+            <div class="field">
+                <input required pattern="^[0-9]+$" type="text" name="phonenumb" placeholder="PHONE" [(ngModel)]="phone" #phonenumb="ngModel">
+                <div *ngIf="phonenumb.invalid && (phonenumb.dirty)">
+                    <div *ngIf="phonenumb.errors.required" class="valid-error">required</div>
+                    <div *ngIf="phonenumb.errors.pattern" class="valid-error">invalid number</div>
+                </div>
+            </div>
+
+            <div class="field">
+                <input required type="number" name="stuff" placeholder="STAFF" [(ngModel)]="staff" #stuff="ngModel">
+                <div *ngIf="stuff.invalid && (stuff.dirty)" class="valid-error">required</div>
+            </div>
+
+            <div class="field">
+                <div class="ui left icon input">
+                    <i class="calendar icon"></i>
+                    <input suiDatepicker placeholder="FOUNDATION" [(ngModel)]="foundation" [pickerMode]="mode">
+                </div>
+            </div>
+
+            <!-- <div *ngIf="error" class="error-field">
+                <sui-message class="error">
+                    <div class="header">
+                        Error
+                    </div>
+                    <p>You must fill all fields</p>
+                </sui-message>
+            </div> -->
+            <div class="field">
+                <a align=center class="ui button reg-btn" (click)="confirmRegister(companyForm)">REGISTER</a>
+            </div>
+        </form>
     </div>
 </div>

@@ -28,8 +28,6 @@ export class RegisterVendorComponent implements OnInit {
 
   mode: string;
 
-  error: boolean = false;
-
   phone: string;
   birthday;
 
@@ -39,12 +37,10 @@ export class RegisterVendorComponent implements OnInit {
 
   ngOnInit() {
     this.mode = 'date';
-  }
 
-  valid(): boolean {
-    return this.birthday !== undefined && this.phone != undefined
-      && this.experience !== undefined && this.position !== undefined
-      && this.speciality !== undefined;
+    this.firstName = this.social.displayName || null;
+    this.email = this.social.email || null;
+    this.phone = this.social.phoneNumber || null;
   }
 
   aggregateInfo(): Vendor {
@@ -67,9 +63,8 @@ export class RegisterVendorComponent implements OnInit {
     return info;
   }
 
-  confirmRegister() {
-    if (this.valid()) {
-      this.error = false;
+  confirmRegister(formData) {
+    if (formData.valid) {
       let regInfo = this.aggregateInfo();
       this.registerService.confirmVendor(regInfo).then(resp => {
         this.modal.deny(null);
@@ -77,8 +72,6 @@ export class RegisterVendorComponent implements OnInit {
         this.authEventService.signIn();
         this.helperService.redirectAfterAuthentication();
       });
-    } else {
-      this.error = true;
-    }
+    } 
   }
 }
