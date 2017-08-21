@@ -38,9 +38,16 @@ export class RegisterVendorComponent implements OnInit {
   ngOnInit() {
     this.mode = 'date';
 
-    this.firstName = this.social.displayName || null;
     this.email = this.social.email || null;
     this.phone = this.social.phoneNumber || null;
+    this.initName();
+  }
+
+  initName() {
+    let displayName = this.social.displayName;
+    let nameValues = displayName.split(' ');
+    this.firstName = nameValues[0] || null;
+    this.middleName = nameValues[1] || null;
   }
 
   aggregateInfo(): Vendor {

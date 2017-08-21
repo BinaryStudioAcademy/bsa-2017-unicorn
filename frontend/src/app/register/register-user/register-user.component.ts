@@ -35,7 +35,14 @@ export class RegisterUserComponent implements OnInit {
     this.mode = 'date';
     this.email = this.social.email || null;
     this.phone = this.social.phoneNumber || null;
-    this.firstName = this.social.providerData[0].displayName || null;
+    this.initName();
+  }
+
+  initName() {
+    let displayName = this.social.displayName;
+    let nameValues = displayName.split(' ');
+    this.firstName = nameValues[0] || null;
+    this.middleName = nameValues[1] || null;
   }
 
   aggregateInfo(): Customer {

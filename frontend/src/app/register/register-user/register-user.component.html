@@ -3,17 +3,17 @@
         <form name="customerForm" #customerForm="ngForm">
             <div class="field">
                 <input required type="text" name="name" placeholder="FIRST NAME" [(ngModel)]="firstName" #name="ngModel">
-                <div *ngIf="name.invalid && (name.dirty)" class="valid-error">required</div>
+                <div *ngIf="name.invalid && (name.dirty)" class="valid-error">* Required</div>
             </div>
 
             <div class="field">
                 <input required type="text" name="surname" placeholder="MIDDLE NAME" [(ngModel)]="middleName" #surname="ngModel">
-                <div *ngIf="surname.invalid && (surname.dirty)" class="valid-error">required</div>
+                <div *ngIf="surname.invalid && (surname.dirty)" class="valid-error">* Required</div>
             </div>
 
             <div class="field">
                 <input required type="text" name="lastname" placeholder="LAST NAME" [(ngModel)]="lastName" #lastname="ngModel">
-                <div *ngIf="lastname.invalid && (lastname.dirty)" class="valid-error">required</div>
+                <div *ngIf="lastname.invalid && (lastname.dirty)" class="valid-error">* Required</div>
             </div>
 
             <div class="field">
@@ -26,16 +26,16 @@
             <div class="field">
                 <input required pattern="\S+@\S+\.\S+" type="text" name="email" placeholder="EMAIL" [(ngModel)]="email" #mail="ngModel">
                 <div *ngIf="mail.invalid && (mail.dirty)">
-                    <div *ngIf="mail.errors.required" class="valid-error">required</div>
-                    <div *ngIf="mail.errors.pattern" class="valid-error">invalid mail</div>
+                    <div *ngIf="mail.errors.required" class="valid-error">* Required</div>
+                    <div *ngIf="mail.errors.pattern" class="valid-error">* Invalid mail</div>
                 </div>
             </div>
 
             <div class="field">
                 <input required pattern="^\+(?:[0-9]●?){6,14}[0-9]$" type="text" name="phone" placeholder="PHONE" [(ngModel)]="phone" #phonenumb="ngModel">
                 <div *ngIf="phonenumb.invalid && (phonenumb.dirty)">
-                    <div *ngIf="phonenumb.errors.required" class="valid-error">required</div>
-                    <div *ngIf="phonenumb.errors.pattern" class="valid-error">invalid number</div>
+                    <div *ngIf="phonenumb.errors.required" class="valid-error">* Required</div>
+                    <div *ngIf="phonenumb.errors.pattern" class="valid-error">* Invalid number</div>
                 </div>
             </div>
 
@@ -49,7 +49,7 @@
             </sui-message>
         </div> -->
             <div class="field">
-                <a align=center class="ui button reg-btn" (click)="confirmRegister(customerForm)">REGISTER</a>
+                <a align=center class="ui button reg-btn" [ngClass]="{'disabled': customerForm.invalid}" (click)="confirmRegister(customerForm)">REGISTER</a>
             </div>
         </form>
     </div>

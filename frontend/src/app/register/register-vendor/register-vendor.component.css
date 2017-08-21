@@ -19,6 +19,11 @@
 .valid-error {
     color: #ff6666;
     font-size: 10px;
+    position: absolute;
+}
+
+input.ng-dirty.ng-invalid.ng-touched {
+    border-color: #ff8080;
 }
 
 .reg-btn {
