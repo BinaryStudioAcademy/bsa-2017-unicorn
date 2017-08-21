@@ -38,13 +38,21 @@ namespace Unicorn.Core.Services
         public async Task<RatingDTO> GetReceiverRatingAsync(long id)
         {
             var reviews = await GetByReceiverIdAsync(id);
-
-            var average = reviews.Average(r => r.Grade);
-            return new RatingDTO()
+            if (reviews.Count()==0)
+                return new RatingDTO()
+                {
+                    Average = 0,
+                    ReviewsCount = 0
+                };
+            else
             {
-                Average = average,
-                ReviewsCount = reviews.Count()
-            };
+                var average = reviews.Average(r => r.Grade);
+                return new RatingDTO()
+                {
+                    Average = average,
+                    ReviewsCount = reviews.Count()
+                };
+            }
 
         }
 
