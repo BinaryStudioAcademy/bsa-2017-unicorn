@@ -78,9 +78,19 @@ namespace Unicorn.Core.Services
             return datareturn;
         }
 
-        public async Task<BookDTO> GetById(long id)
+        public async Task<BookDTO> GetByIdAsync(long id)
         {
-            var book = await _unitOfWork.BookRepository.GetByIdAsync(id);
+            //var book = await _unitOfWork.BookRepository.GetByIdAsync(id);
+            var book = await _unitOfWork.BookRepository.Query
+                .Include(b => b.Location)
+                .Include(b => b.Vendor)
+                .Include(b => b.Vendor.Person)
+                .Include(b => b.Work)
+                .Include(b => b.Work.Subcategory)
+                .Include(b => b.Customer)
+                .Include(b => b.Customer.Person)
+                .Include(b => b.Company)
+                .SingleAsync(b => b.Id == id);
             var bookDto = new BookDTO()
             {
                 Id = book.Id,
@@ -168,6 +178,15 @@ namespace Unicorn.Core.Services
                     }
                 }).ToListAsync();
 
+        }
+
+        public async Task Update(BookDTO bookDto)
+        {
+            var book = await _unitOfWork.BookRepository.GetByIdAsync(bookDto.Id);
+            book.Status = bookDto.Status;
+
+            _unitOfWork.BookRepository.Update(book);
+            await _unitOfWork.SaveAsync();
         }
     }
 }

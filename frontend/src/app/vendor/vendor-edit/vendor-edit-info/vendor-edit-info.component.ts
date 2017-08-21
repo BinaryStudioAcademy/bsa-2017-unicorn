@@ -54,8 +54,7 @@ export class VendorEditInfoComponent implements OnInit {
       Name: ""
     };
     this.categoryService.getAll()
-      .then(resp => this.categories = resp.body as Category[])
-      .then(() => console.log(this.categories));
+      .then(resp => this.categories = resp.body as Category[]);
     this.workService.getAll()
       .then(resp => this.works = resp.body as Work[])
     this.locationService.getById(this.vendor.LocationId)

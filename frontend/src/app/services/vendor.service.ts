@@ -75,4 +75,9 @@ export class VendorService {
     return this.dataService.putFullRequest<Contact[]>(`${this.apiController}/${id}/contacts`, contacts)
       .catch(err => alert(err));;
   }
+
+  updateOrder(id: number, order: VendorBook): Promise<any> {
+    return this.dataService.putFullRequest<VendorBook[]>(`${this.apiController}/${id}/orders/${order.Id}`, order)
+      .catch(err => alert(err));
+  }
 }

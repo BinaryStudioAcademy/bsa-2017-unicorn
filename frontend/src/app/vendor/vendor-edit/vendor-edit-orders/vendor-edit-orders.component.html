@@ -7,6 +7,7 @@
       <th>Customer</th>
       <th>Status</th>
       <th></th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -16,8 +17,9 @@
       <td>{{order.Description}}</td>
       <td>{{order.Customer}}</td>
       <td>
-        <sui-select class="selection"
+         <sui-select class="selection"
                     [(ngModel)]="order.Status"
+                    (ngModelChange)=onOrderChange(order)
                     [options]="bookStatus | enum"
                     labelField="value"
                     valueField="key"
@@ -26,7 +28,12 @@
             <sui-select-option *ngFor="let status of bookStatus | enum"
                                [value]="status">
             </sui-select-option>
-        </sui-select>
+        </sui-select> 
+      </td>
+      <td>
+        <button *ngIf="isOrderChanged(order)" (click)="saveOrder(order)" class="ui icon button">
+          <i class="checkmark icon"></i>
+        </button>
       </td>
       <td>       
         <div class="ui vertical animated button" tabindex="0">

@@ -16,9 +16,26 @@ export class VendorEditOrdersComponent implements OnInit {
   orders: VendorBook[];
   bookStatus = BookStatus;
 
+  changedOrders: VendorBook[];
+
   constructor(private vendorService: VendorService) { }
 
+  isOrderChanged(order): boolean {
+    return this.changedOrders.find(o => o.Id === order.Id) !== undefined
+  }
+
+  onOrderChange(order: VendorBook): void {
+    if (this.changedOrders.find(o => o.Id === order.Id) === undefined)
+      this.changedOrders.push(order);
+  }
+
+  saveOrder(order: VendorBook): void {
+    this.vendorService.updateOrder(this.vendorId, order);
+    this.changedOrders.splice(this.changedOrders.findIndex(o => o.Id === order.Id), 1);
+  }
+
   ngOnInit() {
+    this.changedOrders =  [];
     this.vendorService.getOrders(this.vendorId)
       .then(resp => this.orders = resp.body as VendorBook[]);
   }

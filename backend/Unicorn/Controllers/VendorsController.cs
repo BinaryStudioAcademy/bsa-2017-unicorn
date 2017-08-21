@@ -8,6 +8,7 @@ using System.Web.Http;
 using System.Web.Http.Cors;
 
 using Unicorn.Core.Interfaces;
+using Unicorn.Shared.DTOs.Book;
 using Unicorn.Shared.DTOs.Subcategory;
 using Unicorn.Shared.DTOs.Vendor;
 
@@ -81,6 +82,22 @@ namespace Unicorn.Controllers
         public async Task<HttpResponseMessage> GetVendorOrders(long id)
         {
             var result = await _bookService.GetVendorOrdersAsync(id);
+
+            if (result == null)
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            else
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+        [HttpPut]
+        [Route("{id}/orders/{orderId}")]
+        public async Task<HttpResponseMessage> UpdateVendor(long id, long orderId, [FromBody]VendorBookDTO order)
+        {
+            var book = await _bookService.GetByIdAsync(orderId);
+            book.Status = order.Status;
+            await _bookService.Update(book);
+
+            var result = await _bookService.GetVendorOrdersAsync(orderId);
 
             if (result == null)
                 return Request.CreateResponse(HttpStatusCode.NotFound);
