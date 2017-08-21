@@ -1,7 +1,7 @@
 <div class="header">
     <p class="reg-header">REGISTRATION</p>
 </div>
-<div class="content">
+<div class="content" id="scroll-reg">
     <div class="social-buttons" *ngIf="!isLogged;else authorized">
         <button class="ui facebook button" (click)="loginWithFacebook()">
         <i class="facebook icon"></i>
@@ -25,7 +25,6 @@
             <p>Unable to authorize user</p>
         </sui-message>
     </div>
-
     <ng-template #authorized>
         <div class="roles">
             <div class="question-lbl">
@@ -38,6 +37,7 @@
             </div>
         </div>
     </ng-template>
+
 
     <app-register-user *ngIf="roles['customer']" [social]="currentUser" [modal]="modal"></app-register-user>
     <app-register-vendor *ngIf="roles['vendor']" [social]="currentUser" [modal]="modal"></app-register-vendor>
