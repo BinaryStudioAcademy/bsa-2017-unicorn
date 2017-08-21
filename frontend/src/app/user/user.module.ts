@@ -18,7 +18,6 @@ import { UserService } from '../services/user.service';
 import { DataService } from "../services/data.service";
 import { AgmCoreModule } from "@agm/core";
 import { environment } from "../../environments/environment";
-import { ImageCropperComponent } from 'ng2-img-cropper';
 import { UserMainComponent } from './user-main/user-main.component';
 import { UserMainInfoComponent } from './user-main/user-main-info/user-main-info.component';
 import { UserMainReviewsComponent } from './user-main/user-main-reviews/user-main-reviews.component';
@@ -45,7 +44,6 @@ import { SharedModule } from "../shared/shared.module";
         UserHistoryComponent,
         UserTasksComponent,
         UserMessagesComponent,
-        ImageCropperComponent,
         UserMainComponent,
         UserMainInfoComponent,
         UserMainReviewsComponent
