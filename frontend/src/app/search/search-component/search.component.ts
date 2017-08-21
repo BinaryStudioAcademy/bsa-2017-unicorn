@@ -1,13 +1,14 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 
-import { Company } from '../../models/company.model';
 import { Review } from '../../models/review.model';
-import { CompanyService } from '../../services/company.service';
 import { NguiMapModule, Marker } from '@ngui/map';
 // import { MapModel } from '../../models/map.model';
 
 import { ISubscription } from 'rxjs/Subscription';
+import { CompanyService } from '../../services/company-services/company.service';
+import { CompanyShort } from '../../models/company-page/company-short.model';
+import { CompanyDetails } from '../../models/company-page/company-details.model';
 
 @Component({
   selector: 'app-search',
@@ -29,12 +30,18 @@ export class SearchComponent implements OnInit, OnDestroy {
   searchDate: Date;
   mode: string;
   firstDayOfWeek: string;
+  /* multi-select */
+  selCat: string[];
+  filterCat: string[];
+  selSubcat: string[];
+  filterSubcat: string[];
   /* pagination */
   pageSize = 12;
   maxSize = 3;
   hasEllipses = true;
   selectedPage = 1;
-  companies: Company[] = [];
+  // companies: CompanyShort[] = [];
+  companies: CompanyDetails[] = [];
   /* map */
   positions = [];
   markers = [];
@@ -48,7 +55,9 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getParameters();
-    this.createMockCompanies(20);
+    this.createMockSettings();
+    // this.createMockCompanies(20);
+    this.getCompanies();
     this.initContent();
   }
 
@@ -62,20 +71,52 @@ export class SearchComponent implements OnInit, OnDestroy {
     return new Date(1000 * date);
   }
 
-  createMockCompanies(num: number) {
-    let i: number;
-    for (i = num; i >= 1; i--) {
-      const company = this.companyService.getMockCompany();
-      this.companies.push(company);
-
-      const marker = {
-        pos: [company.Location.Latitude, company.Location.Longitude],
-        title: company.Name
-      };
-      this.markers.push(marker);
-      // this.positions.push([company.Location.Latitude, company.Location.Longitude]);
-    }
+  createMockSettings() {
+    this.filterCat  = ['Category 1', 'Category 2', 'Category 3', 'Category 4', 'Category 5', 'Category 6'];
+    this.filterSubcat  = ['Subategory 1', 'Subategory 2', 'Subategory 3', 'Subategory 4', 'Subategory 5', 'Subategory 6'];
   }
+
+  // createMockCompanies(num: number) {
+  //   let i: number;
+  //   for (i = num; i >= 1; i--) {
+  //     const company = this.companyService.getMockCompany();
+  //     this.companies.push(company);
+
+  //     const marker = {
+  //       pos: [company.Location.Latitude, company.Location.Longitude],
+  //       title: company.Name
+  //     };
+  //     this.markers.push(marker);
+  //     // this.positions.push([company.Location.Latitude, company.Location.Longitude]);
+  //   }
+  // }
+
+  getCompanies() {
+    this.companyService.getCompanies()
+    .then(
+      companies => {
+        companies.forEach(e => {
+          this.companyService.getCompanyDetails(e.Id)
+          .then(
+            detail => {
+              this.companies.push(detail);
+            }
+          );
+        });
+        console.log(this.companies);
+      }
+    );
+  }
+
+  // getCompaniesOld() {
+  //   this.companyService.getCompanies()
+  //   .then(
+  //     companies => {
+  //       this.companies = companies;
+  //       console.log(this.companies);
+  //     }
+  //   );
+  // }
 
   initContent() {
     this.placeholderCategory = 'SCRATCH';

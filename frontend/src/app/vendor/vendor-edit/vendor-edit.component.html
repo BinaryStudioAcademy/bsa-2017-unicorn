@@ -3,7 +3,7 @@
         <div class="sixteen wide column container">
             <div class="vendor-header" [style.backgroundImage]="backgroundUrl">
                 <label id="banner-loader" for="banner-input" class="ui icon button basic" [ngClass]="{'loading': uploading}">
-          <i class="icon pink" [ngClass]="{'upload': !uploading}"></i>
+          <i class="icon up-color" [ngClass]="{'upload': !uploading}"></i>
           </label>
                 <input type="file" id="banner-input" accept="image/*" (change)="bannerListener($event)">
                 <div class="vendor-avatar ui small circular image">

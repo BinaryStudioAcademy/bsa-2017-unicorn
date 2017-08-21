@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { NguiMapModule, Marker } from "@ngui/map";
 import {SuiModule} from 'ng2-semantic-ui';
 
@@ -22,6 +22,8 @@ export class VendorEditInfoComponent implements OnInit {
   location: Location;
   map: MapModel;
   dataLoaded: boolean;
+  
+  @ViewChild('vendorForm') public vendorForm: NgForm;
   
   constructor(
     private locationService: LocationService, 
@@ -46,6 +48,9 @@ export class VendorEditInfoComponent implements OnInit {
   }
 
   saveVendor(): void {
+    if (this.vendorForm.invalid) {
+      return;
+    }
     this.dataLoaded = false;
     this.vendor.Birthday = this.birthday;
     this.vendorService.updateVendor(this.vendor)

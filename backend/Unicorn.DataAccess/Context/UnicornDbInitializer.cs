@@ -321,18 +321,42 @@ namespace Unicorn.DataAccess.Context
             Contact contact69 = new Contact { IsDeleted = false, Provider = telegram, Value = "turbocat_9000" };
             Contact contact70 = new Contact { IsDeleted = false, Provider = facebook, Value = "turbocat_9000" };
 
+            Contact contact71 = new Contact { IsDeleted = false, Provider = phone, Value = "+1 415 670 9788" };
+            Contact contact72 = new Contact { IsDeleted = false, Provider = phone, Value = "+1 415 670 9788" };
+            Contact contact73 = new Contact { IsDeleted = false, Provider = phone, Value = "+1 415 670 9788" };
+            Contact contact74 = new Contact { IsDeleted = false, Provider = email, Value = "turbocat_9000@gmail.com" };
+            Contact contact75 = new Contact { IsDeleted = false, Provider = skype, Value = "turbocat_9000" };
+            Contact contact76 = new Contact { IsDeleted = false, Provider = telegram, Value = "turbocat_9000" };
+            Contact contact77 = new Contact { IsDeleted = false, Provider = facebook, Value = "turbocat_9000" };
+
+            Contact contact78 = new Contact { IsDeleted = false, Provider = phone, Value = "+1 415 670 9788" };
+            Contact contact79 = new Contact { IsDeleted = false, Provider = phone, Value = "+1 415 670 9788" };
+            Contact contact80 = new Contact { IsDeleted = false, Provider = phone, Value = "+1 415 670 9788" };
+            Contact contact81 = new Contact { IsDeleted = false, Provider = email, Value = "turbocat_9000@gmail.com" };
+            Contact contact82 = new Contact { IsDeleted = false, Provider = skype, Value = "turbocat_9000" };
+            Contact contact83 = new Contact { IsDeleted = false, Provider = telegram, Value = "turbocat_9000" };
+            Contact contact84 = new Contact { IsDeleted = false, Provider = facebook, Value = "turbocat_9000" };
+
+            Contact contact85 = new Contact { IsDeleted = false, Provider = phone, Value = "+1 415 670 9788" };
+            Contact contact86 = new Contact { IsDeleted = false, Provider = phone, Value = "+1 415 670 9788" };
+            Contact contact87 = new Contact { IsDeleted = false, Provider = phone, Value = "+1 415 670 9788" };
+            Contact contact88 = new Contact { IsDeleted = false, Provider = email, Value = "turbocat_9000@gmail.com" };
+            Contact contact89 = new Contact { IsDeleted = false, Provider = skype, Value = "turbocat_9000" };
+            Contact contact90 = new Contact { IsDeleted = false, Provider = telegram, Value = "turbocat_9000" };
+            Contact contact91 = new Contact { IsDeleted = false, Provider = facebook, Value = "turbocat_9000" };
+
             context.Contacts.AddRange(new List<Contact>()
             {
-                contact1,  contact11, contact21, contact31, contact41, contact51, contact61,
-                contact2,  contact12, contact22, contact32, contact42, contact52, contact62,
-                contact3,  contact13, contact23, contact33, contact43, contact53, contact63,
-                contact4,  contact14, contact24, contact34, contact44, contact54, contact64,
-                contact5,  contact15, contact25, contact35, contact45, contact55, contact65,
-                contact6,  contact16, contact26, contact36, contact46, contact56, contact66,
-                contact7,  contact17, contact27, contact37, contact47, contact57, contact67,
-                contact8,  contact18, contact28, contact38, contact48, contact58, contact68,
-                contact9,  contact19, contact29, contact39, contact49, contact59, contact69,
-                contact10, contact20, contact30, contact40, contact50, contact60, contact70
+                contact1,  contact11, contact21, contact31, contact41, contact51, contact61, contact71, contact81, contact91,
+                contact2,  contact12, contact22, contact32, contact42, contact52, contact62, contact72, contact82, 
+                contact3,  contact13, contact23, contact33, contact43, contact53, contact63, contact73, contact83, 
+                contact4,  contact14, contact24, contact34, contact44, contact54, contact64, contact74, contact84, 
+                contact5,  contact15, contact25, contact35, contact45, contact55, contact65, contact75, contact85, 
+                contact6,  contact16, contact26, contact36, contact46, contact56, contact66, contact76, contact86, 
+                contact7,  contact17, contact27, contact37, contact47, contact57, contact67, contact77, contact87, 
+                contact8,  contact18, contact28, contact38, contact48, contact58, contact68, contact78, contact88, 
+                contact9,  contact19, contact29, contact39, contact49, contact59, contact69, contact79, contact89, 
+                contact10, contact20, contact30, contact40, contact50, contact60, contact70, contact80, contact90 
             });
 
             #endregion
@@ -480,7 +504,7 @@ namespace Unicorn.DataAccess.Context
                 Rating = 5,
                 IsDeleted = false,
                 Role = role5,
-                Contacts = new List<Contact> { contact64, contact65, contact66, contact67, contact68, contact69, contact70 }
+                Contacts = new List<Contact> { contact71, contact72, contact73, contact74, contact75, contact76, contact77 }
             };
 
             Account account12 = new Account()
@@ -493,7 +517,7 @@ namespace Unicorn.DataAccess.Context
                 Rating = 5,
                 IsDeleted = false,
                 Role = role5,
-                Contacts = new List<Contact> { contact64, contact65, contact66, contact67, contact68, contact69, contact70 }
+                Contacts = new List<Contact> { contact78, contact79, contact80, contact81, contact82, contact83, contact84 }
             };
 
             Account account13 = new Account()
@@ -506,10 +530,10 @@ namespace Unicorn.DataAccess.Context
                 Rating = 5,
                 IsDeleted = false,
                 Role = role5,
-                Contacts = new List<Contact> { contact64, contact65, contact66, contact67, contact68, contact69, contact70 }
+                Contacts = new List<Contact> { contact85, contact86, contact87, contact88, contact89, contact90, contact91 }
             };
 
-            context.Accounts.AddRange(new List<Account>() { account1, account2, account3, account4, account5, account6, account7, account8, account9, account10 });
+            context.Accounts.AddRange(new List<Account>() { account1, account2, account3, account4, account5, account6, account7, account8, account9, account10, account11, account12, account13 });
 
 
             #endregion
@@ -581,7 +605,7 @@ namespace Unicorn.DataAccess.Context
 
             SocialAccount socialAccount8 = new SocialAccount()
             {
-                Id = 7,
+                Id = 8,
                 IsDeleted = false,
                 Uid = "8",
                 Provider = "Facebook",
@@ -590,7 +614,7 @@ namespace Unicorn.DataAccess.Context
 
             SocialAccount socialAccount9 = new SocialAccount()
             {
-                Id = 7,
+                Id = 9,
                 IsDeleted = false,
                 Uid = "9",
                 Provider = "Twitter",
@@ -599,14 +623,42 @@ namespace Unicorn.DataAccess.Context
 
             SocialAccount socialAccount10 = new SocialAccount()
             {
-                Id = 8,
+                Id = 10,
                 IsDeleted = false,
                 Uid = "10",
                 Provider = "Google",
                 Account = account10
             };
 
-            context.SocialAccounts.AddRange(new List<SocialAccount>() { socialAccount1, socialAccount2, socialAccount3, socialAccount4, socialAccount5, socialAccount6, socialAccount7, socialAccount8, socialAccount9, socialAccount10 });
+            SocialAccount socialAccount11 = new SocialAccount()
+            {
+                Id = 11,
+                IsDeleted = false,
+                Uid = "11",
+                Provider = "Facebook",
+                Account = account11
+            };
+
+            SocialAccount socialAccount12 = new SocialAccount()
+            {
+                Id = 12,
+                IsDeleted = false,
+                Uid = "12",
+                Provider = "Facebook",
+                Account = account12
+            };
+
+            SocialAccount socialAccount13 = new SocialAccount()
+            {
+                Id = 13,
+                IsDeleted = false,
+                Uid = "13",
+                Provider = "Twitter",
+                Account = account13
+            };
+
+
+            context.SocialAccounts.AddRange(new List<SocialAccount>() { socialAccount1, socialAccount2, socialAccount3, socialAccount4, socialAccount5, socialAccount6, socialAccount7, socialAccount8, socialAccount9, socialAccount10, socialAccount11, socialAccount12, socialAccount13 });
 
             #endregion     
 
@@ -1015,7 +1067,7 @@ namespace Unicorn.DataAccess.Context
                 },
             };
 
-            context.Persons.AddRange(new List<Person>() { person1, person2, person3, person4, person5, person6, person7 });
+            context.Persons.AddRange(new List<Person>() { person1, person2, person3, person4, person5, person6, person7, person8, person9, person10 });
 
             #endregion
             
@@ -1142,7 +1194,7 @@ namespace Unicorn.DataAccess.Context
                     PostIndex = "79054"
                 },
                 Vendors = new List<Vendor>() { vendor1, vendor2 },
-                Categories = new List<Category> { category1, category2}
+                Works = new List<Work> { work1, work2}
 
             };
 
@@ -1166,7 +1218,7 @@ namespace Unicorn.DataAccess.Context
                     PostIndex = "03179"
                 },
                 Vendors = new List<Vendor>() { vendor4, vendor5},
-                Categories = new List<Category> { category3, category4 }
+                Works = new List<Work> { work3, work4 }
             };
 
             Company company3 = new Company()
@@ -1190,7 +1242,7 @@ namespace Unicorn.DataAccess.Context
                     PostIndex = "27123"
                 },
                 Vendors = new List<Vendor>() { vendor6 },
-                Categories = new List<Category> { category5, category6 }
+                Works = new List<Work> { work5, work6 }
             };
 
             context.Companies.AddRange(new List<Company>() { company1, company2, company3 });

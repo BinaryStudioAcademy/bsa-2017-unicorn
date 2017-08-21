@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using Unicorn.Shared.DTOs.Contact;
-using Unicorn.Shared.DTOs.Vendor;
 
-namespace Unicorn.Shared.DTOs.Company
+namespace Unicorn.Shared.DTOs.CompanyPage
 {
-    public class ShortCompanyDTO
+    public class CompanyDetails
     {
         public long Id { get; set; }
 
@@ -15,16 +14,18 @@ namespace Unicorn.Shared.DTOs.Company
 
         public string Description { get; set; }
 
+        public double Rating { get; set; }
+
         public DateTime FoundationDate { get; set; }
 
         public string Director { get; set; }
 
+        public string City { get; set; }
+
+        public int ReviewsCount { get; set; }
+
         public LocationDTO Location { get; set; }
 
-        public ICollection<VendorDTO> Vendors { get; set; }
-
-        public ICollection<CategoryDTO> Categories { get; set; }
-
-        public ICollection<ContactShortDTO> Contacts { get; set; }
+        public ICollection<CompanyWork> Works { get; set; }
     }
 }

@@ -1,5 +1,3 @@
-import {Vendor} from './vendor'
-
 export interface Book {
 	date: Date;
 	address: string;

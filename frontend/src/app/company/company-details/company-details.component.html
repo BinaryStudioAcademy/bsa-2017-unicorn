@@ -1,7 +1,9 @@
 <div class="main-content">
-    <div *ngIf="company !== undefined" class="flex-content">
-        <div class="sixteen wide column container ">
-            <img class="ui fluid image" src={{company.Avatar}}>
+    <div *ngIf="company !== undefined">
+        <div class="sixteen wide column container">
+            <div id="header" class="ui segment">
+                <img class="ui fluid image" src={{company.Avatar}}>
+            </div>
         </div>
         <div class="ui grid container">
             <div class="row">
@@ -18,16 +20,16 @@
                                 <div class="row">
                                     <div class="ten wide column">
                                         <div class="ui segment" suiTabContent="1">
-                                            <company-general-information [company]="company"></company-general-information>
+                                            <company-general-information></company-general-information>
                                         </div>
                                         <div class="ui segment" suiTabContent="2">
-                                            <company-reviews [reviews]="company.Reviews"></company-reviews>
+                                            <company-reviews></company-reviews>
                                         </div>
                                         <div class="ui segment" suiTabContent="3">
-                                            <company-vendors [vendors]="company.Vendors"></company-vendors>
+                                            <company-vendors></company-vendors>
                                         </div>
                                         <div class="ui segment" suiTabContent="4">
-                                            <company-contacts [contacts]="company.Contacts"></company-contacts>
+                                            <company-contacts></company-contacts>
                                         </div>
                                     </div>
                                     <div class="six wide column">
