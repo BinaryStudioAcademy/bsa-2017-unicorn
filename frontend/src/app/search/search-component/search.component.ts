@@ -6,8 +6,9 @@ import { NguiMapModule, Marker } from '@ngui/map';
 // import { MapModel } from '../../models/map.model';
 
 import { ISubscription } from 'rxjs/Subscription';
-import { CompanyService } from "../../services/company-services/company.service";
-import { CompanyShort } from "../../models/company-page/company-short.model";
+import { CompanyService } from '../../services/company-services/company.service';
+import { CompanyShort } from '../../models/company-page/company-short.model';
+import { CompanyDetails } from '../../models/company-page/company-details.model';
 
 @Component({
   selector: 'app-search',
@@ -39,7 +40,8 @@ export class SearchComponent implements OnInit, OnDestroy {
   maxSize = 3;
   hasEllipses = true;
   selectedPage = 1;
-  companies: CompanyShort[] = [];
+  // companies: CompanyShort[] = [];
+  companies: CompanyDetails[] = [];
   /* map */
   positions = [];
   markers = [];
@@ -74,29 +76,47 @@ export class SearchComponent implements OnInit, OnDestroy {
     this.filterSubcat  = ['Subategory 1', 'Subategory 2', 'Subategory 3', 'Subategory 4', 'Subategory 5', 'Subategory 6'];
   }
 
-  createMockCompanies(num: number) {
-    let i: number;
-    for (i = num; i >= 1; i--) {
-      const company = this.companyService.getMockCompany();
-      this.companies.push(company);
+  // createMockCompanies(num: number) {
+  //   let i: number;
+  //   for (i = num; i >= 1; i--) {
+  //     const company = this.companyService.getMockCompany();
+  //     this.companies.push(company);
 
-      const marker = {
-        pos: [company.Location.Latitude, company.Location.Longitude],
-        title: company.Name
-      };
-      this.markers.push(marker);
-      // this.positions.push([company.Location.Latitude, company.Location.Longitude]);
-    }
-  }
+  //     const marker = {
+  //       pos: [company.Location.Latitude, company.Location.Longitude],
+  //       title: company.Name
+  //     };
+  //     this.markers.push(marker);
+  //     // this.positions.push([company.Location.Latitude, company.Location.Longitude]);
+  //   }
+  // }
 
   getCompanies() {
     this.companyService.getCompanies()
     .then(
-      res => {
-       this.companies = res;
+      companies => {
+        companies.forEach(e => {
+          this.companyService.getCompanyDetails(e.Id)
+          .then(
+            detail => {
+              this.companies.push(detail);
+            }
+          );
+        });
+        console.log(this.companies);
       }
     );
   }
+
+  // getCompaniesOld() {
+  //   this.companyService.getCompanies()
+  //   .then(
+  //     companies => {
+  //       this.companies = companies;
+  //       console.log(this.companies);
+  //     }
+  //   );
+  // }
 
   initContent() {
     this.placeholderCategory = 'SCRATCH';

@@ -112,12 +112,12 @@
               <img class="ui fluid image" src="{{company.Avatar}}"/>
               <div class="row">
                 <!-- <h3>{{company.Name}} ({{company.FoundationDate.getFullYear()}})</h3> -->
-                <h3>{{company.Name}}</h3>
+                <h3>{{company.Name}} ({{company.FoundationDate | date:'y'}})</h3>
               </div>
               <div class="row">
                 <h4>{{company.Location.City}}, {{company.Location.Adress}}</h4>
               </div>
-              <!-- <div class="categories-container">
+              <div class="categories-container">
                 <h5 *ngFor="let category of company.Categories">{{category.Name}}</h5>
               </div>
               <div class="ui grid">
@@ -126,13 +126,13 @@
                     <sui-rating class="star" [ngModel]="company.Rating" [isReadonly]="true"></sui-rating>
                   </div>
                   <div class="column">                      
-                    {{company.Reviews.length}} reviews 
+                    {{company.ReviewsCount}} reviews 
                   </div>
-                  <div class="column">                      
+                  <!-- <div class="column">                      
                     {{company.Vendors.length}} vendors
-                  </div>
+                  </div> -->
                 </div>
-              </div> -->
+              </div>
             </a>
           </div>
         </div>
