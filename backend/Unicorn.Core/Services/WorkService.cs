@@ -25,7 +25,7 @@ namespace Unicorn.Core.Services
             return workList.Select(w => WorkToDTO(w));
         }
 
-        public async Task<WorkDTO> GetById(long id)
+        public async Task<WorkDTO> GetByIdAsync(long id)
         {
             var work = await _unitOfWork.WorkRepository.GetByIdAsync(id);
             return WorkToDTO(work);

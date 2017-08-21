@@ -21,8 +21,9 @@ export class VendorService {
     this.apiController = "vendors";
   }
 
-  getAllVendors() : Promise<Vendor[]> {
-    return this.dataService.getFullRequest<Vendor[]>(this.apiController);
+  getAllVendors() : Promise<any> {
+    return this.dataService.getFullRequest<Vendor[]>(this.apiController)
+      .catch(err => alert(err));
   }
 
   getVendor(id: number) : Promise<any> {
@@ -41,7 +42,7 @@ export class VendorService {
   }
 
   getOrders(id: number): Promise<any> {
-    return this.dataService.getFullRequest<VendorBook>(`${this.apiController}/${id}/orders`)
+    return this.dataService.getFullRequest<VendorBook[]>(`${this.apiController}/${id}/orders`)
       .catch(err => alert(err));
   }
 

@@ -29,6 +29,8 @@ import { VendorEditComponent } from './vendor-edit/vendor-edit.component';
 import { VendorEditInfoComponent } from './vendor-edit/vendor-edit-info/vendor-edit-info.component';
 import { VendorEditOrdersComponent } from './vendor-edit/vendor-edit-orders/vendor-edit-orders.component';
 import { EnumKeysPipe } from "../pipes/enum.pipe";
+import { CategoryService } from "../services/category.service";
+import { WorkService } from "../services/work.service";
 
 @NgModule({
   imports: [
@@ -57,7 +59,9 @@ import { EnumKeysPipe } from "../pipes/enum.pipe";
     VendorService,
     LocationService,
     ReviewService,
-    PhotoService
+    PhotoService,
+    CategoryService,
+    WorkService
   ]
 })
 export class VendorModule { }

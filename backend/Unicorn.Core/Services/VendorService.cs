@@ -185,6 +185,7 @@ namespace Unicorn.Core.Services
             vendor.Person.Name = vendorDto.Name;
             vendor.Person.Surname = vendorDto.Surname;
             vendor.Person.MiddleName = vendorDto.MiddleName;
+            vendor.Works = vendorDto.Works.Select(w => _unitOfWork.WorkRepository.Query.Single(x => x.Id == w.Id)).ToList();
 
             _unitOfWork.VendorRepository.Update(vendor);
             await _unitOfWork.SaveAsync();

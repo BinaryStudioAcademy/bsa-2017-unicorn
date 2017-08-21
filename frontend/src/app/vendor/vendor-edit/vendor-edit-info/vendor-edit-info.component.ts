@@ -12,6 +12,8 @@ import { Subcategory } from "../../../models/subcategory.model";
 
 import { VendorService } from "../../../services/vendor.service";
 import { LocationService } from "../../../services/location.service";
+import { CategoryService } from "../../../services/category.service";
+import { WorkService } from "../../../services/work.service";
 
 @Component({
   selector: 'app-vendor-edit-info',
@@ -28,16 +30,20 @@ export class VendorEditInfoComponent implements OnInit {
   
   newWork: Work;
   categories: Category[];
+  selectedCategory: Category;
+  selectedSubcategory: Subcategory;
   works: Work[];
   subcategoryWorks: Work[];
 
   constructor(
     private locationService: LocationService, 
-    private vendorService: VendorService
+    private vendorService: VendorService,
+    private categoryService: CategoryService,
+    private workService: WorkService
   ) { }
 
   ngOnInit() {
-    this.dataLoaded = true;
+    this.dataLoaded = true;   
     this.newWork = {
       CategoryId: null,
       Category: "",
@@ -47,6 +53,11 @@ export class VendorEditInfoComponent implements OnInit {
       SubcategoryId: null,
       Name: ""
     };
+    this.categoryService.getAll()
+      .then(resp => this.categories = resp.body as Category[])
+      .then(() => console.log(this.categories));
+    this.workService.getAll()
+      .then(resp => this.works = resp.body as Work[])
     this.locationService.getById(this.vendor.LocationId)
       .then(resp => this.location = resp.body as Location)
       .then(() => this.map = {
@@ -60,6 +71,33 @@ export class VendorEditInfoComponent implements OnInit {
 
   onDateSelected(date: Date): void {
     console.log(date.getDate());
+  }
+
+  onSubcategorySelected(subcategory: Subcategory): void {
+    if (subcategory !== undefined || subcategory !== null)
+      this.subcategoryWorks = this.works
+        .filter(w => w.SubcategoryId === subcategory.Id)
+        .filter(w => this.vendor.Works.find(x => x.Id === w.Id) === undefined);
+  }
+
+  addWorkType(): void {
+    this.newWork.CategoryId = this.selectedCategory.Id;
+    this.newWork.Category = this.selectedCategory.Name;
+    this.newWork.SubcategoryId = this.selectedSubcategory.Id;
+    this.vendor.Works.push(this.newWork);
+    this.newWork = {
+      CategoryId: null,
+      Category: "",
+      Subcategory: "",
+      Description: "",
+      Id: null,
+      SubcategoryId: null,
+      Name: ""
+    };
+  }
+
+  removeWorkType(work: Work): void {
+    this.vendor.Works.splice(this.vendor.Works.findIndex(w => w.Id === work.Id), 1);
   }
 
   saveVendor(): void {

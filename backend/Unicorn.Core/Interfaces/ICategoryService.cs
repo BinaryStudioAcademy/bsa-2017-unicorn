@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+
 using Unicorn.Shared.DTOs;
 
 namespace Unicorn.Core.Interfaces
 {
-    public interface IWorkService
+    public interface ICategoryService
     {
-        Task<IEnumerable<WorkDTO>> GetAllAsync();
-        Task<WorkDTO> GetByIdAsync(long id);
+        Task<IEnumerable<CategoryDTO>> GetAllAsync();
+        Task<CategoryDTO> GetByIdAsync(long id);
     }
 }

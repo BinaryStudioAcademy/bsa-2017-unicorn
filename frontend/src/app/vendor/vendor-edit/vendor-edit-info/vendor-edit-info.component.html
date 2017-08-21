@@ -71,7 +71,7 @@
             <td>{{work.Subcategory}}</td>
             <td>{{work.Name}}</td>
             <td class="right aligned">
-              <button class="ui icon button">
+              <button (click)="removeWorkType(work)" class="ui icon button">
                 <i class="remove icon"></i>
               </button>
             </td>
@@ -87,39 +87,59 @@
           <div class="field">
             <div class="four fields">
               <div class="field">
-                <sui-select class="selection" 
-                [(ngModel)]="newWork.Category" 
+                 <sui-select class="selection" 
+                name="category"
+                [(ngModel)]="selectedCategory" 
                 [options]="categories" 
                 labelField="Name" 
                 placeholder="SELECT CATEGORY"
                   #select>
-                  <sui-select-option *ngFor="let category of categories"></sui-select-option>
-                </sui-select>
+                  <sui-select-option 
+                  *ngFor="let category of categories"
+                  [value]="category"></sui-select-option>
+                </sui-select> 
               </div>
               <div class="field">
-                <sui-select class="selection" 
-                [(ngModel)]="newWork.Subcategory" 
-                [options]="newWork.Category.Subcategories" 
+                 <sui-select *ngIf="selectedCategory !== undefined; else select_subcategory_placeholder" class="selection" 
+                name="subcategory"
+                [(ngModel)]="selectedSubcategory" 
+                (selectedOptionChange)="onSubcategorySelected($event)"
+                [options]="selectedCategory.Subcategories" 
                 labelField="Name" 
                 placeholder="SELECT SUBCATEGORY"
                   #select>
-                  <sui-select-option *ngFor="let subcategory of newWork.Category.Subcategories"></sui-select-option>
-                </sui-select>
+                  <sui-select-option 
+                  *ngFor="let subcategory of selectedCategory.Subcategories"
+                  [value]="subcategory"></sui-select-option>
+                </sui-select> 
+                <ng-template #select_subcategory_placeholder>
+                  <div style="text-align: center">
+                    <h4>Choose category of work</h4>
+                  </div>
+                </ng-template>
               </div>
               <div class="field">
-                <sui-select class="selection" 
-                [(ngModel)]="newWork.Name" 
+                <sui-select *ngIf="selectedSubcategory !== undefined; else select_work_placeholder"
+                class="selection" 
+                name="workName" 
+                [(ngModel)]="newWork" 
                 [options]="subcategoryWorks" 
                 [isSearchable]="true"
                 labelField="Name" 
-                placeholder=" "
-                  #select>
-                  <sui-select-option *ngFor="let work of subcategoryWorks"></sui-select-option>
+                placeholder=" " 
+                #select>
+                  <sui-select-option 
+                  *ngFor="let work of subcategoryWorks"
+                  [value]="work"></sui-select-option>
                 </sui-select>
-                <!-- <input type="text" [(ngModel)]="newWork.Name" name="work-name" placeholder="SELECT WORK TYPE"> -->
+                <ng-template #select_work_placeholder>
+                  <div *ngIf="selectedCategory !== undefined" style="text-align: center">
+                    <h4>Choose subcategory of work</h4>
+                  </div>
+                </ng-template> 
               </div>
               <div class="one wide field">
-                <button class="ui ui right floated icon button">
+                <button (click)="addWorkType()" class="ui ui right floated icon button">
                   <i class="plus icon"></i>
                 </button>
               </div>

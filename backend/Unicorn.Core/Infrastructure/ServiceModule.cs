@@ -24,7 +24,7 @@ namespace Unicorn.Core.Infrastructure
             Bind<IAvatarService>().To<AvatarService>();
             Bind<IPortfolioService>().To<PortfolioService>();
             Bind<IReviewService>().To<ReviewService>();
-            //Bind<IContactService>().To<ContactService>();
+            Bind<ICategoryService>().To<CategoryService>();
         }
     }
 }
