@@ -24,6 +24,8 @@ import { CompanyMainInformationComponent } from './company-edit/company-main-inf
 import { CompanyMessagesComponent } from './company-edit/company-messages/company-messages.component';
 import { CompanyOrdersComponent } from './company-edit/company-orders/company-orders.component';
 import { CompanyService } from "../services/company-services/company.service";
+import { CompanyVendorsComponent } from './company-edit/company-vendors/company-vendors.component';
+import { CompanyWorksComponent } from './company-edit/company-works/company-works.component';
 
 @NgModule({
   imports: [    
@@ -46,7 +48,9 @@ import { CompanyService } from "../services/company-services/company.service";
     CompanyEditComponent,
     CompanyMainInformationComponent,
     CompanyMessagesComponent,
-    CompanyOrdersComponent 
+    CompanyOrdersComponent,
+    CompanyVendorsComponent,
+    CompanyWorksComponent 
   ],
   providers: [
     DataService,

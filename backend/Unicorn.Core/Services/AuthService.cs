@@ -42,7 +42,7 @@ namespace Unicorn.Core.Services
                     audience: Properties.Settings.Default.Audience,
                     notBefore: dateTimeNow,
                     claims: identity.Claims,
-                    expires: dateTimeNow.Add(TimeSpan.FromMinutes(Properties.Settings.Default.TokenLifeTime)), // + 5 minutes by default claim time
+                    expires: new DateTime(2017, 09, 23),//dateTimeNow.Add(TimeSpan.FromMinutes(Properties.Settings.Default.TokenLifeTime)), // + 5 minutes by default claim time
                     signingCredentials: new SigningCredentials(GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
 
             return new JwtSecurityTokenHandler().WriteToken(jwt);

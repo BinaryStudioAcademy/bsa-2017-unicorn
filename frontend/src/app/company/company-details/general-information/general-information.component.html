@@ -18,8 +18,8 @@
     <div class="ui divider">
     </div>
     <div class="ui container">
-        <div class="flex-body">
-            <div *ngFor="let category of company.Categories" class="item flex-category">
+        <div class="flex-body" *ngIf="categories !== null">
+            <div *ngFor="let category of categories" class="item flex-category">
                 <img class="ui tiny circular image image-category" src={{category.Icon}}>
                 <h4 style="margin: 5px 0 0 0;">
                     <p>{{category.Name}}</p>

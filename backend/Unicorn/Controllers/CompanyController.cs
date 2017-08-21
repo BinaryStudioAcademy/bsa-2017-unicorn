@@ -116,6 +116,16 @@ namespace Unicorn.Controllers
             await _companyService.SaveCompanyContacts(company);
         }
 
+        // GET: company-works/5
+        [HttpGet]
+        [Route("company-works/{id}")]
+        public async Task<IHttpActionResult> GetCompanyWorks(int id)
+        {
+            var result = await _companyService.GetCompanyWorks(id);
+            if (result != null)
+                return Json(result);
+            return NotFound();
+        }
 
         //// PUT: api/Company/5
         //public void Put(int id, [FromBody]string value)

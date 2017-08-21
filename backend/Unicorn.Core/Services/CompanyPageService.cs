@@ -74,6 +74,11 @@ namespace Unicorn.Core.Services
             await SaveCompanyContactsMethod(companyDTO);
         }
 
+        public async Task<CompanyWorks> GetCompanyWorks(long id)
+        {
+            return await GetCompanyWorksMethod(id);
+        }
+
         #endregion
 
         #region PrivateMethods
@@ -148,24 +153,25 @@ namespace Unicorn.Core.Services
                     Rating = company.Account.Rating,
                     City = company.Location.City,
                     ReviewsCount = reviews.Count(p => p.ToAccountId == company.Account.Id),
-                    Categories = company.Categories.Select(x => new CompanyCategory()
+                    Works = company.Works.Select(z => new CompanyWork()
                     {
-                        Id = x.Id,
-                        Description = x.Description,
-                        Icon = x.Icon,
-                        Name = x.Name,
-                        Subcategories = x.Subcategories.Select(y => new CompanySubcategory()
+                        Id = z.Id,
+                        Description = z.Description,
+                        Name = z.Name,
+                        
+                        Subcategory = new CompanySubcategory
                         {
-                            Id = y.Id,
-                            Name = y.Name,
-                            Description = y.Description,
-                            Works = y.Works.Select(z => new CompanyWork
+                            Id = z.Subcategory.Id,
+                            Name = z.Subcategory.Name,
+                            Description = z.Subcategory.Description,
+                            Category = new CompanyCategory
                             {
-                                Id = z.Id,
-                                Description = z.Description,
-                                Name = z.Name
-                            }).ToList()
-                        }).ToList(),
+                                Id = z.Subcategory.Category.Id,
+                                Description = z.Subcategory.Category.Description,
+                                Icon = z.Subcategory.Category.Icon,
+                                Name = z.Subcategory.Category.Name,
+                            }
+                        }
                     }).ToList(),
                     Location = new LocationDTO
                     {
@@ -194,12 +200,12 @@ namespace Unicorn.Core.Services
                 company.Director = companyDTO.Director;
                 company.Description = companyDTO.Description;
                 company.FoundationDate = companyDTO.FoundationDate;
-                company.Categories.Clear();
-                foreach (var companyDtoCategory in companyDTO.Categories)
+                company.Works.Clear();
+                foreach (var companyDtoWork in companyDTO.Works)
                 {
-                    var category = await _unitOfWork.CategoryRepository.GetByIdAsync(companyDtoCategory.Id);
-                    if (category != null)
-                        company.Categories.Add(category);
+                    var work = await _unitOfWork.WorkRepository.GetByIdAsync(companyDtoWork.Id);
+                    if (work != null)
+                        company.Works.Add(work);
                 }
 
                 _unitOfWork.CompanyRepository.Update(company);
@@ -333,6 +339,64 @@ namespace Unicorn.Core.Services
                 }
             }
         }
+
+        private async Task<CompanyWorks> GetCompanyWorksMethod(long id)
+        {
+            var company = await _unitOfWork.CompanyRepository.GetByIdAsync(id);
+            var allCategories = await _unitOfWork.CategoryRepository.GetAllAsync();
+
+            if (company != null)
+            {
+                var companyWorks = new CompanyWorks()
+                {
+                    Id = company.Id,
+                    Works = company.Works.Select(z => new CompanyWork()
+                    {
+                        Id = z.Id,
+                        Description = z.Description,
+                        Name = z.Name,
+
+                        Subcategory = new CompanySubcategory
+                        {
+                            Id = z.Subcategory.Id,
+                            Name = z.Subcategory.Name,
+                            Description = z.Subcategory.Description,
+                            Category = new CompanyCategory
+                            {
+                                Id = z.Subcategory.Category.Id,
+                                Description = z.Subcategory.Category.Description,
+                                Icon = z.Subcategory.Category.Icon,
+                                Name = z.Subcategory.Category.Name,
+                            }
+                        }
+                    }).ToList(),
+                    AllCategories = allCategories.Select(x => new CompanyCategory()
+                    {
+                        Id = x.Id,
+                        Description = x.Description,
+                        Icon = x.Icon,
+                        Name = x.Name,
+                        Subcategories = x.Subcategories.Select(y => new CompanySubcategory()
+                        {
+                            Id = y.Id,
+                            Name = y.Name,
+                            Description = y.Description,
+                            Works = y.Works.Select(z => new CompanyWork
+                            {
+                                Id = z.Id,
+                                Description = z.Description,
+                                Name = z.Name
+                            }).ToList()
+                        }).ToList(),
+                    }).ToList(),
+                };
+
+                return companyWorks;
+            }
+            return null;
+        }
+            
+      
 
         #endregion
     }

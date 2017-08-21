@@ -1,4 +1,6 @@
-﻿namespace Unicorn.Shared.DTOs.CompanyPage
+﻿using System.Collections.Generic;
+
+namespace Unicorn.Shared.DTOs.CompanyPage
 {
     public class CompanyWork
     {
@@ -7,5 +9,7 @@
         public string Name { get; set; }
 
         public string Description { get; set; }
+
+        public virtual CompanySubcategory Subcategory { get; set; }
     }
 }
