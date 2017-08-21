@@ -9,18 +9,26 @@ namespace Unicorn.DataAccess.Entities
         public bool IsDeleted { get; set; }
         public DateTime Date { get; set; }
 
-        public string Status { get; set; }
+        public BookStatus Status { get; set; }
 
         public string Description { get; set; }
 
-        public virtual Customer Customer { get; set; }
+        public Customer Customer { get; set; }
 
-        public virtual Vendor Vendor { get; set; }
+        public Vendor Vendor { get; set; }
 
-        public virtual Company Company { get; set; } 
+        public Company Company { get; set; } 
 
-        public virtual Work Work { get; set; }
+        public Work Work { get; set; }
 
-        public virtual Location Location { get; set; }
+        public Location Location { get; set; }
+    }
+
+    public enum BookStatus
+    {
+        Accepted,
+        InProgress,
+        Finished,
+        Confirmed
     }
 }

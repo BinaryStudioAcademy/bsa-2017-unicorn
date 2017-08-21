@@ -17,17 +17,29 @@ import { VendorProfileInfoComponent } from './vendor-details/vendor-profile-info
 import { VendorProfileContactsComponent } from './vendor-details/vendor-profile-contacts/vendor-profile-contacts.component';
 import { VendorProfileReviewsComponent } from './vendor-details/vendor-profile-reviews/vendor-profile-reviews.component';
 import { VendorProfilePortfolioComponent } from './vendor-details/vendor-profile-portfolio/vendor-profile-portfolio.component';
+import { VendorEditPortfolioComponent } from "./vendor-edit/vendor-edit-portfolio/vendor-edit-portfolio.component";
+import { VendorEditWorksComponent } from './vendor-edit/vendor-edit-works/vendor-edit-works.component';
+import { VendorEditComponent } from './vendor-edit/vendor-edit.component';
+import { VendorEditInfoComponent } from './vendor-edit/vendor-edit-info/vendor-edit-info.component';
+import { VendorEditOrdersComponent } from './vendor-edit/vendor-edit-orders/vendor-edit-orders.component';
 
 import { VendorRoutingModule } from './vendor-routing.module';
+
+import { EnumKeysPipe } from "../pipes/enum.pipe";
 
 import { PhotoService } from '../services/photo.service';
 import { VendorService } from '../services/vendor.service';
 import { ReviewService } from '../services/review.service';
 import { DataService } from "../services/data.service";
 import { LocationService } from "../services/location.service";
+<<<<<<< HEAD
 import { VendorEditComponent } from './vendor-edit/vendor-edit.component';
 import { VendorEditInfoComponent } from './vendor-edit/vendor-edit-info/vendor-edit-info.component';
 import { SharedModule } from "../shared/shared.module";
+=======
+import { CategoryService } from "../services/category.service";
+import { WorkService } from "../services/work.service";
+>>>>>>> feature/vendor-profile
 
 @NgModule({
   imports: [
@@ -48,14 +60,24 @@ import { SharedModule } from "../shared/shared.module";
     VendorProfilePortfolioComponent,
     VendorsComponent,
     VendorEditComponent,
+<<<<<<< HEAD
     VendorEditInfoComponent
+=======
+    VendorEditInfoComponent,
+    VendorEditOrdersComponent,
+    VendorEditPortfolioComponent,
+    VendorEditWorksComponent,
+    EnumKeysPipe
+>>>>>>> feature/vendor-profile
   ],
   providers: [
     DataService,
     VendorService,
     LocationService,
     ReviewService,
-    PhotoService
+    PhotoService,
+    CategoryService,
+    WorkService
   ]
 })
 export class VendorModule { }
