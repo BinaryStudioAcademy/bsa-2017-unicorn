@@ -1,0 +1,96 @@
+<div class="ui container grid">
+  <div class="row">
+    <div class="column">
+      <table class="ui selectable padded single line table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Subcategory</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let work of works">
+            <td>{{work.Name}}</td>
+            <td>{{work.Category}}</td>
+            <td>{{work.Subcategory}}</td>
+            <td class="right aligned">
+              <button class="ui icon button">
+                <i class="remove icon"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="ui divider"></div>
+  <div class="two column container row">
+    <div class="column">
+      <form class="ui form">
+        <div class="field">
+          <label>Name</label>
+          <input type="text" name="name" placeholder="WORK NAME">
+        </div>
+        <div class="field">
+          <label>Description</label>
+          <textarea name="description" placeholder="WRITE SOMETHING ABOUT THIS WORK..."></textarea>
+        </div>
+      </form>
+    </div>
+    <div class="column">
+        <sui-accordion class="styled fluid category-dropdown">
+        <sui-accordion-panel class="dropdown-panel">
+          <div title>
+            <img class="ui avatar image" src="https://semantic-ui.com/images/wireframe/square-image.png"> Selected category
+            name
+          </div>
+          <div content>
+            <div class="accordion-option">
+              <img class="ui avatar image" src="https://semantic-ui.com/images/wireframe/square-image.png"> Category name
+            </div>
+            <div class="accordion-option">
+              <img class="ui avatar image" src="https://semantic-ui.com/images/wireframe/square-image.png"> Category name
+            </div>
+            <div class="accordion-option">
+              <img class="ui avatar image" src="https://semantic-ui.com/images/wireframe/square-image.png"> Category name
+            </div>
+            <div class="accordion-option">
+              <img class="ui avatar image" src="https://semantic-ui.com/images/wireframe/square-image.png"> Category name
+            </div>
+          </div>
+        </sui-accordion-panel>
+      </sui-accordion>  
+       <sui-accordion class="styled fluid category-dropdown">
+        <sui-accordion-panel>
+          <div title>
+            <img class="ui avatar image" src="https://semantic-ui.com/images/wireframe/square-image.png"> Selected subcategory
+            name
+          </div>
+          <div content>
+            <div class="accordion-option">
+              <img class="ui avatar image" src="https://semantic-ui.com/images/wireframe/square-image.png"> Subcategory name
+            </div>
+            <div class="accordion-option">
+              <img class="ui avatar image" src="https://semantic-ui.com/images/wireframe/square-image.png"> Subcategory name
+            </div>
+            <div class="accordion-option">
+              <img class="ui avatar image" src="https://semantic-ui.com/images/wireframe/square-image.png"> Subcategory name
+            </div>
+            <div class="accordion-option">
+              <img class="ui avatar image" src="https://semantic-ui.com/images/wireframe/square-image.png"> Subcategory name
+            </div>
+          </div>
+        </sui-accordion-panel>
+      </sui-accordion> 
+      <img class="ui small rounded image work-icon" src="https://semantic-ui.com/images/wireframe/square-image.png">
+    </div>
+  </div>
+  <div class="ui divider"></div>
+  <div class="centered row">
+    <div class="three wide column">
+      <button class="ui basic button"><h5>Add or Save</h5></button>
+    </div>
+  </div>
+</div>

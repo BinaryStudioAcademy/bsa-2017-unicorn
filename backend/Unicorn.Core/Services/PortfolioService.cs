@@ -50,6 +50,27 @@ namespace Unicorn.Core.Services
             };
         }
 
+        public async Task CreateAsync(long vendorId, PortfolioItemDTO itemDto)
+        {
+            var vendor = await _unitOfWork.VendorRepository.GetByIdAsync(vendorId);
+            var history = await _unitOfWork.HistoryRepository.GetByIdAsync(itemDto.HistoryEntryId);
+            var work = await _unitOfWork.WorkRepository.Query
+                .Include(w => w.Subcategory)
+                .SingleAsync(w => w.Id == history.WorkId);
+
+            var item = new PortfolioItem()
+            {
+                HistoryEntryId = itemDto.HistoryEntryId,
+                Vendor = vendor,
+                Image = itemDto.Image,
+                Subcategory = work.Subcategory,
+                WorkType = work
+            };
+
+            _unitOfWork.PortfolioRepository.Create(item);
+            await _unitOfWork.SaveAsync();
+        }
+
         private readonly IUnitOfWork _unitOfWork;
     }
 }

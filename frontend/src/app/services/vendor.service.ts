@@ -9,6 +9,9 @@ import { Review } from "../models/review.model";
 import { Subcategory } from "../models/subcategory.model";
 import { Contact } from "../models/contact.model";
 import { Category } from "../models/category.model";
+import { VendorBook } from "../models/book/vendor-book.model";
+import { VendorHistory } from "../models/vendor-history.model";
+import { Work } from "../models/work.model";
 
 @Injectable()
 export class VendorService {
@@ -20,8 +23,9 @@ export class VendorService {
     this.apiController = "vendors";
   }
 
-  getAllVendors() : Promise<Vendor[]> {
-    return this.dataService.getFullRequest<Vendor[]>(this.apiController);
+  getAllVendors() : Promise<any> {
+    return this.dataService.getFullRequest<Vendor[]>(this.apiController)
+      .catch(err => alert(err));
   }
 
   getVendor(id: number) : Promise<any> {
@@ -35,7 +39,18 @@ export class VendorService {
   }
 
   getCategories(id: number): Promise<any> {
-    return this.dataService.getFullRequest<Category[]>(`${this.apiController}/${id}/categories`);
+    return this.dataService.getFullRequest<Category[]>(`${this.apiController}/${id}/categories`)
+      .catch(err => alert(err));
+  }
+
+  getVendorWorks(id: number): Promise<any> {
+    return this.dataService.getFullRequest<Work[]>(`${this.apiController}/${id}/works`)
+      .catch(err => alert(err));
+  }
+
+  getOrders(id: number): Promise<any> {
+    return this.dataService.getFullRequest<VendorBook[]>(`${this.apiController}/${id}/orders`)
+      .catch(err => alert(err));
   }
 
   getReviews(id: number): Promise<any> {
@@ -53,6 +68,16 @@ export class VendorService {
       .catch(err => alert(err));
   }
 
+  getVendorHistory(vendorId: number): Promise<any> {
+    return this.dataService.getFullRequest<VendorHistory[]>(`${this.apiController}/${vendorId}/history`)
+      .catch(err => alert(err));
+  }
+
+  postVendorPorfolio(vendorId: number, item: PortfolioItem): Promise<any> {
+    return this.dataService.postFullRequest<PortfolioItem>(`${this.apiController}/${vendorId}/portfolio`, item)
+      .catch(err => alert(err));
+  }
+
   updateVendor(vendor: Vendor): Promise<any> {
     return this.dataService.putFullRequest<Vendor>(`${this.apiController}/${vendor.Id}`, vendor)
       .catch(err => alert(err));
@@ -66,5 +91,10 @@ export class VendorService {
   updateContacts(id: number, contacts: Contact[]): Promise<any> {
     return this.dataService.putFullRequest<Contact[]>(`${this.apiController}/${id}/contacts`, contacts)
       .catch(err => alert(err));;
+  }
+
+  updateOrder(id: number, order: VendorBook): Promise<any> {
+    return this.dataService.putFullRequest<VendorBook[]>(`${this.apiController}/${id}/orders/${order.Id}`, order)
+      .catch(err => alert(err));
   }
 }

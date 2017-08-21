@@ -72,6 +72,7 @@
     <Compile Include="Interfaces\IAuthService.cs" />
     <Compile Include="Interfaces\IAvatarService.cs" />
     <Compile Include="Interfaces\IBookService.cs" />
+    <Compile Include="Interfaces\ICategoryService.cs" />
     <Compile Include="Interfaces\ICompanyPageService.cs" />
     <Compile Include="Interfaces\ICompanyService.cs" />
     <Compile Include="Interfaces\ICustomerService.cs" />
@@ -90,6 +91,7 @@
     <Compile Include="Services\AccountService.cs" />
     <Compile Include="Services\AvatarService.cs" />
     <Compile Include="Services\BookService.cs" />
+    <Compile Include="Services\CategoryService.cs" />
     <Compile Include="Services\CompanyPageService.cs" />
     <Compile Include="Services\CompanyService.cs" />
     <Compile Include="Services\CustomerService.cs" />

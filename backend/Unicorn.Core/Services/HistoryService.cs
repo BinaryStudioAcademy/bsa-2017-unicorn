@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using Unicorn.Core.Interfaces;
 using Unicorn.DataAccess.Interfaces;
 using Unicorn.Shared.DTOs;
+using Unicorn.Shared.DTOs.History;
 using Unicorn.Shared.DTOs.Vendor;
 
 namespace Unicorn.Core.Services
@@ -139,6 +142,25 @@ namespace Unicorn.Core.Services
                 };
             }
             return historyDto;
+        }
+
+        public async Task<IEnumerable<VendorHistoryDTO>> GetVendorHistoryAsync(long vendorId)
+        {
+            var history = await _unitOfWork.HistoryRepository.Query
+                 .Include(h => h.Vendor)
+                 .Where(h => h.Vendor.Id == vendorId).ToListAsync();
+            return history
+                    .Select(h => new VendorHistoryDTO()
+                    {
+                        Id = h.Id,
+                        BookDescription = h.BookDescription,
+                        Category = h.CategoryName,
+                        Date = h.Date,
+                        Subcategory = h.SubcategoryName,
+                        WorkDescription = h.WorkDescription,
+                        WorkId = h.WorkId,
+                        Label = $"{h.WorkDescription}({h.Date})"
+                    }).ToList();
         }
     }
 }

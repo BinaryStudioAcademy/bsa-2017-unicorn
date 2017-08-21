@@ -3,7 +3,8 @@ import { Injectable } from '@angular/core';
 import { DataService } from './data.service';
 
 import { User } from '../models/user'
-import {Book} from '../models/book.model'
+import {Book} from '../models/book/book.model'
+import {Vendor} from '../models/vendor.model'
 import { environment } from "../../environments/environment";
 import { Rating } from "../models/rating.model";
 import { Review } from "../models/review.model";
@@ -13,12 +14,13 @@ export class UserService {
 
   constructor(private dataService: DataService) {
      dataService.setHeader('Content-Type', 'application/json');
-    }
+  }
 
 
   getUser(id: number):Promise<any>{
     return this.dataService.getFullRequest<User>("users/" + id)
-    .then(res => { return res }); }
+    .then(res => { return res });
+  }
 
     // getUserOld(id: number): User {
     //     var user: User = {

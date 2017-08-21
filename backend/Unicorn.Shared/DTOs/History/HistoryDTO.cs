@@ -1,7 +1,7 @@
 ﻿using System;
 using Unicorn.Shared.DTOs.Vendor;
 
-namespace Unicorn.Shared.DTOs
+namespace Unicorn.Shared.DTOs.History
 {
     public class HistoryDTO
     {

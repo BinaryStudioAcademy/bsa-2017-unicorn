@@ -13,5 +13,6 @@ namespace Unicorn.Core.Interfaces
     {
         Task<PortfolioItemDTO> GetItemByIdAsync(long id);
         Task<IEnumerable<PortfolioItemDTO>> GetItemsByVendorIdAsync(long id);
+        Task CreateAsync(long vendorId, PortfolioItemDTO itemDto);
     }
 }

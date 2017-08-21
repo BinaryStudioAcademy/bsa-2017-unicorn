@@ -1288,7 +1288,7 @@ namespace Unicorn.DataAccess.Context
                 Work = work1,
                 Description = "clean clothes and irom it, output 3 spots ",
                 Company = company1,
-                Status = "in process",
+                Status = BookStatus.InProgress,
                 Customer = customer1
             };
 
@@ -1298,9 +1298,19 @@ namespace Unicorn.DataAccess.Context
                 Date = new DateTime(2017, 08, 17, 5, 30, 00),
                 IsDeleted = false,
                 Work = work2,
+                Vendor = vendor1,
                 Description = "Make a photoset when sunrise",
-                Status = "Search",
-                Customer = customer2
+                Status = BookStatus.Accepted,
+                Customer = customer2,
+                Location = new Location()
+                {
+                    Adress = "Lebedeva-Kumacha 7a str.",
+                    City = "Kiev",
+                    Latitude = 50.437,
+                    Longitude = 30.439,
+                    IsDeleted = false,
+                    PostIndex = "03110"
+                }
             };
 
             Book book3 = new Book()
@@ -1310,8 +1320,17 @@ namespace Unicorn.DataAccess.Context
                 IsDeleted = false,
                 Work = work3,
                 Description = "Care about cat",
-                Status = "Recorded at the reception",
+                Status = BookStatus.Finished,
                 Vendor = vendor3,
+                Location = new Location()
+                {
+                    Adress = "Lebedeva-Kumacha 7a str.",
+                    City = "Kiev",
+                    Latitude = 50.437,
+                    Longitude = 30.439,
+                    IsDeleted = false,
+                    PostIndex = "03110"
+                },
                 Customer = customer3
             };
 
@@ -1322,7 +1341,7 @@ namespace Unicorn.DataAccess.Context
                 IsDeleted = false,
                 Work = work4,
                 Description = "rebuild 3 walls",
-                Status = "Confirmed",
+                Status = BookStatus.Accepted,
                 Customer = customer3,
                 Company = company2
             };
@@ -1335,7 +1354,7 @@ namespace Unicorn.DataAccess.Context
                 IsDeleted = false,
                 Work = work5,
                 Description = "Take out the trash",
-                Status = "Confirmed",
+                Status = BookStatus.Accepted,
                 Customer = customer1,
                 Company = company3
             };
@@ -1346,11 +1365,19 @@ namespace Unicorn.DataAccess.Context
                 Date = new DateTime(2017, 08, 20, 18, 04, 00),
                 IsDeleted = false,
                 Work = work6,
-                Description = "Make a website",
-                Location = new Location(),
-                Status = "Confirmed",
-                Vendor = vendor6,
-                Customer = customer1
+                Description = "Make asp.net core website",
+                Status = BookStatus.InProgress,
+                Vendor = vendor1,
+                Customer = customer1,
+                Location = new Location()
+                {
+                    Adress = "Lebedeva-Kumacha 7a str.",
+                    City = "Kiev",
+                    Latitude = 50.437,
+                    Longitude = 30.439,
+                    IsDeleted = false,
+                    PostIndex = "03110"
+                }
             };
 
             context.Books.AddRange(new List<Book>() { book1, book2, book3, book4, book5, book6 });

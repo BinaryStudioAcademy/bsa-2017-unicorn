@@ -51,12 +51,17 @@
             </div>
         </div>
         <div class="ui container column">
-            <button *ngIf="dataLoaded" (click)="saveVendor()" class="ui basic button"><h5>Save</h5></button>
-            <button *ngIf="!dataLoaded" class="ui loading button">Loading</button>
             <h4>Help customers find you</h4>
             <div *ngIf="map != undefined" class="map">
                 <app-map [inputMap]="map"></app-map>
             </div>
+        </div>
+    </div>
+    <div class="ui divider"></div>
+    <div class="centered row">
+        <div class="three wide column">
+            <button *ngIf="dataLoaded" (click)="saveVendor()" class="ui basic button"><h5>Save</h5></button>
+            <button *ngIf="!dataLoaded" class="ui loading button">Loading</button>
         </div>
     </div>
 </div>
