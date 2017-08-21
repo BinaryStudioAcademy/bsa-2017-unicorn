@@ -26,5 +26,7 @@ namespace Unicorn.Core.Interfaces
         Task<CompanyContacts> GetCompanyContacts(long id);
 
         Task SaveCompanyContacts(CompanyContacts companyDTO);
+
+        Task<CompanyWorks> GetCompanyWorks(long id);
     }
 }

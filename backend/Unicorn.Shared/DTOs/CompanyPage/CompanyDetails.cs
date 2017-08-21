@@ -26,6 +26,6 @@ namespace Unicorn.Shared.DTOs.CompanyPage
 
         public LocationDTO Location { get; set; }
 
-        public ICollection<CompanyCategory> Categories { get; set; }
+        public ICollection<CompanyWork> Works { get; set; }
     }
 }

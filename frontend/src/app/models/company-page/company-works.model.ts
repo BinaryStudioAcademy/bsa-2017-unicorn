@@ -1,10 +1,8 @@
 import { CompanyCategory } from "./company-category.model";
 import { CompanyWork } from "./company-work.model";
 
-export interface CompanySubcategory {
+export interface CompanyWorks {
     Id: number;
-    Name: string;
-    Description: string;
-    Category: CompanyCategory;
     Works: CompanyWork[];
+    AllCategories: CompanyCategory[];
 }

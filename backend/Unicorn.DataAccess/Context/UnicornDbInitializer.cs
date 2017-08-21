@@ -1194,7 +1194,7 @@ namespace Unicorn.DataAccess.Context
                     PostIndex = "79054"
                 },
                 Vendors = new List<Vendor>() { vendor1, vendor2 },
-                Categories = new List<Category> { category1, category2}
+                Works = new List<Work> { work1, work2}
 
             };
 
@@ -1218,7 +1218,7 @@ namespace Unicorn.DataAccess.Context
                     PostIndex = "03179"
                 },
                 Vendors = new List<Vendor>() { vendor4, vendor5},
-                Categories = new List<Category> { category3, category4 }
+                Works = new List<Work> { work3, work4 }
             };
 
             Company company3 = new Company()
@@ -1242,7 +1242,7 @@ namespace Unicorn.DataAccess.Context
                     PostIndex = "27123"
                 },
                 Vendors = new List<Vendor>() { vendor6 },
-                Categories = new List<Category> { category5, category6 }
+                Works = new List<Work> { work5, work6 }
             };
 
             context.Companies.AddRange(new List<Company>() { company1, company2, company3 });
