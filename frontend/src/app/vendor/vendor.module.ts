@@ -33,19 +33,10 @@ import { VendorService } from '../services/vendor.service';
 import { ReviewService } from '../services/review.service';
 import { DataService } from "../services/data.service";
 import { LocationService } from "../services/location.service";
-<<<<<<< HEAD
-<<<<<<< HEAD
-import { VendorEditComponent } from './vendor-edit/vendor-edit.component';
-import { VendorEditInfoComponent } from './vendor-edit/vendor-edit-info/vendor-edit-info.component';
-import { SharedModule } from "../shared/shared.module";
-=======
+
 import { CategoryService } from "../services/category.service";
 import { WorkService } from "../services/work.service";
->>>>>>> feature/vendor-profile
-=======
-import { CategoryService } from "../services/category.service";
-import { WorkService } from "../services/work.service";
->>>>>>> develop
+
 
 @NgModule({
   imports: [
@@ -66,22 +57,12 @@ import { WorkService } from "../services/work.service";
     VendorProfilePortfolioComponent,
     VendorsComponent,
     VendorEditComponent,
-<<<<<<< HEAD
-<<<<<<< HEAD
-    VendorEditInfoComponent
-=======
-=======
->>>>>>> develop
     VendorEditInfoComponent,
     VendorEditOrdersComponent,
     VendorEditPortfolioComponent,
     VendorEditWorksComponent,
     EnumKeysPipe
-<<<<<<< HEAD
->>>>>>> feature/vendor-profile
-=======
->>>>>>> develop
-  ],
+    ],
   providers: [
     DataService,
     VendorService,
