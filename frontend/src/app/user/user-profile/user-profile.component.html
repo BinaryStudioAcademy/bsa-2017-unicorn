@@ -14,7 +14,7 @@
                         <div *ngIf="email.errors.required" class="valid-error">required</div>
                         <div *ngIf="email.errors.pattern" class="valid-error">invalid mail</div>
                     </div>
-                    <input pattern="^[0-9]+$" required type="text" [(ngModel)]="user.Phone" name="phone" placeholder="PHONE" #phone="ngModel">
+                    <input pattern="^\+(?:[0-9]●?){6,14}[0-9]$" required type="text" [(ngModel)]="user.Phone" name="phone" placeholder="PHONE" #phone="ngModel">
                     <div *ngIf="phone.invalid && (phone.dirty || phone.touched)">
                         <div *ngIf="phone.errors.required" class="valid-error">required</div>
                         <div *ngIf="phone.errors.pattern" class="valid-error">invalid number</div>
