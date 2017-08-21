@@ -20,11 +20,13 @@ namespace Unicorn.Core.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IBookService _bookservice;
+        private readonly IHistoryService _historyService;
 
-        public CustomerService(IUnitOfWork unitOfWork, IBookService bookservice)
+        public CustomerService(IUnitOfWork unitOfWork, IBookService bookservice, IHistoryService historyService)
         {
             _unitOfWork = unitOfWork;
             _bookservice = bookservice;
+            _historyService = historyService;
         }
 
         public async Task<object> GetById(long id)
@@ -64,7 +66,7 @@ namespace Unicorn.Core.Services
 
             customer.Person = person;
             customer.Books = new List<Book>();
-
+            customer.History = new List<History>();
             _unitOfWork.CustomerRepository.Create(customer);
             await _unitOfWork.SaveAsync();
         }
@@ -104,6 +106,16 @@ namespace Unicorn.Core.Services
                     Avatar = customer.Person.Account.Avatar,
                     Background = customer.Person.Account.Background,
                     Email = customer.Person.Account.Email,
+                    History = customer.History.Select(x => new HistoryShortDto()
+                    {
+                        bookDescription = x.BookDescription,
+                        categoryName  = x.CategoryName,
+                        date = x.Date,
+                        dateFinished = x.DateFinished,
+                        subcategoryName = x.SubcategoryName,
+                        vendor = x?.Vendor?.Person?.Surname,
+                        workDescription = x.WorkDescription
+                    }).ToList(),
                     Books = customer.Books.Select(x => new BookShortDto()
                     {
                         Address = x.Location?.Adress,

@@ -1,4 +1,5 @@
 ﻿using System;
+using Unicorn.Shared.DTOs.Vendor;
 
 using Unicorn.DataAccess.Entities;
 

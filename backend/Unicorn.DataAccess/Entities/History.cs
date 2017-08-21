@@ -6,17 +6,12 @@ namespace Unicorn.DataAccess.Entities
     public class History : IEntity
     {
         public long Id { get; set; }
+
         public bool IsDeleted { get; set; }
 
-        public long CustomerId { get; set; }
-
-        public string CustomerName { get; set; }
-
-        public long VendorId { get; set; }
-
-        public string VendorName { get; set; }
-
         public DateTime Date { get; set; }
+
+        public DateTime DateFinished { get; set; }
 
         public string BookDescription { get; set; }
 
@@ -25,5 +20,15 @@ namespace Unicorn.DataAccess.Entities
         public string CategoryName { get; set; }
 
         public string SubcategoryName { get; set; }
+
+        public virtual Review Review { get; set; }
+
+        public virtual Customer Customer { get; set; }
+
+        public virtual Vendor Vendor { get; set; }
+
+        public virtual Company Company { get; set; }
+
+       
     }
 }

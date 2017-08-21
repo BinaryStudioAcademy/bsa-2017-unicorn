@@ -14,6 +14,7 @@ namespace Unicorn.Core.Infrastructure
             Bind<IAuthService>().To<AuthJWTService>();
             Bind<IAccountService>().To<AccountService>();
             Bind<IBookService>().To<BookService>();
+            Bind<IHistoryService>().To<HistoryService>();
             Bind<ICustomerService>().To<CustomerService>();
             Bind<IVendorService>().To<VendorService>();
             Bind<IRoleService>().To<RoleService>();

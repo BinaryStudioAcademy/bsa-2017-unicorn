@@ -1,4 +1,5 @@
-import {Book} from './book/book.model'
+import {Book} from './book.model'
+import {History} from './history'
 export interface User
 {
 	Id: number;
@@ -9,6 +10,7 @@ export interface User
 	Background: string;
 	LocationId : string;
 	Books: Book[];
+	History: History[];
 	Email:string;
 	Phone:string;
 	DateCreated: Date;

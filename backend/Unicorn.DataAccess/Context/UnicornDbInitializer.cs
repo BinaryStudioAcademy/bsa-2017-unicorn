@@ -1270,7 +1270,6 @@ namespace Unicorn.DataAccess.Context
                 Description = "Care about cat",
                 Status = BookStatus.Finished,
                 Vendor = vendor3,
-                Customer = customer2,
                 Location = new Location()
                 {
                     Adress = "Lebedeva-Kumacha 7a str.",
@@ -1279,7 +1278,8 @@ namespace Unicorn.DataAccess.Context
                     Longitude = 30.439,
                     IsDeleted = false,
                     PostIndex = "03110"
-                }
+                },
+                Customer = customer3
             };
 
             Book book4 = new Book()
@@ -1406,7 +1406,24 @@ namespace Unicorn.DataAccess.Context
 
             #endregion
 
+            #region History
+           History history1 = new History()
+            {
+                Id = 1,
+                Date = new DateTime(2017, 05, 12, 16, 46, 16),
+                DateFinished = new DateTime(2017,05,13,11,11,11),
+                BookDescription = "fix dripping tap toworrow",
+                WorkDescription = "fix tap",
+                CategoryName = "House Work",
+                Vendor = vendor1,
+                IsDeleted = false,
+                Review = review1,
+                SubcategoryName = "",
+                Customer = customer1
+            };
+            context.Histories.AddRange(new List<History>() { history1 });
 
+            #endregion
             context.SaveChanges();
 
             base.Seed(context);
