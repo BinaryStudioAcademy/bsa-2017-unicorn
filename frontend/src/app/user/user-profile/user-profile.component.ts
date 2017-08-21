@@ -1,5 +1,5 @@
 ﻿import { Component, OnInit, Input, ViewChild, AfterViewChecked } from '@angular/core';
-import { NgModel } from '@angular/forms';
+import { NgModel, NgForm } from '@angular/forms';
 import { User } from '../../models/user';
 import { AgmMap } from "@agm/core";
 import { NguiMapModule, Marker } from "@ngui/map";
@@ -21,6 +21,7 @@ export class UserProfileComponent implements OnInit {
     @ViewChild(AgmMap) private map: any;
       location: Location;
 
+    @ViewChild('userForm') public userForm: NgForm;
     lat: number = 48.464921;
     lng: number = 35.045798;
     birthday: Date;
@@ -35,6 +36,9 @@ export class UserProfileComponent implements OnInit {
     }
 
     updateUser(): void {
+        if (!this.userForm.valid) {
+            return;
+        }
         this.user.Birthday=this.birthday;
         this.user.Birthday.setDate( this.user.Birthday.getDate()+1);
         this.userService.updateUser(this.user)

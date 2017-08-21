@@ -26,6 +26,8 @@ namespace Unicorn.Core.Infrastructure
             Bind<IPortfolioService>().To<PortfolioService>();
             Bind<IReviewService>().To<ReviewService>();
             Bind<ICategoryService>().To<CategoryService>();
+            Bind<ICompanyPageService>().To<CompanyPageService>();
+            //Bind<IContactService>().To<ContactService>();
         }
     }
 }

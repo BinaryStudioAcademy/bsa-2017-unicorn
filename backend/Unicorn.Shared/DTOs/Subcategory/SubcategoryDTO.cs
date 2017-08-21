@@ -11,8 +11,8 @@ namespace Unicorn.Shared.DTOs.Subcategory
         public string Description { get; set; }
 
 
-        public CategoryDTO Category { get; set; }
+        public virtual CategoryDTO Category { get; set; }
 
-        public ICollection<WorkDTO> Works { get; set; }
+        public virtual ICollection<WorkDTO> Works { get; set; }
     }
 }

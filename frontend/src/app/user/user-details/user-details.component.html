@@ -3,13 +3,15 @@
         <div class="sixteen wide column container">
             <div class="user-header" id="user-header" [style.backgroundImage]="backgroundUrl">
                 <label id="banner-loader" for="banner-input" class="ui icon button basic" [ngClass]="{'loading': uploading}">
-                    <i class="icon pink" [ngClass]="{'upload': !uploading}"></i>
+                    <i class="icon up-color" [ngClass]="{'upload': !uploading}"></i>
                 </label>
                 <input type="file" id="banner-input" accept="image/*" (change)="bannerListener($event)">
 
-                <div class="avatar" (click)="openModal()" *ngIf="user!== undefined">
-                    <div class="ui small circular image" suiPopup popupText="Click to update your photo">
-                        <img id="user-avatar" src="{{getImage()}}" />
+                <div (click)="openModal()" *ngIf="user!== undefined">
+                    <div class="ui small circular image">
+                        <div class="avatar">
+                            <img id="user-avatar" src="{{user.Avatar}}" />
+                        </div>
                     </div>
                 </div>
                 <div class="user-title" *ngIf="user!== undefined">
@@ -51,21 +53,6 @@
                             </div>
                         </div>
                     </div>
-
-
-                    <!-- <div class="imagePreviews">
-                                <div class="smallPreview">
-                                    <label>Small Preview</label>
-                                    <img-cropper #cropper [image]="data" [settings]="cropperSettings"></img-cropper>
-                                </div>
-                                <div class="largePreview">
-                                    <label>Large Preview</label>
-                                    <img-cropper #cropper [image]="data" [settings]="cropperSettings"></img-cropper>
-                                </div>
-                                <div class="previewDescription">
-
-                                </div>
-                            </div> -->
                 </ng-template>
             </div>
         </div>

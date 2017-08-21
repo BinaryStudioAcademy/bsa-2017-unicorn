@@ -10,6 +10,7 @@ import { NguiMapModule } from "@ngui/map/dist";
 import { SignBlockModule } from '../sign-block/sign-block.module';
 import { BookModule } from '../book/book.module';
 import { MapModule } from '../map/map.module';
+import { SharedModule } from "../shared/shared.module";
 
 import { VendorsComponent } from './vendors/vendors.component';
 import { VendorDetailsComponent } from './vendor-details/vendor-details.component';
@@ -37,13 +38,14 @@ import { WorkService } from "../services/work.service";
 
 @NgModule({
   imports: [
-    CommonModule,
     VendorRoutingModule,
     FormsModule,
     SuiModule,
     BookModule,
     MapModule,
-    SignBlockModule
+    SignBlockModule,
+    CommonModule,
+    SharedModule
   ],
   declarations: [
     VendorDetailsComponent,

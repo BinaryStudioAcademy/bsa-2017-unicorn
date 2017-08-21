@@ -1,29 +1,73 @@
 <link rel="stylesheet" href="https://unpkg.com/semantic-ui-calendar/dist/calendar.min.css">
 
-<div class="container">
-    <div class="ui form">
-        <div class="field">
-            <label>Company name</label>
-            <input type="text" [(ngModel)]="company.Name">
-        </div>
-        <div class="field">
-            <label>Description</label>
-            <textarea [(ngModel)]="company.Description"></textarea>
-        </div>
-        <div class="field">
-            <label>Foundation date</label>
-            <div class="ui left icon input">
-                <i class="calendar icon"></i>
-                <input suiDatepicker [(ngModel)]="foundation-date" name="foundation-date" pickerMode="date" [placeholder]="company.FoundationDate | date:'shortDate'">
+<div class="container" *ngIf="company !== undefined">
+    <form name="companyForm" #companyForm="ngForm">
+        <div class="ui form">
+            <div class="field">
+                <label>Company name</label>
+                <input required type="text" name="name" [(ngModel)]="company.Name" #compname="ngModel">
+                <div *ngIf="compname.invalid && (compname.dirty)" class="valid-error">* Required</div>
+            </div>
+            <div class="field">
+                <label>Description</label>
+                <textarea required name="description" [(ngModel)]="company.Description" #desc="ngModel"></textarea>
+                <div *ngIf="desc.invalid && (desc.dirty)" class="valid-error">* Required</div>
+            </div>
+            <div class="field">
+                <label>Foundation date</label>
+                <div class="ui left icon input">
+                    <i class="calendar icon"></i>
+                    <input suiDatepicker [(ngModel)]="foundation-date" name="foundation-date" pickerMode="date" [placeholder]="company.FoundationDate | date:'shortDate'">
+                </div>
+            </div>
+            <div class="field">
+                <label>CEO</label>
+                <input required name="director" type="text" [(ngModel)]="company.Director" #dir="ngModel">
+                <div *ngIf="dir.invalid && (dir.dirty)" class="valid-error">* Required</div>
             </div>
         </div>
-        <div>
-            <label>CEO</label>
-            <input type="text" [(ngModel)]="company.Director">
+    </form>
+    <div>
+        <div class="ui form">
+            <div class="field">
+                <label>Select or remove needed works</label>
+                <sui-accordion class="styled fluid">
+                    <sui-accordion-panel *ngFor="let category of company.Categories">
+                        <div title>
+                            <img class="ui avatar image" src="{{category.Icon}}"> {{category.Name}}
+                            <i class="dropdown icon"></i>
+                        </div>
+                        <div content>
+                            <sui-accordion-panel class="styled fluid" *ngFor="let subcategory of category.Subcategories">
+                                <div title>
+                                    {{subcategory.Name}}
+                                    <i class="dropdown icon"></i>
+                                </div>
+                                <div content>
+                                    <div class="ui form">
+                                        <div class="inline field" *ngFor="let work of subcategory.Works">
+                                            <div class="ui toggle checkbox">
+                                                <input type="checkbox" tabindex="0">
+                                                <label>{{work.Name}}</label>
+                                            </div>
+                                            <div class="ui divider"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ui divider"></div>
+                            </sui-accordion-panel>
+                        </div>
+                        <div class="ui divider"></div>
+                    </sui-accordion-panel>
+                </sui-accordion>
+            </div>
         </div>
     </div>
     <div>
         <button class="ui basic button" (click)="save()" [ngClass]="{'loading':isLoaded}">
             <p *ngIf="!isLoaded" style="color:#FF647A;">Save</p></button>
     </div>
-</div>
+
+    <div *ngIf="company === undefined" class="ui active inverted dimmer" style="background-color: rgba(255,255,255,.85)">
+        <div class="ui text loader">Loading</div>
+    </div>

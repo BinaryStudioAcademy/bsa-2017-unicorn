@@ -2,17 +2,30 @@
     <div class="column">
         <div class="ui input" *ngIf="user !== undefined">
             <div class="elem">
-                <input type="text" [(ngModel)]="user.Name" name="Name" placeholder="NAME">
-                <input type="text" [(ngModel)]="user.SurName" name="SurName" placeholder="LASTNAME">
-                <input type="text" [(ngModel)]="user.MiddleName" name="MiddleName" placeholder="MIDLENAME">
-                <input type="text" [(ngModel)]="user.Email" name="Email" placeholder="EMAIL">
-                <input type="text" [(ngModel)]="user.Phone" name="Phone" placeholder="PHONE">
+                <form name="userForm" #userForm="ngForm">
+                    <input required type="text" class="red" [(ngModel)]="user.Name" name="name" placeholder="NAME" #name="ngModel">
+                    <div *ngIf="name.invalid" class="valid-error">* Required</div>
+                    <input required type="text" [(ngModel)]="user.SurName" name="surname" placeholder="LASTNAME" #surname="ngModel">
+                    <div *ngIf="surname.invalid" class="valid-error">* Required</div>
+                    <input required type="text" [(ngModel)]="user.MiddleName" name="middlename" placeholder="MIDLENAME" #middlename="ngModel">
+                    <div *ngIf="middlename.invalid" class="valid-error">* Required</div>
+                    <input pattern="\S+@\S+\.\S+" required type="text" [(ngModel)]="user.Email" name="email" placeholder="EMAIL" #email="ngModel">
+                    <div *ngIf="email.invalid && (email.dirty || email.touched)">
+                        <div *ngIf="email.errors.required" class="valid-error">* Required</div>
+                        <div *ngIf="email.errors.pattern" class="valid-error">* Invalid mail</div>
+                    </div>
+                    <input pattern="^\+(?:[0-9]●?){6,14}[0-9]$" required type="text" [(ngModel)]="user.Phone" name="phone" placeholder="PHONE" #phone="ngModel">
+                    <div *ngIf="phone.invalid && (phone.dirty || phone.touched)">
+                        <div *ngIf="phone.errors.required" class="valid-error">* Required</div>
+                        <div *ngIf="phone.errors.pattern" class="valid-error">* Invalid number</div>
+                    </div>
+                </form>
             </div>
         </div>
         <div class="elem" *ngIf="user !== undefined">
             <div class="ui left icon input">
                 <i class="calendar icon" style="margin-left: 15px; margin-top: 10px;"></i>
-                <input suiDatepicker [(ngModel)]="birthday" name="birthday" pickerMode="date" [placeholder]="user.Birthday | date:'shortDate'">
+                <input suiDatepicker [(ngModel)]="birthday" name="birthday" pickerMode="date" placeholder="Birthday">
             </div>
 
         </div>

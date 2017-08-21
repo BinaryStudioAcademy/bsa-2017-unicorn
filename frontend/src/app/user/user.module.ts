@@ -22,6 +22,7 @@ import {ImageCropperComponent} from 'ng2-img-cropper';
 import { UserMainComponent} from './user-main/user-main.component';
 import { UserMainInfoComponent } from './user-main/user-main-info/user-main-info.component';
 import { UserMainReviewsComponent } from './user-main/user-main-reviews/user-main-reviews.component';
+import { SharedModule } from "../shared/shared.module";
 
 @NgModule({
     imports: [
@@ -32,8 +33,8 @@ import { UserMainReviewsComponent } from './user-main/user-main-reviews/user-mai
         CommonModule,
         UserRoutingModule,
         HttpModule,
-        FormsModule
-
+        FormsModule,
+        SharedModule
     ],
     declarations: [
         UserComponent,
@@ -42,7 +43,6 @@ import { UserMainReviewsComponent } from './user-main/user-main-reviews/user-mai
         UserHistoryComponent,
         UserTasksComponent,
         UserMessagesComponent,
-        ImageCropperComponent,
         UserMainComponent,
         UserMainInfoComponent,
         UserMainReviewsComponent
