@@ -50,7 +50,7 @@ namespace Unicorn.Core.Services
             return VendorToDTO(vendor);
         }
 
-        public async Task<IEnumerable<ContactShortDTO>> GetVendorContacts(long id)
+        public async Task<IEnumerable<ContactShortDTO>> GetVendorContactsAsync(long id)
         {
             var vendor = await _unitOfWork.VendorRepository.Query
                 .Include(v => v.Person)
@@ -131,7 +131,7 @@ namespace Unicorn.Core.Services
             };
         }
 
-        public async Task Create(VendorRegisterDTO ShortVendorDTO)
+        public async Task CreateAsync(VendorRegisterDTO ShortVendorDTO)
         {
             var account = new Account();
             var role = await _unitOfWork.RoleRepository.GetByIdAsync((long)AccountRoles.Vendor);
@@ -170,7 +170,7 @@ namespace Unicorn.Core.Services
             await _unitOfWork.SaveAsync();
         }
 
-        public async Task Update(ShortVendorDTO vendorDto)
+        public async Task UpdateAsync(ShortVendorDTO vendorDto)
         {
             var vendor = await _unitOfWork.VendorRepository.Query
                 .Include(v => v.Person)
@@ -189,6 +189,23 @@ namespace Unicorn.Core.Services
 
             _unitOfWork.VendorRepository.Update(vendor);
             await _unitOfWork.SaveAsync();
+        }
+
+        public async Task<IEnumerable<WorkDTO>> GetVendorWorksAsync(long id)
+        {
+            var vendor = await _unitOfWork.VendorRepository.Query
+                .Include(v => v.Works)
+                .SingleAsync(v => v.Id == id);
+            return vendor.Works.Select(w => new WorkDTO()
+            {
+                Id = w.Id,
+                Category = w.Subcategory.Category.Name,
+                CategoryId = w.Subcategory.Category.Id,
+                Subcategory = w.Subcategory.Name,
+                SubcategoryId = w.Subcategory.Id,
+                Name = w.Name,
+                Description = w.Description
+            });
         }
     }
 }

@@ -72,31 +72,12 @@ export class VendorEditInfoComponent implements OnInit {
     console.log(date.getDate());
   }
 
-  onSubcategorySelected(subcategory: Subcategory): void {
-    if (subcategory !== undefined || subcategory !== null)
-      this.subcategoryWorks = this.works
-        .filter(w => w.SubcategoryId === subcategory.Id)
-        .filter(w => this.vendor.Works.find(x => x.Id === w.Id) === undefined);
-  }
-
   addWorkType(): void {
-    this.newWork.CategoryId = this.selectedCategory.Id;
-    this.newWork.Category = this.selectedCategory.Name;
-    this.newWork.SubcategoryId = this.selectedSubcategory.Id;
-    this.vendor.Works.push(this.newWork);
-    this.newWork = {
-      CategoryId: null,
-      Category: "",
-      Subcategory: "",
-      Description: "",
-      Id: null,
-      SubcategoryId: null,
-      Name: ""
-    };
-  }
-
-  removeWorkType(work: Work): void {
-    this.vendor.Works.splice(this.vendor.Works.findIndex(w => w.Id === work.Id), 1);
+    if (this.newWork.Name !== "") {
+      this.newWork.CategoryId = this.selectedCategory.Id;
+      this.newWork.Category = this.selectedCategory.Name;
+      this.newWork.SubcategoryId = this.selectedSubcategory.Id;
+    }
   }
 
   saveVendor(): void {

@@ -13,7 +13,5 @@ namespace Unicorn.DataAccess.Entities
         public string Description { get; set; }
 
         public virtual Subcategory Subcategory { get; set; }
-
-        public virtual ICollection<Vendor> Vendors { get; set; }
     }
 }

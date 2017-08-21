@@ -21,20 +21,22 @@ export class VendorProfileInfoComponent implements OnInit {
   @Input() vendor: Vendor;
   
   rating: Rating;
-  
-  workPreviews: Work[]; 
+
+  works: Work[];
+  categoryWorks: Work[]; 
   workCategories: Category[];
-  workSubcategories: Subcategory[];
 
   selectedCategory: Category;
-  selectedSubcategory: Subcategory;
 
   constructor(private vendorService: VendorService) { }
 
   ngOnInit() {
-    this.workPreviews = this.vendor.Works;
     this.vendorService.getRating(this.vendor.Id)
       .then(resp => this.rating = resp.body as Rating);
+
+    this.vendorService.getVendorWorks(this.vendor.Id)
+      .then(resp => this.works = resp.body as Work[]);
+    
     this.vendorService.getCategories(this.vendor.Id)
       .then(resp => this.workCategories = resp.body as Category[])
       .then(() => this.onCategorySelect(this.workCategories[0]));
@@ -42,6 +44,6 @@ export class VendorProfileInfoComponent implements OnInit {
 
   onCategorySelect(category: Category): void {
     this.selectedCategory = category;
-    this.workPreviews = this.vendor.Works.filter(w => w.CategoryId === this.selectedCategory.Id);
+    this.categoryWorks = this.works.filter(w => w.CategoryId === this.selectedCategory.Id);
   }
 }

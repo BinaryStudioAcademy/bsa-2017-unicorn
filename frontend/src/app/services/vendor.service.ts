@@ -10,6 +10,8 @@ import { Subcategory } from "../models/subcategory.model";
 import { Contact } from "../models/contact.model";
 import { Category } from "../models/category.model";
 import { VendorBook } from "../models/book/vendor-book.model";
+import { VendorHistory } from "../models/vendor-history.model";
+import { Work } from "../models/work.model";
 
 @Injectable()
 export class VendorService {
@@ -41,6 +43,11 @@ export class VendorService {
       .catch(err => alert(err));
   }
 
+  getVendorWorks(id: number): Promise<any> {
+    return this.dataService.getFullRequest<Work[]>(`${this.apiController}/${id}/works`)
+      .catch(err => alert(err));
+  }
+
   getOrders(id: number): Promise<any> {
     return this.dataService.getFullRequest<VendorBook[]>(`${this.apiController}/${id}/orders`)
       .catch(err => alert(err));
@@ -58,6 +65,16 @@ export class VendorService {
 
   getVendorPorfolio(vendorId: number): Promise<any> {
     return this.dataService.getFullRequest<PortfolioItem[]>(`${this.apiController}/${vendorId}/portfolio`)
+      .catch(err => alert(err));
+  }
+
+  getVendorHistory(vendorId: number): Promise<any> {
+    return this.dataService.getFullRequest<VendorHistory[]>(`${this.apiController}/${vendorId}/history`)
+      .catch(err => alert(err));
+  }
+
+  postVendorPorfolio(vendorId: number, item: PortfolioItem): Promise<any> {
+    return this.dataService.postFullRequest<PortfolioItem>(`${this.apiController}/${vendorId}/portfolio`, item)
       .catch(err => alert(err));
   }
 

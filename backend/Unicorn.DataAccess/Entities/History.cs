@@ -15,6 +15,8 @@ namespace Unicorn.DataAccess.Entities
 
         public string BookDescription { get; set; }
 
+        public long WorkId { get; set; }
+
         public string WorkDescription { get; set; }
 
         public string CategoryName { get; set; }

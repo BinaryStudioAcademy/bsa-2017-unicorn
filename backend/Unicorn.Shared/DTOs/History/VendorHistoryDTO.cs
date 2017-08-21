@@ -12,8 +12,9 @@ namespace Unicorn.Shared.DTOs.History
         public DateTime Date { get; set; }
         public string BookDescription { get; set; }
         public string WorkDescription { get; set; }
-        public long SubcategoryId { get; set; }
+        public long WorkId { get; set; }
         public string Subcategory { get; set; }
         public string Category { get; set; }
+        public string Label { get; set; }
     }
 }

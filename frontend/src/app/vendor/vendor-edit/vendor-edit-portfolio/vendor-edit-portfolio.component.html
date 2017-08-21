@@ -1,10 +1,4 @@
 <div class="ui five stackable cards">
-  <div (click)="open()" class="ui vertical animated button" tabindex="0">
-          <div class="hidden content" style="color:#FF647A;">Add new item</div>
-          <div class="visible content">
-            <i class="masive plus icon" style="color:#FF647A;"></i>
-          </div>
-        </div>
   <div *ngFor="let item of portfolio" class="card">
     <div class="image">
       <img src="{{item.Image}}">
@@ -13,13 +7,3 @@
       <p>{{item.Category}}, {{item.WorkType}}</p>
   </div>
 </div>
-<ng-template let-context let-modal="modal" #modalTemplate>
-    <div class="header">Example</div>
-    <div class="content">
-        <p>{{ context.data }}</p>
-    </div>
-    <div class="actions">
-        <button class="ui red button" (click)="modal.deny('denied')">Cancel</button>
-        <button class="ui green button" (click)="modal.approve('approved')" autofocus>OK</button>
-    </div>
-</ng-template>
