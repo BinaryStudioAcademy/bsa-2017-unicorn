@@ -1,55 +1,48 @@
-<div class="ui equal width grid container">
-    <div class="row">
+<div class="container">
+    <div class="column">
         <div class="column">
-            <div class="ui equal width grid">
-                <div class="row">
-                    <div class="column">
-                        <div class="ui form">
-                            <div class="field">
-                                <h5>On Unicorn scince {{user.DateCreated | date:'mediumDate'}}</h5>
-                                <sui-rating [(ngModel)]="rating.Average" [isReadonly]="true"></sui-rating>
-                                <p>Reviews: {{rating.ReviewsCount}}</p>
-                                <h4>Name</h4>
-                                <div class="description flex-style">
-                                    <a class="ui label contact">
+            <div class="ui form">
+                <div class="field">
+                    <h5>On Unicorn scince {{user.DateCreated | date:'mediumDate'}}</h5>
+                    <sui-rating [(ngModel)]="rating.Average" [isReadonly]="true"></sui-rating>
+                    <p>Reviews: {{rating.ReviewsCount}}</p>
+                    <h4>Name</h4>
+                    <div class="description flex-style">
+                        <a class="ui label contact">
             {{user.Name}} {{user.SurName}} {{user.MiddleName}}
                 </a>
-                                </div>
-                                <div class="ui divider"></div>
-                                <h4>Birthday</h4>
-                                <div class="description flex-style">
-                                    <a class="ui label contact">
+                    </div>
+                    <div class="ui divider"></div>
+                    <h4>Birthday</h4>
+                    <div class="description flex-style">
+                        <a class="ui label contact">
             {{user.Birthday | date:'shortDate'}}
                 </a>
-                                </div>
-                                <h4>Phone</h4>
-                                <div class="description flex-style">
-                                    <a class="ui label contact">
-                                        <i class="colored call icon"></i> {{user.Phone}}
-                                    </a>
-                                </div>
-                                <div class="ui divider"></div>
-                                <h4>Email</h4>
-                                <div class="description flex-style">
-                                    <a class="ui label contact">
-                                        <i class="colored mail icon"></i> {{user.Email}}
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
+                    </div>
+                    <h4>Phone</h4>
+                    <div class="description flex-style">
+                        <a class="ui label contact">
+                            <i class="colored call icon"></i> {{user.Phone}}
+                        </a>
+                    </div>
+                    <div class="ui divider"></div>
+                    <h4>Email</h4>
+                    <div class="description flex-style">
+                        <a class="ui label contact">
+                            <i class="colored mail icon"></i> {{user.Email}}
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
-
-        <div class="column" style="padding-top:95px;">
-            <h4>Location</h4>
-            <div class="map">
-                <agm-map [latitude]="lat" [longitude]="lng" [zoom]="18">
-                    <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
-                </agm-map>
-            </div>
-
+    </div>
+    <div class="column" style="padding-top:95px;">
+        <h4>Location</h4>
+        <div class="map">
+            <agm-map [latitude]="lat" [longitude]="lng" [zoom]="18">
+                <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+            </agm-map>
         </div>
+
     </div>
 </div>

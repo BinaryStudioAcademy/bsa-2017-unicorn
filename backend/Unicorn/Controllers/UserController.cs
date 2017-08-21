@@ -60,20 +60,21 @@ namespace Unicorn.Controllers
                 return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
-     /*   [HttpGet]
+        [HttpGet]
         [Route("{id}/rating")]
         public async Task<HttpResponseMessage> GetUserRating(long id)
         {
             var accountId = await _customerService.GetUserAccountIdAsync(id);
             var result = await _reviewService.GetReceiverRatingAsync(accountId);
 
+            
             if (result == null)
                 return Request.CreateResponse(HttpStatusCode.NotFound);
             else
             {
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }
-        }*/
+        }
 
     }
 }

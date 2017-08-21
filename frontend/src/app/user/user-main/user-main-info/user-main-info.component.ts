@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, Input} from '@angular/core';
 import { NgModel } from '@angular/forms';
 import {SuiModule} from 'ng2-semantic-ui';
 import { User } from '../../../models/user';
@@ -15,19 +15,14 @@ import { LocationService } from "../../../services/location.service";
 })
 export class UserMainInfoComponent implements OnInit {
   @Input() user: User;
-  @ViewChild(AgmMap) private map: any;
-    location: Location;
 
   lat: number = 48.464921;
   lng: number = 35.045798;
-  rating: Rating;
-  constructor(private userService: UserService,private locationService : LocationService) { }
+  rating: Rating = new Rating();
+  constructor(private userService: UserService) {}
   ngOnInit() { 
-    // this.userService.getRating(this.user.Id)
-    // .then(resp => this.rating = resp.body as Rating);
-    this.rating = new Rating();
-    this.rating.Average = 4;
-    this.rating.ReviewsCount = 3;
+     this.userService.getRating(this.user.Id)
+     .then(resp => this.rating = resp.body as Rating);
   }
   mapClicked($event: MouseEvent){
     this.lat=$event.clientX;
