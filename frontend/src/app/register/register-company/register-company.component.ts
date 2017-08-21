@@ -20,7 +20,6 @@ export class RegisterCompanyComponent implements OnInit {
 
   name: string;
   mode: string;
-  error: boolean = false;
   phone: string;
   description: string;
   staff: number;
@@ -33,11 +32,9 @@ export class RegisterCompanyComponent implements OnInit {
 
   ngOnInit() {
     this.mode = 'date';
-  }
-
-  valid(): boolean {
-    return this.foundation !== undefined && this.staff != undefined && this.phone != undefined
-      && this.description !== undefined;
+    this.email = this.social.email || null;
+    this.phone = this.social.phoneNumber || null;
+    this.name = this.social.displayName || null;
   }
 
   aggregateInfo(): Company {
@@ -55,9 +52,8 @@ export class RegisterCompanyComponent implements OnInit {
     return info;
   }
 
-  confirmRegister() {
-    if (this.valid()) {
-      this.error = false;
+  confirmRegister(formData) {
+    if (formData.valid) {
       let regInfo = this.aggregateInfo();
       this.registerService.confirmCompany(regInfo).then(resp => {
         this.modal.deny(null);
@@ -65,8 +61,6 @@ export class RegisterCompanyComponent implements OnInit {
         this.authEventService.signIn();
         this.helperService.redirectAfterAuthentication();
       });
-    } else {
-      this.error = true;
     }
   }
 }
