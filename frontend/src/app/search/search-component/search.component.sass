@@ -1,91 +1,80 @@
 @import "../../../global-style-variables.sass";
 
-.search-wrapper 
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+.ui.grid
+    color: gray;
 
-.companies-container 
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    width: 60%;
-    height: auto;
-    margin: 0 0 30px 0;
-    padding: 20px;
+.settings-container
+    padding-top: 35px !important;
+    padding-left: 45px !important;
+    padding-right: 15px !important;
 
-.filter-container 
-    width: 100%;
-    // height: 100px;
-
-.four.column.row 
-    padding-top: 0;
-
-.search-input 
-    height: 41px;
-
-.datepicker 
-    height: 41px !important;
-    // max-width: 70%;
+.calendar.icon
+    margin-left: 10px !important;
 
 .btn-search 
-    // width: 170px;
-    height: 41px;
+    width: 100%;
+    height: 100%;
     color: white;
     background-color: $primary-color;
-    font-size: 16px;
 
-.separator-horiz 
-    width: 100%;
-    margin: 20px;
-    background-color: #DEDEDE;
-    border-bottom: 2px solid #EFEFEF;
+.gray
+    color: gray !important;
 
-.companies 
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;  
-    justify-content: center;
-    margin: 20px;   
+.button-right
+    float: right;
 
-.page-container 
-    margin: 0 auto;
+.ui.divider
+    margin-left: 0 !important;
+    margin-right: 0 !important;
 
-.company 
-    margin: 20px;
-    width: 240px;
-    height: 280px;
-    color: gray;
-    background-color: white;
+.margin-left
+    margin-left: 10px;
 
-.company img 
-    width: 240px;
-    height: 210px; 
+.margin-right
+    margin-right: 10px;
+    
+.cell
+    height: 378px;
+    margin-top: 20px !important;
+
+.ui.fluid.image
+    height: 260px;
     object-fit: cover;
 
-.company-name 
-    margin: 10px 0;
-    font-size: 18px;
-    font-weight: bold;
+h3, h4, h5
+    color: gray;
 
-.company-detail 
+h3
+    margin-top: 5px;
+
+.categories-container
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
+    margin: 5px 0;
 
-.company-detail p 
-    margin: 0;
+.categories-container h5
+    margin: 0 5px 0 0;
+
+.flex-centered
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
 
 .map-container 
     position: fixed;
     right: 20px;
-    top: 188px;
-    width: 38%;
-    height: 60%;    
+    top: calc(20px + #{$header-height});
+    width: 34%;
+    height: 460px;    
     background-color: gray;
 
-.map 
+.map
     height: 100%;
+
+
+
+
+
+

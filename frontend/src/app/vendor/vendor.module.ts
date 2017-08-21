@@ -27,16 +27,18 @@ import { DataService } from "../services/data.service";
 import { LocationService } from "../services/location.service";
 import { VendorEditComponent } from './vendor-edit/vendor-edit.component';
 import { VendorEditInfoComponent } from './vendor-edit/vendor-edit-info/vendor-edit-info.component';
+import { SharedModule } from "../shared/shared.module";
 
 @NgModule({
   imports: [
-    CommonModule,
     VendorRoutingModule,
     FormsModule,
     SuiModule,
     BookModule,
     MapModule,
-    SignBlockModule
+    SignBlockModule,
+    CommonModule,
+    SharedModule
   ],
   declarations: [
     VendorDetailsComponent,
@@ -46,7 +48,7 @@ import { VendorEditInfoComponent } from './vendor-edit/vendor-edit-info/vendor-e
     VendorProfilePortfolioComponent,
     VendorsComponent,
     VendorEditComponent,
-    VendorEditInfoComponent,
+    VendorEditInfoComponent
   ],
   providers: [
     DataService,

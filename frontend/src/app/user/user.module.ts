@@ -18,7 +18,7 @@ import { UserService } from '../services/user.service';
 import { DataService } from "../services/data.service";
 import { AgmCoreModule } from "@agm/core";
 import { environment } from "../../environments/environment";
-import {ImageCropperComponent} from 'ng2-img-cropper';
+import { SharedModule } from "../shared/shared.module";
 
 @NgModule({
     imports: [
@@ -29,8 +29,8 @@ import {ImageCropperComponent} from 'ng2-img-cropper';
         CommonModule,
         UserRoutingModule,
         HttpModule,
-        FormsModule
-
+        FormsModule,
+        SharedModule
     ],
     declarations: [
         UserComponent,
@@ -38,8 +38,7 @@ import {ImageCropperComponent} from 'ng2-img-cropper';
         UserProfileComponent,
         UserHistoryComponent,
         UserTasksComponent,
-        UserMessagesComponent,
-        ImageCropperComponent
+        UserMessagesComponent
     ],
     providers: [
         DataService,
