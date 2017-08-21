@@ -54,7 +54,8 @@ export class SearchComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.getParameters();
     this.createMockSettings();
-    this.createMockCompanies(20);
+    // this.createMockCompanies(20);
+    this.getCompanies();
     this.initContent();
   }
 
@@ -86,6 +87,15 @@ export class SearchComponent implements OnInit, OnDestroy {
       this.markers.push(marker);
       // this.positions.push([company.Location.Latitude, company.Location.Longitude]);
     }
+  }
+
+  getCompanies() {
+    this.companyService.getCompanies()
+    .then(
+      res => {
+       this.companies = res;
+      }
+    );
   }
 
   initContent() {

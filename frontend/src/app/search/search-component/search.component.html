@@ -105,18 +105,19 @@
           </div>
       </div>
       <div class="ui divider"></div>
-      <div class="ui grid">
+      <div *ngIf="companies" class="ui grid">
         <div class="three column row remove-padding-top">
           <div class="column cell" *ngFor="let company of companies.slice((selectedPage - 1) * pageSize, selectedPage * pageSize)">
             <a href="/company/{{company.Id}}" class="ui medium image">
               <img class="ui fluid image" src="{{company.Avatar}}"/>
               <div class="row">
-                <h3>{{company.Name}} ({{company.FoundationDate.getFullYear()}})</h3>
+                <!-- <h3>{{company.Name}} ({{company.FoundationDate.getFullYear()}})</h3> -->
+                <h3>{{company.Name}}</h3>
               </div>
               <div class="row">
                 <h4>{{company.Location.City}}, {{company.Location.Adress}}</h4>
               </div>
-              <div class="categories-container">
+              <!-- <div class="categories-container">
                 <h5 *ngFor="let category of company.Categories">{{category.Name}}</h5>
               </div>
               <div class="ui grid">
@@ -131,12 +132,12 @@
                     {{company.Vendors.length}} vendors
                   </div>
                 </div>
-              </div>
+              </div> -->
             </a>
           </div>
         </div>
       </div>
-      <div class="flex-centered"> 
+      <div *ngIf="companies.length > 12" class="flex-centered"> 
         <sui-pagination [collectionSize]="companies.length"
                         [pageSize]="pageSize"
                         [maxSize]="maxSize"
