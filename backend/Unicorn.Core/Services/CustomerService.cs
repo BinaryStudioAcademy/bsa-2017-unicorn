@@ -86,7 +86,14 @@ namespace Unicorn.Core.Services
                 await _unitOfWork.SaveAsync();
             }
         }
-
+        public async Task<long> GetUserAccountIdAsync(long id)
+        {
+            var user = await _unitOfWork.CustomerRepository.Query
+                .Include(v => v.Person)
+                .Include(v => v.Person.Account)
+                .SingleAsync(x => x.Id == id);
+            return user.Person.Account.Id;
+        }
         public async Task<object> GetCustomerAsync(long id)
         {
             var customer = await _unitOfWork.CustomerRepository.

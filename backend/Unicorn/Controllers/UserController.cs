@@ -17,10 +17,12 @@ namespace Unicorn.Controllers
     public class UserController : ApiController
     {
         private ICustomerService _customerService;
+        private IReviewService _reviewService;
 
-        public UserController(ICustomerService customerService)
+        public UserController(ICustomerService customerService, IReviewService reviewService)
         {
             _customerService = customerService;
+            _reviewService = reviewService;
         }
         
         [HttpGet]
@@ -46,6 +48,32 @@ namespace Unicorn.Controllers
             else
                 return Request.CreateResponse(HttpStatusCode.OK, result);
         }
+        [HttpGet]
+        [Route("{id}/reviews")]
+        public async Task<HttpResponseMessage> GetUserReviews(long id)
+        {
+            var result = await _reviewService.GetByReceiverIdAsync(id);
+
+            if (result == null)
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            else
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+     /*   [HttpGet]
+        [Route("{id}/rating")]
+        public async Task<HttpResponseMessage> GetUserRating(long id)
+        {
+            var accountId = await _customerService.GetUserAccountIdAsync(id);
+            var result = await _reviewService.GetReceiverRatingAsync(accountId);
+
+            if (result == null)
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+        }*/
 
     }
 }
