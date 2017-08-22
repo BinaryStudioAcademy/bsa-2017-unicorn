@@ -72,6 +72,11 @@ export class VendorService {
       .catch(err => alert(err));
   }
 
+  postVendorWork(vendorId: number, work: Work): Promise<any> {
+    return this.dataService.postFullRequest<Work[]>(`${this.apiController}/${vendorId}/works`, work)
+      .catch(err => alert(err));
+  }
+
   postVendorPorfolio(vendorId: number, item: PortfolioItem): Promise<any> {
     return this.dataService.postFullRequest<PortfolioItem>(`${this.apiController}/${vendorId}/portfolio`, item)
       .catch(err => alert(err));
@@ -94,6 +99,16 @@ export class VendorService {
 
   updateOrder(id: number, order: VendorBook): Promise<any> {
     return this.dataService.putFullRequest<VendorBook[]>(`${this.apiController}/${id}/orders/${order.Id}`, order)
+      .catch(err => alert(err));
+  }
+
+  updateVendorWork(vendorId: number, workId: number, work: Work): Promise<any> {
+    return this.dataService.putFullRequest<Work>(`${this.apiController}/${vendorId}/works/${workId}`, work)
+      .catch(err => alert(err));
+  }
+
+  removeVendorWork(vendorId: number, workId: number, work: Work): Promise<any> {
+    return this.dataService.deleteFullRequest<Work[]>(`${this.apiController}/${vendorId}/works/${workId}`, work)
       .catch(err => alert(err));
   }
 }

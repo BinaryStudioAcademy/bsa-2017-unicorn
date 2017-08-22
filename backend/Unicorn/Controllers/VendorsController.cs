@@ -26,6 +26,7 @@ namespace Unicorn.Controllers
             IPortfolioService portfolioService, 
             IBookService bookService,
             IHistoryService historyService,
+            IWorkService workService,
             IRatingService ratingService)
         {
             _vendorService = vendorService;
@@ -33,8 +34,11 @@ namespace Unicorn.Controllers
             _portfolioService = portfolioService;
             _bookService = bookService;
             _historyService = historyService;
+            _workService = workService;
             _ratingService = ratingService;
         }
+
+        #region Get
 
         [HttpGet]
         [Route("")]
@@ -49,20 +53,6 @@ namespace Unicorn.Controllers
         [Route("{id}")]
         public async Task<HttpResponseMessage> GetById(long id)
         {
-            var result = await _vendorService.GetByIdAsync(id);
-
-            if (result == null)
-                return Request.CreateResponse(HttpStatusCode.NotFound);
-            else
-                return Request.CreateResponse(HttpStatusCode.OK, result);
-        }
-
-        [HttpPut]
-        [Route("{id}")]
-        public async Task<HttpResponseMessage> UpdateVendor(long id, [FromBody]ShortVendorDTO vendor)
-        {
-            await _vendorService.UpdateAsync(vendor);
-
             var result = await _vendorService.GetByIdAsync(id);
 
             if (result == null)
@@ -119,22 +109,6 @@ namespace Unicorn.Controllers
                 return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
-        [HttpPut]
-        [Route("{id}/orders/{orderId}")]
-        public async Task<HttpResponseMessage> UpdateVendor(long id, long orderId, [FromBody]VendorBookDTO order)
-        {
-            var book = await _bookService.GetByIdAsync(orderId);
-            book.Status = order.Status;
-            await _bookService.Update(book);
-
-            var result = await _bookService.GetVendorOrdersAsync(orderId);
-
-            if (result == null)
-                return Request.CreateResponse(HttpStatusCode.NotFound);
-            else
-                return Request.CreateResponse(HttpStatusCode.OK, result);
-        }
-
         [HttpGet]
         [Route("{id}/contacts")]
         public async Task<HttpResponseMessage> GetVendorContacts(long id)
@@ -180,6 +154,9 @@ namespace Unicorn.Controllers
             else
                 return Request.CreateResponse(HttpStatusCode.OK, result);
         }
+#endregion
+        
+        #region Post
 
         [HttpPost]
         [Route("{id}/portfolio")]
@@ -189,11 +166,92 @@ namespace Unicorn.Controllers
             return Request.CreateResponse(HttpStatusCode.Created);
         }
 
+        [HttpPost]
+        [Route("{id}/works")]
+        public async Task<HttpResponseMessage> CreateVendorWork(long id, [FromBody]WorkDTO workDto)
+        {
+            workDto.VendorId = id;
+            await _workService.CreateAsync(workDto);
+
+            var result = await _vendorService.GetVendorWorksAsync(id);
+
+            if (result == null)
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            else
+                return Request.CreateResponse(HttpStatusCode.Created, result);
+        }
+
+        #endregion
+
+        #region Put
+
+        [HttpPut]
+        [Route("{id}")]
+        public async Task<HttpResponseMessage> UpdateVendor(long id, [FromBody]ShortVendorDTO vendor)
+        {
+            await _vendorService.UpdateAsync(vendor);
+
+            var result = await _vendorService.GetByIdAsync(id);
+
+            if (result == null)
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            else
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+        [HttpPut]
+        [Route("{id}/orders/{orderId}")]
+        public async Task<HttpResponseMessage> UpdateVendor(long id, long orderId, [FromBody]VendorBookDTO order)
+        {
+            var book = await _bookService.GetByIdAsync(orderId);
+            book.Status = order.Status;
+            await _bookService.Update(book);
+
+            var result = await _bookService.GetVendorOrdersAsync(orderId);
+
+            if (result == null)
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            else
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+
+        [HttpPut]
+        [Route("{id}/works/{workId}")]
+        public async Task<HttpResponseMessage> UpdateVendorWork(long id, long workId, [FromBody]WorkDTO workDto)
+        {
+            await _workService.UpdateAsync(workDto);
+
+            return Request.CreateResponse(HttpStatusCode.OK);
+        }
+
+
+        #endregion
+
+        #region Delete
+
+        [HttpDelete]
+        [Route("{id}/works/{workId}")]
+        public async Task<HttpResponseMessage> UpdateVendorWork(long id, long workId)
+        {
+            await _workService.RemoveByIdAsync(workId);
+
+            var result = await _vendorService.GetVendorWorksAsync(id);
+
+            if (result == null)
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            else
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+        #endregion
+
         private IVendorService _vendorService;
         private IReviewService _reviewService;
         private IPortfolioService _portfolioService;
         private IBookService _bookService;
         private IHistoryService _historyService;
         private IRatingService _ratingService;
+        private IWorkService _workService;
     }
 }

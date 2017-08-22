@@ -4,14 +4,14 @@
             <div class="sixteen wide column container">
                 <div class="user-header" id="user-header" [style.backgroundImage]="backgroundUrl">
 
-                    <div class="avatar" *ngIf="user!== undefined">
-                        <div class="ui small circular image">
-                            <img id="user-avatar" src="{{getImage()}}" />
-                        </div>
+                <div class="ui small circular image" *ngIf="user!== undefined">
+                    <div class="avatarMain">
+                        <img id="user-avatar" src="{{getImage()}}" />
                     </div>
-                    <div class="user-title" *ngIf="user!== undefined">
-                        <h3>{{user.Name}} {{user.SurName}}</h3>
-                    </div>
+                </div>
+                <div class="user-title" *ngIf="user!== undefined">
+                    <h3>{{user.Name}} {{user.SurName}}</h3>
+                </div>
 
                 </div>
             </div>

@@ -45,7 +45,7 @@ export class ModalService {
         myReader.readAsDataURL(file);
     }
 
-    public openModal(modalTemplate: ModalTemplate<IContext, string, string>, activeModal: SuiActiveModal<IContext, {}, string>) {
+    public openModal(modalTemplate: ModalTemplate<IContext, string, string>) : SuiActiveModal<IContext, {}, string> {
       const config = new TemplateModalConfig<IContext, string, string>(modalTemplate);
       //config.closeResult = "closed!";
 
@@ -55,7 +55,7 @@ export class ModalService {
       //config.mustScroll = true;
       let that = this;
 
-      activeModal = this.suiModalService
+      return this.suiModalService
         .open(config)
         .onApprove(result => { /* approve callback */ })
         .onDeny(result => {

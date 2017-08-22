@@ -60,6 +60,7 @@
     <Compile Include="Entities\Account.cs" />
     <Compile Include="Entities\ContactProvider.cs" />
     <Compile Include="Entities\Rating.cs" />
+    <Compile Include="Entities\Enum\RoleType.cs" />
     <Compile Include="Entities\SocialAccount.cs" />
     <Compile Include="Entities\Book.cs" />
     <Compile Include="Entities\Contact.cs" />
