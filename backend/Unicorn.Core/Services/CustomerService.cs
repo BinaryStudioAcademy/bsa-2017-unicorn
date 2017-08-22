@@ -32,6 +32,12 @@ namespace Unicorn.Core.Services
             return result;
         }
 
+        public async Task<UserForOrder> GetForOder(long id)
+        {
+            var result = await GetCustomerAsync(id) as UserShortDTO;
+            return new UserForOrder() { Location = null, Phone = result.Phone }; // TODO: fix location
+        }
+
         public async Task CreateAsync(CustomerRegisterDTO customerDto)
         {
             var account = new Account();

@@ -1,10 +1,11 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { NgModel, NgForm } from '@angular/forms';
 
-import {SuiModule} from 'ng2-semantic-ui';
+import { SuiModule } from 'ng2-semantic-ui';
 import { BookOrderService } from '../../services/book-order.service';
-import { BookOrder } from '../../models/book/book-order';
+import { UserService } from '../../services/user.service';
 import { TokenHelperService } from '../../services/helper/tokenhelper.service';
+import { BookOrder } from '../../models/book/book-order';
 
 @Component({
   selector: 'app-book',
@@ -21,10 +22,11 @@ export class BookComponent implements OnInit {
 
   @ViewChild('bookForm') public bookForm: NgForm;
 
-  constructor(private bookOrderService: BookOrderService, private tokenHelper: TokenHelperService) { }
+  constructor(private bookOrderService: BookOrderService, private tokenHelper: TokenHelperService, private userService: UserService) { }
 
   ngOnInit() {
     this.formIsSended = false;
+
     this.book = {
       date: null,
       location: "",// TODO: get user location   
@@ -34,7 +36,9 @@ export class BookComponent implements OnInit {
       profileid: this.routeId,
       customerid: +this.tokenHelper.getClaimByName('profileid'),
       phone: ""
-    }    
+    }
+
+    this.getUserData();
   }
 
   makeOrder() {
@@ -56,6 +60,18 @@ export class BookComponent implements OnInit {
         this.onSending = !this.onSending;
         alert('Error!!!');
         console.log(err);
+      });
+  }
+
+  private getUserData() {
+    this.userService.getUserForOrder(this.book.customerid)
+      .then(user => {
+        this.book.location = user.Location;
+        this.book.phone = user.Phone;
+        console.log(user);
+      })
+      .catch(err => {
+
       });
   }
 }
