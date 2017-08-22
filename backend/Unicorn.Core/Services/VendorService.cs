@@ -71,7 +71,7 @@ namespace Unicorn.Core.Services
                 .Include(v => v.Works)
                 .SingleAsync(x => x.Id == id);
 
-            var works = vendor.Works;
+            var works = vendor.Works.Where(w => !w.IsDeleted);
             return works.GroupBy(w => w.Subcategory.Category)
                 .Select(g => new CategoryDTO()
                 {
@@ -196,7 +196,7 @@ namespace Unicorn.Core.Services
             var vendor = await _unitOfWork.VendorRepository.Query
                 .Include(v => v.Works)
                 .SingleAsync(v => v.Id == id);
-            return vendor.Works.Select(w => new WorkDTO()
+            return vendor.Works.Where(w => !w.IsDeleted).Select(w => new WorkDTO()
             {
                 Id = w.Id,
                 Category = w.Subcategory.Category.Name,
@@ -204,8 +204,9 @@ namespace Unicorn.Core.Services
                 Subcategory = w.Subcategory.Name,
                 SubcategoryId = w.Subcategory.Id,
                 Name = w.Name,
-                Description = w.Description
-            });
+                Description = w.Description,
+                Icon = w.Icon
+            }).ToList();
         }
     }
 }
