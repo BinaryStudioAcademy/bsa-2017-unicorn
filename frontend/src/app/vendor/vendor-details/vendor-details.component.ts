@@ -133,6 +133,7 @@ export class VendorDetailsComponent implements OnInit {
       this.photoService.saveAvatar(path)
       .then(resp => {
         this.vendor.Avatar = this.data.image;
+
         this.activeModal.deny('');    
       })
       .catch(err => console.log(err));
@@ -142,6 +143,7 @@ export class VendorDetailsComponent implements OnInit {
   }
 
   public openModal() {
+    debugger;
     this.modalService.openModal(this.modalTemplate, this.activeModal);
   }
 }
