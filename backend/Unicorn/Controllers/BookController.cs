@@ -11,7 +11,6 @@ using Unicorn.Shared.DTOs.Book;
 
 namespace Unicorn.Controllers
 {
-    [RoutePrefix("books")]
     [EnableCors("*", "*", "*")]
     public class BookController : ApiController
     {
