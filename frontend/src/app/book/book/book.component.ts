@@ -13,6 +13,8 @@ import { TokenHelperService } from '../../services/helper/tokenhelper.service';
 })
 export class BookComponent implements OnInit {
   book: BookOrder;
+  formIsSended: boolean;
+
   @Input() routePath: string;
   @Input() routeId: number;
 
@@ -21,6 +23,7 @@ export class BookComponent implements OnInit {
   constructor(private bookOrderService: BookOrderService, private tokenHelper: TokenHelperService) { }
 
   ngOnInit() {
+    this.formIsSended = false;
     this.book = {
       date: null,
       location: "",// TODO: get user location   
@@ -41,7 +44,10 @@ export class BookComponent implements OnInit {
 
   private order() {
     this.bookOrderService.createOrder(this.book)
-      .then(x => alert('DONE!'))
+      .then(x => {
+        this.formIsSended = true;
+        alert('DONE');
+      })
       .catch(err => {
         alert('Error!!!');
         console.log(err);

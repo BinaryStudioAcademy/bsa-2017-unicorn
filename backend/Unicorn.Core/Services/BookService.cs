@@ -141,7 +141,7 @@ namespace Unicorn.Core.Services
         {
             Work work = await _unitOfWork.WorkRepository.GetByIdAsync(book.WorkId);
             Customer customer = await _unitOfWork.CustomerRepository.GetByIdAsync(book.CustomerId);
-            Location location = await _unitOfWork.LocationRepository.GetByIdAsync(book.Location.Id); // TODO: if not exists or changed by user?
+            //Location location = await _unitOfWork.LocationRepository.GetByIdAsync(book.Location.Id); // TODO: if not exists or changed by user?
 
             Company company = null;
             Vendor vendor = null;
@@ -162,7 +162,7 @@ namespace Unicorn.Core.Services
                 Customer = customer,
                 Date = book.Date,
                 Description = book.Description,
-                Location = location,
+                Location = null,
                 Status  = BookStatus.Accepted,
                 Vendor = vendor,
                 Work = work

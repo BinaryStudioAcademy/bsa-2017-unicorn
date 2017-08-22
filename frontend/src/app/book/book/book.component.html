@@ -1,4 +1,4 @@
-<div *ngIf="book !== undefined">
+<div *ngIf="!formIsSended;else formSended">
     <form class="ui form book-form" name="bookForm" #bookForm="ngForm">
         <div class="field">
             <label>Choose work</label>
@@ -35,3 +35,8 @@
         </div>
     </form>
 </div>
+<ng-template #formSended>
+    <div class="ui success message">
+        DONE!
+    </div>
+</ng-template>
