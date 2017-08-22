@@ -1,6 +1,6 @@
-﻿namespace Unicorn.Core.Services.Helpers
+﻿namespace Unicorn.DataAccess.Entities.Enum
 {
-    public enum AccountRoles
+    public enum RoleType
     {
         Guest = 1,
         Customer,

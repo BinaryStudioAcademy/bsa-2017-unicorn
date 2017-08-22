@@ -4,13 +4,12 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Unicorn.Core.Interfaces;
-using Unicorn.Core.Services.Helpers;
 using Unicorn.DataAccess.Entities;
 using Unicorn.DataAccess.Interfaces;
 using Unicorn.Shared.DTOs.Register;
-using Unicorn.Shared.DTOs;
 using Unicorn.Shared.DTOs.User;
 using System.Data.Entity;
+using Unicorn.DataAccess.Entities.Enum;
 
 namespace Unicorn.Core.Services
 {
@@ -36,7 +35,7 @@ namespace Unicorn.Core.Services
         public async Task CreateAsync(CustomerRegisterDTO customerDto)
         {
             var account = new Account();
-            var role = await _unitOfWork.RoleRepository.GetByIdAsync((long)AccountRoles.Customer);
+            var role = await _unitOfWork.RoleRepository.GetByIdAsync((long)RoleType.Customer);
             var socialAccounts = new List<SocialAccount>();
             var socialAccount = new SocialAccount();
             var customer = new Customer();

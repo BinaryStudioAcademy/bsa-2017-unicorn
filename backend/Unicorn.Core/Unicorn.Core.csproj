@@ -95,7 +95,6 @@
     <Compile Include="Services\CompanyPageService.cs" />
     <Compile Include="Services\CompanyService.cs" />
     <Compile Include="Services\CustomerService.cs" />
-    <Compile Include="Services\Helpers\AccountRoles.cs" />
     <Compile Include="Services\HistoryService.cs" />
     <Compile Include="Services\LocationService.cs" />
     <Compile Include="Services\PermissionService.cs" />

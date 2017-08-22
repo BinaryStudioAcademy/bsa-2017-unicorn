@@ -12,6 +12,6 @@ export class HelperService {
   public redirectAfterAuthentication() {
     const userClaims = this.tokenHelper.getAllClaims();
     let path = new RoleRouter().getRouteByRole(userClaims['roleid']);
-    this.router.navigate([path, userClaims['id']]);
+    this.router.navigate([path, userClaims['profileid']]);
   }
 }
