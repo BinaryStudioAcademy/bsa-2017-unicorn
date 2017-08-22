@@ -7,15 +7,19 @@ namespace Unicorn.DataAccess.Entities
     public class Work : IEntity
     {
         public long Id { get; set; }
+
         public bool IsDeleted { get; set; }
+
         public string Name { get; set; }
+
+        public long Orders { get; set; }
 
         public string Description { get; set; }
 
         public virtual Subcategory Subcategory { get; set; }
 
-        public virtual ICollection<Vendor> Vendors { get; set; }
+        public virtual Vendor Vendor { get; set; }
 
-        public virtual ICollection<Company> Companies { get; set; }
+        public virtual Company Company { get; set; }
     }
 }

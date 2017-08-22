@@ -793,6 +793,7 @@ namespace Unicorn.DataAccess.Context
                 IsDeleted = false,
                 Name = "laundress",
                 Subcategory = subcategory1,
+                Orders = 10
             };
 
             Work work2 = new Work()
@@ -801,7 +802,8 @@ namespace Unicorn.DataAccess.Context
                 Description = "Photosession, wedding photosessions etc.",
                 IsDeleted = false,
                 Name = "Photographer",
-                Subcategory = subcategory5
+                Subcategory = subcategory5,
+                Orders = 20
             };
 
             Work work3 = new Work()
@@ -810,7 +812,8 @@ namespace Unicorn.DataAccess.Context
                 Description = "Care of your pets",
                 IsDeleted = false,
                 Name = "Vet",
-                Subcategory = subcategory2
+                Subcategory = subcategory2,
+                Orders = 30
             };
 
             Work work4 = new Work()
@@ -819,7 +822,8 @@ namespace Unicorn.DataAccess.Context
                 Description = "Appartmen repair",
                 IsDeleted = false,
                 Name = "Builder",
-                Subcategory = subcategory4
+                Subcategory = subcategory4,
+                Orders = 40
             };
 
             Work work5 = new Work()
@@ -828,7 +832,8 @@ namespace Unicorn.DataAccess.Context
                 Description = "Driving services",
                 IsDeleted = false,
                 Name = "Driver",
-                Subcategory = subcategory3
+                Subcategory = subcategory3,
+                Orders = 50
             };
 
             Work work6 = new Work()
@@ -837,7 +842,8 @@ namespace Unicorn.DataAccess.Context
                 Description = "C# senior dev",
                 IsDeleted = false,
                 Name = "Developer",
-                Subcategory = subcategory6
+                Subcategory = subcategory6,
+                Orders = 60
             };
 
             context.Works.AddRange(new List<Work>() { work1, work2, work3, work4, work5, work6 });
