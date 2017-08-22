@@ -1,5 +1,5 @@
 import { Component, OnInit, Input,ViewChild, AfterViewChecked } from '@angular/core';
-import { NgModel } from '@angular/forms';
+import { NgModel, NgForm } from '@angular/forms';
 import {SuiModule} from 'ng2-semantic-ui';
 import { User } from '../../../models/user';
 import { AgmMap } from "@agm/core";
