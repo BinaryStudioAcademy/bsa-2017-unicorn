@@ -14,6 +14,7 @@ import { TokenHelperService } from '../../services/helper/tokenhelper.service';
 export class BookComponent implements OnInit {
   book: BookOrder;
   formIsSended: boolean;
+  onSending: boolean;
 
   @Input() routePath: string;
   @Input() routeId: number;
@@ -43,12 +44,15 @@ export class BookComponent implements OnInit {
   }
 
   private order() {
+    this.onSending = !this.onSending;
     this.bookOrderService.createOrder(this.book)
       .then(x => {
+        this.onSending = !this.onSending;
         this.formIsSended = true;
         alert('DONE');
       })
       .catch(err => {
+        this.onSending = !this.onSending;
         alert('Error!!!');
         console.log(err);
       });

@@ -142,6 +142,8 @@ namespace Unicorn.Core.Services
             Work work = await _unitOfWork.WorkRepository.GetByIdAsync(book.WorkId);
             Customer customer = await _unitOfWork.CustomerRepository.GetByIdAsync(book.CustomerId);
             //Location location = await _unitOfWork.LocationRepository.GetByIdAsync(book.Location.Id); // TODO: if not exists or changed by user?
+            // TODO: user phone number in book, get location user and if changed create new. after send form show message (with contact vendors etc.)
+
 
             Company company = null;
             Vendor vendor = null;

@@ -1,5 +1,5 @@
 <div *ngIf="!formIsSended;else formSended">
-    <form class="ui form book-form" name="bookForm" #bookForm="ngForm">
+    <form class="ui form book-form" [class.loading]="onSending" name="bookForm" #bookForm="ngForm">
         <div class="field">
             <label>Choose work</label>
             <select class="ui fluid dropdown">
