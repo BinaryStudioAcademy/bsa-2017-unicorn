@@ -14,8 +14,10 @@ namespace Unicorn.DataAccess.Entities
 
         public virtual Subcategory Subcategory { get; set; }
 
-        public virtual ICollection<Vendor> Vendors { get; set; }
+        public string Icon { get; set; }
 
-        public virtual ICollection<Company> Companies { get; set; }
+        public virtual Vendor Vendor { get; set; }
+
+        public virtual Company Company { get; set; }
     }
 }
