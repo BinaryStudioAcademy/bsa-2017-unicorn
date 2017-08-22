@@ -139,6 +139,7 @@ export class UserDetailsComponent implements OnInit {
   }
 
   public openModal() {
+    debugger;
     this.modalService.openModal(this.modalTemplate, this.activeModal);
   }
 }
