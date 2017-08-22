@@ -127,6 +127,33 @@ namespace Unicorn.Controllers
             return NotFound();
         }
 
+        // POST: company-works
+        [HttpPost]
+        [Route("company-works")]
+        public async Task PostCompanyWorks([FromBody]CompanyWorks company)
+        {
+            await _companyService.SaveCompanyWorks(company);
+        }
+
+        // GET: company-books/5
+        [HttpGet]
+        [Route("company-books/{id}")]
+        public async Task<IHttpActionResult> GetCompanyBooks(int id)
+        {
+            var result = await _companyService.GetCompanyBooks(id);
+            if (result != null)
+                return Json(result);
+            return NotFound();
+        }
+
+        // POST: company-books
+        [HttpPost]
+        [Route("company-books")]
+        public async Task PostCompanyBooks([FromBody]CompanyBooks company)
+        {
+            await _companyService.SaveCompanyBooks(company);
+        }
+
         //// PUT: api/Company/5
         //public void Put(int id, [FromBody]string value)
         //{
