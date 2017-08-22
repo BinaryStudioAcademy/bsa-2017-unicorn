@@ -1294,7 +1294,8 @@ namespace Unicorn.DataAccess.Context
                 Description = "clean clothes and irom it, output 3 spots ",
                 Company = company1,
                 Status = BookStatus.InProgress,
-                Customer = customer1
+                Customer = customer1,               
+                CustomerPhone = "+123 456 789"
             };
 
             Book book2 = new Book()
@@ -1315,7 +1316,8 @@ namespace Unicorn.DataAccess.Context
                     Longitude = 30.439,
                     IsDeleted = false,
                     PostIndex = "03110"
-                }
+                },
+                CustomerPhone = "+380 111 222 333"
             };
 
             Book book3 = new Book()
@@ -1336,7 +1338,8 @@ namespace Unicorn.DataAccess.Context
                     IsDeleted = false,
                     PostIndex = "03110"
                 },
-                Customer = customer3
+                Customer = customer3,
+                CustomerPhone = "8 800 555 3535"
             };
 
             Book book4 = new Book()
@@ -1348,7 +1351,8 @@ namespace Unicorn.DataAccess.Context
                 Description = "rebuild 3 walls",
                 Status = BookStatus.Accepted,
                 Customer = customer3,
-                Company = company2
+                Company = company2,
+                CustomerPhone = "+380 50 40 30 20 10"
             };
 
 
@@ -1361,7 +1365,8 @@ namespace Unicorn.DataAccess.Context
                 Description = "Take out the trash",
                 Status = BookStatus.Accepted,
                 Customer = customer1,
-                Company = company3
+                Company = company3,
+                CustomerPhone = "02"
             };
 
             Book book6 = new Book()
@@ -1382,7 +1387,8 @@ namespace Unicorn.DataAccess.Context
                     Longitude = 30.439,
                     IsDeleted = false,
                     PostIndex = "03110"
-                }
+                },
+                CustomerPhone = "+100 500"
             };
 
             context.Books.AddRange(new List<Book>() { book1, book2, book3, book4, book5, book6 });

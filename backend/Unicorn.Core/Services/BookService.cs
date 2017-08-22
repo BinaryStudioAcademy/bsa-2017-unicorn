@@ -162,6 +162,7 @@ namespace Unicorn.Core.Services
                 IsDeleted = false,
                 Company = company,
                 Customer = customer,
+                CustomerPhone = book.CustomerPhone,
                 Date = book.Date,
                 Description = book.Description,
                 Location = null,

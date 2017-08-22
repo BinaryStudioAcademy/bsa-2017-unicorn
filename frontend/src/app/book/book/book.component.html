@@ -21,7 +21,7 @@
             <div *ngIf="location.invalid && (location.dirty)" class="valid-error">* Required</div>
         </div>
         <div class="field">
-            <input required pattern="^\+(?:[0-9]●?){6,14}[0-9]$" [(ngModel)]="book.contact" name="contact" placeholder="+380 (XX) XXXXXXX" #phonenumb="ngModel">
+            <input required pattern="^\+(?:[0-9]●?){6,14}[0-9]$" [(ngModel)]="book.phone" name="phone" placeholder="+380 (XX) XXXXXXX" #phonenumb="ngModel">
             <div *ngIf="phonenumb.invalid && (phonenumb.dirty)">
                 <div *ngIf="phonenumb.errors.required" class="valid-error">* Required</div>
                 <div *ngIf="phonenumb.errors.pattern" class="valid-error">* Invalid number</div>

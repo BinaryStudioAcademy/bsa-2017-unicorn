@@ -32,7 +32,8 @@ export class BookComponent implements OnInit {
       workid: 0, // TODO: selected work from dropdown
       profile: this.routePath,
       profileid: this.routeId,
-      customerid: +this.tokenHelper.getClaimByName('profileid')
+      customerid: +this.tokenHelper.getClaimByName('profileid'),
+      phone: ""
     }    
   }
 

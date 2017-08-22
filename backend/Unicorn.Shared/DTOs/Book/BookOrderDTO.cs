@@ -6,6 +6,7 @@ namespace Unicorn.Shared.DTOs.Book
     {
         public LocationDTO Location { get; set; }
         public long CustomerId { get; set; }
+        public string CustomerPhone { get; set; }
         public DateTime Date { get; set; }
         public string Description { get; set; }
         public string Profile { get; set; }
