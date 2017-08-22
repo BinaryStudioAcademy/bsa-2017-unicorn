@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using Unicorn.Core.Interfaces;
@@ -150,7 +151,6 @@ namespace Unicorn.Core.Services
                     Description = company.Description,
                     FoundationDate = company.FoundationDate,
                     Director = company.Director,
-                    Rating = company.Account.Rating,
                     City = company.Location.City,
                     ReviewsCount = reviews.Count(p => p.ToAccountId == company.Account.Id),
                     Works = company.Works.Select(z => new CompanyWork()
@@ -232,7 +232,6 @@ namespace Unicorn.Core.Services
                             FromAccountId = x.FromAccountId,
                             To = x.To,
                             ToAccountId = x.ToAccountId,
-                            Grade = x.Grade,
                             Description = x.Description,
                             BookId = x.BookId
                         }).ToList()
@@ -395,8 +394,16 @@ namespace Unicorn.Core.Services
             }
             return null;
         }
-            
-      
+
+        public async Task<long> GetCompanyAccountId(long id)
+        {
+            var company = await _unitOfWork.CompanyRepository.Query
+               .Include(v => v.Account)
+               .SingleAsync(x => x.Id == id);
+            return company.Account.Id;
+        }
+
+
 
         #endregion
     }

@@ -2,45 +2,35 @@
     <div class="column">
         <div class="column">
             <div class="ui form">
-                <div class="field">
-                    <h5>On Unicorn scince {{user.DateCreated | date:'mediumDate'}}</h5>
-                    <sui-rating [(ngModel)]="rating.Average" [isReadonly]="true"></sui-rating>
-                    <p>Reviews: {{rating.ReviewsCount}}</p>
-                    <h4>Name</h4>
-                    <div class="description flex-style">
-                        <a class="ui label contact">
-            {{user.Name}} {{user.SurName}} {{user.MiddleName}}
-                </a>
-                    </div>
-                    <div class="ui divider"></div>
-                    <h4>Birthday</h4>
-                    <div class="description flex-style">
-                        <a class="ui label contact">
+                <h5>&#160;On Unicorn since {{user.DateCreated | date:'mediumDate'}}</h5>
+                <sui-rating [(ngModel)]="rating" [isReadonly]="true"></sui-rating>
+                <a class="review-link">&#160;Reviews({{reviewsCount}})</a>
+                <h4 style="margin-top:15px;">Name</h4>
+                <a class="label" style="padding-top: 0px">{{user.Name}} {{user.SurName}} {{user.MiddleName}}
+                     </a>
+                <div class="ui divider" style="margin-top: 0px; margin-bottom: 10px;"></div>
+                <h4>Birthday</h4>
+                <a class="label" style="padding-top: 0px;">
             {{user.Birthday | date:'shortDate'}}
                 </a>
-                    </div>
-                    <h4>Phone</h4>
-                    <div class="description flex-style">
-                        <a class="ui label contact">
-                            <i class="colored call icon"></i> {{user.Phone}}
-                        </a>
-                    </div>
-                    <div class="ui divider"></div>
-                    <h4>Email</h4>
-                    <div class="description flex-style">
-                        <a class="ui label contact">
-                            <i class="colored mail icon"></i> {{user.Email}}
-                        </a>
-                    </div>
-                </div>
+                <div class="ui divider" style="margin-top: 0px; margin-bottom: 10px;"></div>
+                <h4>Phone</h4>
+                <a class="label" style="padding-top: 0px">
+                    <i class="colored call icon"></i> {{user.Phone}}
+                </a>
+                <div class="ui divider" style="margin-top: 0px; margin-bottom: 5px;"></div>
+                <h4>Email</h4>
+                <a class="label" style="padding-top: 0px ">
+                    <i class="colored mail icon "></i> {{user.Email}}
+                </a>
             </div>
         </div>
     </div>
-    <div class="column" style="padding-top:95px;">
+    <div class="column " style="padding-top: 30px;">
         <h4>Location</h4>
-        <div class="map">
-            <agm-map [latitude]="lat" [longitude]="lng" [zoom]="18">
-                <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+        <div class="map ">
+            <agm-map [latitude]="lat " [longitude]="lng " [zoom]="18 ">
+                <agm-marker [latitude]="lat " [longitude]="lng "></agm-marker>
             </agm-map>
         </div>
 

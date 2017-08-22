@@ -1,7 +1,8 @@
-<div *ngIf="user!== undefined" class="ui grid container remove-margin-top-bottom">
-    <div class="row remove-padding-top" *ngIf="user !== undefined">
-        <div class="sixteen wide column container">
-            <div class="user-header" id="user-header" [style.backgroundImage]="backgroundUrl">
+<div class="main-content">
+    <div *ngIf="user!== undefined" class="ui grid container remove-margin-top-bottom">
+        <div class="row remove-padding-top" *ngIf="user !== undefined">
+            <div class="sixteen wide column container">
+                <div class="user-header" id="user-header" [style.backgroundImage]="backgroundUrl">
 
                 <div class="ui small circular image" *ngIf="user!== undefined">
                     <div class="avatarMain">
@@ -12,35 +13,39 @@
                     <h3>{{user.Name}} {{user.SurName}}</h3>
                 </div>
 
-            </div>
-        </div>
-    </div>
-    <div class="sixteen wide column container">
-        <sui-tabset>
-            <div class="ui pointing secondary menu">
-                <a class="item" suiTabHeader="1">Info</a>
-                <a class="item" suiTabHeader="2">Reviews</a>
-            </div>
-            <div class="row">
-                <div class="ui grid container">
-                    <div class="row">
-                        <div class="sixteen wide container column">
-                            <div class="ui segment" suiTabContent="1">
-                                <app-user-main-info [user]="user"></app-user-main-info>
-                            </div>
-                        </div>
-                        <div class="sixteen wide container column">
-                            <div class="ui segment" suiTabContent="2">
-                                <app-user-main-reviews [user]="user"></app-user-main-reviews>
-                            </div>
-                        </div>
-
-                    </div>
                 </div>
             </div>
-        </sui-tabset>
-    </div>
+        </div>
+        <div class="sixteen wide column container">
+            <sui-tabset id="tabs">
+                <div class="ui pointing secondary menu">
+                    <a class="item" suiTabHeader="1">Info</a>
+                    <a class="item" suiTabHeader="2">Reviews</a>
+                </div>
+                <div class="row">
+                    <div class="ui grid container">
+                        <div class="row">
+                            <div class="sixteen wide container column">
+                                <div class="ui segment" suiTabContent="1">
+                                    <app-user-main-info [user]="user"></app-user-main-info>
+                                </div>
+                            </div>
+                            <div class="sixteen wide container column">
+                                <div class="ui segment" suiTabContent="2" id="tab2">
+                                    <app-user-main-reviews [user]="user"></app-user-main-reviews>
+                                </div>
+                            </div>
 
+                        </div>
+                    </div>
+                </div>
+            </sui-tabset>
+        </div>
+
+        <div *ngIf="user === undefined" class="ui active inverted dimmer" style="z-index: 0;">
+            <div class="ui text loader">Loading</div>
+        </div>
+    </div>
     <div *ngIf="user === undefined" class="ui active inverted dimmer" style="z-index: 0;">
         <div class="ui text loader">Loading</div>
     </div>

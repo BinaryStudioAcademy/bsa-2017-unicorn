@@ -26,7 +26,8 @@ namespace Unicorn.Controllers
             IPortfolioService portfolioService, 
             IBookService bookService,
             IHistoryService historyService,
-            IWorkService workService)
+            IWorkService workService,
+            IRatingService ratingService)
         {
             _vendorService = vendorService;
             _reviewService = reviewService;
@@ -34,6 +35,7 @@ namespace Unicorn.Controllers
             _bookService = bookService;
             _historyService = historyService;
             _workService = workService;
+            _ratingService = ratingService;
         }
 
         #region Get
@@ -136,14 +138,9 @@ namespace Unicorn.Controllers
         public async Task<HttpResponseMessage> GetVendorRating(long id)
         {
             var accountId = await _vendorService.GetVendorAccountIdAsync(id);
-            var result = await _reviewService.GetReceiverRatingAsync(accountId);
+            var result = await _ratingService.GetAvarageByRecieverId(accountId);
+            return Request.CreateResponse(HttpStatusCode.OK, result);
 
-            if (result == null)
-                return Request.CreateResponse(HttpStatusCode.NotFound);
-            else
-            {
-                return Request.CreateResponse(HttpStatusCode.OK, result);
-            }
         }
 
         [HttpGet]
@@ -254,6 +251,7 @@ namespace Unicorn.Controllers
         private IPortfolioService _portfolioService;
         private IBookService _bookService;
         private IHistoryService _historyService;
+        private IRatingService _ratingService;
         private IWorkService _workService;
     }
 }

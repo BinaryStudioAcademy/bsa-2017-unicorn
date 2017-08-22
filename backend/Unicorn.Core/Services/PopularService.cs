@@ -13,10 +13,12 @@ namespace Unicorn.Core.Services
     public class PopularService : IPopularService
     {
         private readonly IUnitOfWork _uow;
+        private readonly IRatingService _ratingService;
 
-        public PopularService(IUnitOfWork uow)
+        public PopularService(IUnitOfWork uow, IRatingService ratingService)
         {
             _uow = uow;
+            _ratingService = ratingService;
         }
 
         public async Task<List<PopularCategoryDTO>> GetPopularCategories()
@@ -40,34 +42,38 @@ namespace Unicorn.Core.Services
 
         public async Task<List<PerformerDTO>> GetPopularPerformers()
         {
-            var vendors = await _uow.VendorRepository
+            var vendorsList = await _uow.VendorRepository
                 .Query
                 .Include(v => v.Person)
                 .Include(v => v.Person.Account)
+                .ToListAsync();
+
+            var vendors = vendorsList
                 .Select(v => new PerformerDTO
                 {
                     Id = v.Id,
                     Avatar = v.Person.Account.Avatar,
                     Name = v.Person.Name,
-                    Rating = v.Person.Account.Rating,
+                    Rating = _ratingService.GetAvarageByRecieverId(v.Person.Account.Id).Result,
                     PerformerType = "vendor",
                     Link = "vendor/"+v.Id
-                })
-                .ToListAsync();
+                });
 
-            var companies = await _uow.CompanyRepository
+            var companiesList = await _uow.CompanyRepository
                 .Query
                 .Include(c => c.Account)
+                .ToListAsync();
+
+            var companies = companiesList
                 .Select(c => new PerformerDTO
                 {
                     Id = c.Id,
                     Avatar = c.Account.Avatar,
                     Name = c.Name,
-                    Rating = c.Account.Rating,
+                    Rating = _ratingService.GetAvarageByRecieverId(c.Account.Id).Result,
                     PerformerType = "company",
                     Link = "company/" + c.Id
-                })
-                .ToListAsync();
+                });
 
             var performers = vendors
                 .Concat(companies)
@@ -100,7 +106,7 @@ namespace Unicorn.Core.Services
                     Id = v.Vendor.Id,
                     Avatar = v.Vendor.Person.Account.Avatar,
                     Name = v.Vendor.Person.Name,
-                    Rating = v.Vendor.Person.Account.Rating,
+                    Rating = _ratingService.GetAvarageByRecieverId(v.Vendor.Person.Account.Id).Result,
                     PerformerType = "vendor",
                     Link = $"vendor/"+v.Vendor.Id
                 });
@@ -112,7 +118,7 @@ namespace Unicorn.Core.Services
                     Id = c.Company.Id,
                     Avatar = c.Company.Account.Avatar,
                     Name = c.Company.Name,
-                    Rating = c.Company.Account.Rating,
+                    Rating = _ratingService.GetAvarageByRecieverId(c.Company.Account.Id).Result,
                     PerformerType = "company",
                     Link = "company/"+c.Company.Id
                 });

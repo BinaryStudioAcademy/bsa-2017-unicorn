@@ -18,8 +18,6 @@ namespace Unicorn.Shared.DTOs
 
         public DateTime Date { get; set; }
 
-        public double Grade { get; set; }
-
         public string Description { get; set; }
 
         public long BookId { get; set; }

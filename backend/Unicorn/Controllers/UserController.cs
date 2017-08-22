@@ -18,11 +18,13 @@ namespace Unicorn.Controllers
     {
         private ICustomerService _customerService;
         private IReviewService _reviewService;
+        private IRatingService _ratingService;
 
-        public UserController(ICustomerService customerService, IReviewService reviewService)
+        public UserController(ICustomerService customerService, IReviewService reviewService, IRatingService ratingService)
         {
             _customerService = customerService;
             _reviewService = reviewService;
+            _ratingService = ratingService;
         }
         
         [HttpGet]
@@ -61,11 +63,11 @@ namespace Unicorn.Controllers
         }
 
         [HttpGet]
-        [Route("{id}/rating")]
-        public async Task<HttpResponseMessage> GetUserRating(long id)
+        [Route("{id}/ratings")]
+        public async Task<HttpResponseMessage> GetAllUserRatings(long id)
         {
             var accountId = await _customerService.GetUserAccountIdAsync(id);
-            var result = await _reviewService.GetReceiverRatingAsync(accountId);
+            var result = await _ratingService.GetByReceiverIdAsync(accountId);
 
             
             if (result == null)
@@ -75,6 +77,14 @@ namespace Unicorn.Controllers
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }
         }
-
+        [HttpGet]
+        [Route("{id}/rating")]
+        public async Task<HttpResponseMessage> GetUserRating(long id)
+        {
+            var accountId = await _customerService.GetUserAccountIdAsync(id);
+            var result = await _ratingService.GetAvarageByRecieverId(accountId);
+                 return Request.CreateResponse(HttpStatusCode.OK, result);
+            
+        }
     }
 }

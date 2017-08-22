@@ -6,7 +6,6 @@ import { User } from '../models/user'
 import {Book} from '../models/book/book.model'
 import {Vendor} from '../models/vendor.model'
 import { environment } from "../../environments/environment";
-import { Rating } from "../models/rating.model";
 import { Review } from "../models/review.model";
 
 @Injectable()
@@ -59,7 +58,7 @@ export class UserService {
       .catch(err => alert(err));
   }
   getRating(id: number): Promise<any> {
-    return this.dataService.getFullRequest<Rating>('users/'+id+'/rating')
+    return this.dataService.getFullRequest<number>('users/'+id+'/rating')
       .catch(err => alert(err));
   }
   getReviews(id: number): Promise<any> {
