@@ -10,6 +10,7 @@ using Unicorn.DataAccess.Interfaces;
 using Unicorn.Shared.DTOs.Register;
 using Unicorn.Shared.DTOs;
 using Unicorn.Shared.DTOs.User;
+using System.Data.Entity;
 
 namespace Unicorn.Core.Services
 {
@@ -17,11 +18,13 @@ namespace Unicorn.Core.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IBookService _bookservice;
+        private readonly IHistoryService _historyService;
 
-        public CustomerService(IUnitOfWork unitOfWork, IBookService bookservice)
+        public CustomerService(IUnitOfWork unitOfWork, IBookService bookservice, IHistoryService historyService)
         {
             _unitOfWork = unitOfWork;
             _bookservice = bookservice;
+            _historyService = historyService;
         }
 
         public async Task<object> GetById(long id)
@@ -61,7 +64,7 @@ namespace Unicorn.Core.Services
 
             customer.Person = person;
             customer.Books = new List<Book>();
-
+            customer.History = new List<History>();
             _unitOfWork.CustomerRepository.Create(customer);
             await _unitOfWork.SaveAsync();
         }
@@ -83,10 +86,20 @@ namespace Unicorn.Core.Services
                 await _unitOfWork.SaveAsync();
             }
         }
-
+        public async Task<long> GetUserAccountIdAsync(long id)
+        {
+            var user = await _unitOfWork.CustomerRepository.Query
+                .Include(v => v.Person)
+                .Include(v => v.Person.Account)
+                .SingleAsync(x => x.Id == id);
+            return user.Person.Account.Id;
+        }
         public async Task<object> GetCustomerAsync(long id)
         {
-            var customer = await _unitOfWork.CustomerRepository.GetByIdAsync(id);
+            var customer = await _unitOfWork.CustomerRepository.
+                Query.Include(c => c.History.Select(h => h.Vendor.Person)).
+                Include(c=>c.Books.Select(h=>h.Vendor.Person)).
+                SingleAsync(c => c.Id == id);
             if (customer != null)
             {
                 var customerDto = new UserShortDTO()
@@ -101,15 +114,25 @@ namespace Unicorn.Core.Services
                     Avatar = customer.Person.Account.Avatar,
                     Background = customer.Person.Account.Background,
                     Email = customer.Person.Account.Email,
-                    Books = customer.Books.Select(x => new BookShortDto()
+                    History = customer.History.Select(x => new HistoryShortDto()
                     {
-                        address = x.Location?.Adress,
+                        bookDescription = x.BookDescription,
+                        categoryName  = x.CategoryName,
                         date = x.Date,
-                        description = x.Description,
-                        vendor = x?.Vendor?.Person?.Surname,
-                        status = x.Status,
-                        workType = x.Work.Subcategory?.Name
-                    }).ToList()
+                        dateFinished = x.DateFinished,
+                        subcategoryName = x.SubcategoryName,
+                        vendor = x?.Vendor?.Person?.Name,
+                        workDescription = x.WorkDescription
+                    }).ToList(),
+                    //Books = customer.Books?.Select(x => new BookShortDto()
+                    //{
+                    //    Address = x.Location?.Adress,
+                    //    Date = x.Date,
+                    //    Description = x.Description,
+                    //    Vendor = x?.Vendor?.Person?.Name,
+                    //    Status = x.Status,
+                    //    WorkType = x.Work.Subcategory?.Name
+                    //}).ToList()
                 };
                 return customerDto;
             }

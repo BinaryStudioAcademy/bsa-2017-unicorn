@@ -8,5 +8,5 @@ export interface Work {
 	CategoryId: number;
 	Subcategory: string;
 	SubcategoryId: number;
-	Description: string;
+	Description: string;	
 }

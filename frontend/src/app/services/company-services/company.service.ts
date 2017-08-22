@@ -5,6 +5,7 @@ import { CompanyDetails } from "../../models/company-page/company-details.model"
 import { CompanyReviews } from "../../models/company-page/company-reviews.model";
 import { CompanyVendors } from "../../models/company-page/company-vendors.model";
 import { CompanyContacts } from "../../models/company-page/company-contacts.model";
+import { CompanyWorks } from "../../models/company-page/company-works.model";
 
 @Injectable()
 export class CompanyService { 
@@ -35,6 +36,10 @@ export class CompanyService {
 
   getCompanyContacts(id: number):Promise<CompanyContacts>{
     return this.dataService.getRequest<CompanyContacts>("company-contacts/" + id);    
+  }
+
+  getCompanyWorks(id: number):Promise<CompanyWorks>{
+    return this.dataService.getRequest<CompanyWorks>("company-works/" + id);    
   }
 
   saveCompanyDetails(company: CompanyDetails):Promise<CompanyDetails>{

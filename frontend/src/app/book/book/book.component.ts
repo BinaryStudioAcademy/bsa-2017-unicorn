@@ -3,7 +3,7 @@ import { NgModel, NgForm } from '@angular/forms';
 
 import {SuiModule} from 'ng2-semantic-ui';
 
-import { Book } from '../../models/book.model';
+import { Book } from '../../models/book/book.model';
 
 @Component({
   selector: 'app-book',
@@ -19,13 +19,13 @@ export class BookComponent implements OnInit {
 
   ngOnInit() {
     this.book = {
-      date: null,
-      address: "",
-      contact: "",
-      description: "",
-      vendor: null,
-      status: "",
-      workType: ""
+      Date: null,
+      Location: null,
+      Description: "",
+      Company: null,
+      Vendor: null,
+      Status: null,
+      Work: null
     }    
   }
 

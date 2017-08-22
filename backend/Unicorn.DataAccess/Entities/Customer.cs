@@ -11,5 +11,6 @@ namespace Unicorn.DataAccess.Entities
         public virtual Person Person { get; set; }
 
         public virtual ICollection<Book> Books { get; set; }
+        public virtual ICollection<History> History { get; set; }
     }
 }

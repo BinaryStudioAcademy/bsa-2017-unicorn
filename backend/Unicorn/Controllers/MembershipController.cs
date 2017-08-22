@@ -82,7 +82,7 @@ namespace Unicorn.Controllers
 
             try
             {
-                await vendorService.Create(vendor);
+                await vendorService.CreateAsync(vendor);
                 token = await authService.GenerateJwtTokenAsync(vendor.Provider, vendor.Uid);
             }
             catch

@@ -1,5 +1,5 @@
 import { Location } from "../location.model"
-import { CompanyCategory } from "./company-category.model";
+import { CompanyWork } from "./company-work.model";
 
 export interface CompanyDetails {
     Id: number;
@@ -11,6 +11,6 @@ export interface CompanyDetails {
     Director: string;   
     City: string;  
     ReviewsCount: number;
-    Categories:CompanyCategory[];
+    Works: CompanyWork[];    
     Location: Location;    
 }

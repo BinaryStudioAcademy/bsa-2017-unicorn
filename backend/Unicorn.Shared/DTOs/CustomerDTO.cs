@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 
+using Unicorn.Shared.DTOs.Book;
+
 namespace Unicorn.Shared.DTOs
 {
     public class CustomerDTO

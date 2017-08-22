@@ -18,6 +18,9 @@ import { UserService } from '../services/user.service';
 import { DataService } from "../services/data.service";
 import { AgmCoreModule } from "@agm/core";
 import { environment } from "../../environments/environment";
+import { UserMainComponent } from './user-main/user-main.component';
+import { UserMainInfoComponent } from './user-main/user-main-info/user-main-info.component';
+import { UserMainReviewsComponent } from './user-main/user-main-reviews/user-main-reviews.component';
 import { SharedModule } from "../shared/shared.module";
 
 @NgModule({
@@ -30,7 +33,9 @@ import { SharedModule } from "../shared/shared.module";
         UserRoutingModule,
         HttpModule,
         FormsModule,
+        FormsModule,
         SharedModule
+
     ],
     declarations: [
         UserComponent,
@@ -38,7 +43,10 @@ import { SharedModule } from "../shared/shared.module";
         UserProfileComponent,
         UserHistoryComponent,
         UserTasksComponent,
-        UserMessagesComponent
+        UserMessagesComponent,
+        UserMainComponent,
+        UserMainInfoComponent,
+        UserMainReviewsComponent
     ],
     providers: [
         DataService,

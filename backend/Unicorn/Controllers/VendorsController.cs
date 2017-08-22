@@ -8,6 +8,9 @@ using System.Web.Http;
 using System.Web.Http.Cors;
 
 using Unicorn.Core.Interfaces;
+using Unicorn.DataAccess.Entities;
+using Unicorn.Shared.DTOs;
+using Unicorn.Shared.DTOs.Book;
 using Unicorn.Shared.DTOs.Subcategory;
 using Unicorn.Shared.DTOs.Vendor;
 
@@ -17,11 +20,18 @@ namespace Unicorn.Controllers
     [EnableCors("*", "*", "*")]
     public class VendorsController : ApiController
     {
-        public VendorsController(IVendorService vendorService, IReviewService reviewService, IPortfolioService portfolioService)
+        public VendorsController(
+            IVendorService vendorService, 
+            IReviewService reviewService, 
+            IPortfolioService portfolioService, 
+            IBookService bookService,
+            IHistoryService historyService)
         {
             _vendorService = vendorService;
             _reviewService = reviewService;
             _portfolioService = portfolioService;
+            _bookService = bookService;
+            _historyService = historyService;
         }
 
         [HttpGet]
@@ -49,7 +59,7 @@ namespace Unicorn.Controllers
         [Route("{id}")]
         public async Task<HttpResponseMessage> UpdateVendor(long id, [FromBody]ShortVendorDTO vendor)
         {
-            await _vendorService.Update(vendor);
+            await _vendorService.UpdateAsync(vendor);
 
             var result = await _vendorService.GetByIdAsync(id);
 
@@ -72,10 +82,62 @@ namespace Unicorn.Controllers
         }
 
         [HttpGet]
+        [Route("{id}/works")]
+        public async Task<HttpResponseMessage> GetVendorWorks(long id)
+        {
+            var result = await _vendorService.GetVendorWorksAsync(id);
+
+            if (result == null)
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            else
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+        [HttpGet]
+        [Route("{id}/history")]
+        public async Task<HttpResponseMessage> GetVendorHistory(long id)
+        {
+            var result = await _historyService.GetVendorHistoryAsync(id);
+
+            if (result == null)
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            else
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+        [HttpGet]
+        [Route("{id}/orders")]
+        public async Task<HttpResponseMessage> GetVendorOrders(long id)
+        {
+            var result = await _bookService.GetVendorOrdersAsync(id);
+
+            if (result == null)
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            else
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+        [HttpPut]
+        [Route("{id}/orders/{orderId}")]
+        public async Task<HttpResponseMessage> UpdateVendor(long id, long orderId, [FromBody]VendorBookDTO order)
+        {
+            var book = await _bookService.GetByIdAsync(orderId);
+            book.Status = order.Status;
+            await _bookService.Update(book);
+
+            var result = await _bookService.GetVendorOrdersAsync(orderId);
+
+            if (result == null)
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            else
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+        [HttpGet]
         [Route("{id}/contacts")]
         public async Task<HttpResponseMessage> GetVendorContacts(long id)
         {
-            var result = await _vendorService.GetVendorContacts(id);
+            var result = await _vendorService.GetVendorContactsAsync(id);
 
             if (result == null)
                 return Request.CreateResponse(HttpStatusCode.NotFound);
@@ -122,8 +184,18 @@ namespace Unicorn.Controllers
                 return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
-        IVendorService _vendorService;
-        IReviewService _reviewService;
-        IPortfolioService _portfolioService;
+        [HttpPost]
+        [Route("{id}/portfolio")]
+        public async Task<HttpResponseMessage> GetVendorPortfolio(long id, [FromBody] PortfolioItemDTO itemDto)
+        {
+            await _portfolioService.CreateAsync(id, itemDto);
+            return Request.CreateResponse(HttpStatusCode.Created);
+        }
+
+        private IVendorService _vendorService;
+        private IReviewService _reviewService;
+        private IPortfolioService _portfolioService;
+        private IBookService _bookService;
+        private IHistoryService _historyService;
     }
 }
