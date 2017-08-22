@@ -14,7 +14,7 @@ import { RegisterModal } from '../register/register-component/register.component
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.css'],
+  styleUrls: ['./menu.component.sass'],
   providers: []
 })
 export class MenuComponent implements OnInit {
@@ -25,6 +25,9 @@ export class MenuComponent implements OnInit {
   onLogIn: Subscription;
   onLogOut: Subscription;
 
+  fakeName: string;
+  fakeSurname: string;
+
   constructor(
     private modalService: SuiModalService,
     private authEventService: AuthenticationEventService,
@@ -34,6 +37,9 @@ export class MenuComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.fakeName = "Name";
+    this.fakeSurname = "Surname";
+
     this.addMenuItems();
     this.isEnabled = true;
 
