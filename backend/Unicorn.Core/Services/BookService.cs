@@ -137,6 +137,10 @@ namespace Unicorn.Core.Services
             return bookDto;
         }
 
+        public async Task Create(BookOrderDTO book)
+        {
+
+        }
 
         public async Task<IEnumerable<VendorBookDTO>> GetVendorOrdersAsync(long vendorId)
         {
