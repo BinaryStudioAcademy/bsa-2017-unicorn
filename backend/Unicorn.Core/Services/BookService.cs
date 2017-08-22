@@ -139,7 +139,37 @@ namespace Unicorn.Core.Services
 
         public async Task Create(BookOrderDTO book)
         {
+            Work work = await _unitOfWork.WorkRepository.GetByIdAsync(book.WorkId);
+            Customer customer = await _unitOfWork.CustomerRepository.GetByIdAsync(book.CustomerId);
+            Location location = await _unitOfWork.LocationRepository.GetByIdAsync(book.Adress.Id); // TODO: if not exists or changed by user?
 
+            Company company = null;
+            Vendor vendor = null;
+
+            if (book.Profile.ToLower() == "company")
+            {
+                company = await _unitOfWork.CompanyRepository.GetByIdAsync(book.ProfileId);
+            }
+            else
+            {
+                vendor = await _unitOfWork.VendorRepository.GetByIdAsync(book.ProfileId);
+            }
+
+            Book _book = new Book()
+            {
+                IsDeleted = false,
+                Company = company,
+                Customer = customer,
+                Date = book.Date,
+                Description = book.Description,
+                Location = location,
+                Status  = BookStatus.Accepted,
+                Vendor = vendor,
+                Work = work
+            };
+
+            _unitOfWork.BookRepository.Create(_book);
+            await _unitOfWork.SaveAsync();
         }
 
         public async Task<IEnumerable<VendorBookDTO>> GetVendorOrdersAsync(long vendorId)
