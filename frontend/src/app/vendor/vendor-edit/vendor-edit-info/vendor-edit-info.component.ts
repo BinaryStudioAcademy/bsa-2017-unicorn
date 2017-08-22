@@ -46,15 +46,6 @@ export class VendorEditInfoComponent implements OnInit {
 
   ngOnInit() {
     this.dataLoaded = true;   
-    this.newWork = {
-      CategoryId: null,
-      Category: "",
-      Subcategory: "",
-      Description: "",
-      Id: null,
-      SubcategoryId: null,
-      Name: ""
-    };
     this.categoryService.getAll()
       .then(resp => this.categories = resp.body as Category[]);
     this.workService.getAll()
