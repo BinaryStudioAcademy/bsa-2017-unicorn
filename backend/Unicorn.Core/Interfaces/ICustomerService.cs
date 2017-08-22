@@ -8,6 +8,7 @@ namespace Unicorn.Core.Interfaces
     {
         Task<object> GetById(long id);
         Task CreateAsync(CustomerRegisterDTO customerDto);
-        Task UpdateCustomerAsync(UserShortDTO userDTO);    
+        Task UpdateCustomerAsync(UserShortDTO userDTO);
+        Task<long> GetUserAccountIdAsync(long id);
     }
 }

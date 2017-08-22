@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { NgModel } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { NgModel, NgForm } from '@angular/forms';
 
 import {SuiModule} from 'ng2-semantic-ui';
 
-import { Book } from '../../models/book.model';
+import { Book } from '../../models/book/book.model';
 
 @Component({
   selector: 'app-book',
@@ -13,17 +13,26 @@ import { Book } from '../../models/book.model';
 export class BookComponent implements OnInit {
   book: Book;
 
+  @ViewChild('bookForm') public bookForm: NgForm;
+
   constructor() { }
 
   ngOnInit() {
     this.book = {
-      date: null,
-      address: "",
-      contact: "",
-      description: "",
-      vendor: null,
-      status: "",
-      workType: ""
+      Date: null,
+      Location: null,
+      Description: "",
+      Company: null,
+      Vendor: null,
+      Status: null,
+      Work: null
     }    
+  }
+
+  makeOrder() {
+    if (this.bookForm.invalid) {
+      return;
+    }
+    // do something ..
   }
 }

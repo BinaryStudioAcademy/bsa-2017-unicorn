@@ -1,0 +1,30 @@
+@import "../../../../global-style-variables.sass";
+
+.accordion-option
+	padding: 1.2em;
+	&:hover
+		background: $primary-color;
+		color: #fff;
+
+.category-dropdown
+	margin-top: 1.7em;
+	z-index: 2;
+	&:click
+		position: absolute;
+
+\:host /deep/ .ui.styled.accordion .content
+	max-height: 20em;
+	overflow: auto;
+
+.ui.basic.button
+	box-shadow: 0 0 0 1px $primary_color;
+	color:  $primary_color;
+	background: none;
+	width: 11em;
+	margin-bottom: 1.5em;
+
+.ui.basic.button h5
+	color: $primary-color;
+
+.work-icon
+	margin-top: 1.7em;

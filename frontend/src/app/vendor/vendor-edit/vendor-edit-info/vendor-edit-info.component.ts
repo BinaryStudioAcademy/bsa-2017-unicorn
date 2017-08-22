@@ -1,14 +1,19 @@
-import { Component, OnInit, Input } from '@angular/core';
-
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { NguiMapModule, Marker } from "@ngui/map";
-import {SuiModule} from 'ng2-semantic-ui';
+import { SuiModule } from 'ng2-semantic-ui';
 
 import { Location } from "../../../models/location.model"
 import { Vendor } from "../../../models/vendor.model";
 import { MapModel } from "../../../models/map.model";
+import { Work } from "../../../models/work.model";
+import { Category } from "../../../models/category.model";
+import { Subcategory } from "../../../models/subcategory.model";
 
 import { VendorService } from "../../../services/vendor.service";
 import { LocationService } from "../../../services/location.service";
+import { CategoryService } from "../../../services/category.service";
+import { WorkService } from "../../../services/work.service";
 
 @Component({
   selector: 'app-vendor-edit-info',
@@ -23,13 +28,37 @@ export class VendorEditInfoComponent implements OnInit {
   map: MapModel;
   dataLoaded: boolean;
   
+  newWork: Work;
+  categories: Category[];
+  selectedCategory: Category;
+  selectedSubcategory: Subcategory;
+  works: Work[];
+  subcategoryWorks: Work[];
+
+  @ViewChild('vendorForm') public vendorForm: NgForm;
+  
   constructor(
     private locationService: LocationService, 
-    private vendorService: VendorService
+    private vendorService: VendorService,
+    private categoryService: CategoryService,
+    private workService: WorkService
   ) { }
 
   ngOnInit() {
-    this.dataLoaded = true;
+    this.dataLoaded = true;   
+    this.newWork = {
+      CategoryId: null,
+      Category: "",
+      Subcategory: "",
+      Description: "",
+      Id: null,
+      SubcategoryId: null,
+      Name: ""
+    };
+    this.categoryService.getAll()
+      .then(resp => this.categories = resp.body as Category[]);
+    this.workService.getAll()
+      .then(resp => this.works = resp.body as Work[])
     this.locationService.getById(this.vendor.LocationId)
       .then(resp => this.location = resp.body as Location)
       .then(() => this.map = {
@@ -45,7 +74,18 @@ export class VendorEditInfoComponent implements OnInit {
     console.log(date.getDate());
   }
 
+  addWorkType(): void {
+    if (this.newWork.Name !== "") {
+      this.newWork.CategoryId = this.selectedCategory.Id;
+      this.newWork.Category = this.selectedCategory.Name;
+      this.newWork.SubcategoryId = this.selectedSubcategory.Id;
+    }
+  }
+
   saveVendor(): void {
+    if (this.vendorForm.invalid) {
+      return;
+    }
     this.dataLoaded = false;
     this.vendor.Birthday = this.birthday;
     this.vendorService.updateVendor(this.vendor)

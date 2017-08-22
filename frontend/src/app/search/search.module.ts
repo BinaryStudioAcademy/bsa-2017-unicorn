@@ -6,12 +6,10 @@ import { SearchComponent } from './search-component/search.component';
 
 import { SearchRoutingModule } from './search-routing.module';
 
-import { Company } from '../models/company.model';
 import { Review } from '../models/review.model';
-import { Vendor } from '../models/vendor';
 import { environment } from '../../environments/environment';
-import { CompanyService } from '../services/company.service';
 import { NguiMapModule } from '@ngui/map';
+import { CompanyService } from "../services/company-services/company.service";
 // import { MapComponent } from '../map/map.component';
 
 

@@ -19,7 +19,6 @@ export class RegisterUserComponent implements OnInit {
   @Input() public modal: SuiActiveModal<void, void, void>;
 
   mode: string;
-  error = false;
   success = false;
   phone: string;
   birthday;
@@ -34,10 +33,16 @@ export class RegisterUserComponent implements OnInit {
 
   ngOnInit() {
     this.mode = 'date';
+    this.email = this.social.email || null;
+    this.phone = this.social.phoneNumber || null;
+    this.initName();
   }
 
-  valid(): boolean {
-    return this.birthday !== undefined && this.phone != undefined;
+  initName() {
+    let displayName = this.social.displayName;
+    let nameValues = displayName.split(' ');
+    this.firstName = nameValues[0] || null;
+    this.middleName = nameValues[1] || null;
   }
 
   aggregateInfo(): Customer {
@@ -56,9 +61,8 @@ export class RegisterUserComponent implements OnInit {
     return info;
   }
 
-  confirmRegister() {
-    if (this.valid()) {
-      this.error = false;
+  confirmRegister(formData) {
+    if (formData.valid) {
       let regInfo = this.aggregateInfo();
       this.registerService.confirmCustomer(regInfo).then(resp => {
         this.modal.deny(null);
@@ -66,8 +70,6 @@ export class RegisterUserComponent implements OnInit {
         this.authEventService.signIn();
         this.helperService.redirectAfterAuthentication();
       });
-    } else {
-      this.error = true;
     }
   }
 

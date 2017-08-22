@@ -1,5 +1,9 @@
 @import "../../../../global-style-variables.sass";
 
+div
+    font-family: 'Verdana', 'Century Gothic', 'Calibri', 'Trebuchet MS', sans-serif!important;
+    font-size: .95em;
+
 .ui.basic.button
    box-shadow: 0 0 0 1px $primary_color;
    color:  $primary_color;
@@ -10,6 +14,17 @@
    margin-right: 0px;
    align-self: flex-end;
    min-height: 2.8em;
+   
+.flex-container
+    display: flex;
+    flex-direction: column;
+
+.align-button
+    align-self: center;
+
+.ui.basic.button
+    margin: 5px;
+    margin-bottom: 15px;
 
 .container
     display: flex;
@@ -17,6 +32,37 @@
     flex-direction: row;
     padding: .5em 1em 1em 1em;
 
-.container > div
-    flex-basis: 50%;
+.container > div    
     margin: 10px;
+    
+.main-information
+    flex-basis: 50%;
+
+.map
+    flex-basis: 50%;
+
+.ui.avatar.image
+    width: 50px;
+    height: 50px;
+    max-height: 3em;
+    max-width: 3em;
+
+.flex-list
+    display: flex;
+    flex-direction: column;
+
+.flex-item
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+.ui.divider
+    margin: 7px 0;
+
+.title-margin
+    margin-left: 45px;
+
+.content-margin
+    margin-left: 55px;
+
+

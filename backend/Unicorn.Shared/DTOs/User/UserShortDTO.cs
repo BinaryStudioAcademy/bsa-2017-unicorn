@@ -17,5 +17,6 @@ namespace Unicorn.Shared.DTOs.User
         public string Phone { get; set; }
         public DateTime DateCreated { get; set; }
         public ICollection<BookShortDto> Books { get; set; }
+        public ICollection<HistoryShortDto> History { get; set; }
     }
 }

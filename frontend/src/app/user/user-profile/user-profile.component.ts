@@ -5,6 +5,7 @@ import { AgmMap } from "@agm/core";
 import { NguiMapModule, Marker } from "@ngui/map";
 import { LocationService } from "../../services/location.service";
 import { UserService } from "../../services/user.service";
+
 export interface IContext {
     data: string;
 }
@@ -21,18 +22,19 @@ export class UserProfileComponent implements OnInit {
     @ViewChild(AgmMap) private map: any;
       location: Location;
 
-    @ViewChild('userForm') userForm: NgForm;
+    @ViewChild('userForm') public userForm: NgForm;
     lat: number = 48.464921;
     lng: number = 35.045798;
     birthday: Date;
     dataLoaded: boolean;
+
     constructor(private userService: UserService, private locationService : LocationService) { }
    mapClicked($event: MouseEvent){
       this.lat=$event.clientX;
       this.lng=$event.clientY;
     
   }
-    ngOnInit() {
+    ngOnInit() { 
     }
 
     updateUser(): void {

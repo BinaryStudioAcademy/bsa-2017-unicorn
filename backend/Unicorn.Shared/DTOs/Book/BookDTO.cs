@@ -1,7 +1,8 @@
 ﻿using System;
+using Unicorn.DataAccess.Entities;
 using Unicorn.Shared.DTOs.Vendor;
 
-namespace Unicorn.Shared.DTOs
+namespace Unicorn.Shared.DTOs.Book
 {
     public class BookDTO
     {
@@ -9,7 +10,7 @@ namespace Unicorn.Shared.DTOs
 
         public DateTime Date { get; set; }
 
-        public string Status { get; set; }
+        public BookStatus Status { get; set; }
 
         public string Description { get; set; }
 

@@ -206,6 +206,7 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AvatarController.cs" />
+    <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\MembershipController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
@@ -213,6 +214,7 @@
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Controllers\VendorsController.cs" />
     <Compile Include="Controllers\LocationController.cs" />
+    <Compile Include="Controllers\WorkController.cs" />
     <Compile Include="Filters\Helpers\AuthenticationFailureResult.cs" />
     <Compile Include="Filters\TokenAuthenticateAttribute.cs" />
     <Compile Include="Global.asax.cs">

@@ -1,28 +1,33 @@
-<div class="ui container flex-header">
-    <h2 class="ui header">{{company.Name}}
-        <div class="sub header">{{company.Location.City}}
-            <sui-rating class="star" [ngModel]="company.Rating" [isReadonly]="true"></sui-rating>
-            Reviews: {{reviewsLength}}</div>
-    </h2>
-    <div class="center">
-        <img class="ui avatar image" id="director-avatar" src={{company.Avatar}}>
-        <p>{{company.Director}}</p>
-    </div>
-</div>
-<div class="ui divider">
-</div>
-<div class="ui justified container">
-    {{company.Description}}
-</div>
-<div class="ui divider">
-</div>
-<div class="ui container">
-    <div class="flex-body">
-        <div *ngFor="let category of company.Categories" class="item flex-category">
-            <img class="ui tiny circular image image-category" src={{category.Icon}}>
-            <h4 style="margin: 5px 0 0 0;">
-                <p>{{category.Name}}</p>
-            </h4>
+<div *ngIf="company !== undefined">
+    <div class="ui container flex-header">
+        <h2 class="ui header">{{company.Name}}
+            <div class="sub header">{{company.City}}
+                <sui-rating class="star" [ngModel]="company.Rating" [isReadonly]="true"></sui-rating>
+                Reviews: {{company.ReviewsCount}}</div>
+        </h2>
+        <div class="center">
+            <img class="ui avatar image" id="director-avatar" src={{company.Avatar}}>
+            <p>{{company.Director}}</p>
         </div>
     </div>
+    <div class="ui divider">
+    </div>
+    <div class="ui justified container">
+        {{company.Description}}
+    </div>
+    <div class="ui divider">
+    </div>
+    <div class="ui container">
+        <div class="flex-body" *ngIf="categories !== null">
+            <div *ngFor="let category of categories" class="item flex-category">
+                <img class="ui tiny circular image image-category" src={{category.Icon}}>
+                <h4 style="margin: 5px 0 0 0;">
+                    <p>{{category.Name}}</p>
+                </h4>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="company === undefined" class="ui active inverted dimmer" style="z-index: 0;">
+    <div class="ui text loader">Loading</div>
 </div>

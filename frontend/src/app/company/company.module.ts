@@ -13,19 +13,19 @@ import { GeneralInformationComponent } from './company-details/general-informati
 import { ReviewsComponent } from './company-details/reviews/reviews.component';
 import { VendorsComponent } from './company-details/vendors/vendors.component';
 import { ContactsComponent } from './company-details/contacts/contacts.component';
-import { Company } from "../models/company.model";
 import { Review } from "../models/review.model";
-import { Vendor } from "../models/vendor";
 import { environment } from "../../environments/environment";
 import { CompanyEditComponent } from './company-edit/company-edit.component';
 import { DataService } from "../services/data.service";
-import { CompanyService } from "../services/company.service";
 import { PhotoService } from '../services/photo.service';
 import { NguiMapModule } from "@ngui/map";
 import { MapModule } from "../map/map.module";
 import { CompanyMainInformationComponent } from './company-edit/company-main-information/company-main-information.component';
 import { CompanyMessagesComponent } from './company-edit/company-messages/company-messages.component';
 import { CompanyOrdersComponent } from './company-edit/company-orders/company-orders.component';
+import { CompanyService } from "../services/company-services/company.service";
+import { CompanyVendorsComponent } from './company-edit/company-vendors/company-vendors.component';
+import { CompanyWorksComponent } from './company-edit/company-works/company-works.component';
 
 @NgModule({
   imports: [    
@@ -48,7 +48,9 @@ import { CompanyOrdersComponent } from './company-edit/company-orders/company-or
     CompanyEditComponent,
     CompanyMainInformationComponent,
     CompanyMessagesComponent,
-    CompanyOrdersComponent 
+    CompanyOrdersComponent,
+    CompanyVendorsComponent,
+    CompanyWorksComponent 
   ],
   providers: [
     DataService,

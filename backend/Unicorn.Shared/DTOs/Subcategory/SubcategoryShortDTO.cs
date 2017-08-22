@@ -17,5 +17,7 @@ namespace Unicorn.Shared.DTOs.Subcategory
         public long CategoryId { get; set; }
 
         public string Category { get; set; }
+
+        public string Icon { get; set; }
     }
 }

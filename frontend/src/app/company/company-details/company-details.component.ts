@@ -1,9 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Company } from "../../models/company.model";
+import { Component, OnInit} from '@angular/core';
 import { Review } from "../../models/review.model";
-import { CompanyService } from "../../services/company.service";
 import { JwtHelper } from '../../helpers/jwthelper';
 import { ActivatedRoute, Params } from "@angular/router";
+import { CompanyShort } from "../../models/company-page/company-short.model";
+import { CompanyService } from "../../services/company-services/company.service";
 
 @Component({
   selector: 'app-company-details',
@@ -11,23 +11,17 @@ import { ActivatedRoute, Params } from "@angular/router";
   styleUrls: ['./company-details.component.sass']
 })
 export class CompanyDetailsComponent implements OnInit {
-  company: Company;  
+  company: CompanyShort;  
   isGuest: boolean;  
   constructor(private companyService: CompanyService,
     private route: ActivatedRoute) { }
 
   ngOnInit() {  
     this.route.params
-    .switchMap((params: Params) => this.companyService.getCompany(params['id'])).subscribe(res => {
-      this.company = res;  
-      console.log(res.Reviews);
-      this.company.Vendors.forEach(element => {
-        if(element.Avatar == "default"){
-          element.Avatar = "https://image.flaticon.com/icons/png/512/78/78373.png";
-        }
-      });
-      // console.log(res);
-      });        
+    .switchMap((params: Params) => this.companyService.getCompanyShort(params['id']))
+    .subscribe(res => {
+      this.company = res;
+    });        
 
     this.getCurrentRole();
   }    
