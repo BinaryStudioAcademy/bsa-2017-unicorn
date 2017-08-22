@@ -1476,7 +1476,43 @@ namespace Unicorn.DataAccess.Context
                 Reciever = account11,
                 Sender = account2
             };
-            context.Ratings.AddRange(new List<Rating>() { rating1, rating2 });
+
+            Rating rating3 = new Rating()
+            {
+                Id = 3,
+                Grade = 5,
+                IsDeleted = false,
+                Reciever = account2,
+                Sender = account1
+            };
+
+            Rating rating4 = new Rating()
+            {
+                Id = 4,
+                Grade = 1,
+                IsDeleted = false,
+                Reciever = account2,
+                Sender = account3
+            };
+
+            Rating rating5 = new Rating()
+            {
+                Id = 5,
+                Grade = 4,
+                IsDeleted = false,
+                Reciever = account9,
+                Sender = account2
+            };
+
+            Rating rating6 = new Rating()
+            {
+                Id = 6,
+                Grade = 3,
+                IsDeleted = false,
+                Reciever = account10,
+                Sender = account3
+            };
+            context.Ratings.AddRange(new List<Rating>() { rating1, rating2, rating3, rating4, rating5, rating6 });
             #endregion
             context.SaveChanges();
 

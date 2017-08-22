@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using Unicorn.Core.Interfaces;
@@ -393,8 +394,16 @@ namespace Unicorn.Core.Services
             }
             return null;
         }
-            
-      
+
+        public async Task<long> GetCompanyAccountId(long id)
+        {
+            var company = await _unitOfWork.CompanyRepository.Query
+               .Include(v => v.Account)
+               .SingleAsync(x => x.Id == id);
+            return company.Account.Id;
+        }
+
+
 
         #endregion
     }

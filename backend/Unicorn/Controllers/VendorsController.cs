@@ -25,13 +25,15 @@ namespace Unicorn.Controllers
             IReviewService reviewService, 
             IPortfolioService portfolioService, 
             IBookService bookService,
-            IHistoryService historyService)
+            IHistoryService historyService,
+            IRatingService ratingService)
         {
             _vendorService = vendorService;
             _reviewService = reviewService;
             _portfolioService = portfolioService;
             _bookService = bookService;
             _historyService = historyService;
+            _ratingService = ratingService;
         }
 
         [HttpGet]
@@ -157,20 +159,15 @@ namespace Unicorn.Controllers
                 return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
-        //[HttpGet]
-        //[Route("{id}/rating")]
-        //public async Task<HttpResponseMessage> GetVendorRating(long id)
-        //{
-        //    var accountId = await _vendorService.GetVendorAccountIdAsync(id);
-        //    var result = await _reviewService.GetReceiverRatingAsync(accountId);
+        [HttpGet]
+        [Route("{id}/rating")]
+        public async Task<HttpResponseMessage> GetVendorRating(long id)
+        {
+            var accountId = await _vendorService.GetVendorAccountIdAsync(id);
+            var result = await _ratingService.GetAvarageByRecieverId(accountId);
+            return Request.CreateResponse(HttpStatusCode.OK, result);
 
-        //    if (result == null)
-        //        return Request.CreateResponse(HttpStatusCode.NotFound);
-        //    else
-        //    {
-        //        return Request.CreateResponse(HttpStatusCode.OK, result);
-        //    }
-        //}
+        }
 
         [HttpGet]
         [Route("{id}/portfolio")]
@@ -197,5 +194,6 @@ namespace Unicorn.Controllers
         private IPortfolioService _portfolioService;
         private IBookService _bookService;
         private IHistoryService _historyService;
+        private IRatingService _ratingService;
     }
 }

@@ -76,7 +76,10 @@ namespace Unicorn.Core.Services
         public async Task<double> GetAvarageByRecieverId(long id)
         {
             var ratings = await GetByReceiverIdAsync(id);
-            return ratings.Average(x => x.Grade);
+            if (ratings.Count() != 0)
+                return ratings.Average(x => x.Grade);
+            else
+                return 0;
         }
 
         private RatingDTO RatingToDTO(Rating rating)
