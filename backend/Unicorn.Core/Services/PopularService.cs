@@ -50,7 +50,8 @@ namespace Unicorn.Core.Services
                     Avatar = v.Person.Account.Avatar,
                     Name = v.Person.Name,
                     Rating = v.Person.Account.Rating,
-                    PerformerType = "vendor"
+                    PerformerType = "vendor",
+                    Link = "vendor/"+v.Id
                 })
                 .ToListAsync();
 
@@ -63,7 +64,8 @@ namespace Unicorn.Core.Services
                     Avatar = c.Account.Avatar,
                     Name = c.Name,
                     Rating = c.Account.Rating,
-                    PerformerType = "company"
+                    PerformerType = "company",
+                    Link = "company/" + c.Id
                 })
                 .ToListAsync();
 
@@ -99,7 +101,8 @@ namespace Unicorn.Core.Services
                     Avatar = v.Vendor.Person.Account.Avatar,
                     Name = v.Vendor.Person.Name,
                     Rating = v.Vendor.Person.Account.Rating,
-                    PerformerType = "vendor"
+                    PerformerType = "vendor",
+                    Link = $"vendor/"+v.Vendor.Id
                 });
 
             var companies = works
@@ -110,7 +113,8 @@ namespace Unicorn.Core.Services
                     Avatar = c.Company.Account.Avatar,
                     Name = c.Company.Name,
                     Rating = c.Company.Account.Rating,
-                    PerformerType = "company"
+                    PerformerType = "company",
+                    Link = "company/"+c.Company.Id
                 });
 
             var performers = vendors

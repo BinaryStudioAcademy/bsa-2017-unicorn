@@ -17,5 +17,7 @@ namespace Unicorn.Shared.DTOs.Popular
         public string Avatar { get; set; }
 
         public string PerformerType { get; set; } //vendor or company
+
+        public string Link { get; set; }
     }
 }
