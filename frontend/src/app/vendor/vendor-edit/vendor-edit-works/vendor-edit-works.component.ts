@@ -53,6 +53,8 @@ export class VendorEditWorksComponent implements OnInit {
   selectedSubcategory: Subcategory;
   selectedWork: Work;
 
+  editOpen: boolean;
+
   constructor(
     private vendorService: VendorService,
     private categoryService: CategoryService,
@@ -67,11 +69,17 @@ export class VendorEditWorksComponent implements OnInit {
    }
 
   ngOnInit() {
+    this.editOpen = false;
     this.vendorService.getVendorWorks(this.vendorId)
       .then(resp => this.works = resp.body as Work[]);
     this.categoryService.getAll()
       .then(resp => this.categories = resp.body as Category[]);
     this.subcategories = [];
+    this.clearSelectedWork();
+  }
+
+  editToggle(): void {
+    this.editOpen = !this.editOpen;
     this.clearSelectedWork();
   }
 
@@ -81,6 +89,7 @@ export class VendorEditWorksComponent implements OnInit {
     this.onCategorySelect();
     this.selectedSubcategory = this.subcategories.find(c => c.Id == this.selectedWork.SubcategoryId);
     this.workIconUrl = this.buildSafeUrl(this.selectedWork.Icon);
+    this.editOpen = true;
   }
 
   onCategorySelect(): void {
