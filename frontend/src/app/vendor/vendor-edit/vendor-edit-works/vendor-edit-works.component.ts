@@ -137,8 +137,7 @@ export class VendorEditWorksComponent implements OnInit {
 
   fileChangeListener($event) {
     var image: any = new Image();
-    if ($event.target !== undefined)
-      this.file = $event.target.files[0];
+    this.file = $event.target.files[0];
     var myReader:FileReader = new FileReader();
     var that = this;
     myReader.onloadend = function (loadEvent:any) {
@@ -153,16 +152,15 @@ export class VendorEditWorksComponent implements OnInit {
   fileSaveListener(){
     if (!this.data)
     {
-      console.log("file not upload");
+      console.log("file can't be loaded");
       return;
     }
     this.photoService.uploadToImgur(this.file)
       .then(resp => {
         let path = resp;
         console.log(path);
-        console.log(this.modalTemplate);
         this.activeModal.deny('');        
-        this.selectedWork = this.data.image;
+        this.selectedWork.Icon = path;
         })
       .catch(err => {
         console.log(err);
@@ -170,7 +168,7 @@ export class VendorEditWorksComponent implements OnInit {
   }
 
   public openModal() {
-    this.modalService.openModal(this.modalTemplate, this.activeModal);
+    this.activeModal = this.modalService.openModal(this.modalTemplate);
   }
 
 }

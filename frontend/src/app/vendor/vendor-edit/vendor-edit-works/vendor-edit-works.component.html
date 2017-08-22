@@ -71,7 +71,7 @@
         <img class="ui avatar image category-icon" src="{{option.Icon}}">{{option.Name}}
       </ng-template>
       <sui-select class="selection fluid category-dropdown" placeholder="SELECT SUBCATEGORY" [isDisabled]="selectedCategory === undefined"
-        [(ngModel)]="selectedSubcategory" [optionTemplate]="optionTemplate" [isSearchable]="true" (selectedOptionChange)="onSubcategorySelect()"
+        [(ngModel)]="selectedSubcategory" [optionTemplate]="optionTemplate" [isSearchable]="true"
         name="selectSubcategory">
         <sui-select-option class="select-option" *ngFor="let subcategory of subcategories" [value]="subcategory">
         </sui-select-option>

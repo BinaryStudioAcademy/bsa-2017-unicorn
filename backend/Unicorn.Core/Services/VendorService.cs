@@ -204,8 +204,9 @@ namespace Unicorn.Core.Services
                 Subcategory = w.Subcategory.Name,
                 SubcategoryId = w.Subcategory.Id,
                 Name = w.Name,
-                Description = w.Description
-            });
+                Description = w.Description,
+                Icon = w.Icon
+            }).ToList();
         }
     }
 }
