@@ -60,21 +60,35 @@ $separator-margin: 20px
     height: 150px;
     width: 150px;
 
+.avatarMain img
+    width: 100%;
+    vertical-align: top;
+    height: 150px;
+    width: 150px;
+
 .avatar:after
     position: absolute;
-    content: '';
+    content: 'Upload';
+    text-align: center;
+    vertical-align: middle;
     color: #fff;
-    width: 100%; 
+    width: 100%;
+    font-size: 20px;
     height: 100%;
     top: 0; 
     left: 0;
     background: rgba(0,0,0,0.6);
     opacity: 0;
     transition: all 1s;
+    line-height: 150px;
     -webkit-transition: all 1s;
 
 .avatar:hover:after
     opacity: 1;
+
+.file-upload-save
+    width: 180px;
+    height: 40px;
 
 label > i.up-color.icon
     color: #ff6666 !important;
