@@ -33,10 +33,15 @@
     <div class="column">
         <label class="gray_font">Your location:</label>
         <div class="map">
-            <agm-map [latitude]="lat" [longitude]="lng" [zoom]="18" style="height: 16em;">
+            <agm-map [latitude]="lat" [longitude]="lng" [zoom]="18" style="height: 20em;">
                 <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
             </agm-map>
         </div>
-        <button class="ui basic button" (click)="updateUser()"><p style="color:#FF647A;">Save</p></button>
     </div>
+
+</div>
+<div class="ui divider"></div>
+
+<div class="row">
+    <button class="ui basic button" align="center" (click)="updateUser()"><p style="color:#FF647A;">Save</p></button>
 </div>

@@ -14,9 +14,7 @@ namespace Unicorn.Shared.DTOs
         public DateTime DateCreated { get; set; }
 
         public string Avatar { get; set; }
-
-        public double Rating { get; set; }
-
+       
         public virtual RoleDTO Role { get; set; }
 
         public virtual ICollection<SocialAccountDTO> SocialAccounts { get; set; }

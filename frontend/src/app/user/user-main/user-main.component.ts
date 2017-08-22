@@ -33,4 +33,6 @@ export class UserMainComponent implements OnInit {
         return this.user.Avatar ? this.user.Avatar : ''; 
     
       }
+      
+    
 }
