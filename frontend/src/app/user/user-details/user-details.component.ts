@@ -139,6 +139,6 @@ export class UserDetailsComponent implements OnInit {
   }
 
   public openModal() {
-    this.modalService.openModal(this.modalTemplate, this.activeModal);
+    this.activeModal = this.modalService.openModal(this.modalTemplate);
   }
 }

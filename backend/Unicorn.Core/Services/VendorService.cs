@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using System.Linq;
 using System.Data.Entity;
 using Unicorn.Core.Interfaces;
-using Unicorn.Core.Services.Helpers;
 using Unicorn.DataAccess.Entities;
 using Unicorn.DataAccess.Interfaces;
 using Unicorn.Shared.DTOs;
@@ -13,6 +12,7 @@ using Unicorn.Shared.DTOs.Register;
 using Unicorn.Shared.DTOs.Vendor;
 using Unicorn.Shared.DTOs.Contact;
 using Unicorn.Shared.DTOs.Book;
+using Unicorn.DataAccess.Entities.Enum;
 
 namespace Unicorn.Core.Services
 {
@@ -134,7 +134,7 @@ namespace Unicorn.Core.Services
         public async Task CreateAsync(VendorRegisterDTO ShortVendorDTO)
         {
             var account = new Account();
-            var role = await _unitOfWork.RoleRepository.GetByIdAsync((long)AccountRoles.Vendor);
+            var role = await _unitOfWork.RoleRepository.GetByIdAsync((long)RoleType.Vendor);
             var permissions = new List<Permission>();
             var socialAccounts = new List<SocialAccount>();
             var socialAccount = new SocialAccount();

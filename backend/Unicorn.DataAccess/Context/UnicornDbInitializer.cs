@@ -101,7 +101,8 @@ namespace Unicorn.DataAccess.Context
                 {
                     permision1,
                     permision2
-                }
+                },
+                Type = Entities.Enum.RoleType.Guest
             };
 
             Role role2 = new Role()
@@ -116,7 +117,8 @@ namespace Unicorn.DataAccess.Context
                     permision6,
                     permision7,
                     permision9
-                }
+                },
+                Type = Entities.Enum.RoleType.Customer
             };
 
             Role role3 = new Role()
@@ -131,7 +133,8 @@ namespace Unicorn.DataAccess.Context
                     permision5,
                     permision8,
                     permision10
-                }
+                },
+                Type = Entities.Enum.RoleType.Vendor
             };
 
             Role role4 = new Role()
@@ -148,7 +151,8 @@ namespace Unicorn.DataAccess.Context
                     permision8,
                     permision10,
                     permision11
-                }
+                },
+                Type = Entities.Enum.RoleType.Company
             };
 
             Role role5 = new Role()
@@ -169,7 +173,8 @@ namespace Unicorn.DataAccess.Context
                     permision9,
                     permision10,
                     permision11
-                }
+                },
+                Type = Entities.Enum.RoleType.Admin
             };
 
             context.Roles.AddRange(new List<Role>() { role1, role2, role3, role4, role5 });
@@ -1446,7 +1451,7 @@ namespace Unicorn.DataAccess.Context
                 From = "NameSurname",
                 FromAccountId = 2,
                 To = "NameSurname",
-                ToAccountId = 1,
+                ToAccountId = 11,
                 IsDeleted = false,
                 Grade = 4,
                 Date = DateTime.Now,
