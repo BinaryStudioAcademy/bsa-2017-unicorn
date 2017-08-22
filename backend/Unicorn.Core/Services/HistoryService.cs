@@ -71,8 +71,8 @@ namespace Unicorn.Core.Services
                         Id = element.Company.Id,
                         Account = new AccountDTO() {
                             Id = element.Company.Account.Id,
-                            DateCreated = element.Company.Account.DateCreated,
-                            Rating = element.Company.Account.Rating },
+                            DateCreated = element.Company.Account.DateCreated
+                            },
                             Vendors = element.Company.Vendors.Select
                             (x => new VendorDTO { Id = x.Id, Person = new PersonDTO()
                             { Id = x.Person.Id, Name = x.Person.Name, Surname = x.Person.Surname } })
@@ -118,7 +118,6 @@ namespace Unicorn.Core.Services
                     Date = history.Review.Date,
                     Description = history.Review.Description,
                     BookId = history.Review.BookId,
-                    Grade = history.Review.Grade,
                     To = history.Review.To,
                     ToAccountId = history.Review.ToAccountId
                 };
@@ -136,8 +135,8 @@ namespace Unicorn.Core.Services
                 {
                     Id = history.Company.Id,
                     Account = new AccountDTO() { Id = history.Company.Account.Id,
-                        DateCreated = history.Company.Account.DateCreated,
-                        Rating = history.Company.Account.Rating },
+                        DateCreated = history.Company.Account.DateCreated
+                        },
                     Vendors = history.Company.Vendors.Select(x => new VendorDTO { Id = x.Id, Person = new PersonDTO() { Id = x.Person.Id, Name = x.Person.Name, Surname = x.Person.Surname } }).ToList()
                 };
             }

@@ -157,20 +157,20 @@ namespace Unicorn.Controllers
                 return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
-        [HttpGet]
-        [Route("{id}/rating")]
-        public async Task<HttpResponseMessage> GetVendorRating(long id)
-        {
-            var accountId = await _vendorService.GetVendorAccountIdAsync(id);
-            var result = await _reviewService.GetReceiverRatingAsync(accountId);
+        //[HttpGet]
+        //[Route("{id}/rating")]
+        //public async Task<HttpResponseMessage> GetVendorRating(long id)
+        //{
+        //    var accountId = await _vendorService.GetVendorAccountIdAsync(id);
+        //    var result = await _reviewService.GetReceiverRatingAsync(accountId);
 
-            if (result == null)
-                return Request.CreateResponse(HttpStatusCode.NotFound);
-            else
-            {
-                return Request.CreateResponse(HttpStatusCode.OK, result);
-            }
-        }
+        //    if (result == null)
+        //        return Request.CreateResponse(HttpStatusCode.NotFound);
+        //    else
+        //    {
+        //        return Request.CreateResponse(HttpStatusCode.OK, result);
+        //    }
+        //}
 
         [HttpGet]
         [Route("{id}/portfolio")]
