@@ -1,16 +1,50 @@
-.flex-container
-    display: flex;
-    flex-direction: row;
-    padding: .5em 1em 1em 1em;
-    
-.container > div    
-    margin: 10px;
+@import "../../../../global-style-variables.sass";
 
-.add-work > div 
-    margin: 10px; 
+.ui.table
+	margin-top: 1em!important;
+	margin-bottom: 1em!important;
 
-.container  
-    flex-basis: 50%;
+.select-option
+	padding: 1.2em!important;
+	&:hover
+		background: rgba(255, 100, 122, 0.33)!important;
+		color: black!important;
 
-.add-work
-    flex-basis: 50%;
+.ui.basic.button
+	box-shadow: 0 0 0 1px $primary_color;
+	color:  $primary_color;
+	background: none;
+	width: 11em;
+	margin-bottom: 1.5em;
+	min-height: 2.8em;
+
+.ui.basic.button h5
+	color: $primary-color;
+
+.ui.basic.button.add
+	padding: .78571429em .78571429em .78571429em;
+	margin: 0 .25em 0 0;
+	width: 7em;
+
+.work-icon
+	margin-top: 1.3em;
+
+.category-icon
+	width: 30px!important;
+	height: 30px!important;
+
+.form-flex
+	display: flex;
+	flex-direction: column;
+
+.save-button
+	align-self: center!important;
+
+.ui.table tbody tr
+	&:hover
+		background: rgba(255, 100, 122, 0.33)!important;
+		color: black!important;
+
+.ui.modal
+	width: 500px!important;
+	margin: 0 0 0 -250px!important;

@@ -47,7 +47,7 @@ export class RegisterVendorComponent implements OnInit {
     let displayName = this.social.displayName;
     let nameValues = displayName.split(' ');
     this.firstName = nameValues[0] || null;
-    this.middleName = nameValues[1] || null;
+    this.lastName = nameValues[1] || null;
   }
 
   aggregateInfo(): Vendor {

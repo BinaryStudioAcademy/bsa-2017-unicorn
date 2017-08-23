@@ -13,6 +13,6 @@ namespace Unicorn.Shared.DTOs.CompanyPage
 
         public string Description { get; set; }
 
-        public ICollection<CompanySubcategory> Subcategories { get; set; }
+        public virtual ICollection<CompanySubcategory> Subcategories { get; set; }
     }
 }
