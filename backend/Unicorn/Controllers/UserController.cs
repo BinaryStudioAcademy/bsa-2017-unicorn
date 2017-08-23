@@ -39,7 +39,7 @@ namespace Unicorn.Controllers
         [Route("{id}/order")]
         public async Task<IHttpActionResult> GetForOrder(long id)
         {
-            var result = await _customerService.GetForOder(id);
+            var result = await _customerService.GetForOrderAsync(id);
             if (result != null)
                 return Json(result);
             return NotFound();

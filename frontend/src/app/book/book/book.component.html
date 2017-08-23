@@ -17,7 +17,7 @@
             <div *ngIf="date.invalid && (date.dirty && date.touched)" class="valid-error">* Required</div>
         </div>
         <div class="field">
-            <input required [(ngModel)]="book.location" name="location" placeholder="FRANKA, 12" #location="ngModel">
+            <input required [(ngModel)]="book.location.Adress" (ngModelChange)="adressChanged($event)" name="location" placeholder="FRANKA, 12" #location="ngModel">
             <div *ngIf="location.invalid && (location.dirty)" class="valid-error">* Required</div>
         </div>
         <div class="field">

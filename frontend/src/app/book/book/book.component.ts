@@ -6,6 +6,7 @@ import { BookOrderService } from '../../services/book-order.service';
 import { UserService } from '../../services/user.service';
 import { TokenHelperService } from '../../services/helper/tokenhelper.service';
 import { BookOrder } from '../../models/book/book-order';
+import { Location } from '../../models/location.model';
 
 @Component({
   selector: 'app-book',
@@ -16,6 +17,7 @@ export class BookComponent implements OnInit {
   book: BookOrder;
   formIsSended: boolean;
   onSending: boolean;
+  private defaultLocation: Location;
 
   @Input() routePath: string;
   @Input() routeId: number;
@@ -27,9 +29,18 @@ export class BookComponent implements OnInit {
   ngOnInit() {
     this.formIsSended = false;
 
+    this.defaultLocation = {
+      Id: 0,
+      City: "",
+      Adress: "",
+      PostIndex: "",
+      Latitude: 0,
+      Longitude: 0
+    }
+
     this.book = {
-      date: null,
-      location: "",// TODO: get user location   
+      date: new Date(),
+      location: this.defaultLocation,
       description: "",
       workid: 0, // TODO: selected work from dropdown
       profile: this.routePath,
@@ -73,5 +84,9 @@ export class BookComponent implements OnInit {
       .catch(err => {
 
       });
+  }
+
+  private adressChanged(event) {
+    this.book.location.Id = -1;
   }
 }

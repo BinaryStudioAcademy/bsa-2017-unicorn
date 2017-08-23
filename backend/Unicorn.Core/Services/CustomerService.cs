@@ -32,12 +32,6 @@ namespace Unicorn.Core.Services
             return result;
         }
 
-        public async Task<UserForOrder> GetForOder(long id)
-        {
-            var result = await GetCustomerAsync(id) as UserShortDTO;
-            return new UserForOrder() { Location = null, Phone = result.Phone }; // TODO: fix location
-        }
-
         public async Task CreateAsync(CustomerRegisterDTO customerDto)
         {
             var account = new Account();
@@ -103,7 +97,7 @@ namespace Unicorn.Core.Services
         {
             var customer = await _unitOfWork.CustomerRepository.
                 Query.Include(c => c.History.Select(h => h.Vendor.Person)).
-                Include(c=>c.Books.Select(h=>h.Vendor.Person)).
+                Include(c => c.Books.Select(h => h.Vendor.Person)).
                 SingleAsync(c => c.Id == id);
             if (customer != null)
             {
@@ -122,7 +116,7 @@ namespace Unicorn.Core.Services
                     History = customer.History.Select(x => new HistoryShortDto()
                     {
                         bookDescription = x.BookDescription,
-                        categoryName  = x.CategoryName,
+                        categoryName = x.CategoryName,
                         date = x.Date,
                         dateFinished = x.DateFinished,
                         subcategoryName = x.SubcategoryName,
@@ -142,6 +136,23 @@ namespace Unicorn.Core.Services
                 return customerDto;
             }
             return null;
+        }
+
+        public async Task<UserForOrder> GetForOrderAsync(long id)
+        {
+            var customer = await _unitOfWork.CustomerRepository.GetByIdAsync(id);
+            return new UserForOrder()
+            {
+                Location = new Shared.DTOs.LocationDTO()
+                {
+                    Id = customer.Person.Location.Id,
+                    Adress = customer.Person.Location.Adress,
+                    City = customer.Person.Location.City,
+                    Latitude = customer.Person.Location.Latitude,
+                    Longitude = customer.Person.Location.Longitude
+                },
+                Phone = customer.Person.Phone
+            };
         }
     }
 }

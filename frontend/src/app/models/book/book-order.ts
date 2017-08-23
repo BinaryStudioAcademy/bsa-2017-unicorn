@@ -1,8 +1,10 @@
+import { Location } from '../location.model';
+
 export interface BookOrder {
     date: Date;
     description: string;
     customerid: number;
-    location: string;
+    location: Location;
     phone: string;
     profile: string;
     profileid: number;
