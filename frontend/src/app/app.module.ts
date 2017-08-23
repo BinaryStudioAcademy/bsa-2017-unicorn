@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 // Enviroment
 import { environment } from '../environments/environment.prod';
 import { AngularFireModule } from 'angularfire2';
@@ -33,14 +33,23 @@ import { SearchModule } from './search/search.module';
 
 
 import { SuiModule } from 'ng2-semantic-ui';
-
+import {ToastOptions} from 'ng2-toastr';
 import { ShellComponent } from './shell/shell.component';
 import { MenuComponent } from './menu/menu.component';
 import { FooterComponent } from './footer/footer.component';
 
 import { RegisterComponent } from './register/register-component/register.component';
 import { TokenHelperService } from './services/helper/tokenhelper.service';
+import {ToastModule, Toast} from 'ng2-toastr/ng2-toastr';
 
+export class CustomOptions extends ToastOptions {
+  animate = 'fade';
+  dismiss = 'auto';
+  showCloseButton = true;
+  newestOnTop = true;
+  enableHTML = true;
+  positionClass = 'toast-bottom-right';
+}
 @NgModule({
   declarations: [
     AppComponent,
@@ -51,6 +60,8 @@ import { TokenHelperService } from './services/helper/tokenhelper.service';
   imports: [
     SuiModule,
     BrowserModule,
+    BrowserAnimationsModule, 
+    ToastModule.forRoot(),
     HttpClientModule,
     AppRoutingModule,
     SignBlockModule,
@@ -70,7 +81,8 @@ import { TokenHelperService } from './services/helper/tokenhelper.service';
     AuthenticationLoginService,
     AuthenticationEventService,
     HelperService,
-    TokenHelperService
+    TokenHelperService,
+   { provide: ToastOptions, useClass: CustomOptions}
   ],
   entryComponents: [RegisterComponent],
   bootstrap: [AppComponent]

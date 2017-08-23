@@ -43,5 +43,6 @@
 <div class="ui divider"></div>
 
 <div class="row">
-    <button class="ui basic button" align="center" (click)="updateUser()"><p style="color:#FF647A;">Save</p></button>
+    <button *ngIf="dataLoaded" class="ui basic button" align="center" (click)="updateUser()"><p style="color:#FF647A;">Save</p></button>
+    <div *ngIf="!dataLoaded" class="ui active loading button">Loading</div>
 </div>
