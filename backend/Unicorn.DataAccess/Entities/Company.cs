@@ -20,6 +20,8 @@ namespace Unicorn.DataAccess.Entities
         
         public int Staff { get; set; }
 
+        public string DirectorContact { get; set; }
+
         public virtual Account Account { get; set; }
 
         public virtual Location Location { get; set; }
