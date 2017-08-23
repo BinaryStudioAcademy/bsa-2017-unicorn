@@ -22,7 +22,8 @@ export interface IContext { }
 @Component({
   selector: 'app-vendor-edit',
   templateUrl: './vendor-edit.component.html',
-  styleUrls: ['./vendor-edit.component.sass']
+  styleUrls: ['./vendor-edit.component.sass'],
+  providers: [ModalService]
 })
 export class VendorEditComponent implements OnInit {
     @ViewChild('modalTemplate')
@@ -37,9 +38,10 @@ export class VendorEditComponent implements OnInit {
   uploading: boolean;
   backgroundUrl: SafeResourceUrl;
 
-    file: File;
-    data: any;
-    imageUploaded: boolean;
+  file: File;
+  data: any;
+  imageUploaded: boolean;
+  cropperSettings: CropperSettings;
 
   constructor(
     private route: ActivatedRoute,
@@ -47,7 +49,11 @@ export class VendorEditComponent implements OnInit {
     private photoService: PhotoService,
     private modalService: ModalService,
     private sanitizer: DomSanitizer
-  ) { }
+  ) { 
+    this.cropperSettings = modalService.cropperSettings;
+      this.data = {};
+      this.imageUploaded = false;
+  }
 
   ngOnInit() {
     this.route.params
