@@ -1,10 +1,12 @@
-﻿import { Component, OnInit, Input, ViewChild, AfterViewChecked } from '@angular/core';
+﻿import { Component, OnInit, Input, ViewChild, AfterViewChecked, ViewContainerRef } from '@angular/core';
 import { NgModel, NgForm } from '@angular/forms';
 import { User } from '../../models/user';
 import { AgmMap } from "@agm/core";
 import { NguiMapModule, Marker } from "@ngui/map";
 import { LocationService } from "../../services/location.service";
 import { UserService } from "../../services/user.service";
+import {ToastsManager, Toast} from 'ng2-toastr';
+import {ToastOptions} from 'ng2-toastr';
 
 export interface IContext {
     data: string;
@@ -28,23 +30,37 @@ export class UserProfileComponent implements OnInit {
     birthday: Date;
     dataLoaded: boolean;
 
-    constructor(private userService: UserService, private locationService : LocationService) { }
+    constructor(private userService: UserService, 
+        private locationService : LocationService,
+        public toastr: ToastsManager) {}
    mapClicked($event: MouseEvent){
       this.lat=$event.clientX;
       this.lng=$event.clientY;
     
   }
     ngOnInit() { 
+        this.dataLoaded=true;
     }
 
     updateUser(): void {
+        
+        this.dataLoaded = false;
         if (!this.userForm.valid) {
+            this.dataLoaded = true;
+            this.toastr.error('Sorry, you must fill all inputs', 'Error!');
             return;
         }
-        this.user.Birthday=this.birthday;
-        this.user.Birthday.setDate( this.user.Birthday.getDate()+1);
+        if(this.birthday!=undefined)
+         { 
+           this.user.Birthday=this.birthday;
+           this.user.Birthday.setDate( this.user.Birthday.getDate()+1);
+         }
         this.userService.updateUser(this.user)
-          .then(resp => this.user = resp.body as User);
+          .then(resp => {this.user = resp.body as User;
+            this.dataLoaded = true;
+            this.toastr.success('Changes were saved', 'Success!');})
+          .catch(x=>{ this.dataLoaded = true;
+            this.toastr.error('Sorry, something went wrong', 'Error!');});
       }
 }
 

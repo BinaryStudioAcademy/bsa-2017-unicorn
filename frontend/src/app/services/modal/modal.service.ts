@@ -26,13 +26,11 @@ export class ModalService {
     this.cropperSettings.croppedHeight = 140;
     this.cropperSettings.canvasWidth = 400;
     this.cropperSettings.canvasHeight = 300;
-
     this.cropperSettings.noFileInput = true;
     this.cropperSettings.rounded = true;
    }
 
    fileChange(file: File, cropper:ImageCropperComponent) {
-     debugger;
         var image:any = new Image();
         var myReader:FileReader = new FileReader();
         var that = this;
