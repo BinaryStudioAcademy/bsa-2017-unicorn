@@ -28,6 +28,7 @@ export class BookComponent implements OnInit {
 
   ngOnInit() {
     this.formIsSended = false;
+    this.onSending = true;
 
     this.defaultLocation = {
       Id: 0,
@@ -46,7 +47,7 @@ export class BookComponent implements OnInit {
       profile: this.routePath,
       profileid: this.routeId,
       customerid: +this.tokenHelper.getClaimByName('profileid'),
-      phone: ""
+      customerphone: ""
     }
 
     this.getUserData();
@@ -59,16 +60,20 @@ export class BookComponent implements OnInit {
     this.order();
   }
 
-  private order() {
+  private updateLoader(){
     this.onSending = !this.onSending;
+  }
+
+  private order() {
+    this.updateLoader();
     this.bookOrderService.createOrder(this.book)
       .then(x => {
-        this.onSending = !this.onSending;
+        this.updateLoader();
         this.formIsSended = true;
         alert('DONE');
       })
       .catch(err => {
-        this.onSending = !this.onSending;
+        this.updateLoader();
         alert('Error!!!');
         console.log(err);
       });
@@ -77,12 +82,13 @@ export class BookComponent implements OnInit {
   private getUserData() {
     this.userService.getUserForOrder(this.book.customerid)
       .then(user => {
+        this.updateLoader();
         this.book.location = user.Location;
-        this.book.phone = user.Phone;
+        this.book.customerphone = user.Phone;
         console.log(user);
       })
       .catch(err => {
-
+        this.updateLoader();
       });
   }
 

@@ -5,7 +5,7 @@ export interface BookOrder {
     description: string;
     customerid: number;
     location: Location;
-    phone: string;
+    customerphone: string;
     profile: string;
     profileid: number;
     workid: number;
