@@ -1,3 +1,46 @@
-<p>
-  company-orders works!
-</p>
+<div *ngIf="company !== undefined" class="container">
+    <table class="ui single line table">
+        <thead>
+            <tr>
+                <th>Date of request</th>
+                <th>Type of work</th>
+                <th>Description</th>
+                <th>Customer</th>
+                <th>Status</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let order of company.Books">
+                <td>{{order.Date | date:'shortDate'}}</td>
+                <td>{{order.Work.Name}}</td>
+                <td>{{order.Description}}</td>
+                <td>{{order.Customer}}</td>
+                <td>
+                    <sui-select class="selection" [(ngModel)]="order.Status" (ngModelChange)=onOrderChange(order) [options]="bookStatus | enum" labelField="value" valueField="key" placeholder="{{bookStatus[order.Status]}}" #select>
+                        <sui-select-option *ngFor="let status of bookStatus | enum" [value]="status">
+                        </sui-select-option>
+                    </sui-select>
+                </td>
+                <td>
+                    <button class="ui icon button" *ngIf="isOrderChanged(order)" (click)="saveOrder(order)" [ngClass]="{'loading':isLoaded}">
+            <i class="checkmark icon"></i>
+          </button>
+                </td>
+                <td>
+                    <div class="ui vertical animated button" tabindex="0">
+                        <div class="hidden content" style="color:#FF647A;">Chat</div>
+                        <div class="visible content">
+                            <i class="mail outline icon" style="color:#FF647A;"></i>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div *ngIf="company === undefined" class="ui active inverted dimmer" style="background-color: rgba(255,255,255,.85)">
+    <div class="ui text loader">Loading</div>
+</div>

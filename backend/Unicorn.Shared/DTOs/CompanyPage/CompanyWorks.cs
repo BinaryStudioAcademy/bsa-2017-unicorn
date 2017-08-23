@@ -6,8 +6,8 @@ namespace Unicorn.Shared.DTOs.CompanyPage
     {
         public long Id { get; set; }
 
-        public ICollection<CompanyWork> Works { get; set; }
+        public virtual ICollection<CompanyWork> Works { get; set; }
 
-        public ICollection<CompanyCategory> AllCategories { get; set; }
+        public virtual ICollection<CompanyCategory> AllCategories { get; set; }
     }
 }

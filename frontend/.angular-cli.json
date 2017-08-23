@@ -9,7 +9,7 @@
         "assets": [
             "assets",
             "favicon.ico",
-			"web.config"
+            "web.config"
         ],
         "index": "index.html",
         "main": "main.ts",
@@ -19,7 +19,8 @@
         "testTsconfig": "tsconfig.spec.json",
         "prefix": "app",
         "styles": [
-            "styles.css"
+            "styles.css",
+            "../node_modules/ng2-toastr/bundles/ng2-toastr.min.css"
         ],
         "scripts": [],
         "environmentSource": "environments/environment.ts",

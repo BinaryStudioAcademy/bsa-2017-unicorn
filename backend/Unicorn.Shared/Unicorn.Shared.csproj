@@ -50,6 +50,8 @@
     <Compile Include="DTOs\Book\VendorBookDTO.cs" />
     <Compile Include="DTOs\CategoryDTO.cs" />
     <Compile Include="DTOs\CompanyDTO.cs" />
+    <Compile Include="DTOs\CompanyPage\CompanyBook.cs" />
+    <Compile Include="DTOs\CompanyPage\CompanyBooks.cs" />
     <Compile Include="DTOs\CompanyPage\CompanyWorks.cs" />
     <Compile Include="DTOs\CompanyPage\CompanyCategory.cs" />
     <Compile Include="DTOs\CompanyPage\CompanyContacts.cs" />

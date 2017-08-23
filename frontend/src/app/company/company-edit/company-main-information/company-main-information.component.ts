@@ -17,8 +17,7 @@ export class CompanyMainInformationComponent implements OnInit {
 
   company: CompanyDetails;
   isLoaded: boolean = false;
-  map: MapModel;
-  includedCompanyWorks: CompanyWork[] = [];
+  map: MapModel;  
 
   @ViewChild('companyForm') public companyForm: NgForm;
 
@@ -36,28 +35,7 @@ export class CompanyMainInformationComponent implements OnInit {
         title: this.company.Name,
         label: this.company.Name,
         markerPos: {lat: this.company.Location.Latitude, lng: this.company.Location.Longitude}    
-      };  
-
-      // this.company.Categories.forEach(category => {
-      //   category.Subcategories.forEach(subcategory => {
-      //     subcategory.Works.forEach(work => {
-      //       this.includedCompanyWorks.push(work);
-      //     })
-      //   })
-      // });    
-
-      // this.company.AllCategories.forEach(category => {
-      //   category.Subcategories.forEach(subcategory => {
-      //     subcategory.Works.forEach(work => {
-      //       if(this.includedCompanyWorks.find(x => x.Id == work.Id) != null){
-      //         work.IsIncludeToCompany = true;             
-      //       }
-      //       else{
-      //         work.IsIncludeToCompany = false;              
-      //       }
-      //     });          
-      //   });            
-      // });      
+      };        
   });
 }
 
