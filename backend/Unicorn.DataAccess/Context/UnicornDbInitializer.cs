@@ -595,7 +595,7 @@ namespace Unicorn.DataAccess.Context
                 Email = "google@gmail.com",
                 EmailConfirmed = true,
                 DateCreated = new DateTime(2017, 08, 01, 20, 00, 00),
-                Avatar = "https://collegecandy.files.wordpress.com/2015/04/google.jpg?quality=88&strip=all&w=640",
+                Avatar = "http://techbox.dennikn.sk/wp-content/uploads/2016/02/Google-logo-01.jpg",
                 Rating = 5,
                 IsDeleted = false,
                 Role = role5,
@@ -608,8 +608,8 @@ namespace Unicorn.DataAccess.Context
                 Email = "siemens@gmail.com",
                 EmailConfirmed = true,
                 DateCreated = new DateTime(2017, 08, 23, 20, 00, 00),
-                Avatar = "http://www.heysuccess.com/public/upload/productimage/18569-21917-4.jpg",
-                Rating = 5,
+                Avatar = "http://vneconomictimes.com/cache/uploads/media/images/2016/MAY/Siemens_logo_640_auto.jpg",
+                Rating = 3.2,
                 IsDeleted = false,
                 Role = role5,
                 Contacts = new List<Contact> { contact99, contact100, contact101, contact102, contact103, contact104, contact105 }
@@ -621,8 +621,8 @@ namespace Unicorn.DataAccess.Context
                 Email = "dell@gmail.com",
                 EmailConfirmed = true,
                 DateCreated = new DateTime(2017, 08, 19, 06, 00, 00),
-                Avatar = "http://spl.co.za/wp-content/uploads/2012/05/dell-logo1.jpg",
-                Rating = 5,
+                Avatar = "http://www.geekets.com/wp-content/uploads/2013/01/dell_logo020307.jpg",
+                Rating = 2.0,
                 IsDeleted = false,
                 Role = role5,
                 Contacts = new List<Contact> { contact106, contact107, contact108, contact109, contact110, contact111, contact112 }
@@ -634,8 +634,8 @@ namespace Unicorn.DataAccess.Context
                 Email = "mcdonalds@gmail.com",
                 EmailConfirmed = true,
                 DateCreated = new DateTime(2017, 08, 14, 16, 00, 00),
-                Avatar = "http://www.mcdonalds.co.uk/content/dam/McDonaldsUK/Promotions/Facebook-Share-Image.jpg",
-                Rating = 5,
+                Avatar = "http://cdn.playbuzz.com/cdn/21053f7d-f84d-4cb5-85d5-387fbb08692a/1c8e0442-5d13-435e-aa93-85b3804cfbc5.jpg",
+                Rating = 3.6,
                 IsDeleted = false,
                 Role = role5,
                 Contacts = new List<Contact> { contact113, contact114, contact115, contact116, contact117, contact118, contact119 }
@@ -647,8 +647,8 @@ namespace Unicorn.DataAccess.Context
                 Email = "novaposhta@gmail.com",
                 EmailConfirmed = true,
                 DateCreated = new DateTime(2017, 08, 11, 12, 00, 00),
-                Avatar = "https://www.haendlerbund.de/images/content/ukraine/Nova_Poshta_logo.jpg",
-                Rating = 5,
+                Avatar = "http://open4business.com.ua/wp-content/uploads/2015/07/NovaPoshta-1-800x494.jpg",
+                Rating = 2.8,
                 IsDeleted = false,
                 Role = role5,
                 Contacts = new List<Contact> { contact120, contact121, contact122, contact123, contact124, contact125, contact126 }
@@ -656,16 +656,8 @@ namespace Unicorn.DataAccess.Context
 
             context.Accounts.AddRange(new List<Account>()
             {
-                account1,  account11,
-                account2,  account12,
-                account3,  account13,
-                account4,  account14,
-                account5,  account15,
-                account6,  account16,
-                account7,  account17,
-                account8,  account18,
-                account9,
-                account10,   
+                account1, account2, account3, account4, account5, account6, account7, account8, account9, account10,
+                account11, account12, account13, account14, account15, account16, account17, account18,
             });
 
 
@@ -906,7 +898,37 @@ namespace Unicorn.DataAccess.Context
                 Name = "Developer Service"
             };
 
-            context.Categories.AddRange(new List<Category>() { category1, category2, category3, category4, category5, category6 });
+            Category category7 = new Category()
+            {
+                Id = 7,
+                Icon = "http://www.shopcusa.com/wp-content/uploads/2015/07/Computer-parts.jpg",
+                IsDeleted = false,
+                Description = "Electronic parts supplier",
+                Name = "Electronic parts"
+            };
+
+            Category category8 = new Category()
+            {
+                Id = 8,
+                Icon = "http://images.all-free-download.com/images/graphicthumb/fast_food_icons_set_vector_graphics_548786.jpg",
+                IsDeleted = false,
+                Description = "Food and beverages",
+                Name = "Food service"
+            };
+
+            Category category9 = new Category()
+            {
+                Id = 9,
+                Icon = "https://cdn.dribbble.com/users/12733/screenshots/2705729/delivery_truck_icon_1x.png",
+                IsDeleted = false,
+                Description = "Package delivery",
+                Name = "Delivery service"
+            };
+
+            context.Categories.AddRange(new List<Category>()
+            {
+                category1, category2, category3, category4, category5, category6, category7, category8, category9
+            });
 
 
             #endregion
@@ -967,7 +989,37 @@ namespace Unicorn.DataAccess.Context
                 Category = category6
             };
 
-            context.Subcategories.AddRange(new List<Subcategory>() { subcategory1, subcategory2, subcategory3, subcategory4, subcategory5, subcategory6 });
+            Subcategory subcategory7 = new Subcategory()
+            {
+                Id = 7,
+                Description = "Computer parts",
+                Name = "Computer parts",
+                IsDeleted = false,
+                Category = category7
+            };
+
+            Subcategory subcategory8 = new Subcategory()
+            {
+                Id = 8,
+                Description = "Fast food",
+                Name = "Fast food",
+                IsDeleted = false,
+                Category = category8
+            };
+
+            Subcategory subcategory9 = new Subcategory()
+            {
+                Id = 9,
+                Description = "Package express delivery",
+                Name = "Express delivery",
+                IsDeleted = false,
+                Category = category9
+            };
+
+            context.Subcategories.AddRange(new List<Subcategory>()
+            {
+                subcategory1, subcategory2, subcategory3, subcategory4, subcategory5, subcategory6, subcategory7, subcategory8, subcategory9
+            });
 
 
             #endregion
@@ -1028,7 +1080,52 @@ namespace Unicorn.DataAccess.Context
                 Subcategory = subcategory6
             };
 
-            context.Works.AddRange(new List<Work>() { work1, work2, work3, work4, work5, work6 });
+            Work work7 = new Work()
+            {
+                Id = 7,
+                Description = "Services and products development",
+                IsDeleted = false,
+                Name = "Services and products",
+                Subcategory = subcategory6
+            };
+
+            Work work8 = new Work()
+            {
+                Id = 8,
+                Description = "Supply industrial equipment and machines",
+                IsDeleted = false,
+                Name = "Equipment supplier",
+                Subcategory = subcategory6
+            };
+
+            Work work9 = new Work()
+            {
+                Id = 9,
+                Description = "Computer parts supplier",
+                IsDeleted = false,
+                Name = "Computer parts supplier",
+                Subcategory = subcategory7
+            };
+
+            Work work10 = new Work()
+            {
+                Id = 10,
+                Description = "Сooking food",
+                IsDeleted = false,
+                Name = "Сooking food",
+                Subcategory = subcategory8
+            };
+
+            Work work11 = new Work()
+            {
+                Id = 11,
+                Description = "Courier service delivery",
+                IsDeleted = false,
+                Name = "Сourier",
+                Subcategory = subcategory9
+            };
+
+            context.Works.AddRange(new List<Work>() { work1, work2, work3, work4, work5, work6, work7, work8, work9, work10, work11 });
 
 
             #endregion
@@ -1445,7 +1542,6 @@ namespace Unicorn.DataAccess.Context
                 IsDeleted = false,
                 Location = new Location()
                 {
-                    Id = 6,
                     Adress = "Soborna St",
                     City = "Vinnitsa",
                     Latitude = 49.233256,                    
@@ -1453,8 +1549,8 @@ namespace Unicorn.DataAccess.Context
                     IsDeleted = false,
                     PostIndex = "21021"
                 },
-                Vendors = new List<Vendor>() { vendor6 },
-                Works = new List<Work> { work5, work6 }
+                Vendors = new List<Vendor>(),
+                Works = new List<Work> { work7 }
             };
 
             Company company5 = new Company()
@@ -1469,7 +1565,6 @@ namespace Unicorn.DataAccess.Context
                 IsDeleted = false,
                 Location = new Location()
                 {
-                    Id = 6,
                     Adress = "Balkivs'ka St",
                     City = "Odessa",
                     Latitude = 46.44124,
@@ -1477,8 +1572,8 @@ namespace Unicorn.DataAccess.Context
                     IsDeleted = false,
                     PostIndex = "23445"
                 },
-                Vendors = new List<Vendor>() { vendor6 },
-                Works = new List<Work> { work5, work6 }
+                Vendors = new List<Vendor>(),
+                Works = new List<Work> { work8 }
             };
 
             Company company6 = new Company()
@@ -1493,7 +1588,6 @@ namespace Unicorn.DataAccess.Context
                 IsDeleted = false,
                 Location = new Location()
                 {
-                    Id = 6,
                     Adress = "Peremohy Ave, 82",
                     City = "Chernihiv",
                     Latitude = 51.492639,                    
@@ -1501,8 +1595,8 @@ namespace Unicorn.DataAccess.Context
                     IsDeleted = false,
                     PostIndex = "24326"
                 },
-                Vendors = new List<Vendor>() { vendor6 },
-                Works = new List<Work> { work5, work6 }
+                Vendors = new List<Vendor>(),
+                Works = new List<Work> { work9 }
             };
 
             Company company7 = new Company()
@@ -1511,13 +1605,12 @@ namespace Unicorn.DataAccess.Context
                 Name = "McDonalds",
                 Description = "I'm lovin' it",
                 Account = account17,
-                FoundationDate = new DateTime(20062, 01, 01, 13, 11, 16),
+                FoundationDate = new DateTime(2006, 01, 01, 13, 11, 16),
                 Director = "Don Thompson",
                 Staff = 1,
                 IsDeleted = false,
                 Location = new Location()
                 {
-                    Id = 6,
                     Adress = "Pushkina Ave, 39А",
                     City = "Dnipro",
                     Latitude = 48.466027,
@@ -1525,8 +1618,8 @@ namespace Unicorn.DataAccess.Context
                     IsDeleted = false,
                     PostIndex = "27000"
                 },
-                Vendors = new List<Vendor>() { vendor6 },
-                Works = new List<Work> { work5, work6 }
+                Vendors = new List<Vendor>(),
+                Works = new List<Work> { work10 }
             };
 
             Company company8 = new Company()
@@ -1541,7 +1634,6 @@ namespace Unicorn.DataAccess.Context
                 IsDeleted = false,
                 Location = new Location()
                 {
-                    Id = 6,
                     Adress = "Rus'ka St, 18",
                     City = "Ternopil",
                     Latitude = 49.550626,
@@ -1549,8 +1641,8 @@ namespace Unicorn.DataAccess.Context
                     IsDeleted = false,
                     PostIndex = "26911"
                 },
-                Vendors = new List<Vendor>() { vendor6 },
-                Works = new List<Work> { work5, work6 }
+                Vendors = new List<Vendor>(),
+                Works = new List<Work> { work11 }
             };
 
             context.Companies.AddRange(new List<Company>()
