@@ -43,6 +43,7 @@ export class UserDetailsComponent implements OnInit {
   uploading: boolean;
   isOwner: boolean;
   user:User;
+  dataLoaded: boolean;
 
   modalSize: string;
   cropperSettings: CropperSettings;
@@ -63,7 +64,7 @@ export class UserDetailsComponent implements OnInit {
       this.imageUploaded = false;
   }
   ngOnInit() {
-
+    this.dataLoaded = true;
     this.initOwnerParam();
     this.route.params
     .switchMap((params: Params) => this.userService.getUser(params['id']))
@@ -123,14 +124,16 @@ export class UserDetailsComponent implements OnInit {
       console.log("file not upload");
       return;
     }
+    this.dataLoaded = false;
     this.photoService.uploadToImgur(this.file).then(resp => {
 
       let path = resp;
       console.log(path);
       this.photoService.saveAvatar(path)
       .then(resp => {
-        this.activeModal.deny('');        
         this.user.Avatar = this.data.image;
+        this.dataLoaded = true;
+        this.activeModal.deny('');        
       })
       .catch(err => console.log(err));
     }).catch(err => {

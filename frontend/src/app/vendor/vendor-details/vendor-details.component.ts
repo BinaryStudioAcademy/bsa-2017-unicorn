@@ -37,6 +37,7 @@ export class VendorDetailsComponent implements OnInit {
   backgroundUrl: SafeResourceUrl;
   uploading: boolean;
   isOwner: boolean;
+  dataLoaded: boolean;
 
   cropperSettings: CropperSettings;
   vendor: Vendor;
@@ -58,6 +59,7 @@ export class VendorDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.dataLoaded = true;
     this.route.params
       .switchMap((params: Params) => this.vendorService.getVendor(params['id']))
       .subscribe(resp => {
@@ -95,5 +97,42 @@ export class VendorDetailsComponent implements OnInit {
         console.log(err);
         this.uploading = false;
       });
+  }
+
+
+  fileChangeListener($event) {
+    var image:any = new Image();
+    this.file = $event.target.files[0];
+    var myReader:FileReader = new FileReader();
+    var that = this;
+    myReader.onloadend = function (loadEvent:any) {
+        image.src = loadEvent.target.result;
+        that.cropper.setImage(image);
+
+    };
+    this.imageUploaded = true;
+    myReader.readAsDataURL(this.file);
+}
+
+  fileSaveListener(){
+    if (!this.data)
+    {
+      console.log("file not upload");
+      return;
+    }
+
+    this.photoService.uploadToImgur(this.file).then(resp => {
+
+      let path = resp;
+      console.log(path);
+      this.photoService.saveAvatar(path)
+      .then(resp => {
+        this.vendor.Avatar = this.data.image;    
+        this.activeModal.deny('');    
+      })
+      .catch(err => console.log(err));
+    }).catch(err => {
+      console.log(err);
+    });
   }
 }
