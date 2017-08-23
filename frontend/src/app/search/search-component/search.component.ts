@@ -1,5 +1,6 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, ChangeDetectorRef, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import { Validators, FormGroup, FormArray, FormBuilder } from '@angular/forms';
 
 import { Review } from '../../models/review.model';
 import { NguiMapModule, Marker } from '@ngui/map';
@@ -46,12 +47,29 @@ export class SearchComponent implements OnInit, OnDestroy {
   positions = [];
   markers = [];
 
+  autocomplete: google.maps.places.Autocomplete;
+  address: any = {};
+
   private subscription: ISubscription;
 
   constructor(
     private companyService: CompanyService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private ref: ChangeDetectorRef
   ) { }
+
+  initialized(autocomplete: any) {
+    this.autocomplete = autocomplete;
+  }
+  placeChanged() {
+    let place = this.autocomplete.getPlace();
+    console.log(place);
+    for (let i = 0; i < place.address_components.length; i++) {
+      let addressType = place.address_components[i].types[0];
+      this.address[addressType] = place.address_components[i].long_name;
+    }
+    this.ref.detectChanges();
+  }
 
   ngOnInit() {
     this.getParameters();

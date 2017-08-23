@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
+﻿﻿using System.Collections.Generic;
 using System.Data.Entity;
+﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Unicorn.Core.Interfaces;
@@ -95,9 +96,14 @@ namespace Unicorn.Core.Services
             await SaveCompanyBooksMethod(companyDTO);
         }
 
+        public async Task<ICollection<CompanyDetails>> GetSearchCompanies(string category, string subcategory, int? date)
+        {
+            return await GetSearchCompaniesMethod(category, subcategory, date);
+        }
+
         #endregion
 
-        #region PrivateMethods
+            #region PrivateMethods
 
         private async Task<ICollection<ShortCompanyDTO>> GetAllCompaniesMethod()
         {
@@ -534,7 +540,19 @@ namespace Unicorn.Core.Services
             return company.Account.Id;
         }
 
+        private async Task<ICollection<CompanyDetails>> GetSearchCompaniesMethod(string category, string subcategory, int? date)
+        {
+            var companies = await _unitOfWork.CompanyRepository.GetAllAsync();
+            var details = new List<CompanyDetails>();
 
+            foreach (var company in companies)
+            {
+                var detail = await GetCompanyDetailsMethod(company.Id);
+                if (detail != null)
+                    details.Add(detail);
+            }
+            return details;            
+        }
 
         #endregion
     }
