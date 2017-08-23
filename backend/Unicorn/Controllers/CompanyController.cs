@@ -127,9 +127,8 @@ namespace Unicorn.Controllers
             return NotFound();
         }
 
-        // GET: company-search
+        // GET: company-search?category=&subcategory=&date=
         [HttpGet]
-        //[Route("company-search/{category}/{subcategory}/{date}")]
         [Route("company-search")]
         public async Task<IHttpActionResult> GetSearchCompanies(string category, string subcategory, int? date)
         {

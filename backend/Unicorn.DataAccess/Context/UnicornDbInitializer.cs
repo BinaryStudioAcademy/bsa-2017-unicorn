@@ -349,19 +349,70 @@ namespace Unicorn.DataAccess.Context
             Contact contact89 = new Contact { IsDeleted = false, Provider = skype, Value = "turbocat_9000" };
             Contact contact90 = new Contact { IsDeleted = false, Provider = telegram, Value = "turbocat_9000" };
             Contact contact91 = new Contact { IsDeleted = false, Provider = facebook, Value = "turbocat_9000" };
+            //---
+            Contact contact92 = new Contact { IsDeleted = false, Provider = phone, Value = "+1 415 670 9788" };
+            Contact contact93 = new Contact { IsDeleted = false, Provider = phone, Value = "+1 415 670 9788" };
+            Contact contact94 = new Contact { IsDeleted = false, Provider = phone, Value = "+1 415 670 9788" };
+            Contact contact95 = new Contact { IsDeleted = false, Provider = email, Value = "turbocat_9000@gmail.com" };
+            Contact contact96 = new Contact { IsDeleted = false, Provider = skype, Value = "turbocat_9000" };
+            Contact contact97 = new Contact { IsDeleted = false, Provider = telegram, Value = "turbocat_9000" };
+            Contact contact98 = new Contact { IsDeleted = false, Provider = facebook, Value = "turbocat_9000" };
+
+            Contact contact99 = new Contact { IsDeleted = false, Provider = phone, Value = "+1 415 670 9788" };
+            Contact contact100 = new Contact { IsDeleted = false, Provider = phone, Value = "+1 415 670 9788" };
+            Contact contact101 = new Contact { IsDeleted = false, Provider = phone, Value = "+1 415 670 9788" };
+            Contact contact102 = new Contact { IsDeleted = false, Provider = email, Value = "turbocat_9000@gmail.com" };
+            Contact contact103 = new Contact { IsDeleted = false, Provider = skype, Value = "turbocat_9000" };
+            Contact contact104 = new Contact { IsDeleted = false, Provider = telegram, Value = "turbocat_9000" };
+            Contact contact105 = new Contact { IsDeleted = false, Provider = facebook, Value = "turbocat_9000" };
+
+            Contact contact106 = new Contact { IsDeleted = false, Provider = phone, Value = "+1 415 670 9788" };
+            Contact contact107 = new Contact { IsDeleted = false, Provider = phone, Value = "+1 415 670 9788" };
+            Contact contact108 = new Contact { IsDeleted = false, Provider = phone, Value = "+1 415 670 9788" };
+            Contact contact109 = new Contact { IsDeleted = false, Provider = email, Value = "turbocat_9000@gmail.com" };
+            Contact contact110 = new Contact { IsDeleted = false, Provider = skype, Value = "turbocat_9000" };
+            Contact contact111 = new Contact { IsDeleted = false, Provider = telegram, Value = "turbocat_9000" };
+            Contact contact112 = new Contact { IsDeleted = false, Provider = facebook, Value = "turbocat_9000" };
+
+            Contact contact113 = new Contact { IsDeleted = false, Provider = phone, Value = "+1 415 670 9788" };
+            Contact contact114 = new Contact { IsDeleted = false, Provider = phone, Value = "+1 415 670 9788" };
+            Contact contact115 = new Contact { IsDeleted = false, Provider = phone, Value = "+1 415 670 9788" };
+            Contact contact116 = new Contact { IsDeleted = false, Provider = email, Value = "turbocat_9000@gmail.com" };
+            Contact contact117 = new Contact { IsDeleted = false, Provider = skype, Value = "turbocat_9000" };
+            Contact contact118 = new Contact { IsDeleted = false, Provider = telegram, Value = "turbocat_9000" };
+            Contact contact119 = new Contact { IsDeleted = false, Provider = facebook, Value = "turbocat_9000" };
+
+            Contact contact120 = new Contact { IsDeleted = false, Provider = phone, Value = "+1 415 670 9788" };
+            Contact contact121 = new Contact { IsDeleted = false, Provider = phone, Value = "+1 415 670 9788" };
+            Contact contact122 = new Contact { IsDeleted = false, Provider = phone, Value = "+1 415 670 9788" };
+            Contact contact123 = new Contact { IsDeleted = false, Provider = email, Value = "turbocat_9000@gmail.com" };
+            Contact contact124 = new Contact { IsDeleted = false, Provider = skype, Value = "turbocat_9000" };
+            Contact contact125 = new Contact { IsDeleted = false, Provider = telegram, Value = "turbocat_9000" };
+            Contact contact126 = new Contact { IsDeleted = false, Provider = facebook, Value = "turbocat_9000" };
 
             context.Contacts.AddRange(new List<Contact>()
             {
                 contact1,  contact11, contact21, contact31, contact41, contact51, contact61, contact71, contact81, contact91,
-                contact2,  contact12, contact22, contact32, contact42, contact52, contact62, contact72, contact82, 
-                contact3,  contact13, contact23, contact33, contact43, contact53, contact63, contact73, contact83, 
-                contact4,  contact14, contact24, contact34, contact44, contact54, contact64, contact74, contact84, 
-                contact5,  contact15, contact25, contact35, contact45, contact55, contact65, contact75, contact85, 
-                contact6,  contact16, contact26, contact36, contact46, contact56, contact66, contact76, contact86, 
-                contact7,  contact17, contact27, contact37, contact47, contact57, contact67, contact77, contact87, 
-                contact8,  contact18, contact28, contact38, contact48, contact58, contact68, contact78, contact88, 
-                contact9,  contact19, contact29, contact39, contact49, contact59, contact69, contact79, contact89, 
-                contact10, contact20, contact30, contact40, contact50, contact60, contact70, contact80, contact90 
+                contact2,  contact12, contact22, contact32, contact42, contact52, contact62, contact72, contact82, contact92,
+                contact3,  contact13, contact23, contact33, contact43, contact53, contact63, contact73, contact83, contact93,
+                contact4,  contact14, contact24, contact34, contact44, contact54, contact64, contact74, contact84, contact94,
+                contact5,  contact15, contact25, contact35, contact45, contact55, contact65, contact75, contact85, contact95,
+                contact6,  contact16, contact26, contact36, contact46, contact56, contact66, contact76, contact86, contact96,
+                contact7,  contact17, contact27, contact37, contact47, contact57, contact67, contact77, contact87, contact97,
+                contact8,  contact18, contact28, contact38, contact48, contact58, contact68, contact78, contact88, contact98,
+                contact9,  contact19, contact29, contact39, contact49, contact59, contact69, contact79, contact89, contact99,
+                contact10, contact20, contact30, contact40, contact50, contact60, contact70, contact80, contact90, contact100,
+
+                contact101, contact111, contact121,
+                contact102, contact112, contact122,
+                contact103, contact113, contact123,
+                contact104, contact114, contact124,
+                contact105, contact115, contact125,
+                contact106, contact116, contact126,
+                contact107, contact117,
+                contact108, contact118,
+                contact109, contact119,
+                contact110, contact120,
             });
 
             #endregion
@@ -537,8 +588,85 @@ namespace Unicorn.DataAccess.Context
                 Role = role5,
                 Contacts = new List<Contact> { contact85, contact86, contact87, contact88, contact89, contact90, contact91 }
             };
+            
+            Account account14 = new Account()
+            {
+                Id = 14,
+                Email = "google@gmail.com",
+                EmailConfirmed = true,
+                DateCreated = new DateTime(2017, 08, 01, 20, 00, 00),
+                Avatar = "https://collegecandy.files.wordpress.com/2015/04/google.jpg?quality=88&strip=all&w=640",
+                Rating = 5,
+                IsDeleted = false,
+                Role = role5,
+                Contacts = new List<Contact> { contact92, contact93, contact94, contact95, contact96, contact97, contact98 }
+            };
 
-            context.Accounts.AddRange(new List<Account>() { account1, account2, account3, account4, account5, account6, account7, account8, account9, account10, account11, account12, account13 });
+            Account account15 = new Account()
+            {
+                Id = 15,
+                Email = "siemens@gmail.com",
+                EmailConfirmed = true,
+                DateCreated = new DateTime(2017, 08, 23, 20, 00, 00),
+                Avatar = "http://www.heysuccess.com/public/upload/productimage/18569-21917-4.jpg",
+                Rating = 5,
+                IsDeleted = false,
+                Role = role5,
+                Contacts = new List<Contact> { contact99, contact100, contact101, contact102, contact103, contact104, contact105 }
+            };
+
+            Account account16 = new Account()
+            {
+                Id = 16,
+                Email = "dell@gmail.com",
+                EmailConfirmed = true,
+                DateCreated = new DateTime(2017, 08, 19, 06, 00, 00),
+                Avatar = "http://spl.co.za/wp-content/uploads/2012/05/dell-logo1.jpg",
+                Rating = 5,
+                IsDeleted = false,
+                Role = role5,
+                Contacts = new List<Contact> { contact106, contact107, contact108, contact109, contact110, contact111, contact112 }
+            };
+
+            Account account17 = new Account()
+            {
+                Id = 17,
+                Email = "mcdonalds@gmail.com",
+                EmailConfirmed = true,
+                DateCreated = new DateTime(2017, 08, 14, 16, 00, 00),
+                Avatar = "http://www.mcdonalds.co.uk/content/dam/McDonaldsUK/Promotions/Facebook-Share-Image.jpg",
+                Rating = 5,
+                IsDeleted = false,
+                Role = role5,
+                Contacts = new List<Contact> { contact113, contact114, contact115, contact116, contact117, contact118, contact119 }
+            };
+
+            Account account18 = new Account()
+            {
+                Id = 18,
+                Email = "novaposhta@gmail.com",
+                EmailConfirmed = true,
+                DateCreated = new DateTime(2017, 08, 11, 12, 00, 00),
+                Avatar = "https://www.haendlerbund.de/images/content/ukraine/Nova_Poshta_logo.jpg",
+                Rating = 5,
+                IsDeleted = false,
+                Role = role5,
+                Contacts = new List<Contact> { contact120, contact121, contact122, contact123, contact124, contact125, contact126 }
+            };
+
+            context.Accounts.AddRange(new List<Account>()
+            {
+                account1,  account11,
+                account2,  account12,
+                account3,  account13,
+                account4,  account14,
+                account5,  account15,
+                account6,  account16,
+                account7,  account17,
+                account8,  account18,
+                account9,
+                account10,   
+            });
 
 
             #endregion
@@ -661,9 +789,64 @@ namespace Unicorn.DataAccess.Context
                 Provider = "Twitter",
                 Account = account13
             };
+            
+            SocialAccount socialAccount14 = new SocialAccount()
+            {
+                Id = 14,
+                IsDeleted = false,
+                Uid = "14",
+                Provider = "Google",
+                Account = account14
+            };
 
+            SocialAccount socialAccount15 = new SocialAccount()
+            {
+                Id = 15,
+                IsDeleted = false,
+                Uid = "15",
+                Provider = "Google",
+                Account = account15
+            };
 
-            context.SocialAccounts.AddRange(new List<SocialAccount>() { socialAccount1, socialAccount2, socialAccount3, socialAccount4, socialAccount5, socialAccount6, socialAccount7, socialAccount8, socialAccount9, socialAccount10, socialAccount11, socialAccount12, socialAccount13 });
+            SocialAccount socialAccount16 = new SocialAccount()
+            {
+                Id = 16,
+                IsDeleted = false,
+                Uid = "16",
+                Provider = "Google",
+                Account = account16
+            };
+
+            SocialAccount socialAccount17 = new SocialAccount()
+            {
+                Id = 17,
+                IsDeleted = false,
+                Uid = "17",
+                Provider = "Google",
+                Account = account17
+            };
+
+            SocialAccount socialAccount18 = new SocialAccount()
+            {
+                Id = 18,
+                IsDeleted = false,
+                Uid = "18",
+                Provider = "Google",
+                Account = account18
+            };
+            context.SocialAccounts.AddRange(new List<SocialAccount>()
+            {
+                socialAccount1,  socialAccount11,
+                socialAccount2,  socialAccount12,
+                socialAccount3,  socialAccount13,
+                socialAccount4,  socialAccount14,
+                socialAccount5,  socialAccount15,
+                socialAccount6,  socialAccount16,
+                socialAccount7,  socialAccount17,
+                socialAccount8,  socialAccount18,
+                socialAccount9,
+                socialAccount10,   
+            });
 
             #endregion     
 
@@ -1250,7 +1433,130 @@ namespace Unicorn.DataAccess.Context
                 Works = new List<Work> { work5, work6 }
             };
 
-            context.Companies.AddRange(new List<Company>() { company1, company2, company3 });
+            Company company4 = new Company()
+            {
+                Id = 4,
+                Name = "Google Inc.",
+                Description = "Don't be evil",
+                Account = account14,
+                FoundationDate = new DateTime(2010, 08, 02, 10, 11, 16),
+                Director = "Sergey Grin",
+                Staff = 1,
+                IsDeleted = false,
+                Location = new Location()
+                {
+                    Id = 6,
+                    Adress = "Soborna St",
+                    City = "Vinnitsa",
+                    Latitude = 49.233256,                    
+                    Longitude = 28.467229,
+                    IsDeleted = false,
+                    PostIndex = "21021"
+                },
+                Vendors = new List<Vendor>() { vendor6 },
+                Works = new List<Work> { work5, work6 }
+            };
+
+            Company company5 = new Company()
+            {
+                Id = 5,
+                Name = "Siemens",
+                Description = "Engenuity for life",
+                Account = account15,
+                FoundationDate = new DateTime(2012, 08, 08, 13, 11, 16),
+                Director = "Rob Morris",
+                Staff = 1,
+                IsDeleted = false,
+                Location = new Location()
+                {
+                    Id = 6,
+                    Adress = "Balkivs'ka St",
+                    City = "Odessa",
+                    Latitude = 46.44124,
+                    Longitude = 30.715554,
+                    IsDeleted = false,
+                    PostIndex = "23445"
+                },
+                Vendors = new List<Vendor>() { vendor6 },
+                Works = new List<Work> { work5, work6 }
+            };
+
+            Company company6 = new Company()
+            {
+                Id = 6,
+                Name = "Dell",
+                Description = "The power to do more",
+                Account = account16,
+                FoundationDate = new DateTime(2009, 08, 09, 13, 11, 16),
+                Director = "Alok Ohrie",
+                Staff = 1,
+                IsDeleted = false,
+                Location = new Location()
+                {
+                    Id = 6,
+                    Adress = "Peremohy Ave, 82",
+                    City = "Chernihiv",
+                    Latitude = 51.492639,                    
+                    Longitude = 31.292565,
+                    IsDeleted = false,
+                    PostIndex = "24326"
+                },
+                Vendors = new List<Vendor>() { vendor6 },
+                Works = new List<Work> { work5, work6 }
+            };
+
+            Company company7 = new Company()
+            {
+                Id = 7,
+                Name = "McDonalds",
+                Description = "I'm lovin' it",
+                Account = account17,
+                FoundationDate = new DateTime(20062, 01, 01, 13, 11, 16),
+                Director = "Don Thompson",
+                Staff = 1,
+                IsDeleted = false,
+                Location = new Location()
+                {
+                    Id = 6,
+                    Adress = "Pushkina Ave, 39А",
+                    City = "Dnipro",
+                    Latitude = 48.466027,
+                    Longitude = 35.025498,
+                    IsDeleted = false,
+                    PostIndex = "27000"
+                },
+                Vendors = new List<Vendor>() { vendor6 },
+                Works = new List<Work> { work5, work6 }
+            };
+
+            Company company8 = new Company()
+            {
+                Id = 8,
+                Name = "Nova poshta",
+                Description = "Express delivery lider",
+                Account = account18,
+                FoundationDate = new DateTime(2014, 08, 08, 13, 11, 16),
+                Director = "Sergey Kovalenko",
+                Staff = 1,
+                IsDeleted = false,
+                Location = new Location()
+                {
+                    Id = 6,
+                    Adress = "Rus'ka St, 18",
+                    City = "Ternopil",
+                    Latitude = 49.550626,
+                    Longitude = 25.590897,
+                    IsDeleted = false,
+                    PostIndex = "26911"
+                },
+                Vendors = new List<Vendor>() { vendor6 },
+                Works = new List<Work> { work5, work6 }
+            };
+
+            context.Companies.AddRange(new List<Company>()
+            {
+                company1, company2, company3, company4, company5, company6, company7, company8
+            });
 
 
             #endregion

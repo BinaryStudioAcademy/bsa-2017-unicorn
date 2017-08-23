@@ -405,15 +405,15 @@ namespace Unicorn.Core.Services
         private async Task<ICollection<CompanyDetails>> GetSearchCompaniesMethod(string category, string subcategory, int? date)
         {
             var companies = await _unitOfWork.CompanyRepository.GetAllAsync();
-            var works = await _unitOfWork.WorkRepository.GetAllAsync();
-            var categories = await _unitOfWork.CategoryRepository.GetAllAsync();
+            var details = new List<CompanyDetails>();
 
-            var selectWorks = works.Where(w => w.Subcategory.Equals(subcategory));
-            //var selectCategory = categories.Where(ca => ca.Subcategories)
-
-
-
-            return null;
+            foreach (var company in companies)
+            {
+                var detail = await GetCompanyDetailsMethod(company.Id);
+                if (detail != null)
+                    details.Add(detail);
+            }
+            return details;            
         }
 
         #endregion
