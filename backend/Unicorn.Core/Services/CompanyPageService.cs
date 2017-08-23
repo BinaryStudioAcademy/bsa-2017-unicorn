@@ -421,7 +421,6 @@ namespace Unicorn.Core.Services
             return null;
         }
 
-<<<<<<< HEAD
         private async Task SaveCompanyWorksMethod(CompanyWorks companyDTO)
         {
             var company = await _unitOfWork.CompanyRepository.GetByIdAsync(companyDTO.Id);
@@ -527,7 +526,6 @@ namespace Unicorn.Core.Services
             }
             await _unitOfWork.SaveAsync();
         }
-=======
         public async Task<long> GetCompanyAccountId(long id)
         {
             var company = await _unitOfWork.CompanyRepository.Query
@@ -536,7 +534,6 @@ namespace Unicorn.Core.Services
             return company.Account.Id;
         }
 
->>>>>>> develop
 
 
         #endregion

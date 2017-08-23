@@ -138,7 +138,6 @@ namespace Unicorn.Controllers
             var result = await _ratingService.GetAvarageByRecieverId(accountId);
             return Request.CreateResponse(HttpStatusCode.OK, result);
 
-<<<<<<< HEAD
         // POST: company-works
         [HttpPost]
         [Route("company-works")]
@@ -166,9 +165,6 @@ namespace Unicorn.Controllers
             await _companyService.SaveCompanyBooks(company);
         }
 
-=======
-        }
->>>>>>> develop
         //// PUT: api/Company/5
         //public void Put(int id, [FromBody]string value)
         //{
