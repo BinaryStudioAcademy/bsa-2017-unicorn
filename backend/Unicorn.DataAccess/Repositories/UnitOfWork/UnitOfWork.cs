@@ -28,6 +28,7 @@ namespace Unicorn.DataAccess.Repositories.UnitOfWork
         private IGenericRepository<SocialAccount> socialAccountRepository;
         private IGenericRepository<PortfolioItem> portfolioRepository;
         private IGenericRepository<Contact> contactRepository;
+        private IGenericRepository<ContactProvider> contactProviderRepository;
 
         public UnitOfWork(AppContext context, IRepositoryFactory factory)
         {
@@ -186,6 +187,15 @@ namespace Unicorn.DataAccess.Repositories.UnitOfWork
             {
                 return contactRepository ??
                     (contactRepository = factory.CreateRepository<Contact>(context));
+            }
+        }
+
+        public IGenericRepository<ContactProvider> ContactProviderRepository
+        {
+            get
+            {
+                return contactProviderRepository ??
+                    (contactProviderRepository = factory.CreateRepository<ContactProvider>(context));
             }
         }
 

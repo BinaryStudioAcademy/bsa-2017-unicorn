@@ -83,6 +83,11 @@ export class VendorService {
       .catch(err => alert(err));
   }
 
+  postVendorContact(vendorId: number, contact: Contact): Promise<any> {
+    return this.dataService.postFullRequest<Contact[]>(`${this.apiController}/${vendorId}/contacts`, contact)
+      .catch(err => alert(err));
+  }
+
   updateVendor(vendor: Vendor): Promise<any> {
     return this.dataService.putFullRequest<Vendor>(`${this.apiController}/${vendor.Id}`, vendor)
       .catch(err => alert(err));
@@ -93,8 +98,8 @@ export class VendorService {
       .catch(err => alert(err));
   }
 
-  updateContacts(id: number, contacts: Contact[]): Promise<any> {
-    return this.dataService.putFullRequest<Contact[]>(`${this.apiController}/${id}/contacts`, contacts)
+  updateContact(id: number, contact: Contact): Promise<any> {
+    return this.dataService.putFullRequest<Contact>(`${this.apiController}/${id}/contacts/${contact.Id}`, contact)
       .catch(err => alert(err));;
   }
 
@@ -111,5 +116,10 @@ export class VendorService {
   removeVendorWork(vendorId: number, workId: number, work: Work): Promise<any> {
     return this.dataService.deleteFullRequest<Work[]>(`${this.apiController}/${vendorId}/works/${workId}`, work)
       .catch(err => alert(err));
+  }
+
+  removeContact(id: number, contact: Contact): Promise<any> {
+    return this.dataService.deleteFullRequest<any>(`${this.apiController}/${id}/contacts/${contact.Id}`, contact)
+      .catch(err => alert(err));;
   }
 }

@@ -57,12 +57,15 @@ namespace Unicorn.Core.Services
                 .SingleAsync(x => x.Id == id);
 
 
-            return vendor.Person.Account.Contacts.Select(c => new ContactShortDTO() {
-                Id = c.Id,
-                Type = c.Provider.Type,
-                Provider = c.Provider.Name,
-                Value = c.Value
-            });
+            return vendor.Person.Account.Contacts
+                .Where(c => !c.IsDeleted)
+                .Select(c => new ContactShortDTO() {
+                    Id = c.Id,
+                    Type = c.Provider.Type,
+                    Provider = c.Provider.Name,
+                    ProviderId = c.Provider.Id,
+                    Value = c.Value
+                }).ToList();
         }
 
         public async Task<IEnumerable<CategoryDTO>> GetVendorCategoriesAsync(long id)

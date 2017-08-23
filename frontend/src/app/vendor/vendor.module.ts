@@ -35,6 +35,8 @@ import { DataService } from "../services/data.service";
 import { LocationService } from "../services/location.service";
 import { CategoryService } from "../services/category.service";
 import { WorkService } from "../services/work.service";
+import { VendorEditContactsComponent } from './vendor-edit/vendor-edit-contacts/vendor-edit-contacts.component';
+import { ContactService } from "../services/contact.service";
 
 @NgModule({
   imports: [
@@ -59,7 +61,8 @@ import { WorkService } from "../services/work.service";
     VendorEditOrdersComponent,
     VendorEditPortfolioComponent,
     VendorEditWorksComponent,
-    EnumKeysPipe
+    EnumKeysPipe,
+    VendorEditContactsComponent
   ],
   providers: [
     DataService,
@@ -68,7 +71,8 @@ import { WorkService } from "../services/work.service";
     ReviewService,
     PhotoService,
     CategoryService,
-    WorkService
+    WorkService,
+    ContactService
   ]
 })
 export class VendorModule { }
