@@ -14,12 +14,12 @@
     width: 172px;
     height: 150px;
     margin: 5px;
-    overflow: hidden;
 }
 
 .img-wrapper img {
-    width: 100%;
-    min-height: 100%;
+    width: 172px;
+    height: 150px;
+    object-fit: scale-down;
 }
 
 .vendor-title {
