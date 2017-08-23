@@ -7,16 +7,20 @@
                         <th>Name</th>
                         <th>Category</th>
                         <th>Subcategory</th>
-                        <th></th>
+                        <th class="right aligned">
+                            <button class="ui basic button add" (click)="openDetailedWindow()">
+                                <h5>Add work</h5>
+                            </button>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let work of company.Works" (click)="selectWorksRow(work)">
+                    <tr *ngFor="let work of company.Works" (click)="selectWorksRow($event, work)">
                         <td>{{work.Name}}</td>
                         <td>{{work.Subcategory.Category.Name}}</td>
                         <td>{{work.Subcategory.Name}}</td>
                         <td class="right aligned">
-                            <button class="ui icon button" (click)="deleteWork(work)">
+                            <button class="ui icon button">
                                 <i class="remove icon"></i>
                             </button>
                         </td>
@@ -25,8 +29,8 @@
             </table>
         </div>
     </div>
-    <div class="ui divider"></div>
-    <div class="two column container row">
+    <div class="ui divider" *ngIf="openedDetailedWindow"></div>
+    <div class="two column container row" *ngIf="openedDetailedWindow">
         <div class="column">
             <form class="ui form">
                 <div class="form-flex">
@@ -52,7 +56,7 @@
                         <img class="ui avatar image category-icon" src="{{option.Icon}}">{{option.Name}}
                     </ng-template>
                     <label>Select category</label>
-                    <sui-select class="selection" [(ngModel)]="selectedCategory" [isDisabled]="selectedDisabled" [optionTemplate]="optionCategoryTemplate" [isSearchable]="true" (selectedOptionChange)="changeCategory()" name="selectCategory">
+                    <sui-select class="selection" [(ngModel)]="selectedCategory" [optionTemplate]="optionCategoryTemplate" (selectedOptionChange)="changeCategory()" name="selectCategory">
                         <sui-select-option class="select-option" *ngFor="let category of company.AllCategories" [value]="category">
                         </sui-select-option>
                     </sui-select>
@@ -63,7 +67,7 @@
                         {{option.Name}}
                     </ng-template>
                     <label>Select subcategory</label>
-                    <sui-select class="selection" [isDisabled]="selectedDisabled" [(ngModel)]="selectedSubcategory" [optionTemplate]="optionSubcategoryTemplate" name="selectSubcategory">
+                    <sui-select class="selection" [(ngModel)]="selectedSubcategory" [optionTemplate]="optionSubcategoryTemplate" name="selectSubcategory">
                         <sui-select-option class="select-option" *ngFor="let subcategory of subcategories" [value]="subcategory">
                         </sui-select-option>
                     </sui-select>
@@ -72,8 +76,8 @@
             </form>
         </div>
     </div>
-    <div class="ui divider"></div>
-    <div class="centered row">
+    <div class="ui divider" *ngIf="openedDetailedWindow"></div>
+    <div class="centered row" *ngIf="openedDetailedWindow">
         <div class="three wide column">
             <button class="ui basic button" (click)="addOrSaveWork()" [ngClass]="{'loading':isLoaded}">
                         <h5 *ngIf="!isLoaded">Save/Add</h5></button>

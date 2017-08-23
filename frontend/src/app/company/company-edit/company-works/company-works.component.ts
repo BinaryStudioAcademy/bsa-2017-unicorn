@@ -17,11 +17,9 @@ export class CompanyWorksComponent implements OnInit {
   selectedCategory: CompanyCategory;
   selectedSubcategory: CompanySubcategory;
   subcategories: CompanySubcategory[] = [];
-  work: CompanyWork = {Id: null, Description: null, Name: null, Subcategory: null};
-  selectedDisabled: boolean = false;
-  isLoaded: boolean = false;
-  saveDisabled: boolean = true;
-  addEnable: boolean = false;
+  work: CompanyWork = {Id: null, Description: null, Name: null, Subcategory: null};  
+  isLoaded: boolean = false; 
+  openedDetailedWindow: boolean = false;
 
   constructor(private companyService: CompanyService,
     private route: ActivatedRoute,) { }
@@ -34,57 +32,75 @@ export class CompanyWorksComponent implements OnInit {
   }
 
   changeCategory(){    
+    console.log(this.selectedCategory);
     this.selectedSubcategory = undefined;
     this.subcategories = this.company.AllCategories.find(x => x.Name == this.selectedCategory.Name).Subcategories;
   }
-
-  selectWorksRow(work: CompanyWork){    
+  selectWorksRow(event: any, work: CompanyWork){   
+    if(event.target.localName === "td") {
     this.work = {
       Id: work.Id,
       Description: work.Description,
       Name: work.Name,
       Subcategory: work.Subcategory
     };
-
-    this.selectedDisabled = true;
+    
+    this.selectedCategory = work.Subcategory.Category;
+    console.log(event.target);
+    this.selectedSubcategory = work.Subcategory;
+    this.openedDetailedWindow = true;
   }
-
+  else{
+    this.deleteWork(work);
+  }
+  }
+  openDetailedWindow(){
+    this.work = {
+      Id: null,
+      Description: null,
+      Name: null,
+      Subcategory: null
+    };
+    if(!this.openedDetailedWindow)  
+    this.openedDetailedWindow = !this.openedDetailedWindow;
+  }
   deleteWork(work: CompanyWork){    
     if(this.work !== null) 
     this.company.Works =  this.company.Works.filter(x => x.Id !== work.Id);   
-
-    this.selectedDisabled = false;
+    this.work = null;  
+    if(this.openedDetailedWindow)  
+      this.openedDetailedWindow = !this.openedDetailedWindow;
   }
-
   saveWorkChanges(){    
-      this.company.Works.find(x => x.Id === this.work.Id).Description = this.work.Description;
-      this.company.Works.find(x => x.Id === this.work.Id).Name = this.work.Name;
-      this.saveCompanyWorks();      
-      this.selectedDisabled = false;      
+    if(this.selectedCategory !== undefined && this.selectedSubcategory !== undefined
+      && this.work.Description !== null && this.work.Name !== null){
+        this.company.Works.find(x => x.Id === this.work.Id).Description = this.work.Description;
+        this.company.Works.find(x => x.Id === this.work.Id).Name = this.work.Name;
+        this.company.Works.find(x => x.Id === this.work.Id).Subcategory.Category = this.selectedCategory;
+        this.company.Works.find(x => x.Id === this.work.Id).Subcategory = this.selectedSubcategory;
+        this.saveCompanyWorks();  
+      }
   } 
-
   addWork(){
-    this.selectedCategory.Subcategories = null;
-    this.selectedSubcategory.Category = this.selectedCategory;  
-    this.work.Subcategory = this.selectedSubcategory;  
-    this.company.Works.push(this.work);
-    console.log(this.company.Works);
-    this.saveCompanyWorks();
+    if(this.selectedCategory !== undefined && this.selectedSubcategory !== undefined
+      && this.work.Description !== null && this.work.Name !== null){ 
+        this.selectedCategory.Subcategories = null;
+        this.selectedSubcategory.Category = this.selectedCategory;  
+        this.work.Subcategory = this.selectedSubcategory;  
+        this.company.Works.push(this.work);
+        console.log(this.company.Works);
+        this.saveCompanyWorks();
+    }
   }
 
   addOrSaveWork(){
-    //console.log(this.selectedCategory, this.selectedSubcategory);
-    if(this.selectedDisabled){
+    if(this.work.Id !== null){
       this.saveWorkChanges();      
     }
-    else{
-      if(this.selectedCategory !== undefined && this.selectedSubcategory !== undefined
-      && this.work.Description !== null && this.work.Name !== null){        
-        this.addWork();
-      }
+    else{             
+        this.addWork();     
     }
-  }
-
+  } 
 
   saveCompanyWorks(){
     this.isLoaded = true;

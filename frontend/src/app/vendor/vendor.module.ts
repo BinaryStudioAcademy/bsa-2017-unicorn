@@ -26,8 +26,6 @@ import { VendorEditOrdersComponent } from './vendor-edit/vendor-edit-orders/vend
 
 import { VendorRoutingModule } from './vendor-routing.module';
 
-import { EnumKeysPipe } from "../pipes/enum.pipe";
-
 import { PhotoService } from '../services/photo.service';
 import { VendorService } from '../services/vendor.service';
 import { ReviewService } from '../services/review.service';
@@ -36,6 +34,7 @@ import { LocationService } from "../services/location.service";
 
 import { CategoryService } from "../services/category.service";
 import { WorkService } from "../services/work.service";
+import { PipeModule } from "../pipe/pipe.module";
 
 
 @NgModule({
@@ -47,7 +46,8 @@ import { WorkService } from "../services/work.service";
     MapModule,
     SignBlockModule,
     CommonModule,
-    SharedModule
+    SharedModule,
+    PipeModule
   ],
   declarations: [
     VendorDetailsComponent,
@@ -60,8 +60,7 @@ import { WorkService } from "../services/work.service";
     VendorEditInfoComponent,
     VendorEditOrdersComponent,
     VendorEditPortfolioComponent,
-    VendorEditWorksComponent,
-    EnumKeysPipe
+    VendorEditWorksComponent
     ],
   providers: [
     DataService,

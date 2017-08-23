@@ -1289,7 +1289,16 @@ namespace Unicorn.DataAccess.Context
                 Description = "clean clothes and irom it, output 3 spots ",
                 Company = company1,
                 Status = BookStatus.InProgress,
-                Customer = customer1
+                Customer = customer1,
+                Location = new Location()
+                {
+                    Adress = "Lebedeva-Kumacha 7a str.",
+                    City = "Kiev",
+                    Latitude = 50.437,
+                    Longitude = 30.439,
+                    IsDeleted = false,
+                    PostIndex = "03110"
+                }
             };
 
             Book book2 = new Book()
@@ -1343,7 +1352,16 @@ namespace Unicorn.DataAccess.Context
                 Description = "rebuild 3 walls",
                 Status = BookStatus.Accepted,
                 Customer = customer3,
-                Company = company2
+                Company = company2,
+                Location = new Location()
+                {
+                    Adress = "Lebedeva-Kumacha 7a str.",
+                    City = "Kiev",
+                    Latitude = 50.437,
+                    Longitude = 30.439,
+                    IsDeleted = false,
+                    PostIndex = "03110"
+                }
             };
 
 
@@ -1356,7 +1374,16 @@ namespace Unicorn.DataAccess.Context
                 Description = "Take out the trash",
                 Status = BookStatus.Accepted,
                 Customer = customer1,
-                Company = company3
+                Company = company3,
+                Location = new Location()
+                {
+                    Adress = "Lebedeva-Kumacha 7a str.",
+                    City = "Kiev",
+                    Latitude = 50.437,
+                    Longitude = 30.439,
+                    IsDeleted = false,
+                    PostIndex = "03110"
+                }
             };
 
             Book book6 = new Book()

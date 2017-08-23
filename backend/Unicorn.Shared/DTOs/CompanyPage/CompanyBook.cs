@@ -17,8 +17,8 @@ namespace Unicorn.Shared.DTOs.CompanyPage
 
         public long CustomerId { get; set; }
 
-        public CompanyWork Work { get; set; }
+        public virtual CompanyWork Work { get; set; }
 
-        public LocationDTO Location { get; set; }
+        public virtual LocationDTO Location { get; set; }
     }
 }

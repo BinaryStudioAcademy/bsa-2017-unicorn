@@ -474,7 +474,7 @@ namespace Unicorn.Core.Services
                 var companyBooks = new CompanyBooks
                 {
                     Id = company.Id,
-                    Books = books.Where(x => x.Company.Id == company.Id).Select(book => new CompanyBook
+                    Books = books.Where(x => x.Company != null && x.Company.Id == company.Id).Select(book => new CompanyBook
                     {
                         Id = book.Id,
                         Customer = book.Customer.Person.Name + " " + book.Customer.Person.MiddleName,
@@ -520,45 +520,14 @@ namespace Unicorn.Core.Services
 
         private async Task SaveCompanyBooksMethod(CompanyBooks companyDTO)
         {
-            //var company = await _unitOfWork.CompanyRepository.GetByIdAsync(companyDTO.Id);
-
-            //if (company != null)
-            //{
-            //    company.Works.Clear();
-            //    foreach (var companyDtoWork in companyDTO.Works)
-            //    {
-            //        var work = await _unitOfWork.WorkRepository.GetByIdAsync(companyDtoWork.Id);
-            //        if (work != null)
-            //        {
-            //            work.Description = companyDtoWork.Description;
-            //            work.Name = companyDtoWork.Name;
-
-            //            var category =
-            //                await _unitOfWork.CategoryRepository.GetByIdAsync(companyDtoWork.Subcategory.Category.Id);
-            //            var subcategory =
-            //                await _unitOfWork.SubcategoryRepository.GetByIdAsync(companyDtoWork.Subcategory.Id);
-            //            subcategory.Category = category;
-            //            work.Subcategory = subcategory;
-            //        }
-            //        else
-            //        {
-            //            var category =
-            //                await _unitOfWork.CategoryRepository.GetByIdAsync(companyDtoWork.Subcategory.Category.Id);
-            //            var subcategory =
-            //                await _unitOfWork.SubcategoryRepository.GetByIdAsync(companyDtoWork.Subcategory.Id);
-            //            subcategory.Category = category;
-            //            work = new Work
-            //            {
-            //                Description = companyDtoWork.Description,
-            //                Name = companyDtoWork.Name,
-            //                Subcategory = subcategory
-            //            };
-            //        }
-            //        company.Works.Add(work);
-            //    }
-            //    await _unitOfWork.SaveAsync();
-            //}
+            foreach (var companyDtoBook in companyDTO.Books)
+            {
+                var book = await _unitOfWork.BookRepository.GetByIdAsync(companyDtoBook.Id);
+                book.Status = companyDtoBook.Status;
+            }
+            await _unitOfWork.SaveAsync();
         }
+
 
         #endregion
     }
