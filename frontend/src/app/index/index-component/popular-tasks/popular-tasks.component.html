@@ -14,10 +14,14 @@
                             <img src="{{performer.Avatar}}" />
                         </div>
                     </a>
-                    <p class="vendor-title">{{performer.Name}}&nbsp;&nbsp;<span class="city-span">{{performer.City}}</span></p>
+                    <div class="per-name">
+                        <div>
+                            <span class="vendor-title">{{performer.Name}}</span>
+                        </div>
+                    </div>
                     <div class="per-info">
                         <sui-rating class="star" [ngModel]="bestPerformers[i].Rating" [isReadonly]="true"></sui-rating>
-                        <a href="#">Reviews({{bestPerformers[i].ReviewsCount}})</a>
+                        <a href="{{performer.Link}}{{tabSuffix}}">Reviews({{bestPerformers[i].ReviewsCount}})</a>
                     </div>
                 </div>
             </div>
@@ -30,10 +34,14 @@
                             <img src="{{performer.Avatar}}" />
                         </div>
                     </a>
-                    <p class="vendor-title">{{performer.Name}}&nbsp;&nbsp;<span class="city-span">{{performer.City}}</span></p>
+                    <div class="per-name">
+                        <div>
+                            <span class="vendor-title">{{performer.Name}}</span>
+                        </div>
+                    </div>
                     <div class="per-info">
                         <sui-rating class="star" [ngModel]="fperformers[i].Rating" [isReadonly]="true"></sui-rating>
-                        <a href="#">Reviews({{fperformers[i].ReviewsCount}})</a>
+                        <a href="{{performer.Link}}{{tabSuffix}}">Reviews({{fperformers[i].ReviewsCount}})</a>
                     </div>
                 </div>
             </div>
@@ -46,10 +54,14 @@
                             <img src="{{performer.Avatar}}" />
                         </div>
                     </a>
-                    <p class="vendor-title">{{performer.Name}}&nbsp;&nbsp;<span class="city-span">{{performer.City}}</span></p>
+                    <div class="per-name">
+                        <div>
+                            <span class="vendor-title">{{performer.Name}}</span>
+                        </div>
+                    </div>
                     <div class="per-info">
                         <sui-rating class="star" [ngModel]="sperformers[i].Rating" [isReadonly]="true"></sui-rating>
-                        <a href="#">Reviews({{sperformers[i].ReviewsCount}})</a>
+                        <a href="{{performer.Link}}{{tabSuffix}}">Reviews({{sperformers[i].ReviewsCount}})</a>
                     </div>
                 </div>
             </div>
@@ -62,10 +74,14 @@
                             <img src="{{performer.Avatar}}" />
                         </div>
                     </a>
-                    <p class="vendor-title">{{performer.Name}}&nbsp;&nbsp;<span class="city-span">{{performer.City}}</span></p>
+                    <div class="per-name">
+                        <div>
+                            <span class="vendor-title">{{performer.Name}}</span>
+                        </div>
+                    </div>
                     <div class="per-info">
                         <sui-rating class="star" [ngModel]="tperformers[i].Rating" [isReadonly]="true"></sui-rating>
-                        <a href="#">Reviews({{tperformers[i].ReviewsCount}})</a>
+                        <a href="{{performer.Link}}{{tabSuffix}}">Reviews({{tperformers[i].ReviewsCount}})</a>
                     </div>
                 </div>
             </div>

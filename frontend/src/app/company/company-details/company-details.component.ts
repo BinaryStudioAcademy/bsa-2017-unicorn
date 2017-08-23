@@ -13,6 +13,8 @@ import { CompanyService } from "../../services/company-services/company.service"
 export class CompanyDetailsComponent implements OnInit {
   company: CompanyShort;  
   isGuest: boolean;  
+
+  tabActive: boolean = false;
   constructor(private companyService: CompanyService,
     private route: ActivatedRoute) { }
 
@@ -21,7 +23,11 @@ export class CompanyDetailsComponent implements OnInit {
     .switchMap((params: Params) => this.companyService.getCompanyShort(params['id']))
     .subscribe(res => {
       this.company = res;
-    });        
+    });   
+    if (this.route.snapshot.queryParams['tab'] === 'reviews') {
+      this.tabActive = true;
+    }
+    console.log(this.route.snapshot.queryParams['tab']);   
 
     this.getCurrentRole();
   }    

@@ -52,6 +52,8 @@ export class VendorDetailsComponent implements OnInit {
   file: File;
   data: any;
   imageUploaded: boolean;
+
+  tabActive: boolean = false;
   constructor(
     private route: ActivatedRoute,
     private vendorService: VendorService,
@@ -72,6 +74,9 @@ export class VendorDetailsComponent implements OnInit {
       .subscribe(resp => {
         this.vendor = resp.body as Vendor
       });
+    if (this.route.snapshot.queryParams['tab'] === 'reviews') {
+      this.tabActive = true;
+    }
   }
   getCurrentRole()
   {
