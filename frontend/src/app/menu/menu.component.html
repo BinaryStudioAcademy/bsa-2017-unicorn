@@ -6,18 +6,23 @@
         <ng-template #authorized>
             <li>
                 <div class="dropdown">
-                    <div class="ui small circular image smallAvatar" (click)="onShowDetails()">
+                    <div class="ui small circular image" (click)="onShowDetails()">
                         <img class="userInfo" src="../../../assets/images/avatar.jpg">
                     </div>
                     <div class="dropdown-content" *ngIf="showDetails">
-                        <img src="../../../assets/images/avatar.jpg">
-                        <div class="desc">{{fakeName}} {{fakeSurname}}</div>
+                        <div class="mainInfo">
+                            <div class="ui small circular image smallAvatar">
+                                <img src="../../../assets/images/avatar.jpg">
+                            </div>
+                            <div class="desc">{{fakeName}} {{fakeSurname}}</div>
+                        </div>
+                        <div class="ui fitted divider"></div>
+                        <div class="signOut">
+                            <a (click)="signOut()" routerLinkActive="active">Sign Out</a>
+                        </div>
                     </div>
                 </div>
             </li>
-
-
-            <li><a (click)="signOut()" routerLinkActive="active">Sign Out</a></li>
         </ng-template>
     </ul>
 </nav>
