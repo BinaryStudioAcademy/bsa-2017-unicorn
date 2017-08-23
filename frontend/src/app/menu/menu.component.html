@@ -5,11 +5,14 @@
         <li *ngIf="!isLogged;else authorized"><a (click)="openModal()" routerLinkActive="active">Sign In</a></li>
         <ng-template #authorized>
             <li>
+                <i class="small circular inverted bell link outline icon" [ngClass]="isNotificationExist()" (click)="onShowNotifications()"></i>
+            </li>
+            <li>
                 <div class="dropdown">
                     <div class="ui small circular image" (click)="onShowDetails()">
                         <img class="userInfo" src="../../../assets/images/avatar.jpg">
                     </div>
-                    <div class="dropdown-content" *ngIf="showDetails">
+                    <div class="dropdown-content" *ngIf="showAccountDetails">
                         <div class="mainInfo">
                             <div class="ui small circular image smallAvatar">
                                 <img src="../../../assets/images/avatar.jpg">
@@ -20,6 +23,19 @@
                         <div class="signOut">
                             <a (click)="signOut()" routerLinkActive="active">Sign Out</a>
                         </div>
+                    </div>
+                    <div class="dropdown-content" *ngIf="showNotifications">
+                        <div class="ui middle aligned divided list">
+                            <div class="item" *ngFor="let not of notifications">
+                                <img class="ui avatar image" src="../../../assets/images/avatar.jpg">
+                                <div class="content">
+                                    <a class="header">{{not}}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dropdown-content" *ngIf="showNotifications && !notifications">
+                        Empty
                     </div>
                 </div>
             </li>

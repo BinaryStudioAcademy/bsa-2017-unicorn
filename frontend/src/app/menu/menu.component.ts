@@ -27,7 +27,9 @@ export class MenuComponent implements OnInit {
 
   fakeName: string;
   fakeSurname: string;
-  showDetails: boolean;
+  showAccountDetails: boolean;
+  showNotifications: boolean;
+  notifications: Array<string>;
 
   constructor(
     private modalService: SuiModalService,
@@ -40,6 +42,11 @@ export class MenuComponent implements OnInit {
   ngOnInit() {
     this.fakeName = "Name";
     this.fakeSurname = "Surname";
+    this.notifications = [
+      "First notification",
+      "Second notification",
+      "Third notification"
+    ];
 
     this.addMenuItems();
     this.isEnabled = true;
@@ -82,6 +89,16 @@ export class MenuComponent implements OnInit {
   }
 
   onShowDetails() {
-    this.showDetails = !this.showDetails;
+    this.showAccountDetails = !this.showAccountDetails;
+    this.showNotifications = false;
+  }
+
+  onShowNotifications() {
+    this.showNotifications = !this.showNotifications;
+    this.showAccountDetails = false;
+  }
+
+  isNotificationExist() {
+    return (this.notifications && this.notifications.length != 0) ? "red" : "";
   }
 }

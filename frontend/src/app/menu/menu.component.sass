@@ -32,19 +32,31 @@ a
 
 .dropdown
     display: inline-block;
+    margin-right: -20px;
+
+.notifications
+    display: inline-block;
 
 .dropdown-content
     display: block;
-    position: absolute;
+    position: fixed;
     background-color: #f9f9f9;
     min-width: 200px;
+    width: 205px;
     margin-left: -160px;
+    margin-top: 16px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
 
 .desc
     padding: 15px;
     text-align: center;
+
+.circular.bell.outline.icon
+    margin-right: -10px;
+
+.item
+    margin: 15px 0;
 
 .mainInfo
     display: flex;
