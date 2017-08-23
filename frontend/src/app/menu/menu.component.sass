@@ -40,17 +40,23 @@ a
 .dropdown-content
     display: block;
     position: fixed;
-    background-color: #f9f9f9;
+    background-color: rgba(255, 255, 255, 1.0);
     min-width: 200px;
-    width: 205px;
-    margin-left: -160px;
+    width: 250px;
+    margin-left: -206px;
     margin-top: 16px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
 
 .desc
-    padding: 15px;
+    position: fixed;
+    padding: 15px 0;
+    margin-left: -10px;
     text-align: center;
+
+.email
+    color: #666;
+    font-size: 10px;
 
 .circular.bell.outline.icon
     margin-right: -10px;
@@ -62,6 +68,13 @@ a
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+
+.content
+    margin: 0 10px;
+
+.accountButtons
+    display: flex;
+    flex-direction: row;
 
 .signOut
     padding: 15px;

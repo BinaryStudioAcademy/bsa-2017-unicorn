@@ -5,7 +5,7 @@
         <li *ngIf="!isLogged;else authorized"><a (click)="openModal()" routerLinkActive="active">Sign In</a></li>
         <ng-template #authorized>
             <li>
-                <i class="small circular inverted bell link outline icon" [ngClass]="isNotificationExist()" (click)="onShowNotifications()"></i>
+                <i class="small circular inverted bell link outline icon" [ngClass]="getNotificationClass()" (click)="onShowNotifications()"></i>
             </li>
             <li>
                 <div class="dropdown">
@@ -17,25 +17,41 @@
                             <div class="ui small circular image smallAvatar">
                                 <img src="../../../assets/images/avatar.jpg">
                             </div>
-                            <div class="desc">{{fakeName}} {{fakeSurname}}</div>
+                            <div class="desc">
+                                <ul>
+                                    <li>{{fakeName}} {{fakeSurname}}</li>
+                                    <li class="email">{{fakeEmail}}</li>
+                                </ul>
+                            </div>
                         </div>
                         <div class="ui fitted divider"></div>
-                        <div class="signOut">
-                            <a (click)="signOut()" routerLinkActive="active">Sign Out</a>
+                        <div class="accountButtons">
+                            <div class="signOut">
+                                <a routerLink="/user/1" routerLinkActive="active">Account</a>
+                            </div>
+                            <div class="signOut">
+                                <a (click)="signOut()" routerLinkActive="active">Sign Out</a>
+                            </div>
                         </div>
+
                     </div>
                     <div class="dropdown-content" *ngIf="showNotifications">
                         <div class="ui middle aligned divided list">
-                            <div class="item" *ngFor="let not of notifications">
-                                <img class="ui avatar image" src="../../../assets/images/avatar.jpg">
+                            <div class="item" *ngFor="let notif of notifications">
                                 <div class="content">
-                                    <a class="header">{{not}}</a>
+                                    <a class="header">{{notif}}</a>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="dropdown-content" *ngIf="showNotifications && !notifications">
-                        Empty
+                    <div class="dropdown-content" *ngIf="!isNotificationExist() && showNotifications">
+                        <div class="ui middle aligned divided list">
+                            <div class="item">
+                                <div class="content">
+                                    <a class="header">Empty List</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </li>

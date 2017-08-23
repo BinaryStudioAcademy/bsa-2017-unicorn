@@ -27,6 +27,7 @@ export class MenuComponent implements OnInit {
 
   fakeName: string;
   fakeSurname: string;
+  fakeEmail: string;
   showAccountDetails: boolean;
   showNotifications: boolean;
   notifications: Array<string>;
@@ -42,6 +43,7 @@ export class MenuComponent implements OnInit {
   ngOnInit() {
     this.fakeName = "Name";
     this.fakeSurname = "Surname";
+    this.fakeEmail = "balanykb@gmail.com";
     this.notifications = [
       "First notification",
       "Second notification",
@@ -88,6 +90,10 @@ export class MenuComponent implements OnInit {
     this.authLoginService.signOut();
   }
 
+  goToAccount() {
+
+  }
+
   onShowDetails() {
     this.showAccountDetails = !this.showAccountDetails;
     this.showNotifications = false;
@@ -98,7 +104,11 @@ export class MenuComponent implements OnInit {
     this.showAccountDetails = false;
   }
 
-  isNotificationExist() {
-    return (this.notifications && this.notifications.length != 0) ? "red" : "";
+  getNotificationClass() : string {
+    return this.isNotificationExist() ? "red" : "";
+  }
+
+  isNotificationExist() : boolean {
+    return this.notifications && this.notifications.length != 0;
   }
 }
