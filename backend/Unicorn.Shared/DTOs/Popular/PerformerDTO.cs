@@ -12,6 +12,8 @@ namespace Unicorn.Shared.DTOs.Popular
 
         public double Rating { get; set; }
 
+        public int ReviewsCount { get; set; }
+
         public string Name { get; set; }
 
         public string Avatar { get; set; }
@@ -19,5 +21,7 @@ namespace Unicorn.Shared.DTOs.Popular
         public string PerformerType { get; set; } //vendor or company
 
         public string Link { get; set; }
+
+        public string City { get; set; }
     }
 }

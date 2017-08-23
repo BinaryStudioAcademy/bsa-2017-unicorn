@@ -42,7 +42,9 @@ export class UserProfileComponent implements OnInit {
             return;
         }
         this.user.Birthday=this.birthday;
-        this.user.Birthday.setDate( this.user.Birthday.getDate()+1);
+        if (this.user.Birthday !== undefined) {
+            this.user.Birthday.setDate( this.user.Birthday.getDate()+1);
+        }
         this.userService.updateUser(this.user)
           .then(resp => this.user = resp.body as User);
       }

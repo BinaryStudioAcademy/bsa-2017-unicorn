@@ -106,7 +106,11 @@
 /* ------------ Section 2 ----------- */
 
 .section2-wrapper {
-    margin: 10px auto 100px auto;
+    margin-top: 10px;
+    margin-bottom: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 92%;
 }
 
 

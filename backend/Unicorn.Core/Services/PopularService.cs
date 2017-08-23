@@ -42,6 +42,8 @@ namespace Unicorn.Core.Services
 
         public async Task<List<PerformerDTO>> GetPopularPerformers()
         {
+            var reviews = await _uow.ReviewRepository.GetAllAsync();
+
             var vendorsList = await _uow.VendorRepository
                 .Query
                 .Include(v => v.Person)
@@ -55,8 +57,10 @@ namespace Unicorn.Core.Services
                     Avatar = v.Person.Account.Avatar,
                     Name = v.Person.Name,
                     Rating = _ratingService.GetAvarageByRecieverId(v.Person.Account.Id).Result,
+                    ReviewsCount = reviews.Count(r => r.ToAccountId == v.Person.Account.Id),
                     PerformerType = "vendor",
-                    Link = "vendor/"+v.Id
+                    Link = "vendor/" + v.Id,
+                    City = v.Person.Location.City
                 });
 
             var companiesList = await _uow.CompanyRepository
@@ -71,8 +75,10 @@ namespace Unicorn.Core.Services
                     Avatar = c.Account.Avatar,
                     Name = c.Name,
                     Rating = _ratingService.GetAvarageByRecieverId(c.Account.Id).Result,
+                    ReviewsCount = reviews.Count(r => r.ToAccountId == c.Account.Id),
                     PerformerType = "company",
-                    Link = "company/" + c.Id
+                    Link = "company/" + c.Id,
+                    City = c.Location.City
                 });
 
             var performers = vendors
@@ -86,6 +92,8 @@ namespace Unicorn.Core.Services
 
         public async Task<List<PerformerDTO>> GetPopularPerformers(long id)
         {
+            var reviews = await _uow.ReviewRepository.GetAllAsync();
+
             var works = await _uow.WorkRepository
                 .Query
                 .Where(w => w.Subcategory.Category.Id == id)
@@ -107,8 +115,10 @@ namespace Unicorn.Core.Services
                     Avatar = v.Vendor.Person.Account.Avatar,
                     Name = v.Vendor.Person.Name,
                     Rating = _ratingService.GetAvarageByRecieverId(v.Vendor.Person.Account.Id).Result,
+                    ReviewsCount = reviews.Count(r => r.ToAccountId == v.Vendor.Person.Account.Id),
                     PerformerType = "vendor",
-                    Link = $"vendor/"+v.Vendor.Id
+                    Link = $"vendor/" + v.Vendor.Id,
+                    City = v.Vendor.Person.Location.City
                 });
 
             var companies = works
@@ -119,8 +129,10 @@ namespace Unicorn.Core.Services
                     Avatar = c.Company.Account.Avatar,
                     Name = c.Company.Name,
                     Rating = _ratingService.GetAvarageByRecieverId(c.Company.Account.Id).Result,
+                    ReviewsCount = reviews.Count(r => r.ToAccountId == c.Company.Account.Id),
                     PerformerType = "company",
-                    Link = "company/"+c.Company.Id
+                    Link = "company/" + c.Company.Id,
+                    City = c.Company.Location.City
                 });
 
             var performers = vendors
