@@ -25,10 +25,10 @@ export class SearchComponent implements OnInit, OnDestroy {
   labelSearch: string;
   placeholderCategory: string;
   placeholderSubcategory: string;
-  searchCategory: string;
-  searchSubcategory: string;
+  // searchCategory: string;
+  // searchSubcategory: string;
   labelDate: string;
-  searchDate: Date;
+  // searchDate: Date;
   mode: string;
   firstDayOfWeek: string;
   /* multi-select */
@@ -74,7 +74,10 @@ export class SearchComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.getParameters();
     this.createMockSettings();
-    // this.createMockCompanies(20);
+    this.getCompanies();
+    this.getCompanies();
+    this.getCompanies();
+    this.getCompanies();
     this.getCompanies();
     this.initContent();
   }
@@ -82,7 +85,9 @@ export class SearchComponent implements OnInit, OnDestroy {
   getParameters() {
     this.category = this.route.snapshot.queryParams['category'];
     this.subcategory = this.route.snapshot.queryParams['subcategory'];
-    this.date = this.convertDate(this.route.snapshot.queryParams['date']);
+    if (this.route.snapshot.queryParams['date']) {
+      this.date = this.convertDate(this.route.snapshot.queryParams['date']);
+    }
   }
 
   convertDate(date: number) {
@@ -93,21 +98,6 @@ export class SearchComponent implements OnInit, OnDestroy {
     this.filterCat  = ['Category 1', 'Category 2', 'Category 3', 'Category 4', 'Category 5', 'Category 6'];
     this.filterSubcat  = ['Subategory 1', 'Subategory 2', 'Subategory 3', 'Subategory 4', 'Subategory 5', 'Subategory 6'];
   }
-
-  // createMockCompanies(num: number) {
-  //   let i: number;
-  //   for (i = num; i >= 1; i--) {
-  //     const company = this.companyService.getMockCompany();
-  //     this.companies.push(company);
-
-  //     const marker = {
-  //       pos: [company.Location.Latitude, company.Location.Longitude],
-  //       title: company.Name
-  //     };
-  //     this.markers.push(marker);
-  //     // this.positions.push([company.Location.Latitude, company.Location.Longitude]);
-  //   }
-  // }
 
   getCompanies() {
     this.companyService.getCompanies()
@@ -139,8 +129,8 @@ export class SearchComponent implements OnInit, OnDestroy {
   initContent() {
     this.placeholderCategory = 'SCRATCH';
     this.placeholderSubcategory = 'MY CAT';
-    this.searchCategory = '';
-    this.searchSubcategory = '';
+    // this.searchCategory = '';
+    // this.searchSubcategory = '';
     /* labels */
     this.labelSearch = 'What to do';
     this.labelDate = 'When to do it';

@@ -9,15 +9,15 @@
                 <label>When to do it</label>                  
               </div>
               <div class="four wide column ui input">
-                <input type="text" placeholder="{{placeholderCategory}}" [(ngModel)]="searchCategory">
+                <input type="text" placeholder="{{placeholderCategory}}" [(ngModel)]="category">
               </div>
               <div class="four wide column  ui input">
-                <input type="text" placeholder="{{placeholderSubcategory}}" [(ngModel)]="searchSubcategory">
+                <input type="text" placeholder="{{placeholderSubcategory}}" [(ngModel)]="subcategory">
               </div>
               <div class="four wide column ui left icon input">
                   <i class="calendar icon"></i>
                   <input class="datepicker" placeholder="RIGHT NOW" suiDatepicker 
-                          [(ngModel)]="searchDate" 
+                          [(ngModel)]="date" 
                           [pickerMode]="mode" 
                           [pickerFirstDayOfWeek]="firstDayOfWeek" 
                           [pickerUseNativeOnMobile]="false">
@@ -89,10 +89,9 @@
                     <i class="sort content descending icon"></i>
                     Sort by
                     <sui-select class="inline" [(ngModel)]="selectedRange">
-                      <div class="header">Type</div>
                       <sui-select-option value="rating"></sui-select-option>
                       <sui-select-option value="name"></sui-select-option>
-                      <sui-select-option value="foundation"></sui-select-option>
+                      <sui-select-option value="distance"></sui-select-option>
                     </sui-select>
                   </div>
                 </h5>
@@ -103,7 +102,6 @@
                     <i class="sort icon"></i>
                     Order
                     <sui-select class="inline" [(ngModel)]="selectedRange2">
-                      <div class="header">Type</div>
                       <sui-select-option value="ascending"></sui-select-option>
                       <sui-select-option value="descending"></sui-select-option>
                     </sui-select>
@@ -119,7 +117,6 @@
             <a href="/company/{{company.Id}}" class="ui medium image">
               <img class="ui fluid image" src="{{company.Avatar}}"/>
               <div class="row">
-                <!-- <h3>{{company.Name}} ({{company.FoundationDate.getFullYear()}})</h3> -->
                 <h3>{{company.Name}} ({{company.FoundationDate | date:'y'}})</h3>
               </div>
               <div class="row">
@@ -136,9 +133,6 @@
                   <div class="column">                      
                     {{company.ReviewsCount}} reviews 
                   </div>
-                  <!-- <div class="column">                      
-                    {{company.Vendors.length}} vendors
-                  </div> -->
                 </div>
               </div>
             </a>

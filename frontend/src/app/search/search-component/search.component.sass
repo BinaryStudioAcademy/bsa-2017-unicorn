@@ -39,6 +39,7 @@
 
 .ui.fluid.image
     height: 260px;
+    border: 1px solid #E5E5E5;
     object-fit: cover;
 
 h3, h4, h5
@@ -66,8 +67,8 @@ h3
     position: fixed;
     right: 20px;
     top: calc(20px + #{$header-height});
-    width: 34%;
-    height: 460px;    
+    width: 34%;    
+    height: calc(100vh - 40px - #{$header-height} - #{$footer-height} - #{$separator-height} - #{$separator-margin});;    
     background-color: gray;
 
 .map
