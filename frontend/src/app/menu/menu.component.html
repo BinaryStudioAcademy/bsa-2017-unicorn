@@ -5,8 +5,14 @@
         <li *ngIf="!isLogged;else authorized"><a (click)="openModal()" routerLinkActive="active">Sign In</a></li>
         <ng-template #authorized>
             <li>
-                <div class="ui small circular image smallAvatar">
-                    <img class="userInfo" src="../../../assets/images/avatar.jpg">
+                <div class="dropdown">
+                    <div class="ui small circular image smallAvatar" (click)="onShowDetails()">
+                        <img class="userInfo" src="../../../assets/images/avatar.jpg">
+                    </div>
+                    <div class="dropdown-content" *ngIf="showDetails">
+                        <img src="../../../assets/images/avatar.jpg">
+                        <div class="desc">{{fakeName}} {{fakeSurname}}</div>
+                    </div>
                 </div>
             </li>
 

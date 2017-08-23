@@ -27,6 +27,7 @@ export class MenuComponent implements OnInit {
 
   fakeName: string;
   fakeSurname: string;
+  showDetails: boolean;
 
   constructor(
     private modalService: SuiModalService,
@@ -78,5 +79,9 @@ export class MenuComponent implements OnInit {
 
   signOut() {
     this.authLoginService.signOut();
+  }
+
+  onShowDetails() {
+    this.showDetails = !this.showDetails;
   }
 }
