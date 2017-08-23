@@ -42,6 +42,7 @@ export class VendorEditComponent implements OnInit {
   data: any;
   imageUploaded: boolean;
   cropperSettings: CropperSettings;
+  dataLoaded: boolean;
 
   constructor(
     private route: ActivatedRoute,
@@ -56,6 +57,7 @@ export class VendorEditComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.dataLoaded = true;
     this.route.params
       .switchMap((params: Params) => this.vendorService.getVendor(params['id']))
       .subscribe(resp => {
@@ -103,14 +105,15 @@ export class VendorEditComponent implements OnInit {
       console.log("file not upload");
       return;
     }
-
+    this.dataLoaded = false;
     this.photoService.uploadToImgur(this.file).then(resp => {
 
       let path = resp;
       console.log(path);
       this.photoService.saveAvatar(path)
       .then(resp => {
-        this.vendor.Avatar = this.data.image;    
+        this.vendor.Avatar = this.data.image;
+        this.dataLoaded = true;  
         this.activeModal.deny('');    
       })
       .catch(err => console.log(err));
