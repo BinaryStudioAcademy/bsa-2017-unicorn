@@ -60,7 +60,7 @@ export class BookComponent implements OnInit {
     this.order();
   }
 
-  private updateLoader(){
+  private updateLoader() {
     this.onSending = !this.onSending;
   }
 
@@ -69,12 +69,10 @@ export class BookComponent implements OnInit {
     this.bookOrderService.createOrder(this.book)
       .then(x => {
         this.updateLoader();
-        this.formIsSended = true;
-        alert('DONE');
+        this.formIsSended = true;        
       })
       .catch(err => {
         this.updateLoader();
-        alert('Error!!!');
         console.log(err);
       });
   }
@@ -82,13 +80,13 @@ export class BookComponent implements OnInit {
   private getUserData() {
     this.userService.getUserForOrder(this.book.customerid)
       .then(user => {
-        this.updateLoader();
         this.book.location = user.Location;
         this.book.customerphone = user.Phone;
-        console.log(user);
+        this.updateLoader();
       })
       .catch(err => {
         this.updateLoader();
+        console.log(err);
       });
   }
 
