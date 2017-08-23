@@ -126,6 +126,7 @@ export class UserDetailsComponent implements OnInit {
     if (!this.data)
     {
       console.log("file not upload");
+      this.toastr.error('You have to pick photo', 'Error!');
       return;
     }
     this.dataLoaded = false;
@@ -137,11 +138,16 @@ export class UserDetailsComponent implements OnInit {
       .then(resp => {
         this.user.Avatar = this.data.image;
         this.dataLoaded = true;
+        this.toastr.success('Your avatar was updated', 'Success!');
         this.activeModal.deny('');        
       })
-      .catch(err => console.log(err));
+      .catch(err => {console.log(err); 
+                    this.toastr.error('Sorry, something went wrong', 'Error!');
+                    this.activeModal.deny('');   });
     }).catch(err => {
       console.log(err);
+      this.toastr.error('Sorry, something went wrong', 'Error!');
+      this.activeModal.deny('');
     });
   }
 

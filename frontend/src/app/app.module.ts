@@ -41,6 +41,7 @@ import { FooterComponent } from './footer/footer.component';
 import { RegisterComponent } from './register/register-component/register.component';
 import { TokenHelperService } from './services/helper/tokenhelper.service';
 import {ToastModule, Toast} from 'ng2-toastr/ng2-toastr';
+
 export class CustomOptions extends ToastOptions {
   animate = 'fade';
   dismiss = 'auto';

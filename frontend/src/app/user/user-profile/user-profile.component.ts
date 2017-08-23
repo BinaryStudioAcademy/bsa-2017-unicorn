@@ -39,20 +39,28 @@ export class UserProfileComponent implements OnInit {
     
   }
     ngOnInit() { 
+        this.dataLoaded=true;
     }
 
     updateUser(): void {
         
-   
+        this.dataLoaded = false;
         if (!this.userForm.valid) {
+            this.dataLoaded = true;
             this.toastr.error('Sorry, you must fill all inputs', 'Error!');
             return;
         }
-        this.toastr.success('Changes were saved', 'Success!');
-        this.user.Birthday=this.birthday;
-        this.user.Birthday.setDate( this.user.Birthday.getDate()+1);
+        if(this.birthday!=undefined)
+         { 
+           this.user.Birthday=this.birthday;
+           this.user.Birthday.setDate( this.user.Birthday.getDate()+1);
+         }
         this.userService.updateUser(this.user)
-          .then(resp => this.user = resp.body as User);
+          .then(resp => {this.user = resp.body as User;
+            this.dataLoaded = true;
+            this.toastr.success('Changes were saved', 'Success!');})
+          .catch(x=>{ this.dataLoaded = true;
+            this.toastr.error('Sorry, something went wrong', 'Error!');});
       }
 }
 
