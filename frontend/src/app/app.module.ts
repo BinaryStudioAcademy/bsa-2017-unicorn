@@ -40,7 +40,15 @@ import { FooterComponent } from './footer/footer.component';
 
 import { RegisterComponent } from './register/register-component/register.component';
 import { TokenHelperService } from './services/helper/tokenhelper.service';
-import {ToastModule} from 'ng2-toastr/ng2-toastr';
+import {ToastModule, Toast} from 'ng2-toastr/ng2-toastr';
+export class CustomOptions extends ToastOptions {
+  animate = 'fade';
+  dismiss = 'auto';
+  showCloseButton = true;
+  newestOnTop = true;
+  enableHTML = true;
+  positionClass = 'toast-bottom-right';
+}
 @NgModule({
   declarations: [
     AppComponent,
@@ -72,7 +80,8 @@ import {ToastModule} from 'ng2-toastr/ng2-toastr';
     AuthenticationLoginService,
     AuthenticationEventService,
     HelperService,
-    TokenHelperService
+    TokenHelperService,
+   { provide: ToastOptions, useClass: CustomOptions}
   ],
   entryComponents: [RegisterComponent],
   bootstrap: [AppComponent]

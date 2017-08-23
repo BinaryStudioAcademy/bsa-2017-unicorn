@@ -16,7 +16,7 @@ import {ImageCropperComponent, CropperSettings} from 'ng2-img-cropper';
 
 import { SuiModalService, TemplateModalConfig
   , ModalTemplate, ModalSize, SuiActiveModal } from 'ng2-semantic-ui';
-
+  import {ToastsManager, Toast} from 'ng2-toastr';
 export interface IContext { }
 
 @Component({
@@ -58,7 +58,8 @@ export class UserDetailsComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private suiModalService: SuiModalService,
     private modalService: ModalService,    
-    private tokenHelper: TokenHelperService) { 
+    private tokenHelper: TokenHelperService,
+    public toastr: ToastsManager) { 
       this.cropperSettings = modalService.cropperSettings;
       this.data = {};
       this.imageUploaded = false;
@@ -97,10 +98,13 @@ export class UserDetailsComponent implements OnInit {
       }).then(link => {
         this.backgroundUrl = this.buildSafeUrl(link);
         this.uploading = false;
+        this.toastr.success('Your background was updated', 'Success!');
       }).catch(err => {
         console.log(err);
         this.uploading = false;
+        this.toastr.error('Sorry, something went wrong', 'Error!');
       });
+
   }
 
 

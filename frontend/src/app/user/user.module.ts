@@ -23,7 +23,10 @@ import { UserMainInfoComponent } from './user-main/user-main-info/user-main-info
 import { UserMainReviewsComponent } from './user-main/user-main-reviews/user-main-reviews.component';
 import { SharedModule } from "../shared/shared.module";
 import {BrowserModule} from '@angular/platform-browser';
-import {ToastModule} from 'ng2-toastr/ng2-toastr';
+import {ToastModule, ToastsManager, ToastOptions} from 'ng2-toastr/ng2-toastr';
+
+
+
 @NgModule({
     imports: [
         AgmCoreModule.forRoot({

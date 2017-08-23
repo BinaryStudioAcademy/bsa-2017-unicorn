@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { DataService } from './services/data.service';
 import {  OnInit, ViewContainerRef } from '@angular/core';
-import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import { ToastsManager, ToastOptions } from 'ng2-toastr/ng2-toastr';
 @Component({
   selector: 'app-root',
   providers: [DataService],

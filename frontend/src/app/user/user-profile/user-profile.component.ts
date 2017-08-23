@@ -42,11 +42,13 @@ export class UserProfileComponent implements OnInit {
     }
 
     updateUser(): void {
+        
+   
         if (!this.userForm.valid) {
-            this.toastr.error('This is not good!', 'Oops!');
+            this.toastr.error('Sorry, you must fill all inputs', 'Error!');
             return;
         }
-        this.toastr.success('You are awesome!', 'Success!',{showCloseButton: true,positionClass:'toast-bottom-right'});
+        this.toastr.success('Changes were saved', 'Success!');
         this.user.Birthday=this.birthday;
         this.user.Birthday.setDate( this.user.Birthday.getDate()+1);
         this.userService.updateUser(this.user)
