@@ -127,6 +127,18 @@ namespace Unicorn.Controllers
             return NotFound();
         }
 
+        // GET: company-search
+        [HttpGet]
+        //[Route("company-search/{category}/{subcategory}/{date}")]
+        [Route("company-search")]
+        public async Task<IHttpActionResult> GetSearchCompanies(string category, string subcategory, int? date)
+        {
+            var result = await _companyService.GetSearchCompanies(category, subcategory, date);
+            if (result != null)
+                return Json(result);
+            return NotFound();
+        }
+
         //// PUT: api/Company/5
         //public void Put(int id, [FromBody]string value)
         //{

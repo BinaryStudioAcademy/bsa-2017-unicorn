@@ -28,5 +28,7 @@ namespace Unicorn.Core.Interfaces
         Task SaveCompanyContacts(CompanyContacts companyDTO);
 
         Task<CompanyWorks> GetCompanyWorks(long id);
+
+        Task<ICollection<CompanyDetails>> GetSearchCompanies(string category, string subcategory, int? date);
     }
 }

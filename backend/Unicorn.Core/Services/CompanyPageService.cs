@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Unicorn.Core.Interfaces;
@@ -77,6 +78,11 @@ namespace Unicorn.Core.Services
         public async Task<CompanyWorks> GetCompanyWorks(long id)
         {
             return await GetCompanyWorksMethod(id);
+        }
+
+        public async Task<ICollection<CompanyDetails>> GetSearchCompanies(string category, string subcategory, int? date)
+        {
+            return await GetSearchCompaniesMethod(category, subcategory, date);
         }
 
         #endregion
@@ -395,8 +401,20 @@ namespace Unicorn.Core.Services
             }
             return null;
         }
-            
-      
+
+        private async Task<ICollection<CompanyDetails>> GetSearchCompaniesMethod(string category, string subcategory, int? date)
+        {
+            var companies = await _unitOfWork.CompanyRepository.GetAllAsync();
+            var works = await _unitOfWork.WorkRepository.GetAllAsync();
+            var categories = await _unitOfWork.CategoryRepository.GetAllAsync();
+
+            var selectWorks = works.Where(w => w.Subcategory.Equals(subcategory));
+            //var selectCategory = categories.Where(ca => ca.Subcategories)
+
+
+
+            return null;
+        }
 
         #endregion
     }
