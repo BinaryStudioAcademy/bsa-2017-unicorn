@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using Unicorn.Core.Interfaces;
@@ -11,10 +13,12 @@ namespace Unicorn.Controllers
     public class CompanyController : ApiController
     {
         private readonly ICompanyPageService _companyService;
+        private readonly IRatingService _ratingService;
 
-        public CompanyController(ICompanyPageService companyService)
+        public CompanyController(ICompanyPageService companyService, IRatingService ratingService)
         {
             _companyService = companyService;
+            _ratingService = ratingService;
         }
 
         // GET: /company
@@ -125,6 +129,42 @@ namespace Unicorn.Controllers
             if (result != null)
                 return Json(result);
             return NotFound();
+        }
+
+        [HttpGet]
+        [Route("company/{id}/rating")]
+        public async Task<HttpResponseMessage> GetCompanyRating(long id)
+        {
+            var accountId = await _companyService.GetCompanyAccountId(id);
+            var result = await _ratingService.GetAvarageByRecieverId(accountId);
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+        // POST: company-works
+        [HttpPost]
+        [Route("company-works")]
+        public async Task PostCompanyWorks([FromBody]CompanyWorks company)
+        {
+            await _companyService.SaveCompanyWorks(company);
+        }
+
+        // GET: company-books/5
+        [HttpGet]
+        [Route("company-books/{id}")]
+        public async Task<IHttpActionResult> GetCompanyBooks(int id)
+        {
+            var result = await _companyService.GetCompanyBooks(id);
+            if (result != null)
+                return Json(result);
+            return NotFound();
+        }
+
+        // POST: company-books
+        [HttpPost]
+        [Route("company-books")]
+        public async Task PostCompanyBooks([FromBody]CompanyBooks company)
+        {
+            await _companyService.SaveCompanyBooks(company);
         }
 
         //// PUT: api/Company/5

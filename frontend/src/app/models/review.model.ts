@@ -6,7 +6,6 @@ export interface Review {
     From: string;
     ToAccountId: number;
     To: string;
-    Grade: number;
     Description: string;
     BookId: number;
 }

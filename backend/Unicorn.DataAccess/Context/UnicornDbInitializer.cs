@@ -375,7 +375,6 @@ namespace Unicorn.DataAccess.Context
                 EmailConfirmed = true,
                 DateCreated = new DateTime(2017, 08, 10, 22, 38, 15),
                 Avatar = "http://www.arteinterattiva.it/wp-content/uploads/2014/08/013.png",
-                Rating = 4.7,
                 IsDeleted = false,
                 Role = role3,
                 Contacts = new List<Contact> { contact1, contact2, contact3, contact4, contact5, contact6, contact7}
@@ -388,7 +387,6 @@ namespace Unicorn.DataAccess.Context
                 EmailConfirmed = true,
                 DateCreated = new DateTime(2017, 08, 11, 00, 55, 16),
                 Avatar = "https://www.xing.com/image/3_4_a_99233ef95_25270136_1/mehmet-altun-foto.1024x1024.jpg",
-                Rating = 4.7,
                 IsDeleted = false,
                 Role = role1,
                 Contacts = new List<Contact> { contact8, contact9, contact10, contact11, contact12, contact13, contact14 }
@@ -401,7 +399,6 @@ namespace Unicorn.DataAccess.Context
                 EmailConfirmed = true,
                 DateCreated = new DateTime(2017, 08, 11, 00, 57, 16),
                 Avatar = "http://revivre.ee/wp-content/uploads/2013/07/photodune-4276142-smiling-portraits-xl_411.jpg",
-                Rating = 2,
                 IsDeleted = false,
                 Role = role2,
                 Contacts = new List<Contact> { contact15, contact16, contact17, contact18, contact19, contact20, contact21 }
@@ -415,7 +412,6 @@ namespace Unicorn.DataAccess.Context
                 EmailConfirmed = true,
                 DateCreated = new DateTime(2017, 08, 11, 00, 58, 16),
                 Avatar = "http://coodiv.net/project/skyhost/HTML/img/quote/44-3.jpg",
-                Rating = 3.7,
                 IsDeleted = false,
                 Role = role3,
                 Contacts = new List<Contact> { contact22, contact23, contact24, contact25, contact26, contact27, contact28 }
@@ -428,7 +424,6 @@ namespace Unicorn.DataAccess.Context
                 EmailConfirmed = true,
                 DateCreated = new DateTime(2017, 08, 11, 01, 00, 16),
                 Avatar = "http://www.actionagainstabduction.org/wp-content/uploads/2015/07/Lucy_Holmes.jpg",
-                Rating = 1,
                 IsDeleted = false,
                 Role = role1,
                 Contacts = new List<Contact> { contact29, contact30, contact31, contact32, contact33, contact34, contact35 }
@@ -441,7 +436,6 @@ namespace Unicorn.DataAccess.Context
                 EmailConfirmed = true,
                 DateCreated = new DateTime(2017, 08, 11, 22, 57, 15),
                 Avatar = "http://1.bp.blogspot.com/_A1-gDagxbUM/S_lmQ5ZiIwI/AAAAAAAAAH4/tfLxn-zR314/s1600/Tom+Cruise.jpg",
-                Rating = 2.7,
                 IsDeleted = false,
                 Role = role3,
                 Contacts = new List<Contact> { contact36, contact37, contact38, contact39, contact40, contact41, contact42 }
@@ -454,7 +448,6 @@ namespace Unicorn.DataAccess.Context
                 EmailConfirmed = true,
                 DateCreated = new DateTime(2017, 08, 11, 22, 57, 15),
                 Avatar = "https://s-media-cache-ak0.pinimg.com/736x/88/e3/b0/88e3b020ed58b7b5734b87f9661e010d--hugo-chávez-archaeology.jpg",
-                Rating = 4,
                 IsDeleted = false,
                 Role = role4,
                 Contacts = new List<Contact> { contact43, contact44, contact45, contact46, contact47, contact48, contact49 }
@@ -467,7 +460,6 @@ namespace Unicorn.DataAccess.Context
                 EmailConfirmed = true,
                 DateCreated = new DateTime(2017, 08, 12, 02, 14, 15),
                 Avatar = "https://articlemanager.blob.core.windows.net/article-images/2_your-logo-design.jpg",
-                Rating = 3,
                 IsDeleted = false,
                 Role = role2,
                 Contacts = new List<Contact> { contact50, contact51, contact52, contact53, contact54, contact55, contact56 }
@@ -480,7 +472,6 @@ namespace Unicorn.DataAccess.Context
                 EmailConfirmed = true,
                 DateCreated = new DateTime(2017, 08, 11, 22, 57, 15),
                 Avatar = "https://tribkcpq.files.wordpress.com/2016/07/s032965871-300.jpg?quality=85&strip=all&w=770",
-                Rating = 5,
                 IsDeleted = false,
                 Role = role1,
                 Contacts = new List<Contact> { contact57, contact58, contact59, contact60, contact61, contact62, contact63 }
@@ -493,7 +484,6 @@ namespace Unicorn.DataAccess.Context
                 EmailConfirmed = true,
                 DateCreated = new DateTime(2017, 08, 11, 22, 00, 00),
                 Avatar = "http://www.nmc-corp.com/uploadedImages/NebraskaMachineryCompany/Logo_Library/NMC%20CAT%20Power%20Systems%20Mark.png",
-                Rating = 5,
                 IsDeleted = false,
                 Role = role5,
                 Contacts = new List<Contact> { contact64, contact65, contact66, contact67, contact68, contact69, contact70 }
@@ -506,7 +496,6 @@ namespace Unicorn.DataAccess.Context
                 EmailConfirmed = true,
                 DateCreated = new DateTime(2017, 08, 11, 22, 00, 00),
                 Avatar = "https://www.ifak.eu/sites/www.ifak.eu/files/Mitarbeiterfotos/Steinmann.jpg",
-                Rating = 5,
                 IsDeleted = false,
                 Role = role5,
                 Contacts = new List<Contact> { contact71, contact72, contact73, contact74, contact75, contact76, contact77 }
@@ -519,7 +508,6 @@ namespace Unicorn.DataAccess.Context
                 EmailConfirmed = true,
                 DateCreated = new DateTime(2017, 08, 11, 22, 00, 00),
                 Avatar = "https://www.kellerag.com/fileadmin/_processed_/csm_KAUSSEN-Sascha_95ed03675a.jpg",
-                Rating = 5,
                 IsDeleted = false,
                 Role = role5,
                 Contacts = new List<Contact> { contact78, contact79, contact80, contact81, contact82, contact83, contact84 }
@@ -532,7 +520,6 @@ namespace Unicorn.DataAccess.Context
                 EmailConfirmed = true,
                 DateCreated = new DateTime(2017, 08, 11, 22, 00, 00),
                 Avatar = "http://top101news.com/wp-content/uploads/2016/10/Paul-Walker-Top-Most-Popular-Persons-Who-Died-in-Road-Accident-2018.jpg",
-                Rating = 5,
                 IsDeleted = false,
                 Role = role5,
                 Contacts = new List<Contact> { contact85, contact86, contact87, contact88, contact89, contact90, contact91 }
@@ -798,6 +785,7 @@ namespace Unicorn.DataAccess.Context
                 IsDeleted = false,
                 Name = "laundress",
                 Subcategory = subcategory1,
+                Orders = 10
             };
 
             Work work2 = new Work()
@@ -806,7 +794,8 @@ namespace Unicorn.DataAccess.Context
                 Description = "Photosession, wedding photosessions etc.",
                 IsDeleted = false,
                 Name = "Photographer",
-                Subcategory = subcategory5
+                Subcategory = subcategory5,
+                Orders = 20
             };
 
             Work work3 = new Work()
@@ -815,7 +804,8 @@ namespace Unicorn.DataAccess.Context
                 Description = "Care of your pets",
                 IsDeleted = false,
                 Name = "Vet",
-                Subcategory = subcategory2
+                Subcategory = subcategory2,
+                Orders = 30
             };
 
             Work work4 = new Work()
@@ -824,7 +814,8 @@ namespace Unicorn.DataAccess.Context
                 Description = "Appartmen repair",
                 IsDeleted = false,
                 Name = "Builder",
-                Subcategory = subcategory4
+                Subcategory = subcategory4,
+                Orders = 40
             };
 
             Work work5 = new Work()
@@ -833,7 +824,8 @@ namespace Unicorn.DataAccess.Context
                 Description = "Driving services",
                 IsDeleted = false,
                 Name = "Driver",
-                Subcategory = subcategory3
+                Subcategory = subcategory3,
+                Orders = 50
             };
 
             Work work6 = new Work()
@@ -842,7 +834,8 @@ namespace Unicorn.DataAccess.Context
                 Description = "C# senior dev",
                 IsDeleted = false,
                 Name = "Developer",
-                Subcategory = subcategory6
+                Subcategory = subcategory6,
+                Orders = 60
             };
 
             context.Works.AddRange(new List<Work>() { work1, work2, work3, work4, work5, work6 });
@@ -1295,7 +1288,16 @@ namespace Unicorn.DataAccess.Context
                 Company = company1,
                 Status = BookStatus.InProgress,
                 Customer = customer1,               
-                CustomerPhone = "+123 456 789"
+                CustomerPhone = "+123 456 789",
+                Location = new Location()
+                {
+                    Adress = "Lebedeva-Kumacha 7a str.",
+                    City = "Kiev",
+                    Latitude = 50.437,
+                    Longitude = 30.439,
+                    IsDeleted = false,
+                    PostIndex = "03110"
+                }
             };
 
             Book book2 = new Book()
@@ -1352,7 +1354,16 @@ namespace Unicorn.DataAccess.Context
                 Status = BookStatus.Accepted,
                 Customer = customer3,
                 Company = company2,
-                CustomerPhone = "+380 50 40 30 20 10"
+                CustomerPhone = "+380 50 40 30 20 10",
+                Location = new Location()
+                {
+                    Adress = "Lebedeva-Kumacha 7a str.",
+                    City = "Kiev",
+                    Latitude = 50.437,
+                    Longitude = 30.439,
+                    IsDeleted = false,
+                    PostIndex = "03110"
+                }
             };
 
 
@@ -1366,7 +1377,16 @@ namespace Unicorn.DataAccess.Context
                 Status = BookStatus.Accepted,
                 Customer = customer1,
                 Company = company3,
-                CustomerPhone = "02"
+                CustomerPhone = "02",
+                Location = new Location()
+                {
+                    Adress = "Lebedeva-Kumacha 7a str.",
+                    City = "Kiev",
+                    Latitude = 50.437,
+                    Longitude = 30.439,
+                    IsDeleted = false,
+                    PostIndex = "03110"
+                }
             };
 
             Book book6 = new Book()
@@ -1407,7 +1427,6 @@ namespace Unicorn.DataAccess.Context
                 To = "NameSurname",
                 ToAccountId = 6,
                 IsDeleted = false,
-                Grade = 4,
                 Date = DateTime.Now,
                 Avatar = "https://image.flaticon.com/icons/png/512/78/78373.png"
             };
@@ -1420,7 +1439,6 @@ namespace Unicorn.DataAccess.Context
                 To = "NameSurname",
                 ToAccountId = 1,
                 IsDeleted = false,
-                Grade = 4,
                 Date = DateTime.Now,
                 Avatar = "https://image.flaticon.com/icons/png/512/78/78373.png"
             };
@@ -1433,7 +1451,6 @@ namespace Unicorn.DataAccess.Context
                 To = "NameSurname",
                 ToAccountId = 6,
                 IsDeleted = false,
-                Grade = 4,
                 Date = DateTime.Now,
                 Avatar = "https://image.flaticon.com/icons/png/512/78/78373.png"
             };
@@ -1446,7 +1463,6 @@ namespace Unicorn.DataAccess.Context
                 To = "NameSurname",
                 ToAccountId = 6,
                 IsDeleted = false,
-                Grade = 4,
                 Date = DateTime.Now,
                 Avatar = "https://image.flaticon.com/icons/png/512/78/78373.png"
             };
@@ -1459,7 +1475,6 @@ namespace Unicorn.DataAccess.Context
                 To = "NameSurname",
                 ToAccountId = 11,
                 IsDeleted = false,
-                Grade = 4,
                 Date = DateTime.Now,
                 Avatar = "https://image.flaticon.com/icons/png/512/78/78373.png"
             };
@@ -1486,6 +1501,62 @@ namespace Unicorn.DataAccess.Context
             };
             context.Histories.AddRange(new List<History>() { history1 });
 
+            #endregion
+
+            #region Ratings
+            Rating rating1 = new Rating()
+            {
+                Id = 1,
+                Grade = 4,
+                IsDeleted = false,
+                Reciever = account11,
+                Sender = account1
+            };
+            Rating rating2 = new Rating()
+            {
+                Id = 2,
+                Grade = 3,
+                IsDeleted = false,
+                Reciever = account11,
+                Sender = account2
+            };
+
+            Rating rating3 = new Rating()
+            {
+                Id = 3,
+                Grade = 5,
+                IsDeleted = false,
+                Reciever = account2,
+                Sender = account1
+            };
+
+            Rating rating4 = new Rating()
+            {
+                Id = 4,
+                Grade = 1,
+                IsDeleted = false,
+                Reciever = account2,
+                Sender = account3
+            };
+
+            Rating rating5 = new Rating()
+            {
+                Id = 5,
+                Grade = 4,
+                IsDeleted = false,
+                Reciever = account9,
+                Sender = account2
+            };
+
+            Rating rating6 = new Rating()
+            {
+                Id = 6,
+                Grade = 3,
+                IsDeleted = false,
+                Reciever = account10,
+                Sender = account3
+            };
+            context.Ratings.AddRange(new List<Rating>() { rating1, rating2, rating3, rating4, rating5, rating6 });
             #endregion
             context.SaveChanges();
 

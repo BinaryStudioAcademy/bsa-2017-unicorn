@@ -13,17 +13,17 @@ namespace Unicorn.DataAccess.Entities
 
         public string Description { get; set; }
 
-        public Customer Customer { get; set; }
+        public virtual Customer Customer { get; set; }
 
         public string CustomerPhone { get; set; }
 
-        public Vendor Vendor { get; set; }
+        public virtual Vendor Vendor { get; set; }
 
-        public Company Company { get; set; } 
+        public virtual Company Company { get; set; } 
 
-        public Work Work { get; set; }
+        public virtual Work Work { get; set; }
 
-        public Location Location { get; set; }
+        public virtual Location Location { get; set; }
     }
 
     public enum BookStatus

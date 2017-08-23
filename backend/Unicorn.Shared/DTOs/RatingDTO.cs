@@ -8,7 +8,12 @@ namespace Unicorn.Shared.DTOs
 {
     public class RatingDTO
     {
-        public int ReviewsCount { get; set; }
-        public double Average { get; set; }
+        public long Id { get; set; }
+
+        public AccountDTO Reciever { get; set; }
+        
+        public AccountDTO Sender { get; set; }
+
+        public int Grade { get; set; }
     }
 }
