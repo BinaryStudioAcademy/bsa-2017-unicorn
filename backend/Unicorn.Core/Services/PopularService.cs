@@ -61,7 +61,7 @@ namespace Unicorn.Core.Services
                     PerformerType = "vendor",
                     Link = "vendor/" + v.Id,
                     City = v.Person.Location.City
-                });
+                }).ToList();
 
             var companiesList = await _uow.CompanyRepository
                 .Query
@@ -79,7 +79,7 @@ namespace Unicorn.Core.Services
                     PerformerType = "company",
                     Link = "company/" + c.Id,
                     City = c.Location.City
-                });
+                }).ToList();
 
             var performers = vendors
                 .Concat(companies)

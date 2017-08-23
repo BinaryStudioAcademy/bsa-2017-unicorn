@@ -30,7 +30,7 @@
                 <div class="ui divider"></div>
                 <div class="row">
                     <div class="column">
-                        <h4>{{selectedCategory.Name}}</h4>
+                        <h4 *ngIf="selectedCategory !== undefined">{{selectedCategory.Name}}</h4>
                         <sui-accordion class="styled fluid">
                             <sui-accordion-panel *ngFor="let work of categoryWorks">
                                 <div title class="ui container work-preview-title">
