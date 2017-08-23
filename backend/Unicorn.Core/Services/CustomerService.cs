@@ -44,7 +44,7 @@ namespace Unicorn.Core.Services
             account.Role = role;
             account.DateCreated = DateTime.Now;
             account.Email = customerDto.Email;
-            account.Avatar = "http://static.1927.kiev.ua/images/default_avatar.jpg";
+            account.Avatar = customerDto.Image;
 
             socialAccount.Provider = customerDto.Provider;
             socialAccount.Uid = customerDto.Uid;

@@ -38,18 +38,17 @@ export class RegisterCompanyComponent implements OnInit {
   }
 
   aggregateInfo(): Company {
-    let info = new Company();
-    info.foundation = this.foundation;
-    info.staff = this.staff;
-    info.description = this.description;
-    info.phone = this.phone;
-    info.email = this.email;
-    info.image = this.social.photoURL;
-    info.name = this.name;
-    info.provider = this.social.providerData[0].providerId;
-    info.uid = this.social.uid;
-
-    return info;
+    return {
+      foundation: this.foundation,
+      staff: this.staff,
+      description: this.description,
+      phone: this.phone,
+      email: this.email,
+      image: this.social.photoURL,
+      name: this.name,
+      provider: this.social.providerData[0].providerId,
+      uid: this.social.uid
+    };
   }
 
   confirmRegister(formData) {
