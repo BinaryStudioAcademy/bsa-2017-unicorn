@@ -141,9 +141,24 @@ namespace Unicorn.Core.Services
         {
             Work work = await _unitOfWork.WorkRepository.GetByIdAsync(book.WorkId);
             Customer customer = await _unitOfWork.CustomerRepository.GetByIdAsync(book.CustomerId);
-            //Location location = await _unitOfWork.LocationRepository.GetByIdAsync(book.Location.Id); // TODO: if not exists or changed by user?
-            // TODO: user phone number in book, get location user and if changed create new. after send form show message (with contact vendors etc.)
+            Location location = null;
 
+            if (book.Location.Id == -1)
+            {
+                location = new Location()
+                {
+                    IsDeleted = false,
+                    City = book.Location.City,
+                    Adress = book.Location.Adress,
+                    Latitude = book.Location.Latitude,
+                    Longitude = book.Location.Longitude,
+                    PostIndex = book.Location.PostIndex
+                };
+            }
+            else
+            {
+                location = await _unitOfWork.LocationRepository.GetByIdAsync(book.Location.Id);
+            }
 
             Company company = null;
             Vendor vendor = null;
@@ -165,8 +180,8 @@ namespace Unicorn.Core.Services
                 CustomerPhone = book.CustomerPhone,
                 Date = book.Date,
                 Description = book.Description,
-                Location = null,
-                Status  = BookStatus.Accepted,
+                Location = location,
+                Status = BookStatus.Accepted,
                 Vendor = vendor,
                 Work = work
             };

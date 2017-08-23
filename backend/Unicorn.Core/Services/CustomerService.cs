@@ -149,7 +149,8 @@ namespace Unicorn.Core.Services
                     Adress = customer.Person.Location.Adress,
                     City = customer.Person.Location.City,
                     Latitude = customer.Person.Location.Latitude,
-                    Longitude = customer.Person.Location.Longitude
+                    Longitude = customer.Person.Location.Longitude,
+                    PostIndex = customer.Person.Location.PostIndex
                 },
                 Phone = customer.Person.Phone
             };
