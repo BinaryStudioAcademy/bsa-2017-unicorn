@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="DTOs\AccountDTO.cs" />
     <Compile Include="DTOs\Book\BookDTO.cs" />
+    <Compile Include="DTOs\Book\BookOrderDTO.cs" />
     <Compile Include="DTOs\Book\VendorBookDTO.cs" />
     <Compile Include="DTOs\CategoryDTO.cs" />
     <Compile Include="DTOs\CompanyDTO.cs" />
@@ -85,6 +86,7 @@
     <Compile Include="DTOs\Subcategory\SubcategoryShortDTO.cs" />
     <Compile Include="DTOs\User\BookShortDto.cs" />
     <Compile Include="DTOs\User\HistoryShortDto.cs" />
+    <Compile Include="DTOs\User\UserForOrder.cs" />
     <Compile Include="DTOs\User\UserShortDTO.cs" />
     <Compile Include="DTOs\Vendor\ShortVendorDTO.cs" />
     <Compile Include="DTOs\Vendor\VendorDTO.cs" />

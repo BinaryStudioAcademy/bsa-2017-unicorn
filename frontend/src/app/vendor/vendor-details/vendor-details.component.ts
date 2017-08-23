@@ -39,6 +39,9 @@ export class VendorDetailsComponent implements OnInit {
   isOwner: boolean;
   dataLoaded: boolean;
 
+  routePath: string;
+  routeid: number;
+
   cropperSettings: CropperSettings;
   vendor: Vendor;
   isGuest: boolean;
@@ -58,6 +61,9 @@ export class VendorDetailsComponent implements OnInit {
     this.cropperSettings = modalService.cropperSettings;
     this.data = {};
     this.imageUploaded = false;
+
+    this.routePath = this.route.root.snapshot.firstChild.url[0].path;
+    this.routeid = +this.route.snapshot.paramMap.get('id');
   }
 
   ngOnInit() {
