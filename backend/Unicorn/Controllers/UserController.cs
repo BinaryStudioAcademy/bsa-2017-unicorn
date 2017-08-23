@@ -37,6 +37,16 @@ namespace Unicorn.Controllers
             return NotFound();
         }
 
+        [HttpGet]
+        [Route("{id}/order")]
+        public async Task<IHttpActionResult> GetForOrder(long id)
+        {
+            var result = await _customerService.GetForOrderAsync(id);
+            if (result != null)
+                return Json(result);
+            return NotFound();
+        }
+
         [HttpPut]
         [Route("{id}")]
         public async Task<HttpResponseMessage> UpdateCustomerAsync(long id, [FromBody]UserShortDTO userDTO)

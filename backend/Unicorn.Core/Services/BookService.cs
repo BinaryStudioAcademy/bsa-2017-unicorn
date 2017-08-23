@@ -137,6 +137,58 @@ namespace Unicorn.Core.Services
             return bookDto;
         }
 
+        public async Task Create(BookOrderDTO book)
+        {
+            Work work = await _unitOfWork.WorkRepository.GetByIdAsync(book.WorkId);
+            Customer customer = await _unitOfWork.CustomerRepository.GetByIdAsync(book.CustomerId);
+            Location location = null;
+
+            if (book.Location.Id == -1)
+            {
+                location = new Location()
+                {
+                    IsDeleted = false,
+                    City = book.Location.City,
+                    Adress = book.Location.Adress,
+                    Latitude = book.Location.Latitude,
+                    Longitude = book.Location.Longitude,
+                    PostIndex = book.Location.PostIndex
+                };
+            }
+            else
+            {
+                location = await _unitOfWork.LocationRepository.GetByIdAsync(book.Location.Id);
+            }
+
+            Company company = null;
+            Vendor vendor = null;
+
+            if (book.Profile.ToLower() == "company")
+            {
+                company = await _unitOfWork.CompanyRepository.GetByIdAsync(book.ProfileId);
+            }
+            else
+            {
+                vendor = await _unitOfWork.VendorRepository.GetByIdAsync(book.ProfileId);
+            }
+
+            Book _book = new Book()
+            {
+                IsDeleted = false,
+                Company = company,
+                Customer = customer,
+                CustomerPhone = book.CustomerPhone,
+                Date = book.Date,
+                Description = book.Description,
+                Location = location,
+                Status = BookStatus.Accepted,
+                Vendor = vendor,
+                Work = work
+            };
+
+            _unitOfWork.BookRepository.Create(_book);
+            await _unitOfWork.SaveAsync();
+        }
 
         public async Task<IEnumerable<VendorBookDTO>> GetVendorOrdersAsync(long vendorId)
         {

@@ -51,7 +51,7 @@
                             <div class="six wide column">
                                 <div class="ui segment">
                                     <app-sign-block *ngIf="isGuest"></app-sign-block>
-                                    <app-book *ngIf="!isGuest"></app-book>
+                                    <app-book [routePath]="routePath" [routeId]="routeid" *ngIf="!isGuest"></app-book>
                                 </div>
                             </div>
                         </div>
