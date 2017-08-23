@@ -66,7 +66,15 @@
                                 <sui-select-option *ngFor="let o of filterCat" [value]="o">{{o}}</sui-select-option>
                             </div>
                           </sui-multi-select>
-                        </div>                                    
+                        </div> 
+                        <div class="six wide column remove-padding-bottom">  
+                          <div class="ui icon input">                        
+                            <input places-auto-complete
+                            (initialized$)="initialized($event)"
+                            (place_changed)="placeChanged(place)"
+                            [types]="['geocode']" />
+                          </div>
+                        </div>                                   
                         <div class="sixteen wide column remove-padding-top">
                           <button class="ui button button-right" (click)="searchVendor()">APPLY</button>
                         </div>

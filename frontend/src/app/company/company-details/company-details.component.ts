@@ -11,8 +11,10 @@ import { CompanyService } from "../../services/company-services/company.service"
   styleUrls: ['./company-details.component.sass']
 })
 export class CompanyDetailsComponent implements OnInit {
-  company: CompanyShort;
-  isGuest: boolean;
+  company: CompanyShort;  
+  isGuest: boolean;  
+
+  tabActive: boolean = false;
 
   routePath: string;
   routeid: number;
@@ -25,10 +27,14 @@ export class CompanyDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.route.params
-      .switchMap((params: Params) => this.companyService.getCompanyShort(params['id']))
-      .subscribe(res => {
-        this.company = res;
-      });
+    .switchMap((params: Params) => this.companyService.getCompanyShort(params['id']))
+    .subscribe(res => {
+      this.company = res;
+    });   
+    if (this.route.snapshot.queryParams['tab'] === 'reviews') {
+      this.tabActive = true;
+    }
+    console.log(this.route.snapshot.queryParams['tab']);   
 
     this.getCurrentRole();
   }
