@@ -20,16 +20,31 @@
                         <td>{{work.Subcategory.Category.Name}}</td>
                         <td>{{work.Subcategory.Name}}</td>
                         <td class="right aligned">
-                            <button class="ui icon button">
+                            <button class="ui icon button" (click)="openModal('hh')">
                                 <i class="remove icon"></i>
                             </button>
                         </td>
+                        <ng-template let-context let-modal="modal" #modalTemplate>
+                            <div class="header">Delete work</div>
+                            <div class="content">
+                                <p>Are you sure you want to delete this work?</p>
+                            </div>
+                            <div class="actions">
+                                <button class="ui red button" (click)="modal.deny()">Cancel</button>
+                                <button class="ui green button" (click)="modal.approve(work)" autofocus>OK</button>
+                            </div>
+                        </ng-template>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
     <div class="ui divider" *ngIf="openedDetailedWindow"></div>
+    <div class="right aligned" *ngIf="openedDetailedWindow">
+        <button class="ui icon button" (click)="closeDetailedWindow()">
+            <i class="remove icon"></i>
+        </button>
+    </div>
     <div class="two column container row" *ngIf="openedDetailedWindow">
         <div class="column">
             <form class="ui form">
@@ -42,10 +57,6 @@
                         <label>Description</label>
                         <textarea name="description" placeholder="WRITE SOMETHING ABOUT THIS WORK..." [(ngModel)]="work.Description" *ngIf="work !== null"></textarea>
                     </div>
-                    <!-- <div class="save-button">
-                        <button class="ui basic button" (click)="saveWorkChanges()" [ngClass]="{'loading':isLoaded}" [disabled]="saveDisabled">
-                            <h5 *ngIf="!isLoaded">Save</h5></button>
-                    </div> -->
                 </div>
             </form>
         </div>
@@ -72,7 +83,11 @@
                         </sui-select-option>
                     </sui-select>
                 </div>
-                <img class="ui small rounded image work-icon" src="https://semantic-ui.com/images/wireframe/square-image.png">
+                <div class="field">
+                    <label>Select icon for work</label>
+                    <img class="ui tiny rounded image work-icon" src="https://semantic-ui.com/images/wireframe/square-image.png">
+                </div>
+
             </form>
         </div>
     </div>
@@ -80,7 +95,11 @@
     <div class="centered row" *ngIf="openedDetailedWindow">
         <div class="three wide column">
             <button class="ui basic button" (click)="addOrSaveWork()" [ngClass]="{'loading':isLoaded}">
-                        <h5 *ngIf="!isLoaded">Save/Add</h5></button>
+                        <h5 *ngIf="!isLoaded">Save</h5></button>
         </div>
     </div>
+</div>
+
+<div *ngIf="company === undefined" class="ui active inverted dimmer" style="background-color: rgba(255,255,255,.85)">
+    <div class="ui text loader">Loading</div>
 </div>

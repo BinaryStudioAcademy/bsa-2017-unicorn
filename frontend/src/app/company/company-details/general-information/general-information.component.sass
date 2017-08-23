@@ -1,3 +1,5 @@
+@import "../../../../global-style-variables.sass";
+
 .flex-header
     display: flex;
     flex-direction: row;    
@@ -15,8 +17,9 @@
     align-items: center;
     flex-direction: column;
     text-align: center;     
-    width: 100px;  
-
+    width: 100px; 
+    margin-left: 10px;
+    margin-right: 10px; 
 
 .center
     text-align: center;
@@ -28,6 +31,22 @@
     width: 80px!important;
     height: 80px!important;
 
+.category-name
+    margin-top: 1em!important;
+
+.selected-category
+	border-bottom: solid 2px $primary-color;   
+
+.selected-category>img
+    width: 90px!important;
+    height: 90px!important;
+
+.selected-category>h5
+    font-size: 1.05rem;
+
+
+.close-button
+    margin-bottom: .5em!important;
 
 #director-avatar
     width: 50px;

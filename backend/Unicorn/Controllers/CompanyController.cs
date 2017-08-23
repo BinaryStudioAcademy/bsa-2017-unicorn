@@ -130,6 +130,7 @@ namespace Unicorn.Controllers
                 return Json(result);
             return NotFound();
         }
+
         [HttpGet]
         [Route("company/{id}/rating")]
         public async Task<HttpResponseMessage> GetCompanyRating(long id)
@@ -137,6 +138,7 @@ namespace Unicorn.Controllers
             var accountId = await _companyService.GetCompanyAccountId(id);
             var result = await _ratingService.GetAvarageByRecieverId(accountId);
             return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
 
         // POST: company-works
         [HttpPost]

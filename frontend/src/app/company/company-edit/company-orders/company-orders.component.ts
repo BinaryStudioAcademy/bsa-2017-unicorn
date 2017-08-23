@@ -14,6 +14,7 @@ import { CompanyBook } from "../../../models/company-page/company-book.model";
 export class CompanyOrdersComponent implements OnInit {
   company: CompanyBooks;
   bookStatus = BookStatus;
+  isLoaded: boolean = false; 
 
   changedOrders: CompanyBooks = {Id: null, Books: []};
 
@@ -37,9 +38,12 @@ export class CompanyOrdersComponent implements OnInit {
   }
 
   saveOrder(order: CompanyBook): void {    
+    this.isLoaded = true;
     this.company.Books.splice(this.company.Books.findIndex(o => o.Id === order.Id), 1, order);    
-    this.companyService.saveCompanyBooks(this.company);
-    this.changedOrders.Books.splice(this.changedOrders.Books.findIndex(o => o.Id === order.Id), 1);
+    this.companyService.saveCompanyBooks(this.company).then(()=> {
+      this.changedOrders.Books.splice(this.changedOrders.Books.findIndex(o => o.Id === order.Id), 1);
+      this.isLoaded = false;
+    });    
   } 
 
 }

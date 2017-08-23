@@ -1,17 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CompanyService } from "../../../services/company-services/company.service";
 import { ActivatedRoute, Params } from "@angular/router";
 import { CompanySubcategory } from "../../../models/company-page/company-subcategory.model";
 import { CompanyWorks } from "../../../models/company-page/company-works.model";
 import { CompanyCategory } from "../../../models/company-page/company-category.model";
 import { CompanyWork } from "../../../models/company-page/company-work.model";
+import { ModalTemplate, SuiModalService, TemplateModalConfig } from "ng2-semantic-ui/dist";
+
+
+export interface IContext {
+  data:string;
+}
 
 @Component({
   selector: 'app-company-works',
   templateUrl: './company-works.component.html',
   styleUrls: ['./company-works.component.sass']
 })
+
 export class CompanyWorksComponent implements OnInit {
+  @ViewChild('modalTemplate')
+  public modalTemplate:ModalTemplate<IContext, string, string>
 
   company: CompanyWorks;
   selectedCategory: CompanyCategory;
@@ -22,7 +31,8 @@ export class CompanyWorksComponent implements OnInit {
   openedDetailedWindow: boolean = false;
 
   constructor(private companyService: CompanyService,
-    private route: ActivatedRoute,) { }
+    private route: ActivatedRoute,
+    public modalService:SuiModalService) { }
 
   ngOnInit() {
     this.route.params
@@ -31,8 +41,20 @@ export class CompanyWorksComponent implements OnInit {
     });
   }
 
-  changeCategory(){    
-    console.log(this.selectedCategory);
+  public openModal(dynamicContent:string = "Delete work") {
+    const config = new TemplateModalConfig<IContext, string, string>(this.modalTemplate);
+
+    config.closeResult = "Closed!";
+    config.context = { data: dynamicContent };
+
+    this.modalService
+        .open(config)
+        .onApprove((result:CompanyWork) => { this.deleteWork(result) })
+        .onDeny(result => { });
+}
+
+
+  changeCategory(){        
     this.selectedSubcategory = undefined;
     this.subcategories = this.company.AllCategories.find(x => x.Name == this.selectedCategory.Name).Subcategories;
   }
@@ -45,13 +67,13 @@ export class CompanyWorksComponent implements OnInit {
       Subcategory: work.Subcategory
     };
     
-    this.selectedCategory = work.Subcategory.Category;
-    console.log(event.target);
-    this.selectedSubcategory = work.Subcategory;
+    this.selectedCategory = this.company.AllCategories.find(x => x.Id === work.Subcategory.Category.Id); 
+    this.subcategories = this.company.AllCategories.find(x => x.Name == this.selectedCategory.Name).Subcategories;   
+    this.selectedSubcategory = this.subcategories.find(x => x.Id === work.Subcategory.Id);
     this.openedDetailedWindow = true;
   }
   else{
-    this.deleteWork(work);
+    // this.deleteWork(work);
   }
   }
   openDetailedWindow(){
@@ -61,23 +83,30 @@ export class CompanyWorksComponent implements OnInit {
       Name: null,
       Subcategory: null
     };
+
+    this.selectedCategory = this.company.AllCategories[0];
+    this.subcategories = this.company.AllCategories.find(x => x.Name == this.selectedCategory.Name).Subcategories;   
+    this.selectedSubcategory = this.subcategories[0];
+
     if(!this.openedDetailedWindow)  
-    this.openedDetailedWindow = !this.openedDetailedWindow;
+    this.openedDetailedWindow = true;      
   }
-  deleteWork(work: CompanyWork){    
-    if(this.work !== null) 
+
+  closeDetailedWindow(){
+    this.openedDetailedWindow = false;  
+  }
+
+  deleteWork(work: CompanyWork){      
     this.company.Works =  this.company.Works.filter(x => x.Id !== work.Id);   
     this.work = null;  
+    this.saveCompanyWorks();
     if(this.openedDetailedWindow)  
       this.openedDetailedWindow = !this.openedDetailedWindow;
   }
   saveWorkChanges(){    
     if(this.selectedCategory !== undefined && this.selectedSubcategory !== undefined
       && this.work.Description !== null && this.work.Name !== null){
-        this.company.Works.find(x => x.Id === this.work.Id).Description = this.work.Description;
-        this.company.Works.find(x => x.Id === this.work.Id).Name = this.work.Name;
-        this.company.Works.find(x => x.Id === this.work.Id).Subcategory.Category = this.selectedCategory;
-        this.company.Works.find(x => x.Id === this.work.Id).Subcategory = this.selectedSubcategory;
+        this.company.Works.splice(this.company.Works.findIndex(x => x.Id === this.work.Id), 1, this.work);        
         this.saveCompanyWorks();  
       }
   } 
@@ -105,5 +134,10 @@ export class CompanyWorksComponent implements OnInit {
   saveCompanyWorks(){
     this.isLoaded = true;
     this.companyService.saveCompanyWorks(this.company).then(() => {this.isLoaded = false;});
+  }
+
+  approveModal(work: CompanyWork){
+    this.deleteWork(work);
+
   }
 }

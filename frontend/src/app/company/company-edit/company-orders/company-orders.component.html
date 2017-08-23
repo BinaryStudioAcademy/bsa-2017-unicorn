@@ -24,7 +24,7 @@
                     </sui-select>
                 </td>
                 <td>
-                    <button class="ui icon button" *ngIf="isOrderChanged(order)" (click)="saveOrder(order)">
+                    <button class="ui icon button" *ngIf="isOrderChanged(order)" (click)="saveOrder(order)" [ngClass]="{'loading':isLoaded}">
             <i class="checkmark icon"></i>
           </button>
                 </td>
@@ -39,4 +39,8 @@
             </tr>
         </tbody>
     </table>
+</div>
+
+<div *ngIf="company === undefined" class="ui active inverted dimmer" style="background-color: rgba(255,255,255,.85)">
+    <div class="ui text loader">Loading</div>
 </div>
