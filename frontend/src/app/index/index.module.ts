@@ -9,6 +9,9 @@ import { PopularTasksComponent } from './index-component/popular-tasks/popular-t
 // import { FooterComponent } from '../footer/footer.component';
 import { SearchPipe } from './search-pipe/search.pipe';
 
+import { DataService } from '../services/data.service';
+import { PopularService } from '../services/popular.service';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -21,6 +24,10 @@ import { SearchPipe } from './search-pipe/search.pipe';
     PopularTasksComponent,
     // FooterComponent,
     SearchPipe
+  ],
+  providers: [
+    PopularService,
+    DataService
   ]
 })
 export class IndexModule { }

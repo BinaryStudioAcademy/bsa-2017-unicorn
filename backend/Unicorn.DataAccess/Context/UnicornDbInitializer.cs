@@ -785,6 +785,7 @@ namespace Unicorn.DataAccess.Context
                 IsDeleted = false,
                 Name = "laundress",
                 Subcategory = subcategory1,
+                Orders = 10
             };
 
             Work work2 = new Work()
@@ -793,7 +794,8 @@ namespace Unicorn.DataAccess.Context
                 Description = "Photosession, wedding photosessions etc.",
                 IsDeleted = false,
                 Name = "Photographer",
-                Subcategory = subcategory5
+                Subcategory = subcategory5,
+                Orders = 20
             };
 
             Work work3 = new Work()
@@ -802,7 +804,8 @@ namespace Unicorn.DataAccess.Context
                 Description = "Care of your pets",
                 IsDeleted = false,
                 Name = "Vet",
-                Subcategory = subcategory2
+                Subcategory = subcategory2,
+                Orders = 30
             };
 
             Work work4 = new Work()
@@ -811,7 +814,8 @@ namespace Unicorn.DataAccess.Context
                 Description = "Appartmen repair",
                 IsDeleted = false,
                 Name = "Builder",
-                Subcategory = subcategory4
+                Subcategory = subcategory4,
+                Orders = 40
             };
 
             Work work5 = new Work()
@@ -820,7 +824,8 @@ namespace Unicorn.DataAccess.Context
                 Description = "Driving services",
                 IsDeleted = false,
                 Name = "Driver",
-                Subcategory = subcategory3
+                Subcategory = subcategory3,
+                Orders = 50
             };
 
             Work work6 = new Work()
@@ -829,7 +834,8 @@ namespace Unicorn.DataAccess.Context
                 Description = "C# senior dev",
                 IsDeleted = false,
                 Name = "Developer",
-                Subcategory = subcategory6
+                Subcategory = subcategory6,
+                Orders = 60
             };
 
             context.Works.AddRange(new List<Work>() { work1, work2, work3, work4, work5, work6 });
@@ -1281,7 +1287,16 @@ namespace Unicorn.DataAccess.Context
                 Description = "clean clothes and irom it, output 3 spots ",
                 Company = company1,
                 Status = BookStatus.InProgress,
-                Customer = customer1
+                Customer = customer1,
+                Location = new Location()
+                {
+                    Adress = "Lebedeva-Kumacha 7a str.",
+                    City = "Kiev",
+                    Latitude = 50.437,
+                    Longitude = 30.439,
+                    IsDeleted = false,
+                    PostIndex = "03110"
+                }
             };
 
             Book book2 = new Book()
@@ -1335,7 +1350,16 @@ namespace Unicorn.DataAccess.Context
                 Description = "rebuild 3 walls",
                 Status = BookStatus.Accepted,
                 Customer = customer3,
-                Company = company2
+                Company = company2,
+                Location = new Location()
+                {
+                    Adress = "Lebedeva-Kumacha 7a str.",
+                    City = "Kiev",
+                    Latitude = 50.437,
+                    Longitude = 30.439,
+                    IsDeleted = false,
+                    PostIndex = "03110"
+                }
             };
 
 
@@ -1348,7 +1372,16 @@ namespace Unicorn.DataAccess.Context
                 Description = "Take out the trash",
                 Status = BookStatus.Accepted,
                 Customer = customer1,
-                Company = company3
+                Company = company3,
+                Location = new Location()
+                {
+                    Adress = "Lebedeva-Kumacha 7a str.",
+                    City = "Kiev",
+                    Latitude = 50.437,
+                    Longitude = 30.439,
+                    IsDeleted = false,
+                    PostIndex = "03110"
+                }
             };
 
             Book book6 = new Book()
