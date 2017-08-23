@@ -54,9 +54,9 @@ export class CompanyWorksComponent implements OnInit {
 }
 
 
-  changeCategory(){        
-    this.selectedSubcategory = undefined;
+  changeCategory(){   
     this.subcategories = this.company.AllCategories.find(x => x.Name == this.selectedCategory.Name).Subcategories;
+    this.selectedSubcategory = this.subcategories[0];
   }
   selectWorksRow(event: any, work: CompanyWork){   
     if(event.target.localName === "td") {
@@ -71,10 +71,7 @@ export class CompanyWorksComponent implements OnInit {
     this.subcategories = this.company.AllCategories.find(x => x.Name == this.selectedCategory.Name).Subcategories;   
     this.selectedSubcategory = this.subcategories.find(x => x.Id === work.Subcategory.Id);
     this.openedDetailedWindow = true;
-  }
-  else{
-    // this.deleteWork(work);
-  }
+    }  
   }
   openDetailedWindow(){
     this.work = {
@@ -134,10 +131,5 @@ export class CompanyWorksComponent implements OnInit {
   saveCompanyWorks(){
     this.isLoaded = true;
     this.companyService.saveCompanyWorks(this.company).then(() => {this.isLoaded = false;});
-  }
-
-  approveModal(work: CompanyWork){
-    this.deleteWork(work);
-
-  }
+  }  
 }

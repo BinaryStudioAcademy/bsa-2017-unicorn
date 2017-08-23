@@ -267,6 +267,7 @@ namespace Unicorn.Core.Services
         private async Task<CompanyVendors> GetCompanyVendorsMethod(long id)
         {
             var company = await _unitOfWork.CompanyRepository.GetByIdAsync(id);
+            var allVendors = await _unitOfWork.VendorRepository.GetAllAsync();
 
             if (company != null)
             {
@@ -274,14 +275,22 @@ namespace Unicorn.Core.Services
                 {
                     Id = company.Id,
                     Vendors = company.Vendors?.Where(v => v.Company.Id == company.Id)
-                        .Select(x => new CompanyVendor()
+                        .Select(x => new CompanyVendor
                         {
                             Id = x.Id,
                             Avatar = x.Person?.Account?.Avatar ?? "default",
                             Experience = x.Experience,
                             Position = x.Position,
                             FIO = x.Person?.Name ?? "Name" + " " + x.Person?.MiddleName
-                        }).ToList()
+                        }).ToList(),
+                    AllVendors = allVendors.Select(x => new CompanyVendor
+                    {
+                        Id = x.Id,
+                        Avatar = x.Person?.Account?.Avatar ?? "default",
+                        Experience = x.Experience,
+                        Position = x.Position,
+                        FIO = x.Person?.Name ?? "Name" + " " + x.Person?.MiddleName
+                    }).ToList()
                 };
 
                 return companyVendors;

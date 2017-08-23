@@ -1,3 +1,105 @@
-<p>
-  company-vendors works!
-</p>
+<div class="ui container grid" *ngIf="company !== undefined">
+    <div class="row">
+        <div class="column">
+            <table class="ui selectable padded single line table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Name</th>
+                        <th>Experience</th>
+                        <th>Position</th>
+                        <th class="right aligned">
+                            <button class="ui basic button add" (click)="openDetailedWindow()">
+                                <h5>Add vendor</h5>
+                            </button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let vendor of company.Vendors">
+                        <td><img class="ui avatar image vendor-icon" src="{{vendor.Avatar}}"></td>
+                        <td>{{vendor.FIO}}</td>
+                        <td>{{vendor.Experience}}</td>
+                        <td>{{vendor.Position}}</td>
+                        <td class="right aligned">
+                            <button class="ui icon button" (click)="openModal(vendor)">
+                                <i class="remove icon"></i>
+                            </button>
+                        </td>
+                        <ng-template let-context let-modal="modal" #modalTemplate>
+                            <div class="header">Remove a vendor</div>
+                            <div class="content">
+                                <p>Are you sure you want to remove this vendor?</p>
+                            </div>
+                            <div class="actions">
+                                <button class="ui red button" (click)="modal.deny()">Cancel</button>
+                                <button class="ui green button" (click)="modal.approve()" autofocus>OK</button>
+                            </div>
+                        </ng-template>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="ui divider" *ngIf="openedDetailedWindow"></div>
+    <div class="right aligned" *ngIf="openedDetailedWindow">
+        <button class="ui icon button" (click)="closeDetailedWindow()">
+            <i class="remove icon"></i>
+        </button>
+    </div>
+    <div class="two column container row" *ngIf="openedDetailedWindow">
+        <div class="column">
+            <form class="ui form">
+                <div class="field">
+                    <ng-template let-option #optionVendorTemplate>
+                        <img class="ui avatar image vendor-icon" src="{{option.Avatar}}">{{option.FIO}}
+                    </ng-template>
+                    <label>Select a vendor</label>
+                    <sui-select class="selection" [(ngModel)]="selectedVendor" [optionTemplate]="optionVendorTemplate" name="selectVendor">
+                        <sui-select-option class="select-option" *ngFor="let vendor of company.AllVendors" [value]="vendor">
+                        </sui-select-option>
+                    </sui-select>
+                    <!-- <div class="field">
+                        <label>Name</label>
+                        <input type="text" name="name" placeholder="WORK NAME" [(ngModel)]="work.Name" *ngIf="work !== null">
+                    </div>
+                    <div class="field">
+                        <label>Description</label>
+                        <textarea name="description" placeholder="WRITE SOMETHING ABOUT THIS WORK..." [(ngModel)]="work.Description" *ngIf="work !== null"></textarea>
+                    </div> -->
+                </div>
+            </form>
+        </div>
+        <div class="column" *ngIf="selectedVendor !== undefined">
+            <form class="ui form">
+                <div class="field right aligned">
+                    <img class="ui avatar image face-icon" src="{{selectedVendor.Avatar}}">
+                </div>
+                <div class="field">
+                    <label>Name</label>
+                    <input type="text" name="name" disabled value="{{selectedVendor.FIO}}">
+                </div>
+                <div class="field">
+                    <label>Experience</label>
+                    <input type="text" name="name" disabled value="{{selectedVendor.Experience}}">
+                </div>
+                <div class="field">
+                    <label>Position</label>
+                    <input type="text" name="name" disabled value="{{selectedVendor.Position}}">
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="ui divider" *ngIf="openedDetailedWindow"></div>
+    <div class="centered row" *ngIf="openedDetailedWindow">
+        <div class="three wide column">
+            <button class="ui basic button" (click)="addVendor()" [ngClass]="{'loading':isLoaded}">
+              <h5 *ngIf="!isLoaded">Add</h5>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="company === undefined" class="ui active inverted dimmer" style="background-color: rgba(255,255,255,.85)">
+    <div class="ui text loader">Loading</div>
+</div>
