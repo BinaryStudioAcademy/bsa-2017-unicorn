@@ -35,18 +35,7 @@ namespace Unicorn.Core.Services
 
         }
 
-        public async Task<RatingDTO> GetReceiverRatingAsync(long id)
-        {
-            var reviews = await GetByReceiverIdAsync(id);
-
-            var average = reviews.Average(r => r.Grade);
-            return new RatingDTO()
-            {
-                Average = average,
-                ReviewsCount = reviews.Count()
-            };
-
-        }
+       
 
         public async Task<IEnumerable<ReviewDTO>> GetBySenderIdAsync(long id)
         {
@@ -75,7 +64,6 @@ namespace Unicorn.Core.Services
                 FromAccountId = review.FromAccountId,
                 To = review.To,
                 ToAccountId = review.ToAccountId,
-                Grade = review.Grade,
                 Date = review.Date,
                 Avatar = review.Avatar
             };

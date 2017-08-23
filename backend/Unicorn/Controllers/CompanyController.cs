@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using Unicorn.Core.Interfaces;
@@ -11,10 +13,12 @@ namespace Unicorn.Controllers
     public class CompanyController : ApiController
     {
         private readonly ICompanyPageService _companyService;
+        private readonly IRatingService _ratingService;
 
-        public CompanyController(ICompanyPageService companyService)
+        public CompanyController(ICompanyPageService companyService, IRatingService ratingService)
         {
             _companyService = companyService;
+            _ratingService = ratingService;
         }
 
         // GET: /company
@@ -126,7 +130,15 @@ namespace Unicorn.Controllers
                 return Json(result);
             return NotFound();
         }
+        [HttpGet]
+        [Route("company/{id}/rating")]
+        public async Task<HttpResponseMessage> GetCompanyRating(long id)
+        {
+            var accountId = await _companyService.GetCompanyAccountId(id);
+            var result = await _ratingService.GetAvarageByRecieverId(accountId);
+            return Request.CreateResponse(HttpStatusCode.OK, result);
 
+<<<<<<< HEAD
         // POST: company-works
         [HttpPost]
         [Route("company-works")]
@@ -154,6 +166,9 @@ namespace Unicorn.Controllers
             await _companyService.SaveCompanyBooks(company);
         }
 
+=======
+        }
+>>>>>>> develop
         //// PUT: api/Company/5
         //public void Put(int id, [FromBody]string value)
         //{

@@ -14,7 +14,6 @@ namespace Unicorn.Core.Interfaces
         Task<IEnumerable<ReviewDTO>> GetByBookIdAsync(long id);
         Task<ReviewDTO> GetByIdAsync(long id);
         Task<IEnumerable<ReviewDTO>> GetByReceiverIdAsync(long id);
-        Task<RatingDTO> GetReceiverRatingAsync(long id);
         Task<IEnumerable<ReviewDTO>> GetBySenderIdAsync(long id);
     }
 }

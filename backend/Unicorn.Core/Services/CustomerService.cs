@@ -1,18 +1,15 @@
+using AutoMapper;
 using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-
-using AutoMapper;
-
 using Unicorn.Core.Interfaces;
-using Unicorn.Core.Services.Helpers;
 using Unicorn.DataAccess.Entities;
 using Unicorn.DataAccess.Interfaces;
 using Unicorn.Shared.DTOs.Register;
-using Unicorn.Shared.DTOs;
-using Unicorn.Shared.DTOs.Book;
 using Unicorn.Shared.DTOs.User;
+using System.Data.Entity;
+using Unicorn.DataAccess.Entities.Enum;
 
 namespace Unicorn.Core.Services
 {
@@ -38,7 +35,7 @@ namespace Unicorn.Core.Services
         public async Task CreateAsync(CustomerRegisterDTO customerDto)
         {
             var account = new Account();
-            var role = await _unitOfWork.RoleRepository.GetByIdAsync((long)AccountRoles.Customer);
+            var role = await _unitOfWork.RoleRepository.GetByIdAsync((long)RoleType.Customer);
             var socialAccounts = new List<SocialAccount>();
             var socialAccount = new SocialAccount();
             var customer = new Customer();
@@ -88,10 +85,20 @@ namespace Unicorn.Core.Services
                 await _unitOfWork.SaveAsync();
             }
         }
-
+        public async Task<long> GetUserAccountIdAsync(long id)
+        {
+            var user = await _unitOfWork.CustomerRepository.Query
+                .Include(v => v.Person)
+                .Include(v => v.Person.Account)
+                .SingleAsync(x => x.Id == id);
+            return user.Person.Account.Id;
+        }
         public async Task<object> GetCustomerAsync(long id)
         {
-            var customer = await _unitOfWork.CustomerRepository.GetByIdAsync(id);
+            var customer = await _unitOfWork.CustomerRepository.
+                Query.Include(c => c.History.Select(h => h.Vendor.Person)).
+                Include(c=>c.Books.Select(h=>h.Vendor.Person)).
+                SingleAsync(c => c.Id == id);
             if (customer != null)
             {
                 var customerDto = new UserShortDTO()
@@ -113,18 +120,18 @@ namespace Unicorn.Core.Services
                         date = x.Date,
                         dateFinished = x.DateFinished,
                         subcategoryName = x.SubcategoryName,
-                        vendor = x?.Vendor?.Person?.Surname,
+                        vendor = x?.Vendor?.Person?.Name,
                         workDescription = x.WorkDescription
                     }).ToList(),
-                    Books = customer.Books.Select(x => new BookShortDto()
-                    {
-                        Address = x.Location?.Adress,
-                        Date = x.Date,
-                        Description = x.Description,
-                        Vendor = x?.Vendor?.Person?.Surname,
-                        Status = x.Status,
-                        WorkType = x.Work.Subcategory?.Name
-                    }).ToList()
+                    //Books = customer.Books?.Select(x => new BookShortDto()
+                    //{
+                    //    Address = x.Location?.Adress,
+                    //    Date = x.Date,
+                    //    Description = x.Description,
+                    //    Vendor = x?.Vendor?.Person?.Name,
+                    //    Status = x.Status,
+                    //    WorkType = x.Work.Subcategory?.Name
+                    //}).ToList()
                 };
                 return customerDto;
             }

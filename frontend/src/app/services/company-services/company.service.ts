@@ -30,6 +30,9 @@ export class CompanyService {
   getCompanyReviews(id: number):Promise<CompanyReviews>{
     return this.dataService.getRequest<CompanyReviews>("company-reviews/" + id);    
   }
+  getCompanyRating(id: number):Promise<any>{
+    return this.dataService.getFullRequest<number>("company/" + id + "/rating");    
+  }
 
   getCompanyVendors(id: number):Promise<CompanyVendors>{
     return this.dataService.getRequest<CompanyVendors>("company-vendors/" + id);    

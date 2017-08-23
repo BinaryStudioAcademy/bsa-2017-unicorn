@@ -12,6 +12,7 @@ import { CompanyCategory } from "../../../models/company-page/company-category.m
 export class GeneralInformationComponent implements OnInit {
 
 company: CompanyDetails;
+rating: number;
 categories: CompanyCategory[] = [];
 
 constructor(private companyService: CompanyService,
@@ -26,6 +27,9 @@ constructor(private companyService: CompanyService,
       this.company.Works.forEach(work => {
         this.categories.push(work.Subcategory.Category);
       });
+
+      this.companyService.getCompanyRating(this.company.Id).
+      then(resp => this.rating = resp.body as number);
 
       console.log(this.categories);
     });   

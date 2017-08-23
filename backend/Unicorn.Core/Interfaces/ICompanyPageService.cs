@@ -34,5 +34,7 @@ namespace Unicorn.Core.Interfaces
         Task<CompanyBooks> GetCompanyBooks(long id);
 
         Task SaveCompanyBooks(CompanyBooks companyDTO);
+        
+        Task<long> GetCompanyAccountId(long id);
     }
 }

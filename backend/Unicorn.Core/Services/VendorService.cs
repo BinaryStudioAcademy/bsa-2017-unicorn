@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using System.Linq;
 using System.Data.Entity;
 using Unicorn.Core.Interfaces;
-using Unicorn.Core.Services.Helpers;
 using Unicorn.DataAccess.Entities;
 using Unicorn.DataAccess.Interfaces;
 using Unicorn.Shared.DTOs;
@@ -13,6 +12,7 @@ using Unicorn.Shared.DTOs.Register;
 using Unicorn.Shared.DTOs.Vendor;
 using Unicorn.Shared.DTOs.Contact;
 using Unicorn.Shared.DTOs.Book;
+using Unicorn.DataAccess.Entities.Enum;
 
 namespace Unicorn.Core.Services
 {
@@ -71,7 +71,7 @@ namespace Unicorn.Core.Services
                 .Include(v => v.Works)
                 .SingleAsync(x => x.Id == id);
 
-            var works = vendor.Works;
+            var works = vendor.Works.Where(w => !w.IsDeleted);
             return works.GroupBy(w => w.Subcategory.Category)
                 .Select(g => new CategoryDTO()
                 {
@@ -134,7 +134,7 @@ namespace Unicorn.Core.Services
         public async Task CreateAsync(VendorRegisterDTO ShortVendorDTO)
         {
             var account = new Account();
-            var role = await _unitOfWork.RoleRepository.GetByIdAsync((long)AccountRoles.Vendor);
+            var role = await _unitOfWork.RoleRepository.GetByIdAsync((long)RoleType.Vendor);
             var permissions = new List<Permission>();
             var socialAccounts = new List<SocialAccount>();
             var socialAccount = new SocialAccount();
@@ -196,7 +196,7 @@ namespace Unicorn.Core.Services
             var vendor = await _unitOfWork.VendorRepository.Query
                 .Include(v => v.Works)
                 .SingleAsync(v => v.Id == id);
-            return vendor.Works.Select(w => new WorkDTO()
+            return vendor.Works.Where(w => !w.IsDeleted).Select(w => new WorkDTO()
             {
                 Id = w.Id,
                 Category = w.Subcategory.Category.Name,
@@ -204,8 +204,9 @@ namespace Unicorn.Core.Services
                 Subcategory = w.Subcategory.Name,
                 SubcategoryId = w.Subcategory.Id,
                 Name = w.Name,
-                Description = w.Description
-            });
+                Description = w.Description,
+                Icon = w.Icon
+            }).ToList();
         }
     }
 }

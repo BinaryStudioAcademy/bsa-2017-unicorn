@@ -48,7 +48,7 @@ export class PhotoService {
 
     private getId(): string {
         console.log(this.tokenHelper.getAllClaims());
-        return this.tokenHelper.getClaimByName('id');
+        return this.tokenHelper.getClaimByName('accountid');
     }
 
     saveBanner(imageUrl: string): Promise<string> {

@@ -17,10 +17,14 @@ namespace Unicorn.Controllers
     public class UserController : ApiController
     {
         private ICustomerService _customerService;
+        private IReviewService _reviewService;
+        private IRatingService _ratingService;
 
-        public UserController(ICustomerService customerService)
+        public UserController(ICustomerService customerService, IReviewService reviewService, IRatingService ratingService)
         {
             _customerService = customerService;
+            _reviewService = reviewService;
+            _ratingService = ratingService;
         }
         
         [HttpGet]
@@ -46,6 +50,41 @@ namespace Unicorn.Controllers
             else
                 return Request.CreateResponse(HttpStatusCode.OK, result);
         }
+        [HttpGet]
+        [Route("{id}/reviews")]
+        public async Task<HttpResponseMessage> GetUserReviews(long id)
+        {
+            var result = await _reviewService.GetByReceiverIdAsync(id);
 
+            if (result == null)
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            else
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+        [HttpGet]
+        [Route("{id}/ratings")]
+        public async Task<HttpResponseMessage> GetAllUserRatings(long id)
+        {
+            var accountId = await _customerService.GetUserAccountIdAsync(id);
+            var result = await _ratingService.GetByReceiverIdAsync(accountId);
+
+            
+            if (result == null)
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+        }
+        [HttpGet]
+        [Route("{id}/rating")]
+        public async Task<HttpResponseMessage> GetUserRating(long id)
+        {
+            var accountId = await _customerService.GetUserAccountIdAsync(id);
+            var result = await _ratingService.GetAvarageByRecieverId(accountId);
+                 return Request.CreateResponse(HttpStatusCode.OK, result);
+            
+        }
     }
 }

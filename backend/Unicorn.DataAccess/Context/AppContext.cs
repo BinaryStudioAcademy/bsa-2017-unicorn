@@ -24,7 +24,7 @@ namespace Unicorn.DataAccess.Context
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<ContactProvider> ContactProviders { get; set; }
         public DbSet<PortfolioItem> PortfolioItems { get; set; }
-
+        public DbSet<Rating> Ratings { get; set; }
         public AppContext() : base("DefaultConnection")
         {
             Database.SetInitializer(new UnicornDbInitializer());

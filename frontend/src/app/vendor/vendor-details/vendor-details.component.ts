@@ -44,6 +44,7 @@ export class VendorDetailsComponent implements OnInit {
   backgroundUrl: SafeResourceUrl;
   uploading: boolean;
   isOwner: boolean;
+  dataLoaded: boolean;
 
   cropperSettings: CropperSettings;
   vendor: Vendor;
@@ -65,6 +66,7 @@ export class VendorDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.dataLoaded = true;
     this.route.params
       .switchMap((params: Params) => this.vendorService.getVendor(params['id']))
       .subscribe(resp => {
@@ -125,7 +127,7 @@ export class VendorDetailsComponent implements OnInit {
       console.log("file not upload");
       return;
     }
-
+    this.dataLoaded = false;
     this.photoService.uploadToImgur(this.file).then(resp => {
 
       let path = resp;
@@ -133,7 +135,8 @@ export class VendorDetailsComponent implements OnInit {
       this.photoService.saveAvatar(path)
       .then(resp => {
         this.vendor.Avatar = this.data.image;
-        this.activeModal.deny('');    
+        this.dataLoaded = true;
+        this.activeModal.deny('');  
       })
       .catch(err => console.log(err));
     }).catch(err => {
@@ -142,6 +145,6 @@ export class VendorDetailsComponent implements OnInit {
   }
 
   public openModal() {
-    this.modalService.openModal(this.modalTemplate, this.activeModal);
+    this.activeModal = this.modalService.openModal(this.modalTemplate);
   }
 }
