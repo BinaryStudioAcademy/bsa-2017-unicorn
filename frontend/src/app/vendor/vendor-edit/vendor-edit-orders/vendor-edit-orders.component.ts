@@ -25,8 +25,9 @@ export class VendorEditOrdersComponent implements OnInit {
   }
 
   onOrderChange(order: VendorBook): void {
-    if (this.changedOrders.find(o => o.Id === order.Id) === undefined)
+    if (this.changedOrders.find(o => o.Id === order.Id) === undefined) {
       this.changedOrders.push(order);
+    }
   }
 
   saveOrder(order: VendorBook): void {
@@ -35,7 +36,7 @@ export class VendorEditOrdersComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.changedOrders =  [];
+    this.changedOrders = [];
     this.vendorService.getOrders(this.vendorId)
       .then(resp => this.orders = resp.body as VendorBook[]);
   }

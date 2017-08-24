@@ -56,7 +56,7 @@ namespace Unicorn.Core.Services
                     Id = v.Id,
                     Avatar = v.Person.Account.Avatar,
                     Name = v.Person.Name,
-                    Rating = _ratingService.GetAvarageByRecieverId(v.Person.Account.Id).Result,
+                    Rating = CalculateRating(v.Person.Account.Id),
                     ReviewsCount = reviews.Count(r => r.ToAccountId == v.Person.Account.Id),
                     PerformerType = "vendor",
                     Link = "vendor/" + v.Id,
@@ -74,7 +74,7 @@ namespace Unicorn.Core.Services
                     Id = c.Id,
                     Avatar = c.Account.Avatar,
                     Name = c.Name,
-                    Rating = _ratingService.GetAvarageByRecieverId(c.Account.Id).Result,
+                    Rating = CalculateRating(c.Account.Id),
                     ReviewsCount = reviews.Count(r => r.ToAccountId == c.Account.Id),
                     PerformerType = "company",
                     Link = "company/" + c.Id,
@@ -114,7 +114,7 @@ namespace Unicorn.Core.Services
                     Id = v.Vendor.Id,
                     Avatar = v.Vendor.Person.Account.Avatar,
                     Name = v.Vendor.Person.Name,
-                    Rating = _ratingService.GetAvarageByRecieverId(v.Vendor.Person.Account.Id).Result,
+                    Rating = CalculateRating(v.Vendor.Person.Account.Id),
                     ReviewsCount = reviews.Count(r => r.ToAccountId == v.Vendor.Person.Account.Id),
                     PerformerType = "vendor",
                     Link = $"vendor/" + v.Vendor.Id,
@@ -128,7 +128,7 @@ namespace Unicorn.Core.Services
                     Id = c.Company.Id,
                     Avatar = c.Company.Account.Avatar,
                     Name = c.Company.Name,
-                    Rating = _ratingService.GetAvarageByRecieverId(c.Company.Account.Id).Result,
+                    Rating = CalculateRating(c.Company.Account.Id),//_ratingService.GetAvarageByRecieverId(c.Company.Account.Id).Result,
                     ReviewsCount = reviews.Count(r => r.ToAccountId == c.Company.Account.Id),
                     PerformerType = "company",
                     Link = "company/" + c.Company.Id,
@@ -142,6 +142,16 @@ namespace Unicorn.Core.Services
                 .ToList();
 
             return performers;
+        }
+
+        private double CalculateRating(long recieverId)
+        {
+            var ratings = _uow.RatingRepository.Query
+                  .Include(y => y.Reciever)
+                  .Where(p => p.Reciever.Id == recieverId)
+                  .ToList();
+
+            return ratings.Any() ? ratings.Average(z => z.Grade) : 0;
         }
     }
 }

@@ -6,11 +6,12 @@ import { SuiModule } from 'ng2-semantic-ui';
 import { environment } from '../../environments/environment';
 import { NguiMapModule } from "@ngui/map/dist";
 
-
+import { VendorRoutingModule } from './vendor-routing.module';
 import { SignBlockModule } from '../sign-block/sign-block.module';
 import { BookModule } from '../book/book.module';
 import { MapModule } from '../map/map.module';
 import { SharedModule } from "../shared/shared.module";
+import { PipeModule } from "../pipe/pipe.module";
 
 import { VendorsComponent } from './vendors/vendors.component';
 import { VendorDetailsComponent } from './vendor-details/vendor-details.component';
@@ -24,8 +25,6 @@ import { VendorEditComponent } from './vendor-edit/vendor-edit.component';
 import { VendorEditInfoComponent } from './vendor-edit/vendor-edit-info/vendor-edit-info.component';
 import { VendorEditOrdersComponent } from './vendor-edit/vendor-edit-orders/vendor-edit-orders.component';
 
-import { VendorRoutingModule } from './vendor-routing.module';
-
 import { PhotoService } from '../services/photo.service';
 import { VendorService } from '../services/vendor.service';
 import { ReviewService } from '../services/review.service';
@@ -36,7 +35,6 @@ import { CategoryService } from "../services/category.service";
 import { WorkService } from "../services/work.service";
 import { VendorEditContactsComponent } from './vendor-edit/vendor-edit-contacts/vendor-edit-contacts.component';
 import { ContactService } from "../services/contact.service";
-import { PipeModule } from "../pipe/pipe.module";
 
 
 @NgModule({

@@ -20,17 +20,17 @@
                     </div>
                 </div>
                 <div class="ui divider"></div>
-
                 <div class="row">
                     <div class="column">
                         <div class="ui container">
                             <div class="flex-body">
-                    <div *ngFor="let category of workCategories" class="four wide column flex-category" [ngClass]="{'selected-category': selectedCategory===category}" (click)="onCategorySelect(category)">
-                        <img class="ui tiny circular image image-category" src="{{category.Icon}}">
-                        <h5>{{category.Name}}</h5>
-                    </div>
-                    </div>
-                    </div>
+                                <div *ngFor="let category of workCategories" class="four wide column flex-category" [ngClass]="{'selected-category': selectedCategory===category}"
+                                    (click)="onCategorySelect(category)">
+                                    <img class="ui tiny circular image image-category" src="{{category.Icon}}">
+                                    <h5>{{category.Name}}</h5>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="ui divider"></div>
