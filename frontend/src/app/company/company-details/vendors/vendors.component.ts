@@ -13,27 +13,26 @@ export class VendorsComponent implements OnInit {
   company: CompanyVendors;
   isVendorsEmpty: boolean = true;
 
-constructor(private companyService: CompanyService,
-  private route: ActivatedRoute) { }
+  constructor(private companyService: CompanyService,
+    private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.route.params
-    .switchMap((params: Params) => this.companyService.getCompanyVendors(params['id']))
-    .subscribe(res => {      
-      this.company = res;
-      if(res.Vendors.length == 0){
-        this.isVendorsEmpty = true;
-        this.company.Vendors.forEach(element => {
-          if(element.Avatar == "default"){
-            element.Avatar = "https://image.flaticon.com/icons/png/512/78/78373.png";
-          }
-        });
-      }
-      else
-        this.isVendorsEmpty = false;
-      this.company = res;      
-    });  
-    
+      .switchMap((params: Params) => this.companyService.getCompanyVendors(params['id']))
+      .subscribe(res => {
+        this.company = res;
+        if (res.Vendors.length == 0) {
+          this.isVendorsEmpty = true;
+          this.company.Vendors.forEach(element => {
+            if (element.Avatar == "default") {
+              element.Avatar = "https://image.flaticon.com/icons/png/512/78/78373.png";
+            }
+          });
+        }
+        else {
+          this.isVendorsEmpty = false;
+        }
+        this.company = res;
+      });
   }
-
 }
