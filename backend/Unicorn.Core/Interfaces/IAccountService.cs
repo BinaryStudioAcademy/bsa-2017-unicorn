@@ -10,5 +10,6 @@ namespace Unicorn.Core.Interfaces
     {
         Task<IEnumerable<AccountDTO>> GetAllAsync();
         Task<AccountDTO> GetByIdAsync(long id);
+        Task<ShortProfileInfoDTO> GetProfileInfoAsync(long id);
     }
 }
