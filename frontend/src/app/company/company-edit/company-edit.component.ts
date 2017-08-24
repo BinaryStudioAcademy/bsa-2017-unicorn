@@ -12,7 +12,6 @@ import { CompanyService } from "../../services/company-services/company.service"
 export class CompanyEditComponent implements OnInit {
   isDimmed: boolean = false;
   company: CompanyShort;  
-
   uploading: boolean;
   
   constructor(private companyService: CompanyService,
@@ -23,23 +22,20 @@ export class CompanyEditComponent implements OnInit {
     this.route.params
     .switchMap((params: Params) => this.companyService.getCompanyShort(params['id'])).subscribe(res => {
       this.company = res;
-      });        
+    });        
   }
 
   bannerListener($event) {
-      let file: File = $event.target.files[0];
-      this.uploading = true;
-      this.photoService.uploadToImgur(file).then(link => {
-        console.log(link);
-        return this.photoService.saveAvatar(link);
-      }).then(link => {
-        //this.backgroundUrl = this.buildSafeUrl(link);
+    let file: File = $event.target.files[0];
+    this.uploading = true;
+    this.photoService.uploadToImgur(file).then(link => {      
+      return this.photoService.saveAvatar(link);
+    }).then(link => {      
         this.company.Avatar = link;
         this.uploading = false;
       }).catch(err => {
         console.log(err);
         this.uploading = false;
-      });
+        });
   }
-
 }

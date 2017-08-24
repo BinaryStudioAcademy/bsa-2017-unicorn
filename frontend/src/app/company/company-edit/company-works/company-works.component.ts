@@ -48,7 +48,6 @@ export class CompanyWorksComponent implements OnInit {
         Subcategory: work.Subcategory,
         Icon: null
       };
-
       this.selectedCategory = this.company.AllCategories.find(x => x.Id === work.Subcategory.Category.Id);
       this.subcategories = this.company.AllCategories.find(x => x.Id == this.selectedCategory.Id).Subcategories;
       this.selectedSubcategory = this.subcategories[0];
@@ -67,13 +66,12 @@ export class CompanyWorksComponent implements OnInit {
       Subcategory: null,
       Icon: null
     };
-
     this.selectedCategory = this.company.AllCategories[0];
     this.subcategories = this.company.AllCategories.find(x => x.Id == this.selectedCategory.Id).Subcategories;
     this.selectedSubcategory = this.subcategories[0];
-
-    if (!this.openedDetailedWindow)
+    if (!this.openedDetailedWindow){
       this.openedDetailedWindow = true;
+    }
   }
 
   closeDetailedWindow() {

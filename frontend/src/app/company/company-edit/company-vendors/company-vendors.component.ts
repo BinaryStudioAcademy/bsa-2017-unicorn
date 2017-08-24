@@ -10,14 +10,12 @@ import { Vendor } from "../../../models/company-page/vendor";
   styleUrls: ['./company-vendors.component.sass']
 })
 export class CompanyVendorsComponent implements OnInit {  
-
   company: CompanyVendors;     
   isLoaded: boolean = false; 
   openedDetailedWindow: boolean = false;  
   allVendors: Vendor[];
   selectedVendors: Vendor[] = [];
   selectedVendor: Vendor;
-
 
   constructor(private companyService: CompanyService,
     private route: ActivatedRoute) { }
@@ -56,8 +54,9 @@ export class CompanyVendorsComponent implements OnInit {
     this.selectedVendors = undefined;
     this.selectedVendor = undefined;
     this.company = undefined;
-    if(this.openedDetailedWindow)  
-      this.openedDetailedWindow = !this.openedDetailedWindow;    
+    if(this.openedDetailedWindow){
+      this.openedDetailedWindow = !this.openedDetailedWindow;   
+    } 
   }
 
   deleteSelectedVendor(vendor: Vendor){
@@ -74,7 +73,6 @@ export class CompanyVendorsComponent implements OnInit {
       this.openedDetailedWindow = !this.openedDetailedWindow;     
   }
 
-
   saveCompanyVendors(){
     this.isLoaded = true;    
     this.companyService.saveCompanyVendors(this.company).then(() => {
@@ -82,6 +80,4 @@ export class CompanyVendorsComponent implements OnInit {
       this.ngOnInit();
     });
   }
-
-
 }

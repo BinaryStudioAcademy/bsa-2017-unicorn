@@ -5,11 +5,6 @@ import { CompanyService } from "../../../services/company-services/company.servi
 import { ActivatedRoute, Params } from "@angular/router";
 import { Contact } from "../../../models/contact.model";
 
-
-export interface IContext {
-    data:string;
-}
-
 @Component({
   selector: 'company-contacts',
   templateUrl: './contacts.component.html',
@@ -31,23 +26,18 @@ export class ContactsComponent implements OnInit {
     this.route.params
     .switchMap((params: Params) => this.companyService.getCompanyContacts(params['id']))
     .subscribe(res => {      
-      this.company = res;
-      console.log(this.company);
+      this.company = res;      
       this.map = {
         center: {lat: this.company.Location.Latitude, lng: this.company.Location.Longitude},
         zoom: 18,    
         title: this.company.Title,
         label: this.company.Title,
         markerPos: {lat: this.company.Location.Latitude, lng: this.company.Location.Longitude}    
-      }; 
-
-      //console.log(this.company.Contacts);
-      this.phones = this.company.Contacts.filter(x => x.Type === "Phone");
-      //console.log(this.phones);
+      };       
+      this.phones = this.company.Contacts.filter(x => x.Type === "Phone");      
       this.emails = this.company.Contacts.filter(x => x.Type === "Email");
       this.messengers = this.company.Contacts.filter(x => x.Type === "Messenger");
       this.socials = this.company.Contacts.filter(x => x.Type === "Social");
-
     });     
   }   
 }

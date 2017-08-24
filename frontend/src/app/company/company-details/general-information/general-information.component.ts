@@ -18,11 +18,12 @@ categories: CompanyCategory[] = [];
 selectedCategory: CompanyCategory;
 categoryWorks: CompanyWork[];
 openedCategoryDetails: boolean = false;
+dsa: string;
 
 constructor(private companyService: CompanyService,
   private route: ActivatedRoute) { }
 
-  ngOnInit() {    
+  ngOnInit() {        
     this.route.params
     .switchMap((params: Params) => this.companyService.getCompanyDetails(params['id']))
     .subscribe(res => {
@@ -30,14 +31,13 @@ constructor(private companyService: CompanyService,
       this.company.Works.forEach(work => {
         this.categories.push(work.Subcategory.Category);
       });
-
       this.companyService.getCompanyRating(this.company.Id).
       then(resp => this.rating = resp.body as number);      
     });   
   }
 
   onCategorySelect(category: CompanyCategory): void {
-    if(!this.openedCategoryDetails){
+    if(this.selectedCategory !== category){
       setTimeout(() => {
         this.openedCategoryDetails = true;
         this.selectedCategory = category;
@@ -50,8 +50,9 @@ constructor(private companyService: CompanyService,
     }
   }
 
-  closeCategoryDetails(){    
-    if(this.openedCategoryDetails){
+  closeCategoryDetails(event){     
+    if(!(event.target.id.includes("divCategory") || event.target.id.includes("imgCategory") ||
+      event.target.id.includes("h5Category"))){
       this.openedCategoryDetails = false;
       this.selectedCategory = undefined;
     }

@@ -14,7 +14,6 @@ import { CompanySubcategory } from "../../../models/company-page/company-subcate
   styleUrls: ['./company-main-information.component.sass']
 })
 export class CompanyMainInformationComponent implements OnInit {
-
   company: CompanyDetails;
   isLoaded: boolean = false;
   map: MapModel;  
@@ -28,7 +27,6 @@ export class CompanyMainInformationComponent implements OnInit {
     this.route.params
     .switchMap((params: Params) => this.companyService.getCompanyDetails(params['id'])).subscribe(res => {
       this.company = res;
-
       this.map = {
         center: {lat: this.company.Location.Latitude, lng: this.company.Location.Longitude},
         zoom: 18,    
@@ -36,8 +34,8 @@ export class CompanyMainInformationComponent implements OnInit {
         label: this.company.Name,
         markerPos: {lat: this.company.Location.Latitude, lng: this.company.Location.Longitude}    
       };        
-  });
-}
+    });
+  }
 
   save(){
     if (this.companyForm.invalid) {
@@ -46,6 +44,4 @@ export class CompanyMainInformationComponent implements OnInit {
     this.isLoaded = true;
     this.companyService.saveCompanyDetails(this.company).then(() => {this.isLoaded = false});
   }
-  
-
 }

@@ -103,7 +103,7 @@ namespace Unicorn.Core.Services
 
         #endregion
 
-            #region PrivateMethods
+        #region PrivateMethods
 
         private async Task<ICollection<ShortCompanyDTO>> GetAllCompaniesMethod()
         {

@@ -1,15 +1,13 @@
 <div *ngIf="company !== undefined">
     <div class="flex-list">
         <div class="child-flex" *ngFor="let vendor of company.Vendors">
-            <!-- <a><img class="ui avatar image vendor-avatar" src={{vendor.Result.Avatar}}></a> -->
             <a><img class="ui avatar image vendor-avatar" src={{vendor.Avatar}}></a>
             <div class="content">
-                <!-- <div class="header"><a>{{vendor.Result.FIO}}</a></div>{{vendor.Result.Position}} </div> -->
-                <div class="header"><a>{{vendor.FIO}}</a></div>{{vendor.Position}} </div>
+                <div class="header"><a>{{vendor.FIO}}</a></div>{{vendor.Position}}
+            </div>
         </div>
         <div *ngIf="company.Vendors === undefined" class="no-vendors">
             There are no vendors
         </div>
     </div>
-
 </div>
