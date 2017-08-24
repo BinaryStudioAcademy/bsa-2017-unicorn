@@ -9,7 +9,8 @@ import { ActivatedRoute, Params } from "@angular/router";
   styleUrls: ['./vendors.component.sass']
 })
 export class VendorsComponent implements OnInit {
-  company: CompanyVendors;  
+  company: CompanyVendors; 
+  isVendorsEmpty: boolean; 
 
 constructor(private companyService: CompanyService,
   private route: ActivatedRoute) { }
@@ -17,7 +18,13 @@ constructor(private companyService: CompanyService,
   ngOnInit() {
     this.route.params
     .switchMap((params: Params) => this.companyService.getCompanyVendors(params['id']))
-    .subscribe(res => {      
+    .subscribe(res => {  
+      if(res.Vendors.length == 0){
+        this.isVendorsEmpty = true;
+      }
+      else{
+        this.isVendorsEmpty = false;
+      }      
       this.company = res;      
       if(this.company  !== undefined){
         this.company.Vendors.forEach(element => {
