@@ -47,10 +47,8 @@ export class VendorEditContactsComponent implements OnInit {
       .then(() => this.filterContacts())
       .then(() => this.contactService.getAllProviders()
         .then((resp) => this.providers = resp.body as ContactProvider[])
-        .then(() => {
-          this.filterProviders();
-    this.cleanAllSellections();
-        }));
+        .then(() => this.filterProviders())
+        .then(() => this.cleanAllSellections()));
   }
 
   filterContacts(): void {

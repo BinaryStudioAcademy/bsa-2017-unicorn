@@ -18,8 +18,6 @@ namespace Unicorn.DataAccess.Entities
         public string Avatar { get; set; }
 
         public string Background { get; set; } 
-
-        public double Rating { get; set; }
         
         public virtual Role Role { get; set; }
 

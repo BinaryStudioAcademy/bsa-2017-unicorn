@@ -147,7 +147,7 @@ namespace Unicorn.Core.Services
             account.Role = role;
             account.DateCreated = DateTime.Now;
             account.Email = ShortVendorDTO.Email;
-            account.Avatar = "http://static.1927.kiev.ua/images/default_avatar.jpg";
+            account.Avatar = ShortVendorDTO.Image;
 
             socialAccount.Provider = ShortVendorDTO.Provider;
             socialAccount.Uid = ShortVendorDTO.Uid;

@@ -3,6 +3,7 @@ import { CompanyDetails } from "../../../models/company-page/company-details.mod
 import { CompanyService } from "../../../services/company-services/company.service";
 import { ActivatedRoute, Params } from "@angular/router";
 import { CompanyCategory } from "../../../models/company-page/company-category.model";
+import { CompanyWork } from "../../../models/company-page/company-work.model";
 
 @Component({
   selector: 'company-general-information',
@@ -12,7 +13,11 @@ import { CompanyCategory } from "../../../models/company-page/company-category.m
 export class GeneralInformationComponent implements OnInit {
 
 company: CompanyDetails;
+rating: number;
 categories: CompanyCategory[] = [];
+selectedCategory: CompanyCategory;
+categoryWorks: CompanyWork[];
+openedCategoryDetails: boolean = false;
 
 constructor(private companyService: CompanyService,
   private route: ActivatedRoute) { }
@@ -22,13 +27,34 @@ constructor(private companyService: CompanyService,
     .switchMap((params: Params) => this.companyService.getCompanyDetails(params['id']))
     .subscribe(res => {
       this.company = res;
-
       this.company.Works.forEach(work => {
         this.categories.push(work.Subcategory.Category);
       });
 
-      console.log(this.categories);
+      this.companyService.getCompanyRating(this.company.Id).
+      then(resp => this.rating = resp.body as number);      
     });   
+  }
+
+  onCategorySelect(category: CompanyCategory): void {
+    if(!this.openedCategoryDetails){
+      setTimeout(() => {
+        this.openedCategoryDetails = true;
+        this.selectedCategory = category;
+        this.categoryWorks = this.company.Works.filter(w => w.Subcategory.Category.Id === this.selectedCategory.Id);
+      }, 50); 
+    }
+    else{
+      this.openedCategoryDetails = false;
+      this.selectedCategory = undefined;
+    }
+  }
+
+  closeCategoryDetails(){    
+    if(this.openedCategoryDetails){
+      this.openedCategoryDetails = false;
+      this.selectedCategory = undefined;
+    }
   }
 
 }

@@ -22,6 +22,10 @@ import { UserMainComponent } from './user-main/user-main.component';
 import { UserMainInfoComponent } from './user-main/user-main-info/user-main-info.component';
 import { UserMainReviewsComponent } from './user-main/user-main-reviews/user-main-reviews.component';
 import { SharedModule } from "../shared/shared.module";
+import {BrowserModule} from '@angular/platform-browser';
+import {ToastModule, ToastsManager, ToastOptions} from 'ng2-toastr/ng2-toastr';
+
+
 
 @NgModule({
     imports: [
@@ -34,7 +38,9 @@ import { SharedModule } from "../shared/shared.module";
         HttpModule,
         FormsModule,
         FormsModule,
-        SharedModule
+        SharedModule,
+        BrowserModule, 
+        ToastModule.forRoot()
 
     ],
     declarations: [

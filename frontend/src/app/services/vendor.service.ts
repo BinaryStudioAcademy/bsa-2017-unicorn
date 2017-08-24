@@ -4,7 +4,6 @@ import { DataService } from './data.service';
 
 import { Vendor } from '../models/vendor.model';
 import { PortfolioItem } from '../models/portfolio-item.model';
-import { Rating } from "../models/rating.model";
 import { Review } from "../models/review.model";
 import { Subcategory } from "../models/subcategory.model";
 import { Contact } from "../models/contact.model";
@@ -34,9 +33,9 @@ export class VendorService {
   }
 
   getRating(id: number): Promise<any> {
-    return this.dataService.getFullRequest<Rating>(`${this.apiController}/${id}/rating`)
+    return this.dataService.getFullRequest<number>(`${this.apiController}/${id}/rating`)
       .catch(err => alert(err));
-  }
+   }
 
   getCategories(id: number): Promise<any> {
     return this.dataService.getFullRequest<Category[]>(`${this.apiController}/${id}/categories`)

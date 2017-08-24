@@ -29,6 +29,7 @@ namespace Unicorn.DataAccess.Repositories.UnitOfWork
         private IGenericRepository<PortfolioItem> portfolioRepository;
         private IGenericRepository<Contact> contactRepository;
         private IGenericRepository<ContactProvider> contactProviderRepository;
+        private IGenericRepository<Rating> ratingRepository;
 
         public UnitOfWork(AppContext context, IRepositoryFactory factory)
         {
@@ -199,6 +200,14 @@ namespace Unicorn.DataAccess.Repositories.UnitOfWork
             }
         }
 
+        public IGenericRepository<Rating> RatingRepository
+        {
+            get
+            {
+                return ratingRepository ??
+                    (ratingRepository = factory.CreateRepository<Rating>(context));
+            }
+        }
         private bool disposed;
 
         public virtual void Dispose(bool disposing)

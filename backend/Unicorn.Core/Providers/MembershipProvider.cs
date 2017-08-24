@@ -26,10 +26,10 @@ namespace Unicorn.Core.Providers
             switch (account.Role.Type)
             {
                 case RoleType.Customer:
-                    profileId = _unitOfWork.PersonRepository.Query.First(x => x.Account.Id == account.Id).Id;
+                    profileId = _unitOfWork.CustomerRepository.Query.First(x => x.Person.Account.Id == account.Id).Id;
                     break;
                 case RoleType.Company:
-                    profileId = _unitOfWork.CompanyRepository.Query.FirstAsync(x => x.Account.Id == account.Id).Id;
+                    profileId = _unitOfWork.CompanyRepository.Query.First(x => x.Account.Id == account.Id).Id;
                     break;
                 case RoleType.Vendor:
                     profileId = _unitOfWork.VendorRepository.Query.First(x => x.Person.Account.Id == account.Id).Id;

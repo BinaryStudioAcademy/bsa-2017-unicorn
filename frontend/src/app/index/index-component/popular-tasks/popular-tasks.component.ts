@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
+import { PopularCategory } from '../../../models/popular/PopularCategory';
+import { Performer } from '../../../models/popular/Performer';
+
+import { PopularService } from '../../../services/popular.service';
+
 @Component({
   selector: 'popular-tasks',
   templateUrl: './popular-tasks.component.html',
@@ -11,11 +16,52 @@ export class PopularTasksComponent implements OnInit {
   buildingVendors: MockVendor[];
   geriatricVendors: MockVendor[];
 
-  constructor() { }
+  categories: PopularCategory[];
+  bestPerformers: Performer[];
+
+  fperformers: Performer[];
+  sperformers: Performer[];
+  tperformers: Performer[];
+
+  tabSuffix: string = '?tab=reviews';
+
+  loaded: boolean = false;
+
+  constructor(private popularService: PopularService) { }
 
   ngOnInit() {
     this.createMockVendors();
+
+    this.popularService.loadCategories().then(c => {
+      this.categories = c;
+      console.log(this.categories);
+      console.log(this.categories[0].Name);
+      this.initPerformers();
+    });
+
+    this.popularService.loadPopularPerformers().then(p => {
+      this.bestPerformers = p;
+      console.log(this.bestPerformers);
+    });
+
+    
   }
+
+  initPerformers() {
+    this.popularService.loadPerformers(this.categories[0].Id).then(p => {
+      this.fperformers = p;
+    });
+    this.popularService.loadPerformers(this.categories[1].Id).then(p => {
+      this.sperformers = p;
+    });
+    this.popularService.loadPerformers(this.categories[2].Id).then(p => {
+      this.tperformers = p;
+    });
+  }
+
+
+
+
 
   createMockVendors() {
     this.popularVendors = [{

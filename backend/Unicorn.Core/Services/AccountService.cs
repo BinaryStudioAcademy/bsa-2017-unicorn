@@ -26,7 +26,6 @@ namespace Unicorn.Core.Services
                 {
                     Id = account.Id,
                     Avatar = account.Avatar,
-                    Rating = account.Rating,
                     DateCreated = account.DateCreated,
                     Email = account.Email,
                     EmailConfirmed = account.EmailConfirmed,
@@ -45,7 +44,6 @@ namespace Unicorn.Core.Services
             {
                 Id = account.Id,
                 Avatar = account.Avatar,
-                Rating = account.Rating,
                 DateCreated = account.DateCreated,
                 Email = account.Email,
                 EmailConfirmed =account.EmailConfirmed,

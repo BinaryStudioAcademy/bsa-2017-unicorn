@@ -26,6 +26,8 @@ import { CompanyOrdersComponent } from './company-edit/company-orders/company-or
 import { CompanyService } from "../services/company-services/company.service";
 import { CompanyVendorsComponent } from './company-edit/company-vendors/company-vendors.component';
 import { CompanyWorksComponent } from './company-edit/company-works/company-works.component';
+import { PipeModule } from "../pipe/pipe.module";
+import { ClickOutsideModule } from 'ng-click-outside';
 
 @NgModule({
   imports: [    
@@ -36,7 +38,9 @@ import { CompanyWorksComponent } from './company-edit/company-works/company-work
     SuiModule,
     BookModule,
     SignBlockModule,
-    MapModule 
+    MapModule,
+    PipeModule,
+    ClickOutsideModule
   ],
   declarations: [
     CompanyComponent,
@@ -50,7 +54,8 @@ import { CompanyWorksComponent } from './company-edit/company-works/company-work
     CompanyMessagesComponent,
     CompanyOrdersComponent,
     CompanyVendorsComponent,
-    CompanyWorksComponent 
+    CompanyWorksComponent
+    
   ],
   providers: [
     DataService,

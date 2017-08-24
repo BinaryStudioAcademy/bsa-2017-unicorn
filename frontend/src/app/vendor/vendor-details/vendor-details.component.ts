@@ -4,7 +4,6 @@ import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
 import { JwtHelper } from '../../helpers/jwthelper';
 import 'rxjs/add/operator/switchMap';
 
-import {SuiModule} from 'ng2-semantic-ui';
 
 import { Vendor } from '../../models/vendor.model';
 
@@ -19,8 +18,6 @@ import { PhotoService, Ng2ImgurUploader } from "../../services/photo.service";
 
 import { FormsModule }   from '@angular/forms';
 
-export interface IContext { }
-
 @Component({
   selector: 'app-vendor-details',
   templateUrl: './vendor-details.component.html',
@@ -32,10 +29,6 @@ export interface IContext { }
 })
 export class VendorDetailsComponent implements OnInit {
 
-  @ViewChild('modalTemplate')
-  public modalTemplate: ModalTemplate<IContext, string, string>;
-  private activeModal: SuiActiveModal<IContext, {}, string>;
-
   @ViewChild('cropper', undefined)
   cropper:ImageCropperComponent;
   enabled: boolean = false;
@@ -46,12 +39,17 @@ export class VendorDetailsComponent implements OnInit {
   isOwner: boolean;
   dataLoaded: boolean;
 
+  routePath: string;
+  routeid: number;
+
   cropperSettings: CropperSettings;
   vendor: Vendor;
   isGuest: boolean;
   file: File;
   data: any;
   imageUploaded: boolean;
+
+  tabActive: boolean = false;
   constructor(
     private route: ActivatedRoute,
     private vendorService: VendorService,
@@ -63,6 +61,9 @@ export class VendorDetailsComponent implements OnInit {
     this.cropperSettings = modalService.cropperSettings;
     this.data = {};
     this.imageUploaded = false;
+
+    this.routePath = this.route.root.snapshot.firstChild.url[0].path;
+    this.routeid = +this.route.snapshot.paramMap.get('id');
   }
 
   ngOnInit() {
@@ -70,8 +71,12 @@ export class VendorDetailsComponent implements OnInit {
     this.route.params
       .switchMap((params: Params) => this.vendorService.getVendor(params['id']))
       .subscribe(resp => {
-        this.vendor = resp.body as Vendor
+        this.vendor = resp.body as Vendor;
+        this.backgroundUrl = this.buildSafeUrl(this.vendor.Background);
       });
+    if (this.route.snapshot.queryParams['tab'] === 'reviews') {
+      this.tabActive = true;
+    }
   }
   getCurrentRole()
   {
@@ -104,47 +109,5 @@ export class VendorDetailsComponent implements OnInit {
         console.log(err);
         this.uploading = false;
       });
-  }
-
-
-  fileChangeListener($event) {
-    var image:any = new Image();
-    this.file = $event.target.files[0];
-    var myReader:FileReader = new FileReader();
-    var that = this;
-    myReader.onloadend = function (loadEvent:any) {
-        image.src = loadEvent.target.result;
-        that.cropper.setImage(image);
-
-    };
-    this.imageUploaded = true;
-    myReader.readAsDataURL(this.file);
-}
-
-  fileSaveListener(){
-    if (!this.data)
-    {
-      console.log("file not upload");
-      return;
-    }
-    this.dataLoaded = false;
-    this.photoService.uploadToImgur(this.file).then(resp => {
-
-      let path = resp;
-      console.log(path);
-      this.photoService.saveAvatar(path)
-      .then(resp => {
-        this.vendor.Avatar = this.data.image;
-        this.dataLoaded = true;
-        this.activeModal.deny('');  
-      })
-      .catch(err => console.log(err));
-    }).catch(err => {
-      console.log(err);
-    });
-  }
-
-  public openModal() {
-    this.activeModal = this.modalService.openModal(this.modalTemplate);
   }
 }

@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: left;
 }
 
 .vendor {
@@ -12,20 +12,20 @@
 
 .img-wrapper {
     width: 172px;
-    height: 134px;
+    height: 150px;
     margin: 5px;
-    overflow: hidden;
 }
 
 .img-wrapper img {
-    width: 100%;
-    min-height: 100%;
+    width: 172px;
+    height: 150px;
+    object-fit: scale-down;
 }
 
 .vendor-title {
     margin: 3px 0;
     color: gray;
-    font-size: 18px;
+    font-size: 15px;
     text-align: center;
 }
 
@@ -39,4 +39,35 @@
     border-color: #FF647A;
     font-weight: 700;
     color: #FF647A;
+}
+
+.per-info {
+    display: flex;
+    justify-content: center;
+}
+
+.per-info>a,
+.per-info>sui-rating {
+    display: inline;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.per-info>a {
+    font-size: 13px;
+}
+
+.city-span {
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.per-name {
+    display: flex;
+    justify-content: space-around;
+}
+
+.per-name>span {
+    margin: 0;
+    padding: 0;
 }

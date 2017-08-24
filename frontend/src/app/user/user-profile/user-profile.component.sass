@@ -8,8 +8,8 @@
     margin-top: 1.3em;
     margin-bottom: 1.3em;
 .map 
-  width: 40em;
-  height: 15em;
+  width: 35em;
+  height: 20em;
   background: green;	
   
 .ui input
@@ -28,16 +28,27 @@
     display: flex;
     justify-content: space-evenly;
 .column
-    display: flex;
-    flex-direction: column;
+     display: flex;
+     flex-direction: column;
 .elem
     display: block;
+.row
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 .ui.basic.button
    box-shadow: 0 0 0 1px $primary_color;
    color:  $primary_color;
    background: none;
    padding: 10px;
-   margin-top: 23px;
    width: 100px;
+   height: 40px;
    margin-right: 0px;
-   align-self: flex-start;
+   margin-top: 5px;
+   align-self: center;
+.ui.active.loading.button
+   box-shadow: 0 0 0 1px $primary_color;
+   color:  $primary_color;
+   background: none;
+   width: 100px;
+   height: 40px;

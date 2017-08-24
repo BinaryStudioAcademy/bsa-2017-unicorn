@@ -1,4 +1,4 @@
-<div class="ui grid">
+<div *ngIf="selectedPhone !== undefined" class="ui grid">
   <div class="row">
     <div class="column">
       <div class="flex-header">
@@ -7,7 +7,7 @@
       </div>
     </div>
   </div>
-  <div class="row">
+  <div *ngIf="phones !== undefined" class="row">
     <div class="column">
       <div class="phones">
         <div class="header">Phone</div>

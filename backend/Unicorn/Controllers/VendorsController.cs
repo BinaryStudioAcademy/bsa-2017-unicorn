@@ -28,7 +28,8 @@ namespace Unicorn.Controllers
             IBookService bookService,
             IHistoryService historyService,
             IWorkService workService,
-            IContactService contactService)
+            IContactService contactService,
+            IRatingService ratingService)
         {
             _vendorService = vendorService;
             _reviewService = reviewService;
@@ -37,6 +38,7 @@ namespace Unicorn.Controllers
             _historyService = historyService;
             _workService = workService;
             _contactService = contactService;
+            _ratingService = ratingService;
         }
 
         #region Get
@@ -170,7 +172,8 @@ namespace Unicorn.Controllers
         [Route("{id}/reviews")]
         public async Task<HttpResponseMessage> GetVendorReviews(long id)
         {
-            var result = await _reviewService.GetByReceiverIdAsync(id);
+            var accountId = await _vendorService.GetVendorAccountIdAsync(id);
+            var result = await _reviewService.GetByReceiverIdAsync(accountId);
 
             if (result == null)
                 return Request.CreateResponse(HttpStatusCode.NotFound);
@@ -183,14 +186,9 @@ namespace Unicorn.Controllers
         public async Task<HttpResponseMessage> GetVendorRating(long id)
         {
             var accountId = await _vendorService.GetVendorAccountIdAsync(id);
-            var result = await _reviewService.GetReceiverRatingAsync(accountId);
+            var result = await _ratingService.GetAvarageByRecieverId(accountId);
+            return Request.CreateResponse(HttpStatusCode.OK, result);
 
-            if (result == null)
-                return Request.CreateResponse(HttpStatusCode.NotFound);
-            else
-            {
-                return Request.CreateResponse(HttpStatusCode.OK, result);
-            }
         }
 
         [HttpGet]
@@ -301,6 +299,7 @@ namespace Unicorn.Controllers
         private IPortfolioService _portfolioService;
         private IBookService _bookService;
         private IHistoryService _historyService;
+        private IRatingService _ratingService;
         private IWorkService _workService;
         private IContactService _contactService;
     }

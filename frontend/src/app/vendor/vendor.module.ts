@@ -26,17 +26,18 @@ import { VendorEditOrdersComponent } from './vendor-edit/vendor-edit-orders/vend
 
 import { VendorRoutingModule } from './vendor-routing.module';
 
-import { EnumKeysPipe } from "../pipes/enum.pipe";
-
 import { PhotoService } from '../services/photo.service';
 import { VendorService } from '../services/vendor.service';
 import { ReviewService } from '../services/review.service';
 import { DataService } from "../services/data.service";
 import { LocationService } from "../services/location.service";
+
 import { CategoryService } from "../services/category.service";
 import { WorkService } from "../services/work.service";
 import { VendorEditContactsComponent } from './vendor-edit/vendor-edit-contacts/vendor-edit-contacts.component';
 import { ContactService } from "../services/contact.service";
+import { PipeModule } from "../pipe/pipe.module";
+
 
 @NgModule({
   imports: [
@@ -47,7 +48,8 @@ import { ContactService } from "../services/contact.service";
     MapModule,
     SignBlockModule,
     CommonModule,
-    SharedModule
+    SharedModule,
+    PipeModule
   ],
   declarations: [
     VendorDetailsComponent,
@@ -61,7 +63,6 @@ import { ContactService } from "../services/contact.service";
     VendorEditOrdersComponent,
     VendorEditPortfolioComponent,
     VendorEditWorksComponent,
-    EnumKeysPipe,
     VendorEditContactsComponent
   ],
   providers: [

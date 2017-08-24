@@ -2,7 +2,7 @@
     <div class="ui container flex-header">
         <h2 class="ui header">{{company.Name}}
             <div class="sub header">{{company.City}}
-                <sui-rating class="star" [ngModel]="company.Rating" [isReadonly]="true"></sui-rating>
+                <sui-rating class="star" [ngModel]="rating" [isReadonly]="true"></sui-rating>
                 Reviews: {{company.ReviewsCount}}</div>
         </h2>
         <div class="center">
@@ -19,12 +19,33 @@
     </div>
     <div class="ui container">
         <div class="flex-body" *ngIf="categories !== null">
-            <div *ngFor="let category of categories" class="item flex-category">
-                <img class="ui tiny circular image image-category" src={{category.Icon}}>
-                <h4 style="margin: 5px 0 0 0;">
-                    <p>{{category.Name}}</p>
-                </h4>
+            <div *ngFor="let category of categories" class="item flex-category" [ngClass]="{'selected-category': selectedCategory===category}" (click)="onCategorySelect(category)">
+                <img class="ui circular image image-category" src={{category.Icon}}>
+                <h5 class="category-name">{{category.Name}}</h5>
             </div>
+        </div>
+        <div class="ui divider"></div>
+        <div *ngIf="openedCategoryDetails" (clickOutside)="closeCategoryDetails()">
+            <div class="flex-header">
+                <h4 style="display: inline-block;">{{selectedCategory.Name}}</h4>
+            </div>
+            <sui-accordion class="styled fluid">
+                <sui-accordion-panel *ngFor="let work of categoryWorks">
+                    <div title class="ui container work-preview-title">
+                        <i class="dropdown icon"></i>{{work.Name}}
+                    </div>
+                    <div content>
+                        <div class="ui container flex-header">
+                            <div>
+                                <p>{{work.Description}}</p>
+                            </div>
+                            <div>
+                                <a class="ui tag label">{{work.Subcategory.Name}}</a>
+                            </div>
+                        </div>
+                    </div>
+                </sui-accordion-panel>
+            </sui-accordion>
         </div>
     </div>
 </div>

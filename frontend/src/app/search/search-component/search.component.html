@@ -9,28 +9,28 @@
                 <label>When to do it</label>                  
               </div>
               <div class="four wide column ui input">
-                <input type="text" placeholder="{{placeholderCategory}}" [(ngModel)]="searchCategory">
+                <input type="text" placeholder="{{placeholderCategory}}" [(ngModel)]="category">
               </div>
               <div class="four wide column  ui input">
-                <input type="text" placeholder="{{placeholderSubcategory}}" [(ngModel)]="searchSubcategory">
+                <input type="text" placeholder="{{placeholderSubcategory}}" [(ngModel)]="subcategory">
               </div>
               <div class="four wide column ui left icon input">
                   <i class="calendar icon"></i>
                   <input class="datepicker" placeholder="RIGHT NOW" suiDatepicker 
-                          [(ngModel)]="searchDate" 
+                          [(ngModel)]="date" 
                           [pickerMode]="mode" 
                           [pickerFirstDayOfWeek]="firstDayOfWeek" 
                           [pickerUseNativeOnMobile]="false">
               </div>
               <div class="four wide column">
-                <button class="ui button btn-search" (click)="searchVendor()">SEARCH</button>
+                <button class="ui active button main btn-search" (click)="searchCompany()">SEARCH</button>
               </div>
               <div class="sixteen wide column remove-padding-top">
                 <sui-accordion class="fluid">
-                  <sui-accordion-panel>
+                  <sui-accordion-panel [isOpen]="filtersIsOpen">
                     <div title>
                       <i class="filter icon"></i>
-                      <label class="gray">Additional filters</label>
+                      <label>Additional filters</label>
                     </div>
                     <div content>
                       <div class="ui grid container segment">
@@ -40,7 +40,7 @@
                               <i class="search icon"></i>
                             </div>
                         </div>
-                        <div class="four wide column remove-padding-bottom">  
+                        <div class="four wide column remove-padding-bottom padding-top">  
                             <div class="ui checkbox">
                               <input type="checkbox" name="example">
                               <label class="checkbox-position">Only with reviews</label>
@@ -66,9 +66,19 @@
                                 <sui-select-option *ngFor="let o of filterCat" [value]="o">{{o}}</sui-select-option>
                             </div>
                           </sui-multi-select>
-                        </div>                                    
+                        </div> 
+                        <div class="six wide column remove-padding-bottom">  
+                          <div class="ui icon input">                        
+                            <input places-auto-complete
+                            (initialized$)="initialized($event)"
+                            (place_changed)="placeChanged(place)"
+                            [types]="['geocode']" 
+                            placeholder="LOCATION"/>
+                          </div>
+                        </div>                                   
                         <div class="sixteen wide column remove-padding-top">
-                          <button class="ui button button-right" (click)="searchVendor()">APPLY</button>
+                          <button class="ui active button main button-right" (click)="searchCompany()">APPLY</button>
+                          <button class="ui active button secondary button-right" (click)="resetFilters()">RESET</button>
                         </div>
                       </div>
                     </div>
@@ -80,24 +90,23 @@
                   <div class="content">
                     <i class="sort content descending icon"></i>
                     Sort by
-                    <sui-select class="inline" [(ngModel)]="selectedRange">
-                      <div class="header">Type</div>
+                    <sui-select class="inline" [(ngModel)]="selectedRange" placeholder="rating">
                       <sui-select-option value="rating"></sui-select-option>
                       <sui-select-option value="name"></sui-select-option>
-                      <sui-select-option value="foundation"></sui-select-option>
+                      <sui-select-option value="distance"></sui-select-option>
                     </sui-select>
                   </div>
                 </h5>
               </div>
               <div class="four wide column remove-padding-top">
                 <h5 class="ui header">                  
-                  <div class="content">
-                    <i class="sort icon"></i>
-                    Order
-                    <sui-select class="inline" [(ngModel)]="selectedRange2">
-                      <div class="header">Type</div>
-                      <sui-select-option value="ascending"></sui-select-option>
-                      <sui-select-option value="descending"></sui-select-option>
+                  <div class="content align-right">
+                    <i class="block layout icon"></i>
+                    Displaying:
+                    <sui-select class="inline" [(ngModel)]="pageSize" placeholder="20">
+                      <sui-select-option value="20"></sui-select-option>
+                      <sui-select-option value="40"></sui-select-option>
+                      <sui-select-option value="60"></sui-select-option>
                     </sui-select>
                   </div>
                 </h5>              
@@ -111,7 +120,6 @@
             <a href="/company/{{company.Id}}" class="ui medium image">
               <img class="ui fluid image" src="{{company.Avatar}}"/>
               <div class="row">
-                <!-- <h3>{{company.Name}} ({{company.FoundationDate.getFullYear()}})</h3> -->
                 <h3>{{company.Name}} ({{company.FoundationDate | date:'y'}})</h3>
               </div>
               <div class="row">
@@ -128,9 +136,6 @@
                   <div class="column">                      
                     {{company.ReviewsCount}} reviews 
                   </div>
-                  <!-- <div class="column">                      
-                    {{company.Vendors.length}} vendors
-                  </div> -->
                 </div>
               </div>
             </a>
@@ -144,6 +149,9 @@
                         [hasEllipses]="hasEllipses"
                         [(page)]="selectedPage">
         </sui-pagination>     
+      </div>
+      <div *ngIf="companies.length == 0" class="ui active inverted dimmer" style="z-index: 0;">
+        <div class="ui text loader">Loading</div>
       </div> 
   </div>
   <div class="six wide column">

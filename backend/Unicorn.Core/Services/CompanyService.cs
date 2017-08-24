@@ -27,7 +27,7 @@ namespace Unicorn.Core.Services
             var company = new Company();
 
             account.Role = role;
-            account.Avatar = "http://www.yupptv.in/images/banner-default.jpg";
+            account.Avatar = companyDto.Image;
             account.DateCreated = DateTime.Now;
             account.Email = companyDto.Email;           
 

@@ -1,3 +1,111 @@
-<p>
-  company-vendors works!
-</p>
+<div class="ui container grid" *ngIf="company !== undefined">
+    <div class="row">
+        <div class="column">
+            <table class="ui selectable padded single line table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Name</th>
+                        <th>Experience</th>
+                        <th>Position</th>
+                        <th>Rating</th>
+                        <th class="right aligned">
+                            <button class="ui basic button add" (click)="openDetailedWindow()">
+                                <h5>Add vendor</h5>
+                            </button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let vendor of company.Vendors">
+                        <!-- <td><img class="ui avatar image vendor-icon" src="{{vendor.Result.Avatar}}"></td> -->
+                        <td><img class="ui avatar image vendor-icon" src="{{vendor.Avatar}}"></td>
+                        <!-- <td>{{vendor.Result.FIO}}</td>
+                        <td>{{vendor.Result.Experience}}</td>
+                        <td>{{vendor.Result.Position}}</td> -->
+                        <td>{{vendor.FIO}}</td>
+                        <td>{{vendor.Experience}}</td>
+                        <td>{{vendor.Position}}</td>
+                        <td>
+                            <!-- <sui-rating class="star" [ngModel]="vendor.Result.Rating" [isReadonly]="true"></sui-rating> -->
+                            <sui-rating class="star" [ngModel]="vendor.Rating" [isReadonly]="true"></sui-rating>
+                        </td>
+                        <td class="right aligned">
+                            <!-- <button class="ui icon button" (click)="deleteVendor(vendor.Result)"> -->
+                            <button class="ui icon button" (click)="deleteVendor(vendor)">
+                                <i class="remove icon"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="ui divider" *ngIf="openedDetailedWindow"></div>
+    <div class="right aligned" *ngIf="openedDetailedWindow">
+        <button class="circular ui icon button" (click)="closeDetailedWindow()">
+            <i class="remove icon"></i>
+        </button>
+    </div>
+    <div class="row" *ngIf="openedDetailedWindow">
+        <div class="column">
+            <div>
+                <ng-template let-option #optionVendorTemplate>
+                    <img class="ui avatar image vendor-icon" src="{{option.Avatar}}">{{option.FIO}}
+                </ng-template>
+                <label>Select a vendor</label>
+                <sui-select class="selection" [(ngModel)]="selectedVendor" [optionTemplate]="optionVendorTemplate" (selectedOptionChange)="changeVendor()" name="selectVendor">
+                    <!-- <sui-select-option class="select-option" *ngFor="let vendor of allVendors" [value]="vendor.Result"> -->
+                    <sui-select-option class="select-option" *ngFor="let vendor of allVendors" [value]="vendor">
+                    </sui-select-option>
+                </sui-select>
+            </div>
+            <div *ngIf="selectedVendors !== undefined">
+                <div class="flex-vendors">
+                    <div class="flex-form" *ngFor="let vendor of selectedVendors">
+                        <div class="face">
+                            <img class="ui avatar image face-icon" src="{{vendor.Avatar}}">
+                            <sui-rating class="star" [ngModel]="vendor.Rating" [isReadonly]="true" style="margin-top: 3px;"></sui-rating>
+                            <!-- <div class="ui star rating" data-rating="3"></div> -->
+                            <div>Reviews: {{vendor.Reviews}}</div>
+                        </div>
+
+
+                        <div class="vendor-description">
+                            <div class="description">
+                                <div>
+                                    <label>Name: </label> {{vendor.FIO}}
+                                </div>
+                                <div class="ui divider"></div>
+                                <div>
+                                    <label>Experience: </label> {{vendor.Experience}}
+                                </div>
+                                <div class="ui divider"></div>
+                                <div>
+                                    <label>Position: </label> {{vendor.Position}}
+                                </div>
+                                <div class="ui divider"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <button class="circular ui button icon delete-vendor" (click)="deleteSelectedVendor(vendor)">
+                                    <i class="remove icon"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="centered row" *ngIf="openedDetailedWindow">
+        <div class="three wide column">
+            <button class="ui basic button" (click)="addVendor()" [ngClass]="{'loading':isLoaded}">
+              <h5 *ngIf="!isLoaded">Add</h5>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="company === undefined" class="ui active inverted dimmer" style="background-color: rgba(255,255,255,.85)">
+    <div class="ui text loader">Loading</div>
+</div>
