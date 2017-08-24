@@ -25,7 +25,7 @@ export class RegisterUserComponent implements OnInit {
   firstName: string;
   middleName: string;
   lastName: string;
-  email: string;
+  email: string; 
 
   constructor(private registerService: RegisterService,
     private helperService: HelperService,
