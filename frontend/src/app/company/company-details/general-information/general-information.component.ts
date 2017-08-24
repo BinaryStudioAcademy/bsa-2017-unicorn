@@ -29,7 +29,9 @@ constructor(private companyService: CompanyService,
     .subscribe(res => {
       this.company = res;
       this.company.Works.forEach(work => {
-        this.categories.push(work.Subcategory.Category);
+        if(this.categories.find(x => x.Id === work.Subcategory.Category.Id) === undefined){
+          this.categories.push(work.Subcategory.Category);
+        }
       });
       this.companyService.getCompanyRating(this.company.Id).
       then(resp => this.rating = resp.body as number);      
