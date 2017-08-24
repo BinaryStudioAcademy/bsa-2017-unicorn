@@ -82,6 +82,8 @@
     <Compile Include="Interfaces\ILocationService.cs" />
     <Compile Include="Interfaces\IPermissionService.cs" />
     <Compile Include="Interfaces\IPersonService.cs" />
+    <Compile Include="Interfaces\IPopularService.cs" />
+	<Compile Include="Interfaces\IRatingService.cs" />
     <Compile Include="Interfaces\IRoleService.cs" />
     <Compile Include="Interfaces\IReviewService.cs" />
     <Compile Include="Interfaces\IPortfolioService.cs" />
@@ -99,6 +101,8 @@
     <Compile Include="Services\LocationService.cs" />
     <Compile Include="Services\PermissionService.cs" />
     <Compile Include="Services\PersonService.cs" />
+    <Compile Include="Services\PopularService.cs" />
+	<Compile Include="Services\RatingService.cs" />
     <Compile Include="Services\RoleService.cs" />
     <Compile Include="Services\ReviewService.cs" />
     <Compile Include="Services\PortfolioService.cs" />

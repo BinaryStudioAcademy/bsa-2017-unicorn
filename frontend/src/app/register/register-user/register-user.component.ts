@@ -42,23 +42,21 @@ export class RegisterUserComponent implements OnInit {
     let displayName = this.social.displayName;
     let nameValues = displayName.split(' ');
     this.firstName = nameValues[0] || null;
-    this.middleName = nameValues[1] || null;
+    this.lastName = nameValues[1] || null;
   }
 
   aggregateInfo(): Customer {
-    let info = new Customer();
-    info.birthday = this.birthday;
-
-    info.phone = this.phone;
-    info.email = this.email;
-    info.image = this.social.photoURL;
-    info.firstName = this.firstName;
-    info.middleName = this.middleName;
-    info.lastName = this.lastName;
-    info.provider = this.social.providerData[0].providerId;
-    info.uid = this.social.uid;
-
-    return info;
+    return {
+      birthday: this.birthday,
+      phone: this.phone,
+      email: this.email,
+      image: this.social.photoURL,
+      firstName: this.firstName,
+      middleName: this.middleName,
+      lastName: this.lastName,
+      provider: this.social.providerData[0].providerId,
+      uid: this.social.uid
+    }
   }
 
   confirmRegister(formData) {

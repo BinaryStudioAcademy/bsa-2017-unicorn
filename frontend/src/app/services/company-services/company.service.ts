@@ -6,6 +6,7 @@ import { CompanyReviews } from "../../models/company-page/company-reviews.model"
 import { CompanyVendors } from "../../models/company-page/company-vendors.model";
 import { CompanyContacts } from "../../models/company-page/company-contacts.model";
 import { CompanyWorks } from "../../models/company-page/company-works.model";
+import { CompanyBooks } from "../../models/company-page/company-books.model";
 
 @Injectable()
 export class CompanyService { 
@@ -29,6 +30,9 @@ export class CompanyService {
   getCompanyReviews(id: number):Promise<CompanyReviews>{
     return this.dataService.getRequest<CompanyReviews>("company-reviews/" + id);    
   }
+  getCompanyRating(id: number):Promise<any>{
+    return this.dataService.getFullRequest<number>("company/" + id + "/rating");    
+  }
 
   getCompanyVendors(id: number):Promise<CompanyVendors>{
     return this.dataService.getRequest<CompanyVendors>("company-vendors/" + id);    
@@ -40,6 +44,10 @@ export class CompanyService {
 
   getCompanyWorks(id: number):Promise<CompanyWorks>{
     return this.dataService.getRequest<CompanyWorks>("company-works/" + id);    
+  }
+
+  getCompanyBooks(id: number):Promise<CompanyBooks>{
+    return this.dataService.getRequest<CompanyBooks>("company-books/" + id);    
   }
 
   saveCompanyDetails(company: CompanyDetails):Promise<CompanyDetails>{
@@ -56,6 +64,14 @@ export class CompanyService {
 
   saveCompanyContacts(company: CompanyContacts):Promise<CompanyContacts>{
     return this.dataService.postRequest("company-contacts", company);
+  }
+
+  saveCompanyWorks(company: CompanyWorks):Promise<CompanyWorks>{
+    return this.dataService.postRequest("company-works", company);
+  }
+
+  saveCompanyBooks(company: CompanyBooks):Promise<CompanyBooks>{
+    return this.dataService.postRequest("company-books", company);
   }
 
   getMockCompany(): CompanyShort{

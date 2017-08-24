@@ -2,21 +2,29 @@
 
 h5 
  color: grey;
-
+ margin-bottom: 0px;
+h4
+ padding-left: 5px;
+ margin-bottom: 0px;
+ margin-top: 3px;
 .map 
-  width: 35em;
-  height: 30em;
-  background: green;	
+  width: 30em;
+  height: 17em;
+  background: url(https://wpmag-22.cdn.pjtsu.com/wp-content/uploads/sites/13/2013/11/google-maps-wordpress.png?w=780);	
 .container
   display: flex;
   justify-content: space-around;
 .column
   display: flex;
   flex-direction: column;
-.ui.label.contact
+.label
   margin: 0.5em;
+  margin-bottom: 0px;
+  color: grey;
   font-size: 13px;
   background: transparent;
+  text-decoration: none;
+  margin-left: 5px;
 
 .flex-header
   display: flex;
@@ -28,3 +36,9 @@ h5
   margin: 0.5em;
 \:host /deep/ .ui.rating .icon.active
 	color: $primary-color;
+.ui.form
+  margin: 0px;
+.review-link
+  display: block;
+.review-link:hover
+ cursor: pointer;

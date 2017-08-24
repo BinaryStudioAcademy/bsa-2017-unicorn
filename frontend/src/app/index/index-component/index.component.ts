@@ -65,8 +65,8 @@ export class IndexComponent implements OnInit {
 
     this.router.navigate(['/search'], {
       queryParams: {
-        'category': this.searchCategory.toLowerCase(),
-        'subcategory': this.searchSubcategory.toLocaleLowerCase(),
+        'category': this.searchCategory,
+        'subcategory': this.searchSubcategory,
         'date': this.searchDate.getTime() / 1000
       }
     });

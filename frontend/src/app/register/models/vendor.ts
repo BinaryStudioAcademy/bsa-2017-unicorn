@@ -1,4 +1,4 @@
-export class Vendor {
+export interface Vendor {
     birthday: any;
     phone: string;
     email: string;

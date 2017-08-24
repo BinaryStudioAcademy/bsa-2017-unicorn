@@ -11,7 +11,7 @@
                     <sui-tabset>
                         <div class="ui pointing secondary menu">
                             <a class="item" suiTabHeader="1">General information</a>
-                            <a class="item" suiTabHeader="2">Reviews</a>
+                            <a class="item" suiTabHeader="2" [isActive]="tabActive">Reviews</a>
                             <a class="item" suiTabHeader="3">Vendors</a>
                             <a class="item" suiTabHeader="4">Contacts</a>
                         </div>
@@ -35,7 +35,7 @@
                                     <div class="six wide column">
                                         <div class="ui segment">
                                             <app-sign-block *ngIf="isGuest"></app-sign-block>
-                                            <app-book *ngIf="!isGuest"></app-book>
+                                            <app-book [routePath]="routePath" [routeId]="routeid" *ngIf="!isGuest"></app-book>
                                         </div>
                                     </div>
                                 </div>
