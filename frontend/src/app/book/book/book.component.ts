@@ -17,6 +17,7 @@ export class BookComponent implements OnInit {
   book: BookOrder;
   formIsSended: boolean;
   onSending: boolean;
+  isUser: boolean;
   private defaultLocation: Location;
 
   @Input() routePath: string;
@@ -24,33 +25,37 @@ export class BookComponent implements OnInit {
 
   @ViewChild('bookForm') public bookForm: NgForm;
 
-  constructor(private bookOrderService: BookOrderService, private tokenHelper: TokenHelperService, private userService: UserService) { }
+  constructor(private bookOrderService: BookOrderService, private tokenHelper: TokenHelperService, private userService: UserService) {
+    this.isUser = +this.tokenHelper.getClaimByName('roleid') === 2;
+  }
 
   ngOnInit() {
     this.formIsSended = false;
     this.onSending = true;
 
-    this.defaultLocation = {
-      Id: 0,
-      City: "",
-      Adress: "",
-      PostIndex: "",
-      Latitude: 0,
-      Longitude: 0
-    }
+    if (this.isUser) {
+      this.defaultLocation = {
+        Id: 0,
+        City: "",
+        Adress: "",
+        PostIndex: "",
+        Latitude: 0,
+        Longitude: 0
+      }
 
-    this.book = {
-      date: new Date(),
-      location: this.defaultLocation,
-      description: "",
-      workid: 0, // TODO: selected work from dropdown
-      profile: this.routePath,
-      profileid: this.routeId,
-      customerid: +this.tokenHelper.getClaimByName('profileid'),
-      customerphone: ""
-    }
+      this.book = {
+        date: new Date(),
+        location: this.defaultLocation,
+        description: "",
+        workid: 0, // TODO: selected work from dropdown
+        profile: this.routePath,
+        profileid: this.routeId,
+        customerid: +this.tokenHelper.getClaimByName('profileid'),
+        customerphone: ""
+      }
 
-    this.getUserData();
+      this.getUserData();
+    }
   }
 
   makeOrder() {
@@ -69,7 +74,7 @@ export class BookComponent implements OnInit {
     this.bookOrderService.createOrder(this.book)
       .then(x => {
         this.updateLoader();
-        this.formIsSended = true;        
+        this.formIsSended = true;
       })
       .catch(err => {
         this.updateLoader();
