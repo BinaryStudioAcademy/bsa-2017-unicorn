@@ -167,42 +167,4 @@
       </div>
     </div>
   </div>
-  <!-- <div class="row">
-    <div class="one wide centered column">
-        <i (click)="editToggle('social')" class="large link icon contact-edit-toggle" [ngClass]="{'plus': !editSocialOpen, 'remove': editSocialOpen}"></i>
-    </div>
-    <div class="fifteen wide column">
-      <div class="ui divider"></div>
-    </div>
-  </div>
-  <div *ngIf="selectedSocial !== undefined" class="ui container grid" [suiCollapse]="!editSocialOpen">
-    <div class="row">
-      <div class="column">
-        <form class="ui form">
-          <div class="inline fields contact-edit">
-            <div class="field">
-            <div class="ui left action mini input" [ngClass]="{'left': selectedMessenger.ProviderId === null, 'action': selectedMessenger.ProviderId === null}">
-              <sui-select 
-              *ngIf="selectedMessenger.ProviderId === null"
-              class="selection" 
-              [(ngModel)]="selectedProvider" 
-              [options]="socialProviders" 
-              name="contactProvider" 
-              labelField="Name"
-              placeholder="CONTACT TYPE"
-                #select>
-                <sui-select-option *ngFor="let provider of socialProviders" [value]="provider">
-                </sui-select-option>
-              </sui-select>
-              <input type="text" [(ngModel)]="selectedSocial.Value" name="social" placeholder="NICKNAME">
-            </div>
-            </div>
-            <div class="two wide field">
-              <button (click)="selectedSocial.Id !== null ? updateContact(selectedSocial) : createContact(selectedSocial)" class="ui basic tiny button">Save</button>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div> -->
 </div>

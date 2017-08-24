@@ -37,8 +37,6 @@ namespace Unicorn.Shared.DTOs.Vendor
 
         public DateTime Birthday { get; set; }
 
-        public ICollection<WorkDTO> Works { get; set; }
-
         public ICollection<ContactShortDTO> Contacts { get; set; }
     }
 }
