@@ -308,11 +308,10 @@ namespace Unicorn.Core.Services
         }
         private double CalculateAverageRating(long receiverId)
         {
-            return _unitOfWork.RatingRepository.Query
-                .Include(y => y.Reciever)
-                .Where(p => p.Reciever.Id == receiverId)
-                .Select(z => z.Grade)
-                .Average();
+            var select = _unitOfWork.RatingRepository.Query
+                .Where(p => p.Reciever.Id == receiverId).Select(z => z.Grade);
+            return select.Any() ? select.Average() : 0;
+
         }
 
         private async Task SaveCompanyVendorsMethod(CompanyVendors companyDTO)

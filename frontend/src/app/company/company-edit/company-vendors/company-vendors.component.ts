@@ -26,16 +26,11 @@ export class CompanyVendorsComponent implements OnInit {
     this.route.params
     .switchMap((params: Params) => this.companyService.getCompanyVendors(params['id'])).subscribe(res => {
       this.company = res;   
-      this.allVendors = this.company.AllVendors;
-      // console.log(this.company.AllVendors);   
+      this.allVendors = this.company.AllVendors;  
     });
   }  
 
   changeVendor(){
-    // this.allVendors.Result  = this.company.AllVendors.Result;    
-    // this.selectedVendors.push(this.selectedVendor);
-    // this.allVendors.Result = this.allVendors.Result.filter(x => x.Id !== this.selectedVendor.Id);
-
     this.selectedVendors.push(this.selectedVendor);
     this.allVendors = this.allVendors.filter(x => x.Id !== this.selectedVendor.Id);
     this.selectedVendor = undefined;  
@@ -55,9 +50,7 @@ export class CompanyVendorsComponent implements OnInit {
     this.selectedVendor = undefined;
   }
 
-  deleteVendor(vendor: Vendor){      
-    // this.company.Vendors.Result =  this.company.Vendors.Result.filter(x => x.Id !== vendor.Id);   
-
+  deleteVendor(vendor: Vendor){     
     this.company.Vendors =  this.company.Vendors.filter(x => x.Id !== vendor.Id);   
     this.saveCompanyVendors();
     this.selectedVendors = undefined;
@@ -72,8 +65,7 @@ export class CompanyVendorsComponent implements OnInit {
     this.allVendors.push(vendor);
   }
 
-  addVendor(){    
-    // this.selectedVendors.forEach(vendor => {this.company.Vendors.Result.push(vendor);});      
+  addVendor(){      
     this.selectedVendors.forEach(vendor => {this.company.Vendors.push(vendor);});      
       this.saveCompanyVendors();  
       this.selectedVendors = undefined;

@@ -35,7 +35,7 @@ export class CompanyDetailsComponent implements OnInit {
     if (this.route.snapshot.queryParams['tab'] === 'reviews') {
       this.tabActive = true;
     }
-    console.log(this.route.snapshot.queryParams['tab']);
+    // console.log(this.route.snapshot.queryParams['tab']);
 
     this.getCurrentRole();
   }
