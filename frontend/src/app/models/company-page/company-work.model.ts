@@ -5,4 +5,5 @@ export interface CompanyWork {
     Name: string;
     Description: string;    
     Subcategory: CompanySubcategory;
+    Icon: string;
 }

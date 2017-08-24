@@ -27,6 +27,7 @@ import { CompanyService } from "../services/company-services/company.service";
 import { CompanyVendorsComponent } from './company-edit/company-vendors/company-vendors.component';
 import { CompanyWorksComponent } from './company-edit/company-works/company-works.component';
 import { PipeModule } from "../pipe/pipe.module";
+import { ClickOutsideModule } from 'ng-click-outside';
 
 @NgModule({
   imports: [    
@@ -38,7 +39,8 @@ import { PipeModule } from "../pipe/pipe.module";
     BookModule,
     SignBlockModule,
     MapModule,
-    PipeModule
+    PipeModule,
+    ClickOutsideModule
   ],
   declarations: [
     CompanyComponent,

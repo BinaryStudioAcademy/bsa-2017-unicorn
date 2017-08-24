@@ -1,4 +1,4 @@
-import { Component, ChangeDetectorRef, OnInit, OnDestroy } from '@angular/core';
+import { Component, ChangeDetectorRef, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Validators, FormGroup, FormArray, FormBuilder } from '@angular/forms';
 
@@ -16,19 +16,17 @@ import { CompanyDetails } from '../../models/company-page/company-details.model'
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.sass']
 })
-export class SearchComponent implements OnInit, OnDestroy {
+export class SearchComponent implements OnInit {
   /* query parameters */
   category: string;
   subcategory: string;
   date: Date;
   /* filter */
+  filtersIsOpen: boolean;
   labelSearch: string;
   placeholderCategory: string;
   placeholderSubcategory: string;
-  // searchCategory: string;
-  // searchSubcategory: string;
   labelDate: string;
-  // searchDate: Date;
   mode: string;
   firstDayOfWeek: string;
   /* multi-select */
@@ -37,11 +35,10 @@ export class SearchComponent implements OnInit, OnDestroy {
   selSubcat: string[];
   filterSubcat: string[];
   /* pagination */
-  pageSize = 12;
+  pageSize = 20;
   maxSize = 3;
   hasEllipses = true;
   selectedPage = 1;
-  // companies: CompanyShort[] = [];
   companies: CompanyDetails[] = [];
   /* map */
   positions = [];
@@ -50,13 +47,20 @@ export class SearchComponent implements OnInit, OnDestroy {
   autocomplete: google.maps.places.Autocomplete;
   address: any = {};
 
-  private subscription: ISubscription;
-
   constructor(
     private companyService: CompanyService,
     private route: ActivatedRoute,
     private ref: ChangeDetectorRef
   ) { }
+
+  searchCompany() {
+    this.companies = [];
+    this.getCompanies();
+  }
+
+  resetFilters() {
+    this.filtersIsOpen = false;
+  }
 
   initialized(autocomplete: any) {
     this.autocomplete = autocomplete;
@@ -116,21 +120,9 @@ export class SearchComponent implements OnInit, OnDestroy {
     );
   }
 
-  // getCompaniesOld() {
-  //   this.companyService.getCompanies()
-  //   .then(
-  //     companies => {
-  //       this.companies = companies;
-  //       console.log(this.companies);
-  //     }
-  //   );
-  // }
-
   initContent() {
     this.placeholderCategory = 'SCRATCH';
     this.placeholderSubcategory = 'MY CAT';
-    // this.searchCategory = '';
-    // this.searchSubcategory = '';
     /* labels */
     this.labelSearch = 'What to do';
     this.labelDate = 'When to do it';
@@ -139,7 +131,4 @@ export class SearchComponent implements OnInit, OnDestroy {
     this.firstDayOfWeek = '1';    /* start calendar from first day of week */
   }
 
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
 }
