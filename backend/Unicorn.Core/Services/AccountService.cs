@@ -37,7 +37,7 @@ namespace Unicorn.Core.Services
             return allaccountsData;
         }
 
-        public async Task<AccountDTO> GetById(long id)
+        public async Task<AccountDTO> GetByIdAsync(long id)
         {
             var account = await _unitOfWork.AccountRepository.GetByIdAsync(id);
             var accountDto = new AccountDTO()

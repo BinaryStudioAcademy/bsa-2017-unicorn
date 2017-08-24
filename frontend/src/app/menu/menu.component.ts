@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { MenuItem } from './menu-item/menu-item';
 
@@ -33,6 +34,7 @@ export class MenuComponent implements OnInit {
   notifications: Array<string>;
 
   constructor(
+    private router: Router,
     private modalService: SuiModalService,
     private authEventService: AuthenticationEventService,
     private authLoginService: AuthenticationLoginService,
@@ -88,6 +90,7 @@ export class MenuComponent implements OnInit {
 
   signOut() {
     this.authLoginService.signOut();
+    this.router.navigate(['index']);
   }
 
   goToAccount() {

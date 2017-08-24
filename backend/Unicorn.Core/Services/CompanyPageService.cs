@@ -1,7 +1,7 @@
 ﻿﻿using System.Collections.Generic;
 using System.Data.Entity;
-﻿using System;
- using System.Linq;
+using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Unicorn.Core.Interfaces;
 using Unicorn.DataAccess.Entities;
@@ -274,8 +274,7 @@ namespace Unicorn.Core.Services
         {
             var company = await _unitOfWork.CompanyRepository.GetByIdAsync(id);
             var allVendors = await _unitOfWork.VendorRepository.GetAllAsync();
-            var reviews = await _unitOfWork.ReviewRepository.GetAllAsync();
-            
+            var reviews = await _unitOfWork.ReviewRepository.GetAllAsync();      
 
             if (company != null )
             {

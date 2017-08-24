@@ -23,6 +23,7 @@ namespace Unicorn.DataAccess.Interfaces
         IGenericRepository<SocialAccount> SocialAccountRepository { get; }
         IGenericRepository<PortfolioItem> PortfolioRepository { get; }
         IGenericRepository<Contact> ContactRepository { get; }
+        IGenericRepository<ContactProvider> ContactProviderRepository { get; }
         IGenericRepository<Rating> RatingRepository { get; }
         Task SaveAsync();
     }

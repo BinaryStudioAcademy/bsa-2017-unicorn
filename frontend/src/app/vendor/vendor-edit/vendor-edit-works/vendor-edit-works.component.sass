@@ -1,35 +1,5 @@
 @import "../../../../global-style-variables.sass";
-
-.accordion-option
-	padding: 1.2em;
-	&:hover
-		background: $primary-color;
-		color: #fff;
-
-.toggle-button
-	margin-left: 3.4em;
-
-.category-dropdown
-	margin-top: 1.7em;
-	margin-bottom: 2.7em;
-
-\:host /deep/ .ui.styled.accordion .content
-	max-height: 20em;
-	overflow: auto;
-
-.ui.basic.button
-	box-shadow: 0 0 0 1px $primary_color;
-	color:  $primary_color;
-	background: none;
-	width: 11em;
-	margin-bottom: 1.5em;
-
-.ui.basic.button h5
-	color: $primary-color;
-
-
-/// image croping modal    
-
+  
 h3
 	margin: 5px;
 	font-size: 20px;
@@ -70,8 +40,6 @@ a
     color: $primary-color;
     display: inline-block;
 
-
-//.inputfile:focus + label,
 .ui.active.button:hover .btnText
     color: #4b0f31;
 
@@ -83,9 +51,6 @@ a
 
 .inputfile + label 
 	cursor: pointer; 
-// .inputfile:focus + label 
-//  	outline: 1px dotted #000;
-//  	outline: -webkit-focus-ring-color auto 5px;
 
 .img-class
     width: 100px;        
@@ -120,10 +85,61 @@ svg path
     font-size: 1.3em;
 
 .uploadedImage
-    //border: groove 1px black;
     margin-top: 1em;
     margin-bottom: 1em;
 
 .previewContent
     align-self: flex-start;
     margin-top: 1.5em;
+
+
+/// Design changed
+
+.ui.table
+	margin-top: 1em!important;
+	margin-bottom: 1em!important;
+
+.select-option
+	padding: 1.2em!important;
+	&:hover
+		background: rgba(251, 226, 230, 0.33)!important;
+		color: black!important;
+
+.ui.basic.button
+	box-shadow: 0 0 0 1px $primary_color;
+	color:  $primary_color;
+	background: none;
+	width: 11em;
+	margin-bottom: 1.5em;
+	min-height: 2.8em;
+
+.ui.basic.button h5
+	color: $primary-color;
+
+.ui.basic.button.add
+	padding: .78571429em .78571429em .78571429em;
+	margin: 0 .25em 0 0;
+	width: 7em;
+
+.work-icon
+	margin-top: 1.3em;
+
+.category-icon
+	width: 30px!important;
+	height: 30px!important;
+
+.form-flex
+	display: flex;
+	flex-direction: column;
+
+.save-button
+	align-self: center!important;
+
+.ui.table tbody tr
+	&:hover
+		background: rgba(251, 226, 230, 0.33)!important;
+		color: black!important;
+
+.ui.modal
+	width: 500px!important;
+	margin: 0 0 0 -250px!important;

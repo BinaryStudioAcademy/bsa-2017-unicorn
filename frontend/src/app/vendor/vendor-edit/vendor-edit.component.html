@@ -29,7 +29,7 @@
                                     <img-cropper #cropper [image]="data" [settings]="cropperSettings"></img-cropper>
                                 </div>
                                 <div class="ui padded grid centered">
-                                    <div class="ui active button file-upload-save" (click)="fileChangeListener(fileInput)" #fileInput>
+                                    <div class="ui active button file-upload-save" #fileInput>
                                         <svg class="svgImage" id="uploadImage" xmlns="http://www.w3.org/2000/svg" width="16" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path></svg>
                                         <input #fileInput id="custom-input" accept="image/*" type="file" name="file" id="file" (change)="fileChangeListener($event)" class="inputfile">
                                         <label class="btnText" for="file">Upload image</label>
@@ -65,9 +65,8 @@
                     <a class="item" suiTabHeader="1">EDIT</a>
                     <a class="item" suiTabHeader="2">WORKS</a>
                     <a class="item" suiTabHeader="3">ORDERS</a>
-                    <a class="item" suiTabHeader="4">PORTFOLIO</a>
-                    <a class="item" suiTabHeader="5">MESSAGES</a>
-                    <a class="item" suiTabHeader="6">CONTACTS</a>
+                    <a class="item" suiTabHeader="4">MESSAGES</a>
+                    <a class="item" suiTabHeader="5">CONTACTS</a>
                 </div>
                 <div class="row">
                     <div class="ui grid equal width container">
@@ -91,12 +90,7 @@
                                 </div>
                                 <div class="container column">
                                     <div class="ui segment" suiTabContent="5">
-                                        <app-vendor-profile-portfolio [vendorId]="vendor.Id"></app-vendor-profile-portfolio>
-                                    </div>
-                                </div>
-                                <div class="container column">
-                                    <div class="ui segment" suiTabContent="6">
-                                        <app-vendor-profile-contacts [vendorId]="vendor.Id" [locationId]="vendor.LocationId"></app-vendor-profile-contacts>
+                                        <app-vendor-edit-contacts [vendorId]="vendor.Id"></app-vendor-edit-contacts>
                                     </div>
                                 </div>
                             </div>
