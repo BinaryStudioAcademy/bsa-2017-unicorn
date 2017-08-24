@@ -8,8 +8,12 @@ namespace Unicorn.Shared.DTOs.CompanyPage
     {
         public long Id { get; set; }
 
-        public ICollection<Task<CompanyVendor>> Vendors { get; set; }
+        //public ICollection<Task<CompanyVendor>> Vendors { get; set; }
 
-        public ICollection<Task<CompanyVendor>> AllVendors { get; set; }
+        //public ICollection<Task<CompanyVendor>> AllVendors { get; set; }
+
+        public ICollection<CompanyVendor> Vendors { get; set; }
+
+        public ICollection<CompanyVendor> AllVendors { get; set; }
     }
 }

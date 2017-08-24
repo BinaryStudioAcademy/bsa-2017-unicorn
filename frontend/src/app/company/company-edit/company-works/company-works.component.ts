@@ -103,6 +103,7 @@ export class CompanyWorksComponent implements OnInit {
         this.work.Subcategory = this.selectedSubcategory;  
         this.company.Works.push(this.work);        
         this.saveCompanyWorks();
+        this.openedDetailedWindow = false;
         this.company = undefined;
     }
   }

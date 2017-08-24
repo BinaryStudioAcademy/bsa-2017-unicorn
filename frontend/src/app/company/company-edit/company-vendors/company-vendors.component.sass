@@ -34,13 +34,22 @@
 	height: 30px!important;
 
 .face-icon
-	width: 120px!important;
-	height: 120px!important;
+	width: 80px!important;
+	height: 80px!important;
 
 .flex-form
 	display: flex;
 	flex-direction: row;
-	justify-content: center;	
+	justify-content: space-between;
+	margin: 15px 20px;
+	width: 260px;
+	border: rgba(251, 226, 230, 0.33) 3px solid;
+
+.flex-vendors
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: stretch;
+
 
 .save-button
 	align-self: center!important;
@@ -50,25 +59,20 @@
 		background: rgba(251, 226, 230, 0.33)!important;
 		color: black!important;
 
-.ui.modal
-	width: 500px!important;
-	margin: 0 0 0 -250px!important;
-
 .center-column
 	width: 40%!important
 	margin: 0 auto!important;
 
 .description
 	display: flex;
-	flex-direction: row;
-	align-items: center;	
+	flex-direction: column;
+	align-items: initial;	
 	margin-left: 1em;
-	label
-		font-weight: bold;
-		margin-right: 1em;
+	label		
+		margin-right: 1em;	
 	div
 		display: flex;
-		flex-direction: column;
+		flex-direction: column;		
 	div.ui.divider
 		margin-top: 0;
 		margin-bottom: 5px;
@@ -77,3 +81,15 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	justify-content: center;
+
+.vendor-description
+	display: flex;
+
+.delete-vendor
+	margin: 3px 2px 0 3px!important;	
+	padding: .1em .1em .1em!important;
+	
+
+label
+	font-weight: bold;

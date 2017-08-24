@@ -278,7 +278,7 @@ namespace Unicorn.Core.Services
                 {
                     Id = company.Id,
                     Vendors = company.Vendors?.Where(v => v.Company.Id == company.Id)
-                        .Select(async x =>  new CompanyVendor
+                        .Select( x =>  new CompanyVendor
                         {
                             Id = x.Id,
                             Avatar = x.Person?.Account?.Avatar ?? "default",
@@ -286,11 +286,11 @@ namespace Unicorn.Core.Services
                             Position = x.Position,
                             FIO = x.Person?.Name ?? "Name" + " " + x.Person?.MiddleName,
                             Reviews = reviews.Count(p => p.ToAccountId == company.Account.Id),
-                            Rating = await _ratingService.GetAvarageByRecieverId(x.Id)
+                            Rating =  _ratingService.GetAvarageByRecieverId(x.Id).Result
                         }).ToList(),
                     AllVendors = allVendors
                         .Where(x => x.Company == null && x.Company?.Id != company.Id)
-                            .Select(async x => new CompanyVendor
+                            .Select( x => new CompanyVendor
                             {
                                 Id = x.Id,
                                 Avatar = x.Person?.Account?.Avatar ?? "default",
@@ -298,7 +298,7 @@ namespace Unicorn.Core.Services
                                 Position = x.Position,
                                 FIO = x.Person?.Name ?? "Name" + " " + x.Person?.MiddleName,
                                 Reviews = reviews.Count(p => p.ToAccountId == company.Account.Id),
-                                Rating = await _ratingService.GetAvarageByRecieverId(x.Id)
+                                Rating =  _ratingService.GetAvarageByRecieverId(x.Id).Result
                             }).ToList()
                 };
 

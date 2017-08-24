@@ -27,7 +27,6 @@ constructor(private companyService: CompanyService,
     .switchMap((params: Params) => this.companyService.getCompanyDetails(params['id']))
     .subscribe(res => {
       this.company = res;
-
       this.company.Works.forEach(work => {
         this.categories.push(work.Subcategory.Category);
       });
@@ -38,14 +37,24 @@ constructor(private companyService: CompanyService,
   }
 
   onCategorySelect(category: CompanyCategory): void {
-    this.openedCategoryDetails = true;
-    this.selectedCategory = category;
-    this.categoryWorks = this.company.Works.filter(w => w.Subcategory.Category.Id === this.selectedCategory.Id);
+    if(!this.openedCategoryDetails){
+      setTimeout(() => {
+        this.openedCategoryDetails = true;
+        this.selectedCategory = category;
+        this.categoryWorks = this.company.Works.filter(w => w.Subcategory.Category.Id === this.selectedCategory.Id);
+      }, 50); 
+    }
+    else{
+      this.openedCategoryDetails = false;
+      this.selectedCategory = undefined;
+    }
   }
 
-  closeCategoryDetails(){
-    this.openedCategoryDetails = false;
-    this.selectedCategory = undefined;
+  closeCategoryDetails(){    
+    if(this.openedCategoryDetails){
+      this.openedCategoryDetails = false;
+      this.selectedCategory = undefined;
+    }
   }
 
 }
