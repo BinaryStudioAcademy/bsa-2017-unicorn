@@ -103,7 +103,7 @@ namespace Unicorn.Core.Services
 
         #endregion
 
-            #region PrivateMethods
+        #region PrivateMethods
 
         private async Task<ICollection<ShortCompanyDTO>> GetAllCompaniesMethod()
         {
@@ -561,15 +561,65 @@ namespace Unicorn.Core.Services
         private async Task<ICollection<CompanyDetails>> GetSearchCompaniesMethod(string category, string subcategory, int? date)
         {
             var companies = await _unitOfWork.CompanyRepository.GetAllAsync();
-            var details = new List<CompanyDetails>();
+            var reviews = await _unitOfWork.ReviewRepository.GetAllAsync();
 
-            foreach (var company in companies)
+            if (companies.Any())
             {
-                var detail = await GetCompanyDetailsMethod(company.Id);
-                if (detail != null)
-                    details.Add(detail);
+                var companiesDetail = companies.Select(
+                    company =>
+                        new CompanyDetails
+                        {
+                            Id = company.Id,
+                            Avatar = company.Account?.Avatar ?? "default",
+                            Name = company.Name,
+                            Description = company.Description,
+                            Rating = CalculateCompanyRating(company.Account.Id),
+                            FoundationDate = company.FoundationDate,
+                            Director = company.Director,
+                            City = company.Location.City,
+                            ReviewsCount = reviews.Count(p => p.ToAccountId == company.Account.Id),
+                            Works = company.Works.Select(z => new CompanyWork()
+                            {
+                                Id = z.Id,
+                                Description = z.Description,
+                                Name = z.Name,
+
+                                Subcategory = new CompanySubcategory
+                                {
+                                    Id = z.Subcategory.Id,
+                                    Name = z.Subcategory.Name,
+                                    Description = z.Subcategory.Description,
+                                    Category = new CompanyCategory
+                                    {
+                                        Id = z.Subcategory.Category.Id,
+                                        Description = z.Subcategory.Category.Description,
+                                        Icon = z.Subcategory.Category.Icon,
+                                        Name = z.Subcategory.Category.Name,
+                                    }
+                                }
+                            }).ToList(),
+                            Location = new LocationDTO
+                            {
+                                Id = company.Location.Id,
+                                Adress = company.Location?.Adress ?? "default",
+                                City = company.Location?.City ?? "default",
+                                Latitude = company.Location?.Latitude ?? 0,
+                                Longitude = company.Location?.Longitude ?? 0
+                            },
+                        }).ToList();
+                return companiesDetail;
             }
-            return details;            
+            return null;           
+        }
+
+        private double CalculateCompanyRating(long recieverId)
+        {
+            var ratings = _unitOfWork.RatingRepository.Query
+                  .Include(y => y.Reciever)
+                  .Where(p => p.Reciever.Id == recieverId)
+                  .ToList();
+
+            return ratings.Any() ? ratings.Average(z => z.Grade) : 0;
         }
 
         #endregion

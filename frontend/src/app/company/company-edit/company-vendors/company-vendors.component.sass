@@ -1,5 +1,8 @@
 @import "../../../../global-style-variables.sass";
 
+img
+	object-fit: cover!important;
+
 .ui.table
 	margin-top: 1em!important;
 	margin-bottom: 1em!important;
@@ -26,9 +29,6 @@
 	margin: 0 .25em 0 0;
 	width: 7em;
 
-.work-icon
-	margin-top: 1.3em;
-
 .vendor-icon
 	width: 30px!important;
 	height: 30px!important;
@@ -43,31 +43,29 @@
 	justify-content: space-between;
 	margin: 15px 20px;
 	width: 260px;
-	border: rgba(251, 226, 230, 0.33) 3px solid;
+	border: lightgray 1px solid;
+	border-radius: 5px;
+	padding: 10px 10px 10px 25px;		
+
+.flex-form:hover .absolute-icon
+	display: inline-block;
 
 .flex-vendors
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: stretch;
 
-
-.save-button
-	align-self: center!important;
-
 .ui.table tbody tr
 	&:hover
 		background: rgba(251, 226, 230, 0.33)!important;
 		color: black!important;
-
-.center-column
-	width: 40%!important
-	margin: 0 auto!important;
 
 .description
 	display: flex;
 	flex-direction: column;
 	align-items: initial;	
 	margin-left: 1em;
+	font-size: .85rem;
 	label		
 		margin-right: 1em;	
 	div
@@ -82,14 +80,18 @@
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
+	font-size: .85rem;
 
 .vendor-description
 	display: flex;
 
-.delete-vendor
-	margin: 3px 2px 0 3px!important;	
-	padding: .1em .1em .1em!important;
-	
+.delete-vendor		
+	margin-top: -5px;
+	margin-right: 10px;
+
+.absolute-icon
+	position: absolute;
+	display: none;
 
 label
 	font-weight: bold;

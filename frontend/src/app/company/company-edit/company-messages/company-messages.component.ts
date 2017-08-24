@@ -7,8 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CompanyMessagesComponent implements OnInit {
 
-  constructor() {
-    
+  constructor() {    
     this.dialogs[0] = new Dialog();
     this.dialogs[1] = new Dialog();
     this.dialogs[0].id = 0;
@@ -43,24 +42,24 @@ export class CompanyMessagesComponent implements OnInit {
     this.dialogs[0].messages[1] = m12;
     this.dialogs[1].messages[0] = m21;
     this.dialogs[1].messages[1] = m22;
-}
-dialogs: Dialog[] = new Array<Dialog>();
-selectedId: number = 0;
+  }
+  dialogs: Dialog[] = new Array<Dialog>();
+  selectedId: number = 0;
 
-ngOnInit() {
-}
-onSelect(curId: number) {
-    this.selectedId = curId;
-}
+  ngOnInit() {
+  }
+  onSelect(curId: number) {
+      this.selectedId = curId;
+  }
 
 }
 export class Message {
-me: boolean;
-messageText: string;
-date: Date;
+  me: boolean;
+  messageText: string;
+  date: Date;
 }
 export class Dialog {
-id: number;
-userName: string;
-messages: Message[];
+  id: number;
+  userName: string;
+  messages: Message[];
 }

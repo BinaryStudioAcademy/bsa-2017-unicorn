@@ -74,20 +74,9 @@ export class CompanyService {
     return this.dataService.postRequest("company-books", company);
   }
 
-  getMockCompany(): CompanyShort{
-    return { 
-      Id: 1,
-      Avatar: "../../../assets/images/company_logo.png",
-      Name: "TURBOCAT 9000 Inc.",      
-      Location: {
-        Id: 1,
-        PostIndex: "74",
-        Adress: "Chornovola 2",
-        City: "Lviv",
-        Latitude: Math.random() * 0.0099 + 43.7250,
-        Longitude: Math.random() * 0.0099 + -79.7699,
-      }
-    };
+  getSearchCompanies(category: string, subcategory: string, date: number): Promise<CompanyDetails[]> {
+    const query = `company-search?category={category}&subcategory={subcategory}&date={date}`;
+    return this.dataService.getRequest<CompanyDetails[]>(query);
   }
 
 }
