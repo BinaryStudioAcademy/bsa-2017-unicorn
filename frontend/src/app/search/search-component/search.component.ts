@@ -21,6 +21,7 @@ export class SearchComponent implements OnInit {
   category: string;
   subcategory: string;
   date: Date;
+  rawDate: number;
   /* filter */
   filtersIsOpen: boolean;
   labelSearch: string;
@@ -90,7 +91,8 @@ export class SearchComponent implements OnInit {
     this.category = this.route.snapshot.queryParams['category'];
     this.subcategory = this.route.snapshot.queryParams['subcategory'];
     if (this.route.snapshot.queryParams['date']) {
-      this.date = this.convertDate(this.route.snapshot.queryParams['date']);
+      this.rawDate = this.route.snapshot.queryParams['date'];
+      this.date = this.convertDate(this.rawDate);
     }
   }
 
@@ -104,21 +106,31 @@ export class SearchComponent implements OnInit {
   }
 
   getCompanies() {
-    this.companyService.getCompanies()
+    this.companyService.getSearchCompanies(this.category, this.subcategory, this.rawDate)
     .then(
       companies => {
-        companies.forEach(e => {
-          this.companyService.getCompanyDetails(e.Id)
-          .then(
-            detail => {
-              this.companies.push(detail);
-            }
-          );
-        });
+        this.companies = companies;
         console.log(this.companies);
       }
     );
   }
+
+  // getCompanies() {
+  //   this.companyService.getCompanies()
+  //   .then(
+  //     companies => {
+  //       companies.forEach(e => {
+  //         this.companyService.getCompanyDetails(e.Id)
+  //         .then(
+  //           detail => {
+  //             this.companies.push(detail);
+  //           }
+  //         );
+  //       });
+  //       console.log(this.companies);
+  //     }
+  //   );
+  // }
 
   initContent() {
     this.placeholderCategory = 'SCRATCH';
