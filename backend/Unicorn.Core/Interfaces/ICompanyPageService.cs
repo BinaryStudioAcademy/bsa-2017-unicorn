@@ -36,5 +36,8 @@ namespace Unicorn.Core.Interfaces
         Task SaveCompanyBooks(CompanyBooks companyDTO);
         
         Task<long> GetCompanyAccountId(long id);
+
+        Task<ICollection<CompanyDetails>> GetSearchCompanies(string category, string subcategory, int? date);
+
     }
 }

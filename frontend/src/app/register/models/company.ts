@@ -1,4 +1,4 @@
-export class Company {
+export interface Company {
     foundation: any;
     phone: string;
     email: string;
