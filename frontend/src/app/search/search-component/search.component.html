@@ -126,11 +126,11 @@
                 <h4>{{company.Location.City}}, {{company.Location.Adress}}</h4>
               </div>
             </a>
-            <div class="categories-container">
+            <!-- <div class="categories-container">
               <div class="category" *ngFor="let work of company.Works">{{work.Subcategory.Category.Name}}</div>
-            </div>
+            </div> -->
             <div class="ui grid">
-              <div class="three column row">
+              <div class="three column row padding-top">
                 <div class="column">
                   <sui-rating class="star" [ngModel]="company.Rating" [isReadonly]="true"></sui-rating>
                 </div>

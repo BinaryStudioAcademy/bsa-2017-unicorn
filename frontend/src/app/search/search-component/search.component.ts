@@ -109,28 +109,11 @@ export class SearchComponent implements OnInit {
     this.companyService.getSearchCompanies(this.category, this.subcategory, this.rawDate)
     .then(
       companies => {
-        this.companies = companies;
+        this.companies.push.apply(this.companies, companies);
         console.log(this.companies);
       }
     );
   }
-
-  // getCompanies() {
-  //   this.companyService.getCompanies()
-  //   .then(
-  //     companies => {
-  //       companies.forEach(e => {
-  //         this.companyService.getCompanyDetails(e.Id)
-  //         .then(
-  //           detail => {
-  //             this.companies.push(detail);
-  //           }
-  //         );
-  //       });
-  //       console.log(this.companies);
-  //     }
-  //   );
-  // }
 
   initContent() {
     this.placeholderCategory = 'SCRATCH';
