@@ -125,20 +125,20 @@
               <div class="row">
                 <h4>{{company.Location.City}}, {{company.Location.Adress}}</h4>
               </div>
-              <div class="categories-container">
-                <h5 *ngFor="let category of company.Categories">{{category.Name}}</h5>
-              </div>
-              <div class="ui grid">
-                <div class="three column row">
-                  <div class="column">
-                    <sui-rating class="star" [ngModel]="company.Rating" [isReadonly]="true"></sui-rating>
-                  </div>
-                  <div class="column">                      
-                    {{company.ReviewsCount}} reviews 
-                  </div>
+            </a>
+            <div class="categories-container">
+              <div class="category" *ngFor="let work of company.Works">{{work.Subcategory.Category.Name}}</div>
+            </div>
+            <div class="ui grid">
+              <div class="three column row">
+                <div class="column">
+                  <sui-rating class="star" [ngModel]="company.Rating" [isReadonly]="true"></sui-rating>
+                </div>
+                <div class="column">                      
+                  <a href="/company/{{company.Id}}">Reviews({{company.ReviewsCount}})</a>
                 </div>
               </div>
-            </a>
+            </div>            
           </div>
         </div>
       </div>
