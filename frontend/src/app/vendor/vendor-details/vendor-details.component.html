@@ -1,7 +1,7 @@
 <div *ngIf="vendor !== undefined" class="ui grid container remove-margin-top-bottom">
     <div class="row remove-padding-top">
         <div class="sixteen wide column container">
-            <div class="vendor-header">
+            <div class="vendor-header" [style.backgroundImage]="backgroundUrl">
                 <div *ngIf="vendor!== undefined">
                     <div class="ui small circular image">
                         <div class="avatarMain">
