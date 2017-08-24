@@ -30,6 +30,5 @@ namespace Unicorn.DataAccess.Entities
 
         public virtual ICollection<Work> Works { get; set; }
 
-        public bool DummyProp { get; set; }     // property was added for database recreation
     }
 }
