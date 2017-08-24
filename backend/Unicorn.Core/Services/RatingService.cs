@@ -47,7 +47,7 @@ namespace Unicorn.Core.Services
                     DateCreated = rating.Sender.DateCreated,
                     Email = rating.Sender.Email,
                     EmailConfirmed = rating.Sender.EmailConfirmed,
-                    Role = new RoleDTO()
+                    Role = new RoleDTO
                     {
                         Id = rating.Sender.Role.Id,
                         Name = rating.Sender.Role.Name
@@ -58,17 +58,15 @@ namespace Unicorn.Core.Services
 
         public async Task<IEnumerable<RatingDTO>> GetByReceiverIdAsync(long id)
         {
-            var rating =( _unitOfWork.RatingRepository.Query
+            var ratings = await _unitOfWork.RatingRepository.Query
                 .Include(v => v.Reciever)
-                .Include(v => v.Sender) as IEnumerable<Rating>)
-                .Where(x => x.Reciever.Id == id);
-            var result = new List<RatingDTO>();
-            foreach (var x in rating)
-                result.Add(RatingToDTO(x));
-            return result;
+                .Include(v => v.Sender)
+                .Where(x => x.Reciever.Id == id).ToListAsync();
+            return ratings.Select(RatingToDTO);
+
         }
 
-        public async Task<IEnumerable<RatingDTO>> GetBySenderIdAsync(long id)
+        public Task<IEnumerable<RatingDTO>> GetBySenderIdAsync(long id)
         {
             return null;
         }
@@ -76,19 +74,18 @@ namespace Unicorn.Core.Services
         public async Task<double> GetAvarageByRecieverId(long id)
         {
             var ratings = await GetByReceiverIdAsync(id);
-            if (ratings.Count() != 0)
-                return ratings.Average(x => x.Grade);
-            else
-                return 0;
+
+            return ratings.Any() ? ratings.Average(x => x.Grade) : 0;
+
         }
 
         private RatingDTO RatingToDTO(Rating rating)
         {
-            return new RatingDTO()
+            return new RatingDTO
             {
                 Id = rating.Id,
                 Grade = rating.Grade,
-                Reciever = new AccountDTO()
+                Reciever = new AccountDTO
                 {
                   Id = rating.Reciever.Id,
                   Avatar = rating.Reciever.Avatar,

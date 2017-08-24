@@ -25,12 +25,9 @@
             </div>
         </div>
         <div class="ui divider"></div>
-        <div *ngIf="openedCategoryDetails">
+        <div *ngIf="openedCategoryDetails" (clickOutside)="closeCategoryDetails()">
             <div class="flex-header">
                 <h4 style="display: inline-block;">{{selectedCategory.Name}}</h4>
-                <button class="ui icon button close-button" (click)="closeCategoryDetails()" style="display: inline-block;">
-                    <i class="remove icon"></i>
-                </button>
             </div>
             <sui-accordion class="styled fluid">
                 <sui-accordion-panel *ngFor="let work of categoryWorks">

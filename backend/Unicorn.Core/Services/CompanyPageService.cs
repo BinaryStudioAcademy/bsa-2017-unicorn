@@ -1,7 +1,7 @@
 ﻿﻿using System.Collections.Generic;
 using System.Data.Entity;
 ﻿using System;
-using System.Linq;
+ using System.Linq;
 using System.Threading.Tasks;
 using Unicorn.Core.Interfaces;
 using Unicorn.DataAccess.Entities;
@@ -10,20 +10,20 @@ using Unicorn.Shared.DTOs;
 using Unicorn.Shared.DTOs.Company;
 using Unicorn.Shared.DTOs.CompanyPage;
 using Unicorn.Shared.DTOs.Contact;
-using Unicorn.Shared.DTOs.Subcategory;
-using Unicorn.Shared.DTOs.Vendor;
 
 namespace Unicorn.Core.Services
 {
     public class CompanyPageService:ICompanyPageService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IRatingService _ratingService;
 
         #region PublicMethods
 
-        public CompanyPageService(IUnitOfWork unitOfWork)
+        public CompanyPageService(IUnitOfWork unitOfWork, IRatingService ratingService)
         {
             _unitOfWork = unitOfWork;
+            _ratingService = ratingService;
         }
 
         public async Task<ICollection<ShortCompanyDTO>> GetAllCompanies()
@@ -265,35 +265,53 @@ namespace Unicorn.Core.Services
             return null;
         }
 
-        private async Task SaveCompanyReviewsMethod(CompanyReviews companyDTO)
+        private Task SaveCompanyReviewsMethod(CompanyReviews companyDTO)
         {
-            return;
+            throw new NotImplementedException();
         }
 
         private async Task<CompanyVendors> GetCompanyVendorsMethod(long id)
         {
             var company = await _unitOfWork.CompanyRepository.GetByIdAsync(id);
+            var allVendors = await _unitOfWork.VendorRepository.GetAllAsync();
+            var reviews = await _unitOfWork.ReviewRepository.GetAllAsync();
+            
 
-            if (company != null)
+            if (company != null )
             {
                 var companyVendors = new CompanyVendors
                 {
                     Id = company.Id,
-                    Vendors = company.Vendors?.Where(v => v.Company.Id == company.Id)
-                        .Select(x => new CompanyVendor()
-                        {
-                            Id = x.Id,
-                            Avatar = x.Person?.Account?.Avatar ?? "default",
-                            Experience = x.Experience,
-                            Position = x.Position,
-                            FIO = x.Person?.Name ?? "Name" + " " + x.Person?.MiddleName
-                        }).ToList()
+                    Vendors = CreateCompanyVendor(company.Vendors?.Where(v => v.Company.Id == company.Id), reviews, company),
+                    AllVendors = CreateCompanyVendor( allVendors.Where(x => x.Company == null && x.Company?.Id != company.Id), reviews, company)
+                           
                 };
 
                 return companyVendors;
             }
 
             return null;
+        }
+        private IList<CompanyVendor> CreateCompanyVendor(IEnumerable<Vendor> vendors, IEnumerable<Review> reviews, Company company)
+        {
+
+            return vendors.Select(x => new CompanyVendor
+            {
+                Id = x.Id,
+                Avatar = x.Person?.Account?.Avatar ?? "default",
+                Experience = x.Experience,
+                Position = x.Position,
+                FIO = x.Person?.Name ?? "Name" + " " + x.Person?.MiddleName,
+                Reviews = reviews.Count(p => p.ToAccountId == company.Account.Id),
+                Rating = CalculateAverageRating(x.Id)
+            }).ToList();
+        }
+        private double CalculateAverageRating(long receiverId)
+        {
+            var select = _unitOfWork.RatingRepository.Query
+                .Where(p => p.Reciever.Id == receiverId).Select(z => z.Grade);
+            return select.Any() ? select.Average() : 0;
+
         }
 
         private async Task SaveCompanyVendorsMethod(CompanyVendors companyDTO)
@@ -532,6 +550,7 @@ namespace Unicorn.Core.Services
             }
             await _unitOfWork.SaveAsync();
         }
+
         public async Task<long> GetCompanyAccountId(long id)
         {
             var company = await _unitOfWork.CompanyRepository.Query

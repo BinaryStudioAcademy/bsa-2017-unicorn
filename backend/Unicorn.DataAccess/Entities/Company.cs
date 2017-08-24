@@ -29,5 +29,6 @@ namespace Unicorn.DataAccess.Entities
         public virtual ICollection<Vendor> Vendors { get; set; }
 
         public virtual ICollection<Work> Works { get; set; }
+
     }
 }
