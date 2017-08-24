@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, NgZone } from '@angular/core';
 import { CompanyService } from "../../../services/company-services/company.service";
 import { ActivatedRoute, Params } from "@angular/router";
 import { CompanySubcategory } from "../../../models/company-page/company-subcategory.model";
@@ -25,7 +25,8 @@ export class CompanyWorksComponent implements OnInit {
 
   constructor(private companyService: CompanyService,
     private route: ActivatedRoute,
-    public modalService: SuiModalService) { }
+    public modalService: SuiModalService,
+    private zone: NgZone) { }
 
   ngOnInit() {
     this.route.params
@@ -36,7 +37,7 @@ export class CompanyWorksComponent implements OnInit {
 
   changeCategory() {
     this.subcategories = this.company.AllCategories.find(x => x.Id == this.selectedCategory.Id).Subcategories;
-    this.selectedSubcategory = this.subcategories[0];
+    this.zone.run(() => { this.selectedSubcategory = this.subcategories[0]; });  
   }
 
   selectWorksRow(event: any, work: CompanyWork) {
@@ -50,7 +51,7 @@ export class CompanyWorksComponent implements OnInit {
       };
       this.selectedCategory = this.company.AllCategories.find(x => x.Id === work.Subcategory.Category.Id);
       this.subcategories = this.company.AllCategories.find(x => x.Id == this.selectedCategory.Id).Subcategories;
-      this.selectedSubcategory = this.subcategories[0];
+      this.zone.run(() => { this.selectedSubcategory = this.subcategories[0]; });  
       this.openedDetailedWindow = true;
     }
     else {
@@ -68,7 +69,7 @@ export class CompanyWorksComponent implements OnInit {
     };
     this.selectedCategory = this.company.AllCategories[0];
     this.subcategories = this.company.AllCategories.find(x => x.Id == this.selectedCategory.Id).Subcategories;
-    this.selectedSubcategory = this.subcategories[0];
+    this.zone.run(() => { this.selectedSubcategory = this.subcategories[0]; });  
     if (!this.openedDetailedWindow){
       this.openedDetailedWindow = true;
     }

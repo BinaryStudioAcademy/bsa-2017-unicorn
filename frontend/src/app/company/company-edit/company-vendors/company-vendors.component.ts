@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, NgZone } from '@angular/core';
 import { ActivatedRoute, Params } from "@angular/router";
 import { CompanyService } from "../../../services/company-services/company.service";
 import { CompanyVendors } from "../../../models/company-page/company-vendors.model";
@@ -18,7 +18,8 @@ export class CompanyVendorsComponent implements OnInit {
   selectedVendor: Vendor;
 
   constructor(private companyService: CompanyService,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private zone: NgZone) { }
 
   ngOnInit() {
     this.route.params
@@ -31,7 +32,7 @@ export class CompanyVendorsComponent implements OnInit {
   changeVendor(){
     this.selectedVendors.push(this.selectedVendor);
     this.allVendors = this.allVendors.filter(x => x.Id !== this.selectedVendor.Id);
-    this.selectedVendor = undefined;  
+    this.zone.run(() => { this.selectedVendor = null; });  
   }
 
   openDetailedWindow(){
@@ -45,14 +46,14 @@ export class CompanyVendorsComponent implements OnInit {
     this.openedDetailedWindow = false;  
     this.allVendors = this.company.AllVendors;
     this.selectedVendors = undefined;
-    this.selectedVendor = undefined;
+    this.zone.run(() => { this.selectedVendor = null; });  
   }
 
   deleteVendor(vendor: Vendor){     
     this.company.Vendors =  this.company.Vendors.filter(x => x.Id !== vendor.Id);   
     this.saveCompanyVendors();
     this.selectedVendors = undefined;
-    this.selectedVendor = undefined;
+    this.zone.run(() => { this.selectedVendor = null; });  
     this.company = undefined;
     if(this.openedDetailedWindow){
       this.openedDetailedWindow = !this.openedDetailedWindow;   
@@ -61,16 +62,17 @@ export class CompanyVendorsComponent implements OnInit {
 
   deleteSelectedVendor(vendor: Vendor){
     this.selectedVendors = this.selectedVendors.filter(x => x.Id !== vendor.Id);
+    this.zone.run(() => { this.selectedVendor = null; });
     this.allVendors.push(vendor);
   }
 
   addVendor(){      
     this.selectedVendors.forEach(vendor => {this.company.Vendors.push(vendor);});      
-      this.saveCompanyVendors();  
-      this.selectedVendors = undefined;
-      this.selectedVendor = undefined;      
-      this.company = undefined;    
-      this.openedDetailedWindow = !this.openedDetailedWindow;     
+    this.saveCompanyVendors();  
+    this.selectedVendors = undefined;
+    this.zone.run(() => { this.selectedVendor = null; });  
+    this.company = undefined;    
+    this.openedDetailedWindow = !this.openedDetailedWindow;     
   }
 
   saveCompanyVendors(){
