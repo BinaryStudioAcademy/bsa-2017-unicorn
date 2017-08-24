@@ -8,11 +8,6 @@ import { VendorService } from '../../services/vendor.service';
 import { ModalService } from '../../services/modal/modal.service';
 import { TokenHelperService } from '../../services/helper/tokenhelper.service';
 
-import {
-  SuiModalService, TemplateModalConfig
-  , ModalTemplate, ModalSize, SuiActiveModal
-} from 'ng2-semantic-ui';
-
 import { ImageCropperComponent, CropperSettings } from 'ng2-img-cropper';
 import { PhotoService, Ng2ImgurUploader } from "../../services/photo.service";
 
