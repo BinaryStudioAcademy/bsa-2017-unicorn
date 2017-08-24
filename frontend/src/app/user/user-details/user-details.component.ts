@@ -67,23 +67,12 @@ export class UserDetailsComponent implements OnInit {
   }
   ngOnInit() {
     this.dataLoaded = true;
-    this.initOwnerParam();
     this.route.params
       .switchMap((params: Params) => this.userService.getUser(params['id']))
       .subscribe(resp => {
         this.user = resp.body as User;
         this.backgroundUrl = this.buildSafeUrl(this.user.Background);
       });
-  }
-
-  initOwnerParam(): void {
-    let id = this.route.snapshot.paramMap.get('id');
-    if (this.tokenHelper.getClaimByName('id') === id) {
-      console.log('owner');
-      this.isOwner = true;
-    }
-    console.log(id);
-    console.log(this.tokenHelper.getClaimByName('id'));
   }
 
   buildSafeUrl(link: string): SafeResourceUrl {
@@ -127,6 +116,9 @@ export class UserDetailsComponent implements OnInit {
     if (!this.data) {
       console.log("file not upload");
       this.toastr.error('You have to pick photo', 'Error!');
+      return;
+    }
+    if (!this.file) {
       return;
     }
     this.dataLoaded = false;
