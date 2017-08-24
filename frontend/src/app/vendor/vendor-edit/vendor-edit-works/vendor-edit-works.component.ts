@@ -13,36 +13,33 @@ import { Work } from "../../../models/work.model";
 import { Category } from "../../../models/category.model";
 import { Subcategory } from "../../../models/subcategory.model";
 
-export interface IContext { }
-
 @Component({
   selector: 'app-vendor-edit-works',
   templateUrl: './vendor-edit-works.component.html',
   styleUrls: ['./vendor-edit-works.component.sass'],
   providers: [
-        PhotoService,
-        Ng2ImgurUploader,
-        ModalService]
+    PhotoService,
+    Ng2ImgurUploader,
+    ModalService]
 })
 export class VendorEditWorksComponent implements OnInit {
   @ViewChild('modalTemplate')
-  public modalTemplate: ModalTemplate<IContext, string, string>;
-  
-  private activeModal: SuiActiveModal<IContext, {}, string>;
+  public modalTemplate: ModalTemplate<void, {}, void>;
+  private activeModal: SuiActiveModal<void, {}, void>;
 
   @ViewChild('cropper', undefined)
   cropper: ImageCropperComponent;
   enabled: boolean = false;
   enableTheme: boolean = false;
-  saveImgButton:boolean = false;
+  saveImgButton: boolean = false;
   workIconUrl: SafeResourceUrl;
   uploading: boolean;
-  
+
   modalSize: string;
   cropperSettings: CropperSettings;
   data: any;
   file: File;
-  imageUploaded: boolean;  
+  imageUploaded: boolean;
 
   @Input() vendorId;
 
@@ -61,12 +58,12 @@ export class VendorEditWorksComponent implements OnInit {
     private photoService: PhotoService,
     private sanitizer: DomSanitizer,
     private suiModalService: SuiModalService,
-    private modalService: ModalService,    
+    private modalService: ModalService,
   ) {
-      this.cropperSettings = modalService.cropperSettings;
-      this.data = {};
-      this.imageUploaded = false;
-   }
+    this.cropperSettings = modalService.cropperSettings;
+    this.data = {};
+    this.imageUploaded = false;
+  }
 
   ngOnInit() {
     this.editOpen = false;
@@ -138,20 +135,19 @@ export class VendorEditWorksComponent implements OnInit {
   fileChangeListener($event) {
     var image: any = new Image();
     this.file = $event.target.files[0];
-    var myReader:FileReader = new FileReader();
+    var myReader: FileReader = new FileReader();
     var that = this;
-    myReader.onloadend = function (loadEvent:any) {
-        image.src = loadEvent.target.result;
-        that.cropper.setImage(image);
+    myReader.onloadend = function (loadEvent: any) {
+      image.src = loadEvent.target.result;
+      that.cropper.setImage(image);
 
     };
     this.imageUploaded = true;
     myReader.readAsDataURL(this.file);
   }
 
-  fileSaveListener(){
-    if (!this.data)
-    {
+  fileSaveListener() {
+    if (!this.data) {
       console.log("file can't be loaded");
       return;
     }
@@ -159,9 +155,9 @@ export class VendorEditWorksComponent implements OnInit {
       .then(resp => {
         let path = resp;
         console.log(path);
-        this.activeModal.deny('');        
+        this.activeModal.deny(null);
         this.selectedWork.Icon = path;
-        })
+      })
       .catch(err => {
         console.log(err);
       });
