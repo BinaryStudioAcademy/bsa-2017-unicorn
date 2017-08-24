@@ -7,7 +7,7 @@
 .select-option
 	padding: 1.2em!important;
 	&:hover
-		background: rgba(255, 100, 122, 0.33)!important;
+		background: rgba(251, 226, 230, 0.33)!important;
 		color: black!important;
 
 .ui.basic.button
@@ -34,21 +34,46 @@
 	height: 30px!important;
 
 .face-icon
-	width: 90px!important;
-	height: 90px!important;
+	width: 120px!important;
+	height: 120px!important;
 
-.form-flex
+.flex-form
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
+	justify-content: center;	
 
 .save-button
 	align-self: center!important;
 
 .ui.table tbody tr
 	&:hover
-		background: rgba(255, 100, 122, 0.33)!important;
+		background: rgba(251, 226, 230, 0.33)!important;
 		color: black!important;
 
 .ui.modal
 	width: 500px!important;
 	margin: 0 0 0 -250px!important;
+
+.center-column
+	width: 40%!important
+	margin: 0 auto!important;
+
+.description
+	display: flex;
+	flex-direction: row;
+	align-items: center;	
+	margin-left: 1em;
+	label
+		font-weight: bold;
+		margin-right: 1em;
+	div
+		display: flex;
+		flex-direction: column;
+	div.ui.divider
+		margin-top: 0;
+		margin-bottom: 5px;
+
+.face
+	display: flex;
+	flex-direction: column;
+	align-items: center;

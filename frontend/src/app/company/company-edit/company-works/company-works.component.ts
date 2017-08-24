@@ -5,12 +5,8 @@ import { CompanySubcategory } from "../../../models/company-page/company-subcate
 import { CompanyWorks } from "../../../models/company-page/company-works.model";
 import { CompanyCategory } from "../../../models/company-page/company-category.model";
 import { CompanyWork } from "../../../models/company-page/company-work.model";
-import { ModalTemplate, SuiModalService, TemplateModalConfig } from "ng2-semantic-ui/dist";
+import { ModalTemplate, SuiModalService, TemplateModalConfig } from "ng2-semantic-ui";
 
-
-export interface IContext {
-  data:string;
-}
 
 @Component({
   selector: 'app-company-works',
@@ -18,15 +14,13 @@ export interface IContext {
   styleUrls: ['./company-works.component.sass']
 })
 
-export class CompanyWorksComponent implements OnInit {
-  @ViewChild('modalTemplate')
-  public modalTemplate:ModalTemplate<IContext, string, string>
+export class CompanyWorksComponent implements OnInit {  
 
   company: CompanyWorks;
   selectedCategory: CompanyCategory;
   selectedSubcategory: CompanySubcategory;
   subcategories: CompanySubcategory[] = [];
-  work: CompanyWork = {Id: null, Description: null, Name: null, Subcategory: null};  
+  work: CompanyWork = {Id: null, Description: null, Name: null, Subcategory: null, Icon: null};  
   isLoaded: boolean = false; 
   openedDetailedWindow: boolean = false;
 
@@ -41,21 +35,8 @@ export class CompanyWorksComponent implements OnInit {
     });
   }
 
-  public openModal(dynamicContent:string = "Delete work") {
-    const config = new TemplateModalConfig<IContext, string, string>(this.modalTemplate);
-
-    config.closeResult = "Closed!";
-    config.context = { data: dynamicContent };
-
-    this.modalService
-        .open(config)
-        .onApprove((result:CompanyWork) => { this.deleteWork(result) })
-        .onDeny(result => { });
-}
-
-
   changeCategory(){   
-    this.subcategories = this.company.AllCategories.find(x => x.Name == this.selectedCategory.Name).Subcategories;
+    this.subcategories = this.company.AllCategories.find(x => x.Id == this.selectedCategory.Id).Subcategories;
     this.selectedSubcategory = this.subcategories[0];
   }
   selectWorksRow(event: any, work: CompanyWork){   
@@ -64,25 +45,30 @@ export class CompanyWorksComponent implements OnInit {
       Id: work.Id,
       Description: work.Description,
       Name: work.Name,
-      Subcategory: work.Subcategory
-    };
+      Subcategory: work.Subcategory,
+      Icon: null
+    };    
     
     this.selectedCategory = this.company.AllCategories.find(x => x.Id === work.Subcategory.Category.Id); 
-    this.subcategories = this.company.AllCategories.find(x => x.Name == this.selectedCategory.Name).Subcategories;   
-    this.selectedSubcategory = this.subcategories.find(x => x.Id === work.Subcategory.Id);
+    this.subcategories = this.company.AllCategories.find(x => x.Id == this.selectedCategory.Id).Subcategories;   
+    this.selectedSubcategory = this.subcategories[0];
     this.openedDetailedWindow = true;
     }  
+    else{
+      this.deleteWork(work);
+    }
   }
   openDetailedWindow(){
     this.work = {
       Id: null,
       Description: null,
       Name: null,
-      Subcategory: null
+      Subcategory: null,
+      Icon: null
     };
 
     this.selectedCategory = this.company.AllCategories[0];
-    this.subcategories = this.company.AllCategories.find(x => x.Name == this.selectedCategory.Name).Subcategories;   
+    this.subcategories = this.company.AllCategories.find(x => x.Id == this.selectedCategory.Id).Subcategories;   
     this.selectedSubcategory = this.subcategories[0];
 
     if(!this.openedDetailedWindow)  
@@ -97,6 +83,7 @@ export class CompanyWorksComponent implements OnInit {
     this.company.Works =  this.company.Works.filter(x => x.Id !== work.Id);   
     this.work = null;  
     this.saveCompanyWorks();
+    this.company = undefined; 
     if(this.openedDetailedWindow)  
       this.openedDetailedWindow = !this.openedDetailedWindow;
   }
@@ -104,7 +91,8 @@ export class CompanyWorksComponent implements OnInit {
     if(this.selectedCategory !== undefined && this.selectedSubcategory !== undefined
       && this.work.Description !== null && this.work.Name !== null){
         this.company.Works.splice(this.company.Works.findIndex(x => x.Id === this.work.Id), 1, this.work);        
-        this.saveCompanyWorks();  
+        this.saveCompanyWorks(); 
+        this.company = undefined; 
       }
   } 
   addWork(){
@@ -113,9 +101,9 @@ export class CompanyWorksComponent implements OnInit {
         this.selectedCategory.Subcategories = null;
         this.selectedSubcategory.Category = this.selectedCategory;  
         this.work.Subcategory = this.selectedSubcategory;  
-        this.company.Works.push(this.work);
-        console.log(this.company.Works);
+        this.company.Works.push(this.work);        
         this.saveCompanyWorks();
+        this.company = undefined;
     }
   }
 
@@ -130,6 +118,9 @@ export class CompanyWorksComponent implements OnInit {
 
   saveCompanyWorks(){
     this.isLoaded = true;
-    this.companyService.saveCompanyWorks(this.company).then(() => {this.isLoaded = false;});
+    this.companyService.saveCompanyWorks(this.company).then(() => {
+      this.isLoaded = false;
+      this.ngOnInit();
+    });
   }  
 }

@@ -13,9 +13,9 @@ namespace Unicorn.DataAccess.Entities
         
         public bool IsDeleted { get; set; }
 
-        public Account Reciever { get; set; }
+        public virtual Account Reciever { get; set; }
 
-        public Account Sender { get; set; }
+        public virtual Account Sender { get; set; }
 
         public int Grade { get; set; }
 

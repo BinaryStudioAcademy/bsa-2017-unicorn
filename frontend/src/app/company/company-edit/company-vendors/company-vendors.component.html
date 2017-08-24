@@ -8,6 +8,7 @@
                         <th>Name</th>
                         <th>Experience</th>
                         <th>Position</th>
+                        <th>Rating</th>
                         <th class="right aligned">
                             <button class="ui basic button add" (click)="openDetailedWindow()">
                                 <h5>Add vendor</h5>
@@ -21,21 +22,14 @@
                         <td>{{vendor.FIO}}</td>
                         <td>{{vendor.Experience}}</td>
                         <td>{{vendor.Position}}</td>
+                        <td>
+                            <sui-rating class="star" [ngModel]="vendor.Rating" [isReadonly]="true"></sui-rating>
+                        </td>
                         <td class="right aligned">
-                            <button class="ui icon button" (click)="openModal(vendor)">
+                            <button class="ui icon button" (click)="deleteVendor(vendor)">
                                 <i class="remove icon"></i>
                             </button>
                         </td>
-                        <ng-template let-context let-modal="modal" #modalTemplate>
-                            <div class="header">Remove a vendor</div>
-                            <div class="content">
-                                <p>Are you sure you want to remove this vendor?</p>
-                            </div>
-                            <div class="actions">
-                                <button class="ui red button" (click)="modal.deny()">Cancel</button>
-                                <button class="ui green button" (click)="modal.approve()" autofocus>OK</button>
-                            </div>
-                        </ng-template>
                     </tr>
                 </tbody>
             </table>
@@ -49,48 +43,44 @@
     </div>
     <div class="two column container row" *ngIf="openedDetailedWindow">
         <div class="column">
-            <form class="ui form">
-                <div class="field">
-                    <ng-template let-option #optionVendorTemplate>
-                        <img class="ui avatar image vendor-icon" src="{{option.Avatar}}">{{option.FIO}}
-                    </ng-template>
-                    <label>Select a vendor</label>
-                    <sui-select class="selection" [(ngModel)]="selectedVendor" [optionTemplate]="optionVendorTemplate" name="selectVendor">
-                        <sui-select-option class="select-option" *ngFor="let vendor of company.AllVendors" [value]="vendor">
-                        </sui-select-option>
-                    </sui-select>
-                    <!-- <div class="field">
-                        <label>Name</label>
-                        <input type="text" name="name" placeholder="WORK NAME" [(ngModel)]="work.Name" *ngIf="work !== null">
-                    </div>
-                    <div class="field">
-                        <label>Description</label>
-                        <textarea name="description" placeholder="WRITE SOMETHING ABOUT THIS WORK..." [(ngModel)]="work.Description" *ngIf="work !== null"></textarea>
-                    </div> -->
-                </div>
-            </form>
+            <ng-template let-option #optionVendorTemplate>
+                <img class="ui avatar image vendor-icon" src="{{option.Avatar}}">{{option.FIO}}
+            </ng-template>
+            <label>Select a vendor</label>
+            <sui-select class="selection" [(ngModel)]="selectedVendor" [optionTemplate]="optionVendorTemplate" name="selectVendor">
+                <sui-select-option class="select-option" *ngFor="let vendor of company.AllVendors" [value]="vendor">
+                </sui-select-option>
+            </sui-select>
         </div>
         <div class="column" *ngIf="selectedVendor !== undefined">
-            <form class="ui form">
-                <div class="field right aligned">
+            <div class="flex-form">
+                <div class="face">
                     <img class="ui avatar image face-icon" src="{{selectedVendor.Avatar}}">
+                    <sui-rating class="star" [ngModel]="selectedVendor.Rating" [isReadonly]="true" style="margin-top: 3px;"></sui-rating>
+                    <!-- <div class="ui star rating" data-rating="3"></div> -->
+                    <div>Reviews: {{selectedVendor.Reviews}}</div>
                 </div>
-                <div class="field">
-                    <label>Name</label>
-                    <input type="text" name="name" disabled value="{{selectedVendor.FIO}}">
+                <div class="description">
+                    <div>
+                        <label>Name:</label>
+                        <div class="ui divider"></div>
+                        <label>Experience:</label>
+                        <div class="ui divider"></div>
+                        <label>Position:</label>
+                        <div class="ui divider"></div>
+                    </div>
+                    <div>
+                        <div>{{selectedVendor.FIO}}</div>
+                        <div class="ui divider"></div>
+                        <div> {{selectedVendor.Experience}}</div>
+                        <div class="ui divider"></div>
+                        <div>{{selectedVendor.Position}}</div>
+                        <div class="ui divider"></div>
+                    </div>
                 </div>
-                <div class="field">
-                    <label>Experience</label>
-                    <input type="text" name="name" disabled value="{{selectedVendor.Experience}}">
-                </div>
-                <div class="field">
-                    <label>Position</label>
-                    <input type="text" name="name" disabled value="{{selectedVendor.Position}}">
-                </div>
-            </form>
+            </div>
         </div>
     </div>
-    <div class="ui divider" *ngIf="openedDetailedWindow"></div>
     <div class="centered row" *ngIf="openedDetailedWindow">
         <div class="three wide column">
             <button class="ui basic button" (click)="addVendor()" [ngClass]="{'loading':isLoaded}">

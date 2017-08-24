@@ -20,20 +20,10 @@
                         <td>{{work.Subcategory.Category.Name}}</td>
                         <td>{{work.Subcategory.Name}}</td>
                         <td class="right aligned">
-                            <button class="ui icon button" (click)="openModal('')">
+                            <button class="ui icon button">
                                 <i class="remove icon"></i>
                             </button>
                         </td>
-                        <ng-template let-context let-modal="modal" #modalTemplate>
-                            <div class="header">Remove the work</div>
-                            <div class="content">
-                                <p>Are you sure you want to remove this work?</p>
-                            </div>
-                            <div class="actions">
-                                <button class="ui red button" (click)="modal.deny()">Cancel</button>
-                                <button class="ui green button" (click)="modal.approve(work)" autofocus>OK</button>
-                            </div>
-                        </ng-template>
                     </tr>
                 </tbody>
             </table>

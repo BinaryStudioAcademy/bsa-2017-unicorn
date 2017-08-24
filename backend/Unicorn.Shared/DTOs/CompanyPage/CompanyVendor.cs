@@ -11,5 +11,9 @@
         public string Position { get; set; }
 
         public string FIO { get; set; }
+
+        public double Rating { get; set; }
+
+        public int  Reviews { get; set; }
     }
 }
