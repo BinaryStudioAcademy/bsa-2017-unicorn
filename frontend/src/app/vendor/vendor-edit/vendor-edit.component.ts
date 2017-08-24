@@ -105,6 +105,10 @@ export class VendorEditComponent implements OnInit {
       console.log("file not upload");
       return;
     }
+    if (!this.file) {
+      console.log('file null');
+      return;
+    }
     this.dataLoaded = false;
     this.photoService.uploadToImgur(this.file).then(resp => {
 

@@ -36,11 +36,14 @@ export class VendorProfileInfoComponent implements OnInit {
     .then(resp => this.reviewsCount = (resp.body as Review[]).length)
 
     this.vendorService.getVendorWorks(this.vendor.Id)
-      .then(resp => this.works = resp.body as Work[]);
-    
-    this.vendorService.getCategories(this.vendor.Id)
+      .then(resp => this.works = resp.body as Work[])
+      .then(() => this.vendorService.getCategories(this.vendor.Id))
       .then(resp => this.workCategories = resp.body as Category[])
       .then(() => this.onCategorySelect(this.workCategories[0]));
+    
+    // this.vendorService.getCategories(this.vendor.Id)
+    //   .then(resp => this.workCategories = resp.body as Category[])
+    //   .then(() => this.onCategorySelect(this.workCategories[0]));
   }
 
   onCategorySelect(category: Category): void {
