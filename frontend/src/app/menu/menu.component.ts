@@ -14,7 +14,7 @@ import { RegisterModal } from '../register/register-component/register.component
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.css'],
+  styleUrls: ['./menu.component.sass'],
   providers: []
 })
 export class MenuComponent implements OnInit {
@@ -25,6 +25,13 @@ export class MenuComponent implements OnInit {
   onLogIn: Subscription;
   onLogOut: Subscription;
 
+  fakeName: string;
+  fakeSurname: string;
+  fakeEmail: string;
+  showAccountDetails: boolean;
+  showNotifications: boolean;
+  notifications: Array<string>;
+
   constructor(
     private modalService: SuiModalService,
     private authEventService: AuthenticationEventService,
@@ -34,6 +41,15 @@ export class MenuComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.fakeName = "Name";
+    this.fakeSurname = "Surname";
+    this.fakeEmail = "balanykb@gmail.com";
+    this.notifications = [
+      "First notification",
+      "Second notification",
+      "Third notification"
+    ];
+
     this.addMenuItems();
     this.isEnabled = true;
 
@@ -72,5 +88,27 @@ export class MenuComponent implements OnInit {
 
   signOut() {
     this.authLoginService.signOut();
+  }
+
+  goToAccount() {
+
+  }
+
+  onShowDetails() {
+    this.showAccountDetails = !this.showAccountDetails;
+    this.showNotifications = false;
+  }
+
+  onShowNotifications() {
+    this.showNotifications = !this.showNotifications;
+    this.showAccountDetails = false;
+  }
+
+  getNotificationClass() : string {
+    return this.isNotificationExist() ? "red" : "";
+  }
+
+  isNotificationExist() : boolean {
+    return this.notifications && this.notifications.length != 0;
   }
 }

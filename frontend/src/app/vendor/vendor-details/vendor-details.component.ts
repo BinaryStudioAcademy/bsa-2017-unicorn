@@ -39,12 +39,17 @@ export class VendorDetailsComponent implements OnInit {
   isOwner: boolean;
   dataLoaded: boolean;
 
+  routePath: string;
+  routeid: number;
+
   cropperSettings: CropperSettings;
   vendor: Vendor;
   isGuest: boolean;
   file: File;
   data: any;
   imageUploaded: boolean;
+
+  tabActive: boolean = false;
   constructor(
     private route: ActivatedRoute,
     private vendorService: VendorService,
@@ -56,6 +61,9 @@ export class VendorDetailsComponent implements OnInit {
     this.cropperSettings = modalService.cropperSettings;
     this.data = {};
     this.imageUploaded = false;
+
+    this.routePath = this.route.root.snapshot.firstChild.url[0].path;
+    this.routeid = +this.route.snapshot.paramMap.get('id');
   }
 
   ngOnInit() {
@@ -63,8 +71,12 @@ export class VendorDetailsComponent implements OnInit {
     this.route.params
       .switchMap((params: Params) => this.vendorService.getVendor(params['id']))
       .subscribe(resp => {
-        this.vendor = resp.body as Vendor
+        this.vendor = resp.body as Vendor;
+        this.backgroundUrl = this.buildSafeUrl(this.vendor.Background);
       });
+    if (this.route.snapshot.queryParams['tab'] === 'reviews') {
+      this.tabActive = true;
+    }
   }
   getCurrentRole()
   {

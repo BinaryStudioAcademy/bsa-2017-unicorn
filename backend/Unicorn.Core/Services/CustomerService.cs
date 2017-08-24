@@ -44,7 +44,7 @@ namespace Unicorn.Core.Services
             account.Role = role;
             account.DateCreated = DateTime.Now;
             account.Email = customerDto.Email;
-            account.Avatar = "http://static.1927.kiev.ua/images/default_avatar.jpg";
+            account.Avatar = customerDto.Image;
 
             socialAccount.Provider = customerDto.Provider;
             socialAccount.Uid = customerDto.Uid;
@@ -97,7 +97,7 @@ namespace Unicorn.Core.Services
         {
             var customer = await _unitOfWork.CustomerRepository.
                 Query.Include(c => c.History.Select(h => h.Vendor.Person)).
-                Include(c=>c.Books.Select(h=>h.Vendor.Person)).
+                Include(c => c.Books.Select(h => h.Vendor.Person)).
                 SingleAsync(c => c.Id == id);
             if (customer != null)
             {
@@ -116,7 +116,7 @@ namespace Unicorn.Core.Services
                     History = customer.History.Select(x => new HistoryShortDto()
                     {
                         bookDescription = x.BookDescription,
-                        categoryName  = x.CategoryName,
+                        categoryName = x.CategoryName,
                         date = x.Date,
                         dateFinished = x.DateFinished,
                         subcategoryName = x.SubcategoryName,
@@ -136,6 +136,24 @@ namespace Unicorn.Core.Services
                 return customerDto;
             }
             return null;
+        }
+
+        public async Task<UserForOrder> GetForOrderAsync(long id)
+        {
+            var customer = await _unitOfWork.CustomerRepository.GetByIdAsync(id);
+            return new UserForOrder()
+            {
+                Location = new Shared.DTOs.LocationDTO()
+                {
+                    Id = customer.Person.Location.Id,
+                    Adress = customer.Person.Location.Adress,
+                    City = customer.Person.Location.City,
+                    Latitude = customer.Person.Location.Latitude,
+                    Longitude = customer.Person.Location.Longitude,
+                    PostIndex = customer.Person.Location.PostIndex
+                },
+                Phone = customer.Person.Phone
+            };
         }
     }
 }

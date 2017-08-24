@@ -1,7 +1,7 @@
 <div *ngIf="vendor !== undefined" class="ui grid container remove-margin-top-bottom">
     <div class="row remove-padding-top">
         <div class="sixteen wide column container">
-            <div class="vendor-header">
+            <div class="vendor-header" [style.backgroundImage]="backgroundUrl">
                 <div *ngIf="vendor!== undefined">
                     <div class="ui small circular image">
                         <div class="avatarMain">
@@ -22,7 +22,7 @@
                 <div class="ui pointing secondary menu">
                     <a class="item" suiTabHeader="1">INFO</a>
                     <a class="item" suiTabHeader="2">PORTFOLIO</a>
-                    <a class="item" suiTabHeader="3">REVIEWS</a>
+                    <a class="item" suiTabHeader="3" [isActive]="tabActive">REVIEWS</a>
                     <a class="item" suiTabHeader="4">CONTACTS</a>
                 </div>
                 <div class="row">
@@ -51,7 +51,7 @@
                             <div class="six wide column">
                                 <div class="ui segment">
                                     <app-sign-block *ngIf="isGuest"></app-sign-block>
-                                    <app-book *ngIf="!isGuest"></app-book>
+                                    <app-book [routePath]="routePath" [routeId]="routeid" *ngIf="!isGuest"></app-book>
                                 </div>
                             </div>
                         </div>

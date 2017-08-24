@@ -125,7 +125,8 @@ namespace Unicorn.Controllers
         [Route("{id}/reviews")]
         public async Task<HttpResponseMessage> GetVendorReviews(long id)
         {
-            var result = await _reviewService.GetByReceiverIdAsync(id);
+            var accountId = await _vendorService.GetVendorAccountIdAsync(id);
+            var result = await _reviewService.GetByReceiverIdAsync(accountId);
 
             if (result == null)
                 return Request.CreateResponse(HttpStatusCode.NotFound);
