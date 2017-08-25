@@ -80,11 +80,12 @@ export class SearchComponent implements OnInit {
     this.getParameters();
     this.createMockSettings();
     this.getCompanies();
-    
+
     /* - WTF
     for (let i = 0; i < 101; i++) {
       this.getCompanies();
-    } */
+    } 
+    */
   }
 
   getParameters() {
