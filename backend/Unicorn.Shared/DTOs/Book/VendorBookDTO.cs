@@ -18,6 +18,8 @@ namespace Unicorn.Shared.DTOs.Book
 
         public string Description { get; set; }
 
+        public string CustomerPhone { get; set; }
+
         public string Customer { get; set; }
 
         public long CustomerId { get; set; }

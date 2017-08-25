@@ -190,6 +190,68 @@ namespace Unicorn.Core.Services
             await _unitOfWork.SaveAsync();
         }
 
+        public async Task<IEnumerable<VendorBookDTO>> GetOrdersAsync(string role, long id)
+        {
+            var query = _unitOfWork.BookRepository.Query
+                .Include(b => b.Vendor)
+                .Include(b => b.Company)
+                .Include(b => b.Work)
+                .Include(b => b.Work.Subcategory)
+                .Include(b => b.Work.Subcategory.Category)
+                .Include(b => b.Location)
+                .Include(b => b.Customer)
+                .Include(b => b.Customer.Person);
+
+            switch (role)
+            {
+                case "vendor":
+                    {
+                        query = query
+                            .Where(b => b.Vendor != null)
+                            .Where(b => b.Vendor.Id == id);
+                        break;
+                    }
+                case "company":
+                    {
+                        query = query
+                            .Where(b => b.Company != null)
+                            .Where(b => b.Company.Id == id);
+                        break;
+                    }
+                default: throw new Exception("not supported role");
+            }
+
+            return await query
+                .Select(b => new VendorBookDTO()
+                {
+                    Id = b.Id,
+                    Customer = b.Customer.Person.Name + " " + b.Customer.Person.Surname,
+                    CustomerId = b.Customer.Id,
+                    CustomerPhone = b.CustomerPhone,
+                    Date = b.Date,
+                    Description = b.Description,
+                    Location = new LocationDTO()
+                    {
+                        Id = b.Location.Id,
+                        Adress = b.Location.Adress,
+                        City = b.Location.City,
+                        Latitude = b.Location.Latitude,
+                        Longitude = b.Location.Longitude
+                    },
+                    Status = b.Status,
+                    Work = new WorkDTO()
+                    {
+                        Id = b.Work.Id,
+                        Name = b.Work.Name,
+                        Description = b.Work.Description,
+                        Category = b.Work.Subcategory.Category.Name,
+                        CategoryId = b.Work.Subcategory.Category.Id,
+                        Subcategory = b.Work.Subcategory.Name,
+                        SubcategoryId = b.Work.Subcategory.Id
+                    }
+                }).ToListAsync();
+        }
+
         public async Task<IEnumerable<VendorBookDTO>> GetVendorOrdersAsync(long vendorId)
         {
             return await _unitOfWork.BookRepository.Query
@@ -207,6 +269,7 @@ namespace Unicorn.Core.Services
                     Id = b.Id,
                     Customer = b.Customer.Person.Name + " " + b.Customer.Person.Surname,
                     CustomerId = b.Customer.Id,
+                    CustomerPhone = b.CustomerPhone,
                     Date = b.Date,
                     Description = b.Description,
                     Location = new LocationDTO()

@@ -13,5 +13,6 @@ namespace Unicorn.Core.Interfaces
         Task<IEnumerable<VendorBookDTO>> GetVendorOrdersAsync(long vendorId);
         Task Create(BookOrderDTO book);
         Task Update(BookDTO book);
+        Task<IEnumerable<VendorBookDTO>> GetOrdersAsync(string role, long id);
     }
 }

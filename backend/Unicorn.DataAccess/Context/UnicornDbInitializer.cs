@@ -1025,7 +1025,8 @@ namespace Unicorn.DataAccess.Context
                 IsDeleted = false,
                 Name = "Photographer",
                 Subcategory = subcategory5,
-                Orders = 20
+                Orders = 20,
+                Icon = "https://udemy-images.udemy.com/course/750x422/394968_538b_7.jpg"
             };
 
             Work work3 = new Work()
@@ -1065,7 +1066,8 @@ namespace Unicorn.DataAccess.Context
                 IsDeleted = false,
                 Name = "Developer",
                 Subcategory = subcategory6,
-                Orders = 60
+                Orders = 60,
+                Icon = "https://cdn3.iconfinder.com/data/icons/luchesa-vol-9/128/Html-512.png"
             };
 
             Work work7 = new Work()

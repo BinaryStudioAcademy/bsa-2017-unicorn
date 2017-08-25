@@ -36,5 +36,22 @@ namespace Unicorn.Controllers
 
             return Request.CreateResponse(HttpStatusCode.OK);
         }
+
+        [HttpGet]
+        [Route("book/{role}/{id}")]
+        public async Task<HttpResponseMessage> GetVendorBooks(string role, long id)
+        {
+            IEnumerable<VendorBookDTO> books;
+            try
+            {
+                books = await _bookService.GetOrdersAsync(role, id);
+            }
+            catch
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
+
+            return Request.CreateResponse(books);
+        }
     }
 }
