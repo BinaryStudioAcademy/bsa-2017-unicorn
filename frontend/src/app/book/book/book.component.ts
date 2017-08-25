@@ -17,7 +17,6 @@ export class BookComponent implements OnInit {
   book: BookOrder;
   formIsSended: boolean;
   onSending: boolean;
-  isUser: boolean;
   private defaultLocation: Location;
 
   @Input() routePath: string;
@@ -25,15 +24,12 @@ export class BookComponent implements OnInit {
 
   @ViewChild('bookForm') public bookForm: NgForm;
 
-  constructor(private bookOrderService: BookOrderService, private tokenHelper: TokenHelperService, private userService: UserService) {
-    this.isUser = +this.tokenHelper.getClaimByName('roleid') === 2;
-  }
+  constructor(private bookOrderService: BookOrderService, private tokenHelper: TokenHelperService, private userService: UserService) { }
 
   ngOnInit() {
     this.formIsSended = false;
     this.onSending = true;
 
-    if (this.isUser) {
       this.defaultLocation = {
         Id: 0,
         City: "",
@@ -55,7 +51,6 @@ export class BookComponent implements OnInit {
       }
 
       this.getUserData();
-    }
   }
 
   makeOrder() {
