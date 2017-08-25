@@ -131,9 +131,7 @@ namespace Unicorn.Controllers
         public async Task<HttpResponseMessage> PostVendorContact(long id, [FromBody]ContactShortDTO contact)
         {
             var accountId = await _vendorService.GetVendorAccountIdAsync(id);
-            await _contactService.CreateAsync(accountId, contact);
-
-            var result = await _vendorService.GetVendorContactsAsync(id);
+            var result = await _contactService.CreateAsync(accountId, contact);
 
             if (result == null)
                 return Request.CreateResponse(HttpStatusCode.NotFound);

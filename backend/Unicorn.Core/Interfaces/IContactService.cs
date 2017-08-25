@@ -13,7 +13,7 @@ namespace Unicorn.Core.Interfaces
     {
         Task<IEnumerable<ContactProviderDTO>> GetAllProvidersAsync();
         Task<ContactShortDTO> GetByIdAsync(long id);
-        Task CreateAsync(long accountId, ContactShortDTO contactDto);
+        Task<ContactShortDTO> CreateAsync(long accountId, ContactShortDTO contactDto);
         Task UpdateAsync(long accountId, ContactShortDTO contactDto);
         Task RemoveAsync(long accountId, long contactId);
     }
