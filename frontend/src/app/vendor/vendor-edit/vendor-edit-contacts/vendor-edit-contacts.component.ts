@@ -86,6 +86,7 @@ export class VendorEditContactsComponent implements OnInit {
       }
     this.selectedProvider = null;
     this.cleanAllSellections();
+    this.hideAllEditFields();
 
     contact.Id = null;
 
@@ -106,6 +107,7 @@ export class VendorEditContactsComponent implements OnInit {
   updateContact(contact: Contact): void {
     this.vendorService.updateContact(this.vendorId, contact);
     this.cleanAllSellections();
+    this.hideAllEditFields();
   }
 
   isContactPending(contact: Contact): boolean {
