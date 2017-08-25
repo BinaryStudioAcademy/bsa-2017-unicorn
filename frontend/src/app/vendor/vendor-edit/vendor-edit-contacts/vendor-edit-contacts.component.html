@@ -1,4 +1,8 @@
-<div *ngIf="selectedPhone !== undefined" class="ui grid">
+
+<div *ngIf="contacts === undefined" class="ui active inverted dimmer" style="z-index: 0;">
+    <div class="ui text loader">Loading</div>
+  </div>
+<div class="ui grid">
   <div class="row">
     <div class="column">
       <div class="flex-header">
@@ -7,7 +11,7 @@
       </div>
     </div>
   </div>
-  <div *ngIf="phones !== undefined" class="row">
+  <div *ngIf="selectedPhone !== undefined" class="row">
     <div class="column">
       <div class="phones">
         <div class="header">Phone</div>
@@ -26,17 +30,20 @@
             </a>
           </div>
           <ng-template #phoneEdit>
-            <div class="ui right action mini left icon input contact-edit">
-              <i class="colored call icon"></i>
-              <input type="text" [(ngModel)]="selectedPhone.Value" name="phone" placeholder="+380 (XX) XXXXXXX">
-              <button (click)="selectedPhone.Id !== -1 ? updateContact(selectedPhone) : createContact(selectedPhone)" class="ui basic tiny button">Save</button>
-            </div>
+            <form name="phone-edit-form" #phoneEditForm="ngForm">
+              <div class="ui right action mini left icon input contact-edit">
+                <i class="colored call icon"></i>
+                <input type="text" required pattern="^\+(?:[0-9]●?){6,14}[0-9]$" [(ngModel)]="selectedPhone.Value" name="phone" placeholder="+380 (XX) XXXXXXX">
+                <button (click)="selectedPhone.Id !== -1 ? updateContact(selectedPhone) : createContact(selectedPhone)" class="ui basic tiny button"
+                  [ngClass]="{'disabled': phoneEditForm.invalid}">Save</button>
+              </div>
+            </form>
           </ng-template>
         </div>
       </div>
     </div>
   </div>
-  <div class="row">
+  <div *ngIf="selectedEmail !== undefined" class="row">
     <div class="column">
       <div class="emails">
         <div class="header">Email</div>
@@ -54,17 +61,20 @@
             </a>
           </div>
           <ng-template #emailEdit>
-            <div class="ui right action mini left icon input contact-edit">
-              <i class="colored call icon"></i>
-              <input type="text" [(ngModel)]="selectedEmail.Value" name="email" placeholder="example@e.mail">
-              <button (click)="selectedEmail.Id !== -1 ? updateContact(selectedEmail) : createContact(selectedEmail)" class="ui basic tiny button">Save</button>
-            </div>
+            <form name="email-edit-form" #emailEditForm="ngForm">
+              <div class="ui right action mini left icon input contact-edit">
+                <i class="colored call icon"></i>
+                <input type="text" required pattern="\S+@\S+\.\S+" [(ngModel)]="selectedEmail.Value" name="email" placeholder="example@e.mail">
+                <button (click)="selectedEmail.Id !== -1 ? updateContact(selectedEmail) : createContact(selectedEmail)" class="ui basic tiny button"
+                  [ngClass]="{'disabled': emailEditForm.invalid}">Save</button>
+              </div>
+            </form>
           </ng-template>
         </div>
       </div>
     </div>
   </div>
-  <div class="row">
+  <div *ngIf="selectedMessenger !== undefined" class="row">
     <div class="column">
       <div class="messangers">
         <div class="header">Messengers</div>
@@ -118,7 +128,7 @@
       </div>
     </div>
   </div>
-  <div class="row">
+  <div *ngIf="selectedSocial !== undefined" class="row">
     <div class="column">
       <div class="socials">
         <div class="header">Socials</div>
