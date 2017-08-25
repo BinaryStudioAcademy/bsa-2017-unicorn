@@ -78,7 +78,7 @@ export class DataService {
       .catch(this.handleError);
   }
 
-  putRequest<T>(url: string, payload: Object): Promise<T> {
+  putRequest<T>(url: string, payload: Object): Promise<T> {    
     return this.http
       .put<T>(this.buildUrl(url), this.prepareData(payload), {headers: this.getHeaders()})
       .toPromise()

@@ -29,10 +29,14 @@ export class CompanyWorksComponent implements OnInit {
     private zone: NgZone) { }
 
   ngOnInit() {
+    this.initializeThisCompany();    
+  }
+
+  initializeThisCompany(){
     this.route.params
-      .switchMap((params: Params) => this.companyService.getCompanyWorks(params['id'])).subscribe(res => {
-        this.company = res;
-      });
+    .switchMap((params: Params) => this.companyService.getCompanyWorks(params['id'])).subscribe(res => {
+      this.company = res;
+    });
   }
 
   changeCategory() {
@@ -80,20 +84,27 @@ export class CompanyWorksComponent implements OnInit {
   }
 
   deleteWork(work: CompanyWork) {
-    this.company.Works = this.company.Works.filter(x => x.Id !== work.Id);
-    this.work = null;
-    this.saveCompanyWorks();
+    let companyId = this.company.Id;
     this.company = undefined;
-    if (this.openedDetailedWindow)
-      this.openedDetailedWindow = !this.openedDetailedWindow;
+    if (this.openedDetailedWindow){
+      this.openedDetailedWindow = false;
+    }
+
+    this.companyService.deleteCompanyWork(companyId, work.Id)
+      .then(() => {
+        this.initializeThisCompany();  
+        this.work = null;        
+      });
   }
 
   saveWorkChanges() {
     if (this.selectedCategory !== undefined && this.selectedSubcategory !== undefined
       && this.work.Description !== null && this.work.Name !== null) {
-      this.company.Works.splice(this.company.Works.findIndex(x => x.Id === this.work.Id), 1, this.work);
-      this.saveCompanyWorks();
-      this.company = undefined;
+        this.company = undefined;        
+        this.companyService.saveCompanyWork(this.work)
+          .then(() => {
+            this.initializeThisCompany();
+          });     
     }
   }
 
@@ -103,10 +114,14 @@ export class CompanyWorksComponent implements OnInit {
       this.selectedCategory.Subcategories = null;
       this.selectedSubcategory.Category = this.selectedCategory;
       this.work.Subcategory = this.selectedSubcategory;
-      this.company.Works.push(this.work);
-      this.saveCompanyWorks();
-      this.openedDetailedWindow = false;
+
+      let companyId = this.company.Id;
       this.company = undefined;
+      this.openedDetailedWindow = false;
+      this.companyService.addCompanyWork(companyId, this.work)
+      .then(() => {
+        this.initializeThisCompany();
+      });        
     }
   }
 
@@ -117,13 +132,5 @@ export class CompanyWorksComponent implements OnInit {
     else {
       this.addWork();
     }
-  }
-
-  saveCompanyWorks() {
-    this.isLoaded = true;
-    this.companyService.saveCompanyWorks(this.company).then(() => {
-      this.isLoaded = false;
-      this.ngOnInit();
-    });
-  }
+  }    
 }

@@ -104,10 +104,10 @@ export class CompanyContactsComponent implements OnInit {
   }
 
   saveContacts(){
-    this.company = undefined;
-    this.companyService.saveCompanyContacts(this.company).then(() => {
-      this.ngOnInit();
-    });
+    // this.company = undefined;
+    // this.companyService.saveCompanyContacts(this.company).then(() => {
+    //   this.ngOnInit();
+    // });
   }
 
   onPhoneSelect(phone: Contact): void {

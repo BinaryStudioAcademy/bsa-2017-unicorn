@@ -21,13 +21,17 @@ export class CompanyVendorsComponent implements OnInit {
     private route: ActivatedRoute,
     private zone: NgZone) { }
 
-  ngOnInit() {
+  ngOnInit() { 
+    this.initializeThisCompany();   
+  }  
+
+  initializeThisCompany(){
     this.route.params
     .switchMap((params: Params) => this.companyService.getCompanyVendors(params['id'])).subscribe(res => {
       this.company = res;   
       this.allVendors = this.company.AllVendors;  
     });
-  }  
+  }
 
   changeVendor(){
     this.selectedVendors.push(this.selectedVendor);
@@ -50,14 +54,18 @@ export class CompanyVendorsComponent implements OnInit {
   }
 
   deleteVendor(vendor: Vendor){     
-    this.company.Vendors =  this.company.Vendors.filter(x => x.Id !== vendor.Id);   
-    this.saveCompanyVendors();
-    this.selectedVendors = undefined;
-    this.zone.run(() => { this.selectedVendor = null; });  
-    this.company = undefined;
     if(this.openedDetailedWindow){
-      this.openedDetailedWindow = !this.openedDetailedWindow;   
-    } 
+      this.openedDetailedWindow = false; 
+    }    
+    this.selectedVendors = undefined;
+    this.zone.run(() => { this.selectedVendor = null; }); 
+
+    let companyId = this.company.Id;
+    this.company = undefined;  
+    this.companyService.deleteCompanyVendor(companyId, vendor.Id)
+      .then(() => {
+        this.initializeThisCompany();   
+      });     
   }
 
   deleteSelectedVendor(vendor: Vendor){
@@ -66,20 +74,20 @@ export class CompanyVendorsComponent implements OnInit {
     this.allVendors.push(vendor);
   }
 
-  addVendor(){      
+  addVendors(){      
     this.selectedVendors.forEach(vendor => {this.company.Vendors.push(vendor);});      
     this.saveCompanyVendors();  
     this.selectedVendors = undefined;
     this.zone.run(() => { this.selectedVendor = null; });  
     this.company = undefined;    
-    this.openedDetailedWindow = !this.openedDetailedWindow;     
+    this.openedDetailedWindow = false;     
   }
 
   saveCompanyVendors(){
     this.isLoaded = true;    
-    this.companyService.saveCompanyVendors(this.company).then(() => {
+    this.companyService.addCompanyVendors(this.company).then(() => {
       this.isLoaded = false;      
-      this.ngOnInit();
+      this.initializeThisCompany();
     });
   }
 }

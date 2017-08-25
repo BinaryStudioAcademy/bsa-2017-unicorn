@@ -1,11 +1,14 @@
 ﻿using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web.Helpers;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using System.Web.Mvc;
 using Unicorn.Core.Interfaces;
 using Unicorn.Shared.DTOs.Company;
 using Unicorn.Shared.DTOs.CompanyPage;
+using Unicorn.Shared.DTOs.Contact;
 
 namespace Unicorn.Controllers
 {
@@ -22,8 +25,8 @@ namespace Unicorn.Controllers
         }
 
         // GET: /company
-        [HttpGet]
-        [Route("company")]
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("company")]
         public async Task<IHttpActionResult> GetAllCompanies()
         {
             var result = await _companyService.GetAllCompanies();
@@ -32,9 +35,11 @@ namespace Unicorn.Controllers
             return NotFound();
         }
 
-        // GET: /company-short
-        [HttpGet]
-        [Route("company-short/{id}")]
+
+
+        // GET: company/short
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("company/short/{id}")]
         public async Task<IHttpActionResult> GetCompanyShort(long id)
         {
             var result = await _companyService.GetCompanyShort(id);
@@ -42,97 +47,163 @@ namespace Unicorn.Controllers
                 return Json(result);
             return NotFound();
         }
-
-
-        // GET: company-details/5
-        [HttpGet]
-        [Route("company-details/{id}")]
-        public async Task<IHttpActionResult> GetCompanyDetails(int id)
+        // GET: company/details/5
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("company/details/{id}")]
+        public async Task<IHttpActionResult> GetCompanyDetails(long id)
         {
             var result = await _companyService.GetCompanyDetails(id);
             if (result != null)
                 return Json(result);
             return NotFound();
         }
-
-        // POST: company-details
-        [HttpPost]
-        [Route("company-details")]
-        public async Task PostCompanyDetails([FromBody]CompanyDetails company)
+        // POST: company/details
+        [System.Web.Http.HttpPost]
+        [System.Web.Http.Route("company/details")]
+        public async Task SaveCompanyDetails([FromBody]CompanyDetails companyDetails)
         {
-            await _companyService.SaveCompanyDetails(company);
+            await _companyService.SaveCompanyDetails(companyDetails);
         }
 
-        // GET: company-reviews/5
-        [HttpGet]
-        [Route("company-reviews/{id}")]
-        public async Task<IHttpActionResult> GetCompanyReviews(int id)
+
+
+        // GET: company/reviews/5
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("company/reviews/{id}")]
+        public async Task<IHttpActionResult> GetCompanyReviews(long id)
         {
             var result = await _companyService.GetCompanyReviews(id);
             if (result != null)
                 return Json(result);
             return NotFound();
         }
-
-        // POST: company-reviews
-        [HttpPost]
-        [Route("company-reviews")]
-        public async Task PostCompanyReviews([FromBody]CompanyReviews company)
+        // PUT: company/reviews
+        [System.Web.Http.HttpPut]
+        [System.Web.Http.Route("company/reviews")]
+        public async Task AddCompanyReviews([FromBody]CompanyReviews companyReviews)
         {
-            await _companyService.SaveCompanyReviews(company);
+            await _companyService.AddCompanyReviews(companyReviews);
         }
 
-        // GET: company-vendors/5
-        [HttpGet]
-        [Route("company-vendors/{id}")]
-        public async Task<IHttpActionResult> GetCompanyVendors(int id)
+
+
+        // GET: company/vendors/5
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("company/vendors/{id}")]
+        public async Task<IHttpActionResult> GetCompanyVendors(long id)
         {
             var result = await _companyService.GetCompanyVendors(id);
             if (result != null)
                 return Json(result);
             return NotFound();
         }
-
-        // POST: company-vendors
-        [HttpPost]
-        [Route("company-vendors")]
-        public async Task PostCompanyVendors([FromBody]CompanyVendors company)
+        // PUT: company/vendors
+        [System.Web.Http.HttpPut]
+        [System.Web.Http.Route("company/vendors")]
+        public async Task AddCompanyVendors([FromBody]CompanyVendors companyVendors)
         {
-            await _companyService.SaveCompanyVendors(company);
+            await _companyService.AddCompanyVendors(companyVendors);
         }
+        // DELETE: company/vendor/5/4
+        [System.Web.Http.HttpDelete]
+        [System.Web.Http.Route("company/vendor/{companyId}/{vendorId}")]
+        public async Task DeleteCompanyVendor(long companyId, long vendorId)
+        {
+            await _companyService.DeleteCompanyVendor(companyId, vendorId);
+        }
+        
 
-        // GET: company-contacts/5
-        [HttpGet]
-        [Route("company-contacts/{id}")]
-        public async Task<IHttpActionResult> GetCompanyContacts(int id)
+
+        // GET: company/contacts/5
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("company/contacts/{id}")]
+        public async Task<IHttpActionResult> GetCompanyContacts(long id)
         {
             var result = await _companyService.GetCompanyContacts(id);
             if (result != null)
                 return Json(result);
             return NotFound();
         }
-
-        // POST: company-contacts
-        [HttpPost]
-        [Route("company-contacts")]
-        public async Task PostCompanyContacts([FromBody]CompanyContacts company)
+        // POST: company/contacts
+        [System.Web.Http.HttpPost]
+        [System.Web.Http.Route("company/contact")]
+        public async Task SaveCompanyContact([FromBody]ContactDTO companyContact)
         {
-            await _companyService.SaveCompanyContacts(company);
+            await _companyService.SaveCompanyContact(companyContact);
+        }
+        // PUT: company/contact/5
+        [System.Web.Http.HttpPut]
+        [System.Web.Http.Route("company/contact/{companyId}")]
+        public async Task AddCompanyContact(long companyId, [FromBody]ContactDTO companyContact)
+        {
+            await _companyService.AddCompanyContact(companyId, companyContact);
+        }
+        // DELETE: company/contact/5
+        [System.Web.Http.HttpDelete]
+        [System.Web.Http.Route("company/contact/{companyId}/{contactId}")]
+        public async Task DeleteCompanyContact(long companyId, long contactId)
+        {
+            await _companyService.DeleteCompanyContact(companyId, contactId);
         }
 
-        // GET: company-works/5
-        [HttpGet]
-        [Route("company-works/{id}")]
-        public async Task<IHttpActionResult> GetCompanyWorks(int id)
+
+
+        // GET: company/works/5
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("company/works/{id}")]
+        public async Task<IHttpActionResult> GetCompanyWorks(long id)
         {
             var result = await _companyService.GetCompanyWorks(id);
             if (result != null)
                 return Json(result);
             return NotFound();
         }
+        // POST: company/work
+        [System.Web.Http.HttpPost]
+        [System.Web.Http.Route("company/work")]
+        public async Task SaveCompanyWork([FromBody]CompanyWork companyWork)
+        {
+            await _companyService.SaveCompanyWork(companyWork);
+        }
+        // PUT: company/work/5
+        [System.Web.Http.HttpPut]
+        [System.Web.Http.Route("company/work/{companyId}")]
+        public async Task AddCompanyWork(long companyId, [FromBody]CompanyWork companyWork)
+        {
+            await _companyService.AddCompanyWork(companyId, companyWork);
+        }
+        // DELETE: company/work/5
+        [System.Web.Http.HttpDelete]
+        [System.Web.Http.Route("company/work/{companyId}/{workId}")]
+        public async Task DeleteCompanyWork(long companyId, long workId)
+        {
+            await _companyService.DeleteCompanyWork(companyId, workId);
+        }
 
-        [HttpGet]
-        [Route("company/{id}/rating")]
+
+
+        // GET: company/books/5
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("company/books/{id}")]
+        public async Task<IHttpActionResult> GetCompanyBooks(long id)
+        {
+            var result = await _companyService.GetCompanyBooks(id);
+            if (result != null)
+                return Json(result);
+            return NotFound();
+        }
+        // POST: company/book
+        [System.Web.Http.HttpPost]
+        [System.Web.Http.Route("company/book")]
+        public async Task SaveCompanyBook([FromBody]CompanyBook companyBook)
+        {
+            await _companyService.SaveCompanyBook(companyBook);
+        }
+
+
+
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("company/{id}/rating")]
         public async Task<HttpResponseMessage> GetCompanyRating(long id)
         {
             var accountId = await _companyService.GetCompanyAccountId(id);
@@ -140,36 +211,9 @@ namespace Unicorn.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
-        // POST: company-works
-        [HttpPost]
-        [Route("company-works")]
-        public async Task PostCompanyWorks([FromBody]CompanyWorks company)
-        {
-            await _companyService.SaveCompanyWorks(company);
-        }
-
-        // GET: company-books/5
-        [HttpGet]
-        [Route("company-books/{id}")]
-        public async Task<IHttpActionResult> GetCompanyBooks(int id)
-        {
-            var result = await _companyService.GetCompanyBooks(id);
-            if (result != null)
-                return Json(result);
-            return NotFound();
-        }
-
-        // POST: company-books
-        [HttpPost]
-        [Route("company-books")]
-        public async Task PostCompanyBooks([FromBody]CompanyBooks company)
-        {
-            await _companyService.SaveCompanyBooks(company);
-        }
-
         // GET: company-search?category=&subcategory=&date=
-        [HttpGet]
-        [Route("company-search")]
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("company-search")]
         public async Task<IHttpActionResult> GetSearchCompanies(string category, string subcategory, int? date)
         {
             var result = await _companyService.GetSearchCompanies(category, subcategory, date);
@@ -177,15 +221,5 @@ namespace Unicorn.Controllers
                 return Json(result);
             return NotFound();
         }
-
-        //// PUT: api/Company/5
-        //public void Put(int id, [FromBody]string value)
-        //{
-        //}
-
-        //// DELETE: api/Company/5
-        //public void Delete(int id)
-        //{
-        //}
     }
 }
