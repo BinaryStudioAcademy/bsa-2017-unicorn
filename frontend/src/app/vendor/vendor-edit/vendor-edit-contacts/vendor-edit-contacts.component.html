@@ -13,10 +13,12 @@
         <div class="header">Phone</div>
         <div class="description flex-style">
           <div *ngFor="let phone of phones">
-            <a *ngIf="phone.Id !== selectedPhone.Id; else phoneEdit" (click)="onPhoneSelect(phone)" class="ui label contact">
+            <a *ngIf="phone.Id !== selectedPhone.Id; else phoneEdit" (click)="isContactPending(phone) || onPhoneSelect(phone)" [ngClass]="{'disabled': isContactPending(phone)}" 
+            class="ui label contact">
               <i class="colored call icon"></i> {{phone.Value}}
             </a>
-            <i *ngIf="phone.Id !== selectedPhone.Id" (click)="removeContact(phone)" class="remove link icon contact-remove-icon"></i>
+            <i *ngIf="phone.Id !== selectedPhone.Id && !isContactPending(phone)" (click)="removeContact(phone)" class="remove link icon contact-remove-icon"></i>
+            <i *ngIf="isContactPending(phone)" class="notched circle loading icon"></i>
           </div>
           <div>
             <a *ngIf="!editPhoneOpen;  else phoneEdit" (click)="editToggle('phone')" class="ui label contact">
@@ -27,7 +29,7 @@
             <div class="ui right action mini left icon input contact-edit">
               <i class="colored call icon"></i>
               <input type="text" [(ngModel)]="selectedPhone.Value" name="phone" placeholder="+380 (XX) XXXXXXX">
-              <button (click)="selectedPhone.Id !== null ? updateContact(selectedPhone) : createContact(selectedPhone)" class="ui basic tiny button">Save</button>
+              <button (click)="selectedPhone.Id !== -1 ? updateContact(selectedPhone) : createContact(selectedPhone)" class="ui basic tiny button">Save</button>
             </div>
           </ng-template>
         </div>
@@ -40,10 +42,11 @@
         <div class="header">Email</div>
         <div class="description flex-style">
           <div *ngFor="let email of emails">
-            <a *ngIf="email.Id !== selectedEmail.Id; else emailEdit" (click)="onEmailSelect(email)"  class="ui label contact">
+            <a *ngIf="email.Id !== selectedEmail.Id; else emailEdit" (click)="isContactPending(email) || onEmailSelect(email)" [ngClass]="{'disabled': isContactPending(email)}" class="ui label contact">
               <i class="colored mail icon"></i> {{email.Value}}
             </a>
-            <i *ngIf="email.Id !== selectedEmail.Id" (click)="removeContact(email)" class="remove link icon contact-remove-icon"></i>
+            <i *ngIf="email.Id !== selectedEmail.Id && !isContactPending(email)" (click)="removeContact(email)" class="remove link icon contact-remove-icon"></i>
+            <i *ngIf="isContactPending(email)" class="notched circle loading icon"></i>
           </div>
           <div>
             <a *ngIf="!editEmailOpen;  else emailEdit" (click)="editToggle('email')" class="ui label contact">
@@ -54,7 +57,7 @@
             <div class="ui right action mini left icon input contact-edit">
               <i class="colored call icon"></i>
               <input type="text" [(ngModel)]="selectedEmail.Value" name="email" placeholder="example@e.mail">
-              <button (click)="selectedEmail.Id !== null ? updateContact(selectedEmail) : createContact(selectedEmail)" class="ui basic tiny button">Save</button>
+              <button (click)="selectedEmail.Id !== -1 ? updateContact(selectedEmail) : createContact(selectedEmail)" class="ui basic tiny button">Save</button>
             </div>
           </ng-template>
         </div>
@@ -67,15 +70,16 @@
         <div class="header">Messengers</div>
         <div class="description flex-style">
           <div *ngFor="let messenger of messengers">
-            <a *ngIf="messenger.Id !== selectedMessenger.Id; else selectedMessengerEdit" (click)="onMessengerSelect(messenger)" class="ui label contact">
+            <a *ngIf="messenger.Id !== selectedMessenger.Id; else selectedMessengerEdit" (click)="isContactPending(messenger) || onMessengerSelect(messenger)" [ngClass]="{'disabled': isContactPending(messenger)}" class="ui label contact">
               <i class="colored {{messenger.Provider}} icon"></i> {{messenger.Value}}
             </a>
-            <i *ngIf="messenger.Id !== selectedMessenger.Id" (click)="removeContact(messenger)" class="remove link icon contact-remove-icon"></i>
+            <i *ngIf="messenger.Id !== selectedMessenger.Id && !isContactPending(messenger)" (click)="removeContact(messenger)" class="remove link icon contact-remove-icon"></i>
+            <i *ngIf="isContactPending(messenger)" class="notched circle loading icon"></i>
             <ng-template #selectedMessengerEdit>
             <div class="ui right action mini left icon input contact-edit">
               <i class="colored {{messenger.Provider}} icon"></i>
               <input type="text" [(ngModel)]="selectedMessenger.Value" name="messenger" placeholder="NICKNAME">
-              <button (click)="selectedMessenger.Id !== null ? updateContact(selectedMessenger) : createContact(selectedMessenger)" class="ui basic tiny button">Save</button>
+              <button (click)="selectedMessenger.Id !== -1 ? updateContact(selectedMessenger) : createContact(selectedMessenger)" class="ui basic tiny button">Save</button>
             </div>
           </ng-template>
           </div>
@@ -104,7 +108,7 @@
             <div class="field">
             <div class="ui right action mini input">
               <input type="text" [(ngModel)]="selectedMessenger.Value" name="messenger" placeholder="NICKNAME">
-              <button (click)="selectedMessenger.Id !== null ? updateContact(selectedMessenger) : createContact(selectedMessenger)" class="ui basic tiny button">Save</button>
+              <button (click)="selectedMessenger.Id !== -1 ? updateContact(selectedMessenger) : createContact(selectedMessenger)" class="ui basic tiny button">Save</button>
             </div>
               </div>
             </div>
@@ -120,15 +124,16 @@
         <div class="header">Socials</div>
         <div class="description flex-style">
           <div *ngFor="let social of socials">
-            <a *ngIf="social.Id !== selectedSocial.Id; else selectedSocialEdit" (click)="onSocialSelect(social)" class="ui label contact">
+            <a *ngIf="social.Id !== selectedSocial.Id; else selectedSocialEdit" (click)="isContactPending(social) || onSocialSelect(social)" [ngClass]="{'disabled': isContactPending(social)}" class="ui label contact">
               <i class="colored {{social.Provider}} icon"></i> {{social.Value}}
             </a>
-            <i *ngIf="social.Id !== selectedSocial.Id" (click)="removeContact(social)" class="remove link icon contact-remove-icon"></i>
+            <i *ngIf="social.Id !== selectedSocial.Id && !isContactPending(social)" (click)="removeContact(social)" class="remove link icon contact-remove-icon"></i>
+            <i *ngIf="isContactPending(social)" class="notched circle loading icon"></i>
             <ng-template #selectedSocialEdit>
             <div class="ui right action mini left icon input contact-edit">
               <i class="colored {{social.Provider}} icon"></i>
               <input type="text" [(ngModel)]="selectedSocial.Value" name="social" placeholder="NICKNAME">
-              <button (click)="selectedSocial.Id !== null ? updateContact(selectedSocial) : createContact(selectedSocial)" class="ui basic tiny button">Save</button>
+              <button (click)="selectedSocial.Id !== -1 ? updateContact(selectedSocial) : createContact(selectedSocial)" class="ui basic tiny button">Save</button>
             </div>
             </ng-template>
           </div>
@@ -157,7 +162,7 @@
             <div class="field">
             <div class="ui right action mini input">
               <input type="text" [(ngModel)]="selectedSocial.Value" name="social" placeholder="NICKNAME">
-              <button (click)="selectedSocial.Id !== null ? updateContact(selectedSocial) : createContact(selectedSocial)" class="ui basic tiny button">Save</button>
+              <button (click)="selectedSocial.Id !== -1 ? updateContact(selectedSocial) : createContact(selectedSocial)" class="ui basic tiny button">Save</button>
             </div>
               </div>
             </div>

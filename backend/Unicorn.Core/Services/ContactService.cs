@@ -48,7 +48,7 @@ namespace Unicorn.Core.Services
             };
         }
 
-        public async Task CreateAsync(long accountId, ContactShortDTO contactDto)
+        public async Task<ContactShortDTO> CreateAsync(long accountId, ContactShortDTO contactDto)
         {
             var account = await _unitOfWork.AccountRepository.GetByIdAsync(accountId);
             var provider = await _unitOfWork.ContactProviderRepository.GetByIdAsync(contactDto.ProviderId); ;
@@ -62,6 +62,10 @@ namespace Unicorn.Core.Services
 
             _unitOfWork.ContactRepository.Create(contact);
             await _unitOfWork.SaveAsync();
+
+            var createdContact = GetByIdAsync(contact.Id);
+
+            return await createdContact;
         }
 
         public async Task UpdateAsync(long accountId, ContactShortDTO contactDto)

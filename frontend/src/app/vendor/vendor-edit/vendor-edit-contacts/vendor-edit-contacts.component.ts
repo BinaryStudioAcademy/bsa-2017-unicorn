@@ -23,6 +23,8 @@ export class VendorEditContactsComponent implements OnInit {
   messengerProviders: ContactProvider[];
   socialProviders: ContactProvider[];
 
+  pendingContactas: Contact[];
+
   selectedPhone: Contact;
   selectedMessenger: Contact;
   selectedEmail: Contact;
@@ -41,6 +43,7 @@ export class VendorEditContactsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.pendingContactas = [];
     this.hideAllEditFields();
     this.vendorService.getContacts(this.vendorId)
       .then(resp => this.contacts = resp.body as Contact[])
@@ -84,15 +87,29 @@ export class VendorEditContactsComponent implements OnInit {
     this.selectedProvider = null;
     this.cleanAllSellections();
 
+    contact.Id = null;
+
+    this.pendingContactas.push(contact);
+    this.contacts.push(contact);
+    this.filterContacts()
+    this.filterContacts()
+
     this.vendorService.postVendorContact(this.vendorId, contact)
-      .then(resp => this.contacts = resp.body as Contact[])
+      .then(resp => {
+        this.pendingContactas.splice(this.pendingContactas.findIndex(c => c === contact), 1);
+        contact.Id = (resp.body as Contact).Id;
+      })
       .then(() => this.filterContacts())
-      .then(() => this.filterProviders());
+      .then(() => this.filterContacts());
   }
 
   updateContact(contact: Contact): void {
     this.vendorService.updateContact(this.vendorId, contact);
     this.cleanAllSellections();
+  }
+
+  isContactPending(contact: Contact): boolean {
+    return this.pendingContactas.includes(contact);
   }
 
   onPhoneSelect(phone: Contact): void {
@@ -141,7 +158,7 @@ export class VendorEditContactsComponent implements OnInit {
       ProviderId: provider.Id,
       Type: provider.Type,
       Value: "",
-      Id: null
+      Id: -1
     };
   }
 
@@ -152,7 +169,7 @@ export class VendorEditContactsComponent implements OnInit {
       ProviderId: provider.Id,
       Type: provider.Type,
       Value: "",
-      Id: null
+      Id: -1
     };
   }
 
@@ -162,7 +179,7 @@ export class VendorEditContactsComponent implements OnInit {
       ProviderId: null,
       Type: "",
       Value: "",
-      Id: null
+      Id: -1
     };
   }
 
@@ -172,7 +189,7 @@ export class VendorEditContactsComponent implements OnInit {
       ProviderId: null,
       Type: "",
       Value: "",
-      Id: null
+      Id: -1
     };
   }
 
