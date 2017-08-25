@@ -53,16 +53,15 @@ export class MenuComponent implements OnInit {
     if (this.isLogged) {
       this.accountService.getShortInfo(+this.tokenHelper.getClaimByName("accountid"))
         .then(resp => this.profileInfo = resp.body as ProfileShortInfo);
-      this.setProfileRoute();
-    } 
+    }
     else {
       this.profileInfo = {
-          Avatar: "",
-          Email: "",
-          Name: "",
-          Role: ""
-        };
-        this.profileUrl = "";
+        Avatar: "",
+        Email: "",
+        Name: "",
+        Role: ""
+      };
+      this.profileUrl = "";
     }
     this.notifications = [
       "First notification",
@@ -78,7 +77,6 @@ export class MenuComponent implements OnInit {
         this.isLogged = true;
         this.accountService.getShortInfo(+this.tokenHelper.getClaimByName("accountid"))
           .then(resp => this.profileInfo = resp.body as ProfileShortInfo);
-        this.setProfileRoute();
       });
 
     this.onLogOut = this.authEventService.logoutEvent$
@@ -137,31 +135,11 @@ export class MenuComponent implements OnInit {
     this.showAccountDetails = false;
   }
 
-  getNotificationClass() : string {
+  getNotificationClass(): string {
     return this.isNotificationExist() ? "red" : "";
   }
 
-  isNotificationExist() : boolean {
+  isNotificationExist(): boolean {
     return this.notifications && this.notifications.length != 0;
-  }
-
-  setProfileRoute(): void {
-    var roleId = +this.tokenHelper.getClaimByName("roleid");
-    var profileId = this.tokenHelper.getClaimByName("profileid");
-    
-    switch (roleId) {
-      case 2:
-        this.profileUrl = `/user/${profileId}/edit`;
-        break;
-      case 3:
-        this.profileUrl = `/vendor/${profileId}/edit`;
-        break;
-      case 4:
-        this.profileUrl = `/company/${profileId}/edit`;
-        break;
-      default:
-        this.profileUrl = "/search";
-        break;
-    }
   }
 }
