@@ -1,10 +1,15 @@
-﻿using AutoMapper;
+using AutoMapper;
+using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Unicorn.Core.Interfaces;
 using Unicorn.DataAccess.Entities;
 using Unicorn.DataAccess.Interfaces;
-using Unicorn.Core.DTOs;
+using Unicorn.Shared.DTOs.Register;
+using Unicorn.Shared.DTOs.User;
+using System.Data.Entity;
+using Unicorn.DataAccess.Entities.Enum;
 
 namespace Unicorn.Core.Services
 {
@@ -12,42 +17,143 @@ namespace Unicorn.Core.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IBookService _bookservice;
+        private readonly IHistoryService _historyService;
 
-        public CustomerService(IUnitOfWork unitOfWork, IBookService bookservice)
+        public CustomerService(IUnitOfWork unitOfWork, IBookService bookservice, IHistoryService historyService)
         {
             _unitOfWork = unitOfWork;
             _bookservice = bookservice;
+            _historyService = historyService;
         }
 
-        public async Task<IEnumerable<CustomerDTO>> GetAllAsync()
+        public async Task<object> GetById(long id)
         {
-            Mapper.Initialize(cfg => cfg.CreateMap<Customer, CustomerDTO>());
-            return Mapper.Map<IEnumerable<Customer>, List<CustomerDTO>>(await _unitOfWork.CustomerRepository.GetAllAsync());
+            var result = await GetCustomerAsync(id);
+            return result;
         }
 
-        public async Task<CustomerDTO> GetById(int id)
+        public async Task CreateAsync(CustomerRegisterDTO customerDto)
+        {
+            var account = new Account();
+            var role = await _unitOfWork.RoleRepository.GetByIdAsync((long)RoleType.Customer);
+            var socialAccounts = new List<SocialAccount>();
+            var socialAccount = new SocialAccount();
+            var customer = new Customer();
+            var person = new Person();
+
+            account.Role = role;
+            account.DateCreated = DateTime.Now;
+            account.Email = customerDto.Email;
+            account.Avatar = customerDto.Image;
+
+            socialAccount.Provider = customerDto.Provider;
+            socialAccount.Uid = customerDto.Uid;
+            socialAccount.Account = account;
+
+            socialAccounts.Add(socialAccount);
+            account.SocialAccounts = socialAccounts;
+
+            person.Birthday = customerDto.Birthday;
+            person.Phone = customerDto.Phone;
+            person.Name = customerDto.FirstName;
+            person.MiddleName = customerDto.MiddleName;
+            person.Surname = customerDto.LastName;
+            person.Account = account;
+            person.Location = new Location();
+
+            customer.Person = person;
+            customer.Books = new List<Book>();
+            customer.History = new List<History>();
+            _unitOfWork.CustomerRepository.Create(customer);
+            await _unitOfWork.SaveAsync();
+        }
+
+        public async Task UpdateCustomerAsync(UserShortDTO userDTO)
+        {
+            var customer = await _unitOfWork.CustomerRepository.GetByIdAsync(userDTO.Id);
+
+            if (customer != null)
+            {
+                customer.Person.Name = userDTO.Name;
+                customer.Person.Surname = userDTO.SurName;
+                customer.Person.MiddleName = userDTO.MiddleName;
+                customer.Person.Account.Email = userDTO.Email;
+                customer.Person.Phone = userDTO.Phone;
+                customer.Person.Birthday = userDTO.Birthday;
+
+                _unitOfWork.CustomerRepository.Update(customer);
+                await _unitOfWork.SaveAsync();
+            }
+        }
+        public async Task<long> GetUserAccountIdAsync(long id)
+        {
+            var user = await _unitOfWork.CustomerRepository.Query
+                .Include(v => v.Person)
+                .Include(v => v.Person.Account)
+                .SingleAsync(x => x.Id == id);
+            return user.Person.Account.Id;
+        }
+        public async Task<object> GetCustomerAsync(long id)
+        {
+            var customer = await _unitOfWork.CustomerRepository.
+                Query.Include(c => c.History.Select(h => h.Vendor.Person)).
+                Include(c => c.Books.Select(h => h.Vendor.Person)).
+                SingleAsync(c => c.Id == id);
+            if (customer != null)
+            {
+                var customerDto = new UserShortDTO()
+                {
+                    Id = customer.Id,
+                    Name = customer.Person.Name,
+                    SurName = customer.Person.Surname,
+                    MiddleName = customer.Person.MiddleName,
+                    LocationId = customer.Person.Location.Id,
+                    Birthday = customer.Person.Birthday,
+                    Phone = customer.Person.Phone,
+                    Avatar = customer.Person.Account.Avatar,
+                    Background = customer.Person.Account.Background,
+                    Email = customer.Person.Account.Email,
+                    History = customer.History.Select(x => new HistoryShortDto()
+                    {
+                        bookDescription = x.BookDescription,
+                        categoryName = x.CategoryName,
+                        date = x.Date,
+                        dateFinished = x.DateFinished,
+                        subcategoryName = x.SubcategoryName,
+                        vendor = x?.Vendor?.Person?.Name,
+                        workDescription = x.WorkDescription
+                    }).ToList(),
+                    //Books = customer.Books?.Select(x => new BookShortDto()
+                    //{
+                    //    Address = x.Location?.Adress,
+                    //    Date = x.Date,
+                    //    Description = x.Description,
+                    //    Vendor = x?.Vendor?.Person?.Name,
+                    //    Status = x.Status,
+                    //    WorkType = x.Work.Subcategory?.Name
+                    //}).ToList()
+                };
+                return customerDto;
+            }
+            return null;
+        }
+
+        public async Task<UserForOrder> GetForOrderAsync(long id)
         {
             var customer = await _unitOfWork.CustomerRepository.GetByIdAsync(id);
-            var person = await _unitOfWork.PersonRepository.GetByIdAsync(id);
-            var books = _bookservice.GetAllAsync();
-
-            var customerDto = new CustomerDTO()
+            return new UserForOrder()
             {
-                Id = customer.Id,
-                Books = (ICollection<BookDTO>)books,
-                Person = new PersonDTO()
+                Location = new Shared.DTOs.LocationDTO()
                 {
-                    Id = person.Id,
-                    Name = person.Name,
-                    SurnameName = person.SurnameName,
-                    MiddleName = person.MiddleName,
-                    Gender = person.Gender,
-                    Phone = person.Phone
-                }
+                    Id = customer.Person.Location.Id,
+                    Adress = customer.Person.Location.Adress,
+                    City = customer.Person.Location.City,
+                    Latitude = customer.Person.Location.Latitude,
+                    Longitude = customer.Person.Location.Longitude,
+                    PostIndex = customer.Person.Location.PostIndex
+                },
+                Phone = customer.Person.Phone
             };
-            return customerDto;
         }
-
-
     }
 }

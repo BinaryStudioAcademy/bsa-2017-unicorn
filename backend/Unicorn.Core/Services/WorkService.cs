@@ -1,10 +1,13 @@
 ﻿using AutoMapper;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Unicorn.Core.DTOs;
+using System.Linq;
+
+using Unicorn.Shared.DTOs;
 using Unicorn.Core.Interfaces;
 using Unicorn.DataAccess.Entities;
 using Unicorn.DataAccess.Interfaces;
+using System;
 
 namespace Unicorn.Core.Services
 {
@@ -17,30 +20,75 @@ namespace Unicorn.Core.Services
             _unitOfWork = unitOfWork;
         }
 
+        public async Task CreateAsync(WorkDTO dto)
+        {
+            var subcategory = await _unitOfWork.SubcategoryRepository.GetByIdAsync(dto.SubcategoryId);
+            var vendor = await _unitOfWork.VendorRepository.GetByIdAsync(dto.VendorId);
+            var company = await _unitOfWork.CompanyRepository.GetByIdAsync(dto.CompanyId);
+
+            var work = new Work()
+            {
+                Name = dto.Name,
+                Description = dto.Description,
+                Icon = dto.Icon,
+                IsDeleted = false,
+                Subcategory = subcategory,
+                Vendor = vendor,
+                Company = company
+            };
+
+            _unitOfWork.WorkRepository.Create(work);
+            await _unitOfWork.SaveAsync();
+        }
+
         public async Task<IEnumerable<WorkDTO>> GetAllAsync()
         {
-            Mapper.Initialize(cfg => cfg.CreateMap<Work, WorkDTO>());
-            return Mapper.Map<IEnumerable<Work>, List<WorkDTO>>(await _unitOfWork.WorkRepository.GetAllAsync());
+            var workList = await _unitOfWork.WorkRepository.GetAllAsync();
+            return workList.Select(w => WorkToDTO(w));
         }
 
-        public async Task<WorkDTO> GetById(int id)
+        public async Task<WorkDTO> GetByIdAsync(long id)
         {
             var work = await _unitOfWork.WorkRepository.GetByIdAsync(id);
-            var subcategory = await _unitOfWork.SubcategoryRepository.GetByIdAsync(id);
-
-            var workDto = new WorkDTO()
-            {
-                Id = work.Id,
-                Name = work.Name,
-                Description = work.Description,
-
-                Subcategory = new SubcategoryDTO() {
-                    Id = subcategory.Id ,
-                    Name = subcategory.Name
-                }
-            };
-            return workDto;
+            return WorkToDTO(work);
         }
 
+        public async Task RemoveByIdAsync(long id)
+        {
+            try
+            {
+                _unitOfWork.WorkRepository.Delete(id);
+                await _unitOfWork.SaveAsync();
+            }catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task UpdateAsync(WorkDTO dto)
+        {
+            var subcategory = await _unitOfWork.SubcategoryRepository.GetByIdAsync(dto.SubcategoryId);
+            var work = await _unitOfWork.WorkRepository.GetByIdAsync(dto.Id);
+
+            work.Name = dto.Name;
+            work.Description = dto.Description;
+            work.Icon = dto.Icon;
+            work.Subcategory = subcategory;
+
+            _unitOfWork.WorkRepository.Update(work);
+            await _unitOfWork.SaveAsync();
+        }
+
+        private WorkDTO WorkToDTO(Work work)
+        {
+            return new WorkDTO()
+            {
+                Name = work.Name,
+                Description = work.Description,
+                Subcategory = work.Subcategory.Name,
+                SubcategoryId = work.Subcategory.Id,
+                Id = work.Id
+            };
+        }
     }
 }

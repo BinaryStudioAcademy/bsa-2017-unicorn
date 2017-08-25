@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { NgModel } from '@angular/forms';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { NgModel, NgForm } from '@angular/forms';
 
-import {SuiModule} from 'ng2-semantic-ui';
-
-import { Book } from '../../models/book.model';
+import { SuiModule } from 'ng2-semantic-ui';
+import { BookOrderService } from '../../services/book-order.service';
+import { UserService } from '../../services/user.service';
+import { TokenHelperService } from '../../services/helper/tokenhelper.service';
+import { BookOrder } from '../../models/book/book-order';
+import { Location } from '../../models/location.model';
 
 @Component({
   selector: 'app-book',
@@ -11,20 +14,88 @@ import { Book } from '../../models/book.model';
   styleUrls: ['./book.component.sass']
 })
 export class BookComponent implements OnInit {
-  book: Book;
+  book: BookOrder;
+  formIsSended: boolean;
+  onSending: boolean;
+  isUser: boolean;
+  private defaultLocation: Location;
 
-  constructor() { }
+  @Input() routePath: string;
+  @Input() routeId: number;
+
+  @ViewChild('bookForm') public bookForm: NgForm;
+
+  constructor(private bookOrderService: BookOrderService, private tokenHelper: TokenHelperService, private userService: UserService) {
+    this.isUser = +this.tokenHelper.getClaimByName('roleid') === 2;
+  }
 
   ngOnInit() {
-    this.book = {
-      date: null,
-      address: "",
-      contact: "",
-      description: "",
-      vendor: null,
-      status: "",
-      workType: ""
+    this.formIsSended = false;
+    this.onSending = true;
+
+    if (this.isUser) {
+      this.defaultLocation = {
+        Id: 0,
+        City: "",
+        Adress: "",
+        PostIndex: "",
+        Latitude: 0,
+        Longitude: 0
+      }
+
+      this.book = {
+        date: new Date(),
+        location: this.defaultLocation,
+        description: "",
+        workid: 0, // TODO: selected work from dropdown
+        profile: this.routePath,
+        profileid: this.routeId,
+        customerid: +this.tokenHelper.getClaimByName('profileid'),
+        customerphone: ""
+      }
+
+      this.getUserData();
     }
   }
 
+  makeOrder() {
+    if (this.bookForm.invalid) {
+      return;
+    }
+    this.order();
+  }
+
+  private updateLoader() {
+    this.onSending = !this.onSending;
+  }
+
+  private order() {
+    this.updateLoader();
+    this.bookOrderService.createOrder(this.book)
+      .then(x => {
+        this.updateLoader();
+        this.formIsSended = true;
+      })
+      .catch(err => {
+        this.updateLoader();
+        console.log(err);
+      });
+  }
+
+  private getUserData() {
+    this.userService.getUserForOrder(this.book.customerid)
+      .then(user => {
+        this.book.location = user.Location;
+        this.book.customerphone = user.Phone;
+        this.updateLoader();
+      })
+      .catch(err => {
+        this.updateLoader();
+        console.log(err);
+      });
+  }
+
+  private adressChanged(event) {
+    this.book.location.Id = -1;
+  }
 }

@@ -1,24 +1,41 @@
 @import "../../../global-style-variables.sass";
 
+img
+    object-fit: cover!important;
+
+.main-content
+    width: 960px;
+    margin: 0 auto;
+
 div
     font-family: 'Verdana', 'Century Gothic', 'Calibri', 'Trebuchet MS', sans-serif!important;
 
-
-.flex-container
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-
-.ui.segment
-    margin: 0;
+.ui.segment.tab
+    min-height: 80px;
     
+.ui.secondary.pointing.menu .item
+    text-transform: uppercase;
+
+.ui.grid > .row > .column
+    padding-left: 1rem;
+    padding-right: 1rem;
+
+.without-padd
+    padding-left: 0!important;
+    padding-right: 0!important;
+
 .ui.secondary.pointing.menu .active.item
     border-color: $primary-color;
 
+#header
+    position: relative;
+    display: flex;
+    justify-content: center; 
+    padding: 0;
+    border-radius: 0;    
 
-#tabset
-    flex-basis: 70%;
-
-
-#order
-    flex-basis: 30%;
+.ui.fluid.image
+    width: auto;
+    height: auto;
+    max-width: 960px;
+    max-height: 250px;

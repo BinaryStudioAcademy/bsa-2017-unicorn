@@ -1,34 +1,53 @@
+@import "../../../../global-style-variables.sass";
+
+
+img
+    object-fit: cover!important;
+
 .flex-header
     display: flex;
     flex-direction: row;    
-    justify-content: space-between;    
-
+    justify-content: space-between;  
 
 .flex-body
     display: flex;
     flex-direction: row;    
-    justify-content: space-between;    
+    justify-content: center;    
 
-
-.flex-feature
+.flex-category
     display: flex;    
     align-items: center;
     flex-direction: column;
     text-align: center;     
-    width: 100px;  
+    width: 100px; 
+    margin: 5px 10px; 
 
+.flex-category:hover
+    margin: 0 10px;
+    img
+        width: 90px!important;
+        height: 90px!important;    
 
 .center
     text-align: center;
 
-
-.image-feature 
+.image-category 
     padding: 5px;
     margin: 0;
     width: 80px!important;
     height: 80px!important;
 
+.category-name
+    margin-top: 1em!important;	   
 
-#director-avatar
-    width: 50px;
-    height: 50px;
+.selected-category
+    margin: 0 10px;
+    img
+        width: 90px!important;
+        height: 90px!important;
+
+.close-button
+    margin-bottom: .5em!important;
+
+label
+    font-weight: bold;

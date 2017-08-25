@@ -8,12 +8,14 @@ namespace Unicorn.DataAccess.Entities
         public long Id { get; set; }
         public bool IsDeleted { get; set; }
 
+        public string Icon { get; set; }
+
         public string Name { get; set; }
 
         public string Description { get; set; }
 
         public virtual Category Category { get; set; }
 
-        public ICollection<Work> Works { get; set; }
+        public virtual ICollection<Work> Works { get; set; }
     }
 }

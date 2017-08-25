@@ -1,64 +1,41 @@
-<div class="container">
-<div class="users">
-    <div class="ui list">
-  <div class="item"style="padding: 10px">
-    <img class="ui avatar image"  src="http://psand.ru/wp-content/uploads/2016/04/Kak-ustanovit-svoy-unikalnyiy-avatar-dlya-vseh-saytov-na-WordPress.png">
-    <div class="content">
-      <a class="header">Matthew</a>
-      <div class="description">Last seen yesterday.</div>
+﻿<div class="container">
+    <div class="users">
+        <div (click)="onSelect(dial.id)" *ngFor="let dial of dialogs">
+            <div class="user" *ngIf="dial.id===selectedId" id="active">
+                <img class="ui avatar image" src="http://psand.ru/wp-content/uploads/2016/04/Kak-ustanovit-svoy-unikalnyiy-avatar-dlya-vseh-saytov-na-WordPress.png">
+                <div class="userName"> {{dial.userName}} </div>
+            </div>
+            <div class="user" *ngIf="dial.id!=selectedId">
+                <img class="ui avatar image" src="http://psand.ru/wp-content/uploads/2016/04/Kak-ustanovit-svoy-unikalnyiy-avatar-dlya-vseh-saytov-na-WordPress.png">
+                <div class="userName"> {{dial.userName}} </div>
+            </div>
+        </div>
     </div>
-  </div>
-  <div class="item" style="padding: 10px">
-    <img class="ui avatar image" src="http://psand.ru/wp-content/uploads/2016/04/Kak-ustanovit-svoy-unikalnyiy-avatar-dlya-vseh-saytov-na-WordPress.png">
-    <div class="content">
-      <a class="header">Jenny Hess</a>
-      <div class="description">Last seen  3 days ago.</div>
-    </div>
-  </div>
-  <div class="item" id="active"  style="padding: 10px">
-    <img class="ui avatar image" src="http://psand.ru/wp-content/uploads/2016/04/Kak-ustanovit-svoy-unikalnyiy-avatar-dlya-vseh-saytov-na-WordPress.png">
-    <div class="content">
-      <a class="header">Veronika Ossi</a>
-      <div class="description">Online</div>
-    </div>
-  </div>
-</div>
-</div>
-
-  <div class="chat">
     <ul>
-     <div class="mes_block">
-      <div class="date-me">
-        10 Aug 2017, 18:30
-      </div>
-      <li class="me">
-       My first message
-      </li>
-     </div>
-     <div class="mes_block">
-      <div class="date-him">
-        11 Aug 2017, 09:26
-      </div>
-     <li class="him">
-      it's first answer
-     </li>
-   
-     <li class="him">
-      second answer is longer dksdldskfja;ld ajsdjjds  sdjsjdksdjsd sdksdj hhfh skdskdsdjsdfhfh
-     </li>
-     </div>
-    <div class="mes_block">
-    <div class="date-me">
-        11 Aug 2017, 12:00
-      </div>
-     <li class="me">
-      and more text
-     </li>
-    </div>
+        <div class="chat" *ngFor="let message of dialogs[selectedId].messages">
+            <div class="mes_block" *ngIf="message.me">
+                <div class="date-me">
+                    {{message.date|date:'medium'}}
+                </div>
+                <li class="me">
+                    {{message.messageText}}
+                </li>
+            </div>
+            <div class="mes_block" *ngIf="!message.me">
+                <div class="date-him">
+                    {{message.date|date:'medium'}}
+                </div>
+                <li class="him">
+                    {{message.messageText}}
+                </li>
+            </div>
+        </div>
+
+        <div class="ui icon input" style="margin-top:5px;">
+            <input class="prompt" type="text" placeholder="Type here..." style="display:inline">
+            <i class="talk outline link icon"></i>
+        </div>
+
     </ul>
-  <div class="ui icon input" style="margin-top:5px;">
-      <input class="prompt" type="text" placeholder="Type here..."style="width: 580px; display:inline">
-      <i class="talk outline link icon"></i>
-  </div>
-   </div>
+
 </div>

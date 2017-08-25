@@ -30,7 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL" />
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
@@ -43,19 +46,51 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DTOs\AccountDTO.cs" />
-    <Compile Include="DTOs\BookDTO.cs" />
+    <Compile Include="DTOs\Book\BookDTO.cs" />
+    <Compile Include="DTOs\Book\BookOrderDTO.cs" />
+    <Compile Include="DTOs\Book\VendorBookDTO.cs" />
     <Compile Include="DTOs\CategoryDTO.cs" />
     <Compile Include="DTOs\CompanyDTO.cs" />
+    <Compile Include="DTOs\CompanyPage\CompanyBook.cs" />
+    <Compile Include="DTOs\CompanyPage\CompanyBooks.cs" />
+    <Compile Include="DTOs\CompanyPage\CompanyWorks.cs" />
+    <Compile Include="DTOs\CompanyPage\CompanyCategory.cs" />
+    <Compile Include="DTOs\CompanyPage\CompanyContacts.cs" />
+    <Compile Include="DTOs\CompanyPage\CompanyDetails.cs" />
+    <Compile Include="DTOs\CompanyPage\CompanyReviews.cs" />
+    <Compile Include="DTOs\CompanyPage\CompanySubcategory.cs" />
+    <Compile Include="DTOs\CompanyPage\CompanyVendor.cs" />
+    <Compile Include="DTOs\CompanyPage\CompanyVendors.cs" />
+    <Compile Include="DTOs\CompanyPage\CompanyWork.cs" />
+    <Compile Include="DTOs\CompanyPage\ShortCompanyDTO.cs" />
+    <Compile Include="DTOs\ContactProviderDTO.cs" />
+    <Compile Include="DTOs\Contact\ContactDTO.cs" />
+    <Compile Include="DTOs\Contact\ContactShortDTO.cs" />
     <Compile Include="DTOs\CustomerDTO.cs" />
-    <Compile Include="DTOs\HistoryDTO.cs" />
+    <Compile Include="DTOs\History\HistoryDTO.cs" />
+    <Compile Include="DTOs\History\VendorHistoryDTO.cs" />
     <Compile Include="DTOs\LocationDTO.cs" />
     <Compile Include="DTOs\PermissionDTO.cs" />
     <Compile Include="DTOs\PersonDTO.cs" />
+    <Compile Include="DTOs\Popular\PerformerDTO.cs" />
+    <Compile Include="DTOs\Popular\PopularCategoryDTO.cs" />
+    <Compile Include="DTOs\PortfolioItemDTO.cs" />
+    <Compile Include="DTOs\RatingDTO.cs" />
+    <Compile Include="DTOs\Register\CompanyRegisterDTO.cs" />
+    <Compile Include="DTOs\Register\CustomerRegisterDTO.cs" />
+    <Compile Include="DTOs\Register\VendorRegisterDTO.cs" />
     <Compile Include="DTOs\ReviewDTO.cs" />
     <Compile Include="DTOs\RoleDTO.cs" />
+    <Compile Include="DTOs\ShortProfileInfoDTO.cs" />
     <Compile Include="DTOs\SocialAccountDTO.cs" />
-    <Compile Include="DTOs\SubcategoryDTO.cs" />
-    <Compile Include="DTOs\VendorDTO.cs" />
+    <Compile Include="DTOs\Subcategory\SubcategoryDTO.cs" />
+    <Compile Include="DTOs\Subcategory\SubcategoryShortDTO.cs" />
+    <Compile Include="DTOs\User\BookShortDto.cs" />
+    <Compile Include="DTOs\User\HistoryShortDto.cs" />
+    <Compile Include="DTOs\User\UserForOrder.cs" />
+    <Compile Include="DTOs\User\UserShortDTO.cs" />
+    <Compile Include="DTOs\Vendor\ShortVendorDTO.cs" />
+    <Compile Include="DTOs\Vendor\VendorDTO.cs" />
     <Compile Include="DTOs\WorkDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="services\HttpWrapClientService.cs" />
@@ -73,7 +108,12 @@
     <Compile Include="services\implementations\JsonRequestContent.cs" />
     <Compile Include="services\implementations\QueryStringBuilder.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Unicorn.DataAccess\Unicorn.DataAccess.csproj">
+      <Project>{3CD69EAE-0362-4F57-91FA-84507C885797}</Project>
+      <Name>Unicorn.DataAccess</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>

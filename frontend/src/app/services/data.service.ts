@@ -3,6 +3,8 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 
 import 'rxjs/add/operator/toPromise';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
 
 @Injectable()
 export class DataService {
@@ -55,9 +57,23 @@ export class DataService {
       .catch(this.handleError);
   }
 
+  getFullRequest<T>(url: string): Promise<T> {
+    return this.http
+      .get<T>(this.buildUrl(url), {observe: 'response'})
+      .toPromise()
+      .catch(this.handleError);
+  }
+
   postRequest<T>(url: string, payload: Object): Promise<T> {
     return this.http
       .post<T>(this.buildUrl(url), this.prepareData(payload), {headers: this.getHeaders()})
+      .toPromise()
+      .catch(this.handleError);
+  }
+
+  postFullRequest<T>(url: string, payload: Object): Promise<T> {
+    return this.http
+      .post<T>(this.buildUrl(url), this.prepareData(payload), {headers: this.getHeaders(), observe: 'response'})
       .toPromise()
       .catch(this.handleError);
   }
@@ -69,9 +85,23 @@ export class DataService {
       .catch(this.handleError);
   }
 
+  putFullRequest<T>(url: string, payload: Object): Promise<T> {
+    return this.http
+      .put<T>(this.buildUrl(url), this.prepareData(payload), {headers: this.getHeaders(), observe: 'response'})
+      .toPromise()
+      .catch(this.handleError);
+  }
+
   deleteRequest<T>(url: string, payload: Object): Promise<T> {
     return this.http
       .delete<T>(this.buildUrl(url), {headers: this.getHeaders()})
+      .toPromise()
+      .catch(this.handleError);
+  }
+
+  deleteFullRequest<T>(url: string, payload: Object): Promise<T> {
+    return this.http
+      .delete<T>(this.buildUrl(url), {headers: this.getHeaders(), observe: 'response'})
       .toPromise()
       .catch(this.handleError);
   }

@@ -1,40 +1,66 @@
 <div class="wrapper">
-  <h1 class="color-main">{{title}}</h1>
-  <div class="color-text slogan">
-    <p>{{slogan}}</p>
-  </div>
-  <div class="search-container">
-    <div class="item-search">
-      <p class="color-text">{{labelSearch}}</p>
-       <div class="ui input fill-horizontal"> 
-        <input class="search-input" type="text" placeholder="{{placeholderSearch}}" [(ngModel)]="searchText">
-      </div>
+    <div class="section-wrapper">
+        <div class="section">
+            <div class="slogan">
+                <h1>{{title}}</h1>
+                <p>{{slogan}}</p>
+            </div>
+            <div class="search-container">
+                <div class="search-item">
+                    <p>{{labelSearch}}</p>
+                    <div class="ui input fill-horizontal">
+                        <input class="search-input" type="text" placeholder="{{placeholderCategory}}" [(ngModel)]="searchCategory">
+                        <!-- <div style='overflow:auto; width:200px;height:40px;'>
+            <div *ngFor="let category of categories | search:'id,text':searchText">{{category.text}}</div> 
+            </div> -->
+                    </div>
+                </div>
+                <div class="search-item">
+                    <div class="ui input fill-horizontal">
+                        <input class="search-input" type="text" placeholder="{{placeholderSubcategory}}" [(ngModel)]="searchSubcategory">
+                    </div>
+                </div>
+                <div class="search-item">
+                    <p>{{labelDate}}</p>
+                    <div class="ui left icon input">
+                        <i class="calendar icon"></i>
+                        <input class="datepicker" placeholder="RIGHT NOW" suiDatepicker [(ngModel)]="searchDate" [pickerMode]="mode" [pickerFirstDayOfWeek]="firstDayOfWeek" [pickerUseNativeOnMobile]="false">
+                    </div>
+                </div>
+                <div class="search-item">
+                    <button class="ui button bg-color-main btn-search" (click)="searchVendor()">SEARCH</button>
+                </div>
+            </div>
+            <div class="section2-wrapper">
+                <popular-tasks></popular-tasks>
+            </div>
+            <div class="info-wrapper">
+                <div class="customer">
+                    <div class="customer-section">
+                        <div class="info-container">
+                            <h4>For customers</h4>
+                            <p>
+                                If you have any problem in your house or you need to do some work you can find vendors here and delegate them all tasks.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-title">
+                    <span>Unicorn</span>
+                    <p>allows to connect customers and vendors</p>
+                </div>
+                <div class="vendor">
+                    <div class="vendor-section">
+                        <div class="info-container">
+                            <h4>For vendors</h4>
+                            <p>
+                                At the same time, if you are vendor, here you can share you skills, be assigned to some companies and provide their services.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="item-date">
-      <p class="color-text">{{labelDate}}</p>
-      <div class="ui left icon input">
-            <i class="calendar icon"></i>
-            <input class="datepicker" placeholder="Now" suiDatepicker
-                   [(ngModel)]="searchDate"
-                   [pickerMode]="mode"
-                   [pickerFirstDayOfWeek]="firstDayOfWeek"
-                   [pickerUseNativeOnMobile]="false">
-        </div>                                              
-    </div>
-    <div class="item-button"> 
-      <button class="ui button bg-color-main btn-search" (click)="searchVendor()">{{labelButton}}</button>  
-    </div>     
-  </div>
-  <popular-tasks></popular-tasks>
-  <base href="https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/">
-  <div id="slider">
-    <figure>
-      <img src="/assets/images/slider-01.jpg" alt>
-      <img src="/assets/images/slider-02.jpg" alt>
-      <img src="/assets/images/slider-03.jpg" alt>
-      <img src="/assets/images/slider-04.jpg" alt>
-      <img src="/assets/images/slider-01.jpg" alt>      
-    </figure>
-  </div>
-  <app-footer></app-footer>
 </div>

@@ -4,75 +4,121 @@ import { DataService } from './data.service';
 
 import { Vendor } from '../models/vendor.model';
 import { PortfolioItem } from '../models/portfolio-item.model';
+import { Review } from "../models/review.model";
+import { Subcategory } from "../models/subcategory.model";
+import { Contact } from "../models/contact.model";
+import { Category } from "../models/category.model";
+import { VendorBook } from "../models/book/vendor-book.model";
+import { VendorHistory } from "../models/vendor-history.model";
+import { Work } from "../models/work.model";
 
 @Injectable()
 export class VendorService {
+  private apiController: string;
 
-  constructor(private dataService: DataService) { }
-
-  getAllVendors() : Vendor[] {
-    return;
+  constructor(private dataService: DataService) 
+  { 
+    dataService.setHeader('Content-Type', 'application/json');
+    this.apiController = "vendors";
   }
 
-  getVendor(id: number) : Vendor {
-    var vendor: Vendor = {
-    id: 0,
-    fio: "Name Surname",
-    location: "Kyiv",
-    rang: "Middle .Net developer",
-    avatarUrl: "https://image.flaticon.com/icons/png/512/78/78373.png",
-    workLetter: "My name is Randy Patterson, and I’m currently looking for a job in youth services. I have 10 years of experience working with youth agencies. I have a bachelor’s degree in outdoor education. I raise money, train leaders, and organize units. I have raised over $100,000 each of the last six years. I consider myself a good public speaker, and I have a good sense of humor.",
-    rating: 4,
-    reviewsCount: 3,
-    features: ["Excellent service", "We are going fast", "We've scratched cats since 1997", "Warm hands"],
-    workList: null
-    }
-    return vendor;
+  getAllVendors() : Promise<any> {
+    return this.dataService.getFullRequest<Vendor[]>(this.apiController)
+      .catch(err => alert(err));
   }
 
-  getVendorPorfolio(vendorId: number) : PortfolioItem[] {
-    var history: PortfolioItem[] = [
-      {
-        category: "Work category",
-        workType: "Work type",
-        image: "https://camo.githubusercontent.com/f8ea5eab7494f955e90f60abc1d13f2ce2c2e540/68747470733a2f2f662e636c6f75642e6769746875622e636f6d2f6173736574732f323037383234352f3235393331332f35653833313336322d386362612d313165322d383435332d6536626439353663383961342e706e67",
-        rating: 4,
-        historyId: 1,
-        reviewId: 1
-      },
-      {
-        category: "Work category",
-        workType: "Work type",
-        image: "https://camo.githubusercontent.com/f8ea5eab7494f955e90f60abc1d13f2ce2c2e540/68747470733a2f2f662e636c6f75642e6769746875622e636f6d2f6173736574732f323037383234352f3235393331332f35653833313336322d386362612d313165322d383435332d6536626439353663383961342e706e67",
-        rating: 4,
-        historyId: 1,
-        reviewId: 1
-      },
-      {
-        category: "Work category",
-        workType: "Work type",
-        image: "https://camo.githubusercontent.com/f8ea5eab7494f955e90f60abc1d13f2ce2c2e540/68747470733a2f2f662e636c6f75642e6769746875622e636f6d2f6173736574732f323037383234352f3235393331332f35653833313336322d386362612d313165322d383435332d6536626439353663383961342e706e67",
-        rating: 4,
-        historyId: 1,
-        reviewId: 1
-      },
-      {
-        category: "Work category",
-        workType: "Work type",
-        image: "https://camo.githubusercontent.com/f8ea5eab7494f955e90f60abc1d13f2ce2c2e540/68747470733a2f2f662e636c6f75642e6769746875622e636f6d2f6173736574732f323037383234352f3235393331332f35653833313336322d386362612d313165322d383435332d6536626439353663383961342e706e67",
-        rating: 4,
-        historyId: 1,
-        reviewId: 1
-      },
-      {
-        category: "Work category",
-        workType: "Work type",
-        image: "https://camo.githubusercontent.com/f8ea5eab7494f955e90f60abc1d13f2ce2c2e540/68747470733a2f2f662e636c6f75642e6769746875622e636f6d2f6173736574732f323037383234352f3235393331332f35653833313336322d386362612d313165322d383435332d6536626439353663383961342e706e67",
-        rating: 4,
-        historyId: 1,
-        reviewId: 1
-      }
-    ];
-      return history;
+  getVendor(id: number) : Promise<any> {
+    return this.dataService.getFullRequest<Vendor>(`${this.apiController}/${id}`)
+      .catch(err => alert(err));
+  }
+
+  getRating(id: number): Promise<any> {
+    return this.dataService.getFullRequest<number>(`${this.apiController}/${id}/rating`)
+      .catch(err => alert(err));
+   }
+
+  getCategories(id: number): Promise<any> {
+    return this.dataService.getFullRequest<Category[]>(`${this.apiController}/${id}/categories`)
+      .catch(err => alert(err));
+  }
+
+  getVendorWorks(id: number): Promise<any> {
+    return this.dataService.getFullRequest<Work[]>(`${this.apiController}/${id}/works`)
+      .catch(err => alert(err));
+  }
+
+  getOrders(id: number): Promise<any> {
+    return this.dataService.getFullRequest<VendorBook[]>(`${this.apiController}/${id}/orders`)
+      .catch(err => alert(err));
+  }
+
+  getReviews(id: number): Promise<any> {
+    return this.dataService.getFullRequest<Review[]>(`${this.apiController}/${id}/reviews`)
+      .catch(err => alert(err));
+  }
+
+  getContacts(id: number): Promise<any> {
+    return this.dataService.getFullRequest<Contact[]>(`${this.apiController}/${id}/contacts`)
+      .catch(err => alert(err));;
+  }
+
+  getVendorPorfolio(vendorId: number): Promise<any> {
+    return this.dataService.getFullRequest<PortfolioItem[]>(`${this.apiController}/${vendorId}/portfolio`)
+      .catch(err => alert(err));
+  }
+
+  getVendorHistory(vendorId: number): Promise<any> {
+    return this.dataService.getFullRequest<VendorHistory[]>(`${this.apiController}/${vendorId}/history`)
+      .catch(err => alert(err));
+  }
+
+  postVendorWork(vendorId: number, work: Work): Promise<any> {
+    return this.dataService.postFullRequest<Work[]>(`${this.apiController}/${vendorId}/works`, work)
+      .catch(err => alert(err));
+  }
+
+  postVendorPorfolio(vendorId: number, item: PortfolioItem): Promise<any> {
+    return this.dataService.postFullRequest<PortfolioItem>(`${this.apiController}/${vendorId}/portfolio`, item)
+      .catch(err => alert(err));
+  }
+
+  postVendorContact(vendorId: number, contact: Contact): Promise<any> {
+    return this.dataService.postFullRequest<Contact>(`${this.apiController}/${vendorId}/contacts`, contact)
+      .catch(err => alert(err));
+  }
+
+  updateVendor(vendor: Vendor): Promise<any> {
+    return this.dataService.putFullRequest<Vendor>(`${this.apiController}/${vendor.Id}`, vendor)
+      .catch(err => alert(err));
+  }
+
+  updateVendorPortfolio(vendorId: number, portfolio: PortfolioItem[]): Promise<any> {
+    return this.dataService.putFullRequest<PortfolioItem[]>(`${this.apiController}/${vendorId}/portfolio`, portfolio)
+      .catch(err => alert(err));
+  }
+
+  updateContact(id: number, contact: Contact): Promise<any> {
+    return this.dataService.putFullRequest<Contact>(`${this.apiController}/${id}/contacts/${contact.Id}`, contact)
+      .catch(err => alert(err));;
+  }
+
+  updateOrder(id: number, order: VendorBook): Promise<any> {
+    return this.dataService.putFullRequest<VendorBook[]>(`${this.apiController}/${id}/orders/${order.Id}`, order)
+      .catch(err => alert(err));
+  }
+
+  updateVendorWork(vendorId: number, workId: number, work: Work): Promise<any> {
+    return this.dataService.putFullRequest<Work>(`${this.apiController}/${vendorId}/works/${workId}`, work)
+      .catch(err => alert(err));
+  }
+
+  removeVendorWork(vendorId: number, workId: number, work: Work): Promise<any> {
+    return this.dataService.deleteFullRequest<Work[]>(`${this.apiController}/${vendorId}/works/${workId}`, work)
+      .catch(err => alert(err));
+  }
+
+  removeContact(id: number, contact: Contact): Promise<any> {
+    return this.dataService.deleteFullRequest<any>(`${this.apiController}/${id}/contacts/${contact.Id}`, contact)
+      .catch(err => alert(err));;
   }
 }

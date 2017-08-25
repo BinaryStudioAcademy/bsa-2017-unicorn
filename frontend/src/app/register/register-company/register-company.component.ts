@@ -1,6 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
 
+import * as firebase from 'firebase/app';
+import { RegisterService } from '../../services/register.service';
+
+import { SuiActiveModal } from 'ng2-semantic-ui';
 import { Company } from '../models/company';
+import { HelperService } from '../../services/helper/helper.service';
+import { AuthenticationEventService } from '../../services/events/authenticationevent.service';
 
 @Component({
   selector: 'app-register-company',
@@ -9,50 +15,51 @@ import { Company } from '../models/company';
 })
 export class RegisterCompanyComponent implements OnInit {
 
-  @Input() social: any;
+  @Input() social: firebase.User;
+  @Input() public modal: SuiActiveModal<void, void, void>;
 
+  name: string;
   mode: string;
-  error: boolean = false;
   phone: string;
   description: string;
   staff: number;
+  email: string;
   foundation: any;
 
-  constructor() { }
+  constructor(private registerService: RegisterService,
+    private helperService: HelperService,
+    private authEventService: AuthenticationEventService) { }
 
   ngOnInit() {
     this.mode = 'date';
-  }
-
-  valid(): boolean {
-    return this.foundation !== undefined && this.staff != undefined && this.phone != undefined
-      && this.description !== undefined;
+    this.email = this.social.email || null;
+    this.phone = this.social.phoneNumber || null;
+    this.name = this.social.displayName || null;
   }
 
   aggregateInfo(): Company {
-    let info = new Company();
-    info.foundation = this.foundation;
-    info.staff = this.staff;
-    info.description = this.description;
-    info.phone = this.phone;
-    info.email = this.social.email;
-    info.image = this.social.image;
-    info.name = this.social.name;
-    info.provider = this.social.provider;
-    info.uid = this.social.uid;
-
-    return info;
+    return {
+      foundation: this.foundation,
+      staff: this.staff,
+      description: this.description,
+      phone: this.phone,
+      email: this.email,
+      image: this.social.photoURL,
+      name: this.name,
+      provider: this.social.providerData[0].providerId,
+      uid: this.social.uid
+    };
   }
 
-  confirmRegister() {
-    if (this.valid()) {
-      this.error = false;
-      console.log('valid');
+  confirmRegister(formData) {
+    if (formData.valid) {
       let regInfo = this.aggregateInfo();
-      console.log(regInfo);
-    } else {
-      this.error = true;
+      this.registerService.confirmCompany(regInfo).then(resp => {
+        this.modal.deny(null);
+        localStorage.setItem('token', resp.headers.get('token'));
+        this.authEventService.signIn();
+        this.helperService.redirectAfterAuthentication();
+      });
     }
   }
-
 }

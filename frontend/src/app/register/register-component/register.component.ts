@@ -1,110 +1,157 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
 import { Location } from '@angular/common';
 
-import { AuthService } from 'angular2-social-login';
+import { AuthenticationLoginService } from '../../services/auth/authenticationlogin.service';
+import { AuthenticationEventService } from '../../services/events/authenticationevent.service';
 
-import { RegisterInfo } from '../models/register-info';
+import * as firebase from 'firebase/app';
+
+import { HelperService } from '../../services/helper/helper.service';
+
+import { RegisterService } from '../../services/register.service';
+
+import { ComponentModalConfig, ModalSize, SuiModal } from 'ng2-semantic-ui';
+
+export class RegisterModal extends ComponentModalConfig<void> {
+  constructor() {
+    super(RegisterComponent);
+    this.size = ModalSize.Small;
+    this.isInverted = true;
+  }
+}
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
-  providers: []
+  providers: [RegisterService]
 })
 export class RegisterComponent implements OnInit, OnDestroy {
-
-  @Input() enabled: boolean;
+  private currentUser: firebase.User = null;
 
   mode: string;
-  modalSize: string;
+  error: boolean = false;
 
-  public user;
-  sub: any;
-  isLogged: boolean = false;
+  public roles: { [role: string]: boolean } = {};
+
+  social: any;
+
+  isLogged: boolean;
+
   roleSelected = false;
 
   isCustomer = false;
   isVendor = false;
   isCompany = false;
 
-  error: boolean = false;
-
-  phone: string;
-  birthday;
-  gender: string;
-  options = ['Male', 'Female'];
-
   constructor(
-    public auth: AuthService,
-    public location: Location,
-    public router: Router) { }
+    public modal: SuiModal<void>,
+    private zone: NgZone,
+    private helperService: HelperService,
+    public registerService: RegisterService,
+    public authLoginService: AuthenticationLoginService,
+    private authEventService: AuthenticationEventService) {
+
+    this.mode = 'date';
+    this.authLoginService.signOut();
+
+    this.isLogged = false;
+    this.error = false;
+
+    this.initRoles();
+  }
+
+  handleErrorLogin() {
+    this.zone.run(() => this.error = true);
+  }
+
+  handleResponse(resp: any): void {
+    switch (resp.status) {
+      case 204: {
+        this.error = false;
+        this.zone.run(() => this.isLogged = !this.isLogged);
+        break;
+      }
+      case 200: {
+        this.modal.deny(null);
+        this.authLoginService.saveJwt(resp.headers.get('token'));
+        this.error = false;
+        this.authEventService.signIn();
+        this.zone.run(() => this.helperService.redirectAfterAuthentication());
+        break;
+      }
+      default: {
+        this.handleErrorLogin();
+        break;
+      }
+    }
+  }
+
+  loginWithGoogle() {
+    this.authLoginService.loginWithGoogle()
+      .then(resp => {
+        this.handleResponse(resp);
+      })
+      .catch(err => {
+        this.handleErrorLogin();
+      });
+  }
+
+  loginWithFacebook() {
+    this.authLoginService.loginWithFacebook()
+      .then(resp => {
+        this.handleResponse(resp);
+      })
+      .catch(err => {
+        this.handleErrorLogin();
+      });
+  }
+
+  loginWithTwitter() {
+    this.authLoginService.loginWithTwitter()
+      .then(resp => {
+        this.handleResponse(resp);
+      })
+      .catch(err => {
+        this.handleErrorLogin();
+      });
+  }
+
+  clearRoles() {
+    for (let key in this.roles) {
+      this.roles[key] = false;
+    }
+  }
+
+  initRoles() {
+    this.roles['customer'] = false;
+    this.roles['vendor'] = false;
+    this.roles['company'] = false;
+  }
 
   ngOnInit() {
-    this.mode = 'date';
-    this.modalSize = 'tiny';
+    this.authLoginService.authState.subscribe(user => {
+      if (user) {
+        this.currentUser = user;
+      } else {
+        this.currentUser = null;
+      }
+    });
   }
 
   ngOnDestroy() {
-    //this.sub.unsubscribe();
+    this.error = false;
+    this.isLogged = false;
+    this.isCompany = false;
+    this.isVendor = false;
+    this.isCustomer = false;
+    this.roleSelected = false;
+    this.social = undefined;
+    this.clearRoles();
   }
 
   selectRole(role: string) {
-    switch (role) {
-      case 'customer': this.isCustomer = true; break;
-      case 'vendor': this.isVendor = true; break;
-      case 'company': this.isCompany = true; break;
-    }
-    this.roleSelected = true;
+    this.clearRoles();
+    this.roles[role] = true;
   }
-
-  register(provider: string) {
-    this.sub = this.auth.login(provider).subscribe(
-      (data) => {
-        console.log(data);
-        this.user=data;
-        this.isLogged = true;
-      }
-    )
-  }
-
-  logout() {
-    this.auth.logout().subscribe(
-      (data) => {
-        console.log(data);
-        this.user=null;
-        this.isLogged = false;
-      }
-    )
-  }
-
-  valid(): boolean {
-    return this.birthday !== undefined && this.gender != undefined && this.phone != undefined;
-  }
-
-  aggregateInfo(): RegisterInfo{
-    let info = new RegisterInfo();
-    info.birthday = this.birthday;
-    info.gender = this.gender;
-    info.phone = this.phone;
-    info.email = this.user.email;
-    info.image = this.user.image;
-    info.name = this.user.name;
-    info.provider = this.user.provider;
-    info.uid = this.user.uid;
-
-    return info;
-  }
-
-  confirmRegister() {
-    if (this.valid()) {
-      this.error = false;
-      console.log('valid');
-      let regInfo = this.aggregateInfo();
-      console.log(regInfo);
-    } else {
-      this.error = true;
-    }
-  }
-
 }

@@ -8,10 +8,7 @@ import { RegisterComponent } from './register-component/register.component';
 import { RegisterRoutingModule } from './register-routing.module';
 
 import { SuiModule } from 'ng2-semantic-ui';
-import { Angular2SocialLoginModule } from 'angular2-social-login';
-import { AuthService } from 'angular2-social-login';
 
-import { providers } from './social-providers';
 import { RegisterUserComponent } from './register-user/register-user.component';
 import { RegisterVendorComponent } from './register-vendor/register-vendor.component';
 import { RegisterCompanyComponent } from './register-company/register-company.component';
@@ -21,8 +18,7 @@ import { RegisterCompanyComponent } from './register-company/register-company.co
     FormsModule,
     SuiModule,
     CommonModule,
-    RegisterRoutingModule,
-    Angular2SocialLoginModule
+    RegisterRoutingModule
   ],
   declarations: [
     RegisterComponent,
@@ -31,8 +27,6 @@ import { RegisterCompanyComponent } from './register-company/register-company.co
     RegisterCompanyComponent
   ],
   exports: [RegisterComponent],
-  providers: [AuthService]
+  providers: []
 })
 export class RegisterModule { }
-
-Angular2SocialLoginModule.loadProvidersScripts(providers);

@@ -1,13 +1,15 @@
 ﻿using System.Collections.Generic;
 
-namespace Unicorn.Core.DTOs
+using Unicorn.Shared.DTOs.Book;
+
+namespace Unicorn.Shared.DTOs
 {
     public class CustomerDTO
     {
         public long Id { get; set; }
 
-        public virtual PersonDTO Person { get; set; }
+        public PersonDTO Person { get; set; }
 
-        public virtual ICollection<BookDTO> Books { get; set; }
+        public ICollection<BookDTO> Books { get; set; }
     }
 }

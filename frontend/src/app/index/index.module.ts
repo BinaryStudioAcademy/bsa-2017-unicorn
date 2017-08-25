@@ -6,7 +6,11 @@ import { SuiModule } from 'ng2-semantic-ui';
 import { IndexComponent } from './index-component/index.component';
 import { IndexRoutingModule } from './index-routing.module';
 import { PopularTasksComponent } from './index-component/popular-tasks/popular-tasks.component';
-import { FooterComponent } from '../footer/footer.component';
+// import { FooterComponent } from '../footer/footer.component';
+import { SearchPipe } from './search-pipe/search.pipe';
+
+import { DataService } from '../services/data.service';
+import { PopularService } from '../services/popular.service';
 
 @NgModule({
   imports: [
@@ -18,7 +22,12 @@ import { FooterComponent } from '../footer/footer.component';
   declarations: [
     IndexComponent,
     PopularTasksComponent,
-    FooterComponent
+    // FooterComponent,
+    SearchPipe
+  ],
+  providers: [
+    PopularService,
+    DataService
   ]
 })
 export class IndexModule { }

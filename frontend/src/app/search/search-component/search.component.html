@@ -1,0 +1,169 @@
+<div class="ui grid remove-margin-top-bottom">
+  <div class="ten wide column settings-container">
+      <div class="row remove-padding-top">
+          <div class="ui grid">
+              <div class="eight wide column remove-padding-bottom">
+                <label>What to do</label>
+              </div>
+              <div class="eight wide column remove-padding-bottom">
+                <label>When to do it</label>                  
+              </div>
+              <div class="four wide column ui input">
+                <input type="text" placeholder="{{placeholderCategory}}" [(ngModel)]="category">
+              </div>
+              <div class="four wide column  ui input">
+                <input type="text" placeholder="{{placeholderSubcategory}}" [(ngModel)]="subcategory">
+              </div>
+              <div class="four wide column ui left icon input">
+                  <i class="calendar icon"></i>
+                  <input class="datepicker" placeholder="RIGHT NOW" suiDatepicker 
+                          [(ngModel)]="date" 
+                          [pickerMode]="mode" 
+                          [pickerFirstDayOfWeek]="firstDayOfWeek" 
+                          [pickerUseNativeOnMobile]="false">
+              </div>
+              <div class="four wide column">
+                <button class="ui active button main btn-search" (click)="searchCompany()">SEARCH</button>
+              </div>
+              <div class="sixteen wide column remove-padding-top">
+                <sui-accordion class="fluid">
+                  <sui-accordion-panel [isOpen]="filtersIsOpen">
+                    <div title>
+                      <i class="filter icon"></i>
+                      <label>Additional filters</label>
+                    </div>
+                    <div content>
+                      <div class="ui grid container segment">
+                        <div class="six wide column remove-padding-bottom">  
+                            <div class="ui icon input">                        
+                              <input type="text" placeholder="COMPANY NAME" [(ngModel)]="searchCategory">
+                              <i class="search icon"></i>
+                            </div>
+                        </div>
+                        <div class="four wide column remove-padding-bottom padding-top">  
+                            <div class="ui checkbox">
+                              <input type="checkbox" name="example">
+                              <label class="checkbox-position">Only with reviews</label>
+                            </div>
+                          </div>            
+                        <div class="six wide column remove-padding-bottom">
+                          <sui-multi-select [(ngModel)]="selCat"
+                                            [options]="filterCat"                                            
+                                            [maxSelected]="5"
+                                            icon="list"
+                                            placeholder="CATEGORIES"
+                                            #select>
+                            <div class="ui icon search input">
+                                <i class="search icon"></i>
+                                <input suiSelectSearch type="text" placeholder="Search options...">
+                            </div>
+                            <div class="divider"></div>
+                            <div class="header">
+                                <i class="list icon"></i>
+                                Categories
+                            </div>
+                            <div class="scrolling menu">
+                                <sui-select-option *ngFor="let o of filterCat" [value]="o">{{o}}</sui-select-option>
+                            </div>
+                          </sui-multi-select>
+                        </div> 
+                        <div class="six wide column remove-padding-bottom">  
+                          <div class="ui icon input">                        
+                            <input places-auto-complete
+                            (initialized$)="initialized($event)"
+                            (place_changed)="placeChanged(place)"
+                            [types]="['geocode']" 
+                            placeholder="LOCATION"/>
+                          </div>
+                        </div>                                   
+                        <div class="sixteen wide column remove-padding-top">
+                          <button class="ui active button main button-right" (click)="searchCompany()">APPLY</button>
+                          <button class="ui active button secondary button-right" (click)="resetFilters()">RESET</button>
+                        </div>
+                      </div>
+                    </div>
+                  </sui-accordion-panel> 
+                </sui-accordion>     
+              </div>
+              <div class="twelve wide column remove-padding-top">
+                <h5 class="ui header">                  
+                  <div class="content">
+                    <i class="sort content descending icon"></i>
+                    Sort by
+                    <sui-select class="inline" [(ngModel)]="selectedRange" placeholder="rating">
+                      <sui-select-option value="rating"></sui-select-option>
+                      <sui-select-option value="name"></sui-select-option>
+                      <sui-select-option value="distance"></sui-select-option>
+                    </sui-select>
+                  </div>
+                </h5>
+              </div>
+              <div class="four wide column remove-padding-top">
+                <h5 class="ui header">                  
+                  <div class="content align-right">
+                    <i class="block layout icon"></i>
+                    Page size:
+                    <sui-select class="inline" [(ngModel)]="pageSize" placeholder="20">
+                      <sui-select-option value="20"></sui-select-option>
+                      <sui-select-option value="40"></sui-select-option>
+                      <sui-select-option value="60"></sui-select-option>
+                    </sui-select>
+                  </div>
+                </h5>              
+              </div>
+          </div>
+      </div>
+      <div class="ui divider"></div>
+      <div *ngIf="companies" class="ui grid">
+        <div class="three column row remove-padding-top">
+          <div class="column cell" *ngFor="let company of companies.slice((selectedPage - 1) * pageSize, selectedPage * pageSize)">
+            <a href="/company/{{company.Id}}" class="ui medium image">
+              <img class="ui fluid image" src="{{company.Avatar}}"/>
+              <div class="row">
+                <h3>{{company.Name}} ({{company.FoundationDate | date:'y'}})</h3>
+              </div>
+              <div class="row">
+                <h4>{{company.Location.City}}, {{company.Location.Adress}}</h4>
+              </div>
+            </a>
+            <!-- <div class="categories-container">
+              <div class="category" *ngFor="let work of company.Works">{{work.Subcategory.Category.Name}}</div>
+            </div> -->
+            <div class="ui grid">
+              <div class="three column row padding-top">
+                <div class="column">
+                  <sui-rating class="star" [ngModel]="company.Rating" [isReadonly]="true"></sui-rating>
+                </div>
+                <div class="column">                      
+                  <a href="/company/{{company.Id}}">Reviews({{company.ReviewsCount}})</a>
+                </div>
+              </div>
+            </div>            
+          </div>
+        </div>
+      </div>
+      <div *ngIf="companies.length > 12" class="flex-centered"> 
+        <sui-pagination [collectionSize]="companies.length"
+                        [pageSize]="pageSize"
+                        [maxSize]="maxSize"
+                        [hasEllipses]="hasEllipses"
+                        [(page)]="selectedPage">
+        </sui-pagination>     
+      </div>
+      <div *ngIf="companies.length == 0" class="ui active inverted dimmer" style="z-index: 0;">
+        <div class="ui text loader">Loading</div>
+      </div> 
+  </div>
+  <div class="six wide column">
+    <div class="row">
+      <div class="map-container">
+        <ngui-map class="map" zoom="14" center="Brampton, Canada">
+          <marker *ngFor="let marker of markers" 
+              [position]="marker.pos"
+              [label]="marker.title"
+              [title]="marker.title"></marker>
+        </ngui-map>
+      </div>
+    </div>
+  </div>
+</div>

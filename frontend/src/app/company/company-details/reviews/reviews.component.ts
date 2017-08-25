@@ -1,6 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Company } from "../../../models/company.model";
+import { Component, OnInit } from '@angular/core';
 import { Review } from "../../../models/review.model";
+import { CompanyService } from "../../../services/company-services/company.service";
+import { ActivatedRoute, Params } from "@angular/router";
+import { CompanyReviews } from "../../../models/company-page/company-reviews.model";
 
 @Component({
   selector: 'company-reviews',
@@ -8,11 +10,23 @@ import { Review } from "../../../models/review.model";
   styleUrls: ['./reviews.component.sass']
 })
 export class ReviewsComponent implements OnInit {
-@Input()
-reviews: Review[];
-  constructor() { }
+company: CompanyReviews;
+isReviewsEmpty: boolean = true;
+constructor(private companyService: CompanyService,
+  private route: ActivatedRoute) { }
 
-  ngOnInit() {
+  ngOnInit() {       
+    this.route.params
+    .switchMap((params: Params) => this.companyService.getCompanyReviews(params['id']))
+    .subscribe(res => {
+      if(res.Reviews.length == 0){
+        this.isReviewsEmpty = true;
+      }
+      else{
+        this.isReviewsEmpty = false;
+      }
+      this.company = res;
+    });   
   }
 
 }

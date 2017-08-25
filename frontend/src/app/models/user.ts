@@ -1,16 +1,18 @@
 import {Book} from './book.model'
+import {History} from './history'
 export interface User
 {
-	id: number;
-	isDeleted:boolean;
-	firstName: string;
-	middleName: string;
-	surName: string;
-	avatarUrl: string;
-	location: string;
-	books: Book[];
-	gender:string;
-	email:string;
-	phone:string;
-	dateCreated: Date;
+	Id: number;
+	Name: string;
+	MiddleName: string;
+	SurName: string;
+	Avatar: string;
+	Background: string;
+	LocationId : string;
+	Books: Book[];
+	History: History[];
+	Email:string;
+	Phone:string;
+	DateCreated: Date;
+	Birthday: Date;
 }

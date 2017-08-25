@@ -1,0 +1,53 @@
+@import "../../global-style-variables.sass";
+
+.wrapper 
+    display: block;
+    width: auto;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0;
+    text-align: left;
+
+.header-wrapper 
+    top: 0px;
+    position: fixed;
+    background-color: white;
+    width: 100%;
+    z-index: 1;
+    display: block;
+
+#header 
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    -webkit-box-shadow: 0px 1px 1px 1px rgba(0,0,0,0.25);
+    -moz-box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.25);
+    box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.25);
+
+.logo-container 
+    padding-left: 10px;
+
+.logo 
+    width: 64px;
+    height: 64px;
+    padding: 5px;
+
+.content-offset 
+    height: $header-height;
+
+#search 
+    padding: 15px 15px;
+
+#menu 
+    display: flex;
+    margin: 10px 20px 0 0;
+
+#content 
+    display: block; 
+    width: 100%;
+    min-height: calc(100vh - #{$header-height} - #{$footer-height} - #{$separator-height} - #{$separator-margin});
+
+
+#footer    
+    box-shadow: 0px 500px 0px 500px white;

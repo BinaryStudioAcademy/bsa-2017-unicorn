@@ -3,6 +3,9 @@ import { RouterModule } from '@angular/router';
 
 import { CompanyComponent } from './company-component/company.component';
 import { CompanyDetailsComponent } from './company-details/company-details.component';
+import { CompanyEditComponent } from "./company-edit/company-edit.component";
+
+import { AuthGuard } from '../guards/auth.guard';
 
 @NgModule({
   imports: [
@@ -24,6 +27,11 @@ import { CompanyDetailsComponent } from './company-details/company-details.compo
           {
             path: ':id',
             component: CompanyDetailsComponent,
+          },
+          {
+            path: ':id/edit',
+            component: CompanyEditComponent,
+            canActivate: [AuthGuard]
           }
         ]
       }
@@ -31,6 +39,7 @@ import { CompanyDetailsComponent } from './company-details/company-details.compo
   ],
   exports: [
     RouterModule
-  ]
+  ],
+  providers: [AuthGuard]
 })
 export class CompanyRoutingModule { }

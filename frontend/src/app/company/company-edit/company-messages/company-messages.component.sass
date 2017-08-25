@@ -1,0 +1,91 @@
+img
+    object-fit: cover!important;
+
+$tab-color: #FF647A;
+
+ul
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-left: 0.5px solid #D5D0D0;
+
+ul li
+  display: inline-block;
+  clear: both;
+  padding: 10px;
+  border-radius: 20px;
+  margin-bottom: 5px;
+  font-family: Helvetica, Arial, sans-serif;
+
+.him
+  background: #eee;
+  float: left;
+  max-width: 45%;
+  align-self: flex-start;
+
+.me
+  float: right;
+  background: #5BB0FF;
+  color: #fff;
+  max-width: 45%;
+  align-self: flex-end;
+
+.him + .me
+  border-bottom-right-radius: 5px;
+
+.me + .me
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+
+.userName
+  font-size: 15px;
+  margin-top: 4px;
+
+.container
+   display: flex;
+   justify-content: space-around;
+
+.users
+    flex-direction: column;
+    display: flex;
+    width: 300px;
+
+.chat
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    width: 600px;
+
+.user
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 5px 10px;
+
+.user:hover 
+   cursor: pointer;
+   background: lighten( $tab-color, 15% );
+
+.date-me
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 8px;
+  color: grey;
+  text-align: right;
+  font-style: italic;
+  padding-right: 6px;
+
+.date-him
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 8px;
+  color: grey;
+  text-align: left;
+  font-style: italic;
+  padding-left: 6px;
+
+.mes_block
+  display: flex;
+  flex-direction: column;
+
+#active
+  background: lighten( $tab-color, 10% );

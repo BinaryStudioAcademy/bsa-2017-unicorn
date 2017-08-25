@@ -1,8 +1,106 @@
 $primary-color: #FF647A
 
+.colored
+  color: $primary-color; 
+
+.colored.call
+  color: #7ac143;
+
+.colored.skype
+  color: #12A5F4;
+
+.colored.telegram
+  color: #0088cc;
+
+.colored.facebook
+  color: #3b5998;
+
+.colored.vk
+  color: #45668e;
+
+.colored.linkedin
+  color: #0077b5;
+
+.colored.google.plus
+  color: #dd4b39;
+
 .ui.secondary.pointing.menu .active.item
     background-color: transparent;
     box-shadow: none;
     border-color: $primary-color;
     font-weight: 700;
     color: $primary-color;
+
+
+/* constans for calc min content height */
+$header-height: 68px
+$footer-height: 45px
+$separator-height: 3px
+$separator-margin: 20px
+
+.remove-margin-top-bottom
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+
+.remove-padding-top
+  padding-top: 0 !important;
+
+.remove-padding-bottom
+  padding-bottom: 0 !important;
+
+.avatar:hover
+    cursor: pointer;
+
+.avatar
+    position: relative;
+
+.avatar img
+    width: 100%;
+    vertical-align: top;
+    height: 150px;
+    width: 150px;
+
+.avatarMain img
+    width: 100%;
+    vertical-align: top;
+    height: 150px;
+    width: 150px;
+
+.avatar:after
+    position: absolute;
+    content: 'Upload';
+    text-align: center;
+    vertical-align: middle;
+    color: #fff;
+    width: 100%;
+    font-size: 20px;
+    height: 100%;
+    top: 0; 
+    left: 0;
+    background: rgba(0,0,0,0.6);
+    opacity: 0;
+    transition: all 1s;
+    line-height: 150px;
+    -webkit-transition: all 1s;
+
+.avatar:hover:after
+    opacity: 1;
+
+.file-upload-save
+    width: 190px;
+    height: 40px;
+
+label > i.up-color.icon
+    color: #ff6666 !important;
+
+
+textarea.ng-dirty.ng-invalid.ng-touched,
+input.ng-dirty.ng-invalid.ng-touched
+    border-color: #ff8080;
+
+.valid-error
+    color: #ff6666;
+    font-size: 10px;
+    margin: 0 0 0 0;
+    padding: 0;
+    position: absolute;

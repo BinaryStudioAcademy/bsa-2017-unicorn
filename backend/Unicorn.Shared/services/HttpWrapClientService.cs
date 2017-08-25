@@ -6,10 +6,10 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Unicorn.Core.services.interception;
-using Unicorn.Core.services.interfaces;
+using Unicorn.Shared.services.interception;
+using Unicorn.Shared.services.interfaces;
 
-namespace Unicorn.Core.services
+namespace Unicorn.Shared.services
 {
     class HttpWrapClientService : IHttpWrapClient, IDisposable
     {

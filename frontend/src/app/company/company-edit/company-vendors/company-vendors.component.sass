@@ -1,0 +1,98 @@
+@import "../../../../global-style-variables.sass";
+
+img
+	object-fit: cover!important;
+
+.ui.table
+	margin-top: 1em!important;
+	margin-bottom: 1em!important;
+
+.select-option
+	padding: 1.2em!important;
+	&:hover
+		background: rgba(251, 226, 230, 0.33)!important;
+		color: black!important;
+
+.ui.basic.button
+	box-shadow: 0 0 0 1px $primary_color;
+	color:  $primary_color;
+	background: none;
+	width: 11em;
+	margin-bottom: 1.5em;
+	min-height: 2.8em;
+
+.ui.basic.button h5
+	color: $primary-color;
+
+.ui.basic.button.add
+	padding: .78571429em .78571429em .78571429em;
+	margin: 0 .25em 0 0;
+	width: 7em;
+
+.vendor-icon
+	width: 30px!important;
+	height: 30px!important;
+
+.face-icon
+	width: 80px!important;
+	height: 80px!important;
+
+.flex-form
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	margin: 15px 20px;
+	width: 260px;
+	border: lightgray 1px solid;
+	border-radius: 5px;
+	padding: 10px 10px 10px 25px;		
+
+.flex-form:hover .absolute-icon
+	display: inline-block;
+
+.flex-vendors
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: stretch;
+
+.ui.table tbody tr
+	&:hover
+		background: rgba(251, 226, 230, 0.33)!important;
+		color: black!important;
+
+.description
+	display: flex;
+	flex-direction: column;
+	align-items: initial;	
+	margin-left: 1em;
+	font-size: .85rem;
+	label		
+		margin-right: 1em;	
+	div
+		display: flex;
+		flex-direction: column;		
+	div.ui.divider
+		margin-top: 0;
+		margin-bottom: 5px;
+
+.face
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	font-size: .85rem;
+
+.vendor-description
+	display: flex;
+
+.delete-vendor		
+	margin-top: -5px;
+	margin-right: 10px;
+
+.absolute-icon
+	position: absolute;
+	display: none;
+	color: rgba(0,0,0,.6);
+
+label
+	font-weight: bold;

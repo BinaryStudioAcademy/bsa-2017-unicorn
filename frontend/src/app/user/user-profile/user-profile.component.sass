@@ -1,3 +1,5 @@
+﻿@import "../../../global-style-variables.sass";
+
 .gray_font
     color: gray;
     text-decoration: none;
@@ -5,16 +7,20 @@
     font-size: 15px;
     margin-top: 1.3em;
     margin-bottom: 1.3em;
-.square 
-  width: 40em;
+.map 
+  width: 35em;
   height: 20em;
   background: green;	
   
 .ui input
-    margin: 10px;
+    margin: 20px;
+    margin-bottom: 0px;
+    width: 300px;
     display: flex;
 
-      
+.valid-error
+    margin: 0 0 0 20px !important;
+  
 .ui form
     display: inline;
 
@@ -22,7 +28,27 @@
     display: flex;
     justify-content: space-evenly;
 .column
-    display: flex;
-    flex-direction: column;
+     display: flex;
+     flex-direction: column;
 .elem
     display: block;
+.row
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+.ui.basic.button
+   box-shadow: 0 0 0 1px $primary_color;
+   color:  $primary_color;
+   background: none;
+   padding: 10px;
+   width: 100px;
+   height: 40px;
+   margin-right: 0px;
+   margin-top: 5px;
+   align-self: center;
+.ui.active.loading.button
+   box-shadow: 0 0 0 1px $primary_color;
+   color:  $primary_color;
+   background: none;
+   width: 100px;
+   height: 40px;

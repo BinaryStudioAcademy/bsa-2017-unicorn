@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms'
 import {SuiModule} from 'ng2-semantic-ui';
 import { BookModule } from '../book/book.module';
+import { SignBlockModule } from '../sign-block/sign-block.module';
 
 import { CompanyComponent } from './company-component/company.component';
 import { CompanyDetailsComponent } from './company-details/company-details.component';
@@ -12,23 +13,34 @@ import { GeneralInformationComponent } from './company-details/general-informati
 import { ReviewsComponent } from './company-details/reviews/reviews.component';
 import { VendorsComponent } from './company-details/vendors/vendors.component';
 import { ContactsComponent } from './company-details/contacts/contacts.component';
-import { Company } from "../models/company.model";
 import { Review } from "../models/review.model";
-import { Vendor } from "../models/vendor";
 import { environment } from "../../environments/environment";
-import { AgmCoreModule } from "@agm/core";
+import { CompanyEditComponent } from './company-edit/company-edit.component';
+import { DataService } from "../services/data.service";
+import { PhotoService } from '../services/photo.service';
+import { NguiMapModule } from "@ngui/map";
+import { MapModule } from "../map/map.module";
+import { CompanyMainInformationComponent } from './company-edit/company-main-information/company-main-information.component';
+import { CompanyMessagesComponent } from './company-edit/company-messages/company-messages.component';
+import { CompanyOrdersComponent } from './company-edit/company-orders/company-orders.component';
+import { CompanyService } from "../services/company-services/company.service";
+import { CompanyVendorsComponent } from './company-edit/company-vendors/company-vendors.component';
+import { CompanyWorksComponent } from './company-edit/company-works/company-works.component';
+import { PipeModule } from "../pipe/pipe.module";
+import { ClickOutsideModule } from 'ng-click-outside';
 
 @NgModule({
-  imports: [
+  imports: [    
     CommonModule,
     CompanyRoutingModule,
     FormsModule,
     BrowserModule,
     SuiModule,
     BookModule,
-    AgmCoreModule.forRoot({
-      apiKey: environment.googleMapsKey
-    }),   
+    SignBlockModule,
+    MapModule,
+    PipeModule,
+    ClickOutsideModule
   ],
   declarations: [
     CompanyComponent,
@@ -36,7 +48,19 @@ import { AgmCoreModule } from "@agm/core";
     GeneralInformationComponent,
     ReviewsComponent,
     VendorsComponent,
-    ContactsComponent
+    ContactsComponent,
+    CompanyEditComponent,
+    CompanyMainInformationComponent,
+    CompanyMessagesComponent,
+    CompanyOrdersComponent,
+    CompanyVendorsComponent,
+    CompanyWorksComponent
+    
+  ],
+  providers: [
+    DataService,
+    PhotoService,
+    CompanyService
   ]
 })
 export class CompanyModule { }

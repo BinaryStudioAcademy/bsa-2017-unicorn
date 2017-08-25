@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Unicorn.Core.DTOs
+namespace Unicorn.Shared.DTOs
 {
     public class PersonDTO
     {
@@ -10,7 +10,7 @@ namespace Unicorn.Core.DTOs
 
         public string Name { get; set; }
 
-        public string SurnameName { get; set; }
+        public string Surname { get; set; }
 
         public string MiddleName { get; set; }
 
@@ -19,8 +19,8 @@ namespace Unicorn.Core.DTOs
         public string Phone { get; set; }
 
 
-        public virtual AccountDTO Account { get; set; }
+        public AccountDTO Account { get; set; }
 
-        public virtual LocationDTO Location { get; set; }
+        public LocationDTO Location { get; set; }
     }
 }

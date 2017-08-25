@@ -30,6 +30,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.IdentityModel.Logging, Version=1.1.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.IdentityModel.Logging.1.1.4\lib\net451\Microsoft.IdentityModel.Logging.dll</HintPath>
     </Reference>
@@ -49,6 +55,7 @@
       <HintPath>..\packages\Ninject.Extensions.Factory.3.2.1.0\lib\net45-full\Ninject.Extensions.Factory.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.IdentityModel.Tokens.Jwt, Version=5.1.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.IdentityModel.Tokens.Jwt.5.1.4\lib\net451\System.IdentityModel.Tokens.Jwt.dll</HintPath>
@@ -63,23 +70,43 @@
   <ItemGroup>
     <Compile Include="Interfaces\IAccountService.cs" />
     <Compile Include="Interfaces\IAuthService.cs" />
+    <Compile Include="Interfaces\IAvatarService.cs" />
     <Compile Include="Interfaces\IBookService.cs" />
+    <Compile Include="Interfaces\ICategoryService.cs" />
+    <Compile Include="Interfaces\ICompanyPageService.cs" />
+    <Compile Include="Interfaces\ICompanyService.cs" />
     <Compile Include="Interfaces\ICustomerService.cs" />
+    <Compile Include="Interfaces\IHistoryService.cs" />
     <Compile Include="Interfaces\IMembershipProvider.cs" />
     <Compile Include="Infrastructure\ServiceModule.cs" />
     <Compile Include="Interfaces\ILocationService.cs" />
     <Compile Include="Interfaces\IPermissionService.cs" />
     <Compile Include="Interfaces\IPersonService.cs" />
+    <Compile Include="Interfaces\IPopularService.cs" />
+	<Compile Include="Interfaces\IRatingService.cs" />
     <Compile Include="Interfaces\IRoleService.cs" />
+    <Compile Include="Interfaces\IReviewService.cs" />
+    <Compile Include="Interfaces\IPortfolioService.cs" />
+    <Compile Include="Interfaces\IContactService.cs" />
     <Compile Include="Interfaces\IVendorService.cs" />
     <Compile Include="Interfaces\IWorkService.cs" />
     <Compile Include="Services\AccountService.cs" />
+    <Compile Include="Services\AvatarService.cs" />
     <Compile Include="Services\BookService.cs" />
+    <Compile Include="Services\CategoryService.cs" />
+    <Compile Include="Services\CompanyPageService.cs" />
+    <Compile Include="Services\CompanyService.cs" />
+    <Compile Include="Services\ContactService.cs" />
     <Compile Include="Services\CustomerService.cs" />
+    <Compile Include="Services\HistoryService.cs" />
     <Compile Include="Services\LocationService.cs" />
     <Compile Include="Services\PermissionService.cs" />
     <Compile Include="Services\PersonService.cs" />
+    <Compile Include="Services\PopularService.cs" />
+	<Compile Include="Services\RatingService.cs" />
     <Compile Include="Services\RoleService.cs" />
+    <Compile Include="Services\ReviewService.cs" />
+    <Compile Include="Services\PortfolioService.cs" />
     <Compile Include="Services\VendorService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">

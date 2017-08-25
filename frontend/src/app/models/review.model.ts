@@ -1,8 +1,11 @@
 export interface Review {
-    avatar: string;
-    date: Date;
-    from: string;
-    to: string;
-    grade: number;
-    description: string;
+    Id: number;
+    Avatar: string;
+    Date: Date;
+    FromAccountId: number;
+    From: string;
+    ToAccountId: number;
+    To: string;
+    Description: string;
+    BookId: number;
 }

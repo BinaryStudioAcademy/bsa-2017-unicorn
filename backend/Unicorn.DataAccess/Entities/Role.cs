@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Unicorn.DataAccess.Entities.Enum;
 using Unicorn.DataAccess.Interfaces;
 
 namespace Unicorn.DataAccess.Entities 
@@ -9,7 +10,8 @@ namespace Unicorn.DataAccess.Entities
         public bool IsDeleted { get; set; }
 
         public string Name { get; set; }
+        public RoleType Type { get; set; }
 
-        public virtual ICollection<Account> Accounts { get; set; }
+        public virtual ICollection<Permission> Permissions { get; set; }
     }
 }

@@ -1,10 +1,65 @@
 <nav class="navbar">
     <ul>
-        <!-- <li *ngFor="let item of items"><a routerLink="{{item.route}}" routerLinkActive="active">{{item.name}}</a></li> -->
-        <li><a routerLink="#" routerLinkActive="active">Get task</a></li>
+        <li><a routerLink="/search" routerLinkActive="active">Search</a></li>
         <li><a routerLink="#" routerLinkActive="active">Vendors</a></li>
-        <li><a (click)="openModal()" routerLinkActive="active">Registration</a></li>
-        <li><a routerLink="#" routerLinkActive="active">Sign in</a></li>
+        <li *ngIf="!isLogged;else authorized"><a (click)="openModal()" routerLinkActive="active">Sign In</a></li>
+        <ng-template #authorized>
+            <li>
+                <i class="small circular inverted bell link outline icon" [ngClass]="getNotificationClass()" (click)="onShowNotifications()"></i>
+            </li>
+            <li>
+                <div class="dropdown">
+                    <div *ngIf="profileInfo !== undefined" class="ui small circular image" (click)="onShowDetails()">
+                        <img class="profile-avatar" src="{{profileInfo.Avatar}}">
+                    </div>
+                    <div class="dropdown-content" *ngIf="showAccountDetails && profileInfo !== undefined">
+                        <div class="mainInfo">
+                            <div class="ui items">
+                                <div class="item">
+                                    <div class="ui small circular image smallAvatar">
+                                        <img class="profile-avatar" src="{{profileInfo.Avatar}}">
+                                    </div>
+                                    <div class="content">
+                                        <h5>{{profileInfo.Name}}</h5>
+                                        <div class="description">
+                                            <p class="email">{{profileInfo.Email}}</p>
+                                            <p>{{profileInfo.Role}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui fitted divider"></div>
+                        <div class="accountButtons">
+                            <div class="signOut">
+                                <a (click)="goToAccount()" routerLinkActive="active">Account</a>
+                            </div>
+                            <div class="signOut">
+                                <a (click)="signOut()" routerLinkActive="active">Sign Out</a>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="dropdown-content" *ngIf="showNotifications">
+                        <div class="ui middle aligned divided list">
+                            <div class="item" *ngFor="let notif of notifications">
+                                <div class="content">
+                                    <a class="header">{{notif}}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dropdown-content" *ngIf="!isNotificationExist() && showNotifications">
+                        <div class="ui middle aligned divided list">
+                            <div class="item">
+                                <div class="content">
+                                    <a class="header">Empty List</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ng-template>
     </ul>
 </nav>
-<app-register [enabled]="isEnabled"></app-register>

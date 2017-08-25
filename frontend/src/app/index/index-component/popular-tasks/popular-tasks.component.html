@@ -1,38 +1,90 @@
-<div class="tabset-container">
+<div class="tabset-container" *ngIf="categories !== undefined && bestPerformers !== undefined">
     <sui-tabset>
-    <div class="ui pointing secondary menu">
-      <a class="item" suiTabHeader="1">Popular</a>
-      <a class="item" suiTabHeader="2">Cleaning</a>
-      <a class="item" suiTabHeader="3">Building</a>
-      <a class="item" suiTabHeader="4">Relocation</a>
-      <a class="item" suiTabHeader="5">Сourier</a>
-    </div>
-    <div class="ui" suiTabContent="1">
-      <div class="vendor-wrapper">
-        <div *ngFor='let vendor of popularVendors' class="vendor">
-          <a href="#">
-            <div class="img-wrapper">
-              <img src="{{vendor.imgUrl}}" />            
+        <div class="ui pointing secondary menu">
+            <a class="item" suiTabHeader="1">Popular</a>
+            <a class="item" suiTabHeader="2">{{categories[0].Name}}</a>
+            <a class="item" suiTabHeader="3">{{categories[1].Name}}</a>
+            <a class="item" suiTabHeader="4">{{categories[2].Name}}</a>
+        </div>
+        <div class="ui" suiTabContent="1">
+            <div class="vendor-wrapper" *ngIf="bestPerformers !== undefined">
+                <div *ngFor='let performer of bestPerformers; let i = index' class="vendor">
+                    <a href="{{performer.Link}}">
+                        <div class="img-wrapper">
+                            <img src="{{performer.Avatar}}" />
+                        </div>
+                    </a>
+                    <div class="per-name">
+                        <div>
+                            <span class="vendor-title">{{performer.Name}}</span>
+                        </div>
+                    </div>
+                    <div class="per-info">
+                        <sui-rating class="star" [ngModel]="bestPerformers[i].Rating" [isReadonly]="true"></sui-rating>
+                        <a href="{{performer.Link}}{{tabSuffix}}">Reviews({{bestPerformers[i].ReviewsCount}})</a>
+                    </div>
+                </div>
             </div>
-            <p class="vendor-title">{{vendor.name}}<p>
-          </a>
-         </div> 
-      </div>
-    </div>
-    <div class="ui" suiTabContent="2">
-      <div class="vendor-wrapper">
-        <div *ngFor='let vendor of cleaningVendors' class="vendor">
-          <a href="#">
-            <div class="img-wrapper">
-              <img src="{{vendor.imgUrl}}" />            
+        </div>
+        <div class="ui" suiTabContent="2">
+            <div class="vendor-wrapper" *ngIf="fperformers !== undefined">
+                <div *ngFor='let performer of fperformers; let i = index' class="vendor">
+                    <a href="{{performer.Link}}">
+                        <div class="img-wrapper">
+                            <img src="{{performer.Avatar}}" />
+                        </div>
+                    </a>
+                    <div class="per-name">
+                        <div>
+                            <span class="vendor-title">{{performer.Name}}</span>
+                        </div>
+                    </div>
+                    <div class="per-info">
+                        <sui-rating class="star" [ngModel]="fperformers[i].Rating" [isReadonly]="true"></sui-rating>
+                        <a href="{{performer.Link}}{{tabSuffix}}">Reviews({{fperformers[i].ReviewsCount}})</a>
+                    </div>
+                </div>
             </div>
-            <p class="vendor-title">{{vendor.name}}<p>
-          </a>
-         </div> 
-      </div>
-    </div>
-    <div class="ui" suiTabContent="3">Second nested tab!</div>
-    <div class="ui" suiTabContent="4">Second nested tab!</div>
-    <div class="ui" suiTabContent="5">Second nested tab!</div>
-  </sui-tabset>  
+        </div>
+        <div class="ui" suiTabContent="3">
+            <div class="vendor-wrapper" *ngIf="sperformers !== undefined">
+                <div *ngFor='let performer of sperformers; let i = index' class="vendor">
+                    <a href="{{performer.Link}}">
+                        <div class="img-wrapper">
+                            <img src="{{performer.Avatar}}" />
+                        </div>
+                    </a>
+                    <div class="per-name">
+                        <div>
+                            <span class="vendor-title">{{performer.Name}}</span>
+                        </div>
+                    </div>
+                    <div class="per-info">
+                        <sui-rating class="star" [ngModel]="sperformers[i].Rating" [isReadonly]="true"></sui-rating>
+                        <a href="{{performer.Link}}{{tabSuffix}}">Reviews({{sperformers[i].ReviewsCount}})</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ui" suiTabContent="4">
+            <div class="vendor-wrapper" *ngIf="tperformers !== undefined">
+                <div *ngFor='let performer of tperformers; let i = index' class="vendor">
+                    <a href="{{performer.Link}}">
+                        <div class="img-wrapper">
+                            <img src="{{performer.Avatar}}" />
+                        </div>
+                    </a>
+                    <div class="per-name">
+                        <div>
+                            <span class="vendor-title">{{performer.Name}}</span>
+                        </div>
+                    </div>
+                    <div class="per-info">
+                        <sui-rating class="star" [ngModel]="tperformers[i].Rating" [isReadonly]="true"></sui-rating>
+                        <a href="{{performer.Link}}{{tabSuffix}}">Reviews({{tperformers[i].ReviewsCount}})</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </sui-tabset>
 </div>
