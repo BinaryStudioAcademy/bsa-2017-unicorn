@@ -38,13 +38,47 @@ namespace Unicorn.Controllers
         }
 
         [HttpGet]
-        [Route("book/{role}/{id}")]
+        [Route("book/{role}/{id}/pending")]
+        public async Task<HttpResponseMessage> GetPendingBooks(string role, long id)
+        {
+            IEnumerable<VendorBookDTO> books;
+            try
+            {
+                books = await _bookService.GetPendingOrdersAsync(role, id);
+            }
+            catch
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
+
+            return Request.CreateResponse(books);
+        }
+
+        [HttpGet]
+        [Route("book/{role}/{id}/accepted")]
         public async Task<HttpResponseMessage> GetVendorBooks(string role, long id)
         {
             IEnumerable<VendorBookDTO> books;
             try
             {
-                books = await _bookService.GetOrdersAsync(role, id);
+                books = await _bookService.GetAcceptedOrdersAsync(role, id);
+            }
+            catch
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
+
+            return Request.CreateResponse(books);
+        }
+
+        [HttpGet]
+        [Route("book/{role}/{id}/finished")]
+        public async Task<HttpResponseMessage> GetFinishedBooks(string role, long id)
+        {
+            IEnumerable<VendorBookDTO> books;
+            try
+            {
+                books = await _bookService.GetFinishedOrdersAsync(role, id);
             }
             catch
             {

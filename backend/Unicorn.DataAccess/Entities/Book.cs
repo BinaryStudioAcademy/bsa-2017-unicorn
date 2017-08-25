@@ -28,7 +28,9 @@ namespace Unicorn.DataAccess.Entities
 
     public enum BookStatus
     {
+        Pending,
         Accepted,
+        Declined,
         InProgress,
         Finished,
         Confirmed

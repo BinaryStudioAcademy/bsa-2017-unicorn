@@ -1,3 +1,19 @@
-<p>
-  dashboard-progress works!
-</p>
+<div class="sixteen wide column" *ngIf="books !== undefined">
+    <div class="ui segment book-card grid" *ngFor="let book of books">
+        <div class="book-img two wide column">
+            <img class="ui tiny circular image" src="https://pbs.twimg.com/profile_images/459069336443822080/FpBLZE8R.png">
+        </div>
+        <div class="book-info five wide column">
+            <p>{{book.Work.Name}} <span align=right>{{book.Date | date: 'dd/MM/yyyy'}}</span></p>
+            <p>{{book.Description}}</p>
+        </div>
+        <div class="customer-info five wide column">
+            <p>{{book.Customer}}</p>
+            <p><i class="colored call icon"></i>{{book.CustomerPhone}}</p>
+            <p><i class="colored map pin icon"></i>{{book.Location.City}},&nbsp;{{book.Location.Adress}}</p>
+        </div>
+        <div class="book-actions four wide column">
+            <a class="ui button accept-btn">Finish</a>
+        </div>
+    </div>
+</div>

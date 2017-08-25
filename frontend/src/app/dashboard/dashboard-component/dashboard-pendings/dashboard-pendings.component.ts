@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { BookCard } from '../../../models/dashboard/book-card';
+import { BookCard, BookStatus } from '../../../models/dashboard/book-card';
 
 import { DashboardService } from '../../../services/dashboard/dashboard.service';
 @Component({
@@ -15,7 +15,7 @@ export class DashboardPendingsComponent implements OnInit {
   constructor(private dashboardService: DashboardService) { }
 
   ngOnInit() {
-    this.dashboardService.getVendorBooks(1, 'vendor').then(resp => {
+    this.dashboardService.getPendingBooks().then(resp => {
       this.books = resp;
       console.log(this.books);
     });

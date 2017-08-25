@@ -181,7 +181,7 @@ namespace Unicorn.Core.Services
                 Date = book.Date,
                 Description = book.Description,
                 Location = location,
-                Status = BookStatus.Accepted,
+                Status = BookStatus.Pending,
                 Vendor = vendor,
                 Work = work
             };
@@ -252,49 +252,6 @@ namespace Unicorn.Core.Services
                 }).ToListAsync();
         }
 
-        public async Task<IEnumerable<VendorBookDTO>> GetVendorOrdersAsync(long vendorId)
-        {
-            return await _unitOfWork.BookRepository.Query
-                .Include(b => b.Vendor)
-                .Include(b => b.Work)
-                .Include(b => b.Work.Subcategory)
-                .Include(b => b.Work.Subcategory.Category)
-                .Include(b => b.Location)
-                .Include(b => b.Customer)
-                .Include(b => b.Customer.Person)
-                .Where(b => b.Vendor != null)
-                .Where(b => b.Vendor.Id == vendorId)
-                .Select(b => new VendorBookDTO()
-                {
-                    Id = b.Id,
-                    Customer = b.Customer.Person.Name + " " + b.Customer.Person.Surname,
-                    CustomerId = b.Customer.Id,
-                    CustomerPhone = b.CustomerPhone,
-                    Date = b.Date,
-                    Description = b.Description,
-                    Location = new LocationDTO()
-                    {
-                        Id = b.Location.Id,
-                        Adress = b.Location.Adress,
-                        City = b.Location.City,
-                        Latitude = b.Location.Latitude,
-                        Longitude = b.Location.Longitude
-                    },
-                    Status = b.Status,
-                    Work = new WorkDTO()
-                    {
-                        Id = b.Work.Id,
-                        Name = b.Work.Name,
-                        Description = b.Work.Description,
-                        Category = b.Work.Subcategory.Category.Name,
-                        CategoryId = b.Work.Subcategory.Category.Id,
-                        Subcategory = b.Work.Subcategory.Name,
-                        SubcategoryId = b.Work.Subcategory.Id
-                    }
-                }).ToListAsync();
-
-        }
-
         public async Task Update(BookDTO bookDto)
         {
             var book = await _unitOfWork.BookRepository.GetByIdAsync(bookDto.Id);
@@ -302,6 +259,32 @@ namespace Unicorn.Core.Services
 
             _unitOfWork.BookRepository.Update(book);
             await _unitOfWork.SaveAsync();
+        }
+
+        public Task<IEnumerable<VendorBookDTO>> GetVendorOrdersAsync(long vendorId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<IEnumerable<VendorBookDTO>> GetPendingOrdersAsync(string role, long id)
+        {
+            return await GetOrdersByStatus(role, id, BookStatus.Pending);
+        }
+
+        public async Task<IEnumerable<VendorBookDTO>> GetAcceptedOrdersAsync(string role, long id)
+        {
+            return await GetOrdersByStatus(role, id, BookStatus.Accepted);
+        }
+
+        public async Task<IEnumerable<VendorBookDTO>> GetFinishedOrdersAsync(string role, long id)
+        {
+            return await GetOrdersByStatus(role, id, BookStatus.Finished);
+        }
+
+        private async Task<IEnumerable<VendorBookDTO>> GetOrdersByStatus(string role, long id, BookStatus status)
+        {
+            var books = await GetOrdersAsync(role, id);
+            return books.Where(b => b.Status == status);
         }
     }
 }

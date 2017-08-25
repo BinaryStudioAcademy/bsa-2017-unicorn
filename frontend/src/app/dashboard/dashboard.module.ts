@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 import { DashboardComponent } from './dashboard-component/dashboard.component';
 import { DashboardPendingsComponent } from './dashboard-component/dashboard-pendings/dashboard-pendings.component';
@@ -11,13 +12,15 @@ import { SuiModule } from 'ng2-semantic-ui';
 
 import { DataService } from '../services/data.service';
 import { DashboardService } from '../services/dashboard/dashboard.service';
+import { TokenHelperService } from '../services/helper/tokenhelper.service';
 
 
 @NgModule({
   imports: [
     CommonModule,
     DashboardRoutingModule,
-    SuiModule
+    SuiModule,
+    FormsModule
   ],
   declarations: [
     DashboardComponent,
