@@ -84,6 +84,28 @@ namespace Unicorn.Core.Services
                         Role = account.Role.Name,
                         Name = company.Name
                     };
+                case 5:
+                    var adminPerson = await _unitOfWork.PersonRepository.Query
+                        .Include(p => p.Account).FirstOrDefaultAsync(x => x.Account.Id == id);
+                    if (adminPerson == null)
+                    {
+                        var adminCompany = await _unitOfWork.CompanyRepository.Query
+                            .Include(p => p.Account).FirstOrDefaultAsync(p => p.Account.Id == id);
+                        return new ShortProfileInfoDTO
+                        {
+                            Avatar = account.Avatar,
+                            Email = account.Email,
+                            Role = account.Role.Name,
+                            Name = adminCompany.Name
+                        };
+                    }
+                    return new ShortProfileInfoDTO
+                    {
+                        Avatar = account.Avatar,
+                        Email = account.Email,
+                        Role = account.Role.Name,
+                        Name = $"{adminPerson.Name} {adminPerson.Surname}"
+                    };
                 default:
                     return null;
             }

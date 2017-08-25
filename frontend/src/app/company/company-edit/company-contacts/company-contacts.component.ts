@@ -16,6 +16,7 @@ export class CompanyContactsComponent implements OnInit {
   companyId: number;
   contacts: Contact[];
   providers: ContactProvider[];
+  blockAddButtons: boolean = false;
   
   phones: Contact[];
   messengers: Contact[];
@@ -80,6 +81,7 @@ export class CompanyContactsComponent implements OnInit {
   }
 
   removeContact(contact: Contact): void {
+    console.log(contact.Value);
     this.companyService.deleteCompanyContact(this.companyId, contact.Id);
     this.contacts.splice(this.contacts.findIndex(c => c.Id === contact.Id), 1);
     this.filterContacts();
@@ -87,6 +89,7 @@ export class CompanyContactsComponent implements OnInit {
   }
 
   createContact(contact: Contact): void {
+    this.blockAddButtons = true;
     if (contact.ProviderId === null)
       {
         contact.ProviderId = this.selectedProvider.Id;
@@ -96,21 +99,20 @@ export class CompanyContactsComponent implements OnInit {
     this.selectedProvider = null;
     this.cleanAllSellections();
     this.hideAllEditFields();
+    
 
     contact.Id = null;
 
     this.pendingContactas.push(contact);
     this.contacts.push(contact);
-    this.filterContacts()
-    this.filterContacts()
-
+    this.filterContacts();  
     this.companyService.addCompanyContact(this.companyId, contact)
       .then(resp => {
-        this.pendingContactas.splice(this.pendingContactas.findIndex(c => c === contact), 1);
-        contact.Id = resp.Id;
+        this.pendingContactas.splice(this.pendingContactas.findIndex(c => c === contact), 1);        
       })
-      .then(() => this.filterContacts())
-      .then(() => this.filterContacts());
+      .then(() => {
+        this.filterContacts();
+        this.blockAddButtons = false;});
   }
 
   updateContact(contact: Contact): void {

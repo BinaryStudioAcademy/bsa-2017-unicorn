@@ -1,7 +1,7 @@
-<div *ngIf="contacts === undefined" class="ui active inverted dimmer" style="z-index: 0;">
+<div *ngIf="providers === undefined" class="ui active inverted dimmer" style="z-index: 0;">
     <div class="ui text loader">Loading</div>
 </div>
-<div class="ui grid">
+<div class="ui grid" *ngIf="providers !== undefined">
     <div class="row">
         <div class="column">
             <div class="flex-header">
