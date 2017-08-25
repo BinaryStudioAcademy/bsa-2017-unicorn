@@ -1,17 +1,8 @@
 @import "../../../../global-style-variables.sass";
 
-.flex-container
-    display: flex;
-    flex-direction: column;
-    margin: 15px;
 
-.flex-row
-    display: flex;
-    flex-direction: row;
-
-.flex-column
-    display: flex;
-    flex-direction: column;
+.ui.grid
+  margin: 15px;
 
 .flex-contacts
   display: flex;
@@ -24,6 +15,14 @@
   justify-content: flex-start;
   flex-wrap: wrap;
 
+.phone div
+  margin: 0 10px;
+
+.ui.label.contact
+  margin: 0.5em;
+  font-size: 13px;
+  background: transparent;
+
 .flex-header
   display: flex;
   justify-content: space-between;
@@ -32,14 +31,6 @@
 
 .flex-header.title
   margin: 0.5em;
-
-.phone div
-  margin: 0 10px;
-
-.ui.label.contact
-  margin: 0.5em;
-  font-size: 13px;
-  background: transparent;
 
 .ui.active.button
   background: transparent;
@@ -57,5 +48,5 @@
 .contact-edit-toggle
   margin-top: 5px; 
 
-label
-    font-weight: bold;
+.ui.basic.tiny.button.disabled
+  border: solid 1px #d8d8d8;

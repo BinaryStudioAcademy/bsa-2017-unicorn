@@ -10,7 +10,8 @@ import { Vendor } from "../../../models/company-page/vendor";
   styleUrls: ['./company-vendors.component.sass']
 })
 export class CompanyVendorsComponent implements OnInit {  
-  company: CompanyVendors;     
+  company: CompanyVendors;  
+  companyId: number;   
   isLoaded: boolean = false; 
   openedDetailedWindow: boolean = false;  
   allVendors: Vendor[];
@@ -29,7 +30,8 @@ export class CompanyVendorsComponent implements OnInit {
     this.route.params
     .switchMap((params: Params) => this.companyService.getCompanyVendors(params['id'])).subscribe(res => {
       this.company = res;   
-      this.allVendors = this.company.AllVendors;  
+      this.allVendors = this.company.AllVendors;
+      this.companyId = this.company.Id;  
     });
   }
 
@@ -60,9 +62,8 @@ export class CompanyVendorsComponent implements OnInit {
     this.selectedVendors = undefined;
     this.zone.run(() => { this.selectedVendor = null; }); 
 
-    let companyId = this.company.Id;
     this.company = undefined;  
-    this.companyService.deleteCompanyVendor(companyId, vendor.Id)
+    this.companyService.deleteCompanyVendor(this.companyId, vendor.Id)
       .then(() => {
         this.initializeThisCompany();   
       });     

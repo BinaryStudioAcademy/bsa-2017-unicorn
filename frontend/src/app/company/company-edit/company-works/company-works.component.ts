@@ -16,6 +16,7 @@ import { ModalTemplate, SuiModalService, TemplateModalConfig } from "ng2-semanti
 export class CompanyWorksComponent implements OnInit {
 
   company: CompanyWorks;
+  companyId: number;
   selectedCategory: CompanyCategory;
   selectedSubcategory: CompanySubcategory;
   subcategories: CompanySubcategory[] = [];
@@ -36,6 +37,7 @@ export class CompanyWorksComponent implements OnInit {
     this.route.params
     .switchMap((params: Params) => this.companyService.getCompanyWorks(params['id'])).subscribe(res => {
       this.company = res;
+      this.companyId = this.company.Id;
     });
   }
 
@@ -100,6 +102,7 @@ export class CompanyWorksComponent implements OnInit {
   saveWorkChanges() {
     if (this.selectedCategory !== undefined && this.selectedSubcategory !== undefined
       && this.work.Description !== null && this.work.Name !== null) {
+        this.openedDetailedWindow = false;
         this.company = undefined;        
         this.companyService.saveCompanyWork(this.work)
           .then(() => {
@@ -114,11 +117,10 @@ export class CompanyWorksComponent implements OnInit {
       this.selectedCategory.Subcategories = null;
       this.selectedSubcategory.Category = this.selectedCategory;
       this.work.Subcategory = this.selectedSubcategory;
-
-      let companyId = this.company.Id;
+      
       this.company = undefined;
       this.openedDetailedWindow = false;
-      this.companyService.addCompanyWork(companyId, this.work)
+      this.companyService.addCompanyWork(this.companyId, this.work)
       .then(() => {
         this.initializeThisCompany();
       });        

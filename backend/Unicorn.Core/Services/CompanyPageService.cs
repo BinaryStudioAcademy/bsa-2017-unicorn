@@ -83,12 +83,12 @@ namespace Unicorn.Core.Services
             return await GetCompanyContactsMethod(id);
         }
 
-        public async Task SaveCompanyContact(ContactDTO companyContactDTO)
+        public async Task SaveCompanyContact(ContactShortDTO companyContactDTO)
         {
             await SaveCompanyContactMethod(companyContactDTO);
         }
 
-        public async Task AddCompanyContact(long companyId, ContactDTO companyContactDTO)
+        public async Task AddCompanyContact(long companyId, ContactShortDTO companyContactDTO)
         {
             await AddCompanyContactMethod(companyId, companyContactDTO);
         }
@@ -442,7 +442,7 @@ namespace Unicorn.Core.Services
             return null;
         }
 
-        private async Task SaveCompanyContactMethod(ContactDTO companyContactDTO)
+        private async Task SaveCompanyContactMethod(ContactShortDTO companyContactDTO)
         {
             var contact = await _unitOfWork.ContactRepository.GetByIdAsync(companyContactDTO.Id);
 
@@ -454,20 +454,17 @@ namespace Unicorn.Core.Services
             }
         }
 
-        private async Task AddCompanyContactMethod(long companyId, ContactDTO companyContactDTO)
+        private async Task AddCompanyContactMethod(long companyId, ContactShortDTO companyContactDTO)
         {
             var company = await _unitOfWork.CompanyRepository.GetByIdAsync(companyId);
+            var provider = await _unitOfWork.ContactProviderRepository.GetByIdAsync(companyContactDTO.ProviderId);
 
             if (company != null)
             {
                 _unitOfWork.ContactRepository.Create(new Contact
                 {
                     Account = company.Account,
-                    Provider = new ContactProvider
-                    {
-                        Name = companyContactDTO.Provider.Name,
-                        Type = companyContactDTO.Provider.Type
-                    },
+                    Provider = provider,
                     Value = companyContactDTO.Value,
                     IsDeleted = false
                 });

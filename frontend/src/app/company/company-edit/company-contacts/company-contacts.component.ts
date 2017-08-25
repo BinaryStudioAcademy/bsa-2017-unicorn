@@ -11,8 +11,10 @@ import { ContactService } from "../../../services/contact.service";
   templateUrl: './company-contacts.component.html',
   styleUrls: ['./company-contacts.component.sass']
 })
-export class CompanyContactsComponent implements OnInit {
+export class CompanyContactsComponent implements OnInit {  
   company: CompanyContacts;
+  companyId: number;
+  contacts: Contact[];
   providers: ContactProvider[];
   
   phones: Contact[];
@@ -22,6 +24,8 @@ export class CompanyContactsComponent implements OnInit {
 
   messengerProviders: ContactProvider[];
   socialProviders: ContactProvider[];
+
+  pendingContactas: Contact[];
 
   selectedPhone: Contact;
   selectedMessenger: Contact;
@@ -40,11 +44,17 @@ export class CompanyContactsComponent implements OnInit {
     private contactService: ContactService) { }
 
   ngOnInit() {
+    this.pendingContactas = [];
+    this.hideAllEditFields();   
     this.route.params
     .switchMap((params: Params) => this.companyService.getCompanyContacts(params['id']))
     .subscribe(res => {
-      this.company = res;       
+      this.company = res;
+      this.companyId = this.company.Id;
+      this.contacts = this.company.Contacts;
       this.filterContacts();
+
+      
       this.contactService.getAllProviders()
         .then((resp) => {
           this.providers = resp.body as ContactProvider[];
@@ -53,12 +63,11 @@ export class CompanyContactsComponent implements OnInit {
         })
     });
   }
-
   filterContacts(): void {
-    this.phones = this.company.Contacts.filter(x => x.Type === "Phone");
-    this.emails = this.company.Contacts.filter(x => x.Type === "Email");
-    this.messengers = this.company.Contacts.filter(x => x.Type === "Messenger");
-    this.socials = this.company.Contacts.filter(x => x.Type === "Social");
+    this.phones = this.contacts.filter(x => x.Type === "Phone");
+    this.emails = this.contacts.filter(x => x.Type === "Email");
+    this.messengers = this.contacts.filter(x => x.Type === "Messenger");
+    this.socials = this.contacts.filter(x => x.Type === "Social");
   }
 
   filterProviders(): void {
@@ -71,8 +80,8 @@ export class CompanyContactsComponent implements OnInit {
   }
 
   removeContact(contact: Contact): void {
-    // this.vendorService.removeContact(this.vendorId, contact);
-    this.company.Contacts.splice(this.company.Contacts.findIndex(c => c.Id === contact.Id), 1);
+    this.companyService.deleteCompanyContact(this.companyId, contact.Id);
+    this.contacts.splice(this.contacts.findIndex(c => c.Id === contact.Id), 1);
     this.filterContacts();
     this.filterProviders();
   }
@@ -86,28 +95,32 @@ export class CompanyContactsComponent implements OnInit {
       }
     this.selectedProvider = null;
     this.cleanAllSellections();
+    this.hideAllEditFields();
 
-    this.company.Contacts.push(contact);
-    this.filterContacts();
-    this.filterProviders();
+    contact.Id = null;
 
-    // this.vendorService.postVendorContact(this.vendorId, contact)
-    //   .then(resp => this.contacts = resp.body as Contact[])
-    //   .then(() => this.filterContacts())
-    //   .then(() => this.filterProviders());
+    this.pendingContactas.push(contact);
+    this.contacts.push(contact);
+    this.filterContacts()
+    this.filterContacts()
+
+    this.companyService.addCompanyContact(this.companyId, contact)
+      .then(resp => {
+        this.pendingContactas.splice(this.pendingContactas.findIndex(c => c === contact), 1);
+        contact.Id = resp.Id;
+      })
+      .then(() => this.filterContacts())
+      .then(() => this.filterContacts());
   }
 
   updateContact(contact: Contact): void {
-    // this.vendorService.updateContact(this.vendorId, contact);
-    this.company.Contacts.splice(this.company.Contacts.findIndex(x => x.Id === contact.Id), 1, contact);
+    this.companyService.saveCompanyContact(contact);
     this.cleanAllSellections();
+    this.hideAllEditFields();
   }
 
-  saveContacts(){
-    // this.company = undefined;
-    // this.companyService.saveCompanyContacts(this.company).then(() => {
-    //   this.ngOnInit();
-    // });
+  isContactPending(contact: Contact): boolean {
+    return this.pendingContactas.includes(contact);
   }
 
   onPhoneSelect(phone: Contact): void {
@@ -156,7 +169,7 @@ export class CompanyContactsComponent implements OnInit {
       ProviderId: provider.Id,
       Type: provider.Type,
       Value: "",
-      Id: null
+      Id: -1
     };
   }
 
@@ -167,7 +180,7 @@ export class CompanyContactsComponent implements OnInit {
       ProviderId: provider.Id,
       Type: provider.Type,
       Value: "",
-      Id: null
+      Id: -1
     };
   }
 
@@ -177,7 +190,7 @@ export class CompanyContactsComponent implements OnInit {
       ProviderId: null,
       Type: "",
       Value: "",
-      Id: null
+      Id: -1
     };
   }
 
@@ -187,7 +200,7 @@ export class CompanyContactsComponent implements OnInit {
       ProviderId: null,
       Type: "",
       Value: "",
-      Id: null
+      Id: -1
     };
   }
 
@@ -212,6 +225,6 @@ export class CompanyContactsComponent implements OnInit {
         this.editSocialOpen = true;
         break;
     }
-  }
+  } 
 
 }

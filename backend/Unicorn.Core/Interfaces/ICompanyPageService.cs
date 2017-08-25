@@ -35,9 +35,9 @@ namespace Unicorn.Core.Interfaces
 
         Task<CompanyContacts> GetCompanyContacts(long id);
 
-        Task SaveCompanyContact(ContactDTO companyContactDTO);
+        Task SaveCompanyContact(ContactShortDTO companyContactDTO);
 
-        Task AddCompanyContact(long companyId, ContactDTO companyContactDTO);
+        Task AddCompanyContact(long companyId, ContactShortDTO companyContactDTO);
 
         Task DeleteCompanyContact(long companyId, long contactId);
 

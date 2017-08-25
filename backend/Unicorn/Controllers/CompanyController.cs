@@ -127,14 +127,14 @@ namespace Unicorn.Controllers
         // POST: company/contacts
         [System.Web.Http.HttpPost]
         [System.Web.Http.Route("company/contact")]
-        public async Task SaveCompanyContact([FromBody]ContactDTO companyContact)
+        public async Task SaveCompanyContact([FromBody]ContactShortDTO companyContact)
         {
             await _companyService.SaveCompanyContact(companyContact);
         }
         // PUT: company/contact/5
         [System.Web.Http.HttpPut]
         [System.Web.Http.Route("company/contact/{companyId}")]
-        public async Task AddCompanyContact(long companyId, [FromBody]ContactDTO companyContact)
+        public async Task AddCompanyContact(long companyId, [FromBody]ContactShortDTO companyContact)
         {
             await _companyService.AddCompanyContact(companyId, companyContact);
         }
