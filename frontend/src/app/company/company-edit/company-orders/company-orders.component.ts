@@ -15,7 +15,6 @@ export class CompanyOrdersComponent implements OnInit {
   company: CompanyBooks;
   bookStatus = BookStatus;
   isLoaded: boolean = false;
-
   changedOrders: CompanyBooks = { Id: null, Books: [] };
 
   constructor(private companyService: CompanyService,

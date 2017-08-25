@@ -13,9 +13,7 @@ import { TokenHelperService } from '../../services/helper/tokenhelper.service';
 export class CompanyDetailsComponent implements OnInit {
   company: CompanyShort;
   isGuest: boolean;
-
   tabActive: boolean = false;
-
   routePath: string;
   routeid: number;
 
@@ -34,9 +32,7 @@ export class CompanyDetailsComponent implements OnInit {
       });
     if (this.route.snapshot.queryParams['tab'] === 'reviews') {
       this.tabActive = true;
-    }
-    // console.log(this.route.snapshot.queryParams['tab']);
-
+    }   
     this.getCurrentRole();
   }
 
@@ -45,9 +41,7 @@ export class CompanyDetailsComponent implements OnInit {
       this.isGuest = true;
       return;
     }
-
     const userRoleId = +this.tokenHelperService.getClaimByName('roleid');
     this.isGuest = userRoleId === 1;
   }
 }
-
