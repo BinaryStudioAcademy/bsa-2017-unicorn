@@ -21,7 +21,7 @@ export class CompanyMainInformationComponent implements OnInit {
   @ViewChild('companyForm') public companyForm: NgForm;
 
   constructor(private companyService: CompanyService,
-    private route: ActivatedRoute,) { }
+    private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.route.params
