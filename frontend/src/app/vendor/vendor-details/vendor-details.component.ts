@@ -41,6 +41,7 @@ export class VendorDetailsComponent implements OnInit {
   cropperSettings: CropperSettings;
   vendor: Vendor;
   isGuest: boolean;
+  isUser: boolean;
   file: File;
   data: any;
   imageUploaded: boolean;
@@ -78,11 +79,13 @@ export class VendorDetailsComponent implements OnInit {
   getCurrentRole() {
     if (this.tokenHelperService.getToken() === null) {
       this.isGuest = true;
+      this.isUser = false;
       return;
     }
 
     const userRoleId = +this.tokenHelperService.getClaimByName('roleid');
     this.isGuest = userRoleId === 1;
+    this.isUser = userRoleId === 2;
   }
 
   buildSafeUrl(link: string): SafeResourceUrl {

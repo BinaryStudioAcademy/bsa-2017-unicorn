@@ -16,9 +16,9 @@
                             <a class="item" suiTabHeader="4">Contacts</a>
                         </div>
                         <div class="row">
-                            <div class="ui grid container">
+                            <div class="ui equal width grid container">
                                 <div class="row">
-                                    <div class="ten wide column">
+                                    <div class="container column">
                                         <div class="ui segment" suiTabContent="1">
                                             <company-general-information></company-general-information>
                                         </div>
@@ -32,10 +32,10 @@
                                             <company-contacts></company-contacts>
                                         </div>
                                     </div>
-                                    <div class="six wide column">
+                                    <div *ngIf="isUser||isGuest" class="six wide column">
                                         <div class="ui segment">
                                             <app-sign-block *ngIf="isGuest"></app-sign-block>
-                                            <app-book [routePath]="routePath" [routeId]="routeid" *ngIf="!isGuest"></app-book>
+                                            <app-book *ngIf="!isGuest" [routePath]="routePath" [routeId]="routeid"></app-book>
                                         </div>
                                     </div>
                                 </div>
