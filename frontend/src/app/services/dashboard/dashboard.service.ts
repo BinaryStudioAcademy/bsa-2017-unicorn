@@ -36,4 +36,8 @@ export class DashboardService {
     return this.dataService.getRequest<BookCard[]>(`book/${this.role}/${this.id}/finished`);
   }
 
+  update(book: BookCard): Promise<any> {
+    return this.dataService.putRequest('book', book);
+  }
+
 }

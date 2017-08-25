@@ -13,7 +13,7 @@
             <p><i class="colored map pin icon"></i>{{book.Location.City}},&nbsp;{{book.Location.Adress}}</p>
         </div>
         <div class="book-actions four wide column">
-            <a class="ui button accept-btn">Finish</a>
+            <a (click)="finish(book.Id)" class="ui button accept-btn">Finish</a>
         </div>
     </div>
 </div>

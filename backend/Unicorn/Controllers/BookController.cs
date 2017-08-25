@@ -87,5 +87,21 @@ namespace Unicorn.Controllers
 
             return Request.CreateResponse(books);
         }
+
+        [HttpPut]
+        [Route("book")]
+        public async Task<HttpResponseMessage> UpdateBook(VendorBookDTO book)
+        {
+            try
+            {
+                await _bookService.Update(book);
+            }
+            catch
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK);
+        }
     }
 }
