@@ -32,7 +32,7 @@
                         <div class="ui fitted divider"></div>
                         <div class="accountButtons">
                             <div class="signOut">
-                                <a routerLink="{{profileUrl}}" routerLinkActive="active">Account</a>
+                                <a (click)="goToAccount()" routerLinkActive="active">Account</a>
                             </div>
                             <div class="signOut">
                                 <a (click)="signOut()" routerLinkActive="active">Sign Out</a>

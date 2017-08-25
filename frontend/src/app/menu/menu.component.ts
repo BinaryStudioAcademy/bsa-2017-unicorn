@@ -123,7 +123,8 @@ export class MenuComponent implements OnInit {
   }
 
   goToAccount() {
-
+    this.showAccountDetails = false;
+    this.router.navigateByUrl(this.profileUrl);
   }
 
   onShowDetails() {
