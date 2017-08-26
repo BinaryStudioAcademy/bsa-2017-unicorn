@@ -76,12 +76,14 @@ export class CompanyVendorsComponent implements OnInit {
   }
 
   addVendors(){      
-    this.selectedVendors.forEach(vendor => {this.company.Vendors.push(vendor);});      
-    this.saveCompanyVendors();  
-    this.selectedVendors = undefined;
-    this.zone.run(() => { this.selectedVendor = null; });  
-    this.company = undefined;    
-    this.openedDetailedWindow = false;     
+    if(this.selectedVendors.length !== 0){
+      this.selectedVendors.forEach(vendor => {this.company.Vendors.push(vendor);});      
+      this.saveCompanyVendors();  
+      this.selectedVendors = undefined;
+      this.zone.run(() => { this.selectedVendor = null; });  
+      this.company = undefined;    
+      this.openedDetailedWindow = false;     
+    }
   }
 
   saveCompanyVendors(){

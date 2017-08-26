@@ -52,6 +52,7 @@ export class CompanyWorksComponent implements OnInit {
   isLoaded: boolean = false;
   openedDetailedWindow: boolean = false;
   isDimmed: boolean = false;
+  dataLoaded: boolean = true;
 
   constructor(private companyService: CompanyService,
     private route: ActivatedRoute,    
@@ -173,18 +174,21 @@ export class CompanyWorksComponent implements OnInit {
   }
 
   fileChangeListener($event) {
-    var image: any = new Image();    
+    var image: any = new Image(); 
+    console.log($event)
+    this.file = $event.target.files[0];   
     var myReader: FileReader = new FileReader();
     var that = this;
     myReader.onloadend = function (loadEvent: any) {
       image.src = loadEvent.target.result;
       that.cropper.setImage(image);      
     };
-    if($event.target !== undefined){
-      this.file = $event.target.files[0];
-      this.imageUploaded = true;
-      myReader.readAsDataURL(this.file);
-    }
+    this.imageUploaded = true;
+    myReader.readAsDataURL(this.file);
+    // if($event.target !== undefined){
+      
+      
+    // }
     
   }
 
@@ -193,11 +197,15 @@ export class CompanyWorksComponent implements OnInit {
       console.log("file can't be loaded");
       return;
     }
+    if(!this.file){
+      return;
+    }
+    this.dataLoaded = false;
     this.photoService.uploadToImgur(this.file)
-      .then(resp => {
-        let path = resp;        
+      .then(resp => {        
+        this.dataLoaded = true;
+        this.work.Icon = this.data.image;
         this.activeModal.deny(null);
-        this.work.Icon = path;
       })
       .catch(err => {
         console.log(err);
