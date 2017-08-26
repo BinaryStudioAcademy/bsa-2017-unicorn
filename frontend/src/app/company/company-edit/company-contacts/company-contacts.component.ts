@@ -38,7 +38,7 @@ export class CompanyContactsComponent implements OnInit {
   editPhoneOpen: boolean;
   editSocialOpen: boolean;
   editEmailOpen: boolean;
-  editMessengerOpen: boolean;
+  editMessengerOpen: boolean; 
 
   constructor(private companyService: CompanyService,
     private route: ActivatedRoute,
@@ -80,15 +80,38 @@ export class CompanyContactsComponent implements OnInit {
       .filter(x => this.socials.find(s => s.ProviderId === x.Id) === undefined);
   }
 
-  removeContact(contact: Contact): void {
-    console.log(contact.Value);
+  removeContact(contact: Contact): void {    
     this.companyService.deleteCompanyContact(this.companyId, contact.Id);
     this.contacts.splice(this.contacts.findIndex(c => c.Id === contact.Id), 1);
     this.filterContacts();
     this.filterProviders();
   }
 
-  createContact(contact: Contact): void {
+  editPhoneOpenClickOutside()  {
+    if(this.editPhoneOpen){
+      this.editPhoneOpen = false;
+    }   
+  }
+
+  editEmailOpenClickOutside(){
+    if(this.editEmailOpen){
+      this.editEmailOpen = false;
+    }
+  }
+
+  editMessengerOpenClickOutside(){
+    if(this.editMessengerOpen){
+      this.editMessengerOpen = false;
+    }
+  }
+
+  editSocialOpenClickOutside(){
+    if(this.editSocialOpen){
+      this.editSocialOpen = false;
+    }
+  }
+    
+  createContact(contact: Contact): void {    
     this.blockAddButtons = true;
     if (contact.ProviderId === null)
       {
@@ -100,7 +123,6 @@ export class CompanyContactsComponent implements OnInit {
     this.cleanAllSellections();
     this.hideAllEditFields();
     
-
     contact.Id = null;
 
     this.pendingContactas.push(contact);
@@ -108,11 +130,18 @@ export class CompanyContactsComponent implements OnInit {
     this.filterContacts();  
     this.companyService.addCompanyContact(this.companyId, contact)
       .then(resp => {
-        this.pendingContactas.splice(this.pendingContactas.findIndex(c => c === contact), 1);        
-      })
-      .then(() => {
-        this.filterContacts();
-        this.blockAddButtons = false;});
+        this.companyService.getCompanyContacts(this.companyId)        
+        .then(res => {
+          this.company = res;  
+        })
+          .then(() => {            
+            this.contacts = this.company.Contacts;            
+            this.filterContacts();
+            this.pendingContactas.splice(this.pendingContactas.findIndex(c => c === contact), 1);
+            this.blockAddButtons = false;
+          });            
+      });
+      
   }
 
   updateContact(contact: Contact): void {
@@ -207,26 +236,27 @@ export class CompanyContactsComponent implements OnInit {
   }
 
   editToggle(contactType: string): void {
-    this.cleanAllSellections();
-
-    switch (contactType) {
-      case 'phone':
-        this.hideAllEditFields();
-        this.editPhoneOpen = true;
-        break;
-      case 'email':
-        this.hideAllEditFields();
-        this.editEmailOpen = true;
-        break;
-      case 'messenger':
-        this.hideAllEditFields();
-        this.editMessengerOpen = true;
-        break;
-      case 'social':
-        this.hideAllEditFields();
-        this.editSocialOpen = true;
-        break;
-    }
+    setTimeout(() => {
+      this.cleanAllSellections();
+      switch (contactType) {
+        case 'phone':
+          this.hideAllEditFields();
+          this.editPhoneOpen = true;
+          break;
+        case 'email':
+          this.hideAllEditFields();
+          this.editEmailOpen = true;
+          break;
+        case 'messenger':
+          this.hideAllEditFields();
+          this.editMessengerOpen = true;
+          break;
+        case 'social':
+          this.hideAllEditFields();
+          this.editSocialOpen = true;
+          break;
+      }
+    },50);
   } 
 
 }
