@@ -11,8 +11,7 @@
                 </div>
                 <div class="field">
                     <label>Description</label>
-                    <textarea required name="description" [(ngModel)]="company.Description" #desc="ngModel"></textarea>
-                    <div *ngIf="desc.invalid && (desc.dirty)" class="valid-error">* Required</div>
+                    <textarea name="description" [(ngModel)]="company.Description" #desc="ngModel"></textarea>                    
                 </div>
                 <div class="field">
                     <label>Foundation date</label>
@@ -23,8 +22,7 @@
                 </div>
                 <div class="field">
                     <label>CEO</label>
-                    <input required name="director" type="text" [(ngModel)]="company.Director" #dir="ngModel">
-                    <div *ngIf="dir.invalid && (dir.dirty)" class="valid-error">* Required</div>
+                    <input name="director" type="text" [(ngModel)]="company.Director" #dir="ngModel">                    
                 </div>
             </div>
         </div>
