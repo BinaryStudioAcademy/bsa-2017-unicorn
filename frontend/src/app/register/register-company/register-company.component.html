@@ -8,8 +8,7 @@
             </div>
 
             <div class="field">
-                <textarea required rows="3" name="desc" placeholder="DESCRIPTION" [(ngModel)]="description" #desc="ngModel"></textarea>
-                <div *ngIf="desc.invalid && (desc.dirty)" class="valid-error">* Required</div>
+                <textarea rows="3" name="desc" placeholder="DESCRIPTION (OPTIONAL)" [(ngModel)]="description" #desc="ngModel"></textarea>               
             </div>
 
             <div class="field">

@@ -7,8 +7,7 @@
             </div>
 
             <div class="field">
-                <input required type="text" name="surname" placeholder="MIDDLE NAME" [(ngModel)]="middleName" #surname="ngModel">
-                <div *ngIf="surname.invalid && (surname.dirty)" class="valid-error">* Required</div>
+                <input type="text" name="surname" placeholder="MIDDLE NAME (OPTIONAL)" [(ngModel)]="middleName" #surname="ngModel">                
             </div>
 
             <div class="field">
