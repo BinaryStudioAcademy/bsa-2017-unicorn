@@ -53,6 +53,7 @@ export class MenuComponent implements OnInit {
     if (this.isLogged) {
       this.accountService.getShortInfo(+this.tokenHelper.getClaimByName("accountid"))
         .then(resp => this.profileInfo = resp.body as ProfileShortInfo);
+      this.setProfileRoute();
     }
     else {
       this.profileInfo = {
@@ -77,6 +78,7 @@ export class MenuComponent implements OnInit {
         this.isLogged = true;
         this.accountService.getShortInfo(+this.tokenHelper.getClaimByName("accountid"))
           .then(resp => this.profileInfo = resp.body as ProfileShortInfo);
+        this.setProfileRoute();
       });
 
     this.onLogOut = this.authEventService.logoutEvent$
@@ -141,5 +143,25 @@ export class MenuComponent implements OnInit {
 
   isNotificationExist(): boolean {
     return this.notifications && this.notifications.length != 0;
+  }
+
+  setProfileRoute(): void {
+    const roleId = +this.tokenHelper.getClaimByName("roleid");
+    const profileId = this.tokenHelper.getClaimByName("profileid");
+
+    switch (roleId) {
+      case 2:
+        this.profileUrl = `/user/${profileId}/edit`;
+        break;
+      case 3:
+        this.profileUrl = `/vendor/${profileId}/edit`;
+        break;
+      case 4:
+        this.profileUrl = `/company/${profileId}/edit`;
+        break;
+      default:
+        this.profileUrl = "/search";
+        break;
+    }
   }
 }
