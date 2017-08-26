@@ -57,7 +57,7 @@ namespace Unicorn.Core.Services
         {
             var account = await _unitOfWork.AccountRepository.Query
                 .Include(a => a.Role)
-                .SingleAsync(a => a.Id == id);
+                .FirstOrDefaultAsync(a => a.Id == id);
 
             switch (account.Role.Id)
             {

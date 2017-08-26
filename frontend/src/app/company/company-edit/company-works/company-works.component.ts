@@ -5,15 +5,43 @@ import { CompanySubcategory } from "../../../models/company-page/company-subcate
 import { CompanyWorks } from "../../../models/company-page/company-works.model";
 import { CompanyCategory } from "../../../models/company-page/company-category.model";
 import { CompanyWork } from "../../../models/company-page/company-work.model";
-import { ModalTemplate, SuiModalService, TemplateModalConfig } from "ng2-semantic-ui";
+
+import { ModalService } from "../../../services/modal/modal.service";
+import { PhotoService, Ng2ImgurUploader } from "../../../services/photo.service";
+
+import { ImageCropperComponent, CropperSettings } from "ng2-img-cropper";
+import { SafeResourceUrl, DomSanitizer } from "@angular/platform-browser";
+import { SuiModalService, TemplateModalConfig, ModalTemplate, ModalSize, SuiActiveModal } from 'ng2-semantic-ui';
 
 @Component({
   selector: 'app-company-works',
   templateUrl: './company-works.component.html',
-  styleUrls: ['./company-works.component.sass']
+  styleUrls: ['./company-works.component.sass'],
+  providers: [
+    PhotoService,
+    Ng2ImgurUploader,
+    ModalService]
 })
 
 export class CompanyWorksComponent implements OnInit {
+  @ViewChild('modalTemplate')
+  public modalTemplate: ModalTemplate<void, {}, void>;
+  private activeModal: SuiActiveModal<void, {}, void>;
+
+  @ViewChild('cropper', undefined)
+  cropper: ImageCropperComponent;
+  enabled: boolean = false;
+  enableTheme: boolean = false;
+  saveImgButton: boolean = false;
+  workIconUrl: SafeResourceUrl;
+  uploading: boolean;
+
+  modalSize: string;
+  cropperSettings: CropperSettings;
+  data: any;
+  file: File;
+  imageUploaded: boolean;
+
 
   company: CompanyWorks;
   companyId: number;
@@ -23,14 +51,22 @@ export class CompanyWorksComponent implements OnInit {
   work: CompanyWork = { Id: null, Description: null, Name: null, Subcategory: null, Icon: null };
   isLoaded: boolean = false;
   openedDetailedWindow: boolean = false;
+  isDimmed: boolean = false;
 
   constructor(private companyService: CompanyService,
-    private route: ActivatedRoute,
-    public modalService: SuiModalService,
-    private zone: NgZone) { }
+    private route: ActivatedRoute,    
+    private zone: NgZone,
+    private photoService: PhotoService,
+    private sanitizer: DomSanitizer,
+    private suiModalService: SuiModalService,
+    private modalService: ModalService,) {
+      this.cropperSettings = modalService.cropperSettings;
+      this.data = {};
+      this.imageUploaded = false; 
+     }
 
   ngOnInit() {
-    this.initializeThisCompany();    
+    this.initializeThisCompany();       
   }
 
   initializeThisCompany(){
@@ -46,18 +82,13 @@ export class CompanyWorksComponent implements OnInit {
     this.zone.run(() => { this.selectedSubcategory = this.subcategories[0]; });  
   }
 
-  selectWorksRow(event: any, work: CompanyWork) {
-    if (event.target.localName === "td") {
-      this.work = {
-        Id: work.Id,
-        Description: work.Description,
-        Name: work.Name,
-        Subcategory: work.Subcategory,
-        Icon: null
-      };
+  selectWorksRow(event: any, work: CompanyWork) {    
+    if (event.target.localName !== "button" && event.target.localName !== "i") {
+      this.work = work;
       this.selectedCategory = this.company.AllCategories.find(x => x.Id === work.Subcategory.Category.Id);
       this.subcategories = this.company.AllCategories.find(x => x.Id == this.selectedCategory.Id).Subcategories;
       this.zone.run(() => { this.selectedSubcategory = this.subcategories[0]; });  
+      this.workIconUrl = this.buildSafeUrl(this.work.Icon);
       this.openedDetailedWindow = true;
     }
     else {
@@ -134,5 +165,46 @@ export class CompanyWorksComponent implements OnInit {
     else {
       this.addWork();
     }
-  }    
+  }
+  
+  
+  buildSafeUrl(link: string): SafeResourceUrl {
+    return this.sanitizer.bypassSecurityTrustStyle(`url('${link}')`);
+  }
+
+  fileChangeListener($event) {
+    var image: any = new Image();    
+    var myReader: FileReader = new FileReader();
+    var that = this;
+    myReader.onloadend = function (loadEvent: any) {
+      image.src = loadEvent.target.result;
+      that.cropper.setImage(image);      
+    };
+    if($event.target !== undefined){
+      this.file = $event.target.files[0];
+      this.imageUploaded = true;
+      myReader.readAsDataURL(this.file);
+    }
+    
+  }
+
+  fileSaveListener() {
+    if (!this.data) {
+      console.log("file can't be loaded");
+      return;
+    }
+    this.photoService.uploadToImgur(this.file)
+      .then(resp => {
+        let path = resp;        
+        this.activeModal.deny(null);
+        this.work.Icon = path;
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
+  public openModal() {
+    this.activeModal = this.modalService.openModal(this.modalTemplate);
+  }
 }

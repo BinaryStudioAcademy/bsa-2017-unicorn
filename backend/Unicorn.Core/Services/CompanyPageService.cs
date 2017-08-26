@@ -387,26 +387,7 @@ namespace Unicorn.Core.Services
             return select.Any() ? select.Average() : 0;
 
         }
-
-        //private async Task SaveCompanyVendorsMethod(CompanyVendors companyDTO)
-        //{
-        //    var company = await _unitOfWork.CompanyRepository.GetByIdAsync(companyDTO.Id);
-
-        //    if (company != null)
-        //    {
-        //        company.Vendors.Clear();
-        //        foreach (var companyDtoVendor in companyDTO.Vendors)
-        //        {
-        //            var vendor = await _unitOfWork.VendorRepository.GetByIdAsync(companyDtoVendor.Id);
-        //            if (vendor != null)
-        //            {
-        //                company.Vendors.Add(vendor);
-        //            }
-        //        }
-        //        await _unitOfWork.SaveAsync();
-        //    }
-        //}
-
+        
 
 
         private async Task<CompanyContacts> GetCompanyContactsMethod(long id)
@@ -486,30 +467,7 @@ namespace Unicorn.Core.Services
             }
             
         }
-
-        //private async Task SaveCompanyContactsMethod(CompanyContacts companyDTO)
-        //{
-        //    var company = await _unitOfWork.CompanyRepository.GetByIdAsync(companyDTO.Id);
-
-        //    if (company != null)
-        //    {
-        //        company.Account.Contacts.Clear();
-        //        foreach (var companyDtoContact in companyDTO.Contacts)
-        //        {
-        //            var contact = await _unitOfWork.ContactRepository.GetByIdAsync(companyDtoContact.Id);
-        //            if (contact != null)
-        //            {
-        //                contact.Provider.Name = companyDtoContact.Provider;
-        //                contact.Value = companyDtoContact.Value;
-        //                contact.Provider.Type = companyDtoContact.Type;
-
-        //                company.Account.Contacts.Add(contact);
-        //            }
-        //        }
-        //        await _unitOfWork.SaveAsync();
-        //    }
-        //}
-
+        
 
 
         private async Task<CompanyWorks> GetCompanyWorksMethod(long id)
@@ -578,6 +536,7 @@ namespace Unicorn.Core.Services
                 work.Name = companyWorkDTO.Name;
                 work.Description = companyWorkDTO.Description;
                 work.Subcategory = subcategory;
+                work.Icon = companyWorkDTO.Icon;
                 _unitOfWork.WorkRepository.Update(work);
                 await _unitOfWork.SaveAsync();
             }
@@ -617,49 +576,7 @@ namespace Unicorn.Core.Services
             }
         }
 
-        //private async Task SaveCompanyWorksMethod(CompanyWorks companyDTO)
-        //{
-        //    var company = await _unitOfWork.CompanyRepository.GetByIdAsync(companyDTO.Id);
-
-        //    if (company != null)
-        //    {
-        //        company.Works.Clear();
-        //        foreach (var companyDtoWork in companyDTO.Works)
-        //        {
-        //            var work = await _unitOfWork.WorkRepository.GetByIdAsync(companyDtoWork.Id);
-        //            if (work != null)
-        //            {
-        //                work.Description = companyDtoWork.Description;
-        //                work.Name = companyDtoWork.Name;
-
-        //                var category =
-        //                    await _unitOfWork.CategoryRepository.GetByIdAsync(companyDtoWork.Subcategory.Category.Id);
-        //                var subcategory =
-        //                    await _unitOfWork.SubcategoryRepository.GetByIdAsync(companyDtoWork.Subcategory.Id);
-        //                subcategory.Category = category;
-        //                work.Subcategory = subcategory;
-        //            }
-        //            else
-        //            {
-        //                var category =
-        //                    await _unitOfWork.CategoryRepository.GetByIdAsync(companyDtoWork.Subcategory.Category.Id);
-        //                var subcategory =
-        //                    await _unitOfWork.SubcategoryRepository.GetByIdAsync(companyDtoWork.Subcategory.Id);
-        //                subcategory.Category = category;
-        //                work = new Work
-        //                {
-        //                    Description = companyDtoWork.Description,
-        //                    Name = companyDtoWork.Name,
-        //                    Subcategory = subcategory
-        //                };
-        //            }
-        //            company.Works.Add(work);
-        //        }
-        //        await _unitOfWork.SaveAsync();
-        //    }
-        //}
-
-
+        
 
         private async Task<CompanyBooks> GetCompanyBooksMethod(long id)
         {

@@ -52,16 +52,19 @@ export class MenuComponent implements OnInit {
     this.roleRouter = new RoleRouter();
     if (this.isLogged) {
       this.accountService.getShortInfo(+this.tokenHelper.getClaimByName("accountid"))
-        .then(resp => this.profileInfo = resp.body as ProfileShortInfo);
+        .then(resp => {
+          if(resp !== undefined){
+            this.profileInfo = resp.body as ProfileShortInfo;
+          }
+          else{
+            this.initEmptyProfile();
+            this.profileUrl = "";
+          }
+        });
       this.setProfileRoute();
     }
     else {
-      this.profileInfo = {
-        Avatar: "",
-        Email: "",
-        Name: "",
-        Role: ""
-      };
+      this.initEmptyProfile();
       this.profileUrl = "";
     }
     this.notifications = [
@@ -84,15 +87,19 @@ export class MenuComponent implements OnInit {
     this.onLogOut = this.authEventService.logoutEvent$
       .subscribe(() => {
         this.isLogged = false;
-        this.profileInfo = {
-          Avatar: "",
-          Email: "",
-          Name: "",
-          Role: ""
-        };
+        this.initEmptyProfile();
         this.showAccountDetails = false;
         this.profileUrl = "/search";
       });
+  }
+
+  initEmptyProfile(){
+    this.profileInfo = {
+      Avatar: "",
+      Email: "",
+      Name: "",
+      Role: ""
+    };
   }
 
   ngOnDestroy() {
