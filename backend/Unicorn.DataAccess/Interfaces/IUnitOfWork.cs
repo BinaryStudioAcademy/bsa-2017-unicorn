@@ -11,6 +11,7 @@ namespace Unicorn.DataAccess.Interfaces
         IGenericRepository<Category> CategoryRepository { get; }
         IGenericRepository<Company> CompanyRepository { get; }
         IGenericRepository<Customer> CustomerRepository { get; }
+        IGenericRepository<ChatMessage> ChatRepository { get; }
         IGenericRepository<History> HistoryRepository { get; }
         IGenericRepository<Location> LocationRepository { get; }
         IGenericRepository<Permission> PermissionRepository { get; }
