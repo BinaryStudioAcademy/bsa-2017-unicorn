@@ -1,34 +1,69 @@
 @import "../../../../global-style-variables.sass";
-  
-h3
-	margin: 5px;
-	font-size: 20px;
- 
-a
-	font-size: 17px;
 
-.ui small circular image
-	align-self: center;
+img
+    object-fit: cover!important;
 
-#main font
-    text-decoration: none;
-    font-family: 'Verdana', 'Century Gothic', 'Calibri', 'Trebuchet MS', sans-serif;
-    font-size: 10px;
+.ui.table
+	margin-top: 1em!important;
+	margin-bottom: 1em!important;
 
-.ui bottom attached segment
+.select-option
+	padding: 1.2em!important;
+	&:hover
+		background: rgba(251, 226, 230, 0.33)!important;
+		color: black!important;
+
+.ui.basic.button
+	box-shadow: 0 0 0 1px $primary_color;
+	color:  $primary_color;
+	background: none;
+	width: 11em;
+	margin-bottom: 1.5em;
+	min-height: 2.8em;
+
+.ui.basic.button h5
+	color: $primary-color;
+
+.ui.basic.button.add
+	padding: .78571429em .78571429em .78571429em;
+	margin: 0 .25em 0 0;
+	width: 7em;
+
+.work-icon	
+	margin-top: 1.3em;
+	width: 80px!important;
+	height: 80px!important;
+
+.ui.segment
+	border-radius: 500rem;
+	width: 80px;
+	height: 80px;
+	padding: 0;
+	.work-icon
+		margin: 0;
+
+.ui.dimmer
+	background: rgba(0, 0, 0, .5);
+	cursor: pointer;
+
+.ui.dimmer i
+	margin: 0;
+	margin-top: 10px;	
+		
+.category-icon
+	width: 30px!important;
+	height: 30px!important;
+
+.form-flex
 	display: flex;
 	flex-direction: column;
 
-.ui left icon input
-	display: flex;
-	flex-direction: row;
+.ui.table tbody tr
+	&:hover
+		background: rgba(251, 226, 230, 0.33)!important;
+		color: black!important;
+		cursor: pointer;
 
-.ui small circular image
-	padding-top: 15px;
-
-.color-main 
-	color: #FF647A;
-    
 
 .inputfile
 	overflow: hidden;
@@ -92,54 +127,13 @@ svg path
     align-self: flex-start;
     margin-top: 1.5em;
 
+.actions-buttons
+	flex-wrap: nowrap!important;
 
-/// Design changed
+.content
+	font-size: 1.2em;
+	margin-top: 15px;
+	margin-bottom: 25px;
 
-.ui.table
-	margin-top: 1em!important;
-	margin-bottom: 1em!important;
-
-.select-option
-	padding: 1.2em!important;
-	&:hover
-		background: rgba(251, 226, 230, 0.33)!important;
-		color: black!important;
-
-.ui.basic.button
-	box-shadow: 0 0 0 1px $primary_color;
-	color:  $primary_color;
-	background: none;
-	width: 11em;
-	margin-bottom: 1.5em;
-	min-height: 2.8em;
-
-.ui.basic.button h5
-	color: $primary-color;
-
-.ui.basic.button.add
-	padding: .78571429em .78571429em .78571429em;
-	margin: 0 .25em 0 0;
-	width: 7em;
-
-.work-icon
-	margin-top: 1.3em;
-
-.category-icon
-	width: 30px!important;
-	height: 30px!important;
-
-.form-flex
-	display: flex;
-	flex-direction: column;
-
-.save-button
-	align-self: center!important;
-
-.ui.table tbody tr
-	&:hover
-		background: rgba(251, 226, 230, 0.33)!important;
-		color: black!important;
-
-.ui.modal
-	width: 500px!important;
-	margin: 0 0 0 -250px!important;
+.button-text
+	line-height: 1.2em;

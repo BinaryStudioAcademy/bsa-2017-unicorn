@@ -35,6 +35,9 @@ export class VendorEditWorksComponent implements OnInit {
   workIconUrl: SafeResourceUrl;
   uploading: boolean;
 
+  @ViewChild('modalDeleteTemplate')
+  public modalDeleteTemplate: ModalTemplate<void, {}, void>;
+
   modalSize: string;
   cropperSettings: CropperSettings;
   data: any;
@@ -109,8 +112,42 @@ export class VendorEditWorksComponent implements OnInit {
   }
 
   removeWork(work: Work): void {
-    this.vendorService.removeVendorWork(this.vendorId, work.Id, work)
-      .then(resp => this.works = resp.body as Work[]);
+
+    const config = new TemplateModalConfig<void, {}, void>(this.modalDeleteTemplate);
+    
+    config.size = ModalSize.Small;
+    config.isInverted = true;
+    
+    let that = this;
+
+    this.activeModal = this.suiModalService
+      .open(config)
+      .onApprove(result => { 
+        if(this.activeModal !== undefined){ 
+          this.activeModal.deny(null);  
+        } 
+    
+        if (this.selectedWork.Id === work.Id){
+          this.isEditOpen = false;
+          this.clearSelectedWork();
+        }
+    
+        this.vendorService.removeVendorWork(this.vendorId, work.Id, work)
+          .then(resp => this.works = resp.body as Work[]);
+       })
+      .onDeny(result => {  /* deny callback */   });
+
+    // if(this.activeModal !== undefined){ 
+    //   this.activeModal.deny(null);  
+    // } 
+
+    // if (this.selectedWork.Id === work.Id){
+    //   this.isEditOpen = false;
+    //   this.clearSelectedWork();
+    // }
+
+    // this.vendorService.removeVendorWork(this.vendorId, work.Id, work)
+    //   .then(resp => this.works = resp.body as Work[]);
   }
 
   clearSelectedWork(): void {
