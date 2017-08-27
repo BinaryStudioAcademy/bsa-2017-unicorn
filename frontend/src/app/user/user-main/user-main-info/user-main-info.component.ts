@@ -15,20 +15,13 @@ import { Review} from "../../../models/review.model"
 export class UserMainInfoComponent implements OnInit {
   @Input() user: User;
   @ViewChild(AgmMap) private map: any;
-  lat: number = 48.464921;
-  lng: number = 35.045798;
   rating: number;
   reviewsCount: number;
   constructor(private userService: UserService) {}
-  ngOnInit() { 
+  ngOnInit() {
      this.userService.getRating(this.user.Id)
      .then(resp => this.rating = resp.body as number);
      this.userService.getReviews(this.user.Id)
      .then(resp => this.reviewsCount = (resp.body as Review[]).length)
   }
-  mapClicked($event: MouseEvent){
-    this.lat=$event.clientX;
-    this.lng=$event.clientY;
-  
-}
 }

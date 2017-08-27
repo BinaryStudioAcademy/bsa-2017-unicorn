@@ -29,8 +29,8 @@
     <div class="column " style="padding-top: 30px;">
         <h4>Location</h4>
         <div class="map">
-            <agm-map [latitude]="lat" [longitude]="lng" [zoom]="18" style="height: 17em;">
-                <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+            <agm-map [latitude]="user.Location.Latitude" [longitude]="user.Location.Longitude" [zoom]="18" style="height: 17em;">
+                <agm-marker [latitude]="user.Location.Latitude" [longitude]="user.Location.Longitude"></agm-marker>
             </agm-map>
         </div>
 

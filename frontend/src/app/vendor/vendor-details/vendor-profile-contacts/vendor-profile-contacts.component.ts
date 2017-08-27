@@ -16,11 +16,11 @@ import { VendorService } from "../../../services/vendor.service";
 })
 export class VendorProfileContactsComponent implements OnInit {
   @Input() private vendorId: number;
-  @Input() private locationId: number;
   
   contacts: Contact[];
   location: Location;
   map: MapModel;
+  vendor: Vendor;
 
   constructor(
     private locationService: LocationService, 
@@ -28,18 +28,21 @@ export class VendorProfileContactsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.vendorService.getContacts(this.vendorId)
-      .then(resp => this.contacts = resp.body as Contact[]);
-    this.locationService.getById(this.locationId)
-      .then(resp => { 
-        this.location = resp.body as Location;
+    
+    this.vendorService.getVendor(this.vendorId)
+    .then(resp => 
+      { 
+        this.vendor = resp.body as Vendor;
         this.map = {
-          center: {lat: this.location.Latitude, lng: this.location.Longitude},
+          center: {lat: this.vendor.Location.Latitude, lng: this.vendor.Location.Longitude},
           zoom: 18,    
-          title: "Overcat 9000",
-          label: "",
-          markerPos: {lat: this.location.Latitude, lng: this.location.Longitude}
-        };
+          title: this.vendor.Name,
+          label: this.vendor.Name,
+          markerPos: {lat: this.vendor.Location.Latitude, lng: this.vendor.Location.Longitude}    
+        };   
       });
+    this.vendorService.getContacts(this.vendorId)
+      .then(resp => this.contacts = resp.body as Contact[])
+     
   }
 }

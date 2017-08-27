@@ -50,15 +50,7 @@ export class VendorEditInfoComponent implements OnInit {
       .then(resp => this.categories = resp.body as Category[]);
     this.workService.getAll()
       .then(resp => this.works = resp.body as Work[])
-    this.locationService.getById(this.vendor.LocationId)
-      .then(resp => this.location = resp.body as Location)
-      .then(() => this.map = {
-          center: {lat: this.location.Latitude, lng: this.location.Longitude},
-          zoom: 18,    
-          title: "Overcat 9000",
-          label: "",
-          markerPos: {lat: this.location.Latitude, lng: this.location.Longitude}
-        });
+   
   }
 
   onDateSelected(date: Date): void {
