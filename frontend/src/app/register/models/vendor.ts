@@ -1,3 +1,5 @@
+import { Location } from '../../models/location.model'
+
 export interface Vendor {
     birthday: any;
     phone: string;
@@ -11,4 +13,5 @@ export interface Vendor {
     experience: number;
     position: string;
     speciality: string;
+    location: Location;
 }

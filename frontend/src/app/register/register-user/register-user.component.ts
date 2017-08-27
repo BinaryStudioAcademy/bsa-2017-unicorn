@@ -7,6 +7,7 @@ import { SuiActiveModal } from 'ng2-semantic-ui';
 import { Customer } from '../models/customer';
 import { HelperService } from '../../services/helper/helper.service';
 import { AuthenticationEventService } from '../../services/events/authenticationevent.service';
+import { Location } from '../../models/location.model'
 
 @Component({
   selector: 'app-register-user',
@@ -26,6 +27,7 @@ export class RegisterUserComponent implements OnInit {
   middleName: string;
   lastName: string;
   email: string; 
+  location: Location = new Location();
 
   constructor(private registerService: RegisterService,
     private helperService: HelperService,
@@ -35,6 +37,11 @@ export class RegisterUserComponent implements OnInit {
     this.mode = 'date';
     this.email = this.social.email || null;
     this.phone = this.social.phoneNumber || null;
+    this.location.Latitude = 49.841459;
+    this.location.Longitude = 24.031946;
+    this.location.City = "Lviv";
+    this.location.PostIndex = "10";
+    this.location.Adress = "Rynok";
     this.initName();
   }
 
@@ -55,7 +62,8 @@ export class RegisterUserComponent implements OnInit {
       middleName: this.middleName,
       lastName: this.lastName,
       provider: this.social.providerData[0].providerId,
-      uid: this.social.uid
+      uid: this.social.uid,
+      location: this.location
     }
   }
 

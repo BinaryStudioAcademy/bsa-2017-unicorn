@@ -30,9 +30,13 @@ import { PipeModule } from "../pipe/pipe.module";
 import { ClickOutsideModule } from 'ng-click-outside';
 import { SharedModule } from "../shared/shared.module";
 import { CompanyContactsComponent } from './company-edit/company-contacts/company-contacts.component';
+import { AgmCoreModule } from "@agm/core";
 
 @NgModule({
   imports: [    
+    AgmCoreModule.forRoot({
+      apiKey: environment.googleMapsKey
+  }),
     CommonModule,
     CompanyRoutingModule,
     FormsModule,

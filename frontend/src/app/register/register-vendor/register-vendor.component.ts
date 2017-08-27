@@ -7,6 +7,7 @@ import { SuiActiveModal } from 'ng2-semantic-ui';
 import { Vendor } from '../models/vendor';
 import { HelperService } from '../../services/helper/helper.service';
 import { AuthenticationEventService } from '../../services/events/authenticationevent.service';
+import { Location } from '../../models/location.model'
 
 @Component({
   selector: 'app-register-vendor',
@@ -25,7 +26,7 @@ export class RegisterVendorComponent implements OnInit {
   middleName: string;
   lastName: string;
   email: string;
-
+  location: Location = new Location();
   mode: string;
 
   phone: string;
@@ -37,7 +38,11 @@ export class RegisterVendorComponent implements OnInit {
 
   ngOnInit() {
     this.mode = 'date';
-
+    this.location.Latitude = 49.841459;
+    this.location.Longitude = 24.031946;
+    this.location.City = "Lviv";
+    this.location.PostIndex = "10";
+    this.location.Adress = "Rynok";
     this.email = this.social.email || null;
     this.phone = this.social.phoneNumber || null;
     this.initName();
@@ -48,6 +53,7 @@ export class RegisterVendorComponent implements OnInit {
     let nameValues = displayName.split(' ');
     this.firstName = nameValues[0] || null;
     this.lastName = nameValues[1] || null;
+    
   }
 
   aggregateInfo(): Vendor {
@@ -63,7 +69,8 @@ export class RegisterVendorComponent implements OnInit {
       uid: this.social.uid,
       experience: this.experience,
       position: this.position,
-      speciality: this.speciality
+      speciality: this.speciality,
+      location: this.location
     };
   }
 

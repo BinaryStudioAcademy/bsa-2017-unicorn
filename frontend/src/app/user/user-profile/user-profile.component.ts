@@ -25,23 +25,21 @@ export class UserProfileComponent implements OnInit {
       location: Location;
 
     @ViewChild('userForm') public userForm: NgForm;
-    lat: number = 48.464921;
-    lng: number = 35.045798;
     birthday: Date;
     dataLoaded: boolean;
 
     constructor(private userService: UserService, 
-        private locationService : LocationService,
         public toastr: ToastsManager) {}
-   mapClicked($event: MouseEvent){
-      this.lat=$event.clientX;
-      this.lng=$event.clientY;
-    
-  }
+  
     ngOnInit() { 
         this.dataLoaded=true;
     }
 
+    markerDragged($event)
+    {
+        this.user.Location.Latitude = $event.coords.lat;
+        this.user.Location.Longitude = $event.coords.lng;
+    }
     updateUser(): void {
         
         this.dataLoaded = false;

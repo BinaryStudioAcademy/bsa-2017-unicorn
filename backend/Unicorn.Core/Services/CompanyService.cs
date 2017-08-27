@@ -29,8 +29,17 @@ namespace Unicorn.Core.Services
             account.Role = role;
             account.Avatar = companyDto.Image;
             account.DateCreated = DateTime.Now;
-            account.Email = companyDto.Email;           
+            account.Email = companyDto.Email;
 
+            account.Location = new Location()
+            {
+                Adress = companyDto.Location.Adress,
+                City = companyDto.Location.City,
+                IsDeleted = false,
+                Latitude = companyDto.Location.Latitude,
+                Longitude = companyDto.Location.Longitude,
+                PostIndex = companyDto.Location.PostIndex
+            };
             socialAccount.Provider = companyDto.Provider;
             socialAccount.Uid = companyDto.Uid;
             socialAccount.Account = account;
@@ -43,15 +52,6 @@ namespace Unicorn.Core.Services
             company.Description = companyDto.Description;
             company.Account = account;
             company.FoundationDate = companyDto.Foundation;
-            company.Account.Location = new Location()
-            {
-                Adress = companyDto.Location.Adress,
-                City = companyDto.Location.City,
-                IsDeleted = false,
-                Latitude = companyDto.Location.Latitude,
-                Longitude = companyDto.Location.Longitude,
-                PostIndex = companyDto.Location.PostIndex
-            };
 
             _unitOfWork.CompanyRepository.Create(company);
             await _unitOfWork.SaveAsync();

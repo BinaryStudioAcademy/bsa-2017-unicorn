@@ -1,3 +1,4 @@
+import { Location } from '../../models/location.model'
 export interface Company {
     foundation: any;
     phone: string;
@@ -8,4 +9,5 @@ export interface Company {
     name: string;
     staff: number;
     description: string;
+    location: Location;
 }

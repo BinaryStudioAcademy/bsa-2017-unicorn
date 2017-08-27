@@ -11,7 +11,7 @@
                 </div>
                 <div class="field">
                     <label>Description</label>
-                    <textarea name="description" [(ngModel)]="company.Description" #desc="ngModel"></textarea>                    
+                    <textarea name="description" [(ngModel)]="company.Description" #desc="ngModel"></textarea>
                 </div>
                 <div class="field">
                     <label>Foundation date</label>
@@ -22,7 +22,7 @@
                 </div>
                 <div class="field">
                     <label>CEO</label>
-                    <input name="director" type="text" [(ngModel)]="company.Director" #dir="ngModel">                    
+                    <input name="director" type="text" [(ngModel)]="company.Director" #dir="ngModel">
                 </div>
             </div>
         </div>
@@ -31,7 +31,11 @@
                 <div class="ui form">
                     <div class="field">
                         <label>Change your location</label>
-                        <app-map [inputMap]="map"></app-map>
+                        <div class="map">
+                            <agm-map [latitude]="company.Location.Latitude" [longitude]="company.Location.Longitude" [zoom]="18" style="height: 20em;">
+                                <agm-marker (dragEnd)="markerDragged($event)" [markerDraggable]="true" [latitude]="company.Location.Latitude" [longitude]="company.Location.Longitude"></agm-marker>
+                            </agm-map>
+                        </div>
                     </div>
                 </div>
             </div>

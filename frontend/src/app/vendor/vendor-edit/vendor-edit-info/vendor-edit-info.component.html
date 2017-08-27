@@ -40,7 +40,7 @@
                                 <div class="field">
                                     <label>About me</label>
                                     <textarea [(ngModel)]="vendor.WorkLetter" name="workLetter" placeholder="FEW WORDS ABOUT YOU AND YOUR WORK" #about="ngModel">
-                                </textarea>                                    
+                                </textarea>
                                 </div>
                             </div>
                         </form>
@@ -50,8 +50,10 @@
         </div>
         <div class="ui container column">
             <h4>Help customers find you</h4>
-            <div *ngIf="map != undefined" class="map">
-                <app-map [inputMap]="map"></app-map>
+            <div class="map">
+                <agm-map [latitude]="vendor.Location.Latitude" [longitude]="vendor.Location.Longitude" [zoom]="18" style="height: 20em;">
+                    <agm-marker (dragEnd)="markerDragged($event)" [markerDraggable]="true" [latitude]="vendor.Location.Latitude" [longitude]="vendor.Location.Longitude"></agm-marker>
+                </agm-map>
             </div>
         </div>
     </div>

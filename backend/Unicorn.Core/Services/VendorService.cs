@@ -184,10 +184,19 @@ namespace Unicorn.Core.Services
             var vendor = await _unitOfWork.VendorRepository.Query
                 .Include(v => v.Person)
                 .Include(v => v.Person.Account)
+                .Include(v => v.Person.Account.Location)
                 .Include(v => v.Works)
                 .Include(v => v.Company)
                 .SingleAsync(x => x.Id == vendorDto.Id);
-
+            vendor.Person.Account.Location = new Location()
+            {
+                Adress = vendorDto.Location.Adress,
+                City = vendorDto.Location.City,
+                IsDeleted = false,
+                Latitude = vendorDto.Location.Latitude,
+                Longitude = vendorDto.Location.Longitude,
+                PostIndex = vendorDto.Location.PostIndex
+            };
             vendor.WorkLetter = vendorDto.WorkLetter;
             vendor.Position = vendorDto.Position;
             vendor.Person.Birthday = vendorDto.Birthday.AddDays(1); // Dirty hack, fix this later

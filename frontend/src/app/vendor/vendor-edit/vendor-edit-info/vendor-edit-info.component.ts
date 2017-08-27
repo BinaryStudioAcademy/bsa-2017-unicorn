@@ -14,6 +14,7 @@ import { VendorService } from "../../../services/vendor.service";
 import { LocationService } from "../../../services/location.service";
 import { CategoryService } from "../../../services/category.service";
 import { WorkService } from "../../../services/work.service";
+import { AgmMap } from "@agm/core";
 
 @Component({
   selector: 'app-vendor-edit-info',
@@ -64,7 +65,11 @@ export class VendorEditInfoComponent implements OnInit {
       this.newWork.SubcategoryId = this.selectedSubcategory.Id;
     }
   }
-
+  markerDragged($event)
+  {
+      this.vendor.Location.Latitude = $event.coords.lat;
+      this.vendor.Location.Longitude = $event.coords.lng;
+  }
   saveVendor(): void {
     if (this.vendorForm.invalid) {
       return;

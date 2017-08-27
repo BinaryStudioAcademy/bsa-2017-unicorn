@@ -22,7 +22,11 @@ export class CompanyMainInformationComponent implements OnInit {
 
   constructor(private companyService: CompanyService,
     private route: ActivatedRoute) { }
-
+    markerDragged($event)
+    {
+        this.company.Location.Latitude = $event.coords.lat;
+        this.company.Location.Longitude = $event.coords.lng;
+    }
   ngOnInit() {
     this.route.params
     .switchMap((params: Params) => this.companyService.getCompanyDetails(params['id'])).subscribe(res => {

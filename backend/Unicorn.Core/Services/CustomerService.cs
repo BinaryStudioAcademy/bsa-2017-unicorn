@@ -88,6 +88,15 @@ namespace Unicorn.Core.Services
                 customer.Person.Surname = userDTO.SurName;
                 customer.Person.MiddleName = userDTO.MiddleName;
                 customer.Person.Account.Email = userDTO.Email;
+                customer.Person.Account.Location = new Location()
+                {
+                    Adress = userDTO.Location.Adress,
+                    City = userDTO.Location.City,
+                    IsDeleted = false,
+                    Latitude = userDTO.Location.Latitude,
+                    Longitude = userDTO.Location.Longitude,
+                    PostIndex = userDTO.Location.PostIndex
+                };
                 customer.Person.Phone = userDTO.Phone;
                 customer.Person.Birthday = userDTO.Birthday;
 

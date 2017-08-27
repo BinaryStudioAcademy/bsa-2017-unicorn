@@ -7,7 +7,7 @@ import { SuiActiveModal } from 'ng2-semantic-ui';
 import { Company } from '../models/company';
 import { HelperService } from '../../services/helper/helper.service';
 import { AuthenticationEventService } from '../../services/events/authenticationevent.service';
-
+import { Location } from '../../models/location.model'
 @Component({
   selector: 'app-register-company',
   templateUrl: './register-company.component.html',
@@ -25,7 +25,7 @@ export class RegisterCompanyComponent implements OnInit {
   staff: number;
   email: string;
   foundation: any;
-
+  location: Location = new Location();
   constructor(private registerService: RegisterService,
     private helperService: HelperService,
     private authEventService: AuthenticationEventService) { }
@@ -35,6 +35,11 @@ export class RegisterCompanyComponent implements OnInit {
     this.email = this.social.email || null;
     this.phone = this.social.phoneNumber || null;
     this.name = this.social.displayName || null;
+    this.location.Latitude = 49.841459;
+    this.location.Longitude = 24.031946;
+    this.location.City = "Lviv";
+    this.location.PostIndex = "10";
+    this.location.Adress = "Rynok";
   }
 
   aggregateInfo(): Company {
@@ -47,7 +52,8 @@ export class RegisterCompanyComponent implements OnInit {
       image: this.social.photoURL,
       name: this.name,
       provider: this.social.providerData[0].providerId,
-      uid: this.social.uid
+      uid: this.social.uid,
+      location: this.location
     };
   }
 
