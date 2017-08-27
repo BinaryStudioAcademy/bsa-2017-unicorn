@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 
 import { BookCard, BookStatus } from '../../../models/dashboard/book-card';
 
+import { DashMessagingService } from '../../../services/dashboard/dash-messaging.service';
 import { DashboardService } from '../../../services/dashboard/dashboard.service';
+
 @Component({
   selector: 'app-dashboard-pendings',
   templateUrl: './dashboard-pendings.component.html',
@@ -12,7 +14,13 @@ export class DashboardPendingsComponent implements OnInit {
 
   books: BookCard[];
 
-  constructor(private dashboardService: DashboardService) { }
+  aloads: {[bookId: number]: boolean} = {};
+  dloads: {[bookId: number]: boolean} = {};
+
+  constructor(
+    private dashboardService: DashboardService,
+    private dashMessaging: DashMessagingService
+  ) { }
 
   ngOnInit() {
     this.loadData();
@@ -28,13 +36,22 @@ export class DashboardPendingsComponent implements OnInit {
   accept(id: number) {
     let book: BookCard = this.books.filter(b => b.Id == id)[0];
     book.Status = BookStatus.Accepted;
-    this.dashboardService.update(book).then(resp => this.loadData());
+    this.aloads[book.Id] = true;
+    this.dashboardService.update(book).then(resp => {
+      this.loadData();
+      this.aloads[book.Id] = false;
+      this.dashMessaging.changePending();
+    });
   }
 
   decline(id: number) {
     let book: BookCard = this.books.filter(b => b.Id == id)[0];
     book.Status = BookStatus.Declined;
-    this.dashboardService.update(book).then(resp => this.loadData());
+    this.dloads[book.Id] = true;
+    this.dashboardService.update(book).then(resp => {
+      this.loadData();
+      this.dloads[book.Id] = false;
+    });
   }
 
 }

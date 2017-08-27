@@ -13,6 +13,7 @@ import { SuiModule } from 'ng2-semantic-ui';
 import { DataService } from '../services/data.service';
 import { DashboardService } from '../services/dashboard/dashboard.service';
 import { TokenHelperService } from '../services/helper/tokenhelper.service';
+import { DashMessagingService } from '../services/dashboard/dash-messaging.service';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { TokenHelperService } from '../services/helper/tokenhelper.service';
   ],
   providers: [
     DashboardService,
-    DataService
+    DataService,
+    DashMessagingService
   ]
 })
 export class DashboardModule { }
