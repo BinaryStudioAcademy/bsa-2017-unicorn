@@ -1,5 +1,6 @@
 import {Book} from './book.model'
 import {History} from './history'
+import {Location} from './location.model'
 export interface User
 {
 	Id: number;
@@ -8,8 +9,7 @@ export interface User
 	SurName: string;
 	Avatar: string;
 	Background: string;
-	LocationId : string;
-	Books: Book[];
+	Location : Location;
 	History: History[];
 	Email:string;
 	Phone:string;

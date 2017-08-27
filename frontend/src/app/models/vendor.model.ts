@@ -2,6 +2,7 @@ import { Review } from './review.model';
 import { Work } from './work.model';
 import { PortfolioItem } from "./portfolio-item.model";
 import { Contact } from "./contact.model";
+import { Location } from './location.model'
 
 export interface Vendor {
 	Id: number;
@@ -11,7 +12,7 @@ export interface Vendor {
 	Avatar: string;
 	Background: string;
 	City: string;
-	LocationId: number;
+	Location: Location;
 	Position: string;
 	WorkLetter: string;
 	ExWork: string;
