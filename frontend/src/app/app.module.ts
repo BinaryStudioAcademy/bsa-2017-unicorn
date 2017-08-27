@@ -31,7 +31,7 @@ import { IndexModule } from './index/index.module';
 import { SearchModule } from './search/search.module';
 
 
-
+import { SignalR, SignalRConnection, SignalRModule, SignalRConfiguration } from 'ng2-signalr';
 import { SuiModule } from 'ng2-semantic-ui';
 import {ToastOptions} from 'ng2-toastr';
 import { ShellComponent } from './shell/shell.component';
@@ -43,6 +43,13 @@ import { TokenHelperService } from './services/helper/tokenhelper.service';
 import {ToastModule, Toast} from 'ng2-toastr/ng2-toastr';
 import { AccountService } from "./services/account.service";
 
+export function createConfig(): SignalRConfiguration {
+  const c = new SignalRConfiguration();
+  c.hubName = 'NotificationHub';
+  // c.url = "http://localhost:52309";
+  c.logging = true;
+  return c;
+}
 export class CustomOptions extends ToastOptions {
   animate = 'fade';
   dismiss = 'auto';
@@ -76,6 +83,7 @@ export class CustomOptions extends ToastOptions {
     VendorModule,
     BookModule,
     SearchModule,
+    SignalRModule.forRoot(createConfig),
     IndexModule // Must be the last module
   ],
   providers: [
