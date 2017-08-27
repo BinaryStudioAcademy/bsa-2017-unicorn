@@ -18,21 +18,15 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let vendor of company.Vendors">
-                        <!-- <td><img class="ui avatar image vendor-icon" src="{{vendor.Result.Avatar}}"></td> -->
                         <td><img class="ui avatar image vendor-icon" src="{{vendor.Avatar}}"></td>
-                        <!-- <td>{{vendor.Result.FIO}}</td>
-                        <td>{{vendor.Result.Experience}}</td>
-                        <td>{{vendor.Result.Position}}</td> -->
                         <td>{{vendor.FIO}}</td>
                         <td>{{vendor.Experience}}</td>
                         <td>{{vendor.Position}}</td>
                         <td>
-                            <!-- <sui-rating class="star" [ngModel]="vendor.Result.Rating" [isReadonly]="true"></sui-rating> -->
                             <sui-rating class="star" [ngModel]="vendor.Rating" [isReadonly]="true"></sui-rating>
                         </td>
                         <td class="right aligned">
-                            <!-- <button class="ui icon button" (click)="deleteVendor(vendor.Result)"> -->
-                            <button class="ui icon button" (click)="deleteVendor(vendor)">
+                            <button class="ui button icon" (click)="openDeleteModal(vendor)">
                                 <i class="remove icon"></i>
                             </button>
                         </td>
@@ -55,7 +49,6 @@
                 </ng-template>
                 <label>Select a vendor</label>
                 <sui-select class="selection" [(ngModel)]="selectedVendor" [optionTemplate]="optionVendorTemplate" (selectedOptionChange)="changeVendor()" name="selectVendor">
-                    <!-- <sui-select-option class="select-option" *ngFor="let vendor of allVendors" [value]="vendor.Result"> -->
                     <sui-select-option class="select-option" *ngFor="let vendor of allVendors" [value]="vendor">
                     </sui-select-option>
                 </sui-select>
@@ -66,7 +59,6 @@
                         <div class="face">
                             <img class="ui avatar image face-icon" src="{{vendor.Avatar}}">
                             <sui-rating class="star" [ngModel]="vendor.Rating" [isReadonly]="true" style="margin-top: 3px;"></sui-rating>
-                            <!-- <div class="ui star rating" data-rating="3"></div> -->
                             <div>Reviews: {{vendor.Reviews}}</div>
                         </div>
 
@@ -87,10 +79,8 @@
                                 <div class="ui divider"></div>
                             </div>
                         </div>
-                        <div>
-                            <button class="circular ui button icon delete-vendor" (click)="deleteSelectedVendor(vendor)">
-                                    <i class="remove icon"></i>
-                            </button>
+                        <div class="delete-vendor">
+                            <i class="remove icon absolute-icon" (click)="deleteSelectedVendor(vendor)"></i>
                         </div>
                     </div>
                 </div>
@@ -99,7 +89,7 @@
     </div>
     <div class="centered row" *ngIf="openedDetailedWindow">
         <div class="three wide column">
-            <button class="ui basic button" (click)="addVendor()" [ngClass]="{'loading':isLoaded}">
+            <button class="ui basic button" (click)="addVendors()" [ngClass]="{'loading':isLoaded}">
               <h5 *ngIf="!isLoaded">Add</h5>
             </button>
         </div>
@@ -109,3 +99,30 @@
 <div *ngIf="company === undefined" class="ui active inverted dimmer" style="background-color: rgba(255,255,255,.85)">
     <div class="ui text loader">Loading</div>
 </div>
+
+
+
+<ng-template class="modalImage" let-context let-modal="modal" #modalDeleteTemplate>
+    <div class="content">
+        <div class="contentContainer">
+            <div class="mainContent" align="center">
+                <div class="title">
+                    <label>Delete a vendor</label>
+                </div>
+                <div class="content">
+                    <p>Are you sure you want to delete this vendor?</p>
+                </div>
+                <div class="ui padded grid centered actions-buttons">
+                    <div class="ui active button file-upload-save" (click)="deleteVendor()">
+                        <label class="button-text">Delete</label>
+                    </div>
+                    <div class="ui active button file-upload-save" (click)="activeModal.deny(null)">
+                        <label class="button-text">Cancel</label>
+                    </div>
+                    <!-- <div class="ui approve button" (click)="deleteWork()">Approve</div>
+            <div class="ui cancel button" (click)="activeModal.deny(null)">Cancel</div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

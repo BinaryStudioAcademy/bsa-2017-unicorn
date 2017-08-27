@@ -6,7 +6,7 @@
                 Reviews: {{company.ReviewsCount}}</div>
         </h2>
         <div class="center">
-            <img class="ui avatar image" id="director-avatar" src={{company.Avatar}}>
+            <label>CEO:</label>
             <p>{{company.Director}}</p>
         </div>
     </div>
@@ -19,13 +19,13 @@
     </div>
     <div class="ui container">
         <div class="flex-body" *ngIf="categories !== null">
-            <div *ngFor="let category of categories" class="item flex-category" [ngClass]="{'selected-category': selectedCategory===category}" (click)="onCategorySelect(category)">
-                <img class="ui circular image image-category" src={{category.Icon}}>
-                <h5 class="category-name">{{category.Name}}</h5>
+            <div *ngFor="let category of categories" class="item flex-category" id="divCategory{{category.Id}}" [ngClass]="{'selected-category': selectedCategory===category}" (click)="onCategorySelect(category)">
+                <img class="ui circular image image-category" src={{category.Icon}} id="imgCategory{{category.Id}}">
+                <h5 class="category-name" id="h5Category{{category.Id}}">{{category.Name}}</h5>
             </div>
         </div>
         <div class="ui divider"></div>
-        <div *ngIf="openedCategoryDetails" (clickOutside)="closeCategoryDetails()">
+        <div *ngIf="openedCategoryDetails" (clickOutside)="closeCategoryDetails($event)">
             <div class="flex-header">
                 <h4 style="display: inline-block;">{{selectedCategory.Name}}</h4>
             </div>

@@ -1,44 +1,52 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, NgZone } from '@angular/core';
 import { ActivatedRoute, Params } from "@angular/router";
 import { CompanyService } from "../../../services/company-services/company.service";
 import { CompanyVendors } from "../../../models/company-page/company-vendors.model";
 import { Vendor } from "../../../models/company-page/vendor";
+import { SuiModalService, TemplateModalConfig, ModalTemplate, ModalSize, SuiActiveModal } from 'ng2-semantic-ui';
 
 @Component({
   selector: 'app-company-vendors',
   templateUrl: './company-vendors.component.html',
   styleUrls: ['./company-vendors.component.sass']
 })
-export class CompanyVendorsComponent implements OnInit {  
+export class CompanyVendorsComponent implements OnInit { 
+  @ViewChild('modalDeleteTemplate')
+  public modalDeleteTemplate: ModalTemplate<void, {}, void>;
+  private activeModal: SuiActiveModal<void, {}, void>;
+  
 
-  company: CompanyVendors;     
+  company: CompanyVendors;  
+  companyId: number;   
   isLoaded: boolean = false; 
   openedDetailedWindow: boolean = false;  
   allVendors: Vendor[];
   selectedVendors: Vendor[] = [];
   selectedVendor: Vendor;
-
+  vendor: Vendor;
 
   constructor(private companyService: CompanyService,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private zone: NgZone,
+    private suiModalService: SuiModalService) { }
 
-  ngOnInit() {
+  ngOnInit() { 
+    this.initializeThisCompany();   
+  }  
+
+  initializeThisCompany(){
     this.route.params
     .switchMap((params: Params) => this.companyService.getCompanyVendors(params['id'])).subscribe(res => {
       this.company = res;   
       this.allVendors = this.company.AllVendors;
-      // console.log(this.company.AllVendors);   
+      this.companyId = this.company.Id;  
     });
-  }  
+  }
 
   changeVendor(){
-    // this.allVendors.Result  = this.company.AllVendors.Result;    
-    // this.selectedVendors.push(this.selectedVendor);
-    // this.allVendors.Result = this.allVendors.Result.filter(x => x.Id !== this.selectedVendor.Id);
-
     this.selectedVendors.push(this.selectedVendor);
     this.allVendors = this.allVendors.filter(x => x.Id !== this.selectedVendor.Id);
-    this.selectedVendor = undefined;  
+    this.zone.run(() => { this.selectedVendor = null; });  
   }
 
   openDetailedWindow(){
@@ -52,44 +60,68 @@ export class CompanyVendorsComponent implements OnInit {
     this.openedDetailedWindow = false;  
     this.allVendors = this.company.AllVendors;
     this.selectedVendors = undefined;
-    this.selectedVendor = undefined;
+    this.zone.run(() => { this.selectedVendor = null; });  
   }
 
-  deleteVendor(vendor: Vendor){      
-    // this.company.Vendors.Result =  this.company.Vendors.Result.filter(x => x.Id !== vendor.Id);   
-
-    this.company.Vendors =  this.company.Vendors.filter(x => x.Id !== vendor.Id);   
-    this.saveCompanyVendors();
+  deleteVendor(){ 
+    if(this.activeModal !== undefined){ 
+    this.activeModal.deny(null);  
+    } 
+    if(this.openedDetailedWindow){
+      this.openedDetailedWindow = false; 
+    }    
     this.selectedVendors = undefined;
-    this.selectedVendor = undefined;
-    this.company = undefined;
-    if(this.openedDetailedWindow)  
-      this.openedDetailedWindow = !this.openedDetailedWindow;    
+    this.zone.run(() => { this.selectedVendor = null; }); 
+
+    this.company = undefined;  
+    this.companyService.deleteCompanyVendor(this.companyId, this.vendor.Id)
+      .then(() => {
+        this.initializeThisCompany();   
+      });     
   }
 
   deleteSelectedVendor(vendor: Vendor){
     this.selectedVendors = this.selectedVendors.filter(x => x.Id !== vendor.Id);
+    this.zone.run(() => { this.selectedVendor = null; });
     this.allVendors.push(vendor);
   }
 
-  addVendor(){    
-    // this.selectedVendors.forEach(vendor => {this.company.Vendors.Result.push(vendor);});      
-    this.selectedVendors.forEach(vendor => {this.company.Vendors.push(vendor);});      
+  addVendors(){      
+    if(this.selectedVendors.length !== 0){
+      this.selectedVendors.forEach(vendor => {this.company.Vendors.push(vendor);});      
       this.saveCompanyVendors();  
       this.selectedVendors = undefined;
-      this.selectedVendor = undefined;      
+      this.zone.run(() => { this.selectedVendor = null; });  
       this.company = undefined;    
-      this.openedDetailedWindow = !this.openedDetailedWindow;     
+      this.openedDetailedWindow = false;     
+    }
   }
-
 
   saveCompanyVendors(){
     this.isLoaded = true;    
-    this.companyService.saveCompanyVendors(this.company).then(() => {
+    this.companyService.addCompanyVendors(this.company).then(() => {
       this.isLoaded = false;      
-      this.ngOnInit();
+      this.initializeThisCompany();
     });
   }
 
+  openDeleteModal(vendor: Vendor){
+    this.vendor = vendor;
+    this.activeModal = this.openDelModal(this.modalDeleteTemplate);
+  }
 
+  public openDelModal(modalTemplate: ModalTemplate<void, {}, void>): SuiActiveModal<void, {}, void> {
+    const config = new TemplateModalConfig<void, {}, void>(modalTemplate);
+    //config.closeResult = "closed!";
+
+    config.size = ModalSize.Small;
+    config.isInverted = true;
+    //config.mustScroll = true;
+    let that = this;
+
+    return this.suiModalService
+      .open(config)
+      .onApprove(result => { /* approve callback */ })
+      .onDeny(result => {  /* deny callback */   });
+  }
 }

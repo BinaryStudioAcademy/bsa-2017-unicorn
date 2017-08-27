@@ -1011,6 +1011,7 @@ namespace Unicorn.DataAccess.Context
             Work work1 = new Work()
             {
                 Id = 1,
+                Icon = "https://semantic-ui.com/images/avatar/small/daniel.jpg",
                 Description = "Care of clothes",
                 IsDeleted = false,
                 Name = "laundress",
@@ -1021,6 +1022,7 @@ namespace Unicorn.DataAccess.Context
             Work work2 = new Work()
             {
                 Id = 2,
+                Icon = "https://semantic-ui.com/images/avatar/small/daniel.jpg",
                 Description = "Photosession, wedding photosessions etc.",
                 IsDeleted = false,
                 Name = "Photographer",
@@ -1032,6 +1034,7 @@ namespace Unicorn.DataAccess.Context
             Work work3 = new Work()
             {
                 Id = 3,
+                Icon = "https://semantic-ui.com/images/avatar/small/daniel.jpg",
                 Description = "Care of your pets",
                 IsDeleted = false,
                 Name = "Vet",
@@ -1042,6 +1045,7 @@ namespace Unicorn.DataAccess.Context
             Work work4 = new Work()
             {
                 Id = 4,
+                Icon = "https://semantic-ui.com/images/avatar/small/daniel.jpg",
                 Description = "Appartmen repair",
                 IsDeleted = false,
                 Name = "Builder",
@@ -1052,6 +1056,7 @@ namespace Unicorn.DataAccess.Context
             Work work5 = new Work()
             {
                 Id = 5,
+                Icon = "https://semantic-ui.com/images/avatar/small/daniel.jpg",
                 Description = "Driving services",
                 IsDeleted = false,
                 Name = "Driver",
@@ -1062,6 +1067,7 @@ namespace Unicorn.DataAccess.Context
             Work work6 = new Work()
             {
                 Id = 6,
+                Icon = "https://semantic-ui.com/images/avatar/small/daniel.jpg",
                 Description = "C# senior dev",
                 IsDeleted = false,
                 Name = "Developer",
@@ -1073,6 +1079,7 @@ namespace Unicorn.DataAccess.Context
             Work work7 = new Work()
             {
                 Id = 7,
+                Icon = "https://semantic-ui.com/images/avatar/small/daniel.jpg",
                 Description = "Services and products development",
                 IsDeleted = false,
                 Name = "Services and products",
@@ -1082,6 +1089,7 @@ namespace Unicorn.DataAccess.Context
             Work work8 = new Work()
             {
                 Id = 8,
+                Icon = "https://semantic-ui.com/images/avatar/small/daniel.jpg",
                 Description = "Supply industrial equipment and machines",
                 IsDeleted = false,
                 Name = "Equipment supplier",
@@ -1091,6 +1099,7 @@ namespace Unicorn.DataAccess.Context
             Work work9 = new Work()
             {
                 Id = 9,
+                Icon = "https://semantic-ui.com/images/avatar/small/daniel.jpg",
                 Description = "Computer parts supplier",
                 IsDeleted = false,
                 Name = "Computer parts supplier",
@@ -1100,6 +1109,7 @@ namespace Unicorn.DataAccess.Context
             Work work10 = new Work()
             {
                 Id = 10,
+                Icon = "https://semantic-ui.com/images/avatar/small/daniel.jpg",
                 Description = "Сooking food",
                 IsDeleted = false,
                 Name = "Сooking food",
@@ -1109,6 +1119,7 @@ namespace Unicorn.DataAccess.Context
             Work work11 = new Work()
             {
                 Id = 11,
+                Icon = "https://semantic-ui.com/images/avatar/small/daniel.jpg",
                 Description = "Courier service delivery",
                 IsDeleted = false,
                 Name = "Сourier",

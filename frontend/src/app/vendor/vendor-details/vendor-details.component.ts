@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
+
 import 'rxjs/add/operator/switchMap';
 
 import { Vendor } from '../../models/vendor.model';
@@ -40,6 +41,7 @@ export class VendorDetailsComponent implements OnInit {
   cropperSettings: CropperSettings;
   vendor: Vendor;
   isGuest: boolean;
+  isUser: boolean;
   file: File;
   data: any;
   imageUploaded: boolean;
@@ -77,11 +79,13 @@ export class VendorDetailsComponent implements OnInit {
   getCurrentRole() {
     if (this.tokenHelperService.getToken() === null) {
       this.isGuest = true;
+      this.isUser = false;
       return;
     }
 
     const userRoleId = +this.tokenHelperService.getClaimByName('roleid');
     this.isGuest = userRoleId === 1;
+    this.isUser = userRoleId === 2;
   }
 
   buildSafeUrl(link: string): SafeResourceUrl {

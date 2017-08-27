@@ -31,7 +31,6 @@ namespace Unicorn.Core.Services
                 .Include(v => v.Person)
                 .Include(v => v.Person.Location)
                 .Include(v => v.PortfolioItems)
-                .Include(v => v.Works)
                 .Include(v => v.Company)
                 .ToListAsync();
 
@@ -44,7 +43,6 @@ namespace Unicorn.Core.Services
                 .Include(v => v.Person)
                 .Include(v => v.Person.Location)
                 .Include(v => v.PortfolioItems)
-                .Include(v => v.Works)
                 .Include(v => v.Company)
                 .SingleAsync(x => x.Id == id);
             return VendorToDTO(vendor);
@@ -57,12 +55,15 @@ namespace Unicorn.Core.Services
                 .SingleAsync(x => x.Id == id);
 
 
-            return vendor.Person.Account.Contacts.Select(c => new ContactShortDTO() {
-                Id = c.Id,
-                Type = c.Provider.Type,
-                Provider = c.Provider.Name,
-                Value = c.Value
-            });
+            return vendor.Person.Account.Contacts
+                .Where(c => !c.IsDeleted)
+                .Select(c => new ContactShortDTO() {
+                    Id = c.Id,
+                    Type = c.Provider.Type,
+                    Provider = c.Provider.Name,
+                    ProviderId = c.Provider.Id,
+                    Value = c.Value
+                }).ToList();
         }
 
         public async Task<IEnumerable<CategoryDTO>> GetVendorCategoriesAsync(long id)
@@ -78,6 +79,7 @@ namespace Unicorn.Core.Services
                     Id = g.Key.Id,
                     Name = g.Key.Name,
                     Description = g.Key.Description,
+                    Icon = g.Key.Icon,
                     Subcategories = g.Key.Subcategories
                         .Select(s => new SubcategoryShortDTO()
                         {
@@ -85,7 +87,8 @@ namespace Unicorn.Core.Services
                             CategoryId = g.Key.Id,
                             Name = s.Name,
                             Id = s.Id,
-                            Description = s.Description
+                            Description = s.Description,
+                            Icon = s.Icon
                         }).ToList()
                 }).ToList();
         }
@@ -117,17 +120,7 @@ namespace Unicorn.Core.Services
                 LocationId = vendor.Person.Location.Id,
                 Position = vendor.Position,
                 WorkLetter = vendor.WorkLetter,
-                Birthday = vendor.Person.Birthday,
-                Works = vendor.Works.Select(w => new WorkDTO()
-                {
-                    Id = w.Id,
-                    Description = w.Description,
-                    Name = w.Name,
-                    Category = w.Subcategory.Category.Name,
-                    CategoryId = w.Subcategory.Category.Id,
-                    Subcategory = w.Subcategory.Name,
-                    SubcategoryId = w.Subcategory.Id
-                }).ToList()
+                Birthday = vendor.Person.Birthday
             };
         }
 
@@ -185,7 +178,6 @@ namespace Unicorn.Core.Services
             vendor.Person.Name = vendorDto.Name;
             vendor.Person.Surname = vendorDto.Surname;
             vendor.Person.MiddleName = vendorDto.MiddleName;
-            vendor.Works = vendorDto.Works.Select(w => _unitOfWork.WorkRepository.Query.Single(x => x.Id == w.Id)).ToList();
 
             _unitOfWork.VendorRepository.Update(vendor);
             await _unitOfWork.SaveAsync();

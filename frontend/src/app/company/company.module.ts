@@ -28,6 +28,8 @@ import { CompanyVendorsComponent } from './company-edit/company-vendors/company-
 import { CompanyWorksComponent } from './company-edit/company-works/company-works.component';
 import { PipeModule } from "../pipe/pipe.module";
 import { ClickOutsideModule } from 'ng-click-outside';
+import { SharedModule } from "../shared/shared.module";
+import { CompanyContactsComponent } from './company-edit/company-contacts/company-contacts.component';
 
 @NgModule({
   imports: [    
@@ -40,7 +42,8 @@ import { ClickOutsideModule } from 'ng-click-outside';
     SignBlockModule,
     MapModule,
     PipeModule,
-    ClickOutsideModule
+    ClickOutsideModule,
+    SharedModule
   ],
   declarations: [
     CompanyComponent,
@@ -54,7 +57,8 @@ import { ClickOutsideModule } from 'ng-click-outside';
     CompanyMessagesComponent,
     CompanyOrdersComponent,
     CompanyVendorsComponent,
-    CompanyWorksComponent
+    CompanyWorksComponent,
+    CompanyContactsComponent
     
   ],
   providers: [

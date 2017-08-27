@@ -58,12 +58,12 @@ export class UserDetailsComponent implements OnInit {
     private photoService: PhotoService,
     private sanitizer: DomSanitizer,
     private suiModalService: SuiModalService,
-    private modalService: ModalService,
+    private modalService: ModalService,    
     private tokenHelper: TokenHelperService,
-    public toastr: ToastsManager) {
-    this.cropperSettings = modalService.cropperSettings;
-    this.data = {};
-    this.imageUploaded = false;
+    public toastr: ToastsManager) { 
+      this.cropperSettings = modalService.cropperSettings;
+      this.data = {};
+      this.imageUploaded = false;
   }
   ngOnInit() {
     this.dataLoaded = true;

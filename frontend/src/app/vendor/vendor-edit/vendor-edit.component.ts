@@ -2,14 +2,12 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser'
 
-import { SuiModule } from 'ng2-semantic-ui';
+import {SuiModule} from 'ng2-semantic-ui';
 
-import {
-  SuiModalService, TemplateModalConfig
-  , ModalTemplate, ModalSize, SuiActiveModal
-} from 'ng2-semantic-ui';
+import { SuiModalService, TemplateModalConfig
+  , ModalTemplate, ModalSize, SuiActiveModal } from 'ng2-semantic-ui';
 
-import { ImageCropperComponent, CropperSettings } from 'ng2-img-cropper';
+import {ImageCropperComponent, CropperSettings} from 'ng2-img-cropper';
 
 import 'rxjs/add/operator/switchMap';
 

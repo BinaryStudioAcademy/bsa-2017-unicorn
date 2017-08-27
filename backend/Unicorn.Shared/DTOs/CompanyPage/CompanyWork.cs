@@ -10,6 +10,8 @@ namespace Unicorn.Shared.DTOs.CompanyPage
 
         public string Description { get; set; }
 
+        public string Icon { get; set; }
+
         public virtual CompanySubcategory Subcategory { get; set; }
     }
 }

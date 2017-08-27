@@ -4,6 +4,7 @@
             <table class="ui selectable padded single line table">
                 <thead>
                     <tr>
+                        <th>Icon</th>
                         <th>Name</th>
                         <th>Category</th>
                         <th>Subcategory</th>
@@ -16,11 +17,15 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let work of company.Works" (click)="selectWorksRow($event, work)">
+                        <td>
+                            <img *ngIf="work.Icon !== '' && work.Icon !== null" class="ui avatar image" src="{{work.Icon}}">
+                            <img *ngIf="work.Icon === '' || work.Icon === null" class="ui avatar image" src="https://semantic-ui.com/images/wireframe/square-image.png">
+                        </td>
                         <td>{{work.Name}}</td>
                         <td>{{work.Subcategory.Category.Name}}</td>
                         <td>{{work.Subcategory.Name}}</td>
                         <td class="right aligned">
-                            <button class="ui icon button">
+                            <button class="ui icon button" (click)="openDeleteModal(work)">
                                 <i class="remove icon"></i>
                             </button>
                         </td>
@@ -31,7 +36,7 @@
     </div>
     <div class="ui divider" *ngIf="openedDetailedWindow"></div>
     <div class="right aligned" *ngIf="openedDetailedWindow">
-        <button class="ui icon button" (click)="closeDetailedWindow()">
+        <button class="circular ui icon button" (click)="closeDetailedWindow()">
             <i class="remove icon"></i>
         </button>
     </div>
@@ -64,7 +69,6 @@
                 </div>
                 <div class="field">
                     <ng-template let-option #optionSubcategoryTemplate>
-                        <!-- <img class="ui avatar image category-icon" src="{{option.Icon}}"> -->
                         {{option.Name}}
                     </ng-template>
                     <label>Select a subcategory</label>
@@ -75,7 +79,13 @@
                 </div>
                 <div class="field">
                     <label>Select an icon for work</label>
-                    <img class="ui tiny rounded image work-icon" src="https://semantic-ui.com/images/wireframe/square-image.png">
+                    <div class="ui segment" (mouseenter)="isDimmed = !isDimmed" (mouseleave)="isDimmed = !isDimmed">
+                        <img *ngIf="work.Icon !== '' && work.Icon !== null" class="ui circular image work-icon" src="{{work.Icon}}">
+                        <img *ngIf="work.Icon === '' || work.Icon === null " class="ui circular image work-icon" src="https://semantic-ui.com/images/wireframe/square-image.png">
+                        <sui-dimmer [(isDimmed)]="isDimmed" [isClickable]="false" (click)="openModal()">
+                            <h4 class="ui inverted header">Upload</h4>
+                        </sui-dimmer>
+                    </div>
                 </div>
 
             </form>
@@ -93,3 +103,70 @@
 <div *ngIf="company === undefined" class="ui active inverted dimmer" style="background-color: rgba(255,255,255,.85)">
     <div class="ui text loader">Loading</div>
 </div>
+
+
+<ng-template class="modalImage" let-context let-modal="modal" #modalTemplate>
+    <div class="content">
+        <div class="contentContainer">
+            <div class="mainContent" align="center">
+                <div class="title">
+                    <label>Select your photo</label>
+                </div>
+                <div class="uploadedImage">
+                    <img-cropper #cropper [image]="data" [settings]="cropperSettings"></img-cropper>
+                </div>
+                <div class="ui padded grid centered">
+                    <div class="ui active button file-upload-save" #fileInput (change)="fileChangeListener($event)">
+                        <svg class="svgImage" id="uploadImage" xmlns="http://www.w3.org/2000/svg" width="16" height="17" viewBox="0 0 20 17">
+                        <path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path>
+                        </svg>
+                        <input #fileInput id="custom-input" accept="image/*" type="file" name="file" id="file" class="inputfile">
+                        <label class="btnText" for="file">Upload image</label>
+                    </div>
+                    <div *ngIf="dataLoaded" class="ui active button file-upload-save" (click)="fileSaveListener()">
+                        <svg class="svgImage" id="saveImage" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="17" viewBox="0 0 1000 1000" enable-background="new 0 0 1000 1000" xml:space="preserve">
+                            <g><path d="M500,613.1L780,360H605V150H394.1v210H220L500,613.1z M958,590.1L801.9,469.8H710L845.6,605H734.9c-5,0-9.4,2.6-11.8,6.3l-40.2,99.5H316.5l-40.2-99.5c-2.2-3.9-6.8-6.3-11.8-6.3H154L290,469.8h-92.3L41.5,590.1C18.3,603.7,7,631.7,10.7,659.2l19,146.3c5,28.7,21.2,44.4,61.5,44.4h817.6c41.8,0,56.4-16.6,61.5-44.4l19-146.3C993,631,981.2,603.7,958,590.1z"/></g>
+                        </svg>
+                        <input type="submit" id="custom-input" class="inputfile">
+                        <label class="btnText" for="submit">Save image</label>
+                    </div>
+                    <div *ngIf="!dataLoaded" class="ui active loading button file-upload-save">Loading</div>
+                </div>
+            </div>
+            <div class="previewContent" *ngIf="imageUploaded">
+                <div class="result rounded">
+                    <div class="previewTitle">
+                        <label>Preview</label>
+                    </div>
+                    <img class="ui small circular image uploadedImage" [src]="data.image" [width]="cropperSettings.croppedWidth" [height]="cropperSettings.croppedHeight">
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+
+<ng-template class="modalImage" let-context let-modal="modal" #modalDeleteTemplate>
+    <div class="content">
+        <div class="contentContainer">
+            <div class="mainContent" align="center">
+                <div class="title">
+                    <label>Delete a work</label>
+                </div>
+                <div class="content">
+                    <p>Are you sure you want to delete this work?</p>
+                </div>
+                <div class="ui padded grid centered actions-buttons">
+                    <div class="ui active button file-upload-save" (click)="deleteWork()">
+                        <label class="button-text">Delete</label>
+                    </div>
+                    <div class="ui active button file-upload-save" (click)="activeModal.deny(null)">
+                        <label class="button-text">Cancel</label>
+                    </div>
+                    <!-- <div class="ui approve button" (click)="deleteWork()">Approve</div>
+        <div class="ui cancel button" (click)="activeModal.deny(null)">Cancel</div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

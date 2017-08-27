@@ -13,9 +13,8 @@ import { TokenHelperService } from '../../services/helper/tokenhelper.service';
 export class CompanyDetailsComponent implements OnInit {
   company: CompanyShort;
   isGuest: boolean;
-
+  isUser: boolean;
   tabActive: boolean = false;
-
   routePath: string;
   routeid: number;
 
@@ -34,20 +33,18 @@ export class CompanyDetailsComponent implements OnInit {
       });
     if (this.route.snapshot.queryParams['tab'] === 'reviews') {
       this.tabActive = true;
-    }
-    // console.log(this.route.snapshot.queryParams['tab']);
-
+    }   
     this.getCurrentRole();
   }
 
   getCurrentRole() {
     if (this.tokenHelperService.getToken() === null) {
       this.isGuest = true;
+      this.isUser = false;
       return;
     }
-
     const userRoleId = +this.tokenHelperService.getClaimByName('roleid');
     this.isGuest = userRoleId === 1;
+    this.isUser = userRoleId === 2;
   }
 }
-

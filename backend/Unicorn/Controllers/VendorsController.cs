@@ -11,6 +11,7 @@ using Unicorn.Core.Interfaces;
 using Unicorn.DataAccess.Entities;
 using Unicorn.Shared.DTOs;
 using Unicorn.Shared.DTOs.Book;
+using Unicorn.Shared.DTOs.Contact;
 using Unicorn.Shared.DTOs.Subcategory;
 using Unicorn.Shared.DTOs.Vendor;
 
@@ -27,6 +28,7 @@ namespace Unicorn.Controllers
             IBookService bookService,
             IHistoryService historyService,
             IWorkService workService,
+            IContactService contactService,
             IRatingService ratingService)
         {
             _vendorService = vendorService;
@@ -35,6 +37,7 @@ namespace Unicorn.Controllers
             _bookService = bookService;
             _historyService = historyService;
             _workService = workService;
+            _contactService = contactService;
             _ratingService = ratingService;
         }
 
@@ -109,6 +112,8 @@ namespace Unicorn.Controllers
                 return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
+#region Contacts
+
         [HttpGet]
         [Route("{id}/contacts")]
         public async Task<HttpResponseMessage> GetVendorContacts(long id)
@@ -120,6 +125,46 @@ namespace Unicorn.Controllers
             else
                 return Request.CreateResponse(HttpStatusCode.OK, result);
         }
+
+        [HttpPost]
+        [Route("{id}/contacts")]
+        public async Task<HttpResponseMessage> PostVendorContact(long id, [FromBody]ContactShortDTO contact)
+        {
+            var accountId = await _vendorService.GetVendorAccountIdAsync(id);
+            var result = await _contactService.CreateAsync(accountId, contact);
+
+            if (result == null)
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            else
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+        [HttpPut]
+        [Route("{id}/contacts/{contactId}")]
+        public async Task<HttpResponseMessage> PutVendorContact(long id, long contactId, [FromBody]ContactShortDTO contact)
+        {
+            var accountId = await _vendorService.GetVendorAccountIdAsync(id);
+            await _contactService.UpdateAsync(accountId, contact);
+
+            var result = await _contactService.GetByIdAsync(contactId);
+
+            if (result == null)
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            else
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+        [HttpDelete]
+        [Route("{id}/contacts/{contactId}")]
+        public async Task<HttpResponseMessage> DeleteVendorContact(long id, long contactId)
+        {
+            var accountId = await _vendorService.GetVendorAccountIdAsync(id);
+            await _contactService.RemoveAsync(accountId, contactId);
+
+            return Request.CreateResponse(HttpStatusCode.NoContent);
+        }
+
+        #endregion
 
         [HttpGet]
         [Route("{id}/reviews")]
@@ -254,5 +299,6 @@ namespace Unicorn.Controllers
         private IHistoryService _historyService;
         private IRatingService _ratingService;
         private IWorkService _workService;
+        private IContactService _contactService;
     }
 }

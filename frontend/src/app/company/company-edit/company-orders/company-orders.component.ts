@@ -15,7 +15,6 @@ export class CompanyOrdersComponent implements OnInit {
   company: CompanyBooks;
   bookStatus = BookStatus;
   isLoaded: boolean = false;
-
   changedOrders: CompanyBooks = { Id: null, Books: [] };
 
   constructor(private companyService: CompanyService,
@@ -40,8 +39,8 @@ export class CompanyOrdersComponent implements OnInit {
 
   saveOrder(order: CompanyBook): void {
     this.isLoaded = true;
-    this.company.Books.splice(this.company.Books.findIndex(o => o.Id === order.Id), 1, order);
-    this.companyService.saveCompanyBooks(this.company).then(() => {
+    //this.company.Books.splice(this.company.Books.findIndex(o => o.Id === order.Id), 1, order);
+    this.companyService.saveCompanyBook(order).then(() => {
       this.changedOrders.Books.splice(this.changedOrders.Books.findIndex(o => o.Id === order.Id), 1);
       this.isLoaded = false;
     });

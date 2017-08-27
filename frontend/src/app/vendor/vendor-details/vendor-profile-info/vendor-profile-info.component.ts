@@ -31,9 +31,9 @@ export class VendorProfileInfoComponent implements OnInit {
 
   ngOnInit() {
     this.vendorService.getRating(this.vendor.Id)
-    .then(resp => this.rating = resp.body as number);
+      .then(resp => this.rating = resp.body as number);
     this.vendorService.getReviews(this.vendor.Id)
-    .then(resp => this.reviewsCount = (resp.body as Review[]).length)
+      .then(resp => this.reviewsCount = (resp.body as Review[]).length)
 
     this.vendorService.getVendorWorks(this.vendor.Id)
       .then(resp => this.works = resp.body as Work[])

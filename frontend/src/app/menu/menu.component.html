@@ -9,25 +9,30 @@
             </li>
             <li>
                 <div class="dropdown">
-                    <div class="ui small circular image" (click)="onShowDetails()">
-                        <img class="userInfo" src="../../../assets/images/avatar.jpg">
+                    <div *ngIf="profileInfo !== undefined" class="ui small circular image" (click)="onShowDetails()">
+                        <img class="profile-avatar" src="{{profileInfo.Avatar}}">
                     </div>
-                    <div class="dropdown-content" *ngIf="showAccountDetails">
+                    <div class="dropdown-content" *ngIf="showAccountDetails && profileInfo !== undefined">
                         <div class="mainInfo">
-                            <div class="ui small circular image smallAvatar">
-                                <img src="../../../assets/images/avatar.jpg">
-                            </div>
-                            <div class="desc">
-                                <ul>
-                                    <li>{{fakeName}} {{fakeSurname}}</li>
-                                    <li class="email">{{fakeEmail}}</li>
-                                </ul>
+                            <div class="ui items">
+                                <div class="item">
+                                    <div class="ui small circular image smallAvatar">
+                                        <img class="profile-avatar" src="{{profileInfo.Avatar}}">
+                                    </div>
+                                    <div class="content">
+                                        <h5>{{profileInfo.Name}}</h5>
+                                        <div class="description">
+                                            <p class="email">{{profileInfo.Email}}</p>
+                                            <p>{{profileInfo.Role}}</p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="ui fitted divider"></div>
                         <div class="accountButtons">
                             <div class="signOut">
-                                <a routerLink="/user/1" routerLinkActive="active">Account</a>
+                                <a (click)="goToAccount()" routerLinkActive="active">Account</a>
                             </div>
                             <div class="signOut">
                                 <a (click)="signOut()" routerLinkActive="active">Sign Out</a>
