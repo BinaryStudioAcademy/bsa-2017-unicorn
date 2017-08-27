@@ -247,7 +247,8 @@ namespace Unicorn.Core.Services
                         Category = b.Work.Subcategory.Category.Name,
                         CategoryId = b.Work.Subcategory.Category.Id,
                         Subcategory = b.Work.Subcategory.Name,
-                        SubcategoryId = b.Work.Subcategory.Id
+                        SubcategoryId = b.Work.Subcategory.Id,
+                        Icon = b.Work.Icon
                     }
                 }).ToListAsync();
         }
