@@ -48,4 +48,23 @@ export class TokenHelperService {
   public getToken(): string {
     return localStorage.getItem('token');
   }
+
+  public getRoleName(): string {
+    let roleId = this.getClaimByName('roleid');
+    let roleName = '';
+    switch (roleId) {
+      case '2':
+          roleName = 'user';
+      case '3':
+          roleName = 'vendor';
+          break;
+      case '4':
+          roleName = 'company';
+          break;
+      case '5':
+          roleName = 'admin';
+          break;
+    }
+    return roleName;
+  }
 }
