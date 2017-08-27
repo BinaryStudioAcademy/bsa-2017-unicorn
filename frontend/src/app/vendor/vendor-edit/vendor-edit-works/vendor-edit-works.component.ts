@@ -33,7 +33,7 @@ export class VendorEditWorksComponent implements OnInit {
   enableTheme: boolean = false;
   saveImgButton: boolean = false;
   workIconUrl: SafeResourceUrl;
-  uploading: boolean;
+  uploading: boolean = false;
 
   @ViewChild('modalDeleteTemplate')
   public modalDeleteTemplate: ModalTemplate<void, {}, void>;
@@ -136,18 +136,6 @@ export class VendorEditWorksComponent implements OnInit {
           .then(resp => this.works = resp.body as Work[]);
        })
       .onDeny(result => {  /* deny callback */   });
-
-    // if(this.activeModal !== undefined){ 
-    //   this.activeModal.deny(null);  
-    // } 
-
-    // if (this.selectedWork.Id === work.Id){
-    //   this.isEditOpen = false;
-    //   this.clearSelectedWork();
-    // }
-
-    // this.vendorService.removeVendorWork(this.vendorId, work.Id, work)
-    //   .then(resp => this.works = resp.body as Work[]);
   }
 
   clearSelectedWork(): void {
@@ -188,12 +176,15 @@ export class VendorEditWorksComponent implements OnInit {
       console.log("file can't be loaded");
       return;
     }
+    if(!this.file){
+      return;
+    }
+    this.uploading = true;
     this.photoService.uploadToImgur(this.file)
       .then(resp => {
-        let path = resp;
-        console.log(path);
+        this.uploading = false;
+        this.selectedWork.Icon = this.data.image;
         this.activeModal.deny(null);
-        this.selectedWork.Icon = path;
       })
       .catch(err => {
         console.log(err);
