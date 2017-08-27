@@ -30,6 +30,7 @@ import { VendorService } from '../services/vendor.service';
 import { ReviewService } from '../services/review.service';
 import { DataService } from "../services/data.service";
 import { LocationService } from "../services/location.service";
+import { DashboardService } from '../services/dashboard/dashboard.service';
 
 import { CategoryService } from "../services/category.service";
 import { WorkService } from "../services/work.service";
@@ -71,7 +72,8 @@ import { ContactService } from "../services/contact.service";
     PhotoService,
     CategoryService,
     WorkService,
-    ContactService
+    ContactService,
+    DashboardService
   ]
 })
 export class VendorModule { }

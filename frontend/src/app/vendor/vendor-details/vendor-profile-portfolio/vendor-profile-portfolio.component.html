@@ -1,4 +1,4 @@
-<div class="ui three stackable cards">
+<!-- <div class="ui three stackable cards">
   <div *ngFor="let item of portfolio" class="card">
     <div class="image">
       <img src="{{item.Image}}">
@@ -6,4 +6,20 @@
     <div class="extra">
       <p>{{item.Category}}, {{item.WorkType}}</p>
   </div>
+</div> -->
+<div class="ui cards" id="portfolio" *ngIf="books !== undefined">
+    <div class="ui card" *ngFor="let book of books; let i = index">
+        <div class="content">
+            <div class="right floated meta">{{book.Date | date: 'dd/MM/yyyy'}}</div>
+            <div class="right floated meta"></div>
+            <img class="ui avatar image" src="{{book.Work.Icon}}"> {{book.Work.Name}}
+        </div>
+        <div class="content">
+            {{book.Description}}
+        </div>
+        <div class="content">
+            <sui-rating class="star" [isReadonly]="true"></sui-rating>
+            <span class="right floated"><a href="#">Review</a></span>
+        </div>
+    </div>
 </div>
