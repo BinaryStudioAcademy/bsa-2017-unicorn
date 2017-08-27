@@ -30,6 +30,7 @@ import {ToastModule, ToastsManager, ToastOptions} from 'ng2-toastr/ng2-toastr';
 @NgModule({
     imports: [
         AgmCoreModule.forRoot({
+            language: 'en',
             apiKey: environment.googleMapsKey
         }),
         SuiModule,
