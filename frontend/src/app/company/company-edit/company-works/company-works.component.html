@@ -25,7 +25,7 @@
                         <td>{{work.Subcategory.Category.Name}}</td>
                         <td>{{work.Subcategory.Name}}</td>
                         <td class="right aligned">
-                            <button class="ui icon button">
+                            <button class="ui icon button" (click)="openDeleteModal(work)">
                                 <i class="remove icon"></i>
                             </button>
                         </td>
@@ -105,11 +105,6 @@
 </div>
 
 
-
-
-
-
-
 <ng-template class="modalImage" let-context let-modal="modal" #modalTemplate>
     <div class="content">
         <div class="contentContainer">
@@ -144,6 +139,32 @@
                         <label>Preview</label>
                     </div>
                     <img class="ui small circular image uploadedImage" [src]="data.image" [width]="cropperSettings.croppedWidth" [height]="cropperSettings.croppedHeight">
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+
+<ng-template class="modalImage" let-context let-modal="modal" #modalDeleteTemplate>
+    <div class="content">
+        <div class="contentContainer">
+            <div class="mainContent" align="center">
+                <div class="title">
+                    <label>Delete a work</label>
+                </div>
+                <div class="content">
+                    <p>Are you sure you want to delete this work?</p>
+                </div>
+                <div class="ui padded grid centered actions-buttons">
+                    <div class="ui active button file-upload-save" (click)="deleteWork()">
+                        <label class="button-text">Delete</label>
+                    </div>
+                    <div class="ui active button file-upload-save" (click)="activeModal.deny(null)">
+                        <label class="button-text">Cancel</label>
+                    </div>
+                    <!-- <div class="ui approve button" (click)="deleteWork()">Approve</div>
+        <div class="ui cancel button" (click)="activeModal.deny(null)">Cancel</div> -->
                 </div>
             </div>
         </div>

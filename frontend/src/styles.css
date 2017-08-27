@@ -3,7 +3,7 @@
 @media only screen and (min-width: 1200px) {
     .ui.modal.small {
         position: fixed;
-        top: 12%;
+        top: 50%;
         width: 500px;
         margin: 0 0 0 -235px;
     }
