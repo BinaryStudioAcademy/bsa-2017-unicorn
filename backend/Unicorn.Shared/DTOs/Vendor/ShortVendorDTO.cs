@@ -21,7 +21,7 @@ namespace Unicorn.Shared.DTOs.Vendor
 
         public string City { get; set; }
 
-        public long LocationId { get; set; }
+        public LocationDTO Location { get; set; }
 
         public double Experience { get; set; }
 

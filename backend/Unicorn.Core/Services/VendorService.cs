@@ -29,7 +29,7 @@ namespace Unicorn.Core.Services
         {
             var vendors = await _unitOfWork.VendorRepository.Query
                 .Include(v => v.Person)
-                .Include(v => v.Person.Location)
+                .Include(v => v.Person.Account.Location)
                 .Include(v => v.PortfolioItems)
                 .Include(v => v.Company)
                 .ToListAsync();
@@ -41,7 +41,7 @@ namespace Unicorn.Core.Services
         {
             var vendor = await _unitOfWork.VendorRepository.Query
                 .Include(v => v.Person)
-                .Include(v => v.Person.Location)
+                .Include(v => v.Person.Account.Location)
                 .Include(v => v.PortfolioItems)
                 .Include(v => v.Company)
                 .SingleAsync(x => x.Id == id);
@@ -116,8 +116,16 @@ namespace Unicorn.Core.Services
                 Surname = vendor.Person.Surname,
                 MiddleName = vendor.Person.MiddleName,
                 Id = vendor.Id,
-                City = vendor.Person.Location.City,
-                LocationId = vendor.Person.Location.Id,
+                City = vendor.Person.Account.Location.City,
+                Location = new LocationDTO()
+                {
+                    Id = vendor.Person.Account.Location.Id,
+                    Adress = vendor.Person.Account.Location.Adress,
+                    City = vendor.Person.Account.Location.City,
+                    Latitude = vendor.Person.Account.Location.Latitude,
+                    Longitude = vendor.Person.Account.Location.Longitude,
+                    PostIndex = vendor.Person.Account.Location.PostIndex
+                },
                 Position = vendor.Position,
                 WorkLetter = vendor.WorkLetter,
                 Birthday = vendor.Person.Birthday
@@ -138,6 +146,15 @@ namespace Unicorn.Core.Services
             account.DateCreated = DateTime.Now;
             account.Email = ShortVendorDTO.Email;
             account.Avatar = ShortVendorDTO.Image;
+            account.Location = new Location()
+            {
+                Adress = vendor.Person.Account.Location.Adress,
+                IsDeleted = false,
+                City = vendor.Person.Account.Location.City,
+                Latitude = vendor.Person.Account.Location.Latitude,
+                Longitude = vendor.Person.Account.Location.Longitude,
+                PostIndex = vendor.Person.Account.Location.PostIndex
+            };
 
             socialAccount.Provider = ShortVendorDTO.Provider;
             socialAccount.Uid = ShortVendorDTO.Uid;
@@ -152,7 +169,6 @@ namespace Unicorn.Core.Services
             person.MiddleName = ShortVendorDTO.MiddleName;
             person.Surname = ShortVendorDTO.LastName;
             person.Account = account;
-            person.Location = new Location();
 
             vendor.Person = person;
             vendor.Experience = ShortVendorDTO.Experience;

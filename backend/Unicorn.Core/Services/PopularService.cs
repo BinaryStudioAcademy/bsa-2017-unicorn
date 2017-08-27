@@ -48,6 +48,7 @@ namespace Unicorn.Core.Services
                 .Query
                 .Include(v => v.Person)
                 .Include(v => v.Person.Account)
+                .Include(v => v.Person.Account.Location)
                 .ToListAsync();
 
             var vendors = vendorsList
@@ -60,7 +61,7 @@ namespace Unicorn.Core.Services
                     ReviewsCount = reviews.Count(r => r.ToAccountId == v.Person.Account.Id),
                     PerformerType = "vendor",
                     Link = "vendor/" + v.Id,
-                    City = v.Person.Location.City
+                    City = v.Person.Account.Location.City
                 }).ToList();
 
             var companiesList = await _uow.CompanyRepository
@@ -78,7 +79,7 @@ namespace Unicorn.Core.Services
                     ReviewsCount = reviews.Count(r => r.ToAccountId == c.Account.Id),
                     PerformerType = "company",
                     Link = "company/" + c.Id,
-                    City = c.Location.City
+                    City = c.Account.Location.City
                 }).ToList();
 
             var performers = vendors
@@ -118,7 +119,7 @@ namespace Unicorn.Core.Services
                     ReviewsCount = reviews.Count(r => r.ToAccountId == v.Vendor.Person.Account.Id),
                     PerformerType = "vendor",
                     Link = $"vendor/" + v.Vendor.Id,
-                    City = v.Vendor.Person.Location.City
+                    City = v.Vendor.Person.Account.Location.City
                 });
 
             var companies = works
@@ -132,7 +133,7 @@ namespace Unicorn.Core.Services
                     ReviewsCount = reviews.Count(r => r.ToAccountId == c.Company.Account.Id),
                     PerformerType = "company",
                     Link = "company/" + c.Company.Id,
-                    City = c.Company.Location.City
+                    City = c.Company.Account.Location.City
                 });
 
             var performers = vendors

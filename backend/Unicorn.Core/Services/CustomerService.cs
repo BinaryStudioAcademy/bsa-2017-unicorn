@@ -10,6 +10,7 @@ using Unicorn.Shared.DTOs.Register;
 using Unicorn.Shared.DTOs.User;
 using System.Data.Entity;
 using Unicorn.DataAccess.Entities.Enum;
+using Unicorn.Shared.DTOs;
 
 namespace Unicorn.Core.Services
 {
@@ -41,10 +42,20 @@ namespace Unicorn.Core.Services
             var customer = new Customer();
             var person = new Person();
 
+            
             account.Role = role;
             account.DateCreated = DateTime.Now;
             account.Email = customerDto.Email;
             account.Avatar = customerDto.Image;
+            account.Location = new Location()
+            {
+                Adress = customerDto.Location.Adress,
+                City = customerDto.Location.City,
+                IsDeleted = false,
+                Latitude = customerDto.Location.Latitude,
+                Longitude = customerDto.Location.Longitude,
+                PostIndex = customerDto.Location.PostIndex
+            };
 
             socialAccount.Provider = customerDto.Provider;
             socialAccount.Uid = customerDto.Uid;
@@ -59,7 +70,6 @@ namespace Unicorn.Core.Services
             person.MiddleName = customerDto.MiddleName;
             person.Surname = customerDto.LastName;
             person.Account = account;
-            person.Location = new Location();
 
             customer.Person = person;
             customer.Books = new List<Book>();
@@ -98,6 +108,7 @@ namespace Unicorn.Core.Services
             var customer = await _unitOfWork.CustomerRepository.
                 Query.Include(c => c.History.Select(h => h.Vendor.Person)).
                 Include(c => c.Books.Select(h => h.Vendor.Person)).
+                Include(c=>c.Person.Account.Location).
                 SingleAsync(c => c.Id == id);
             if (customer != null)
             {
@@ -107,7 +118,14 @@ namespace Unicorn.Core.Services
                     Name = customer.Person.Name,
                     SurName = customer.Person.Surname,
                     MiddleName = customer.Person.MiddleName,
-                    LocationId = customer.Person.Location.Id,
+                    Location = new LocationDTO()
+                    {
+                        Adress = customer.Person.Account.Location.Adress,
+                        City = customer.Person.Account.Location.City,
+                        Latitude = customer.Person.Account.Location.Latitude,
+                        Longitude = customer.Person.Account.Location.Longitude,
+                        PostIndex = customer.Person.Account.Location.PostIndex
+                    },
                     Birthday = customer.Person.Birthday,
                     Phone = customer.Person.Phone,
                     Avatar = customer.Person.Account.Avatar,
@@ -145,12 +163,12 @@ namespace Unicorn.Core.Services
             {
                 Location = new Shared.DTOs.LocationDTO()
                 {
-                    Id = customer.Person.Location.Id,
-                    Adress = customer.Person.Location.Adress,
-                    City = customer.Person.Location.City,
-                    Latitude = customer.Person.Location.Latitude,
-                    Longitude = customer.Person.Location.Longitude,
-                    PostIndex = customer.Person.Location.PostIndex
+                    Id = customer.Person.Account.Location.Id,
+                    Adress = customer.Person.Account.Location.Adress,
+                    City = customer.Person.Account.Location.City,
+                    Latitude = customer.Person.Account.Location.Latitude,
+                    Longitude = customer.Person.Account.Location.Longitude,
+                    PostIndex = customer.Person.Account.Location.PostIndex
                 },
                 Phone = customer.Person.Phone
             };

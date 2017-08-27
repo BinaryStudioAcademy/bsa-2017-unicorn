@@ -12,7 +12,7 @@ namespace Unicorn.Shared.DTOs.User
         public DateTime Birthday { get; set; }
         public string Avatar { get; set; }
         public string Background { get; set; }
-        public long LocationId { get; set; }
+        public LocationDTO Location { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
         public DateTime DateCreated { get; set; }

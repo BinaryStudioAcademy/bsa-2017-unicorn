@@ -17,5 +17,6 @@ namespace Unicorn.Shared.DTOs.Register
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
         public string LastName { get; set; }
+        public LocationDTO Location { get; set; }
     }
 }

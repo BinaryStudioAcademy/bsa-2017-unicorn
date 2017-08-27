@@ -43,7 +43,15 @@ namespace Unicorn.Core.Services
             company.Description = companyDto.Description;
             company.Account = account;
             company.FoundationDate = companyDto.Foundation;
-            company.Location = new Location();
+            company.Account.Location = new Location()
+            {
+                Adress = companyDto.Location.Adress,
+                City = companyDto.Location.City,
+                IsDeleted = false,
+                Latitude = companyDto.Location.Latitude,
+                Longitude = companyDto.Location.Longitude,
+                PostIndex = companyDto.Location.PostIndex
+            };
 
             _unitOfWork.CompanyRepository.Create(company);
             await _unitOfWork.SaveAsync();
