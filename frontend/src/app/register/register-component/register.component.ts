@@ -11,6 +11,7 @@ import { HelperService } from '../../services/helper/helper.service';
 import { RegisterService } from '../../services/register.service';
 
 import { ComponentModalConfig, ModalSize, SuiModal } from 'ng2-semantic-ui';
+import { LocationService } from "../../services/location.service";
 
 export class RegisterModal extends ComponentModalConfig<void> {
   constructor() {
@@ -50,14 +51,15 @@ export class RegisterComponent implements OnInit, OnDestroy {
     private helperService: HelperService,
     public registerService: RegisterService,
     public authLoginService: AuthenticationLoginService,
-    private authEventService: AuthenticationEventService) {
+    private authEventService: AuthenticationEventService,
+    private locationService: LocationService) {
 
     this.mode = 'date';
     this.authLoginService.signOut();
 
     this.isLogged = false;
     this.error = false;
-
+    this.locationService.getCurrentLocation();
     this.initRoles();
   }
 
@@ -151,6 +153,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   selectRole(role: string) {
+    
     this.clearRoles();
     this.roles[role] = true;
   }

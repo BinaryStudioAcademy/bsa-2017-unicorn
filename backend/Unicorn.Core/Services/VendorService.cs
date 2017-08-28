@@ -148,12 +148,12 @@ namespace Unicorn.Core.Services
             account.Avatar = ShortVendorDTO.Image;
             account.Location = new Location()
             {
-                Adress = vendor.Person.Account.Location.Adress,
+                Adress = ShortVendorDTO.Location.Adress,
                 IsDeleted = false,
-                City = vendor.Person.Account.Location.City,
-                Latitude = vendor.Person.Account.Location.Latitude,
-                Longitude = vendor.Person.Account.Location.Longitude,
-                PostIndex = vendor.Person.Account.Location.PostIndex
+                City = ShortVendorDTO.Location.City,
+                Latitude = ShortVendorDTO.Location.Latitude,
+                Longitude = ShortVendorDTO.Location.Longitude,
+                PostIndex = ShortVendorDTO.Location.PostIndex
             };
 
             socialAccount.Provider = ShortVendorDTO.Provider;

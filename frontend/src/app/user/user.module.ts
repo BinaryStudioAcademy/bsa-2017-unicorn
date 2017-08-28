@@ -31,6 +31,7 @@ import {ToastModule, ToastsManager, ToastOptions} from 'ng2-toastr/ng2-toastr';
     imports: [
         AgmCoreModule.forRoot({
             language: 'en',
+            libraries: ["places"],
             apiKey: environment.googleMapsKey
         }),
         SuiModule,
