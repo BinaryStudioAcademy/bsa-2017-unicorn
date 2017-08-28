@@ -50,7 +50,8 @@
     <Compile Include="DTOs\Book\BookOrderDTO.cs" />
     <Compile Include="DTOs\Book\VendorBookDTO.cs" />
     <Compile Include="DTOs\CategoryDTO.cs" />
-    <Compile Include="DTOs\ChatDTO.cs" />
+    <Compile Include="DTOs\Chat\ChatDialogDTO.cs" />
+    <Compile Include="DTOs\Chat\ChatMessageDTO.cs" />
     <Compile Include="DTOs\CompanyDTO.cs" />
     <Compile Include="DTOs\CompanyPage\CompanyBook.cs" />
     <Compile Include="DTOs\CompanyPage\CompanyBooks.cs" />

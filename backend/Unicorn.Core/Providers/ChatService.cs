@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Unicorn.Core.Interfaces;
 using Unicorn.DataAccess.Entities;
 using Unicorn.DataAccess.Interfaces;
-using Unicorn.Shared.DTOs;
+using Unicorn.Shared.DTOs.Chat;
 
 namespace Unicorn.Core.Providers
 {
@@ -19,56 +20,73 @@ namespace Unicorn.Core.Providers
             _unitOfWork = unitOfWork;
         }
 
-        public async Task Create(ChatDTO msg)
+        public async Task CreateMessage(ChatMessageDTO msg)
         {
-            ChatMessage m = new ChatMessage
+            var dialog = await _unitOfWork.ChatDialogRepository.GetByIdAsync(msg.DialogId);
+            var owner = await _unitOfWork.AccountRepository.GetByIdAsync(msg.OwnerId);
+
+            ChatMessage cmsg = new ChatMessage
             {
-                SenderId = msg.SenderId,
-                ReceiverId = msg.ReceiverId,
-                Message = msg.Message,
-                Date = msg.Date
+                IsReaded = false,
+                Date = msg.Date,
+                Dialog = dialog,
+                Owner = owner,
+                Message = msg.Message
             };
 
-            _unitOfWork.ChatRepository.Create(m);
+            _unitOfWork.ChatMessageRepository.Create(cmsg);
+            await _unitOfWork.SaveAsync();
+
+        }
+
+        public async Task CreateDialog(ChatDialogDTO dialog)
+        {
+            var participant1 = await _unitOfWork.AccountRepository.GetByIdAsync(dialog.ParticipantOneId);
+            var participant2 = await _unitOfWork.AccountRepository.GetByIdAsync(dialog.ParticipantTwoId);
+
+            var dl = new ChatDialog
+            {
+                Participant1 = participant1,
+                Participant2 = participant2,
+                Messages = new List<ChatMessage>()
+            };
+
+            _unitOfWork.ChatDialogRepository.Create(dl);
             await _unitOfWork.SaveAsync();
         }
 
-        public ICollection<ChatDTO> GetChat(long senderId, long receiverId)
+        public async Task<ChatDialogDTO> GetDialog(long dialogId)
         {
-            // TODO: async?
-            var data = _unitOfWork.ChatRepository.Query.Where(x => x.SenderId == senderId && x.ReceiverId == receiverId);
-            if (data.Any())
+            var dialog = await _unitOfWork.ChatDialogRepository.Query
+                .Include(x => x.Messages)
+                .Include(x => x.Participant1)
+                .Include(x => x.Participant2)
+                .SingleAsync(x => x.Id == dialogId);
+
+            ChatDialogDTO dl = new ChatDialogDTO
             {
-                var dto = data.Select(x => new ChatDTO
+                Id = dialogId,
+                ParticipantOneId = dialog.Participant1.Id,
+                ParticipantTwoId = dialog.Participant2.Id,
+                Messages = dialog.Messages.Select(x => new ChatMessageDTO
                 {
-                    SenderId = x.SenderId,
-                    ReceiverId = x.ReceiverId,
+                    DialogId = x.Dialog.Id,
+                    Date = x.Date,
+                    IsReaded = x.IsReaded,
                     Message = x.Message,
-                    Date = x.Date
-                }).ToList();
+                    OwnerId = x.Owner.Id
+                }).ToList()
+            };
 
-                return dto;
-            }
-            return null;
+            return dl;
         }
 
-        public IEnumerable<ChatDTO> GetChatByDate(long senderId, long receiverId, DateTime dateMin)
+        public Task Remove(ChatMessageDTO msg)
         {
-            var dataDto = GetChat(senderId, receiverId);
-            if (dataDto == null)
-            {
-                return null;
-            }
-
-            return dataDto.Where(x => x.Date >= dateMin);
-        }
-
-        public Task Remove(ChatDTO msg)
-        {            
             throw new NotImplementedException();
         }
 
-        public Task Update(ChatDTO msg)
+        public Task Update(ChatMessageDTO msg)
         {
             throw new NotImplementedException();
         }

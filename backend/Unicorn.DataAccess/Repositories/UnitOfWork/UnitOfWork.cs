@@ -16,7 +16,8 @@ namespace Unicorn.DataAccess.Repositories.UnitOfWork
         private IGenericRepository<Category> categoryRepository;
         private IGenericRepository<Company> companyRepository;
         private IGenericRepository<Customer> customerRepository;
-        private IGenericRepository<ChatMessage> chatRepository;
+        private IGenericRepository<ChatDialog> chatDialogRepository;
+        private IGenericRepository<ChatMessage> chatMessageRepository;
         private IGenericRepository<History> historyRepository;
         private IGenericRepository<Location> locationRepository;
         private IGenericRepository<Permission> permissionRepository;
@@ -84,12 +85,21 @@ namespace Unicorn.DataAccess.Repositories.UnitOfWork
             }
         }
 
-        public IGenericRepository<ChatMessage> ChatRepository
+        public IGenericRepository<ChatDialog> ChatDialogRepository
         {
             get
             {
-                return chatRepository ??
-                  (chatRepository = factory.CreateRepository<ChatMessage>(context));
+                return chatDialogRepository ??
+                  (chatDialogRepository = factory.CreateRepository<ChatDialog>(context));
+            }
+        }
+
+        public IGenericRepository<ChatMessage> ChatMessageRepository
+        {
+            get
+            {
+                return chatMessageRepository ??
+                  (chatMessageRepository = factory.CreateRepository<ChatMessage>(context));
             }
         }
 
