@@ -53,7 +53,7 @@ import { AgmCoreModule } from "@agm/core";
     PipeModule,
     AgmCoreModule.forRoot({
       apiKey: environment.googleMapsKey
-  })
+  }),
     ClickOutsideModule
   ],
   declarations: [
