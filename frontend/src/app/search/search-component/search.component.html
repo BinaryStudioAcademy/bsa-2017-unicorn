@@ -116,15 +116,15 @@
       <div class="ui divider"></div>
       <div *ngIf="performers" class="ui grid">
         <div class="three column row remove-padding-top">
-          <div class="column cell" *ngFor="let company of performers.slice((selectedPage - 1) * pageSize, selectedPage * pageSize)">
-            <a href="/{{company.Link}}" class="ui medium image">
-              <img class="ui fluid image" src="{{company.Avatar}}"/>
-              <div class="row">
-                <h3>{{company.Name}}</h3>
+          <div class="column cell" *ngFor="let performer of performers.slice((selectedPage - 1) * pageSize, selectedPage * pageSize)">
+            <a href="/{{performer.Link}}" class="ui medium image">
+              <img class="ui fluid image" src="{{performer.Avatar}}"/>
+              <div class="cell-info">
+                <h3 class="info-item">{{performer.Name}}</h3>
+                <h4 class="info-item" *ngIf="performer.PerformerType === 'vendor'">{{performer.Description}}</h4>
               </div>
               <div class="row">
-                <h4>{{company.Location.City}}, {{company.Location.Adress}}</h4>
-                <!-- <h4>{{company.City}}</h4> -->
+                <h4>{{performer.Location.City}}, {{performer.Location.Adress}}</h4>
               </div>
             </a>
             <!-- <div class="categories-container">
@@ -133,10 +133,10 @@
             <div class="ui grid">
               <div class="three column row padding-top">
                 <div class="column">
-                  <sui-rating class="star" [ngModel]="company.Rating" [isReadonly]="true"></sui-rating>
+                  <sui-rating class="star" [ngModel]="performer.Rating" [isReadonly]="true"></sui-rating>
                 </div>
                 <div class="column">                      
-                  <a href="{{company.Link}}{{tabSuffix}}">Reviews({{company.ReviewsCount}})</a>
+                  <a href="{{performer.Link}}{{tabSuffix}}">Reviews({{performer.ReviewsCount}})</a>
                 </div>
               </div>
             </div>            

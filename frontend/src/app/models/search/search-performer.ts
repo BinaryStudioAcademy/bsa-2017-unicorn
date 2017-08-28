@@ -7,4 +7,5 @@ export interface SearchPerformer {
     PerformerType: string;
     Link: string;
     Location: Location;
+    Description: string;
 }
