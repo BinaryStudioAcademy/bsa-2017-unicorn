@@ -58,6 +58,8 @@
   <ItemGroup>
     <Compile Include="Context\UnicornDbInitializer.cs" />
     <Compile Include="Entities\Account.cs" />
+    <Compile Include="Entities\ChatDialog.cs" />
+    <Compile Include="Entities\ChatMessage.cs" />
     <Compile Include="Entities\ContactProvider.cs" />
     <Compile Include="Entities\Rating.cs" />
     <Compile Include="Entities\Enum\RoleType.cs" />
