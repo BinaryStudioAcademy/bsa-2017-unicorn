@@ -24,6 +24,8 @@ namespace Unicorn.Shared.DTOs.Book
 
         public long CustomerId { get; set; }
 
+        public int Rating { get; set; }
+
         public WorkDTO Work { get; set; }
 
         public LocationDTO Location { get; set; }

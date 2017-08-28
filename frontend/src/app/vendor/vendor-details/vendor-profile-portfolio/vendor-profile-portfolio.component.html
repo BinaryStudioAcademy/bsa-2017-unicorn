@@ -18,7 +18,7 @@
             {{book.Description}}
         </div>
         <div class="content">
-            <sui-rating class="star" [isReadonly]="true"></sui-rating>
+            <sui-rating class="star" [isReadonly]="true" [ngModel]="book.Rating"></sui-rating>
             <span class="right floated"><a href="#">Review</a></span>
         </div>
     </div>

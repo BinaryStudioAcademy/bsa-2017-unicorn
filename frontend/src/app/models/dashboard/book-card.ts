@@ -9,6 +9,7 @@ export interface BookCard {
     Customer: string;
     CustomerId: number;
     CustomerPhone: string;
+    Rating: number;
     Work: Work;
     Location: BookLocation;
 }
