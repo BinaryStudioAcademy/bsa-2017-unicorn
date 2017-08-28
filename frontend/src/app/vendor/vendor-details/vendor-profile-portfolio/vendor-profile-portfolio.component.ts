@@ -18,8 +18,7 @@ import { DashboardService } from '../../../services/dashboard/dashboard.service'
 })
 export class VendorProfilePortfolioComponent implements OnInit, AfterContentInit {
   @Input() private vendorId: number;
-  
-  portfolio: PortfolioItem[];
+
   books: BookCard[] = [];
 
   constructor(
@@ -28,15 +27,12 @@ export class VendorProfilePortfolioComponent implements OnInit, AfterContentInit
   ) { }
 
   ngAfterContentInit(): void {
-    // this.vendorService.getVendorPorfolio(this.vendorId)
-    //   .then(resp => this.portfolio = resp.body as PortfolioItem[]);
     this.loadData();
   }
 
   loadData() {
     this.dashboardService.getPortfolioBooks('vendor', this.vendorId).then(resp => {
       this.books = resp.filter(b => b.IsHidden == false);
-      console.log(this.books);
     });
   }
 

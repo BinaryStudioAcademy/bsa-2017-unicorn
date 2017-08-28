@@ -2,6 +2,7 @@
     <div class="ui card" *ngFor="let book of books; let i = index">
         <div class="content">
             <div class="right floated meta">{{book.Date | date: 'dd/MM/yyyy'}}</div>
+            <div class="right floated meta"></div>
             <img class="ui avatar image" src="{{book.Work.Icon}}"> {{book.Work.Name}}
         </div>
         <div class="content">
@@ -9,9 +10,7 @@
         </div>
         <div class="content">
             <sui-rating class="star" [isReadonly]="true" [ngModel]="book.Rating"></sui-rating>
-            <span class="center floated review"><a href="#">Review</a></span>
-            <sui-checkbox name="hide" class="right floated" [(ngModel)]="book.IsHidden" (ngModelChange)="updateBook(book.Id)">Hide</sui-checkbox>
+            <span class="right floated"><a href="#">Review</a></span>
         </div>
-
     </div>
 </div>
