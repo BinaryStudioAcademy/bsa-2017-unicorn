@@ -117,7 +117,7 @@
       <div *ngIf="performers" class="ui grid">
         <div class="three column row remove-padding-top">
           <div class="column cell" *ngFor="let company of performers.slice((selectedPage - 1) * pageSize, selectedPage * pageSize)">
-            <a href="/company/{{company.Id}}" class="ui medium image">
+            <a href="/{{company.Link}}" class="ui medium image">
               <img class="ui fluid image" src="{{company.Avatar}}"/>
               <div class="row">
                 <h3>{{company.Name}}</h3>

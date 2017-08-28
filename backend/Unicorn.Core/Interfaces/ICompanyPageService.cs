@@ -61,7 +61,5 @@ namespace Unicorn.Core.Interfaces
 
         Task<long> GetCompanyAccountId(long id);
 
-        Task<ICollection<CompanyDetails>> GetSearchCompanies(string category, string subcategory, int? date);
-
     }
 }
