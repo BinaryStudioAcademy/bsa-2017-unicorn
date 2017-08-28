@@ -833,6 +833,7 @@ namespace Unicorn.DataAccess.Context
                 IsDeleted = false,
                 Description = "Sewing",
                 Name = "Care of clothes",
+                Tags = @""
             };
 
             Category category2 = new Category()
@@ -841,7 +842,12 @@ namespace Unicorn.DataAccess.Context
                 Icon = "https://phrasee.co/wp-content/uploads/2016/06/pets.jpg",
                 IsDeleted = false,
                 Description = "Pet",
-                Name = "Pets care"
+                Name = "Pets care",
+                Tags = @"care,scratch,caregiver,infirmary,healthcare,health,caring,caregiving,elderly,paramedic,
+                        clinic,nursery,convalescence,lactation,profession,infant,retirement,breastfeeding,medic,resting,
+                        accommodation,pension,feeding,corpsman,lactating,rest,suckler,attendant,weaning,conservation,
+                        endowment,ranger,upbringing,orderly,guarding,infancy,attentionbreast-feeding,
+                        health-care,nursing"
             };
 
             Category category3 = new Category()
@@ -850,7 +856,8 @@ namespace Unicorn.DataAccess.Context
                 Icon = "http://www.portlandgroupbd.com/wp-content/uploads/2016/06/t1.jpg",
                 IsDeleted = false,
                 Description = "Transportations",
-                Name = "Car services"
+                Name = "Car services",
+                Tags = @""
             };
 
             Category category4 = new Category()
@@ -859,7 +866,8 @@ namespace Unicorn.DataAccess.Context
                 Icon = "http://pop.h-cdn.co/assets/cm/15/05/54cb5d94587ec_-_tallest-buildings-05-1214-lgn.jpg",
                 IsDeleted = false,
                 Description = "Buildings",
-                Name = "Buider services"
+                Name = "Buider services",
+                Tags = @""
             };
 
             Category category5 = new Category()
@@ -868,7 +876,8 @@ namespace Unicorn.DataAccess.Context
                 Icon = "http://photolifeway.com/images/futaji.png",
                 IsDeleted = false,
                 Description = "Media processing",
-                Name = "Photo and Video"
+                Name = "Photo and Video",
+                Tags = @""
             };
 
             Category category6 = new Category()
@@ -877,7 +886,8 @@ namespace Unicorn.DataAccess.Context
                 Icon = "https://ieg.worldbankgroup.org/Data/styles/inner_page_style/public/Evaluation/images/financial-viability-electricity.jpg?itok=CvUNQtjh",
                 IsDeleted = false,
                 Description = "Developing",
-                Name = "Developer Service"
+                Name = "Developer Service",
+                Tags = @""
             };
 
             Category category7 = new Category()
@@ -886,7 +896,8 @@ namespace Unicorn.DataAccess.Context
                 Icon = "http://www.shopcusa.com/wp-content/uploads/2015/07/Computer-parts.jpg",
                 IsDeleted = false,
                 Description = "Electronic parts supplier",
-                Name = "Electronic parts"
+                Name = "Electronic parts",
+                Tags = @""
             };
 
             Category category8 = new Category()
@@ -895,7 +906,8 @@ namespace Unicorn.DataAccess.Context
                 Icon = "http://images.all-free-download.com/images/graphicthumb/fast_food_icons_set_vector_graphics_548786.jpg",
                 IsDeleted = false,
                 Description = "Food and beverages",
-                Name = "Food service"
+                Name = "Food service",
+                Tags = @""
             };
 
             Category category9 = new Category()
@@ -904,7 +916,8 @@ namespace Unicorn.DataAccess.Context
                 Icon = "https://cdn.dribbble.com/users/12733/screenshots/2705729/delivery_truck_icon_1x.png",
                 IsDeleted = false,
                 Description = "Package delivery",
-                Name = "Delivery service"
+                Name = "Delivery service",
+                Tags = @""
             };
 
             context.Categories.AddRange(new List<Category>()
@@ -923,7 +936,8 @@ namespace Unicorn.DataAccess.Context
                 Description = "Wash your clothes and dry clothes",
                 Name = "Washing",
                 IsDeleted = false,
-                Category = category1
+                Category = category1,
+                Tags = @""
             };
 
             Subcategory subcategory2 = new Subcategory()
@@ -932,7 +946,10 @@ namespace Unicorn.DataAccess.Context
                 Description = "care with lots of love about your cat",
                 Name = "Cats care",
                 IsDeleted = false,
-                Category = category2
+                Category = category2,
+                Tags = @"cat,kitten,puss,pussycat,pot,pool,pussy,jackpot,kitty-cat,pet,cats,poodle,cub,sweetie,beaver,
+                        Koko,bimbo,commie,coconut,baby,bucket,spade,coco,geezer,mom,little,boy,playboy,Cathy,rug,
+                        Katie,bogeyman,wuss,petit,cold,nice,kath,hood,chat,stop"
             };
 
             Subcategory subcategory3 = new Subcategory()
@@ -941,7 +958,8 @@ namespace Unicorn.DataAccess.Context
                 Description = "Subacategory lory service",
                 Name = "Lory service",
                 IsDeleted = false,
-                Category = category3
+                Category = category3,
+                Tags = @""
             };
 
             Subcategory subcategory4 = new Subcategory()
@@ -950,7 +968,8 @@ namespace Unicorn.DataAccess.Context
                 Description = "Your appartment repair",
                 Name = "Painting and plastering work",
                 IsDeleted = false,
-                Category = category4
+                Category = category4,
+                Tags = @""
             };
 
             Subcategory subcategory5 = new Subcategory()
@@ -959,7 +978,8 @@ namespace Unicorn.DataAccess.Context
                 Description = "Make your own photoset",
                 Name = "Photosession",
                 IsDeleted = false,
-                Category = category5
+                Category = category5,
+                Tags = @""
             };
 
             Subcategory subcategory6 = new Subcategory()
@@ -968,7 +988,8 @@ namespace Unicorn.DataAccess.Context
                 Description = "Web Development",
                 Name = "Web Development",
                 IsDeleted = false,
-                Category = category6
+                Category = category6,
+                Tags = @""
             };
 
             Subcategory subcategory7 = new Subcategory()
@@ -977,7 +998,8 @@ namespace Unicorn.DataAccess.Context
                 Description = "Computer parts",
                 Name = "Computer parts",
                 IsDeleted = false,
-                Category = category7
+                Category = category7,
+                Tags = @""
             };
 
             Subcategory subcategory8 = new Subcategory()
@@ -986,7 +1008,8 @@ namespace Unicorn.DataAccess.Context
                 Description = "Fast food",
                 Name = "Fast food",
                 IsDeleted = false,
-                Category = category8
+                Category = category8,
+                Tags = @""
             };
 
             Subcategory subcategory9 = new Subcategory()
@@ -995,7 +1018,8 @@ namespace Unicorn.DataAccess.Context
                 Description = "Package express delivery",
                 Name = "Express delivery",
                 IsDeleted = false,
-                Category = category9
+                Category = category9,
+                Tags = @""
             };
 
             context.Subcategories.AddRange(new List<Subcategory>()

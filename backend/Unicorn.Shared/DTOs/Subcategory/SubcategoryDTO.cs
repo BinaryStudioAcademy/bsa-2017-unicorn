@@ -10,6 +10,7 @@ namespace Unicorn.Shared.DTOs.Subcategory
 
         public string Description { get; set; }
 
+        public string Tags { get; set; }
 
         public virtual CategoryDTO Category { get; set; }
 
