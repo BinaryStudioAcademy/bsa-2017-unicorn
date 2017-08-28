@@ -31,7 +31,8 @@ export class RegisterCompanyComponent implements OnInit {
   location: Location = new Location();
   constructor(private registerService: RegisterService,
     private helperService: HelperService,
-    private authEventService: AuthenticationEventService, private locationService: LocationService) { }
+    private authEventService: AuthenticationEventService, private locationService: LocationService,
+  private mapsApiLoader: MapsAPILoader) { }
 
   ngOnInit() {
     this.mode = 'date';
