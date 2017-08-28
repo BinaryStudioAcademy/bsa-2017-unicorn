@@ -6,5 +6,5 @@ export interface SearchPerformer {
     Avatar: string;
     PerformerType: string;
     Link: string;
-    City: string;
+    Location: Location;
 }

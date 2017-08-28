@@ -22,6 +22,6 @@ namespace Unicorn.Shared.DTOs.Search
 
         public string Link { get; set; }
 
-        public string City { get; set; }
+        public LocationDTO Location { get; set; }
     }
 }
