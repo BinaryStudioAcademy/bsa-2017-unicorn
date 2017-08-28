@@ -11,31 +11,35 @@
                     <sui-tabset>
                         <div class="ui pointing secondary menu">
                             <a class="item" suiTabHeader="1">General information</a>
-                            <a class="item" suiTabHeader="2" [isActive]="tabActive">Reviews</a>
-                            <a class="item" suiTabHeader="3">Vendors</a>
-                            <a class="item" suiTabHeader="4">Contacts</a>
+                            <a class="item" suiTabHeader="2">Portfolio</a>
+                            <a class="item" suiTabHeader="3" [isActive]="tabActive">Reviews</a>
+                            <a class="item" suiTabHeader="4">Vendors</a>
+                            <a class="item" suiTabHeader="5">Contacts</a>
                         </div>
                         <div class="row">
-                            <div class="ui grid container">
+                            <div class="ui equal width grid container">
                                 <div class="row">
-                                    <div class="ten wide column">
+                                    <div class="container column">
                                         <div class="ui segment" suiTabContent="1">
                                             <company-general-information></company-general-information>
                                         </div>
                                         <div class="ui segment" suiTabContent="2">
-                                            <company-reviews></company-reviews>
+                                            <company-portfolio></company-portfolio>
                                         </div>
                                         <div class="ui segment" suiTabContent="3">
-                                            <company-vendors></company-vendors>
+                                            <company-reviews></company-reviews>
                                         </div>
                                         <div class="ui segment" suiTabContent="4">
+                                            <company-vendors></company-vendors>
+                                        </div>
+                                        <div class="ui segment" suiTabContent="5">
                                             <company-contacts></company-contacts>
                                         </div>
                                     </div>
-                                    <div class="six wide column">
+                                    <div *ngIf="isUser||isGuest" class="six wide column">
                                         <div class="ui segment">
                                             <app-sign-block *ngIf="isGuest"></app-sign-block>
-                                            <app-book [routePath]="routePath" [routeId]="routeid" *ngIf="!isGuest"></app-book>
+                                            <app-book *ngIf="!isGuest" [routePath]="routePath" [routeId]="routeid"></app-book>
                                         </div>
                                     </div>
                                 </div>

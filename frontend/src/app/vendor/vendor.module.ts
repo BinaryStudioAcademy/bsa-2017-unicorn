@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { SuiModule } from 'ng2-semantic-ui';
 import { environment } from '../../environments/environment';
 import { NguiMapModule } from "@ngui/map/dist";
+import { ClickOutsideModule } from 'ng-click-outside';
 
 import { VendorRoutingModule } from './vendor-routing.module';
 import { SignBlockModule } from '../sign-block/sign-block.module';
@@ -30,6 +31,7 @@ import { VendorService } from '../services/vendor.service';
 import { ReviewService } from '../services/review.service';
 import { DataService } from "../services/data.service";
 import { LocationService } from "../services/location.service";
+import { DashboardService } from '../services/dashboard/dashboard.service';
 
 import { CategoryService } from "../services/category.service";
 import { WorkService } from "../services/work.service";
@@ -47,6 +49,7 @@ import { ContactService } from "../services/contact.service";
     SignBlockModule,
     CommonModule,
     SharedModule,
+    ClickOutsideModule,    
     PipeModule
   ],
   declarations: [
@@ -71,7 +74,8 @@ import { ContactService } from "../services/contact.service";
     PhotoService,
     CategoryService,
     WorkService,
-    ContactService
+    ContactService,
+    DashboardService
   ]
 })
 export class VendorModule { }

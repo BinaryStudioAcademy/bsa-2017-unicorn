@@ -1,5 +1,5 @@
 <div *ngIf="company !== undefined">
-    <div class="flex-list">
+    <div class="flex-list" *ngIf="!isVendorsEmpty">
         <div class="child-flex" *ngFor="let vendor of company.Vendors">
             <a><img class="ui avatar image vendor-avatar" src={{vendor.Avatar}}></a>
             <div class="content">

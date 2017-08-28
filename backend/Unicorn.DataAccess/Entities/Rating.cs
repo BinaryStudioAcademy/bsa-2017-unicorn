@@ -17,6 +17,8 @@ namespace Unicorn.DataAccess.Entities
 
         public virtual Account Sender { get; set; }
 
+        public virtual Book Book { get; set; }
+
         public int Grade { get; set; }
 
     }

@@ -44,6 +44,7 @@ import {ToastModule, Toast} from 'ng2-toastr/ng2-toastr';
 import { AccountService } from "./services/account.service";
 import { NotificationService } from "./services/notifications/notification.service";
 
+import { ChatModule } from "./chat/chat.module";
 
 export class CustomOptions extends ToastOptions {
   animate = 'fade';
@@ -69,6 +70,7 @@ export function getDefaultSignalRConfig(): SignalRConfiguration {
   ],
   imports: [
     SuiModule,
+    ChatModule,
     BrowserModule,
     BrowserAnimationsModule, 
     ToastModule.forRoot(),

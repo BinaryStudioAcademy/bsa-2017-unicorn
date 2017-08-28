@@ -224,6 +224,7 @@
     <Compile Include="Controllers\AvatarController.cs" />
     <Compile Include="Controllers\BookController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
+    <Compile Include="Controllers\ChatController.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\ContactsController.cs" />
     <Compile Include="Controllers\MembershipController.cs" />

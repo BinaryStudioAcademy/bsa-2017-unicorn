@@ -7,8 +7,7 @@
                     <div *ngIf="name.invalid" class="valid-error">* Required</div>
                     <input required type="text" [(ngModel)]="user.SurName" name="surname" placeholder="LASTNAME" #surname="ngModel">
                     <div *ngIf="surname.invalid" class="valid-error">* Required</div>
-                    <input required type="text" [(ngModel)]="user.MiddleName" name="middlename" placeholder="MIDLENAME" #middlename="ngModel">
-                    <div *ngIf="middlename.invalid" class="valid-error">* Required</div>
+                    <input type="text" [(ngModel)]="user.MiddleName" name="middlename" placeholder="MIDLENAME (OPTIONAL)" #middlename="ngModel">                    
                     <input pattern="\S+@\S+\.\S+" required type="text" [(ngModel)]="user.Email" name="email" placeholder="EMAIL" #email="ngModel">
                     <div *ngIf="email.invalid && (email.dirty || email.touched)">
                         <div *ngIf="email.errors.required" class="valid-error">* Required</div>

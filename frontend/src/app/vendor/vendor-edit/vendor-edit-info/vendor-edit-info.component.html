@@ -20,8 +20,7 @@
                                             <div *ngIf="surname.invalid && (surname.dirty)" class="valid-error">* Required</div>
                                         </div>
                                         <div class="field">
-                                            <input required type="text" [(ngModel)]="vendor.MiddleName" name="middle-name" placeholder="MIDDLE NAME" #middlename="ngModel">
-                                            <div *ngIf="middlename.invalid && (middlename.dirty)" class="valid-error">* Required</div>
+                                            <input type="text" [(ngModel)]="vendor.MiddleName" name="middle-name" placeholder="MIDDLE NAME (OPTIONAL)" #middlename="ngModel">
                                         </div>
                                     </div>
                                 </div>
@@ -40,9 +39,8 @@
                                 <div class="ui divider"></div>
                                 <div class="field">
                                     <label>About me</label>
-                                    <textarea required [(ngModel)]="vendor.WorkLetter" name="workLetter" placeholder="FEW WORDS ABOUT YOU AND YOUR WORK" #about="ngModel">
-                                </textarea>
-                                    <div *ngIf="about.invalid && (about.dirty)" class="valid-error">* Required</div>
+                                    <textarea [(ngModel)]="vendor.WorkLetter" name="workLetter" placeholder="FEW WORDS ABOUT YOU AND YOUR WORK" #about="ngModel">
+                                </textarea>                                    
                                 </div>
                             </div>
                         </form>

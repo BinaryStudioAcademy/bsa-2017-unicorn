@@ -95,6 +95,7 @@
     <Compile Include="Interfaces\IAvatarService.cs" />
     <Compile Include="Interfaces\IBookService.cs" />
     <Compile Include="Interfaces\ICategoryService.cs" />
+    <Compile Include="Interfaces\IChatService.cs" />
     <Compile Include="Interfaces\ICompanyPageService.cs" />
     <Compile Include="Interfaces\ICompanyService.cs" />
     <Compile Include="Interfaces\ICustomerService.cs" />
@@ -113,6 +114,7 @@
     <Compile Include="Interfaces\IContactService.cs" />
     <Compile Include="Interfaces\IVendorService.cs" />
     <Compile Include="Interfaces\IWorkService.cs" />
+    <Compile Include="Providers\ChatService.cs" />
     <Compile Include="Services\AccountService.cs" />
     <Compile Include="Services\AvatarService.cs" />
     <Compile Include="Services\BookService.cs" />

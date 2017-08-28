@@ -54,17 +54,20 @@ export class MenuComponent implements OnInit {
     this.roleRouter = new RoleRouter();
     if (this.isLogged) {
       this.accountService.getShortInfo(+this.tokenHelper.getClaimByName("accountid"))
-        .then(resp => this.profileInfo = resp.body as ProfileShortInfo);
+        .then(resp => {
+          if(resp !== undefined){
+            this.profileInfo = resp.body as ProfileShortInfo;
+          }
+          else{
+            this.initEmptyProfile();
+            this.profileUrl = "";
+          }
+        });
       this.setProfileRoute();
-    } 
+    }
     else {
-      this.profileInfo = {
-          Avatar: "",
-          Email: "",
-          Name: "",
-          Role: ""
-        };
-        this.profileUrl = "";
+      this.initEmptyProfile();
+      this.profileUrl = "";
     }
     this.notifications = [
       "First notification",
@@ -87,15 +90,19 @@ export class MenuComponent implements OnInit {
     this.onLogOut = this.authEventService.logoutEvent$
       .subscribe(() => {
         this.isLogged = false;
-        this.profileInfo = {
-          Avatar: "",
-          Email: "",
-          Name: "",
-          Role: ""
-        };
+        this.initEmptyProfile();
         this.showAccountDetails = false;
         this.profileUrl = "/search";
       });
+  }
+
+  initEmptyProfile(){
+    this.profileInfo = {
+      Avatar: "",
+      Email: "",
+      Name: "",
+      Role: ""
+    };
   }
 
   ngOnDestroy() {
@@ -140,18 +147,18 @@ export class MenuComponent implements OnInit {
     this.showAccountDetails = false;
   }
 
-  getNotificationClass() : string {
+  getNotificationClass(): string {
     return this.isNotificationExist() ? "red" : "";
   }
 
-  isNotificationExist() : boolean {
+  isNotificationExist(): boolean {
     return this.notifications && this.notifications.length != 0;
   }
 
   setProfileRoute(): void {
-    var roleId = +this.tokenHelper.getClaimByName("roleid");
-    var profileId = this.tokenHelper.getClaimByName("profileid");
-    
+    const roleId = +this.tokenHelper.getClaimByName("roleid");
+    const profileId = this.tokenHelper.getClaimByName("profileid");
+
     switch (roleId) {
       case 2:
         this.profileUrl = `/user/${profileId}/edit`;

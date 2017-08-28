@@ -5,34 +5,81 @@ import { CompanySubcategory } from "../../../models/company-page/company-subcate
 import { CompanyWorks } from "../../../models/company-page/company-works.model";
 import { CompanyCategory } from "../../../models/company-page/company-category.model";
 import { CompanyWork } from "../../../models/company-page/company-work.model";
-import { ModalTemplate, SuiModalService, TemplateModalConfig } from "ng2-semantic-ui";
+
+import { ModalService } from "../../../services/modal/modal.service";
+import { PhotoService, Ng2ImgurUploader } from "../../../services/photo.service";
+
+import { ImageCropperComponent, CropperSettings } from "ng2-img-cropper";
+import { SafeResourceUrl, DomSanitizer } from "@angular/platform-browser";
+import { SuiModalService, TemplateModalConfig, ModalTemplate, ModalSize, SuiActiveModal } from 'ng2-semantic-ui';
 
 @Component({
   selector: 'app-company-works',
   templateUrl: './company-works.component.html',
-  styleUrls: ['./company-works.component.sass']
+  styleUrls: ['./company-works.component.sass'],
+  providers: [
+    PhotoService,
+    Ng2ImgurUploader,
+    ModalService]
 })
 
 export class CompanyWorksComponent implements OnInit {
+  @ViewChild('modalTemplate')
+  public modalTemplate: ModalTemplate<void, {}, void>;
+
+  @ViewChild('modalDeleteTemplate')
+  public modalDeleteTemplate: ModalTemplate<void, {}, void>;
+
+  private activeModal: SuiActiveModal<void, {}, void>;
+
+  @ViewChild('cropper', undefined)
+  cropper: ImageCropperComponent;
+  enabled: boolean = false;
+  enableTheme: boolean = false;
+  saveImgButton: boolean = false;
+  workIconUrl: SafeResourceUrl;
+  uploading: boolean;
+
+  modalSize: string;
+  cropperSettings: CropperSettings;
+  data: any;
+  file: File;
+  imageUploaded: boolean;
+
 
   company: CompanyWorks;
+  companyId: number;
   selectedCategory: CompanyCategory;
   selectedSubcategory: CompanySubcategory;
   subcategories: CompanySubcategory[] = [];
   work: CompanyWork = { Id: null, Description: null, Name: null, Subcategory: null, Icon: null };
   isLoaded: boolean = false;
   openedDetailedWindow: boolean = false;
+  isDimmed: boolean = false;
+  dataLoaded: boolean = true;
 
   constructor(private companyService: CompanyService,
-    private route: ActivatedRoute,
-    public modalService: SuiModalService,
-    private zone: NgZone) { }
+    private route: ActivatedRoute,    
+    private zone: NgZone,
+    private photoService: PhotoService,
+    private sanitizer: DomSanitizer,
+    private suiModalService: SuiModalService,
+    private modalService: ModalService,) {
+      this.cropperSettings = modalService.cropperSettings;
+      this.data = {};
+      this.imageUploaded = false; 
+     }
 
   ngOnInit() {
+    this.initializeThisCompany();       
+  }
+
+  initializeThisCompany(){
     this.route.params
-      .switchMap((params: Params) => this.companyService.getCompanyWorks(params['id'])).subscribe(res => {
-        this.company = res;
-      });
+    .switchMap((params: Params) => this.companyService.getCompanyWorks(params['id'])).subscribe(res => {
+      this.company = res;
+      this.companyId = this.company.Id;
+    });
   }
 
   changeCategory() {
@@ -40,23 +87,18 @@ export class CompanyWorksComponent implements OnInit {
     this.zone.run(() => { this.selectedSubcategory = this.subcategories[0]; });  
   }
 
-  selectWorksRow(event: any, work: CompanyWork) {
-    if (event.target.localName === "td") {
-      this.work = {
-        Id: work.Id,
-        Description: work.Description,
-        Name: work.Name,
-        Subcategory: work.Subcategory,
-        Icon: null
-      };
+  selectWorksRow(event: any, work: CompanyWork) {    
+    if (event.target.localName !== "button" && event.target.localName !== "i") {
+      this.work = work;
       this.selectedCategory = this.company.AllCategories.find(x => x.Id === work.Subcategory.Category.Id);
       this.subcategories = this.company.AllCategories.find(x => x.Id == this.selectedCategory.Id).Subcategories;
       this.zone.run(() => { this.selectedSubcategory = this.subcategories[0]; });  
+      this.workIconUrl = this.buildSafeUrl(this.work.Icon);
       this.openedDetailedWindow = true;
     }
-    else {
-      this.deleteWork(work);
-    }
+    // else {
+    //   this.deleteWork(work);
+    // }
   }
 
   openDetailedWindow() {
@@ -79,21 +121,32 @@ export class CompanyWorksComponent implements OnInit {
     this.openedDetailedWindow = false;
   }
 
-  deleteWork(work: CompanyWork) {
-    this.company.Works = this.company.Works.filter(x => x.Id !== work.Id);
-    this.work = null;
-    this.saveCompanyWorks();
+  deleteWork() {
+    if(this.activeModal !== undefined){ 
+      this.activeModal.deny(null);  
+    } 
+    let companyId = this.company.Id;
     this.company = undefined;
-    if (this.openedDetailedWindow)
-      this.openedDetailedWindow = !this.openedDetailedWindow;
+    if (this.openedDetailedWindow){
+      this.openedDetailedWindow = false;
+    }
+
+    this.companyService.deleteCompanyWork(companyId, this.work.Id)
+      .then(() => {
+        this.initializeThisCompany();  
+        this.work = null;        
+      });
   }
 
   saveWorkChanges() {
     if (this.selectedCategory !== undefined && this.selectedSubcategory !== undefined
       && this.work.Description !== null && this.work.Name !== null) {
-      this.company.Works.splice(this.company.Works.findIndex(x => x.Id === this.work.Id), 1, this.work);
-      this.saveCompanyWorks();
-      this.company = undefined;
+        this.openedDetailedWindow = false;
+        this.company = undefined;        
+        this.companyService.saveCompanyWork(this.work)
+          .then(() => {
+            this.initializeThisCompany();
+          });     
     }
   }
 
@@ -103,10 +156,13 @@ export class CompanyWorksComponent implements OnInit {
       this.selectedCategory.Subcategories = null;
       this.selectedSubcategory.Category = this.selectedCategory;
       this.work.Subcategory = this.selectedSubcategory;
-      this.company.Works.push(this.work);
-      this.saveCompanyWorks();
-      this.openedDetailedWindow = false;
+      
       this.company = undefined;
+      this.openedDetailedWindow = false;
+      this.companyService.addCompanyWork(this.companyId, this.work)
+      .then(() => {
+        this.initializeThisCompany();
+      });        
     }
   }
 
@@ -118,12 +174,67 @@ export class CompanyWorksComponent implements OnInit {
       this.addWork();
     }
   }
+  
+  
+  buildSafeUrl(link: string): SafeResourceUrl {
+    return this.sanitizer.bypassSecurityTrustStyle(`url('${link}')`);
+  }
 
-  saveCompanyWorks() {
-    this.isLoaded = true;
-    this.companyService.saveCompanyWorks(this.company).then(() => {
-      this.isLoaded = false;
-      this.ngOnInit();
-    });
+  fileChangeListener($event) {
+    var image: any = new Image(); 
+    console.log($event)
+    this.file = $event.target.files[0];   
+    var myReader: FileReader = new FileReader();
+    var that = this;
+    myReader.onloadend = function (loadEvent: any) {
+      image.src = loadEvent.target.result;
+      that.cropper.setImage(image);      
+    };
+    this.imageUploaded = true;
+    myReader.readAsDataURL(this.file);  
+  }
+
+  fileSaveListener() {
+    if (!this.data) {
+      console.log("file can't be loaded");
+      return;
+    }
+    if(!this.file){
+      return;
+    }
+    this.dataLoaded = false;
+    this.photoService.uploadToImgur(this.file)
+      .then(resp => {        
+        this.dataLoaded = true;
+        this.work.Icon = this.data.image;
+        this.activeModal.deny(null);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
+  openDeleteModal(work: CompanyWork){
+    this.work = work;
+    this.activeModal = this.openDelModal(this.modalDeleteTemplate);
+  }
+
+  public openModal() {
+    this.activeModal = this.modalService.openModal(this.modalTemplate);
+  }
+
+  public openDelModal(modalTemplate: ModalTemplate<void, {}, void>): SuiActiveModal<void, {}, void> {
+    const config = new TemplateModalConfig<void, {}, void>(modalTemplate);
+    //config.closeResult = "closed!";
+
+    config.size = ModalSize.Mini;
+    config.isInverted = true;
+    //config.mustScroll = true;
+    let that = this;
+
+    return this.suiModalService
+      .open(config)
+      .onApprove(result => { /* approve callback */ })
+      .onDeny(result => {  /* deny callback */   });
   }
 }

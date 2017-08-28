@@ -18,7 +18,6 @@ categories: CompanyCategory[] = [];
 selectedCategory: CompanyCategory;
 categoryWorks: CompanyWork[];
 openedCategoryDetails: boolean = false;
-dsa: string;
 
 constructor(private companyService: CompanyService,
   private route: ActivatedRoute) { }

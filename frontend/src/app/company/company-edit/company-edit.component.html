@@ -18,25 +18,33 @@
                     <sui-tabset>
                         <div class="ui pointing secondary menu">
                             <a class="item" suiTabHeader="1">General information</a>
-                            <a class="item" suiTabHeader="2">Vendors</a>
-                            <a class="item" suiTabHeader="3">Works</a>
-                            <a class="item" suiTabHeader="4">Orders</a>
-                            <a class="item" suiTabHeader="5">Messages</a>
+                            <a class="item" suiTabHeader="2">Portfolio</a>
+                            <a class="item" suiTabHeader="3">Vendors</a>
+                            <a class="item" suiTabHeader="4">Works</a>
+                            <a class="item" suiTabHeader="5">Orders</a>
+                            <a class="item" suiTabHeader="6">Messages</a>
+                            <a class="item" suiTabHeader="7">Contacts</a>
                         </div>
                         <div class="ui segment" suiTabContent="1">
                             <app-company-main-information></app-company-main-information>
                         </div>
                         <div class="ui segment" suiTabContent="2">
-                            <app-company-vendors></app-company-vendors>
+                            <app-company-portfolio></app-company-portfolio>
                         </div>
                         <div class="ui segment" suiTabContent="3">
-                            <app-company-works></app-company-works>
+                            <app-company-vendors></app-company-vendors>
                         </div>
                         <div class="ui segment" suiTabContent="4">
-                            <app-company-orders></app-company-orders>
+                            <app-company-works></app-company-works>
                         </div>
                         <div class="ui segment" suiTabContent="5">
+                            <app-company-orders></app-company-orders>
+                        </div>
+                        <div class="ui segment" suiTabContent="6">
                             <app-company-messages></app-company-messages>
+                        </div>
+                        <div class="ui segment" suiTabContent="7">
+                            <app-company-contacts></app-company-contacts>
                         </div>
                     </sui-tabset>
                 </div>

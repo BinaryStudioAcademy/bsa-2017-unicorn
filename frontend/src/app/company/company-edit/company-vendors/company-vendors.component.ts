@@ -3,31 +3,45 @@ import { ActivatedRoute, Params } from "@angular/router";
 import { CompanyService } from "../../../services/company-services/company.service";
 import { CompanyVendors } from "../../../models/company-page/company-vendors.model";
 import { Vendor } from "../../../models/company-page/vendor";
+import { SuiModalService, TemplateModalConfig, ModalTemplate, ModalSize, SuiActiveModal } from 'ng2-semantic-ui';
 
 @Component({
   selector: 'app-company-vendors',
   templateUrl: './company-vendors.component.html',
   styleUrls: ['./company-vendors.component.sass']
 })
-export class CompanyVendorsComponent implements OnInit {  
-  company: CompanyVendors;     
+export class CompanyVendorsComponent implements OnInit { 
+  @ViewChild('modalDeleteTemplate')
+  public modalDeleteTemplate: ModalTemplate<void, {}, void>;
+  private activeModal: SuiActiveModal<void, {}, void>;
+  
+
+  company: CompanyVendors;  
+  companyId: number;   
   isLoaded: boolean = false; 
   openedDetailedWindow: boolean = false;  
   allVendors: Vendor[];
   selectedVendors: Vendor[] = [];
   selectedVendor: Vendor;
+  vendor: Vendor;
 
   constructor(private companyService: CompanyService,
     private route: ActivatedRoute,
-    private zone: NgZone) { }
+    private zone: NgZone,
+    private suiModalService: SuiModalService) { }
 
-  ngOnInit() {
+  ngOnInit() { 
+    this.initializeThisCompany();   
+  }  
+
+  initializeThisCompany(){
     this.route.params
     .switchMap((params: Params) => this.companyService.getCompanyVendors(params['id'])).subscribe(res => {
       this.company = res;   
-      this.allVendors = this.company.AllVendors;  
+      this.allVendors = this.company.AllVendors;
+      this.companyId = this.company.Id;  
     });
-  }  
+  }
 
   changeVendor(){
     this.selectedVendors.push(this.selectedVendor);
@@ -49,15 +63,21 @@ export class CompanyVendorsComponent implements OnInit {
     this.zone.run(() => { this.selectedVendor = null; });  
   }
 
-  deleteVendor(vendor: Vendor){     
-    this.company.Vendors =  this.company.Vendors.filter(x => x.Id !== vendor.Id);   
-    this.saveCompanyVendors();
-    this.selectedVendors = undefined;
-    this.zone.run(() => { this.selectedVendor = null; });  
-    this.company = undefined;
-    if(this.openedDetailedWindow){
-      this.openedDetailedWindow = !this.openedDetailedWindow;   
+  deleteVendor(){ 
+    if(this.activeModal !== undefined){ 
+    this.activeModal.deny(null);  
     } 
+    if(this.openedDetailedWindow){
+      this.openedDetailedWindow = false; 
+    }    
+    this.selectedVendors = undefined;
+    this.zone.run(() => { this.selectedVendor = null; }); 
+
+    this.company = undefined;  
+    this.companyService.deleteCompanyVendor(this.companyId, this.vendor.Id)
+      .then(() => {
+        this.initializeThisCompany();   
+      });     
   }
 
   deleteSelectedVendor(vendor: Vendor){
@@ -66,20 +86,42 @@ export class CompanyVendorsComponent implements OnInit {
     this.allVendors.push(vendor);
   }
 
-  addVendor(){      
-    this.selectedVendors.forEach(vendor => {this.company.Vendors.push(vendor);});      
-    this.saveCompanyVendors();  
-    this.selectedVendors = undefined;
-    this.zone.run(() => { this.selectedVendor = null; });  
-    this.company = undefined;    
-    this.openedDetailedWindow = !this.openedDetailedWindow;     
+  addVendors(){      
+    if(this.selectedVendors.length !== 0){
+      this.selectedVendors.forEach(vendor => {this.company.Vendors.push(vendor);});      
+      this.saveCompanyVendors();  
+      this.selectedVendors = undefined;
+      this.zone.run(() => { this.selectedVendor = null; });  
+      this.company = undefined;    
+      this.openedDetailedWindow = false;     
+    }
   }
 
   saveCompanyVendors(){
     this.isLoaded = true;    
-    this.companyService.saveCompanyVendors(this.company).then(() => {
+    this.companyService.addCompanyVendors(this.company).then(() => {
       this.isLoaded = false;      
-      this.ngOnInit();
+      this.initializeThisCompany();
     });
+  }
+
+  openDeleteModal(vendor: Vendor){
+    this.vendor = vendor;
+    this.activeModal = this.openDelModal(this.modalDeleteTemplate);
+  }
+
+  public openDelModal(modalTemplate: ModalTemplate<void, {}, void>): SuiActiveModal<void, {}, void> {
+    const config = new TemplateModalConfig<void, {}, void>(modalTemplate);
+    //config.closeResult = "closed!";
+
+    config.size = ModalSize.Mini;
+    config.isInverted = true;
+    //config.mustScroll = true;
+    let that = this;
+
+    return this.suiModalService
+      .open(config)
+      .onApprove(result => { /* approve callback */ })
+      .onDeny(result => {  /* deny callback */   });
   }
 }

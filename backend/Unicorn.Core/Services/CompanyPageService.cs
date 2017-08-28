@@ -2,7 +2,8 @@
 using System.Data.Entity;
 using System;
 using System.Linq;
-using System.Threading.Tasks;
+ using System.Runtime.InteropServices;
+ using System.Threading.Tasks;
 using Unicorn.Core.Interfaces;
 using Unicorn.DataAccess.Entities;
 using Unicorn.DataAccess.Interfaces;
@@ -16,20 +17,20 @@ namespace Unicorn.Core.Services
     public class CompanyPageService:ICompanyPageService
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IRatingService _ratingService;
 
         #region PublicMethods
 
-        public CompanyPageService(IUnitOfWork unitOfWork, IRatingService ratingService)
+        public CompanyPageService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-            _ratingService = ratingService;
         }
 
         public async Task<ICollection<ShortCompanyDTO>> GetAllCompanies()
         {
             return await GetAllCompaniesMethod();
         }
+
+
 
         public async Task<ShortCompanyDTO> GetCompanyShort(long id)
         {
@@ -41,60 +42,97 @@ namespace Unicorn.Core.Services
             return await GetCompanyDetailsMethod(id);
         }
 
-        public async Task SaveCompanyDetails(CompanyDetails companyDTO)
+        public async Task SaveCompanyDetails(CompanyDetails companyDetailsDTO)
         {
-            await SaveCompanyDetailsMethod(companyDTO);
+            await SaveCompanyDetailsMethod(companyDetailsDTO);
         }
+
+
 
         public async Task<CompanyReviews> GetCompanyReviews(long id)
         {
             return await GetCompanyReviewsMethod(id);
         }
 
-        public async Task SaveCompanyReviews(CompanyReviews companyDTO)
+        public async Task AddCompanyReviews(CompanyReviews companyReviewsDTO)
         {
-            await SaveCompanyReviewsMethod(companyDTO);
+            await AddCompanyReviewsMethod(companyReviewsDTO);
         }
+
+
 
         public async Task<CompanyVendors> GetCompanyVendors(long id)
         {
             return await GetCompanyVendorsMethod(id);
         }
 
-        public async Task SaveCompanyVendors(CompanyVendors companyDTO)
+        public async Task AddCompanyVendors(CompanyVendors companyVendorsDTO)
         {
-            await SaveCompanyVendorsMethod(companyDTO);
+            await AddCompanyVendorsMethod(companyVendorsDTO);
         }
+
+        public async Task DeleteCompanyVendor(long companyId, long vendorId)
+        {
+            await DeleteCompanyVendorMethod(companyId, vendorId);
+        }
+
+
 
         public async Task<CompanyContacts> GetCompanyContacts(long id)
         {
             return await GetCompanyContactsMethod(id);
         }
 
-        public async Task SaveCompanyContacts(CompanyContacts companyDTO)
+        public async Task SaveCompanyContact(ContactShortDTO companyContactDTO)
         {
-            await SaveCompanyContactsMethod(companyDTO);
+            await SaveCompanyContactMethod(companyContactDTO);
         }
+
+        public async Task AddCompanyContact(long companyId, ContactShortDTO companyContactDTO)
+        {
+            await AddCompanyContactMethod(companyId, companyContactDTO);
+        }
+
+        public async Task DeleteCompanyContact(long companyId, long contactId)
+        {
+            await DeleteCompanyContactMethod(companyId, contactId);
+        }
+        
+        
 
         public async Task<CompanyWorks> GetCompanyWorks(long id)
         {
             return await GetCompanyWorksMethod(id);
         }
 
-        public async Task SaveCompanyWorks(CompanyWorks companyDTO)
+        public async Task SaveCompanyWork(CompanyWork companyWorkDTO)
         {
-            await SaveCompanyWorksMethod(companyDTO);
+            await SaveCompanyWorkMethod(companyWorkDTO);
         }
+
+        public async Task AddCompanyWork(long companyId, CompanyWork companyWorkDTO)
+        {
+            await AddCompanyWorkMethod(companyId, companyWorkDTO);
+        }
+
+        public async Task DeleteCompanyWork(long companyId, long workId)
+        {
+            await DeleteCompanyWorkMethod(companyId, workId);
+        }
+
+
 
         public async Task<CompanyBooks> GetCompanyBooks(long id)
         {
             return await GetCompanyBooksMethod(id);
         }
 
-        public async Task SaveCompanyBooks(CompanyBooks companyDTO)
+        public async Task SaveCompanyBook(CompanyBook companyBookDTO)
         {
-            await SaveCompanyBooksMethod(companyDTO);
+            await SaveCompanyBookMethod(companyBookDTO);
         }
+
+
 
         public async Task<ICollection<CompanyDetails>> GetSearchCompanies(string category, string subcategory, int? date)
         {
@@ -131,6 +169,8 @@ namespace Unicorn.Core.Services
             }
             return null;
         }
+
+
 
         private async Task<ShortCompanyDTO> GetCompanyShortMethod(long id)
         {
@@ -210,23 +250,23 @@ namespace Unicorn.Core.Services
             return null;
         }
 
-        private async Task SaveCompanyDetailsMethod(CompanyDetails companyDTO)
+        private async Task SaveCompanyDetailsMethod(CompanyDetails companyDetailsDTO)
         {
-            var company = await _unitOfWork.CompanyRepository.GetByIdAsync(companyDTO.Id);
+            var company = await _unitOfWork.CompanyRepository.GetByIdAsync(companyDetailsDTO.Id);
 
             if (company != null)
             {
-                company.Account.Avatar = companyDTO.Avatar;
-                company.Name = companyDTO.Name;
-                company.Director = companyDTO.Director;
-                company.Description = companyDTO.Description;
-                company.FoundationDate = companyDTO.FoundationDate;
+                company.Account.Avatar = companyDetailsDTO.Avatar;
+                company.Name = companyDetailsDTO.Name;
+                company.Director = companyDetailsDTO.Director;
+                company.Description = companyDetailsDTO.Description;
+                company.FoundationDate = companyDetailsDTO.FoundationDate;
                 company.Location = new Location
                 {
-                    Adress = companyDTO.Location.Adress,
-                    City = companyDTO.Location.City,
-                    Longitude = companyDTO.Location.Longitude,
-                    Latitude = companyDTO.Location.Latitude
+                    Adress = companyDetailsDTO.Location.Adress,
+                    City = companyDetailsDTO.Location.City,
+                    Longitude = companyDetailsDTO.Location.Longitude,
+                    Latitude = companyDetailsDTO.Location.Latitude
                 };
                 
 
@@ -234,6 +274,8 @@ namespace Unicorn.Core.Services
                 await _unitOfWork.SaveAsync();
             }
         }
+
+
 
         private async Task<CompanyReviews> GetCompanyReviewsMethod(long id)
         {
@@ -265,10 +307,12 @@ namespace Unicorn.Core.Services
             return null;
         }
 
-        private Task SaveCompanyReviewsMethod(CompanyReviews companyDTO)
+        private Task AddCompanyReviewsMethod(CompanyReviews companyReviewsDTO)
         {
             throw new NotImplementedException();
         }
+
+
 
         private async Task<CompanyVendors> GetCompanyVendorsMethod(long id)
         {
@@ -291,6 +335,37 @@ namespace Unicorn.Core.Services
 
             return null;
         }
+
+        private async Task AddCompanyVendorsMethod(CompanyVendors companyVendorsDTO)
+        {
+            var company = await _unitOfWork.CompanyRepository.GetByIdAsync(companyVendorsDTO.Id);
+
+            if (company != null)
+            {
+                foreach (var companyDtoVendor in companyVendorsDTO.Vendors)
+                {
+                    var vendor = await _unitOfWork.VendorRepository.GetByIdAsync(companyDtoVendor.Id);
+                    if (vendor != null)
+                    {
+                        company.Vendors.Add(vendor);
+                    }
+                }
+                await _unitOfWork.SaveAsync();
+            }
+        }
+
+        private async Task DeleteCompanyVendorMethod(long companyId, long vendorId)
+        {
+            var company = await _unitOfWork.CompanyRepository.GetByIdAsync(companyId);
+            var vendor = await _unitOfWork.VendorRepository.GetByIdAsync(vendorId);
+
+            if (company != null && vendor != null)
+            {
+                company.Vendors.Remove(vendor);
+                await _unitOfWork.SaveAsync();
+            }
+        }
+
         private IList<CompanyVendor> CreateCompanyVendor(IEnumerable<Vendor> vendors, IEnumerable<Review> reviews, Company company)
         {
 
@@ -312,25 +387,8 @@ namespace Unicorn.Core.Services
             return select.Any() ? select.Average() : 0;
 
         }
+        
 
-        private async Task SaveCompanyVendorsMethod(CompanyVendors companyDTO)
-        {
-            var company = await _unitOfWork.CompanyRepository.GetByIdAsync(companyDTO.Id);
-
-            if (company != null)
-            {
-                company.Vendors.Clear();
-                foreach (var companyDtoVendor in companyDTO.Vendors)
-                {
-                    var vendor = await _unitOfWork.VendorRepository.GetByIdAsync(companyDtoVendor.Id);
-                    if (vendor != null)
-                    {
-                        company.Vendors.Add(vendor);
-                    }
-                }
-                await _unitOfWork.SaveAsync();
-            }
-        }
 
         private async Task<CompanyContacts> GetCompanyContactsMethod(long id)
         {
@@ -365,28 +423,52 @@ namespace Unicorn.Core.Services
             return null;
         }
 
-        private async Task SaveCompanyContactsMethod(CompanyContacts companyDTO)
+        private async Task SaveCompanyContactMethod(ContactShortDTO companyContactDTO)
         {
-            var company = await _unitOfWork.CompanyRepository.GetByIdAsync(companyDTO.Id);
+            var contact = await _unitOfWork.ContactRepository.GetByIdAsync(companyContactDTO.Id);
 
-            if (company != null)
+            if (contact != null)
             {
-                company.Account.Contacts.Clear();
-                foreach (var companyDtoContact in companyDTO.Contacts)
-                {
-                    var contact = await _unitOfWork.ContactRepository.GetByIdAsync(companyDtoContact.Id);
-                    if (contact != null)
-                    {
-                        contact.Provider.Name = companyDtoContact.Provider;
-                        contact.Value = companyDtoContact.Value;
-                        contact.Provider.Type = companyDtoContact.Type;
-
-                        company.Account.Contacts.Add(contact);
-                    }
-                }
+                contact.Value = companyContactDTO.Value;
+                _unitOfWork.ContactRepository.Update(contact);
                 await _unitOfWork.SaveAsync();
             }
         }
+
+        private async Task AddCompanyContactMethod(long companyId, ContactShortDTO companyContactDTO)
+        {
+            var company = await _unitOfWork.CompanyRepository.GetByIdAsync(companyId);
+            var provider = await _unitOfWork.ContactProviderRepository.GetByIdAsync(companyContactDTO.ProviderId);
+
+            if (company != null)
+            {
+                _unitOfWork.ContactRepository.Create(new Contact
+                {
+                    Account = company.Account,
+                    Provider = provider,
+                    Value = companyContactDTO.Value,
+                    IsDeleted = false
+                });
+
+                await _unitOfWork.SaveAsync();
+            }
+        }
+
+        private async Task DeleteCompanyContactMethod(long companyId, long contactId)
+        {
+            var company = await _unitOfWork.CompanyRepository.GetByIdAsync(companyId);
+            var contact = await _unitOfWork.ContactRepository.GetByIdAsync(contactId);
+
+            if (company != null && contact != null)
+            {
+                company.Account.Contacts.Remove(contact);
+                _unitOfWork.ContactRepository.Delete(contactId);
+                await _unitOfWork.SaveAsync();
+            }
+            
+        }
+        
+
 
         private async Task<CompanyWorks> GetCompanyWorksMethod(long id)
         {
@@ -403,7 +485,7 @@ namespace Unicorn.Core.Services
                         Id = z.Id,
                         Description = z.Description,
                         Name = z.Name,
-
+                        Icon = z.Icon,
                         Subcategory = new CompanySubcategory
                         {
                             Id = z.Subcategory.Id,
@@ -444,47 +526,57 @@ namespace Unicorn.Core.Services
             return null;
         }
 
-        private async Task SaveCompanyWorksMethod(CompanyWorks companyDTO)
+        private async Task SaveCompanyWorkMethod(CompanyWork companyWorkDTO)
         {
-            var company = await _unitOfWork.CompanyRepository.GetByIdAsync(companyDTO.Id);
+            var work = await _unitOfWork.WorkRepository.GetByIdAsync(companyWorkDTO.Id);
+            var subcategory = await _unitOfWork.SubcategoryRepository.GetByIdAsync(companyWorkDTO.Subcategory.Id);
 
-            if (company != null)
+            if (work != null && subcategory != null)
             {
-                company.Works.Clear();
-                foreach (var companyDtoWork in companyDTO.Works)
-                {
-                    var work = await _unitOfWork.WorkRepository.GetByIdAsync(companyDtoWork.Id);
-                    if (work != null)
-                    {
-                        work.Description = companyDtoWork.Description;
-                        work.Name = companyDtoWork.Name;
-
-                        var category =
-                            await _unitOfWork.CategoryRepository.GetByIdAsync(companyDtoWork.Subcategory.Category.Id);
-                        var subcategory =
-                            await _unitOfWork.SubcategoryRepository.GetByIdAsync(companyDtoWork.Subcategory.Id);
-                        subcategory.Category = category;
-                        work.Subcategory = subcategory;
-                    }
-                    else
-                    {
-                        var category =
-                            await _unitOfWork.CategoryRepository.GetByIdAsync(companyDtoWork.Subcategory.Category.Id);
-                        var subcategory =
-                            await _unitOfWork.SubcategoryRepository.GetByIdAsync(companyDtoWork.Subcategory.Id);
-                        subcategory.Category = category;
-                        work = new Work
-                        {
-                            Description = companyDtoWork.Description,
-                            Name = companyDtoWork.Name,
-                            Subcategory = subcategory
-                        };
-                    }
-                    company.Works.Add(work);
-                }
+                work.Name = companyWorkDTO.Name;
+                work.Description = companyWorkDTO.Description;
+                work.Subcategory = subcategory;
+                work.Icon = companyWorkDTO.Icon;
+                _unitOfWork.WorkRepository.Update(work);
                 await _unitOfWork.SaveAsync();
             }
         }
+
+        private async Task AddCompanyWorkMethod(long companyId, CompanyWork companyWorkDTO)
+        {
+            var company = await _unitOfWork.CompanyRepository.GetByIdAsync(companyId);
+            var subcategory = await _unitOfWork.SubcategoryRepository.GetByIdAsync(companyWorkDTO.Subcategory.Id);
+
+            if (company != null && subcategory != null)
+            {
+                _unitOfWork.WorkRepository.Create(new Work
+                {
+                   Company = company,
+                   Description = companyWorkDTO.Description,
+                   Icon = companyWorkDTO.Icon,
+                   Name = companyWorkDTO.Name,
+                   Subcategory = subcategory,
+                   IsDeleted = false
+                });
+
+                await _unitOfWork.SaveAsync();
+            }
+        }
+
+        private async Task DeleteCompanyWorkMethod(long companyId, long workId)
+        {
+            var company = await _unitOfWork.CompanyRepository.GetByIdAsync(companyId);
+            var work = await _unitOfWork.WorkRepository.GetByIdAsync(workId);
+
+            if (company != null && work != null)
+            {
+                company.Works.Remove(work);
+                _unitOfWork.WorkRepository.Delete(workId);
+                await _unitOfWork.SaveAsync();
+            }
+        }
+
+        
 
         private async Task<CompanyBooks> GetCompanyBooksMethod(long id)
         {
@@ -540,15 +632,19 @@ namespace Unicorn.Core.Services
             return null;
         }
 
-        private async Task SaveCompanyBooksMethod(CompanyBooks companyDTO)
+        private async Task SaveCompanyBookMethod(CompanyBook companyBookDTO)
         {
-            foreach (var companyDtoBook in companyDTO.Books)
+            var book = await _unitOfWork.BookRepository.GetByIdAsync(companyBookDTO.Id);
+
+            if (book != null)
             {
-                var book = await _unitOfWork.BookRepository.GetByIdAsync(companyDtoBook.Id);
-                book.Status = companyDtoBook.Status;
+                book.Status = companyBookDTO.Status;
+                _unitOfWork.BookRepository.Update(book);
+                await _unitOfWork.SaveAsync();
             }
-            await _unitOfWork.SaveAsync();
         }
+
+
 
         public async Task<long> GetCompanyAccountId(long id)
         {

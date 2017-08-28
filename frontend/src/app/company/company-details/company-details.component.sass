@@ -10,6 +10,9 @@ img
 div
     font-family: 'Verdana', 'Century Gothic', 'Calibri', 'Trebuchet MS', sans-serif!important;
 
+.ui.segment
+    margin-top: 0!important;
+
 .ui.segment.tab
     min-height: 80px;
     
@@ -31,11 +34,14 @@ div
     position: relative;
     display: flex;
     justify-content: center; 
+    align-items: center;
     padding: 0;
-    border-radius: 0;    
+    border-radius: 0;   
+       
 
 .ui.fluid.image
-    width: auto;
-    height: auto;
+    object-fit: contain;   
     max-width: 960px;
     max-height: 250px;
+    width: auto;
+    height: auto;

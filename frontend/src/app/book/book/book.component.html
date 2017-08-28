@@ -1,4 +1,3 @@
-<div *ngIf="isUser;else notUser">
 <div *ngIf="!formIsSended;else formSended">
     <form class="ui form book-form" [class.loading]="onSending" name="bookForm" #bookForm="ngForm">
         <div class="field">
@@ -36,7 +35,6 @@
         </div>
     </form>
 </div>
-</div>
 
 <ng-template #formSended>
     <div class="ui success message">
@@ -44,11 +42,5 @@
             Thank you for your request.
           </div>
           <p>Your request has been received and added to our internal tracking system for future review.</p>
-    </div>
-</ng-template>
-
-<ng-template #notUser>
-    <div class="ui warning message">        
-          <p>For booking please login as customer.</p>
     </div>
 </ng-template>

@@ -26,5 +26,7 @@ namespace Unicorn.DataAccess.Entities
         public virtual Work Work { get; set; }
 
         public virtual Location Location { get; set; }
+
+        public bool IsHidden { get; set; }
     }
 }

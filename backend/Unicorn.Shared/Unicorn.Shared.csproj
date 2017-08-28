@@ -50,6 +50,8 @@
     <Compile Include="DTOs\Book\BookOrderDTO.cs" />
     <Compile Include="DTOs\Book\VendorBookDTO.cs" />
     <Compile Include="DTOs\CategoryDTO.cs" />
+    <Compile Include="DTOs\Chat\ChatDialogDTO.cs" />
+    <Compile Include="DTOs\Chat\ChatMessageDTO.cs" />
     <Compile Include="DTOs\CompanyDTO.cs" />
     <Compile Include="DTOs\CompanyPage\CompanyBook.cs" />
     <Compile Include="DTOs\CompanyPage\CompanyBooks.cs" />
@@ -71,6 +73,7 @@
     <Compile Include="DTOs\History\VendorHistoryDTO.cs" />
     <Compile Include="DTOs\LocationDTO.cs" />
     <Compile Include="DTOs\Notification\ConnectedAccount.cs" />
+    <Compile Include="DTOs\Notification\NotificationDTO.cs" />
     <Compile Include="DTOs\PermissionDTO.cs" />
     <Compile Include="DTOs\PersonDTO.cs" />
     <Compile Include="DTOs\Popular\PerformerDTO.cs" />
