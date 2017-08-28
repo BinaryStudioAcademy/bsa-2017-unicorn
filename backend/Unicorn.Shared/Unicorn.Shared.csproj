@@ -83,6 +83,7 @@
     <Compile Include="DTOs\Register\VendorRegisterDTO.cs" />
     <Compile Include="DTOs\ReviewDTO.cs" />
     <Compile Include="DTOs\RoleDTO.cs" />
+    <Compile Include="DTOs\Search\SearchPerformerDTO.cs" />
     <Compile Include="DTOs\ShortProfileInfoDTO.cs" />
     <Compile Include="DTOs\SocialAccountDTO.cs" />
     <Compile Include="DTOs\Subcategory\SubcategoryDTO.cs" />
