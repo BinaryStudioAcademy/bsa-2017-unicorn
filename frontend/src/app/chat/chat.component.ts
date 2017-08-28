@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { DialogModel } from "../models/chat/dialog.model";
 import { MessageModel } from "../models/chat/message.model";
 
@@ -8,12 +8,19 @@ import { MessageModel } from "../models/chat/message.model";
   styleUrls: ['./chat.component.sass']
 })
 export class ChatComponent implements OnInit {
+@ViewChild('messagesBlock')
+  private messagesElement: any;
+
   dialogs: DialogModel[] = [];
   messages: MessageModel[] = [];
   me: string;
   myParticipant: string;
   selectedId: number;
   writtenMessage: string;
+
+
+  inputHeight: number = 40;
+  maxInputHeight: number = 75;
   constructor() { }
 
   ngOnInit() {
@@ -31,17 +38,25 @@ export class ChatComponent implements OnInit {
     this.myParticipant = this.dialogs.find(x => x.Id === dialogId).SecondParticipant;
 }
 
+  keyEvent(){    
+    if(this.inputHeight < this.maxInputHeight){
+      this.inputHeight += 15;      
+    }
+  }
+
   onWrite(){
-    if(this.writtenMessage !== undefined && this.writtenMessage !== ''){
+    console.log(this.writtenMessage);
+    this.inputHeight = 40;
+    if(this.writtenMessage !== undefined && this.writtenMessage !== '' && this.writtenMessage != '\n'){
     this.messages.push(
       {
       Id: 3, 
-      Sender: this.me, 
-      Receiver: this.myParticipant, 
+      Owner: this.me,
       Message: this.writtenMessage, 
       Date: new Date(Date.now())
-    });
+    });    
     this.writtenMessage = undefined;
+    //this.messagesElement.nativeElement.scrollTop = this.messagesElement.nativeElement.scrollHeight;
   }
   }
 
@@ -50,20 +65,16 @@ export class ChatComponent implements OnInit {
       {
         Id: 1,
         FirstParticipant: "John",
-        FirstParticipantsId: 1,
-        SecondParticipant: "Alex",
-        SecondParticipantsId: 2,
+        SecondParticipant: "Alex",        
         Messages: [{
           Id: 1,
-          Sender: "Alex",
-          Receiver: "John",
+          Owner: "Alex",
           Message: "Hello. I need some help",
           Date: new Date(Date.now())
         },
         {
           Id: 2,
-          Sender: "John",
-          Receiver: "Alex",
+          Owner: "John",          
           Message: "Hello. What is a problem?",
           Date: new Date(Date.now())
         }]
@@ -71,48 +82,159 @@ export class ChatComponent implements OnInit {
       {
         Id: 2,
         FirstParticipant: "John",
-        FirstParticipantsId: 1,
-        SecondParticipant: "Anna",
-        SecondParticipantsId: 3,
+        SecondParticipant: "Alex",        
+        Messages: [{
+          Id: 1,
+          Owner: "Alex",
+          Message: "Hello. I need some help",
+          Date: new Date(Date.now())
+        },
+        {
+          Id: 2,
+          Owner: "John",          
+          Message: "Hello. What is a problem?",
+          Date: new Date(Date.now())
+        }]
+      },
+      {
+        Id: 3,
+        FirstParticipant: "John",
+        SecondParticipant: "Alex",        
+        Messages: [{
+          Id: 1,
+          Owner: "Alex",
+          Message: "Hello. I need some help",
+          Date: new Date(Date.now())
+        },
+        {
+          Id: 2,
+          Owner: "John",          
+          Message: "Hello. What is a problem?",
+          Date: new Date(Date.now())
+        }]
+      },
+      {
+        Id: 4,
+        FirstParticipant: "John",
+        SecondParticipant: "Alex",        
+        Messages: [{
+          Id: 1,
+          Owner: "Alex",
+          Message: "Hello. I need some help",
+          Date: new Date(Date.now())
+        },
+        {
+          Id: 2,
+          Owner: "John",          
+          Message: "Hello. What is a problem?",
+          Date: new Date(Date.now())
+        }]
+      },
+      {
+        Id: 5,
+        FirstParticipant: "John",
+        SecondParticipant: "Alex",        
+        Messages: [{
+          Id: 1,
+          Owner: "Alex",
+          Message: "Hello. I need some help",
+          Date: new Date(Date.now())
+        },
+        {
+          Id: 2,
+          Owner: "John",          
+          Message: "Hello. What is a problem?",
+          Date: new Date(Date.now())
+        }]
+      },
+      {
+        Id: 6,
+        FirstParticipant: "John",
+        SecondParticipant: "Alex",        
+        Messages: [{
+          Id: 1,
+          Owner: "Alex",
+          Message: "Hello. I need some help",
+          Date: new Date(Date.now())
+        },
+        {
+          Id: 2,
+          Owner: "John",          
+          Message: "Hello. What is a problem?",
+          Date: new Date(Date.now())
+        }]
+      },
+      {
+        Id: 7,
+        FirstParticipant: "John",
+        SecondParticipant: "Alex",        
+        Messages: [{
+          Id: 1,
+          Owner: "Alex",
+          Message: "Hello. I need some help",
+          Date: new Date(Date.now())
+        },
+        {
+          Id: 2,
+          Owner: "John",          
+          Message: "Hello. What is a problem?",
+          Date: new Date(Date.now())
+        }]
+      },
+      {
+        Id: 8,
+        FirstParticipant: "John",
+        SecondParticipant: "Alex",        
+        Messages: [{
+          Id: 1,
+          Owner: "Alex",
+          Message: "Hello. I need some help",
+          Date: new Date(Date.now())
+        },
+        {
+          Id: 2,
+          Owner: "John",          
+          Message: "Hello. What is a problem?",
+          Date: new Date(Date.now())
+        }]
+      },
+      {
+        Id: 9,
+        FirstParticipant: "John",       
+        SecondParticipant: "Anna",        
         Messages: [{
           Id: 3,
-          Sender: "John",
-          Receiver: "Anna",
+          Owner: "John",
           Message: "What about payment?!!!",
           Date: new Date(Date.now())
         },
         {
           Id: 4,
-          Sender: "Anna",
-          Receiver: "John",
+          Owner: "Anna",
           Message: "Oh, sorry, tomorrow will be",
           Date: new Date(Date.now())
         },
         {
           Id: 5,
-          Sender: "John",
-          Receiver: "Anna",
+          Owner: "John",
           Message: "So, I am waiting",
           Date: new Date(Date.now())
         },
         {
           Id: 6,
-          Sender: "Anna",
-          Receiver: "John",
+          Owner: "Anna",
           Message: "I have money, we need to meet up",
           Date: new Date(Date.now())
         },
         {
           Id: 5,
-          Sender: "John",
-          Receiver: "Anna",
+          Owner: "John",
           Message: "So, I am waiting",
           Date: new Date(Date.now())
         },
         {
           Id: 6,
-          Sender: "Anna",
-          Receiver: "John",
+          Owner: "Anna",
           Message: "I have money, we need to meet up",
           Date: new Date(Date.now())
         }]

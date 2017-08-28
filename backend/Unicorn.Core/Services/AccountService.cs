@@ -59,6 +59,13 @@ namespace Unicorn.Core.Services
                 .Include(a => a.Role)
                 .FirstOrDefaultAsync(a => a.Id == id);
 
+            var result = new ShortProfileInfoDTO
+            {
+                Avatar = account.Avatar,
+                Email = account.Email,
+                Role = account.Role.Name
+            };
+
             switch (account.Role.Id)
             {
                 case 2:
@@ -66,46 +73,29 @@ namespace Unicorn.Core.Services
                     var person = await _unitOfWork.PersonRepository.Query
                         .Include(p => p.Account)
                         .SingleAsync(p => p.Account.Id == id);
-                    return new ShortProfileInfoDTO
-                    {
-                        Avatar = account.Avatar,
-                        Email = account.Email,
-                        Role = account.Role.Name,
-                        Name = $"{person.Name} {person.Surname}"
-                    };
+                    result.Name = $"{person.Name} {person.Surname}";
+                    return result;
+                    
                 case 4: 
                     var company = await _unitOfWork.CompanyRepository.Query
                         .Include(p => p.Account)
                         .SingleAsync(p => p.Account.Id == id);
-                    return new ShortProfileInfoDTO
-                    {
-                        Avatar = account.Avatar,
-                        Email = account.Email,
-                        Role = account.Role.Name,
-                        Name = company.Name
-                    };
+                    result.Name = company.Name;
+                    return result;
                 case 5:
                     var adminPerson = await _unitOfWork.PersonRepository.Query
                         .Include(p => p.Account).FirstOrDefaultAsync(x => x.Account.Id == id);
                     if (adminPerson == null)
                     {
                         var adminCompany = await _unitOfWork.CompanyRepository.Query
-                            .Include(p => p.Account).FirstOrDefaultAsync(p => p.Account.Id == id);
-                        return new ShortProfileInfoDTO
-                        {
-                            Avatar = account.Avatar,
-                            Email = account.Email,
-                            Role = account.Role.Name,
-                            Name = adminCompany.Name
-                        };
+                            .Include(p => p.Account).SingleAsync(p => p.Account.Id == id);
+                        result.Name = adminCompany.Name;
+                        return result;
                     }
-                    return new ShortProfileInfoDTO
-                    {
-                        Avatar = account.Avatar,
-                        Email = account.Email,
-                        Role = account.Role.Name,
-                        Name = $"{adminPerson.Name} {adminPerson.Surname}"
-                    };
+
+                    result.Name = $"{adminPerson.Name} {adminPerson.Surname}";
+                    return result;
+
                 default:
                     return null;
             }

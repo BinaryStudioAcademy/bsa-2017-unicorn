@@ -1,7 +1,6 @@
 export interface MessageModel{
     Id: number;
-    Sender: string;    
-    Receiver: string;    
+    Owner: string;    
     Message: string;
     Date: Date;
 }

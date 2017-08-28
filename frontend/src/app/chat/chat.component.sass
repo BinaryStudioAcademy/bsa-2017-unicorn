@@ -3,6 +3,14 @@ img
 
 $tab-color: #FF647A;
 
+body 
+    &::-webkit-scrollbar-thumb
+        border-radius: 0;
+
+body 
+    &::-webkit-scrollbar-track
+        background: rgba(0, 0, 0, 0.04);
+
 .chat-block    
     display: flex;
     flex-direction: column;
@@ -23,12 +31,19 @@ $tab-color: #FF647A;
     overflow-x: hidden;
     padding: 0 10px;
 
-.ui.icon.input
-    margin: 0;
-    width: 100%;
-    height: 15%;
-    input
-        border-radius: 0;
+textarea
+    font-size: 15px;
+    margin: 0!important;
+    width: 100%!important;     
+    min-height: 30px!important
+    max-height: 70px!important;
+    border-radius: 0!important;
+    padding-right: 2em!important;
+    overflow-y: auto!important;
+    overflow-x: hidden!important;
+
+    //input
+        //border-radius: 0;
     
 
 
@@ -66,11 +81,10 @@ $tab-color: #FF647A;
     justify-content: space-between;
     height: 300px;
 
-.users
-    flex-direction: column;
-    display: flex;
-    width: 30%;
-    margin: 10px;
+.users    
+    width: 30%;    
+    overflow-y: auto;
+    overflow-x: hidden;
 
 .message-block
     display: flex;
@@ -78,17 +92,18 @@ $tab-color: #FF647A;
     padding: 5px 0;    
 
 .user
-    display: flex;
-    margin: 3px 0;
-    flex-direction: row;    
-    padding: 5px 10px;
+    display: flex;    
+    flex-direction: row; 
+    align-items: center; 
+    height: 100%;
+    padding-left: 5px;
 
-.users:first-child
-    margin-top: 10px;
+.upper-user
+    height: 15%;
 
 .user:hover 
     cursor: pointer;
-    background: rgba(251, 226, 230, 0.33);
+    background: #fff0f2;
 
 .date-me
     font-family: Helvetica, Arial, sans-serif;
@@ -109,4 +124,11 @@ $tab-color: #FF647A;
     flex-direction: column;
 
 #active
-    background: rgba(251, 226, 230, 0.33);
+    background: #f5bec6;
+
+.talk.outline.link.icon
+    background: rgba(249, 141, 141, 0.5);
+    font-size: 1.2em;
+    font-weight: 700;
+    color: black;
+    margin-right: 10px;    

@@ -1,6 +1,6 @@
 <div class="container">
     <div class="users">
-        <div (click)="onSelect(dialog.Id)" *ngFor="let dialog of dialogs">
+        <div class="upper-user" (click)="onSelect(dialog.Id)" *ngFor="let dialog of dialogs">
             <div class="user" *ngIf="dialog.Id === selectedId" id="active">
                 <img class="ui avatar image" src="http://psand.ru/wp-content/uploads/2016/04/Kak-ustanovit-svoy-unikalnyiy-avatar-dlya-vseh-saytov-na-WordPress.png">
                 <div class="userName"> {{dialog.SecondParticipant}} </div>
@@ -13,9 +13,9 @@
     </div>
     <div class="chat-block">
         <div class="under-chat-block">
-            <div class="messages">
+            <div class="messages" #messagesBlock scroll-to-bottom="messages">
                 <div class="message-block" *ngFor="let message of messages">
-                    <div class="message" *ngIf="message.Sender === me">
+                    <div class="message" *ngIf="message.Owner === me">
                         <div class="date-me">
                             {{message.Date|date:'medium'}}
                         </div>
@@ -23,7 +23,7 @@
                             {{message.Message}}
                         </div>
                     </div>
-                    <div class="message" *ngIf="message.Sender === myParticipant">
+                    <div class="message" *ngIf="message.Owner === myParticipant">
                         <div class="date-him">
                             {{message.Date|date:'medium'}}
                         </div>
@@ -34,12 +34,15 @@
                 </div>
             </div>
         </div>
-        <div class="ui icon input">
-            <input class="prompt" type="text" placeholder="Type here..." (keyup.enter)="onWrite()" [(ngModel)]="writtenMessage" style="display:inline">
-            <!-- <a href="#send-button" target="_self"> -->
-            <i class="talk outline link icon" (click)="onWrite()"></i>
-            <!-- </a> -->
-
+        <div class="ui form">
+            <div class="field">
+                <div class="ui icon input">
+                    <textarea [ngStyle]="{'height.px': inputHeight}" class="prompt" type="text" (keyup.enter)="keyEvent()" placeholder="Type here..." [(ngModel)]="writtenMessage" style="display:inline">
+                        
+                    </textarea>
+                    <i class="talk outline link icon" (click)="onWrite()"></i>
+                </div>
+            </div>
         </div>
         <a name="send-button"></a>
     </div>

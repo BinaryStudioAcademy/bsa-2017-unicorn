@@ -3,8 +3,8 @@ import { MessageModel } from "./message.model";
 export interface DialogModel {
     Id: number;
     FirstParticipant: string;
-    FirstParticipantsId: number;
+    //FirstParticipantsId: number;
     SecondParticipant: string;
-    SecondParticipantsId: number;
+    //SecondParticipantsId: number;
     Messages: MessageModel[];
 }
