@@ -196,25 +196,50 @@ export class VendorEditContactsComponent implements OnInit {
   }
 
   editToggle(contactType: string): void {
-    this.cleanAllSellections();
+    setTimeout(() => {
+      this.cleanAllSellections();
+      switch (contactType) {
+        case 'phone':
+          this.hideAllEditFields();
+          this.editPhoneOpen = true;
+          break;
+        case 'email':
+          this.hideAllEditFields();
+          this.editEmailOpen = true;
+          break;
+        case 'messenger':
+          this.hideAllEditFields();
+          this.editMessengerOpen = true;
+          break;
+        case 'social':
+          this.hideAllEditFields();
+          this.editSocialOpen = true;
+          break;
+      }
+    },50);
+  }
 
-    switch (contactType) {
-      case 'phone':
-        this.hideAllEditFields();
-        this.editPhoneOpen = true;
-        break;
-      case 'email':
-        this.hideAllEditFields();
-        this.editEmailOpen = true;
-        break;
-      case 'messenger':
-        this.hideAllEditFields();
-        this.editMessengerOpen = true;
-        break;
-      case 'social':
-        this.hideAllEditFields();
-        this.editSocialOpen = true;
-        break;
+  editPhoneOpenClickOutside()  {
+    if(this.editPhoneOpen){
+      this.editPhoneOpen = false;
+    }   
+  }
+
+  editEmailOpenClickOutside(){
+    if(this.editEmailOpen){
+      this.editEmailOpen = false;
+    }
+  }
+
+  editMessengerOpenClickOutside(){
+    if(this.editMessengerOpen){
+      this.editMessengerOpen = false;
+    }
+  }
+
+  editSocialOpenClickOutside(){
+    if(this.editSocialOpen){
+      this.editSocialOpen = false;
     }
   }
 
