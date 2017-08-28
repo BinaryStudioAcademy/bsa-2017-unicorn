@@ -114,16 +114,17 @@
           </div>
       </div>
       <div class="ui divider"></div>
-      <div *ngIf="companies" class="ui grid">
+      <div *ngIf="performers" class="ui grid">
         <div class="three column row remove-padding-top">
-          <div class="column cell" *ngFor="let company of companies.slice((selectedPage - 1) * pageSize, selectedPage * pageSize)">
+          <div class="column cell" *ngFor="let company of performers.slice((selectedPage - 1) * pageSize, selectedPage * pageSize)">
             <a href="/company/{{company.Id}}" class="ui medium image">
               <img class="ui fluid image" src="{{company.Avatar}}"/>
               <div class="row">
-                <h3>{{company.Name}} ({{company.FoundationDate | date:'y'}})</h3>
+                <h3>{{company.Name}}</h3>
               </div>
               <div class="row">
-                <h4>{{company.Location.City}}, {{company.Location.Adress}}</h4>
+                <!-- <h4>{{company.Location.City}}, {{company.Location.Adress}}</h4> -->
+                <h4>{{company.City}}</h4>
               </div>
             </a>
             <!-- <div class="categories-container">
@@ -135,22 +136,22 @@
                   <sui-rating class="star" [ngModel]="company.Rating" [isReadonly]="true"></sui-rating>
                 </div>
                 <div class="column">                      
-                  <a href="/company/{{company.Id}}">Reviews({{company.ReviewsCount}})</a>
+                  <a href="{{company.Link}}{{tabSuffix}}">Reviews({{company.ReviewsCount}})</a>
                 </div>
               </div>
             </div>            
           </div>
         </div>
       </div>
-      <div *ngIf="companies.length > 12" class="flex-centered"> 
-        <sui-pagination [collectionSize]="companies.length"
+      <div *ngIf="performers.length > 12" class="flex-centered"> 
+        <sui-pagination [collectionSize]="performers.length"
                         [pageSize]="pageSize"
                         [maxSize]="maxSize"
                         [hasEllipses]="hasEllipses"
                         [(page)]="selectedPage">
         </sui-pagination>     
       </div>
-      <div *ngIf="companies.length == 0" class="ui active inverted dimmer" style="z-index: 0;">
+      <div *ngIf="performers.length == 0" class="ui active inverted dimmer" style="z-index: 0;">
         <div class="ui text loader">Loading</div>
       </div> 
   </div>
