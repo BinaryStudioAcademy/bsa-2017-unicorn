@@ -26,6 +26,10 @@ import { SuiModalService, TemplateModalConfig, ModalTemplate, ModalSize, SuiActi
 export class CompanyWorksComponent implements OnInit {
   @ViewChild('modalTemplate')
   public modalTemplate: ModalTemplate<void, {}, void>;
+
+  @ViewChild('modalDeleteTemplate')
+  public modalDeleteTemplate: ModalTemplate<void, {}, void>;
+
   private activeModal: SuiActiveModal<void, {}, void>;
 
   @ViewChild('cropper', undefined)
@@ -92,9 +96,9 @@ export class CompanyWorksComponent implements OnInit {
       this.workIconUrl = this.buildSafeUrl(this.work.Icon);
       this.openedDetailedWindow = true;
     }
-    else {
-      this.deleteWork(work);
-    }
+    // else {
+    //   this.deleteWork(work);
+    // }
   }
 
   openDetailedWindow() {
@@ -117,14 +121,17 @@ export class CompanyWorksComponent implements OnInit {
     this.openedDetailedWindow = false;
   }
 
-  deleteWork(work: CompanyWork) {
+  deleteWork() {
+    if(this.activeModal !== undefined){ 
+      this.activeModal.deny(null);  
+    } 
     let companyId = this.company.Id;
     this.company = undefined;
     if (this.openedDetailedWindow){
       this.openedDetailedWindow = false;
     }
 
-    this.companyService.deleteCompanyWork(companyId, work.Id)
+    this.companyService.deleteCompanyWork(companyId, this.work.Id)
       .then(() => {
         this.initializeThisCompany();  
         this.work = null;        
@@ -184,12 +191,7 @@ export class CompanyWorksComponent implements OnInit {
       that.cropper.setImage(image);      
     };
     this.imageUploaded = true;
-    myReader.readAsDataURL(this.file);
-    // if($event.target !== undefined){
-      
-      
-    // }
-    
+    myReader.readAsDataURL(this.file);  
   }
 
   fileSaveListener() {
@@ -212,7 +214,27 @@ export class CompanyWorksComponent implements OnInit {
       });
   }
 
+  openDeleteModal(work: CompanyWork){
+    this.work = work;
+    this.activeModal = this.openDelModal(this.modalDeleteTemplate);
+  }
+
   public openModal() {
     this.activeModal = this.modalService.openModal(this.modalTemplate);
+  }
+
+  public openDelModal(modalTemplate: ModalTemplate<void, {}, void>): SuiActiveModal<void, {}, void> {
+    const config = new TemplateModalConfig<void, {}, void>(modalTemplate);
+    //config.closeResult = "closed!";
+
+    config.size = ModalSize.Mini;
+    config.isInverted = true;
+    //config.mustScroll = true;
+    let that = this;
+
+    return this.suiModalService
+      .open(config)
+      .onApprove(result => { /* approve callback */ })
+      .onDeny(result => {  /* deny callback */   });
   }
 }

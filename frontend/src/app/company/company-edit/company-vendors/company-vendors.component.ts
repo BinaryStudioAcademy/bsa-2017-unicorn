@@ -3,13 +3,19 @@ import { ActivatedRoute, Params } from "@angular/router";
 import { CompanyService } from "../../../services/company-services/company.service";
 import { CompanyVendors } from "../../../models/company-page/company-vendors.model";
 import { Vendor } from "../../../models/company-page/vendor";
+import { SuiModalService, TemplateModalConfig, ModalTemplate, ModalSize, SuiActiveModal } from 'ng2-semantic-ui';
 
 @Component({
   selector: 'app-company-vendors',
   templateUrl: './company-vendors.component.html',
   styleUrls: ['./company-vendors.component.sass']
 })
-export class CompanyVendorsComponent implements OnInit {  
+export class CompanyVendorsComponent implements OnInit { 
+  @ViewChild('modalDeleteTemplate')
+  public modalDeleteTemplate: ModalTemplate<void, {}, void>;
+  private activeModal: SuiActiveModal<void, {}, void>;
+  
+
   company: CompanyVendors;  
   companyId: number;   
   isLoaded: boolean = false; 
@@ -17,10 +23,12 @@ export class CompanyVendorsComponent implements OnInit {
   allVendors: Vendor[];
   selectedVendors: Vendor[] = [];
   selectedVendor: Vendor;
+  vendor: Vendor;
 
   constructor(private companyService: CompanyService,
     private route: ActivatedRoute,
-    private zone: NgZone) { }
+    private zone: NgZone,
+    private suiModalService: SuiModalService) { }
 
   ngOnInit() { 
     this.initializeThisCompany();   
@@ -55,7 +63,10 @@ export class CompanyVendorsComponent implements OnInit {
     this.zone.run(() => { this.selectedVendor = null; });  
   }
 
-  deleteVendor(vendor: Vendor){     
+  deleteVendor(){ 
+    if(this.activeModal !== undefined){ 
+    this.activeModal.deny(null);  
+    } 
     if(this.openedDetailedWindow){
       this.openedDetailedWindow = false; 
     }    
@@ -63,7 +74,7 @@ export class CompanyVendorsComponent implements OnInit {
     this.zone.run(() => { this.selectedVendor = null; }); 
 
     this.company = undefined;  
-    this.companyService.deleteCompanyVendor(this.companyId, vendor.Id)
+    this.companyService.deleteCompanyVendor(this.companyId, this.vendor.Id)
       .then(() => {
         this.initializeThisCompany();   
       });     
@@ -92,5 +103,25 @@ export class CompanyVendorsComponent implements OnInit {
       this.isLoaded = false;      
       this.initializeThisCompany();
     });
+  }
+
+  openDeleteModal(vendor: Vendor){
+    this.vendor = vendor;
+    this.activeModal = this.openDelModal(this.modalDeleteTemplate);
+  }
+
+  public openDelModal(modalTemplate: ModalTemplate<void, {}, void>): SuiActiveModal<void, {}, void> {
+    const config = new TemplateModalConfig<void, {}, void>(modalTemplate);
+    //config.closeResult = "closed!";
+
+    config.size = ModalSize.Mini;
+    config.isInverted = true;
+    //config.mustScroll = true;
+    let that = this;
+
+    return this.suiModalService
+      .open(config)
+      .onApprove(result => { /* approve callback */ })
+      .onDeny(result => {  /* deny callback */   });
   }
 }

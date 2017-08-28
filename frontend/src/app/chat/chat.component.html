@@ -1,0 +1,41 @@
+<div class="container">
+    <div class="users">
+        <div (click)="onSelect(dialog.Id)" *ngFor="let dialog of dialogs">
+            <div class="user" *ngIf="dialog.Id === selectedId" id="active">
+                <img class="ui avatar image" src="http://psand.ru/wp-content/uploads/2016/04/Kak-ustanovit-svoy-unikalnyiy-avatar-dlya-vseh-saytov-na-WordPress.png">
+                <div class="userName"> {{dialog.SecondParticipant}} </div>
+            </div>
+            <div class="user" *ngIf="dialog.Id !== selectedId">
+                <img class="ui avatar image" src="http://psand.ru/wp-content/uploads/2016/04/Kak-ustanovit-svoy-unikalnyiy-avatar-dlya-vseh-saytov-na-WordPress.png">
+                <div class="userName"> {{dialog.SecondParticipant}} </div>
+            </div>
+        </div>
+    </div>
+    <ul>
+        <div class="chat" *ngFor="let message of messages">
+            <div class="mes_block" *ngIf="message.Sender === me">
+                <div class="date-me">
+                    {{message.Date|date:'medium'}}
+                </div>
+                <li class="me">
+                    {{message.Message}}
+                </li>
+            </div>
+            <div class="mes_block" *ngIf="message.Sender === myParticipant">
+                <div class="date-him">
+                    {{message.Date|date:'medium'}}
+                </div>
+                <li class="him">
+                    {{message.Message}}
+                </li>
+            </div>
+        </div>
+
+        <div class="ui icon input" style="margin-top:5px;">
+            <input class="prompt" type="text" placeholder="Type here..." style="display:inline">
+            <i class="talk outline link icon"></i>
+        </div>
+
+    </ul>
+
+</div>

@@ -42,6 +42,7 @@ import { RegisterComponent } from './register/register-component/register.compon
 import { TokenHelperService } from './services/helper/tokenhelper.service';
 import {ToastModule, Toast} from 'ng2-toastr/ng2-toastr';
 import { AccountService } from "./services/account.service";
+import { ChatModule } from "./chat/chat.module";
 
 export class CustomOptions extends ToastOptions {
   animate = 'fade';
@@ -60,6 +61,7 @@ export class CustomOptions extends ToastOptions {
   ],
   imports: [
     SuiModule,
+    ChatModule,
     BrowserModule,
     BrowserAnimationsModule, 
     ToastModule.forRoot(),

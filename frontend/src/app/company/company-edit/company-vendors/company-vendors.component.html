@@ -26,7 +26,7 @@
                             <sui-rating class="star" [ngModel]="vendor.Rating" [isReadonly]="true"></sui-rating>
                         </td>
                         <td class="right aligned">
-                            <button class="ui button icon" (click)="deleteVendor(vendor)">
+                            <button class="ui button icon" (click)="openDeleteModal(vendor)">
                                 <i class="remove icon"></i>
                             </button>
                         </td>
@@ -99,3 +99,28 @@
 <div *ngIf="company === undefined" class="ui active inverted dimmer" style="background-color: rgba(255,255,255,.85)">
     <div class="ui text loader">Loading</div>
 </div>
+
+
+
+<ng-template class="modalImage" let-context let-modal="modal" #modalDeleteTemplate>
+    <div class="content">
+        <div align="center">
+            <div class="title">
+                <label>Delete a vendor</label>
+            </div>
+            <div class="content">
+                <p>Are you sure you want to delete this vendor?</p>
+            </div>
+            <div class="ui padded grid centered actions-buttons">
+                <div class="ui active button file-upload-save" (click)="deleteVendor()">
+                    <label class="button-text">Delete</label>
+                </div>
+                <div class="ui active button file-upload-save" (click)="activeModal.deny(null)">
+                    <label class="button-text">Cancel</label>
+                </div>
+                <!-- <div class="ui approve button" (click)="deleteWork()">Approve</div>
+            <div class="ui cancel button" (click)="activeModal.deny(null)">Cancel</div> -->
+            </div>
+        </div>
+    </div>
+</ng-template>

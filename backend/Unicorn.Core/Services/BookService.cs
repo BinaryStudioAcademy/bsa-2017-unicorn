@@ -181,7 +181,7 @@ namespace Unicorn.Core.Services
                 Date = book.Date,
                 Description = book.Description,
                 Location = location,
-                Status = BookStatus.Accepted,
+                Status = BookStatus.Pending,
                 Vendor = vendor,
                 Work = work
             };
@@ -190,23 +190,44 @@ namespace Unicorn.Core.Services
             await _unitOfWork.SaveAsync();
         }
 
-        public async Task<IEnumerable<VendorBookDTO>> GetVendorOrdersAsync(long vendorId)
+        public async Task<IEnumerable<VendorBookDTO>> GetOrdersAsync(string role, long id)
         {
-            return await _unitOfWork.BookRepository.Query
+            var query = _unitOfWork.BookRepository.Query
                 .Include(b => b.Vendor)
+                .Include(b => b.Company)
                 .Include(b => b.Work)
                 .Include(b => b.Work.Subcategory)
                 .Include(b => b.Work.Subcategory.Category)
                 .Include(b => b.Location)
                 .Include(b => b.Customer)
-                .Include(b => b.Customer.Person)
-                .Where(b => b.Vendor != null)
-                .Where(b => b.Vendor.Id == vendorId)
+                .Include(b => b.Customer.Person);
+
+            switch (role)
+            {
+                case "vendor":
+                    {
+                        query = query
+                            .Where(b => b.Vendor != null)
+                            .Where(b => b.Vendor.Id == id);
+                        break;
+                    }
+                case "company":
+                    {
+                        query = query
+                            .Where(b => b.Company != null)
+                            .Where(b => b.Company.Id == id);
+                        break;
+                    }
+                default: throw new Exception("not supported role");
+            }
+
+            return await query
                 .Select(b => new VendorBookDTO()
                 {
                     Id = b.Id,
                     Customer = b.Customer.Person.Name + " " + b.Customer.Person.Surname,
                     CustomerId = b.Customer.Id,
+                    CustomerPhone = b.CustomerPhone,
                     Date = b.Date,
                     Description = b.Description,
                     Location = new LocationDTO()
@@ -226,10 +247,19 @@ namespace Unicorn.Core.Services
                         Category = b.Work.Subcategory.Category.Name,
                         CategoryId = b.Work.Subcategory.Category.Id,
                         Subcategory = b.Work.Subcategory.Name,
-                        SubcategoryId = b.Work.Subcategory.Id
+                        SubcategoryId = b.Work.Subcategory.Id,
+                        Icon = b.Work.Icon
                     }
                 }).ToListAsync();
+        }
 
+        public async Task Update(VendorBookDTO bookDto)
+        {
+            var book = await _unitOfWork.BookRepository.GetByIdAsync(bookDto.Id);
+            book.Status = bookDto.Status;
+
+            _unitOfWork.BookRepository.Update(book);
+            await _unitOfWork.SaveAsync();
         }
 
         public async Task Update(BookDTO bookDto)
@@ -239,6 +269,27 @@ namespace Unicorn.Core.Services
 
             _unitOfWork.BookRepository.Update(book);
             await _unitOfWork.SaveAsync();
+        }
+
+        public async Task<IEnumerable<VendorBookDTO>> GetPendingOrdersAsync(string role, long id)
+        {
+            return await GetOrdersByStatus(role, id, BookStatus.Pending);
+        }
+
+        public async Task<IEnumerable<VendorBookDTO>> GetAcceptedOrdersAsync(string role, long id)
+        {
+            return await GetOrdersByStatus(role, id, BookStatus.Accepted);
+        }
+
+        public async Task<IEnumerable<VendorBookDTO>> GetFinishedOrdersAsync(string role, long id)
+        {
+            return await GetOrdersByStatus(role, id, BookStatus.Finished);
+        }
+
+        private async Task<IEnumerable<VendorBookDTO>> GetOrdersByStatus(string role, long id, BookStatus status)
+        {
+            var books = await GetOrdersAsync(role, id);
+            return books.Where(b => b.Status == status);
         }
     }
 }

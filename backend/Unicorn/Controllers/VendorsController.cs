@@ -104,7 +104,7 @@ namespace Unicorn.Controllers
         [Route("{id}/orders")]
         public async Task<HttpResponseMessage> GetVendorOrders(long id)
         {
-            var result = await _bookService.GetVendorOrdersAsync(id);
+            var result = await _bookService.GetOrdersAsync("vendor", id);
 
             if (result == null)
                 return Request.CreateResponse(HttpStatusCode.NotFound);
@@ -253,7 +253,7 @@ namespace Unicorn.Controllers
             book.Status = order.Status;
             await _bookService.Update(book);
 
-            var result = await _bookService.GetVendorOrdersAsync(orderId);
+            var result = await _bookService.GetOrdersAsync("vendor", id);
 
             if (result == null)
                 return Request.CreateResponse(HttpStatusCode.NotFound);
