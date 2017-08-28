@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { SuiModule } from 'ng2-semantic-ui';
 import { environment } from '../../environments/environment';
 import { NguiMapModule } from "@ngui/map/dist";
+import { ClickOutsideModule } from 'ng-click-outside';
 
 import { VendorRoutingModule } from './vendor-routing.module';
 import { SignBlockModule } from '../sign-block/sign-block.module';
@@ -48,6 +49,7 @@ import { ContactService } from "../services/contact.service";
     SignBlockModule,
     CommonModule,
     SharedModule,
+    ClickOutsideModule,    
     PipeModule
   ],
   declarations: [

@@ -30,6 +30,7 @@ import { PipeModule } from "../pipe/pipe.module";
 import { ClickOutsideModule } from 'ng-click-outside';
 import { SharedModule } from "../shared/shared.module";
 import { CompanyContactsComponent } from './company-edit/company-contacts/company-contacts.component';
+import { ChatModule } from "../chat/chat.module";
 
 @NgModule({
   imports: [    
@@ -43,7 +44,8 @@ import { CompanyContactsComponent } from './company-edit/company-contacts/compan
     MapModule,
     PipeModule,
     ClickOutsideModule,
-    SharedModule
+    SharedModule,
+    ChatModule
   ],
   declarations: [
     CompanyComponent,

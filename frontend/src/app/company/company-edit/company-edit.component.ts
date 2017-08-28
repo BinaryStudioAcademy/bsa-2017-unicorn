@@ -27,6 +27,7 @@ export class CompanyEditComponent implements OnInit {
 
   bannerListener($event) {
     let file: File = $event.target.files[0];
+    console.log(file);
     this.uploading = true;
     this.photoService.uploadToImgur(file).then(link => {      
       return this.photoService.saveAvatar(link);

@@ -114,7 +114,7 @@ export class CompanyVendorsComponent implements OnInit {
     const config = new TemplateModalConfig<void, {}, void>(modalTemplate);
     //config.closeResult = "closed!";
 
-    config.size = ModalSize.Small;
+    config.size = ModalSize.Mini;
     config.isInverted = true;
     //config.mustScroll = true;
     let that = this;

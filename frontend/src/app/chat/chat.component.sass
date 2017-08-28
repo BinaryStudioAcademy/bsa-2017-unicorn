@@ -1,0 +1,112 @@
+img
+    object-fit: cover!important;
+
+$tab-color: #FF647A;
+
+.chat-block    
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    width: 70%;    
+    margin: 0;
+    padding: 0;
+    border-left: 0.5px solid #D5D0D0;
+
+.under-chat-block
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 85%;
+
+.messages
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0 10px;
+
+.ui.icon.input
+    margin: 0;
+    width: 100%;
+    height: 15%;
+    input
+        border-radius: 0;
+    
+
+
+.concrete-message
+    display: inline-block;
+    clear: both;
+    padding: 10px;
+    border-radius: 20px;
+    margin-bottom: 5px;
+    font-family: Helvetica, Arial, sans-serif;
+    max-width: 45%;
+
+.him
+    background: #eee;        
+    align-self: flex-start;
+
+.me    
+    background: #5BB0FF;
+    color: #fff;    
+    align-self: flex-end;
+
+.him + .me
+    border-bottom-right-radius: 5px;
+
+.me + .me
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+
+.userName
+    font-size: 15px;
+    margin-top: 4px;
+
+.container
+    display: flex;
+    justify-content: space-between;
+    height: 300px;
+
+.users
+    flex-direction: column;
+    display: flex;
+    width: 30%;
+    margin: 10px;
+
+.message-block
+    display: flex;
+    flex-direction: column;
+    padding: 5px 0;    
+
+.user
+    display: flex;
+    margin: 3px 0;
+    flex-direction: row;    
+    padding: 5px 10px;
+
+.users:first-child
+    margin-top: 10px;
+
+.user:hover 
+    cursor: pointer;
+    background: rgba(251, 226, 230, 0.33);
+
+.date-me
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 10px;
+    color: grey;
+    text-align: right;    
+    padding-right: 6px;
+
+.date-him
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 10px;
+    color: grey;
+    text-align: left;    
+    padding-left: 6px;
+
+.message
+    display: flex;
+    flex-direction: column;
+
+#active
+    background: rgba(251, 226, 230, 0.33);

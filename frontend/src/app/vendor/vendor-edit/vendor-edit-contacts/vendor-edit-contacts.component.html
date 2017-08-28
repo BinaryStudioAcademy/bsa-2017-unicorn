@@ -30,7 +30,7 @@
             </a>
           </div>
           <ng-template #phoneEdit>
-            <form name="phone-edit-form" #phoneEditForm="ngForm">
+            <form name="phone-edit-form" #phoneEditForm="ngForm" (clickOutside)="editPhoneOpenClickOutside()">
               <div class="ui right action mini left icon input contact-edit">
                 <i class="colored call icon"></i>
                 <input type="text" required pattern="^\+(?:[0-9]●?){6,14}[0-9]$" [(ngModel)]="selectedPhone.Value" name="phone" placeholder="+380 (XX) XXXXXXX">
@@ -61,7 +61,7 @@
             </a>
           </div>
           <ng-template #emailEdit>
-            <form name="email-edit-form" #emailEditForm="ngForm">
+            <form name="email-edit-form" #emailEditForm="ngForm" (clickOutside)="editEmailOpenClickOutside()">
               <div class="ui right action mini left icon input contact-edit">
                 <i class="colored call icon"></i>
                 <input type="text" required pattern="\S+@\S+\.\S+" [(ngModel)]="selectedEmail.Value" name="email" placeholder="example@e.mail">
@@ -99,7 +99,7 @@
             </a>
           </div>
           <ng-template #newMessengerEdit>
-            <div class="ui form contact-edit">
+            <div class="ui form contact-edit" (clickOutside)="editMessengerOpenClickOutside()">
             <div class="inline fields">
               <div class="field">
             <sui-select 
@@ -153,7 +153,7 @@
             </a>
           </div>
           <ng-template #newSocialEdit>
-            <div class="ui form contact-edit">
+            <div class="ui form contact-edit" (clickOutside)="editSocialOpenClickOutside()">
             <div class="inline fields">
               <div class="field">
             <sui-select 
