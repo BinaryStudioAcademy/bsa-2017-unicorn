@@ -103,5 +103,22 @@ namespace Unicorn.Controllers
 
             return Request.CreateResponse(HttpStatusCode.OK);
         }
+
+        [HttpGet]
+        [Route("book/customer/{id}")]
+        public async Task<HttpResponseMessage> GetCustomerBooks(long id)
+        {
+            IEnumerable<CustomerBookDTO> books;
+            try
+            {
+                books = await _bookService.GetCustomerBooks(id);
+            }
+            catch
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, books);
+        }
     }
 }

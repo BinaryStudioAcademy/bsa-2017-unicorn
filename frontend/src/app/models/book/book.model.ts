@@ -12,8 +12,24 @@ export interface Book {
 	Work: Work;
 }
 
+export interface CustomerBook {
+    Id: number;
+    Date: Date;
+    Status: BookStatus;
+    Description: string;
+    Performer: string;
+    PerformerId: number;
+    PerformerType: string;
+    Rating: number;
+    IsHidden: boolean;
+    Work: Work;
+    Location: Location;
+}
+
 export enum BookStatus {
-	Accepted,
+    Pending,
+    Accepted,
+    Declined,
     InProgress,
     Finished,
     Confirmed

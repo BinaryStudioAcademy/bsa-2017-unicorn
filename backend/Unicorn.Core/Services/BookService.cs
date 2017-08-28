@@ -272,6 +272,62 @@ namespace Unicorn.Core.Services
                 }).ToList();
         }
 
+        public async Task<IEnumerable<CustomerBookDTO>> GetCustomerBooks(long id)
+        {
+            var books = await _unitOfWork.BookRepository
+                .Query
+                .Include(b => b.Customer)
+                .Include(b => b.Vendor)
+                .Include(b => b.Vendor.Person)
+                .Include(b => b.Company)
+                .Include(b => b.Work)
+                .Include(b => b.Work.Subcategory)
+                .Include(b => b.Work.Subcategory.Category)
+                .Include(b => b.Location)
+                .Where(b => b.Customer.Id == id)
+                .ToListAsync();
+
+            var customerBooks = books
+                .Select(b => BookToCustomerBookDTO(b));
+
+            return customerBooks;
+        }
+
+        private CustomerBookDTO BookToCustomerBookDTO(Book b)
+        {
+            return new CustomerBookDTO
+            {
+                Id = b.Id,
+                PerformerType = (b.Vendor == null ? "company" : "vendor"),
+                Performer = (b.Vendor == null ? b.Company.Name : b.Vendor.Person.Name + " " + b.Vendor.Person.Surname),
+                PerformerId = (b.Vendor == null ? b.Company.Id : b.Vendor.Id),
+                Date = b.Date,
+                Description = b.Description,
+                Rating = GetRatingByBookId(b.Id),
+                Status = b.Status,
+                IsHidden = b.IsHidden,
+                Location = new LocationDTO
+                {
+                    Id = b.Location.Id,
+                    Adress = b.Location.Adress,
+                    City = b.Location.City,
+                    Latitude = b.Location.Latitude,
+                    Longitude = b.Location.Longitude
+                },
+                Work = new WorkDTO()
+                {
+                    Id = b.Work.Id,
+                    Name = b.Work.Name,
+                    Description = b.Work.Description,
+                    Category = b.Work.Subcategory.Category.Name,
+                    CategoryId = b.Work.Subcategory.Category.Id,
+                    Subcategory = b.Work.Subcategory.Name,
+                    SubcategoryId = b.Work.Subcategory.Id,
+                    Icon = b.Work.Icon
+                }
+            };
+        }
+
         public async Task Update(VendorBookDTO bookDto)
         {
             var book = await _unitOfWork.BookRepository.GetByIdAsync(bookDto.Id);
