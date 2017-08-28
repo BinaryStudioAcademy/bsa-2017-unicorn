@@ -5,11 +5,11 @@ using Unicorn.Shared.DTOs;
 
 namespace Unicorn.Core.Interfaces
 {
-    interface IChatService
+    public interface IChatService
     {
         Task Create(ChatDTO msg);
-        ICollection<ChatDTO> GetChat(long receiverId, long senderId);
-        IEnumerable<ChatDTO> GetChatByDate(long receiverId, long senderId, DateTime dateMin);
+        ICollection<ChatDTO> GetChat(long senderId, long receiverId);
+        IEnumerable<ChatDTO> GetChatByDate(long senderId, long receiverId, DateTime dateMin);
         Task Remove(ChatDTO msg);
         Task Update(ChatDTO msg);
     }

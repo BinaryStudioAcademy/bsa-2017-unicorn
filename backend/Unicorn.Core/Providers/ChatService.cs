@@ -33,10 +33,10 @@ namespace Unicorn.Core.Providers
             await _unitOfWork.SaveAsync();
         }
 
-        public ICollection<ChatDTO> GetChat(long receiverId, long senderId)
+        public ICollection<ChatDTO> GetChat(long senderId, long receiverId)
         {
             // TODO: async?
-            var data = _unitOfWork.ChatRepository.Query.Where(x => x.ReceiverId == receiverId && x.SenderId == senderId);
+            var data = _unitOfWork.ChatRepository.Query.Where(x => x.SenderId == senderId && x.ReceiverId == receiverId);
             if (data.Any())
             {
                 var dto = data.Select(x => new ChatDTO
@@ -52,9 +52,9 @@ namespace Unicorn.Core.Providers
             return null;
         }
 
-        public IEnumerable<ChatDTO> GetChatByDate(long receiverId, long senderId, DateTime dateMin)
+        public IEnumerable<ChatDTO> GetChatByDate(long senderId, long receiverId, DateTime dateMin)
         {
-            var dataDto = GetChat(receiverId, senderId);
+            var dataDto = GetChat(senderId, receiverId);
             if (dataDto == null)
             {
                 return null;
