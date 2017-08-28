@@ -2,7 +2,6 @@
 import { NgModel, NgForm } from '@angular/forms';
 import { User } from '../../models/user';
 import { AgmMap} from "@agm/core";
-import { NguiMapModule, Marker } from "@ngui/map";
 import { LocationService } from "../../services/location.service";
 import { UserService } from "../../services/user.service";
 import {ToastsManager, Toast} from 'ng2-toastr';
@@ -22,7 +21,6 @@ export class UserProfileComponent implements OnInit {
 
     @Input() user: User;
     @ViewChild(AgmMap) private map: any;
-      location: Location;
 
     @ViewChild('userForm') public userForm: NgForm;
     birthday: Date;
