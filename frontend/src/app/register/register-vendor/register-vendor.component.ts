@@ -2,12 +2,16 @@ import { Component, OnInit, Input } from '@angular/core';
 
 import * as firebase from 'firebase/app';
 import { RegisterService } from '../../services/register.service';
+import { MapsAPILoader } from "@agm/core";
 
 import { SuiActiveModal } from 'ng2-semantic-ui';
 import { Vendor } from '../models/vendor';
 import { HelperService } from '../../services/helper/helper.service';
 import { AuthenticationEventService } from '../../services/events/authenticationevent.service';
 import { Location } from '../../models/location.model'
+import { LocationService } from "../../services/location.service";
+
+import { AgmMap } from "@agm/core";
 
 @Component({
   selector: 'app-register-vendor',
@@ -34,15 +38,27 @@ export class RegisterVendorComponent implements OnInit {
 
   constructor(private registerService: RegisterService,
     private helperService: HelperService,
-    private authEventService: AuthenticationEventService) { }
+    private authEventService: AuthenticationEventService,
+    private locationService: LocationService,
+    private mapsApiLoader: MapsAPILoader
+  ) { }
 
   ngOnInit() {
     this.mode = 'date';
-    this.location.Latitude = 49.841459;
-    this.location.Longitude = 24.031946;
-    this.location.City = "Lviv";
-    this.location.PostIndex = "10";
-    this.location.Adress = "Rynok";
+
+    let location = this.locationService.getCurrentLocation();
+    this.mapsApiLoader.load()
+      .then(() => {
+        console.log('google script loaded');
+      })
+      .then(() => 
+        this.locationService.getLocDetails(location.Latitude, location.Longitude).toPromise()
+          .then(result => {
+            location.Adress = result.formatted_address;
+            location.City = result.address_components[3].short_name;
+          }));
+
+    this.location = location;
     this.email = this.social.email || null;
     this.phone = this.social.phoneNumber || null;
     this.initName();

@@ -17,8 +17,9 @@ export class LocationService {
 
 	getById(id: number): Promise<any> {
 		return this.dataService.getFullRequest<Location>(`${this.apiController}/${id}`);
-	}
-	getLocDetails(lat: number, lng: number)
+    }
+    
+	getLocDetails(lat: number, lng: number): Observable<any>
     {
         let geocoder = new google.maps.Geocoder();
         var latlng = {lat: lat, lng: lng}
