@@ -42,7 +42,8 @@ export class VendorEditInfoComponent implements OnInit {
     private locationService: LocationService, 
     private vendorService: VendorService,
     private categoryService: CategoryService,
-    private workService: WorkService
+    private workService: WorkService,
+    private LocationService: LocationService
   ) { }
 
   ngOnInit() {
@@ -69,6 +70,16 @@ export class VendorEditInfoComponent implements OnInit {
   {
       this.vendor.Location.Latitude = $event.coords.lat;
       this.vendor.Location.Longitude = $event.coords.lng;
+      this.LocationService.getLocDetails(this.vendor.Location.Latitude,this.vendor.Location.Longitude)
+      .subscribe(
+      result => {
+         
+          this.vendor.Location.Adress=result.formatted_address;
+          this.vendor.Location.City=result.address_components[3].short_name;
+      },
+      error => console.log(error),
+      () => console.log('Geocoding completed!')
+      );
   }
   saveVendor(): void {
     if (this.vendorForm.invalid) {

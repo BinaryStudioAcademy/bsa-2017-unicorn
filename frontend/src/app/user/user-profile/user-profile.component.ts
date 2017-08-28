@@ -29,7 +29,7 @@ export class UserProfileComponent implements OnInit {
     dataLoaded: boolean;
 
     constructor(private userService: UserService, 
-        public toastr: ToastsManager) {}
+        public toastr: ToastsManager, public LocationService: LocationService) {}
   
     ngOnInit() { 
         this.dataLoaded=true;
@@ -39,7 +39,7 @@ export class UserProfileComponent implements OnInit {
     {
         this.user.Location.Latitude = $event.coords.lat;
         this.user.Location.Longitude = $event.coords.lng;
-        this.getLocDetails()
+        this.LocationService.getLocDetails(this.user.Location.Latitude,this.user.Location.Longitude)
         .subscribe(
         result => {
            
@@ -50,24 +50,7 @@ export class UserProfileComponent implements OnInit {
         () => console.log('Geocoding completed!')
         );
     }
-    getLocDetails()
-    {
-        let geocoder = new google.maps.Geocoder();
-        var latlng = {lat: this.user.Location.Latitude, lng: this.user.Location.Longitude}
-        return Observable.create(observer => {
-            geocoder.geocode( { 'location':latlng }, function(results, status) {
-                if (status == google.maps.GeocoderStatus.OK) {
-                    observer.next(results[0]);
-                    observer.complete();
-                } else {
-                    console.log('Error - ', results, ' & Status - ', status);
-                    observer.next({});
-                    observer.complete();
-                }
-            });
-        })
-    }
-    
+   
     updateUser(): void {
         
         this.dataLoaded = false;

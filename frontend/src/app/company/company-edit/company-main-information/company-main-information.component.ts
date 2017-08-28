@@ -7,6 +7,7 @@ import { MapModel } from "../../../models/map.model";
 import { CompanyWork } from "../../../models/company-page/company-work.model";
 import { CompanyCategory } from "../../../models/company-page/company-category.model";
 import { CompanySubcategory } from "../../../models/company-page/company-subcategory.model";
+import { LocationService } from "../../../services/location.service";
 
 @Component({
   selector: 'app-company-main-information',
@@ -21,11 +22,21 @@ export class CompanyMainInformationComponent implements OnInit {
   @ViewChild('companyForm') public companyForm: NgForm;
 
   constructor(private companyService: CompanyService,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute, private LocationService: LocationService) { }
     markerDragged($event)
     {
         this.company.Location.Latitude = $event.coords.lat;
         this.company.Location.Longitude = $event.coords.lng;
+        this.LocationService.getLocDetails(this.company.Location.Latitude,this.company.Location.Longitude)
+        .subscribe(
+        result => {
+           
+            this.company.Location.Adress=result.formatted_address;
+            this.company.Location.City=result.address_components[3].short_name;
+        },
+        error => console.log(error),
+        () => console.log('Geocoding completed!')
+        );
     }
   ngOnInit() {
     this.route.params

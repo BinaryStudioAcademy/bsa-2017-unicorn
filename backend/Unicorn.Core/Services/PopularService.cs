@@ -67,6 +67,7 @@ namespace Unicorn.Core.Services
             var companiesList = await _uow.CompanyRepository
                 .Query
                 .Include(c => c.Account)
+                .Include(c => c.Account.Location)
                 .ToListAsync();
 
             var companies = companiesList
@@ -103,8 +104,10 @@ namespace Unicorn.Core.Services
                 .Include(w => w.Vendor)
                 .Include(w => w.Vendor.Person)
                 .Include(w => w.Vendor.Person.Account)
+                .Include(w => w.Vendor.Person.Account.Location)
                 .Include(w => w.Company)
                 .Include(w => w.Company.Account)
+                .Include(w => w.Company.Account.Location)
                 .ToListAsync();
 
 
