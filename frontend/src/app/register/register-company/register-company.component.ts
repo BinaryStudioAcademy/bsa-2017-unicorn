@@ -9,6 +9,8 @@ import { HelperService } from '../../services/helper/helper.service';
 import { AuthenticationEventService } from '../../services/events/authenticationevent.service';
 import { Location } from '../../models/location.model'
 import { LocationService } from "../../services/location.service";
+import { MapsAPILoader } from "@agm/core";
+
 @Component({
   selector: 'app-register-company',
   templateUrl: './register-company.component.html',
@@ -33,16 +35,20 @@ export class RegisterCompanyComponent implements OnInit {
 
   ngOnInit() {
     this.mode = 'date';
+    let location = this.locationService.getCurrentLocation();
+    this.mapsApiLoader.load()
+      .then(() => {
+        console.log('google script loaded');
+      })
+      .then(() => 
+        this.locationService.getLocDetails(location.Latitude, location.Longitude).toPromise()
+          .then(result => {
+            location.Adress = result.formatted_address;
+            location.City = result.address_components[3].short_name;
+          })).then(()=>{this.location = location});
     this.email = this.social.email || null;
     this.phone = this.social.phoneNumber || null;
     this.name = this.social.displayName || null;
-    this.location =  this.locationService.getCurrentLocation();
-    console.log(this.location);
-    // this.location.Latitude = 49.841459;
-    // this.location.Longitude = 24.031946;
-    // this.location.City = "Lviv";
-    // this.location.PostIndex = "10";
-    // this.location.Adress = "Rynok";
   }
 
   aggregateInfo(): Company {

@@ -20,7 +20,6 @@ export interface IContext {
 export class UserProfileComponent implements OnInit {
 
     @Input() user: User;
-    @ViewChild(AgmMap) private map: any;
 
     @ViewChild('userForm') public userForm: NgForm;
     birthday: Date;

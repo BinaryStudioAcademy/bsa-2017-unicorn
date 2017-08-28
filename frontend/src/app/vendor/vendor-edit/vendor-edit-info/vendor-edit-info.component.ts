@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { NguiMapModule, Marker } from "@ngui/map";
 import { SuiModule } from 'ng2-semantic-ui';
 
 import { Location } from "../../../models/location.model"
@@ -14,7 +13,6 @@ import { VendorService } from "../../../services/vendor.service";
 import { LocationService } from "../../../services/location.service";
 import { CategoryService } from "../../../services/category.service";
 import { WorkService } from "../../../services/work.service";
-import { AgmMap } from "@agm/core";
 
 @Component({
   selector: 'app-vendor-edit-info',

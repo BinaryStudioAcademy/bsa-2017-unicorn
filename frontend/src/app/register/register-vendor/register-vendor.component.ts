@@ -45,7 +45,6 @@ export class RegisterVendorComponent implements OnInit {
 
   ngOnInit() {
     this.mode = 'date';
-
     let location = this.locationService.getCurrentLocation();
     this.mapsApiLoader.load()
       .then(() => {
@@ -56,9 +55,7 @@ export class RegisterVendorComponent implements OnInit {
           .then(result => {
             location.Adress = result.formatted_address;
             location.City = result.address_components[3].short_name;
-          }));
-
-    this.location = location;
+          })).then(()=>{this.location = location});
     this.email = this.social.email || null;
     this.phone = this.social.phoneNumber || null;
     this.initName();

@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 
 import { SuiModule } from 'ng2-semantic-ui';
 import { environment } from '../../environments/environment';
-import { NguiMapModule } from "@ngui/map/dist";
 import { ClickOutsideModule } from 'ng-click-outside';
 
 import { VendorRoutingModule } from './vendor-routing.module';
