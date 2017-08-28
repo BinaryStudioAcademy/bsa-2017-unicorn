@@ -190,9 +190,24 @@ namespace Unicorn.Core.Services
             await _unitOfWork.SaveAsync();
         }
 
+        private int GetRatingByBookId(long id)
+        {
+            var ratings = _unitOfWork.RatingRepository
+                .Query
+                .Include(r => r.Book)
+                .ToList();
+
+            var rating = ratings
+                .Where(r => r.Book != null)
+                .FirstOrDefault(r => r.Book.Id == id);
+
+            return rating == null ? 0 : rating.Grade;
+        }
+
         public async Task<IEnumerable<VendorBookDTO>> GetOrdersAsync(string role, long id)
         {
-            var query = _unitOfWork.BookRepository.Query
+            var query = _unitOfWork.BookRepository
+                .Query
                 .Include(b => b.Vendor)
                 .Include(b => b.Company)
                 .Include(b => b.Work)
@@ -221,7 +236,9 @@ namespace Unicorn.Core.Services
                 default: throw new Exception("not supported role");
             }
 
-            return await query
+            var books = await query.ToListAsync();
+
+            return books
                 .Select(b => new VendorBookDTO()
                 {
                     Id = b.Id,
@@ -230,6 +247,8 @@ namespace Unicorn.Core.Services
                     CustomerPhone = b.CustomerPhone,
                     Date = b.Date,
                     Description = b.Description,
+                    Rating = GetRatingByBookId(b.Id),
+                    IsHidden = b.IsHidden,
                     Location = new LocationDTO()
                     {
                         Id = b.Location.Id,
@@ -250,13 +269,14 @@ namespace Unicorn.Core.Services
                         SubcategoryId = b.Work.Subcategory.Id,
                         Icon = b.Work.Icon
                     }
-                }).ToListAsync();
+                }).ToList();
         }
 
         public async Task Update(VendorBookDTO bookDto)
         {
             var book = await _unitOfWork.BookRepository.GetByIdAsync(bookDto.Id);
             book.Status = bookDto.Status;
+            book.IsHidden = bookDto.IsHidden;
 
             _unitOfWork.BookRepository.Update(book);
             await _unitOfWork.SaveAsync();
@@ -289,6 +309,10 @@ namespace Unicorn.Core.Services
         private async Task<IEnumerable<VendorBookDTO>> GetOrdersByStatus(string role, long id, BookStatus status)
         {
             var books = await GetOrdersAsync(role, id);
+            if (books == null)
+            {
+                return Enumerable.Empty<VendorBookDTO>();
+            }
             return books.Where(b => b.Status == status);
         }
     }

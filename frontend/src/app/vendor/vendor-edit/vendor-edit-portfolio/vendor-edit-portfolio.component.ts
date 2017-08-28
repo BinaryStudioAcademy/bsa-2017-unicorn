@@ -9,6 +9,10 @@ import { PortfolioItem } from '../../../models/portfolio-item.model';
 import { History } from '../../../models/history';
 import { VendorHistory } from "../../../models/vendor-history.model";
 
+import { BookCard, BookStatus } from '../../../models/dashboard/book-card';
+
+import { DashboardService } from '../../../services/dashboard/dashboard.service';
+
 @Component({
   selector: 'app-vendor-edit-portfolio',
   templateUrl: './vendor-edit-portfolio.component.html',
@@ -18,16 +22,31 @@ export class VendorEditPortfolioComponent implements OnInit {
   @Input() private vendorId: number;
   portfolio: PortfolioItem[];
   history: VendorHistory[];
+  books: BookCard[];
 
   constructor(
-    private vendorService: VendorService
+    private vendorService: VendorService,
+    private dashboardService: DashboardService
   ) { }
 
   ngOnInit() {
-    this.vendorService.getVendorPorfolio(this.vendorId)
-      .then(resp => this.portfolio = resp.body as PortfolioItem[]);
-    this.vendorService.getVendorHistory(this.vendorId)
-      .then(resp => this.history = resp.body as VendorHistory[])
+    // this.vendorService.getVendorPorfolio(this.vendorId)
+    //   .then(resp => this.portfolio = resp.body as PortfolioItem[]);
+    // this.vendorService.getVendorHistory(this.vendorId)
+    //   .then(resp => this.history = resp.body as VendorHistory[])
+    this.loadData();
+  }
+
+  loadData() {
+    this.dashboardService.getPortfolioBooks('vendor', this.vendorId).then(resp => {
+      this.books = resp;
+      console.log(this.books);
+    });
+  }
+
+  updateBook(id: number) {
+    let book = this.books.filter(b => b.Id == id)[0];
+    this.dashboardService.update(book);
   }
 }
 

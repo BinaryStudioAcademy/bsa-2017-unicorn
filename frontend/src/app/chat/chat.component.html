@@ -11,31 +11,37 @@
             </div>
         </div>
     </div>
-    <ul>
-        <div class="chat" *ngFor="let message of messages">
-            <div class="mes_block" *ngIf="message.Sender === me">
-                <div class="date-me">
-                    {{message.Date|date:'medium'}}
+    <div class="chat-block">
+        <div class="under-chat-block">
+            <div class="messages">
+                <div class="message-block" *ngFor="let message of messages">
+                    <div class="message" *ngIf="message.Sender === me">
+                        <div class="date-me">
+                            {{message.Date|date:'medium'}}
+                        </div>
+                        <div class="concrete-message me">
+                            {{message.Message}}
+                        </div>
+                    </div>
+                    <div class="message" *ngIf="message.Sender === myParticipant">
+                        <div class="date-him">
+                            {{message.Date|date:'medium'}}
+                        </div>
+                        <div class="concrete-message him">
+                            {{message.Message}}
+                        </div>
+                    </div>
                 </div>
-                <li class="me">
-                    {{message.Message}}
-                </li>
-            </div>
-            <div class="mes_block" *ngIf="message.Sender === myParticipant">
-                <div class="date-him">
-                    {{message.Date|date:'medium'}}
-                </div>
-                <li class="him">
-                    {{message.Message}}
-                </li>
             </div>
         </div>
+        <div class="ui icon input">
+            <input class="prompt" type="text" placeholder="Type here..." (keyup.enter)="onWrite()" [(ngModel)]="writtenMessage" style="display:inline">
+            <!-- <a href="#send-button" target="_self"> -->
+            <i class="talk outline link icon" (click)="onWrite()"></i>
+            <!-- </a> -->
 
-        <div class="ui icon input" style="margin-top:5px;">
-            <input class="prompt" type="text" placeholder="Type here..." style="display:inline">
-            <i class="talk outline link icon"></i>
         </div>
-
-    </ul>
+        <a name="send-button"></a>
+    </div>
 
 </div>
