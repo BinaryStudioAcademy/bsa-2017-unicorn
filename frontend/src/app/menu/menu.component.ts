@@ -14,6 +14,7 @@ import { AccountService } from "../services/account.service";
 
 import { ProfileShortInfo } from "../models/profile-short-info.model";
 import { RoleRouter } from "../helpers/rolerouter";
+import { NotificationService } from "../services/notifications/notification.service";
 
 @Component({
   selector: 'app-menu',
@@ -44,7 +45,8 @@ export class MenuComponent implements OnInit {
     private authEventService: AuthenticationEventService,
     private authLoginService: AuthenticationLoginService,
     private tokenHelper: TokenHelperService,
-    private accountService: AccountService) {
+    private accountService: AccountService,
+    private notificationService: NotificationService) {
     this.isLogged = this.tokenHelper.isTokenValid() && this.tokenHelper.isTokenNotExpired();
   }
 
@@ -76,6 +78,7 @@ export class MenuComponent implements OnInit {
     this.onLogIn = this.authEventService.loginEvent$
       .subscribe(() => {
         this.isLogged = true;
+        this.notificationService.connect(+this.tokenHelper.getClaimByName("accountid"));
         this.accountService.getShortInfo(+this.tokenHelper.getClaimByName("accountid"))
           .then(resp => this.profileInfo = resp.body as ProfileShortInfo);
         this.setProfileRoute();

@@ -42,14 +42,9 @@ import { RegisterComponent } from './register/register-component/register.compon
 import { TokenHelperService } from './services/helper/tokenhelper.service';
 import {ToastModule, Toast} from 'ng2-toastr/ng2-toastr';
 import { AccountService } from "./services/account.service";
+import { NotificationService } from "./services/notifications/notification.service";
 
-export function createConfig(): SignalRConfiguration {
-  const c = new SignalRConfiguration();
-  c.hubName = 'NotificationHub';
-  // c.url = "http://localhost:52309";
-  c.logging = true;
-  return c;
-}
+
 export class CustomOptions extends ToastOptions {
   animate = 'fade';
   dismiss = 'auto';
@@ -58,6 +53,13 @@ export class CustomOptions extends ToastOptions {
   enableHTML = true;
   positionClass = 'toast-bottom-right';
 }
+
+export function getDefaultSignalRConfig(): SignalRConfiguration {
+  const config = new SignalRConfiguration();
+  config.logging = true;
+  return config;
+}
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -83,7 +85,7 @@ export class CustomOptions extends ToastOptions {
     VendorModule,
     BookModule,
     SearchModule,
-    SignalRModule.forRoot(createConfig),
+    SignalRModule.forRoot(getDefaultSignalRConfig),
     IndexModule // Must be the last module
   ],
   providers: [
@@ -92,6 +94,7 @@ export class CustomOptions extends ToastOptions {
     HelperService,
     TokenHelperService,
     AccountService,
+    NotificationService,
    { provide: ToastOptions, useClass: CustomOptions}
   ],
   entryComponents: [RegisterComponent],

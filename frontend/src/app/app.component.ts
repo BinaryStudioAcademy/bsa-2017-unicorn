@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { DataService } from './services/data.service';
 import {  OnInit, ViewContainerRef } from '@angular/core';
 import { ToastsManager, ToastOptions } from 'ng2-toastr/ng2-toastr';
-import { SignalR } from "ng2-signalr";
+
 @Component({
   selector: 'app-root',
   providers: [DataService],
@@ -13,13 +13,8 @@ export class AppComponent {
   title: string;
   data: any;
 
-  constructor(private dataService: DataService, public toastr: ToastsManager, vRef: ViewContainerRef, private signalR: SignalR) {
+  constructor(private dataService: DataService, public toastr: ToastsManager, vRef: ViewContainerRef) {
     this.title = 'app';
     this.toastr.setRootViewContainerRef(vRef);
-
-    // this.signalR.connect()
-    //   .then((c) => {
-    //     alert(c.status);
-    // });
   }
 }
