@@ -9,6 +9,7 @@ import { DashboardFinishedComponent } from './dashboard-component/dashboard-fini
 
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { SuiModule } from 'ng2-semantic-ui';
+import {ToastModule, ToastsManager, ToastOptions} from 'ng2-toastr/ng2-toastr';
 
 import { DataService } from '../services/data.service';
 import { DashboardService } from '../services/dashboard/dashboard.service';
@@ -21,7 +22,8 @@ import { DashMessagingService } from '../services/dashboard/dash-messaging.servi
     CommonModule,
     DashboardRoutingModule,
     SuiModule,
-    FormsModule
+    FormsModule,
+    ToastModule.forRoot()
   ],
   declarations: [
     DashboardComponent,

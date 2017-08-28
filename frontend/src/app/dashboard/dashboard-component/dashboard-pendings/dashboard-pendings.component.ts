@@ -5,6 +5,9 @@ import { BookCard, BookStatus } from '../../../models/dashboard/book-card';
 import { DashMessagingService } from '../../../services/dashboard/dash-messaging.service';
 import { DashboardService } from '../../../services/dashboard/dashboard.service';
 
+import {ToastsManager, Toast} from 'ng2-toastr';
+import {ToastOptions} from 'ng2-toastr';
+
 @Component({
   selector: 'app-dashboard-pendings',
   templateUrl: './dashboard-pendings.component.html',
@@ -19,7 +22,8 @@ export class DashboardPendingsComponent implements OnInit {
 
   constructor(
     private dashboardService: DashboardService,
-    private dashMessaging: DashMessagingService
+    private dashMessaging: DashMessagingService,
+    private toastr: ToastsManager
   ) { }
 
   ngOnInit() {
@@ -41,7 +45,8 @@ export class DashboardPendingsComponent implements OnInit {
       this.loadData();
       this.aloads[book.Id] = false;
       this.dashMessaging.changePending();
-    });
+      this.toastr.success('Accepted task');
+    }).catch(err => this.toastr.error('Ops. Cannot accept task'));
   }
 
   decline(id: number) {
@@ -51,7 +56,8 @@ export class DashboardPendingsComponent implements OnInit {
     this.dashboardService.update(book).then(resp => {
       this.loadData();
       this.dloads[book.Id] = false;
-    });
+      this.toastr.success('Declined task');
+    }).catch(err => this.toastr.error('Ops. Cannot decline task'));
   }
 
 }

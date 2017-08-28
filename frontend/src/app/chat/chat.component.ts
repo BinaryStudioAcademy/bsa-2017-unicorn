@@ -13,6 +13,7 @@ export class ChatComponent implements OnInit {
   me: string;
   myParticipant: string;
   selectedId: number;
+  writtenMessage: string;
   constructor() { }
 
   ngOnInit() {
@@ -29,6 +30,20 @@ export class ChatComponent implements OnInit {
     this.me = this.dialogs.find(x => x.Id === dialogId).FirstParticipant;
     this.myParticipant = this.dialogs.find(x => x.Id === dialogId).SecondParticipant;
 }
+
+  onWrite(){
+    if(this.writtenMessage !== undefined && this.writtenMessage !== ''){
+    this.messages.push(
+      {
+      Id: 3, 
+      Sender: this.me, 
+      Receiver: this.myParticipant, 
+      Message: this.writtenMessage, 
+      Date: new Date(Date.now())
+    });
+    this.writtenMessage = undefined;
+  }
+  }
 
   mockData(){
     this.dialogs = [
@@ -78,6 +93,27 @@ export class ChatComponent implements OnInit {
           Sender: "John",
           Receiver: "Anna",
           Message: "So, I am waiting",
+          Date: new Date(Date.now())
+        },
+        {
+          Id: 6,
+          Sender: "Anna",
+          Receiver: "John",
+          Message: "I have money, we need to meet up",
+          Date: new Date(Date.now())
+        },
+        {
+          Id: 5,
+          Sender: "John",
+          Receiver: "Anna",
+          Message: "So, I am waiting",
+          Date: new Date(Date.now())
+        },
+        {
+          Id: 6,
+          Sender: "Anna",
+          Receiver: "John",
+          Message: "I have money, we need to meet up",
           Date: new Date(Date.now())
         }]
       }

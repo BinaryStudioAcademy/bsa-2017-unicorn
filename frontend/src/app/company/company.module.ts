@@ -31,6 +31,8 @@ import { ClickOutsideModule } from 'ng-click-outside';
 import { SharedModule } from "../shared/shared.module";
 import { CompanyContactsComponent } from './company-edit/company-contacts/company-contacts.component';
 import { ChatModule } from "../chat/chat.module";
+import { PortfolioComponent } from './company-details/portfolio/portfolio.component';
+import { CompanyPortfolioComponent } from './company-edit/company-portfolio/company-portfolio.component';
 import { AgmCoreModule } from "@agm/core";
 
 @NgModule({
@@ -64,7 +66,9 @@ import { AgmCoreModule } from "@agm/core";
     CompanyOrdersComponent,
     CompanyVendorsComponent,
     CompanyWorksComponent,
-    CompanyContactsComponent
+    CompanyContactsComponent,
+    PortfolioComponent,
+    CompanyPortfolioComponent
     
   ],
   providers: [
