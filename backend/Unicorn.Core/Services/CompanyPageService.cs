@@ -660,7 +660,7 @@ namespace Unicorn.Core.Services
 
         private async Task<ICollection<CompanyDetails>> GetSearchCompaniesMethod(string category, string subcategory, int? date)
         {
-            var companies = await _unitOfWork.CompanyRepository.GetAllAsync();
+            var companies = await _unitOfWork.CompanyRepository.Query.Include(c => c.Account.Location).ToListAsync();
             var reviews = await _unitOfWork.ReviewRepository.GetAllAsync();
 
             if (companies.Any())
