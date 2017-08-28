@@ -31,6 +31,7 @@ namespace Unicorn.Core.Infrastructure
             Bind<IContactService>().To<ContactService>();
             Bind<IPopularService>().To<PopularService>();
             Bind<IRatingService>().To<RatingService>();
+            Bind<ISearchService>().To<SearchService>();
         }
     }
 }

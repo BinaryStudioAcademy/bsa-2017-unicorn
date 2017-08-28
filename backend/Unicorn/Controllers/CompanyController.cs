@@ -211,15 +211,5 @@ namespace Unicorn.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
-        // GET: company-search?category=&subcategory=&date=
-        [System.Web.Http.HttpGet]
-        [System.Web.Http.Route("company-search")]
-        public async Task<IHttpActionResult> GetSearchCompanies(string category, string subcategory, int? date)
-        {
-            var result = await _companyService.GetSearchCompanies(category, subcategory, date);
-            if (result != null)
-                return Json(result);
-            return NotFound();
-        }
     }
 }

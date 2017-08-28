@@ -100,8 +100,4 @@ export class CompanyService {
   getCompanyRating(id: number):Promise<any>{
     return this.dataService.getFullRequest<number>("company/" + id + "/rating");    
   }
-  getSearchCompanies(category: string, subcategory: string, date: number): Promise<CompanyDetails[]> {
-    const query = `company-search?category={category}&subcategory={subcategory}&date={date}`;
-    return this.dataService.getRequest<CompanyDetails[]>(query);
-  }
 }
