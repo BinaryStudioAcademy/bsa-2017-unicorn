@@ -11,6 +11,10 @@ import { CompanyService } from '../../services/company-services/company.service'
 import { CompanyShort } from '../../models/company-page/company-short.model';
 import { CompanyDetails } from '../../models/company-page/company-details.model';
 
+import { SearchService } from '../../services/search.service';
+import { SearchPerformer } from '../../models/search/search-performer';
+
+
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
@@ -41,6 +45,7 @@ export class SearchComponent implements OnInit {
   hasEllipses = true;
   selectedPage = 1;
   companies: CompanyDetails[] = [];
+  performers: SearchPerformer[] = [];
   /* map */
   positions = [];
   markers = [];
@@ -50,9 +55,18 @@ export class SearchComponent implements OnInit {
 
   constructor(
     private companyService: CompanyService,
+    private searchService: SearchService,
     private route: ActivatedRoute,
     private ref: ChangeDetectorRef
   ) { }
+
+  searchPerformers() {
+    this.searchService.getSearchPerformers()
+    .then(p => {
+      this.performers = p;
+      console.log(this.performers);
+    });
+  }
 
   searchCompany() {
     this.companies = [];
@@ -80,6 +94,7 @@ export class SearchComponent implements OnInit {
     this.getParameters();
     this.createMockSettings();
     this.getCompanies();
+    this.searchPerformers();
 
     /* - WTF
     for (let i = 0; i < 101; i++) {
