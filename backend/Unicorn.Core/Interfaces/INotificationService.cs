@@ -10,6 +10,10 @@ namespace Unicorn.Core.Interfaces
 {
     public interface INotificationService
     {
-        Task SendNotification(long accountId, NotificationDTO notification);
+        Task<IEnumerable<NotificationDTO>> GetAllAsync();
+        Task<NotificationDTO> GetByIdAsync(long id);
+        Task<IEnumerable<NotificationDTO>> GetByAccountIdAsync(long id);
+        Task CreateAsync(long acoountId, NotificationDTO notificationDto);
+        Task RemoveAsync(long id);
     }
 }

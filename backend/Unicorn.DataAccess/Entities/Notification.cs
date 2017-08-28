@@ -12,9 +12,11 @@ namespace Unicorn.DataAccess.Entities
     public class Notification : IEntity
     {
         public long Id { get; set; }
-        public NotificationType Type { get; set; }
+        public long AccountId { get; set; }
         public long SourceItemId { get; set; }
+        public NotificationType Type { get; set; }
         public DateTime Time { get; set; }
+        public string Message { get; set; }
 
         public bool IsDeleted { get; set; }
     }

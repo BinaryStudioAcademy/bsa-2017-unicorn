@@ -15,10 +15,12 @@ namespace Unicorn.Controllers
     public class BookController : ApiController
     {
         private IBookService _bookService;
+        private INotificationService _notificationService;
 
-        public BookController(IBookService bookService)
+        public BookController(IBookService bookService, INotificationService notificationService)
         {
             _bookService = bookService;
+            _notificationService = notificationService;
         }
 
         [HttpPost]

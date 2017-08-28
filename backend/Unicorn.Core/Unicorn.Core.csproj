@@ -90,6 +90,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Infrastructure\SignalR\NotificationHub.cs" />
+    <Compile Include="Infrastructure\SignalR\NotificationProxy.cs" />
     <Compile Include="Interfaces\IAccountService.cs" />
     <Compile Include="Interfaces\IAuthService.cs" />
     <Compile Include="Interfaces\IAvatarService.cs" />
@@ -103,6 +104,7 @@
     <Compile Include="Interfaces\IMembershipProvider.cs" />
     <Compile Include="Infrastructure\ServiceModule.cs" />
     <Compile Include="Interfaces\ILocationService.cs" />
+    <Compile Include="Interfaces\INotificationProxy.cs" />
     <Compile Include="Interfaces\INotificationService.cs" />
     <Compile Include="Interfaces\IPermissionService.cs" />
     <Compile Include="Interfaces\IPersonService.cs" />

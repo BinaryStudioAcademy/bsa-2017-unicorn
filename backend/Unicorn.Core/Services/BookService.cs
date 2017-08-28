@@ -11,6 +11,7 @@ using Unicorn.Shared.DTOs.Book;
 using System.Data.Entity;
 using System;
 using Unicorn.DataAccess.Entities.Enum;
+using Unicorn.Shared.DTOs.Notification;
 
 namespace Unicorn.Core.Services
 {
@@ -18,11 +19,13 @@ namespace Unicorn.Core.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         ILocationService _locationService;
+        private INotificationService _notificationService;
 
-        public BookService(IUnitOfWork unitOfWork, ILocationService location)
+        public BookService(IUnitOfWork unitOfWork, ILocationService location, INotificationService notificationService)
         {
             _unitOfWork = unitOfWork;
             _locationService = location;
+            _notificationService = notificationService;
         }
 
         public async Task<IEnumerable<BookDTO>> GetAllAsync()
@@ -170,7 +173,10 @@ namespace Unicorn.Core.Services
             }
             else
             {
-                vendor = await _unitOfWork.VendorRepository.GetByIdAsync(book.ProfileId);
+                vendor = await _unitOfWork.VendorRepository.Query
+                    .Include(v => v.Person)
+                    .Include(v => v.Person.Account)
+                    .SingleAsync(v => v.Id == book.ProfileId);
             }
 
             Book _book = new Book()
@@ -189,6 +195,17 @@ namespace Unicorn.Core.Services
 
             _unitOfWork.BookRepository.Create(_book);
             await _unitOfWork.SaveAsync();
+
+            var notification = new NotificationDTO()
+            {
+                Message = "New order",
+                SourceItemId = _book.Id,
+                Time = DateTime.Now,
+                Type = NotificationType.TaskNotification
+            };
+
+            var receiverId = vendor != null ? vendor.Person.Account.Id : company.Account.Id;
+            await _notificationService.CreateAsync(receiverId, notification);
         }
 
         private int GetRatingByBookId(long id)
