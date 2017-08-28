@@ -148,24 +148,22 @@
 
 <ng-template class="modalImage" let-context let-modal="modal" #modalDeleteTemplate>
     <div class="content">
-        <div class="contentContainer">
-            <div class="mainContent" align="center">
-                <div class="title">
-                    <label>Delete a work</label>
+        <div align="center">
+            <div class="title">
+                <label>Delete a work</label>
+            </div>
+            <div class="content">
+                <p>Are you sure you want to delete this work?</p>
+            </div>
+            <div class="ui padded grid centered actions-buttons">
+                <div class="ui active button file-upload-save" (click)="deleteWork()">
+                    <label class="button-text">Delete</label>
                 </div>
-                <div class="content">
-                    <p>Are you sure you want to delete this work?</p>
+                <div class="ui active button file-upload-save" (click)="activeModal.deny(null)">
+                    <label class="button-text">Cancel</label>
                 </div>
-                <div class="ui padded grid centered actions-buttons">
-                    <div class="ui active button file-upload-save" (click)="deleteWork()">
-                        <label class="button-text">Delete</label>
-                    </div>
-                    <div class="ui active button file-upload-save" (click)="activeModal.deny(null)">
-                        <label class="button-text">Cancel</label>
-                    </div>
-                    <!-- <div class="ui approve button" (click)="deleteWork()">Approve</div>
+                <!-- <div class="ui approve button" (click)="deleteWork()">Approve</div>
         <div class="ui cancel button" (click)="activeModal.deny(null)">Cancel</div> -->
-                </div>
             </div>
         </div>
     </div>

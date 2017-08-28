@@ -93,14 +93,13 @@
                 </div>
                 <div class="field">
                   <label>Select an icon for work</label>
-                  <img *ngIf="selectedWork.Icon !== ''" 
-                    (click)="openModal()"
-                    class="ui tiny circular image work-icon" 
-                    src="{{selectedWork.Icon}}">
-                  <img *ngIf="selectedWork.Icon === '' || selectedWork.Icon === null " 
-                    (click)="openModal()"
-                    class="ui tiny circular image work-icon" 
-                    src="https://semantic-ui.com/images/wireframe/square-image.png">
+                  <div class="ui segment" (mouseenter)="isDimmed = !isDimmed" (mouseleave)="isDimmed = !isDimmed">
+                    <img *ngIf="selectedWork.Icon !== '' && selectedWork.Icon !== null" class="ui circular image work-icon" src="{{selectedWork.Icon}}">
+                    <img *ngIf="selectedWork.Icon === '' || selectedWork.Icon === null " class="ui circular image work-icon" src="https://semantic-ui.com/images/wireframe/square-image.png">
+                    <sui-dimmer [(isDimmed)]="isDimmed" [isClickable]="false" (click)="openModal()">
+                        <h4 class="ui inverted header">Upload</h4>
+                    </sui-dimmer>
+                </div>
                 </div>
             </form>
         </div>
@@ -112,96 +111,6 @@
         </div>
     </div>
 </div>
-
-
-<!-- <div class="ui container grid">
-  <div class="row">
-    <div class="column">
-      <table class="ui selectable padded single line table">
-        <thead>
-          <tr>
-            <th>Icon</th>
-            <th>Name</th>
-            <th>Category</th>
-            <th>Subcategory</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let work of works">
-            <td (click)="onWorkSelect(work)">
-              <img *ngIf="work.Icon !== '' && work.Icon !== null" class="ui avatar image" src="{{work.Icon}}">
-              <img *ngIf="work.Icon === '' || work.Icon === null" class="ui avatar image" src="https://semantic-ui.com/images/wireframe/square-image.png">
-            </td>
-            <td (click)="onWorkSelect(work)">{{work.Name}}</td>
-            <td (click)="onWorkSelect(work)">{{work.Category}}</td>
-            <td (click)="onWorkSelect(work)">{{work.Subcategory}}</td>
-            <td class="right aligned">
-              <button (click)="removeWork(work)" class="ui icon button">
-                <i class="remove icon"></i>
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-  <div class="row">
-    <div class="fourteen wide column">
-      <div class="ui divider"></div>
-    </div>
-    <div class="two wide column">
-      <button class="ui icon button toggle-button" (click)="editToggle()">
-            <i *ngIf="!isEditOpen" class="plus icon"></i>
-            <i *ngIf="isEditOpen" class="remove icon"></i>
-        </button>
-    </div>
-  </div>
-  <div class="ui container grid" [suiCollapse]="!isEditOpen">
-    <div class="two column container row">
-      <div class="column">
-        <form class="ui form">
-          <div class="field">
-            <label>Name</label>
-            <input type="text" [(ngModel)]="selectedWork.Name" name="name" placeholder="WORK NAME">
-          </div>
-          <div class="field">
-            <label>Description</label>
-            <textarea [(ngModel)]="selectedWork.Description" name="description" placeholder="WRITE SOMETHING ABOUT THIS WORK..."></textarea>
-          </div>
-        </form>
-      </div>
-      <div class="column">
-        <ng-template let-option #optionTemplate>
-          <img class="ui avatar image category-icon" src="{{option.Icon}}">{{option.Name}}
-        </ng-template>
-        <sui-select class="selection fluid category-dropdown" placeholder="SELECT CATEGORY" [(ngModel)]="selectedCategory" [optionTemplate]="optionTemplate"
-          [isSearchable]="true" (selectedOptionChange)="onCategorySelect()" name="selectCategory">
-          <sui-select-option class="select-option" *ngFor="let category of categories" [value]="category">
-          </sui-select-option>
-        </sui-select>
-        <ng-template let-option #optionTemplate>
-          <img class="ui avatar image category-icon" src="{{option.Icon}}">{{option.Name}}
-        </ng-template>
-        <sui-select class="selection fluid category-dropdown" placeholder="SELECT SUBCATEGORY" [isDisabled]="selectedCategory === undefined"
-          [(ngModel)]="selectedSubcategory" [optionTemplate]="optionTemplate" [isSearchable]="true" name="selectSubcategory">
-          <sui-select-option class="select-option" *ngFor="let subcategory of subcategories" [value]="subcategory">
-          </sui-select-option>
-        </sui-select>
-        <div (click)="openModal()" class="workIcon">
-          <img *ngIf="selectedWork.Icon !== ''" class="ui small rounded image work-icon" src="{{selectedWork.Icon}}">
-          <img *ngIf="selectedWork.Icon === '' || selectedWork.Icon === null " class="ui small rounded image work-icon" src="https://semantic-ui.com/images/wireframe/square-image.png">
-        </div>
-      </div>
-    </div>
-    <div class="ui divider"></div>
-    <div class="centered row">
-      <div class="three wide column">
-        <button (click)="selectedWork.Id !== null ? updateWork() : createWork()" class="ui basic button"><h5>Save</h5></button>
-      </div>
-    </div>
-  </div>
-</div> -->
 
 <ng-template class="modalImage" let-context let-modal="modal" #modalTemplate>
   <div class="content">
@@ -222,7 +131,7 @@
               class="inputfile">
             <label class="btnText" for="file">Upload image</label>
           </div>
-          <div class="ui active button file-upload-save" (click)="fileSaveListener()">
+          <div *ngIf="!uploading" class="ui active button file-upload-save" (click)="fileSaveListener()">
             <svg class="svgImage" id="saveImage" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
               width="20" height="17" viewBox="0 0 1000 1000" enable-background="new 0 0 1000 1000" xml:space="preserve">
               <g>
@@ -233,6 +142,7 @@
             <input type="submit" id="custom-input" class="inputfile">
             <label class="btnText" for="submit">Save image</label>
           </div>
+          <div *ngIf="uploading" class="ui active loading button file-upload-save">Loading</div>
         </div>
       </div>
       <div class="previewContent" *ngIf="imageUploaded">
@@ -244,5 +154,28 @@
         </div>
       </div>
     </div>
+  </div>
+</ng-template>
+
+<ng-template class="modalImage" let-context let-modal="modal" #modalDeleteTemplate>
+  <div class="content">
+      <div class="contentContainer">
+          <div class="mainContent" align="center">
+              <div class="title">
+                  <label>Delete a work</label>
+              </div>
+              <div class="content">
+                  <p>Are you sure you want to delete this work?</p>
+              </div>
+              <div class="ui padded grid centered actions-buttons">
+                  <div class="ui active button file-upload-save" (click)="activeModal.approve(null)">
+                      <label class="button-text">Delete</label>
+                  </div>
+                  <div class="ui active button file-upload-save" (click)="activeModal.deny(null)">
+                      <label class="button-text">Cancel</label>
+                  </div>
+              </div>
+          </div>
+      </div>
   </div>
 </ng-template>
