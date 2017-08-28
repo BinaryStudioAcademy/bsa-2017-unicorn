@@ -21,10 +21,7 @@ export class SearchComponent implements OnInit {
   rawDate: number;
   /* filter */
   filtersIsOpen: boolean;
-  labelSearch: string;
-  placeholderCategory: string;
-  placeholderSubcategory: string;
-  labelDate: string;
+  /* datepicker */
   mode: string;
   firstDayOfWeek: string;
   /* multi-select */
@@ -53,6 +50,7 @@ export class SearchComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.initDarepicker();
     this.getParameters();
     this.createMockSettings();
     this.searchPerformers();
@@ -102,12 +100,7 @@ export class SearchComponent implements OnInit {
     this.filterSubcat  = ['Subategory 1', 'Subategory 2', 'Subategory 3', 'Subategory 4', 'Subategory 5', 'Subategory 6'];
   }
 
-  initContent() {
-    this.placeholderCategory = 'SCRATCH';
-    this.placeholderSubcategory = 'MY CAT';
-    /* labels */
-    this.labelSearch = 'What to do';
-    this.labelDate = 'When to do it';
+  initDarepicker() {
     /* datepicker settings */
     this.mode = 'date';           /* select day */
     this.firstDayOfWeek = '1';    /* start calendar from first day of week */
