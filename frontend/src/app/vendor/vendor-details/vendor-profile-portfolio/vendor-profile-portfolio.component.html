@@ -1,12 +1,3 @@
-<!-- <div class="ui three stackable cards">
-  <div *ngFor="let item of portfolio" class="card">
-    <div class="image">
-      <img src="{{item.Image}}">
-    </div>
-    <div class="extra">
-      <p>{{item.Category}}, {{item.WorkType}}</p>
-  </div>
-</div> -->
 <div class="ui cards" id="portfolio" *ngIf="books !== undefined">
     <div class="ui card" *ngFor="let book of books; let i = index">
         <div class="content">

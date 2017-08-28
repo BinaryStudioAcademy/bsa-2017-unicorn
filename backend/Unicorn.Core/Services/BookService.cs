@@ -248,6 +248,7 @@ namespace Unicorn.Core.Services
                     Date = b.Date,
                     Description = b.Description,
                     Rating = GetRatingByBookId(b.Id),
+                    IsHidden = b.IsHidden,
                     Location = new LocationDTO()
                     {
                         Id = b.Location.Id,
@@ -275,6 +276,7 @@ namespace Unicorn.Core.Services
         {
             var book = await _unitOfWork.BookRepository.GetByIdAsync(bookDto.Id);
             book.Status = bookDto.Status;
+            book.IsHidden = bookDto.IsHidden;
 
             _unitOfWork.BookRepository.Update(book);
             await _unitOfWork.SaveAsync();

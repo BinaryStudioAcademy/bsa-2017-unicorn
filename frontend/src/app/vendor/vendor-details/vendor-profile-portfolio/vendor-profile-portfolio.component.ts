@@ -20,7 +20,7 @@ export class VendorProfilePortfolioComponent implements OnInit, AfterContentInit
   @Input() private vendorId: number;
   
   portfolio: PortfolioItem[];
-  books: BookCard[];
+  books: BookCard[] = [];
 
   constructor(
     private vendorService: VendorService,
@@ -35,7 +35,7 @@ export class VendorProfilePortfolioComponent implements OnInit, AfterContentInit
 
   loadData() {
     this.dashboardService.getPortfolioBooks('vendor', this.vendorId).then(resp => {
-      this.books = resp;
+      this.books = resp.filter(b => b.IsHidden == false);
       console.log(this.books);
     });
   }

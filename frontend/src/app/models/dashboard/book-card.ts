@@ -8,6 +8,7 @@ export interface BookCard {
     Description: string;
     Customer: string;
     CustomerId: number;
+    IsHidden: boolean;
     CustomerPhone: string;
     Rating: number;
     Work: Work;

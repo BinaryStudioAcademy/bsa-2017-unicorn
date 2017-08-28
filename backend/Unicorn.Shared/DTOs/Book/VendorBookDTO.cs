@@ -26,6 +26,8 @@ namespace Unicorn.Shared.DTOs.Book
 
         public int Rating { get; set; }
 
+        public bool IsHidden { get; set; }
+
         public WorkDTO Work { get; set; }
 
         public LocationDTO Location { get; set; }
