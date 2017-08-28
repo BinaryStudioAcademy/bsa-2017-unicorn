@@ -102,6 +102,7 @@
     <Compile Include="Interfaces\IMembershipProvider.cs" />
     <Compile Include="Infrastructure\ServiceModule.cs" />
     <Compile Include="Interfaces\ILocationService.cs" />
+    <Compile Include="Interfaces\INotificationService.cs" />
     <Compile Include="Interfaces\IPermissionService.cs" />
     <Compile Include="Interfaces\IPersonService.cs" />
     <Compile Include="Interfaces\IPopularService.cs" />
@@ -122,6 +123,7 @@
     <Compile Include="Services\CustomerService.cs" />
     <Compile Include="Services\HistoryService.cs" />
     <Compile Include="Services\LocationService.cs" />
+    <Compile Include="Services\NotificationService.cs" />
     <Compile Include="Services\PermissionService.cs" />
     <Compile Include="Services\PersonService.cs" />
     <Compile Include="Services\PopularService.cs" />

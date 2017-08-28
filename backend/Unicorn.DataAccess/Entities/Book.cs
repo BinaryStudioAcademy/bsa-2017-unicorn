@@ -1,4 +1,6 @@
 ﻿using System;
+
+using Unicorn.DataAccess.Entities.Enum;
 using Unicorn.DataAccess.Interfaces;
 
 namespace Unicorn.DataAccess.Entities
@@ -24,13 +26,5 @@ namespace Unicorn.DataAccess.Entities
         public virtual Work Work { get; set; }
 
         public virtual Location Location { get; set; }
-    }
-
-    public enum BookStatus
-    {
-        Accepted,
-        InProgress,
-        Finished,
-        Confirmed
     }
 }

@@ -43,6 +43,16 @@ export class NotificationService {
 		onMethodInvoked$.subscribe(callback);
 	}
 
+	invoke<TParameter>(methodName: string, parameter: TParameter): Promise<any> {
+		if (this.isConnected) {
+			console.log("No connection with server SignalR service.")
+			return;
+		}
+
+		return this.connection.invoke(methodName, parameter);
+	}
+	
+
 
 
 
