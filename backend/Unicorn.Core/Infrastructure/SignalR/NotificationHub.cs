@@ -17,6 +17,12 @@ namespace Unicorn.Core.Infrastructure.SignalR
             await base.OnConnected();
         }
 
+        public override async Task OnReconnected()
+        {
+            await Groups.Add(Context.ConnectionId, $"accountId={Context.QueryString["accountId"]}");
+            await base.OnConnected();
+        }
+
         public async Task JoinGroup(string groupName)
         {
             await Groups.Add(Context.ConnectionId, groupName);
