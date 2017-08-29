@@ -1,4 +1,6 @@
-﻿using Ninject.Modules;
+﻿using Microsoft.AspNet.SignalR;
+using Ninject.Modules;
+using Unicorn.Core.Infrastructure.SignalR;
 using Unicorn.Core.Interfaces;
 using Unicorn.Core.Providers;
 using Unicorn.Core.Services;
@@ -16,6 +18,7 @@ namespace Unicorn.Core.Infrastructure
             Bind<IBookService>().To<BookService>();
             Bind<IHistoryService>().To<HistoryService>();
             Bind<ICustomerService>().To<CustomerService>();
+            Bind<IChatService>().To<ChatService>();
             Bind<IVendorService>().To<VendorService>();
             Bind<IRoleService>().To<RoleService>();
             Bind<IWorkService>().To<WorkService>();
@@ -30,6 +33,10 @@ namespace Unicorn.Core.Infrastructure
             Bind<IContactService>().To<ContactService>();
             Bind<IPopularService>().To<PopularService>();
             Bind<IRatingService>().To<RatingService>();
+            Bind<INotificationProxy>().To<NotificationProxy>()
+                .WithConstructorArgument("context", GlobalHost.ConnectionManager.GetHubContext<NotificationHub>());
+            Bind<INotificationService>().To<NotificationService>();
+            Bind<ISearchService>().To<SearchService>();
         }
     }
 }

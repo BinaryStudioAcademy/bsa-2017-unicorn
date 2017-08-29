@@ -10,6 +10,8 @@ using Unicorn.Shared.DTOs.Vendor;
 using Unicorn.Shared.DTOs.Book;
 using System.Data.Entity;
 using System;
+using Unicorn.DataAccess.Entities.Enum;
+using Unicorn.Shared.DTOs.Notification;
 
 namespace Unicorn.Core.Services
 {
@@ -17,11 +19,13 @@ namespace Unicorn.Core.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         ILocationService _locationService;
+        private INotificationService _notificationService;
 
-        public BookService(IUnitOfWork unitOfWork, ILocationService location)
+        public BookService(IUnitOfWork unitOfWork, ILocationService location, INotificationService notificationService)
         {
             _unitOfWork = unitOfWork;
             _locationService = location;
+            _notificationService = notificationService;
         }
 
         public async Task<IEnumerable<BookDTO>> GetAllAsync()
@@ -169,7 +173,10 @@ namespace Unicorn.Core.Services
             }
             else
             {
-                vendor = await _unitOfWork.VendorRepository.GetByIdAsync(book.ProfileId);
+                vendor = await _unitOfWork.VendorRepository.Query
+                    .Include(v => v.Person)
+                    .Include(v => v.Person.Account)
+                    .SingleAsync(v => v.Id == book.ProfileId);
             }
 
             Book _book = new Book()
@@ -188,11 +195,37 @@ namespace Unicorn.Core.Services
 
             _unitOfWork.BookRepository.Create(_book);
             await _unitOfWork.SaveAsync();
+
+            var notification = new NotificationDTO()
+            {
+                Message = "New order",
+                SourceItemId = _book.Id,
+                Time = DateTime.Now,
+                Type = NotificationType.TaskNotification
+            };
+
+            var receiverId = vendor != null ? vendor.Person.Account.Id : company.Account.Id;
+            await _notificationService.CreateAsync(receiverId, notification);
+        }
+
+        private int GetRatingByBookId(long id)
+        {
+            var ratings = _unitOfWork.RatingRepository
+                .Query
+                .Include(r => r.Book)
+                .ToList();
+
+            var rating = ratings
+                .Where(r => r.Book != null)
+                .FirstOrDefault(r => r.Book.Id == id);
+
+            return rating == null ? 0 : rating.Grade;
         }
 
         public async Task<IEnumerable<VendorBookDTO>> GetOrdersAsync(string role, long id)
         {
-            var query = _unitOfWork.BookRepository.Query
+            var query = _unitOfWork.BookRepository
+                .Query
                 .Include(b => b.Vendor)
                 .Include(b => b.Company)
                 .Include(b => b.Work)
@@ -221,7 +254,9 @@ namespace Unicorn.Core.Services
                 default: throw new Exception("not supported role");
             }
 
-            return await query
+            var books = await query.ToListAsync();
+
+            return books
                 .Select(b => new VendorBookDTO()
                 {
                     Id = b.Id,
@@ -230,6 +265,8 @@ namespace Unicorn.Core.Services
                     CustomerPhone = b.CustomerPhone,
                     Date = b.Date,
                     Description = b.Description,
+                    Rating = GetRatingByBookId(b.Id),
+                    IsHidden = b.IsHidden,
                     Location = new LocationDTO()
                     {
                         Id = b.Location.Id,
@@ -250,13 +287,14 @@ namespace Unicorn.Core.Services
                         SubcategoryId = b.Work.Subcategory.Id,
                         Icon = b.Work.Icon
                     }
-                }).ToListAsync();
+                }).ToList();
         }
 
         public async Task Update(VendorBookDTO bookDto)
         {
             var book = await _unitOfWork.BookRepository.GetByIdAsync(bookDto.Id);
             book.Status = bookDto.Status;
+            book.IsHidden = bookDto.IsHidden;
 
             _unitOfWork.BookRepository.Update(book);
             await _unitOfWork.SaveAsync();
@@ -289,6 +327,10 @@ namespace Unicorn.Core.Services
         private async Task<IEnumerable<VendorBookDTO>> GetOrdersByStatus(string role, long id, BookStatus status)
         {
             var books = await GetOrdersAsync(role, id);
+            if (books == null)
+            {
+                return Enumerable.Empty<VendorBookDTO>();
+            }
             return books.Where(b => b.Status == status);
         }
     }

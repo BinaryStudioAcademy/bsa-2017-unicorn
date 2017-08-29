@@ -9,10 +9,10 @@
                 <label>When to do it</label>                  
               </div>
               <div class="four wide column ui input">
-                <input type="text" placeholder="{{placeholderCategory}}" [(ngModel)]="category">
+                <input type="text" placeholder="SCRATCH" [(ngModel)]="category">
               </div>
               <div class="four wide column  ui input">
-                <input type="text" placeholder="{{placeholderSubcategory}}" [(ngModel)]="subcategory">
+                <input type="text" placeholder="MY CAT" [(ngModel)]="subcategory">
               </div>
               <div class="four wide column ui left icon input">
                   <i class="calendar icon"></i>
@@ -114,16 +114,17 @@
           </div>
       </div>
       <div class="ui divider"></div>
-      <div *ngIf="companies" class="ui grid">
+      <div *ngIf="performers" class="ui grid">
         <div class="three column row remove-padding-top">
-          <div class="column cell" *ngFor="let company of companies.slice((selectedPage - 1) * pageSize, selectedPage * pageSize)">
-            <a href="/company/{{company.Id}}" class="ui medium image">
-              <img class="ui fluid image" src="{{company.Avatar}}"/>
-              <div class="row">
-                <h3>{{company.Name}} ({{company.FoundationDate | date:'y'}})</h3>
+          <div class="column cell" *ngFor="let performer of performers.slice((selectedPage - 1) * pageSize, selectedPage * pageSize)">
+            <a href="/{{performer.Link}}" class="ui medium image">
+              <img class="ui fluid image" src="{{performer.Avatar}}"/>
+              <div class="cell-info">
+                <h3 class="info-item">{{performer.Name}}</h3>
+                <h4 class="info-item" *ngIf="performer.PerformerType === 'vendor'">{{performer.Description}}</h4>
               </div>
               <div class="row">
-                <h4>{{company.Location.City}}, {{company.Location.Adress}}</h4>
+                <h4>{{performer.Location.City}}, {{performer.Location.Adress}}</h4>
               </div>
             </a>
             <!-- <div class="categories-container">
@@ -132,25 +133,25 @@
             <div class="ui grid">
               <div class="three column row padding-top">
                 <div class="column">
-                  <sui-rating class="star" [ngModel]="company.Rating" [isReadonly]="true"></sui-rating>
+                  <sui-rating class="star" [ngModel]="performer.Rating" [isReadonly]="true"></sui-rating>
                 </div>
                 <div class="column">                      
-                  <a href="/company/{{company.Id}}">Reviews({{company.ReviewsCount}})</a>
+                  <a href="{{performer.Link}}{{tabSuffix}}">Reviews({{performer.ReviewsCount}})</a>
                 </div>
               </div>
             </div>            
           </div>
         </div>
       </div>
-      <div *ngIf="companies.length > 12" class="flex-centered"> 
-        <sui-pagination [collectionSize]="companies.length"
+      <div *ngIf="performers.length > 12" class="flex-centered"> 
+        <sui-pagination [collectionSize]="performers.length"
                         [pageSize]="pageSize"
                         [maxSize]="maxSize"
                         [hasEllipses]="hasEllipses"
                         [(page)]="selectedPage">
         </sui-pagination>     
       </div>
-      <div *ngIf="companies.length == 0" class="ui active inverted dimmer" style="z-index: 0;">
+      <div *ngIf="performers.length == 0" class="ui active inverted dimmer" style="z-index: 0;">
         <div class="ui text loader">Loading</div>
       </div> 
   </div>

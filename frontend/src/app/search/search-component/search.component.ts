@@ -1,15 +1,12 @@
 import { Component, ChangeDetectorRef, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { Validators, FormGroup, FormArray, FormBuilder } from '@angular/forms';
 
 import { Review } from '../../models/review.model';
 import { NguiMapModule, Marker } from '@ngui/map';
-// import { MapModel } from '../../models/map.model';
 
-import { ISubscription } from 'rxjs/Subscription';
-import { CompanyService } from '../../services/company-services/company.service';
-import { CompanyShort } from '../../models/company-page/company-short.model';
-import { CompanyDetails } from '../../models/company-page/company-details.model';
+import { SearchService } from '../../services/search.service';
+import { SearchPerformer } from '../../models/search/search-performer';
+
 
 @Component({
   selector: 'app-search',
@@ -24,10 +21,7 @@ export class SearchComponent implements OnInit {
   rawDate: number;
   /* filter */
   filtersIsOpen: boolean;
-  labelSearch: string;
-  placeholderCategory: string;
-  placeholderSubcategory: string;
-  labelDate: string;
+  /* datepicker */
   mode: string;
   firstDayOfWeek: string;
   /* multi-select */
@@ -40,7 +34,8 @@ export class SearchComponent implements OnInit {
   maxSize = 3;
   hasEllipses = true;
   selectedPage = 1;
-  companies: CompanyDetails[] = [];
+  performers: SearchPerformer[] = [];
+  tabSuffix = '?tab=reviews';
   /* map */
   positions = [];
   markers = [];
@@ -49,14 +44,23 @@ export class SearchComponent implements OnInit {
   address: any = {};
 
   constructor(
-    private companyService: CompanyService,
+    private searchService: SearchService,
     private route: ActivatedRoute,
     private ref: ChangeDetectorRef
   ) { }
 
-  searchCompany() {
-    this.companies = [];
-    this.getCompanies();
+  ngOnInit() {
+    this.initDarepicker();
+    this.getParameters();
+    this.createMockSettings();
+    this.searchPerformers();
+  }
+
+  searchPerformers() {
+    this.searchService.getSearchPerformers()
+    .then(performers => {
+      this.performers = performers;
+    });
   }
 
   resetFilters() {
@@ -66,6 +70,7 @@ export class SearchComponent implements OnInit {
   initialized(autocomplete: any) {
     this.autocomplete = autocomplete;
   }
+
   placeChanged() {
     let place = this.autocomplete.getPlace();
     console.log(place);
@@ -76,17 +81,6 @@ export class SearchComponent implements OnInit {
     this.ref.detectChanges();
   }
 
-  ngOnInit() {
-    this.getParameters();
-    this.createMockSettings();
-    this.getCompanies();
-
-    /* - WTF
-    for (let i = 0; i < 101; i++) {
-      this.getCompanies();
-    } 
-    */
-  }
 
   getParameters() {
     this.category = this.route.snapshot.queryParams['category'];
@@ -106,22 +100,7 @@ export class SearchComponent implements OnInit {
     this.filterSubcat  = ['Subategory 1', 'Subategory 2', 'Subategory 3', 'Subategory 4', 'Subategory 5', 'Subategory 6'];
   }
 
-  getCompanies() {
-    this.companyService.getSearchCompanies(this.category, this.subcategory, this.rawDate)
-    .then(
-      companies => {
-        this.companies.push.apply(this.companies, companies);
-        console.log(this.companies);
-      }
-    );
-  }
-
-  initContent() {
-    this.placeholderCategory = 'SCRATCH';
-    this.placeholderSubcategory = 'MY CAT';
-    /* labels */
-    this.labelSearch = 'What to do';
-    this.labelDate = 'When to do it';
+  initDarepicker() {
     /* datepicker settings */
     this.mode = 'date';           /* select day */
     this.firstDayOfWeek = '1';    /* start calendar from first day of week */

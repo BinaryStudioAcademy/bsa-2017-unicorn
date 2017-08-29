@@ -16,6 +16,8 @@ namespace Unicorn.DataAccess.Repositories.UnitOfWork
         private IGenericRepository<Category> categoryRepository;
         private IGenericRepository<Company> companyRepository;
         private IGenericRepository<Customer> customerRepository;
+        private IGenericRepository<ChatDialog> chatDialogRepository;
+        private IGenericRepository<ChatMessage> chatMessageRepository;
         private IGenericRepository<History> historyRepository;
         private IGenericRepository<Location> locationRepository;
         private IGenericRepository<Permission> permissionRepository;
@@ -30,6 +32,7 @@ namespace Unicorn.DataAccess.Repositories.UnitOfWork
         private IGenericRepository<Contact> contactRepository;
         private IGenericRepository<ContactProvider> contactProviderRepository;
         private IGenericRepository<Rating> ratingRepository;
+        private IGenericRepository<Notification> notificationRepository;
 
         public UnitOfWork(AppContext context, IRepositoryFactory factory)
         {
@@ -80,6 +83,24 @@ namespace Unicorn.DataAccess.Repositories.UnitOfWork
             {
                 return customerRepository ??
                   (customerRepository = factory.CreateRepository<Customer>(context));
+            }
+        }
+
+        public IGenericRepository<ChatDialog> ChatDialogRepository
+        {
+            get
+            {
+                return chatDialogRepository ??
+                  (chatDialogRepository = factory.CreateRepository<ChatDialog>(context));
+            }
+        }
+
+        public IGenericRepository<ChatMessage> ChatMessageRepository
+        {
+            get
+            {
+                return chatMessageRepository ??
+                  (chatMessageRepository = factory.CreateRepository<ChatMessage>(context));
             }
         }
 
@@ -208,6 +229,16 @@ namespace Unicorn.DataAccess.Repositories.UnitOfWork
                     (ratingRepository = factory.CreateRepository<Rating>(context));
             }
         }
+
+        public IGenericRepository<Notification> NotificationRepository
+        {
+            get
+            {
+                return notificationRepository ??
+                    (notificationRepository = factory.CreateRepository<Notification>(context));
+            }
+        }
+
         private bool disposed;
 
         public virtual void Dispose(bool disposing)

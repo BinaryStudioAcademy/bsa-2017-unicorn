@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Unicorn.DataAccess.Entities;
+using Unicorn.DataAccess.Entities.Enum;
 
 namespace Unicorn.Shared.DTOs.Book
 {
@@ -23,6 +24,10 @@ namespace Unicorn.Shared.DTOs.Book
         public string Customer { get; set; }
 
         public long CustomerId { get; set; }
+
+        public int Rating { get; set; }
+
+        public bool IsHidden { get; set; }
 
         public WorkDTO Work { get; set; }
 
