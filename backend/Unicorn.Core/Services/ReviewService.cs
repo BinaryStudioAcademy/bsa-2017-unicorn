@@ -68,7 +68,9 @@ namespace Unicorn.Core.Services
                 To = review.To,
                 ToAccountId = review.ToAccountId,
                 Date = review.Date,
-                Avatar = review.Avatar
+                Avatar = review.Avatar,
+                Grade = review.Grade,
+                WorkName = review.WorkName
             };
         }
 
@@ -91,7 +93,9 @@ namespace Unicorn.Core.Services
             var review = new Review();
             review.BookId = reviewDto.BookId;
             review.Description = reviewDto.Text;
+            review.Grade = reviewDto.Grade;
             review.Avatar = book.Customer.Person.Account.Avatar;
+            review.WorkName = book.Work.Name;
             review.From = book.Customer.Person.Name;
             review.FromAccountId = book.Customer.Person.Account.Id;
             if (reviewDto.PerformerType == "vendor")

@@ -1,25 +1,6 @@
 <div *ngIf="isReviewsEmpty" class="no-reviews">
     There are no reviews
 </div>
-<!-- <div *ngIf="company !== undefined">
-    <div class="ui medium comments" *ngIf="!isReviewsEmpty">
-        <div *ngFor="let review of company.Reviews" class="comment">
-            <a class="avatar">
-                <img src={{review.Avatar}}>
-            </a>
-            <div class="content">
-                <a class="author">{{review.From}}</a>
-                <div class="metadata">
-                    <sui-rating class="star" [isReadonly]=true name="rating" [(ngModel)]="review.Grade"></sui-rating>
-                    <div class="date">{{review.Date|date:fullDate}}</div>
-                </div>
-                <div class="text">
-                    <p class="met"><strong>Task: </strong>work name</p>{{review.Description}}
-                </div>
-            </div>
-        </div>
-    </div>
-</div> -->
 <div *ngIf="company !== undefined" class="ui vertically divided grid" id="main">
     <div *ngFor="let review of company.Reviews" class="row">
         <div class="sixteen wide column">
@@ -37,7 +18,7 @@
                         <div class="ten wide column">
                             <p class="from">{{review.From}}</p>
                             <p class="review-text">{{review.Description}}</p>
-                            <p class="task"><strong>Review for task: </strong>website from scratch</p>
+                            <p class="task"><strong>Review for work: </strong>{{review.WorkName}}</p>
                         </div>
                         <div class="three wide column">
                             <span class="date">{{review.Date|date:fullDate}}</span>

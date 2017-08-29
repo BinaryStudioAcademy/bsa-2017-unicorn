@@ -292,7 +292,8 @@ namespace Unicorn.Core.Services
                             ToAccountId = x.ToAccountId,
                             Description = x.Description,
                             BookId = x.BookId,
-                            Grade = GetRatingByBookId(x.BookId)
+                            Grade = x.Grade,
+                            WorkName = x.WorkName
                         }).ToList()
                 };
 
