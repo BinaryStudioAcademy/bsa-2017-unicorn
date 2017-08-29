@@ -3,12 +3,10 @@ img
 
 $tab-color: #FF647A;
 
-body 
-    &::-webkit-scrollbar-thumb
+\::-webkit-scrollbar-thumb
         border-radius: 0;
 
-body 
-    &::-webkit-scrollbar-track
+\::-webkit-scrollbar-track
         background: rgba(0, 0, 0, 0.04);
 
 .chat-block    
@@ -35,26 +33,30 @@ textarea
     font-size: 15px;
     margin: 0!important;
     width: 100%!important;     
-    min-height: 30px!important
-    max-height: 70px!important;
+    min-height: 45px!important
+    max-height: 85px!important;
     border-radius: 0!important;
     padding-right: 2em!important;
     overflow-y: auto!important;
     overflow-x: hidden!important;
-
-    //input
-        //border-radius: 0;
-    
+    resize: none!important;
 
 
 .concrete-message
     display: inline-block;
     clear: both;
     padding: 10px;
-    border-radius: 20px;
+    border-radius: 10px;
     margin-bottom: 5px;
     font-family: Helvetica, Arial, sans-serif;
     max-width: 45%;
+    min-width: 5%;        
+
+.concrete-message.me
+    text-align: right;
+
+.concrete-message.him
+    text-align: left;
 
 .him
     background: #eee;        
@@ -127,8 +129,8 @@ textarea
     background: #f5bec6;
 
 .talk.outline.link.icon
-    background: rgba(249, 141, 141, 0.5);
+    background: rgb(176, 213, 247);
     font-size: 1.2em;
     font-weight: 700;
-    color: black;
-    margin-right: 10px;    
+    color: black;    
+    margin-right: 10px;

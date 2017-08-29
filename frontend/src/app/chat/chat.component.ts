@@ -17,10 +17,9 @@ export class ChatComponent implements OnInit {
   myParticipant: string;
   selectedId: number;
   writtenMessage: string;
+  isShiftBeforeEnter: boolean= false;
 
-
-  inputHeight: number = 40;
-  maxInputHeight: number = 75;
+  inputHeight: number = 45;
   constructor() { }
 
   ngOnInit() {
@@ -31,34 +30,57 @@ export class ChatComponent implements OnInit {
     this.myParticipant = this.dialogs[0].SecondParticipant;
   }
 
+  onChange(event){ 
+    if(event.key === "Shift"){
+      this.isShiftBeforeEnter = true;
+    }    
+    else if(event.key === "Enter" && (event.shiftKey || this.isShiftBeforeEnter)){      
+      this.inputHeight += 20;
+      this.isShiftBeforeEnter = false;      
+    }      
+    else if(event.key === "Enter"){
+      if(this.writtenMessage !== undefined &&
+        this.writtenMessage.match(/\w+|[a-z A-z А-Я а-я 0-9 іІЇї]|\.|\№|\+|\-|\,|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\;|\\|\/|\||\<|\>|\"|\'|\:|\?|\=/ig) !== null){      
+          //event.preventDefault();
+          this.onWrite();      
+      }
+      else{
+        this.inputHeight = 45;   
+        this.writtenMessage = undefined;
+      }
+    }
+    else if(event.key === "Backspace" &&
+      this.writtenMessage.match(/\w+|[a-z A-z А-Я а-я 0-9 іІЇї]|\.|\№|\+|\-|\,|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\;|\\|\/|\||\<|\>|\"|\'|\:|\?|\=/ig) === null){
+      this.inputHeight -= 20; 
+    }
+    //console.log(event);
+  }
+
   onSelect(dialogId: number) {
     this.selectedId = dialogId;
     this.messages = this.dialogs.find(x => x.Id === dialogId).Messages;
     this.me = this.dialogs.find(x => x.Id === dialogId).FirstParticipant;
     this.myParticipant = this.dialogs.find(x => x.Id === dialogId).SecondParticipant;
+    setTimeout(() => {
+      this.messagesElement.nativeElement.scrollTop = this.messagesElement.nativeElement.scrollHeight;
+    }, 0);
 }
 
-  keyEvent(){    
-    if(this.inputHeight < this.maxInputHeight){
-      this.inputHeight += 15;      
-    }
-  }
-
-  onWrite(){
-    console.log(this.writtenMessage);
-    this.inputHeight = 40;
-    if(this.writtenMessage !== undefined && this.writtenMessage !== '' && this.writtenMessage != '\n'){
-    this.messages.push(
-      {
+  onWrite(){   
+    //console.log(this.writtenMessage.match(/\w+|\.|\+|\-|\,|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\;|\\|\/|\||\<|\>|\"|\'|\:|\?|\=/ig));
+    this.inputHeight = 45;    
+    this.messages.push({
       Id: 3, 
       Owner: this.me,
       Message: this.writtenMessage, 
-      Date: new Date(Date.now())
+      Date: new Date()
     });    
-    this.writtenMessage = undefined;
-    //this.messagesElement.nativeElement.scrollTop = this.messagesElement.nativeElement.scrollHeight;
-  }
-  }
+    this.writtenMessage = undefined;    
+    setTimeout(() => {
+      this.messagesElement.nativeElement.scrollTop = this.messagesElement.nativeElement.scrollHeight;
+    }, 0);
+  }    
+  
 
   mockData(){
     this.dialogs = [

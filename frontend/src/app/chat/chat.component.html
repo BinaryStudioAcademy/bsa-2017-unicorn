@@ -37,7 +37,7 @@
         <div class="ui form">
             <div class="field">
                 <div class="ui icon input">
-                    <textarea [ngStyle]="{'height.px': inputHeight}" class="prompt" type="text" (keyup.enter)="keyEvent()" placeholder="Type here..." [(ngModel)]="writtenMessage" style="display:inline">
+                    <textarea (keyup)="onChange($event)" [ngStyle]="{'height.px': inputHeight}" class="prompt" type="text" placeholder="Type here..." [(ngModel)]="writtenMessage" style="display:inline">
                         
                     </textarea>
                     <i class="talk outline link icon" (click)="onWrite()"></i>
