@@ -89,7 +89,15 @@ namespace Unicorn.Core.Services
                 customer.Person.Account.Email = userDTO.Email;
                 customer.Person.Phone = userDTO.Phone;
                 customer.Person.Birthday = userDTO.Birthday;
-
+                customer.Person.Account.Location = new Location()
+                {
+                    Adress = userDTO.Location.Adress,
+                    City = userDTO.Location.City,
+                    IsDeleted = false,
+                    Latitude = userDTO.Location.Latitude,
+                    Longitude = userDTO.Location.Longitude,
+                    PostIndex = userDTO.Location.PostIndex
+                };
                 _unitOfWork.CustomerRepository.Update(customer);
                 await _unitOfWork.SaveAsync();
             }
