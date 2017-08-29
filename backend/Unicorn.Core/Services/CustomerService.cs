@@ -10,6 +10,8 @@ using Unicorn.Shared.DTOs.Register;
 using Unicorn.Shared.DTOs.User;
 using System.Data.Entity;
 using Unicorn.DataAccess.Entities.Enum;
+using Unicorn.Shared.DTOs.Book;
+using Unicorn.Shared.DTOs;
 
 namespace Unicorn.Core.Services
 {
@@ -101,6 +103,38 @@ namespace Unicorn.Core.Services
                 SingleAsync(c => c.Id == id);
             if (customer != null)
             {
+                //var books = await _unitOfWork.BookRepository
+                //    .Query
+                //    .Include(b => b.Work)
+                //    .Include(b => b.Customer)
+                //    .Include(b => b.Vendor)
+                //    .Include(b => b.Company)
+                //    .Include(b => b.Location)
+                //    .Where(b => b.Customer.Id == id)
+                //    .ToListAsync();
+                //var bookDtos = books
+                //    .Select(b => new BookDTO
+                //    {
+                //        Id = b.Id,
+                //        Date = b.Date,
+                //        Description = b.Description,
+                //        Status = b.Status,
+                //        Work = new WorkDTO
+                //        {
+                //            Id = b.Work.Id,
+                //            Icon = b.Work.Icon,
+                //            Name = b.Work.Name                           
+                //        },
+                //        Location = new LocationDTO
+                //        {
+                //            Id = b.Location.Id,
+                //            Adress = b.Location.Adress,
+                //            City = b.Location.City,
+                //            Latitude = b.Location.Latitude,
+                //            Longitude = b.Location.Longitude,
+                //            PostIndex = b.Location.PostIndex
+                //        }
+                //    }).ToList();
                 var customerDto = new UserShortDTO()
                 {
                     Id = customer.Id,
