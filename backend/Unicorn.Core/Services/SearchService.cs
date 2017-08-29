@@ -26,6 +26,7 @@ namespace Unicorn.Core.Services
                 .Query
                 .Include(v => v.Person)
                 .Include(v => v.Person.Account)
+                .Include(v => v.Person.Account.Location)
                 .ToListAsync();
 
             var vendors = vendorsList
@@ -41,18 +42,19 @@ namespace Unicorn.Core.Services
                     Link = "vendor/" + v.Id,
                     Location = new LocationDTO
                     {
-                        Id = v.Person.Location.Id,
-                        City = v.Person.Location.City,
-                        Adress = v.Person.Location.Adress,
-                        Latitude = v.Person.Location.Latitude,
-                        Longitude = v.Person.Location.Longitude,
-                        PostIndex = v.Person.Location.PostIndex
+                        Id = v.Person.Account.Location.Id,
+                        City = v.Person.Account.Location.City,
+                        Adress = v.Person.Account.Location.Adress,
+                        Latitude = v.Person.Account.Location.Latitude,
+                        Longitude = v.Person.Account.Location.Longitude,
+                        PostIndex = v.Person.Account.Location.PostIndex
                     },
                 }).ToList();
 
             var companiesList = await _unitOfWork.CompanyRepository
                 .Query
                 .Include(c => c.Account)
+                .Include(c => c.Account.Location)
                 .ToListAsync();
 
             var companies = companiesList
@@ -68,12 +70,12 @@ namespace Unicorn.Core.Services
                     Link = "company/" + c.Id,
                     Location = new LocationDTO
                     {
-                        Id = c.Location.Id,
-                        City = c.Location.City,
-                        Adress = c.Location.Adress,
-                        Latitude = c.Location.Latitude,
-                        Longitude = c.Location.Longitude,
-                        PostIndex = c.Location.PostIndex
+                        Id = c.Account.Location.Id,
+                        City = c.Account.Location.City,
+                        Adress = c.Account.Location.Adress,
+                        Latitude = c.Account.Location.Latitude,
+                        Longitude = c.Account.Location.Longitude,
+                        PostIndex = c.Account.Location.PostIndex
                     },
                 }).ToList();
 
