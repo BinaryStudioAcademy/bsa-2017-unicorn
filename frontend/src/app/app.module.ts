@@ -29,7 +29,7 @@ import { BookModule } from './book/book.module';
 import { SignBlockModule } from './sign-block/sign-block.module';
 import { IndexModule } from './index/index.module';
 import { SearchModule } from './search/search.module';
-
+import { MomentModule } from 'angular2-moment';
 
 import { SignalR, SignalRConnection, SignalRModule, SignalRConfiguration } from 'ng2-signalr';
 import { SuiModule } from 'ng2-semantic-ui';
@@ -88,6 +88,7 @@ export function getDefaultSignalRConfig(): SignalRConfiguration {
     BookModule,
     SearchModule,
     SignalRModule.forRoot(getDefaultSignalRConfig),
+    MomentModule,
     IndexModule // Must be the last module
   ],
   providers: [

@@ -89,11 +89,14 @@ namespace Unicorn.Core.Services
                 .Include(b => b.Location)
                 .Include(b => b.Vendor)
                 .Include(b => b.Vendor.Person)
+                .Include(b => b.Vendor.Person.Account)
                 .Include(b => b.Work)
                 .Include(b => b.Work.Subcategory)
                 .Include(b => b.Customer)
                 .Include(b => b.Customer.Person)
+                .Include(b => b.Customer.Person.Account)
                 .Include(b => b.Company)
+                .Include(b => b.Company.Account)
                 .SingleAsync(b => b.Id == id);
             var bookDto = new BookDTO()
             {
@@ -198,8 +201,8 @@ namespace Unicorn.Core.Services
 
             var notification = new NotificationDTO()
             {
-                Title = "New order",
-                Description = _book.Description,
+                Title = $"New order for {_book.Work.Name}",
+                Description = $"{_book.Customer.Person.Name} {_book.Customer.Person.Surname} booked {_book.Work?.Name}. Check your dashboard to find out details.",
                 SourceItemId = _book.Id,
                 Time = DateTime.Now,
                 Type = NotificationType.TaskNotification
@@ -299,6 +302,33 @@ namespace Unicorn.Core.Services
 
             _unitOfWork.BookRepository.Update(book);
             await _unitOfWork.SaveAsync();
+
+            var notification = new NotificationDTO();
+            string performerName = book.Vendor != null ? $"{book.Vendor.Person.Name} {book.Vendor.Person.Surname}" : book.Company.Name;
+            long receiverId = book.Customer.Person.Account.Id;
+
+            switch (book.Status)
+            {
+                case BookStatus.Accepted:
+                    notification.Title = "Order accepted";
+                    notification.Description = $"{performerName} accepted your order ({book.Work.Name}).";
+                    break;
+                case BookStatus.Finished:
+                    notification.Title = "Work was finished";
+                    notification.Description = $"{performerName} finished {book.Work.Name} and waiting for your confirmation.";
+                    break;
+                case BookStatus.Confirmed:
+                    receiverId = book.Vendor != null ? book.Vendor.Person.Account.Id : book.Company.Account.Id;
+                    notification.Title = "Work confirmed";
+                    notification.Description = $"{book.Work.Name} was confirmed  by {book.Customer.Person.Name} {book.Customer.Person.Surname}.";
+                    break;
+                case BookStatus.Declined:
+                    notification.Title = "Order was declined";
+                    notification.Description = $"{performerName} decline your order ({book.Work.Name}).";
+                    break;
+            }
+
+            await _notificationService.CreateAsync(receiverId, notification);
         }
 
         public async Task Update(BookDTO bookDto)

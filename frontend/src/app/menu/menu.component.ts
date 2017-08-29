@@ -73,7 +73,10 @@ export class MenuComponent implements OnInit {
         .then(() => this.notificationService
           .listen<Notification>("OnNotificationRecieved", notification => this.addNotification(notification)));
       this.accountService.getNotifications(accountId)
-        .then(resp => this.notifications = resp.body as Notification[]);
+        .then(resp => {
+          this.notifications = (resp.body as Notification[]);
+          this.sortNotificationsByTime();
+        });
     }
     else {
       this.initEmptyProfile();
@@ -184,7 +187,18 @@ export class MenuComponent implements OnInit {
 
   addNotification(notification: Notification): void {
     this.notifications.push(notification);
+    this.sortNotificationsByTime();
     this.newNotification = notification;
     setTimeout(() => this.newNotification = undefined, 3000);
+  }
+
+  removeNotification(notification: Notification): void {
+    this.notifications.splice(this.notifications.findIndex(n => n.Id === notification.Id), 1);
+    this.accountService.removeNotification(+this.tokenHelper.getClaimByName("accountid"), notification);
+  }
+
+  sortNotificationsByTime(): void {
+    this.notifications.forEach(n => n.Time = new Date(n.Time));
+    this.notifications.sort((a, b) => b.Time.getTime() - a.Time.getTime());
   }
 }
