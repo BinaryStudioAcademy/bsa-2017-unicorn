@@ -38,6 +38,7 @@ export class UserTasksComponent implements OnInit {
   };
 
   loader: boolean;
+  error: boolean;
 
   books: CustomerBook[];
 
@@ -99,10 +100,21 @@ export class UserTasksComponent implements OnInit {
 
   showReview(id: number) {
     let book = this.getBookById(id);
-    this.modalService.open(new ReviewModal(book.Review));
+    this.modalService.open(new ReviewModal(book.Review))
+      .onDeny(this.clearData);
+  }
+
+  clearData() {
+    this.error = false;
+    this.review.Grade = 0;
+    this.review.Text = '';
   }
 
   saveReview(id: number) {
+    if (this.review.Grade == 0) {
+      this.error = true;
+      return;
+    }
     this.loader = true;
     let book = this.getBookById(id);
     this.review.BookId = id;
@@ -112,11 +124,9 @@ export class UserTasksComponent implements OnInit {
       this.loadData();
       this.loader = false;
       this.currModal.deny(undefined);
-      this.review.Text = '';
     }).catch(err => {
       this.loader = false;
       this.currModal.deny(undefined);
-      this.review.Text = '';
     });
   }
 

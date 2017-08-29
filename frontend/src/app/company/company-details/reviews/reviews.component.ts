@@ -26,6 +26,7 @@ constructor(private companyService: CompanyService,
         this.isReviewsEmpty = false;
       }
       this.company = res;
+      console.log(res);
     });   
   }
 

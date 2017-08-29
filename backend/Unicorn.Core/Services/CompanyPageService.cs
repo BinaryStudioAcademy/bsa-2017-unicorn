@@ -291,7 +291,8 @@ namespace Unicorn.Core.Services
                             To = x.To,
                             ToAccountId = x.ToAccountId,
                             Description = x.Description,
-                            BookId = x.BookId
+                            BookId = x.BookId,
+                            Grade = GetRatingByBookId(x.BookId)
                         }).ToList()
                 };
 
@@ -299,6 +300,17 @@ namespace Unicorn.Core.Services
             }
 
             return null;
+        }
+
+        private int GetRatingByBookId(long id)
+        {
+            var rating = _unitOfWork.RatingRepository
+                .Query
+                .Include(r => r.Book)
+                .Where(r => r.Book != null)
+                .FirstOrDefault(r => r.Book.Id == id);
+
+            return rating == null ? 0 : rating.Grade;
         }
 
         private Task AddCompanyReviewsMethod(CompanyReviews companyReviewsDTO)

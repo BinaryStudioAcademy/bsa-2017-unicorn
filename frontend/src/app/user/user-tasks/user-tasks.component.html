@@ -38,18 +38,20 @@
             <div class="content">
                 <a class="author">{{user.Name}}</a>
                 <div class="text">
-                    <sui-rating name="rating" [(ngModel)]="review.Grade" class="star" [isReadonly]="false"></sui-rating>
+                    <sui-rating (click)="error = false" name="rating" [(ngModel)]="review.Grade" class="star" [isReadonly]="false"></sui-rating>
+                    <span *ngIf="error" class="valid-error">* Required</span>
                 </div>
             </div>
         </div>
         <form class="ui reply form" name="reviewForm" #reviewForm="ngForm">
             <div class="field">
-                <textarea required placeholder="LEAVE REVIEW" name="review" [(ngModel)]="review.Text" #taskreview="ngModel"></textarea>
-                <div *ngIf="taskreview.invalid && (taskreview.dirty)" class="valid-error">* Required</div>
+                <textarea placeholder="LEAVE REVIEW" name="review" [(ngModel)]="review.Text" #taskreview="ngModel"></textarea>
             </div>
-            <a (click)="saveReview(context.id)" [ngClass]="{'loading': loader, 'disabled': reviewForm.invalid}" class="ui basic button">
-                <p *ngIf="!loader" style="color:#FF647A;">Save</p>
-            </a>
+            <div class="save-btn">
+                <a (click)="saveReview(context.id)" [ngClass]="{'loading': loader, 'disabled': reviewForm.invalid}" class="ui basic button">
+                    <p *ngIf="!loader" style="color:#FF647A;">Save</p>
+                </a>
+            </div>
         </form>
     </div>
 </ng-template>
