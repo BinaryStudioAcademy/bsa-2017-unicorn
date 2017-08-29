@@ -29,7 +29,7 @@ import { BookModule } from './book/book.module';
 import { SignBlockModule } from './sign-block/sign-block.module';
 import { IndexModule } from './index/index.module';
 import { SearchModule } from './search/search.module';
-
+import { MomentModule } from 'angular2-moment';
 
 import { SignalR, SignalRConnection, SignalRModule, SignalRConfiguration } from 'ng2-signalr';
 import { SuiModule } from 'ng2-semantic-ui';
@@ -45,6 +45,7 @@ import { AccountService } from "./services/account.service";
 import { NotificationService } from "./services/notifications/notification.service";
 
 import { ChatModule } from "./chat/chat.module";
+import { ReviewModalComponent } from './review/review-modal/review-modal.component';
 
 export class CustomOptions extends ToastOptions {
   animate = 'fade';
@@ -66,7 +67,8 @@ export function getDefaultSignalRConfig(): SignalRConfiguration {
     AppComponent,
     ShellComponent,
     MenuComponent,
-    FooterComponent
+    FooterComponent,
+    ReviewModalComponent
   ],
   imports: [
     SuiModule,
@@ -88,6 +90,7 @@ export function getDefaultSignalRConfig(): SignalRConfiguration {
     BookModule,
     SearchModule,
     SignalRModule.forRoot(getDefaultSignalRConfig),
+    MomentModule,
     IndexModule // Must be the last module
   ],
   providers: [
@@ -99,7 +102,10 @@ export function getDefaultSignalRConfig(): SignalRConfiguration {
     NotificationService,
    { provide: ToastOptions, useClass: CustomOptions}
   ],
-  entryComponents: [RegisterComponent],
+  entryComponents: [
+    RegisterComponent,
+    ReviewModalComponent
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

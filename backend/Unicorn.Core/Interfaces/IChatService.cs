@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Unicorn.Shared.DTOs.Chat;
 
 namespace Unicorn.Core.Interfaces
@@ -7,8 +8,10 @@ namespace Unicorn.Core.Interfaces
     {
         Task CreateMessage(ChatMessageDTO msg);
         Task CreateDialog(ChatDialogDTO dialog);
-        Task <ChatDialogDTO> GetDialog(long dialogId);        
-        Task Remove(ChatMessageDTO msg);
+        Task<ChatDialogDTO> GetDialog(long dialogId);
+        Task<IEnumerable<ChatDialogDTO>> GetAllDialogs(long accountId);
+        Task RemoveDialog(long dialogId);
+        Task RemoveMessage(long messageId);
         Task Update(ChatMessageDTO msg);
     }
 }

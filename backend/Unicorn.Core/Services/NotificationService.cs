@@ -29,7 +29,8 @@ namespace Unicorn.Core.Services
                 AccountId = accountId,
                 IsDeleted = false,
                 SourceItemId = notificationDto.SourceItemId,
-                Message = notificationDto.Message,
+                Title = notificationDto.Title,
+                Description = notificationDto.Description,
                 Time = notificationDto.Time,
                 Type = notificationDto.Type
             };
@@ -47,7 +48,8 @@ namespace Unicorn.Core.Services
             return notifications.Select(n => new NotificationDTO()
             {
                 Id = n.Id,
-                Message = n.Message,
+                Title = n.Title,
+                Description = n.Description,
                 SourceItemId = n.SourceItemId,
                 Time = n.Time,
                 Type = n.Type
@@ -61,7 +63,8 @@ namespace Unicorn.Core.Services
             return new NotificationDTO()
             {
                 Id = notification.Id,
-                Message = notification.Message,
+                Title = notification.Title,
+                Description = notification.Description,
                 SourceItemId = notification.SourceItemId,
                 Time = notification.Time,
                 Type = notification.Type
@@ -83,7 +86,8 @@ namespace Unicorn.Core.Services
                 .Select(n => new NotificationDTO()
             {
                 Id = n.Id,
-                Message = n.Message,
+                Title = n.Title,
+                Description = n.Description,
                 SourceItemId = n.SourceItemId,
                 Time = n.Time,
                 Type = n.Type

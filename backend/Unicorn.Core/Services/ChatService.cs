@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Unicorn.Core.Interfaces;
 using Unicorn.DataAccess.Entities;
+using Unicorn.DataAccess.Entities.Enum;
 using Unicorn.DataAccess.Interfaces;
 using Unicorn.Shared.DTOs.Chat;
 
-namespace Unicorn.Core.Providers
+namespace Unicorn.Core.Services
 {
     public class ChatService : IChatService
     {
@@ -36,7 +36,6 @@ namespace Unicorn.Core.Providers
 
             _unitOfWork.ChatMessageRepository.Create(cmsg);
             await _unitOfWork.SaveAsync();
-
         }
 
         public async Task CreateDialog(ChatDialogDTO dialog)
@@ -61,7 +60,7 @@ namespace Unicorn.Core.Providers
                 .Include(x => x.Messages)
                 .Include(x => x.Participant1)
                 .Include(x => x.Participant2)
-                .SingleAsync(x => x.Id == dialogId);
+                .SingleAsync(x => x.Id == dialogId);            
 
             ChatDialogDTO dl = new ChatDialogDTO
             {
@@ -81,14 +80,70 @@ namespace Unicorn.Core.Providers
             return dl;
         }
 
-        public Task Remove(ChatMessageDTO msg)
+        public async Task<IEnumerable<ChatDialogDTO>> GetAllDialogs(long accountId)
+        {           
+            var dialogs = await _unitOfWork.ChatDialogRepository.Query
+                .Include(x => x.Participant1)
+                .Include(x => x.Participant2)
+               .Where(x => x.Participant1.Id == accountId || x.Participant2.Id == accountId)
+               .ToListAsync();
+
+            if (dialogs.Count == 0)
+            {
+                return null;
+            }
+
+            var names = dialogs.SelectMany(x => new List<Account> { x.Participant1, x.Participant2 }).Where(x => x.Id != accountId).Select(x => GetName(x)).ToList();
+            int i = 0;
+
+            var result = dialogs.Select(x => new ChatDialogDTO()
+            {
+                Id = x.Id,
+                ParticipantOneId = x.Participant1.Id,
+                ParticipantTwoId = x.Participant2.Id,
+                ParticipantName = names[i++]
+            }).ToList();
+
+            return result;
+        }
+
+        public async Task RemoveDialog(long dialogId)
         {
-            throw new NotImplementedException();
+            _unitOfWork.ChatDialogRepository.Delete(dialogId);
+            await _unitOfWork.SaveAsync();
+        }
+
+        public async Task RemoveMessage(long messageId)
+        {
+            _unitOfWork.ChatMessageRepository.Delete(messageId);
+            await _unitOfWork.SaveAsync();
         }
 
         public Task Update(ChatMessageDTO msg)
         {
             throw new NotImplementedException();
+        }
+
+        private string GetName(Account acc)
+        {
+            string name = null;
+
+            switch (acc.Role.Type)
+            {
+                case RoleType.Customer:
+                    var customer = _unitOfWork.CustomerRepository.Query.First(x => x.Person.Account.Id == acc.Id).Person;
+                    name = $"{customer.Name} {customer.Surname}";
+                    break;
+                case RoleType.Company:
+                    name = _unitOfWork.CompanyRepository.Query.First(x => x.Account.Id == acc.Id).Name;
+                    break;
+                case RoleType.Vendor:
+                    var vendor = _unitOfWork.VendorRepository.Query.First(x => x.Person.Account.Id == acc.Id).Person;
+                    name = $"{vendor.Name} {vendor.Surname}";
+                    break;
+            }
+
+            return name;
         }
     }
 }

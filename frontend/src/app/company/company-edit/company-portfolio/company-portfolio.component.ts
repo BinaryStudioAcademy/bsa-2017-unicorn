@@ -5,6 +5,9 @@ import { BookCard, BookStatus } from '../../../models/dashboard/book-card';
 
 import { DashboardService } from '../../../services/dashboard/dashboard.service';
 
+import {SuiModalService, TemplateModalConfig, ModalTemplate, ModalSize, SuiActiveModal} from 'ng2-semantic-ui';
+import { ReviewModal } from '../../..//review/review-modal/review-modal.component';
+
 @Component({
   selector: 'app-company-portfolio',
   templateUrl: './company-portfolio.component.html',
@@ -17,7 +20,8 @@ export class CompanyPortfolioComponent implements OnInit {
 
   constructor(
     private dashboardService: DashboardService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private modalService: SuiModalService
   ) { }
 
   ngOnInit() {
@@ -27,13 +31,22 @@ export class CompanyPortfolioComponent implements OnInit {
 
   loadData() {
     this.dashboardService.getPortfolioBooks('company', this.companyId).then(resp => {
-      this.books = resp;
+      resp.forEach(b => {
+        if (b.Status == BookStatus.Confirmed) {
+          this.books.push(b);
+        }
+      });
     });
   }
 
   updateBook(id: number) {
     let book = this.books.filter(b => b.Id == id)[0];
     this.dashboardService.update(book);
+  }
+
+  showReview(id: number) {
+    let book = this.books.filter(b => b.Id == id)[0];
+    this.modalService.open(new ReviewModal(book.Review));
   }
 
 }
