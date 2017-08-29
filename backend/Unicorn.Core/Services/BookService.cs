@@ -198,7 +198,8 @@ namespace Unicorn.Core.Services
 
             var notification = new NotificationDTO()
             {
-                Message = "New order",
+                Title = "New order",
+                Description = _book.Description,
                 SourceItemId = _book.Id,
                 Time = DateTime.Now,
                 Type = NotificationType.TaskNotification

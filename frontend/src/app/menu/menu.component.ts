@@ -95,6 +95,7 @@ export class MenuComponent implements OnInit {
 
     this.onLogOut = this.authEventService.logoutEvent$
       .subscribe(() => {
+        this.notificationService.disconnect();
         this.isLogged = false;
         this.initEmptyProfile();
         this.showAccountDetails = false;
