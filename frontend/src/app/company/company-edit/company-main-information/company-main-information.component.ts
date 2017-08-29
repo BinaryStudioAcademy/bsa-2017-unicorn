@@ -8,6 +8,7 @@ import { CompanyWork } from "../../../models/company-page/company-work.model";
 import { CompanyCategory } from "../../../models/company-page/company-category.model";
 import { CompanySubcategory } from "../../../models/company-page/company-subcategory.model";
 import { LocationService } from "../../../services/location.service";
+import { NguiMapModule, Marker } from "@ngui/map";
 
 @Component({
   selector: 'app-company-main-information',
@@ -40,10 +41,11 @@ export class CompanyMainInformationComponent implements OnInit {
         );
     }
   ngOnInit() {
-    this.position={lat: this.company.Location.Latitude, lng: this.company.Location.Longitude};    
+       
     this.route.params
     .switchMap((params: Params) => this.companyService.getCompanyDetails(params['id'])).subscribe(res => {
       this.company = res;
+      this.position={lat: this.company.Location.Latitude, lng: this.company.Location.Longitude};
       this.map = {
         center: {lat: this.company.Location.Latitude, lng: this.company.Location.Longitude},
         zoom: 18,    

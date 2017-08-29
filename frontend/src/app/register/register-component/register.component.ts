@@ -9,7 +9,7 @@ import * as firebase from 'firebase/app';
 import { HelperService } from '../../services/helper/helper.service';
 
 import { RegisterService } from '../../services/register.service';
-
+import { NguiMapModule } from "@ngui/map";
 import { ComponentModalConfig, ModalSize, SuiModal } from 'ng2-semantic-ui';
 import { LocationService } from "../../services/location.service";
 import { LocationModel } from "../../models/location.model";
@@ -30,7 +30,6 @@ export class RegisterModal extends ComponentModalConfig<void> {
 })
 export class RegisterComponent implements OnInit, OnDestroy {
   private currentUser: firebase.User = null;
-
   mode: string;
   error: boolean = false;
 
@@ -61,6 +60,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.isLogged = false;
     this.error = false;
     this.location = this.locationService.getCurrentLocation();
+ 
     this.initRoles();
   }
 
@@ -133,9 +133,20 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    
     this.authLoginService.authState.subscribe(user => {
       if (user) {
         this.currentUser = user;
+        this.locationService.getLocDetails(this.location.Latitude,this.location.Longitude)
+        .subscribe(
+        result => {
+          
+             this.location.Adress=result.formatted_address;
+              this.location.City=result.address_components[3].short_name;
+         },
+          error => console.log(error),
+          () => console.log('Geocoding completed!')
+          );
       } else {
         this.currentUser = null;
       }

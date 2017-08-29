@@ -34,7 +34,7 @@ import { NguiMapModule } from '@ngui/map';
     imports: [
         NguiMapModule.forRoot({
             apiUrl: 'https://maps.google.com/maps/api/js?key=' + environment.googleMapsKey +
-            '&libraries=visualization,places,drawing'
+            '&libraries=visualization,places,drawing&language=en'
           }),
         SuiModule,
         CommonModule,

@@ -13,9 +13,14 @@ import { SuiModule } from 'ng2-semantic-ui';
 import { RegisterUserComponent } from './register-user/register-user.component';
 import { RegisterVendorComponent } from './register-vendor/register-vendor.component';
 import { RegisterCompanyComponent } from './register-company/register-company.component';
+import { NguiMapModule } from "@ngui/map";
 
 @NgModule({
   imports: [
+    NguiMapModule.forRoot({
+      apiUrl: 'https://maps.google.com/maps/api/js?key=' + environment.googleMapsKey +
+      '&libraries=visualization,places,drawing'
+    }),
     FormsModule,
     SuiModule,
     CommonModule,

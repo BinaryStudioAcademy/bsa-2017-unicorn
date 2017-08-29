@@ -1,4 +1,4 @@
-﻿import { Component, OnInit, Input, ViewChild, AfterViewChecked, ViewContainerRef } from '@angular/core';
+﻿import { Component, OnInit, Input, ViewChild, AfterViewChecked, ViewContainerRef, ChangeDetectorRef } from '@angular/core';
 import { NgModel, NgForm } from '@angular/forms';
 import { User } from '../../models/user';
 import { LocationService } from "../../services/location.service";
@@ -26,8 +26,12 @@ export class UserProfileComponent implements OnInit {
     birthday: Date;
     dataLoaded: boolean;
     position;
+    autocomplete: google.maps.places.Autocomplete;
+    address: any = {};
+    marker;
     constructor(private userService: UserService, 
-        public toastr: ToastsManager, public LocationService: LocationService) {
+        public toastr: ToastsManager, public LocationService: LocationService,
+        private ref: ChangeDetectorRef) {
           
         }
   
@@ -73,6 +77,34 @@ export class UserProfileComponent implements OnInit {
             this.toastr.success('Changes were saved', 'Success!');})
           .catch(x=>{ this.dataLoaded = true;
             this.toastr.error('Sorry, something went wrong', 'Error!');});
+      }
+
+      initialized(autocomplete: any) {
+        this.autocomplete = autocomplete;
+      }
+    
+      placeChanged(event) {
+        let place = this.autocomplete.getPlace();
+        for (let i = 0; i < place.address_components.length; i++) {
+          let addressType = place.address_components[i].types[0];
+          this.address[addressType] = place.address_components[i].long_name;
+        }
+    
+        this.position = this.address.locality;
+        this.user.Location.Latitude = event.geometry.location.lat();
+        this.user.Location.Longitude = event.geometry.location.lng()
+
+        this.LocationService.getLocDetails(this.user.Location.Latitude,this.user.Location.Longitude)
+       .subscribe(
+        result => {
+          
+           this.user.Location.Adress=result.formatted_address;
+            this.user.Location.City=result.address_components[3].short_name;
+        },
+        error => console.log(error),
+        () => console.log('Geocoding completed!')
+        );
+        this.ref.detectChanges();
       }
 }
 

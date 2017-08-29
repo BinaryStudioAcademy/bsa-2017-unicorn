@@ -31,11 +31,19 @@
             </div>
         </div>
         <div class="column">
-            <label class="gray_font">Your location:</label>
-            <ngui-map class="map" zoom="14" [center]="position">
-                <marker [position]="position" [draggable]="true" (dragend)="markerDragged($event)">
-                </marker>
-            </ngui-map>
+            <div class="row" style="justify-content: flex-start;">
+                <label class="gray_font">Your location:</label>
+
+                <div class="ui input" style="display:inline;">
+                    <input places-auto-complete (initialized$)="initialized($event)" (place_changed)="placeChanged($event)" [types]="['geocode']" placeholder="TYPE HERE..." />
+                </div>
+            </div>
+            <div class="elem">
+                <ngui-map class="map" zoom="14" [center]="position">
+                    <marker [position]="position" [draggable]="true" (dragend)="markerDragged($event)">
+                    </marker>
+                </ngui-map>
+            </div>
         </div>
 
     </div>
