@@ -23,7 +23,7 @@
                 <p><a class="rev-link" (click)="showReview(book.Id)">Review</a></p>
             </div>
             <ng-template #nonRated>
-                <span>{{getStatus(book.Id)}}</span>
+                <span *ngIf="!isFinished(book.Id)">{{getStatus(book.Id)}}</span>
                 <a *ngIf="isFinished(book.Id)" class="ui button review-btn" (click)="openModal(book.Id)">Leave review</a>
             </ng-template>
 

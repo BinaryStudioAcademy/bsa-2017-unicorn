@@ -311,7 +311,7 @@ namespace Unicorn.Core.Services
                     FromAccountId = r.FromAccountId,
                     To = r.To,
                     ToAccountId = r.ToAccountId
-                }).Single();
+                }).SingleOrDefault();
         }
 
         private CustomerBookDTO BookToCustomerBookDTO(Book b)
