@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Unicorn.DataAccess.Entities;
+using Unicorn.DataAccess.Entities.Enum;
 
 namespace Unicorn.Shared.DTOs.Book
 {

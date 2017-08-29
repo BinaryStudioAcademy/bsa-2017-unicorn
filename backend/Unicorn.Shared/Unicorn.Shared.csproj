@@ -73,6 +73,8 @@
     <Compile Include="DTOs\History\HistoryDTO.cs" />
     <Compile Include="DTOs\History\VendorHistoryDTO.cs" />
     <Compile Include="DTOs\LocationDTO.cs" />
+    <Compile Include="DTOs\Notification\ConnectedAccount.cs" />
+    <Compile Include="DTOs\Notification\NotificationDTO.cs" />
     <Compile Include="DTOs\PermissionDTO.cs" />
     <Compile Include="DTOs\PersonDTO.cs" />
     <Compile Include="DTOs\Popular\PerformerDTO.cs" />
@@ -85,6 +87,7 @@
     <Compile Include="DTOs\ReviewDTO.cs" />
     <Compile Include="DTOs\Review\ShortReviewDTO.cs" />
     <Compile Include="DTOs\RoleDTO.cs" />
+    <Compile Include="DTOs\Search\SearchPerformerDTO.cs" />
     <Compile Include="DTOs\ShortProfileInfoDTO.cs" />
     <Compile Include="DTOs\SocialAccountDTO.cs" />
     <Compile Include="DTOs\Subcategory\SubcategoryDTO.cs" />
@@ -121,6 +124,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

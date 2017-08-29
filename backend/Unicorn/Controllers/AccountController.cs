@@ -15,9 +15,11 @@ namespace Unicorn.Controllers
     public class AccountController : ApiController
     {
         public AccountController(
-            IAccountService accountService)
+            IAccountService accountService, 
+            INotificationService notificationService)
         {
             _accountService = accountService;
+            _notificationService = notificationService;
         }
 
         [HttpGet]
@@ -32,6 +34,19 @@ namespace Unicorn.Controllers
                 return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
+        [HttpGet]
+        [Route("{id}/notifications")]
+        public async Task<HttpResponseMessage> GetNotifications(long id)
+        {
+            var result = await _notificationService.GetByAccountIdAsync(id);
+
+            if (result == null)
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            else
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
         private IAccountService _accountService;
+        private INotificationService _notificationService;
     }
 }

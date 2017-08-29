@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 using Unicorn.Core.Interfaces;
 using Unicorn.DataAccess.Entities;
+using Unicorn.DataAccess.Entities.Enum;
 using Unicorn.DataAccess.Interfaces;
 using Unicorn.Shared.DTOs;
 using Unicorn.Shared.DTOs.Review;

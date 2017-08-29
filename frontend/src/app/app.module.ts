@@ -31,7 +31,7 @@ import { IndexModule } from './index/index.module';
 import { SearchModule } from './search/search.module';
 
 
-
+import { SignalR, SignalRConnection, SignalRModule, SignalRConfiguration } from 'ng2-signalr';
 import { SuiModule } from 'ng2-semantic-ui';
 import {ToastOptions} from 'ng2-toastr';
 import { ShellComponent } from './shell/shell.component';
@@ -42,6 +42,8 @@ import { RegisterComponent } from './register/register-component/register.compon
 import { TokenHelperService } from './services/helper/tokenhelper.service';
 import {ToastModule, Toast} from 'ng2-toastr/ng2-toastr';
 import { AccountService } from "./services/account.service";
+import { NotificationService } from "./services/notifications/notification.service";
+
 import { ChatModule } from "./chat/chat.module";
 import { ReviewModalComponent } from './review/review-modal/review-modal.component';
 
@@ -53,6 +55,13 @@ export class CustomOptions extends ToastOptions {
   enableHTML = true;
   positionClass = 'toast-bottom-right';
 }
+
+export function getDefaultSignalRConfig(): SignalRConfiguration {
+  const config = new SignalRConfiguration();
+  config.logging = true;
+  return config;
+}
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -80,6 +89,7 @@ export class CustomOptions extends ToastOptions {
     VendorModule,
     BookModule,
     SearchModule,
+    SignalRModule.forRoot(getDefaultSignalRConfig),
     IndexModule // Must be the last module
   ],
   providers: [
@@ -88,6 +98,7 @@ export class CustomOptions extends ToastOptions {
     HelperService,
     TokenHelperService,
     AccountService,
+    NotificationService,
    { provide: ToastOptions, useClass: CustomOptions}
   ],
   entryComponents: [
