@@ -18,7 +18,82 @@ namespace Unicorn.Core.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<List<SearchPerformerDTO>> GetSearchPerformers()
+        public async Task<List<SearchPerformerDTO>> GetPerformersByBaseFilters(string category, string subcategory, int date)
+        {
+            var reviews = await _unitOfWork.ReviewRepository.GetAllAsync();
+
+            var vendorsList = await _unitOfWork.VendorRepository
+                .Query
+                .Include(v => v.Person)
+                .Include(v => v.Person.Account)
+                .Where(c => c.Works.Any(w =>
+                    (w.Subcategory.Name.Contains(subcategory) || w.Subcategory.Tags.Contains(subcategory)) &&
+                    (w.Subcategory.Category.Name.Contains(category) || w.Subcategory.Category.Tags.Contains(category))))
+                .ToListAsync();
+
+
+            var vendors = vendorsList
+                .Select(v => new SearchPerformerDTO
+                {
+                    Id = v.Id,
+                    Avatar = v.Person.Account.Avatar,
+                    Name = v.Person.Name,
+                    Description = v.Position,
+                    Rating = CalculateRating(v.Person.Account.Id),
+                    ReviewsCount = reviews.Count(r => r.ToAccountId == v.Person.Account.Id),
+                    PerformerType = "vendor",
+                    Link = "vendor/" + v.Id,
+                    Location = new LocationDTO
+                    {
+                        Id = v.Person.Location.Id,
+                        City = v.Person.Location.City,
+                        Adress = v.Person.Location.Adress,
+                        Latitude = v.Person.Location.Latitude,
+                        Longitude = v.Person.Location.Longitude,
+                        PostIndex = v.Person.Location.PostIndex
+                    },
+                }).ToList();
+
+            var companiesList = await _unitOfWork.CompanyRepository
+                .Query
+                .Include(c => c.Account)
+                .Where(c => c.Works.Any(w =>
+                    (w.Subcategory.Name.Contains(subcategory) || w.Subcategory.Tags.Contains(subcategory)) &&
+                    (w.Subcategory.Category.Name.Contains(category) || w.Subcategory.Category.Tags.Contains(category))))
+                .ToListAsync();
+
+            var companies = companiesList                
+                .Select(c => new SearchPerformerDTO
+                {
+                    Id = c.Id,
+                    Avatar = c.Account.Avatar,
+                    Name = c.Name,
+                    Description = c.Description,
+                    Rating = CalculateRating(c.Account.Id),
+                    ReviewsCount = reviews.Count(r => r.ToAccountId == c.Account.Id),
+                    PerformerType = "company",
+                    Link = "company/" + c.Id,
+                    Location = new LocationDTO
+                    {
+                        Id = c.Location.Id,
+                        City = c.Location.City,
+                        Adress = c.Location.Adress,
+                        Latitude = c.Location.Latitude,
+                        Longitude = c.Location.Longitude,
+                        PostIndex = c.Location.PostIndex
+                    },
+                }).ToList();
+
+            var searchPerformers = vendors
+                .Concat(companies)
+                .OrderByDescending(p => p.Rating)
+                .Distinct()
+                .ToList();
+
+            return searchPerformers;
+        }
+
+        public async Task<List<SearchPerformerDTO>> GetAllPerformers()
         {
             var reviews = await _unitOfWork.ReviewRepository.GetAllAsync();
 

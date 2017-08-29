@@ -9,7 +9,12 @@ export class SearchService {
 
   constructor(private dataService: DataService) { }
 
-  getSearchPerformers(): Promise<SearchPerformer[]> {
+  getPerformersByBaseFilters(category: string, subcategory: string, date: number): Promise<SearchPerformer[]> {
+    const query = `search/performers?category=${category}&subcategory=${subcategory}&date=${date}`;
+    return this.dataService.getRequest<SearchPerformer[]>(query);
+  }
+
+  getAllPerformers(): Promise<SearchPerformer[]> {
     return this.dataService.getRequest<SearchPerformer[]>('search/performers');
   }
 

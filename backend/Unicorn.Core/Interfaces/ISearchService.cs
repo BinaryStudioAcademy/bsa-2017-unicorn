@@ -6,6 +6,7 @@ namespace Unicorn.Core.Interfaces
 {
     public interface ISearchService
     {
-        Task<List<SearchPerformerDTO>> GetSearchPerformers();
+        Task<List<SearchPerformerDTO>> GetPerformersByBaseFilters(string category, string subcategory, int date);
+        Task<List<SearchPerformerDTO>> GetAllPerformers();
     }
 }

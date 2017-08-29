@@ -19,9 +19,16 @@ namespace Unicorn.Controllers
 
         [HttpGet]
         [Route("search/performers")]
-        public async Task<List<SearchPerformerDTO>> GetSearchPerformers()
+        public async Task<List<SearchPerformerDTO>> GetPerformersByBaseFilters(string category, string subcategory, int date)
         {
-            return await _searchService.GetSearchPerformers();
+            return await _searchService.GetPerformersByBaseFilters(category, subcategory, date);
+        }
+
+        [HttpGet]
+        [Route("search/performers")]
+        public async Task<List<SearchPerformerDTO>> GetAllPerformers()
+        {
+            return await _searchService.GetAllPerformers();
         }
     }
 }

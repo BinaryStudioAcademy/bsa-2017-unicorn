@@ -57,7 +57,28 @@ export class SearchComponent implements OnInit {
   }
 
   searchPerformers() {
-    this.searchService.getSearchPerformers()
+    if (this.category === undefined || this.subcategory === undefined || this.date === undefined) {
+      console.log(this.date);
+      this.getAllPerformers();
+    } else {
+      this.getPerformersByBaseFilters(this.category, this.subcategory, this.rawDate);
+    }
+    // if (this.category === undefined && this.subcategory === undefined) {
+    //   this.getAllPerformers();
+    // } else {
+    //   this.getPerformersByBaseFilters(this.category, this.subcategory, this.rawDate);
+    // }
+  }
+
+  getAllPerformers() {
+    this.searchService.getAllPerformers()
+    .then(performers => {
+      this.performers = performers;
+    });
+  }
+
+  getPerformersByBaseFilters(category: string, subcategory: string, date: number) {
+    this.searchService.getPerformersByBaseFilters(category, subcategory, date)
     .then(performers => {
       this.performers = performers;
     });
@@ -89,6 +110,7 @@ export class SearchComponent implements OnInit {
       this.rawDate = this.route.snapshot.queryParams['date'];
       this.date = this.convertDate(this.rawDate);
     }
+    console.log(this.category, this.subcategory, this.date);
   }
 
   convertDate(date: number) {

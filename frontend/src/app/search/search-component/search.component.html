@@ -12,7 +12,7 @@
                 <input type="text" placeholder="SCRATCH" [(ngModel)]="category">
               </div>
               <div class="four wide column  ui input">
-                <input type="text" placeholder="MY CAT" [(ngModel)]="subcategory">
+                <input type="text" placeholder="CAT" [(ngModel)]="subcategory">
               </div>
               <div class="four wide column ui left icon input">
                   <i class="calendar icon"></i>
@@ -23,7 +23,7 @@
                           [pickerUseNativeOnMobile]="false">
               </div>
               <div class="four wide column">
-                <button class="ui active button main btn-search" (click)="searchCompany()">SEARCH</button>
+                <button class="ui active button main btn-search" (click)="searchPerformers()">SEARCH</button>
               </div>
               <div class="sixteen wide column remove-padding-top">
                 <sui-accordion class="fluid">
@@ -143,7 +143,7 @@
           </div>
         </div>
       </div>
-      <div *ngIf="performers.length > 12" class="flex-centered"> 
+      <div *ngIf="performers.length > pageSize" class="flex-centered"> 
         <sui-pagination [collectionSize]="performers.length"
                         [pageSize]="pageSize"
                         [maxSize]="maxSize"
