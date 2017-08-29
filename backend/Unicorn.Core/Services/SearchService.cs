@@ -39,7 +39,7 @@ namespace Unicorn.Core.Services
                     Rating = CalculateRating(w.Vendor.Person.Account.Id),
                     ReviewsCount = reviews.Count(r => r.ToAccountId == w.Vendor.Person.Account.Id),
                     PerformerType = "vendor",
-                    PerformerName = $"{w.Vendor.Person.Name} {w.Vendor.Position}",
+                    PerformerName = $"{w.Vendor.Person.Name} ({w.Vendor.Position})",
                     Link = "vendor/" + w.Vendor.Id,
                     Location = new LocationDTO
                     {

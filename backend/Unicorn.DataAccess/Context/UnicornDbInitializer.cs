@@ -1035,7 +1035,7 @@ namespace Unicorn.DataAccess.Context
             Work work1 = new Work()
             {
                 Id = 1,
-                Icon = "https://semantic-ui.com/images/avatar/small/daniel.jpg",
+                Icon = "http://homecareservices.ru/blog/wp-content/uploads/2014/10/CollectionShot.jpg",
                 Description = "Care of clothes",
                 IsDeleted = false,
                 Name = "laundress",
@@ -1046,7 +1046,7 @@ namespace Unicorn.DataAccess.Context
             Work work2 = new Work()
             {
                 Id = 2,
-                Icon = "https://semantic-ui.com/images/avatar/small/daniel.jpg",
+                Icon = "http://blog.creativelive.com/wp-content/uploads/2015/06/photographer-692035_640.jpg",
                 Description = "Photosession, wedding photosessions etc.",
                 IsDeleted = false,
                 Name = "Photographer",
@@ -1057,7 +1057,7 @@ namespace Unicorn.DataAccess.Context
             Work work3 = new Work()
             {
                 Id = 3,
-                Icon = "https://semantic-ui.com/images/avatar/small/daniel.jpg",
+                Icon = "http://www.sagevets.com.au/images/vet-and-cat.jpg",
                 Description = "Care of your pets",
                 IsDeleted = false,
                 Name = "Vet",
@@ -1068,7 +1068,7 @@ namespace Unicorn.DataAccess.Context
             Work work4 = new Work()
             {
                 Id = 4,
-                Icon = "https://semantic-ui.com/images/avatar/small/daniel.jpg",
+                Icon = "http://www.samuraibuilders.co.nz/wp-content/uploads/2015/05/topslider2-a1.jpg",
                 Description = "Appartmen repair",
                 IsDeleted = false,
                 Name = "Builder",
@@ -1079,7 +1079,7 @@ namespace Unicorn.DataAccess.Context
             Work work5 = new Work()
             {
                 Id = 5,
-                Icon = "https://semantic-ui.com/images/avatar/small/daniel.jpg",
+                Icon = "http://nordwest-fc.ru/pictures/nochyu-v-mashine-video-16.jpg",
                 Description = "Driving services",
                 IsDeleted = false,
                 Name = "Driver",
@@ -1090,7 +1090,7 @@ namespace Unicorn.DataAccess.Context
             Work work6 = new Work()
             {
                 Id = 6,
-                Icon = "https://semantic-ui.com/images/avatar/small/daniel.jpg",
+                Icon = "http://www.startupguys.net/wp-content/uploads/2016/06/how-to-find-good-software-developer.jpg",
                 Description = "C# senior dev",
                 IsDeleted = false,
                 Name = "Developer",
@@ -1101,7 +1101,7 @@ namespace Unicorn.DataAccess.Context
             Work work7 = new Work()
             {
                 Id = 7,
-                Icon = "https://semantic-ui.com/images/avatar/small/daniel.jpg",
+                Icon = "http://www.qualix.co.in/wp-content/uploads/2016/01/servicesInformationTechnologyBanner.jpg",
                 Description = "Services and products development",
                 IsDeleted = false,
                 Name = "Services and products",
@@ -1111,7 +1111,7 @@ namespace Unicorn.DataAccess.Context
             Work work8 = new Work()
             {
                 Id = 8,
-                Icon = "https://semantic-ui.com/images/avatar/small/daniel.jpg",
+                Icon = "https://www.misedesigns.com/wp-content/uploads/2016/09/restaurant-equipment-supplier.jpg",
                 Description = "Supply industrial equipment and machines",
                 IsDeleted = false,
                 Name = "Equipment supplier",
@@ -1121,7 +1121,7 @@ namespace Unicorn.DataAccess.Context
             Work work9 = new Work()
             {
                 Id = 9,
-                Icon = "https://semantic-ui.com/images/avatar/small/daniel.jpg",
+                Icon = "https://www.easypacelearning.com/design/images/content/personalcomputerhardwareparts.png",
                 Description = "Computer parts supplier",
                 IsDeleted = false,
                 Name = "Computer parts supplier",
@@ -1131,7 +1131,7 @@ namespace Unicorn.DataAccess.Context
             Work work10 = new Work()
             {
                 Id = 10,
-                Icon = "https://semantic-ui.com/images/avatar/small/daniel.jpg",
+                Icon = "https://cdn.shutterstock.com/shutterstock/videos/1811057/thumb/10.jpg",
                 Description = "Сooking food",
                 IsDeleted = false,
                 Name = "Сooking food",
@@ -1141,10 +1141,10 @@ namespace Unicorn.DataAccess.Context
             Work work11 = new Work()
             {
                 Id = 11,
-                Icon = "https://semantic-ui.com/images/avatar/small/daniel.jpg",
+                Icon = "http://www.phatinvestor.com/wp-content/uploads/2017/04/blog41.jpg",
                 Description = "Courier service delivery",
                 IsDeleted = false,
-                Name = "Сourier",
+                Name = "Delivery",
                 Subcategory = subcategory9
             };
 
