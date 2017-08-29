@@ -60,9 +60,9 @@ export class ChatComponent implements OnInit {
   onWrite(){  
     if(this.writtenMessage !== undefined){
       let str = this.writtenMessage;
-      str = str.replace((/\n{2,}/ig), " ");
+      str = str.replace((/\n{2,}/ig), "\n");
       str = str.replace((/\s{2,}/ig), " ");      
-      if(str !== " " && str !== "  " && str !== "\n"){
+      if(str !== " " && str !== "\n"){
           this.messages.push({
             Id: 3,
             IsReaded: false, 

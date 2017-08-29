@@ -1,23 +1,24 @@
-<div class="container">
+<div class="container" *ngIf="dialogs !== undefined">
     <div class="users">
         <div class="upper-user" (click)="onSelect(dialog.Id)" *ngFor="let dialog of dialogs">
-            <div class="user" *ngIf="dialog.Id === selectedId" id="active">
+            <div class="user" [ngClass]="{'active': dialog.Id === selectedId}">
                 <img class="ui avatar image" src="http://psand.ru/wp-content/uploads/2016/04/Kak-ustanovit-svoy-unikalnyiy-avatar-dlya-vseh-saytov-na-WordPress.png">
-                <div class="userName"> {{dialog.SecondParticipant}} </div>
-            </div>
-            <div class="user" *ngIf="dialog.Id !== selectedId">
-                <img class="ui avatar image" src="http://psand.ru/wp-content/uploads/2016/04/Kak-ustanovit-svoy-unikalnyiy-avatar-dlya-vseh-saytov-na-WordPress.png">
-                <div class="userName"> {{dialog.SecondParticipant}} </div>
+                <div class="dialog-inf">
+                    <div class="userName"> {{dialog.SecondParticipant}} </div>
+                    <div class="lastMessageDate" *ngIf="messages !== undefined">
+                        {{messages[0].Date|amTimeAgo}}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
     <div class="chat-block">
         <div class="under-chat-block">
-            <div class="messages" #messagesBlock scroll-to-bottom="messages">
+            <div class="messages" #messagesBlock>
                 <div class="message-block" *ngFor="let message of messages" [ngClass]="{'grey-background': !message.IsReaded, 'normal-background': message.IsReaded}">
                     <div class="message" *ngIf="message.Owner === me">
                         <div class="date-me">
-                            {{message.Date|date:'medium'}}
+                            {{message.Date|amTimeAgo}}
                         </div>
                         <div class="concrete-message me">
                             {{message.Message}}
@@ -25,7 +26,7 @@
                     </div>
                     <div class="message" *ngIf="message.Owner === myParticipant">
                         <div class="date-him">
-                            {{message.Date|date:'medium'}}
+                            {{message.Date|amTimeAgo}}
                         </div>
                         <div class="concrete-message him">
                             {{message.Message}}
