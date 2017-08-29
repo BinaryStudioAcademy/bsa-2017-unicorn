@@ -27,6 +27,8 @@ namespace Unicorn.DataAccess.Context
         public DbSet<ContactProvider> ContactProviders { get; set; }
         public DbSet<PortfolioItem> PortfolioItems { get; set; }
         public DbSet<Rating> Ratings { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
+
         public AppContext() : base("DefaultConnection")
         {
             Database.SetInitializer(new UnicornDbInitializer());
@@ -37,7 +39,7 @@ namespace Unicorn.DataAccess.Context
         {
 
             modelBuilder.Entity<Role>()
-                .HasMany<Permission>(r => r.Permissions)
+                .HasMany(r => r.Permissions)
                 .WithMany(p => p.Roles)
                 .Map(cs =>
                 {
@@ -47,6 +49,9 @@ namespace Unicorn.DataAccess.Context
                 });
             modelBuilder.Entity<Person>()
                .Property(f => f.Birthday)
+               .HasColumnType("datetime2");
+            modelBuilder.Entity<Notification>()
+               .Property(n => n.Time)
                .HasColumnType("datetime2");
 
         }

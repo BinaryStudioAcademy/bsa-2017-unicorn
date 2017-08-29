@@ -13,7 +13,10 @@ import { TokenHelperService } from '../services/helper/tokenhelper.service';
 import { AccountService } from "../services/account.service";
 
 import { ProfileShortInfo } from "../models/profile-short-info.model";
+import { Notification } from "../models/notification.model";
+
 import { RoleRouter } from "../helpers/rolerouter";
+import { NotificationService } from "../services/notifications/notification.service";
 
 @Component({
   selector: 'app-menu',
@@ -36,7 +39,8 @@ export class MenuComponent implements OnInit {
 
   showAccountDetails: boolean;
   showNotifications: boolean;
-  notifications: Array<string>;
+  notifications: Notification[];
+  newNotification: Notification;
 
   constructor(
     private router: Router,
@@ -44,14 +48,16 @@ export class MenuComponent implements OnInit {
     private authEventService: AuthenticationEventService,
     private authLoginService: AuthenticationLoginService,
     private tokenHelper: TokenHelperService,
-    private accountService: AccountService) {
+    private accountService: AccountService,
+    private notificationService: NotificationService) {
     this.isLogged = this.tokenHelper.isTokenValid() && this.tokenHelper.isTokenNotExpired();
   }
 
   ngOnInit() {
     this.roleRouter = new RoleRouter();
     if (this.isLogged) {
-      this.accountService.getShortInfo(+this.tokenHelper.getClaimByName("accountid"))
+      let accountId = +this.tokenHelper.getClaimByName("accountid");
+      this.accountService.getShortInfo(accountId)
         .then(resp => {
           if(resp !== undefined){
             this.profileInfo = resp.body as ProfileShortInfo;
@@ -62,16 +68,18 @@ export class MenuComponent implements OnInit {
           }
         });
       this.setProfileRoute();
+
+      this.notificationService.connect(accountId)
+        .then(() => this.notificationService
+          .listen<Notification>("OnNotificationRecieved", notification => this.addNotification(notification)));
+      this.accountService.getNotifications(accountId)
+        .then(resp => this.notifications = resp.body as Notification[]);
     }
     else {
       this.initEmptyProfile();
       this.profileUrl = "";
+    
     }
-    this.notifications = [
-      "First notification",
-      "Second notification",
-      "Third notification"
-    ];
 
     this.addMenuItems();
     this.isEnabled = true;
@@ -79,6 +87,7 @@ export class MenuComponent implements OnInit {
     this.onLogIn = this.authEventService.loginEvent$
       .subscribe(() => {
         this.isLogged = true;
+        this.notificationService.connect(+this.tokenHelper.getClaimByName("accountid"));
         this.accountService.getShortInfo(+this.tokenHelper.getClaimByName("accountid"))
           .then(resp => this.profileInfo = resp.body as ProfileShortInfo);
         this.setProfileRoute();
@@ -170,5 +179,11 @@ export class MenuComponent implements OnInit {
         this.profileUrl = "/search";
         break;
     }
+  }
+
+  addNotification(notification: Notification): void {
+    this.notifications.push(notification);
+    this.newNotification = notification;
+    setTimeout(() => this.newNotification = undefined, 3000);
   }
 }

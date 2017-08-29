@@ -12,6 +12,9 @@ import { NguiMapModule } from '@ngui/map';
 import { CompanyService } from '../services/company-services/company.service';
 // import { MapComponent } from '../map/map.component';
 
+import { SearchService } from '../services/search.service';
+
+
 
 @NgModule({
   imports: [
@@ -30,7 +33,8 @@ import { CompanyService } from '../services/company-services/company.service';
     // MapComponent
   ],
   providers: [
-    CompanyService
+    CompanyService,
+    SearchService
   ]
 })
 export class SearchModule { }

@@ -29,13 +29,16 @@
     "angular2-social-login": "^3.1.1",
     "angularfire2": "^4.0.0-rc.1",
     "core-js": "^2.4.1",
+    "expose-loader": "^0.7.3",
     "firebase": "^4.2.0",
     "jquery": "^3.2.1",
     "ng-click-outside": "^2.4.1",
     "ng2-img-cropper": "^0.9.0",
     "ng2-semantic-ui": "^0.9.5",
+    "ng2-signalr": "^2.1.0",
     "ng2-toastr": "^4.1.2",
     "rxjs": "^5.4.1",
+    "signalr": "^2.2.2",
     "zone.js": "^0.8.14"
   },
   "devDependencies": {

@@ -20,8 +20,7 @@ import { DashboardService } from '../../../services/dashboard/dashboard.service'
 })
 export class VendorEditPortfolioComponent implements OnInit {
   @Input() private vendorId: number;
-  portfolio: PortfolioItem[];
-  history: VendorHistory[];
+  
   books: BookCard[];
 
   constructor(
@@ -30,17 +29,12 @@ export class VendorEditPortfolioComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // this.vendorService.getVendorPorfolio(this.vendorId)
-    //   .then(resp => this.portfolio = resp.body as PortfolioItem[]);
-    // this.vendorService.getVendorHistory(this.vendorId)
-    //   .then(resp => this.history = resp.body as VendorHistory[])
     this.loadData();
   }
 
   loadData() {
     this.dashboardService.getPortfolioBooks('vendor', this.vendorId).then(resp => {
       this.books = resp;
-      console.log(this.books);
     });
   }
 
