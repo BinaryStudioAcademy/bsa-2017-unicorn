@@ -54,7 +54,14 @@ export class UserTasksComponent implements OnInit {
   loadData() {
     this.bookService.getCustomerBooks(this.user.Id)
     .then(resp => {
-      this.books = resp;
+      this.books = resp.filter(b => b.Status != BookStatus.Confirmed)
+        .sort((b1, b2) => b1.Status - b2.Status)
+        .sort((b1, b2) => {
+          if (b1.Status !== b2.Status) return 0;
+          let f = new Date(b1.Date).getTime();
+          let s = new Date(b2.Date).getTime();
+          return f - s;
+        });
       console.log(resp);
     });
   }
