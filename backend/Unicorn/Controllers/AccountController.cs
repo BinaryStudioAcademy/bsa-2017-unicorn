@@ -46,6 +46,15 @@ namespace Unicorn.Controllers
                 return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
+        [HttpDelete]
+        [Route("{id}/notifications/{notificationId}")]
+        public async Task<HttpResponseMessage> RemoveNotifications(long id, long notificationId)
+        {
+            await _notificationService.RemoveAsync(notificationId);
+
+            return Request.CreateResponse(HttpStatusCode.NoContent);
+        }
+
         private IAccountService _accountService;
         private INotificationService _notificationService;
     }
