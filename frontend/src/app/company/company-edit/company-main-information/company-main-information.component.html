@@ -32,9 +32,7 @@
                     <div class="field">
                         <label>Change your location</label>
                         <div class="map">
-                            <agm-map [latitude]="company.Location.Latitude" [longitude]="company.Location.Longitude" [zoom]="18" style="height: 20em;">
-                                <agm-marker (dragEnd)="markerDragged($event)" [markerDraggable]="true" [latitude]="company.Location.Latitude" [longitude]="company.Location.Longitude"></agm-marker>
-                            </agm-map>
+
                         </div>
                     </div>
                 </div>

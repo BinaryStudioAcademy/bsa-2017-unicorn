@@ -6,6 +6,7 @@ import { Location } from '@angular/common';
 
 import { RegisterComponent } from './register-component/register.component';
 import { RegisterRoutingModule } from './register-routing.module';
+import { environment } from "../../environments/environment";
 
 import { SuiModule } from 'ng2-semantic-ui';
 

@@ -6,7 +6,7 @@ import { BookOrderService } from '../../services/book-order.service';
 import { UserService } from '../../services/user.service';
 import { TokenHelperService } from '../../services/helper/tokenhelper.service';
 import { BookOrder } from '../../models/book/book-order';
-import { Location } from '../../models/location.model';
+import { LocationModel } from '../../models/location.model';
 
 @Component({
   selector: 'app-book',
@@ -17,7 +17,7 @@ export class BookComponent implements OnInit {
   book: BookOrder;
   formIsSended: boolean;
   onSending: boolean;
-  private defaultLocation: Location;
+  private defaultLocation: LocationModel;
 
   @Input() routePath: string;
   @Input() routeId: number;

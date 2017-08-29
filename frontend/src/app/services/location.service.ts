@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { DataService } from './data.service';
 
-import { Location } from '../models/location.model';
+import { LocationModel } from '../models/location.model';
 
 import { Observable, Observer } from 'rxjs';
 import 'rxjs/add/operator/toPromise';
@@ -38,7 +38,7 @@ export class LocationService {
     }
 
     getCurrentLocation() {
-        var location = new Location();
+        var location = new LocationModel();
          if (navigator.geolocation)
           {
             navigator.geolocation.getCurrentPosition(position => {

@@ -16,7 +16,6 @@ import { UserMessagesComponent } from './user-messages/user-messages.component';
 import { PhotoService, Ng2ImgurUploader } from '../services/photo.service';
 import { UserService } from '../services/user.service';
 import { DataService } from "../services/data.service";
-import { AgmCoreModule } from "@agm/core";
 import { environment } from "../../environments/environment";
 import { UserMainComponent } from './user-main/user-main.component';
 import { UserMainInfoComponent } from './user-main/user-main-info/user-main-info.component';
@@ -29,11 +28,7 @@ import {ToastModule, ToastsManager, ToastOptions} from 'ng2-toastr/ng2-toastr';
 
 @NgModule({
     imports: [
-        AgmCoreModule.forRoot({
-            language: 'en',
-            libraries: ["places"],
-            apiKey: environment.googleMapsKey
-        }),
+        
         SuiModule,
         CommonModule,
         UserRoutingModule,

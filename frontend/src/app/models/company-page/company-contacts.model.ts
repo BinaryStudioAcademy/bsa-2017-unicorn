@@ -1,8 +1,8 @@
-import { Location } from "../location.model"
+import { LocationModel } from "../location.model"
 import { Contact } from "../contact.model";
 export interface CompanyContacts {
     Id: number;
     Title: string;
-    Location: Location;   
+    Location: LocationModel;   
     Contacts: Contact[];
 }

@@ -1,5 +1,6 @@
 import { Work } from "../work.model";
 import { BookStatus } from "./book.model";
+import { LocationModel } from '../location.model';
 
 export class VendorBook {
 	Id: number;
@@ -9,5 +10,5 @@ export class VendorBook {
 	Customer: string;
 	CustomerId: number;
     Work: Work;
-    Location: Location;
+    Location: LocationModel;
 }

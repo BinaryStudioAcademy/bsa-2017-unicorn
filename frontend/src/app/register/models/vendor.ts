@@ -1,4 +1,4 @@
-import { Location } from '../../models/location.model'
+import { LocationModel } from '../../models/location.model'
 
 export interface Vendor {
     birthday: any;
@@ -13,5 +13,5 @@ export interface Vendor {
     experience: number;
     position: string;
     speciality: string;
-    location: Location;
+    location: LocationModel;
 }

@@ -37,8 +37,6 @@ import {ToastOptions} from 'ng2-toastr';
 import { ShellComponent } from './shell/shell.component';
 import { MenuComponent } from './menu/menu.component';
 import { FooterComponent } from './footer/footer.component';
-import { AgmCoreModule } from "@agm/core";
-
 import { RegisterComponent } from './register/register-component/register.component';
 import { TokenHelperService } from './services/helper/tokenhelper.service';
 import {ToastModule, Toast} from 'ng2-toastr/ng2-toastr';
@@ -66,10 +64,6 @@ export class CustomOptions extends ToastOptions {
     BrowserModule,
     BrowserAnimationsModule, 
     ToastModule.forRoot(),
-    AgmCoreModule.forRoot({
-      language: 'en',
-      apiKey: environment.googleMapsKey
-  }),
     HttpClientModule,
     AppRoutingModule,
     SignBlockModule,

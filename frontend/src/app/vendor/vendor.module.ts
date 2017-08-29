@@ -36,7 +36,6 @@ import { CategoryService } from "../services/category.service";
 import { WorkService } from "../services/work.service";
 import { VendorEditContactsComponent } from './vendor-edit/vendor-edit-contacts/vendor-edit-contacts.component';
 import { ContactService } from "../services/contact.service";
-import { AgmCoreModule } from "@agm/core";
 
 
 @NgModule({
@@ -50,9 +49,6 @@ import { AgmCoreModule } from "@agm/core";
     CommonModule,
     SharedModule,
     PipeModule,
-    AgmCoreModule.forRoot({
-      apiKey: environment.googleMapsKey
-  }),
     ClickOutsideModule
   ],
   declarations: [

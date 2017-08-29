@@ -12,6 +12,7 @@ import { RegisterService } from '../../services/register.service';
 
 import { ComponentModalConfig, ModalSize, SuiModal } from 'ng2-semantic-ui';
 import { LocationService } from "../../services/location.service";
+import { LocationModel } from "../../models/location.model";
 
 export class RegisterModal extends ComponentModalConfig<void> {
   constructor() {
@@ -40,11 +41,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
   isLogged: boolean;
 
   roleSelected = false;
-
+  location: LocationModel;
   isCustomer = false;
   isVendor = false;
   isCompany = false;
-
+  
   constructor(
     public modal: SuiModal<void>,
     private zone: NgZone,
@@ -59,7 +60,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
     this.isLogged = false;
     this.error = false;
-    this.locationService.getCurrentLocation();
+    this.location = this.locationService.getCurrentLocation();
     this.initRoles();
   }
 

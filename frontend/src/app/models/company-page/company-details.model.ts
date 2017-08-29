@@ -1,4 +1,4 @@
-import { Location } from "../location.model"
+import { LocationModel } from "../location.model"
 import { CompanyWork } from "./company-work.model";
 
 export interface CompanyDetails {
@@ -12,5 +12,5 @@ export interface CompanyDetails {
     City: string;  
     ReviewsCount: number;
     Works: CompanyWork[];    
-    Location: Location;    
+    Location: LocationModel;    
 }

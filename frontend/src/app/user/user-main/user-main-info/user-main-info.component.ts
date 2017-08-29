@@ -2,7 +2,6 @@ import { Component, OnInit, Input,ViewChild, AfterViewChecked } from '@angular/c
 import { NgModel, NgForm } from '@angular/forms';
 import {SuiModule} from 'ng2-semantic-ui';
 import { User } from '../../../models/user';
-import { AgmMap } from "@agm/core";
 import { NguiMapModule, Marker } from "@ngui/map";
 import { UserService } from "../../../services/user.service";
 import { LocationService } from "../../../services/location.service";
@@ -14,7 +13,6 @@ import { Review} from "../../../models/review.model"
 })
 export class UserMainInfoComponent implements OnInit {
   @Input() user: User;
-  @ViewChild(AgmMap) private map: any;
   rating: number;
   reviewsCount: number;
   constructor(private userService: UserService) {}

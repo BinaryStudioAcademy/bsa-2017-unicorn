@@ -1,7 +1,6 @@
 ﻿import { Component, OnInit, Input, ViewChild, AfterViewChecked, ViewContainerRef } from '@angular/core';
 import { NgModel, NgForm } from '@angular/forms';
 import { User } from '../../models/user';
-import { AgmMap} from "@agm/core";
 import { LocationService } from "../../services/location.service";
 import { UserService } from "../../services/user.service";
 import {ToastsManager, Toast} from 'ng2-toastr';

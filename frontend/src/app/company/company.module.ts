@@ -18,7 +18,6 @@ import { environment } from "../../environments/environment";
 import { CompanyEditComponent } from './company-edit/company-edit.component';
 import { DataService } from "../services/data.service";
 import { PhotoService } from '../services/photo.service';
-import { NguiMapModule } from "@ngui/map";
 import { MapModule } from "../map/map.module";
 import { CompanyMainInformationComponent } from './company-edit/company-main-information/company-main-information.component';
 import { CompanyMessagesComponent } from './company-edit/company-messages/company-messages.component';
@@ -33,13 +32,10 @@ import { CompanyContactsComponent } from './company-edit/company-contacts/compan
 import { ChatModule } from "../chat/chat.module";
 import { PortfolioComponent } from './company-details/portfolio/portfolio.component';
 import { CompanyPortfolioComponent } from './company-edit/company-portfolio/company-portfolio.component';
-import { AgmCoreModule } from "@agm/core";
+
 
 @NgModule({
-  imports: [    
-    AgmCoreModule.forRoot({
-      apiKey: environment.googleMapsKey
-  }),
+  imports: [
     CommonModule,
     CompanyRoutingModule,
     FormsModule,

@@ -32,9 +32,7 @@
     <div class="column">
         <label class="gray_font">Your location:</label>
         <div class="map">
-            <agm-map [latitude]="user.Location.Latitude" [longitude]="user.Location.Longitude" [zoom]="18" style="height: 20em;">
-                <agm-marker (dragEnd)="markerDragged($event)" [markerDraggable]="true" [latitude]="user.Location.Latitude" [longitude]="user.Location.Longitude"></agm-marker>
-            </agm-map>
+
         </div>
     </div>
 

@@ -2,7 +2,7 @@ import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { SuiModule } from 'ng2-semantic-ui';
 
-import { Location } from "../../../models/location.model"
+import { LocationModel } from "../../../models/location.model"
 import { Vendor } from "../../../models/vendor.model";
 import { MapModel } from "../../../models/map.model";
 import { Work } from "../../../models/work.model";
@@ -23,7 +23,7 @@ export class VendorEditInfoComponent implements OnInit {
   @Input() vendor: Vendor;
   
   birthday: Date;
-  location: Location;
+  location: LocationModel;
   map: MapModel;
   dataLoaded: boolean;
   

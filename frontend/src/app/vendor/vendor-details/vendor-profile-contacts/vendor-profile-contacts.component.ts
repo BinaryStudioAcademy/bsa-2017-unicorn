@@ -5,7 +5,7 @@ import { NguiMapModule, Marker } from "@ngui/map";
 import { MapModel } from "../../../models/map.model";
 import { Vendor } from '../../../models/vendor.model';
 import { Contact } from "../../../models/contact.model";
-import { Location } from "../../../models/location.model";
+import { LocationModel } from "../../../models/location.model";
 import { LocationService } from "../../../services/location.service";
 import { VendorService } from "../../../services/vendor.service";
 
@@ -18,7 +18,7 @@ export class VendorProfileContactsComponent implements OnInit {
   @Input() private vendorId: number;
   
   contacts: Contact[];
-  location: Location;
+  location: LocationModel;
   map: MapModel;
   vendor: Vendor;
 

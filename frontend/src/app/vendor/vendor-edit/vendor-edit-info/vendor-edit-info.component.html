@@ -51,9 +51,7 @@
         <div class="ui container column">
             <h4>Help customers find you</h4>
             <div class="map">
-                <agm-map [latitude]="vendor.Location.Latitude" [longitude]="vendor.Location.Longitude" [zoom]="18" style="height: 20em;">
-                    <agm-marker (dragEnd)="markerDragged($event)" [markerDraggable]="true" [latitude]="vendor.Location.Latitude" [longitude]="vendor.Location.Longitude"></agm-marker>
-                </agm-map>
+
             </div>
         </div>
     </div>
