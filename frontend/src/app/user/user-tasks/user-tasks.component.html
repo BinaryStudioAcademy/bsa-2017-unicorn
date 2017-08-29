@@ -20,7 +20,7 @@
                 <p>
                     <sui-rating class="star" [isReadonly]="true" [ngModel]="book.Rating"></sui-rating>
                 </p>
-                <p><a>Review</a></p>
+                <p><a class="rev-link" (click)="showReview(book.Id)">Review</a></p>
             </div>
             <ng-template #nonRated>
                 <span>{{getStatus(book.Id)}}</span>

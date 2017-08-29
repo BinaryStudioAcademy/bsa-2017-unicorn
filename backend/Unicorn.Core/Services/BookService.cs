@@ -249,6 +249,7 @@ namespace Unicorn.Core.Services
                     Date = b.Date,
                     Description = b.Description,
                     Rating = GetRatingByBookId(b.Id),
+                    Review = GetReviewDtoByBookId(b.Id),
                     IsHidden = b.IsHidden,
                     Location = new LocationDTO()
                     {

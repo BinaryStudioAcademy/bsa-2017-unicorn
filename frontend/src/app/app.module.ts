@@ -43,6 +43,7 @@ import { TokenHelperService } from './services/helper/tokenhelper.service';
 import {ToastModule, Toast} from 'ng2-toastr/ng2-toastr';
 import { AccountService } from "./services/account.service";
 import { ChatModule } from "./chat/chat.module";
+import { ReviewModalComponent } from './review/review-modal/review-modal.component';
 
 export class CustomOptions extends ToastOptions {
   animate = 'fade';
@@ -57,7 +58,8 @@ export class CustomOptions extends ToastOptions {
     AppComponent,
     ShellComponent,
     MenuComponent,
-    FooterComponent
+    FooterComponent,
+    ReviewModalComponent
   ],
   imports: [
     SuiModule,
@@ -88,7 +90,10 @@ export class CustomOptions extends ToastOptions {
     AccountService,
    { provide: ToastOptions, useClass: CustomOptions}
   ],
-  entryComponents: [RegisterComponent],
+  entryComponents: [
+    RegisterComponent,
+    ReviewModalComponent
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

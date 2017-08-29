@@ -1,5 +1,6 @@
 import { BookLocation } from './location';
 import { Work } from './work';
+import { Review } from '../review.model';
 
 export interface BookCard {
     Id: number;
@@ -11,6 +12,7 @@ export interface BookCard {
     IsHidden: boolean;
     CustomerPhone: string;
     Rating: number;
+    Review: Review;
     Work: Work;
     Location: BookLocation;
 }

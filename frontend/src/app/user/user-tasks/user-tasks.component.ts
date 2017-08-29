@@ -3,6 +3,7 @@ import { User } from '../../models/user';
 import { NgModel } from '@angular/forms';
 
 import {SuiModalService, TemplateModalConfig, ModalTemplate, ModalSize, SuiActiveModal} from 'ng2-semantic-ui';
+import { ReviewModal } from '../../review/review-modal/review-modal.component';
 
 import { CustomerbookService } from '../../services/customerbook.service';
 import { ReviewService } from '../../services/review.service';
@@ -87,6 +88,11 @@ export class UserTasksComponent implements OnInit {
     config.isInverted = true;
     config.size = ModalSize.Tiny;
     this.currModal = this.modalService.open(config);
+  }
+
+  showReview(id: number) {
+    let book = this.getBookById(id);
+    this.modalService.open(new ReviewModal(book.Review));
   }
 
   saveReview(id: number) {

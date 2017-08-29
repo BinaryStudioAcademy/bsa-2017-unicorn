@@ -1,0 +1,16 @@
+<div class="ui comments content">
+    <div class="comment">
+        <a class="avatar">
+            <img src="{{modal.context.review.Avatar}}">
+        </a>
+        <div class="content">
+            <a class="author">{{modal.context.review.From}}</a>
+            <div class="metadata">
+                <span class="date">{{modal.context.review.Date | date: 'dd/MM/yyyy'}}</span>
+            </div>
+            <div class="text">
+                {{modal.context.review.Description}}
+            </div>
+        </div>
+    </div>
+</div>

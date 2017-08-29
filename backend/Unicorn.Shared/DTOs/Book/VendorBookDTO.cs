@@ -28,6 +28,8 @@ namespace Unicorn.Shared.DTOs.Book
 
         public bool IsHidden { get; set; }
 
+        public ReviewDTO Review { get; set; }
+
         public WorkDTO Work { get; set; }
 
         public LocationDTO Location { get; set; }

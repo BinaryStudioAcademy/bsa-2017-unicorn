@@ -20,7 +20,7 @@
                 <p>
                     <sui-rating class="star" [isReadonly]="true" [ngModel]="book.Rating"></sui-rating>
                 </p>
-                <p><a (click)="openModal()">Review</a></p>
+                <p><a (click)="openModal(book.Id)">Review</a></p>
             </div>
             <ng-template #nonRated>
                 <span>Waiting for review</span>
@@ -28,21 +28,3 @@
         </div>
     </div>
 </div>
-<ng-template let-context let-modal="modal" #modalTemplate>
-    <div class="ui comments content">
-        <div class="comment">
-            <a class="avatar">
-                <img src="http://www.lovemarks.com/wp-content/uploads/profile-avatars/default-avatar-ginger-guy.png">
-            </a>
-            <div class="content">
-                <a class="author">Matt</a>
-                <div class="metadata">
-                    <span class="date">Today at 5:42PM</span>
-                </div>
-                <div class="text">
-                    Some very long comments about vendor or company
-                </div>
-            </div>
-        </div>
-    </div>
-</ng-template>
