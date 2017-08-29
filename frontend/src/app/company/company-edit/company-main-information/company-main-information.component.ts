@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { CompanyDetails } from "../../../models/company-page/company-details.model";
 import { CompanyService } from "../../../services/company-services/company.service";
@@ -20,10 +20,14 @@ export class CompanyMainInformationComponent implements OnInit {
   isLoaded: boolean = false;
   map: MapModel;  
   position;
+  autocomplete: google.maps.places.Autocomplete;
+  address: any = {};
+  marker;
   @ViewChild('companyForm') public companyForm: NgForm;
 
   constructor(private companyService: CompanyService,
-    private route: ActivatedRoute, private LocationService: LocationService) { }
+    private route: ActivatedRoute, private LocationService: LocationService,
+    private ref: ChangeDetectorRef) { }
     markerDragged(event)
     {
       this.company.Location.Latitude = event.latLng.lat();
@@ -62,5 +66,32 @@ export class CompanyMainInformationComponent implements OnInit {
     }
     this.isLoaded = true;
     this.companyService.saveCompanyDetails(this.company).then(() => {this.isLoaded = false});
+  }
+  initialized(autocomplete: any) {
+    this.autocomplete = autocomplete;
+  }
+
+  placeChanged(event) {
+    let place = this.autocomplete.getPlace();
+    for (let i = 0; i < place.address_components.length; i++) {
+      let addressType = place.address_components[i].types[0];
+      this.address[addressType] = place.address_components[i].long_name;
+    }
+
+    this.position = this.address.locality;
+    this.company.Location.Latitude = event.geometry.location.lat();
+    this.company.Location.Longitude = event.geometry.location.lng()
+
+    this.LocationService.getLocDetails(this.company.Location.Latitude,this.company.Location.Longitude)
+   .subscribe(
+    result => {
+      
+       this.company.Location.Adress=result.formatted_address;
+        this.company.Location.City=result.address_components[3].short_name;
+    },
+    error => console.log(error),
+    () => console.log('Geocoding completed!')
+    );
+    this.ref.detectChanges();
   }
 }

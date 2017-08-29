@@ -49,11 +49,18 @@
             </div>
         </div>
         <div class="ui container column">
-            <h4>Help customers find you</h4>
-            <ngui-map class="map" zoom="14" [center]="position">
-                <marker [position]="position" [draggable]="true" (dragend)="markerDragged($event)">
-                </marker>
-            </ngui-map>
+            <div class="ui form">
+                <div class="field">
+                    <label>Help customers find you</label>
+                    <div class="ui icon input">
+                        <input places-auto-complete (initialized$)="initialized($event)" (place_changed)="placeChanged($event)" [types]="['geocode']" placeholder="TYPE HERE..." />
+                    </div>
+                    <ngui-map class="map" zoom="14" [center]="position">
+                        <marker [position]="position" [draggable]="true" (dragend)="markerDragged($event)">
+                        </marker>
+                    </ngui-map>
+                </div>
+            </div>
         </div>
     </div>
     <div class="ui divider"></div>

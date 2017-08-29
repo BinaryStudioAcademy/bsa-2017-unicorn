@@ -31,7 +31,10 @@
                 <div class="ui form">
                     <div class="field">
                         <label>Change your location</label>
-                        <ngui-map class="map" zoom="14" [center]="position">
+                        <div class="ui input">
+                            <input places-auto-complete (initialized$)="initialized($event)" (place_changed)="placeChanged($event)" [types]="['geocode']" placeholder="TYPE HERE..." />
+                        </div>
+                        <ngui-map class="map" zoom="14" [center]="position" style="margin-top: 5px">
                             <marker [position]="position" [draggable]="true" (dragend)="markerDragged($event)">
                             </marker>
                         </ngui-map>

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { SuiModule } from 'ng2-semantic-ui';
 
@@ -34,6 +34,9 @@ export class VendorEditInfoComponent implements OnInit {
   works: Work[];
   subcategoryWorks: Work[];
   position;
+  autocomplete: google.maps.places.Autocomplete;
+  address: any = {};
+  marker;
   @ViewChild('vendorForm') public vendorForm: NgForm;
   
   constructor(
@@ -41,7 +44,8 @@ export class VendorEditInfoComponent implements OnInit {
     private vendorService: VendorService,
     private categoryService: CategoryService,
     private workService: WorkService,
-    private LocationService: LocationService
+    private LocationService: LocationService,
+    private ref: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
@@ -80,6 +84,33 @@ export class VendorEditInfoComponent implements OnInit {
        error => console.log(error),
        () => console.log('Geocoding completed!')
        );
+  }
+  initialized(autocomplete: any) {
+    this.autocomplete = autocomplete;
+  }
+
+  placeChanged(event) {
+    let place = this.autocomplete.getPlace();
+    for (let i = 0; i < place.address_components.length; i++) {
+      let addressType = place.address_components[i].types[0];
+      this.address[addressType] = place.address_components[i].long_name;
+    }
+
+    this.position = this.address.locality;
+    this.vendor.Location.Latitude = event.geometry.location.lat();
+    this.vendor.Location.Longitude = event.geometry.location.lng()
+
+    this.LocationService.getLocDetails(this.vendor.Location.Latitude,this.vendor.Location.Longitude)
+   .subscribe(
+    result => {
+      
+       this.vendor.Location.Adress=result.formatted_address;
+        this.vendor.Location.City=result.address_components[3].short_name;
+    },
+    error => console.log(error),
+    () => console.log('Geocoding completed!')
+    );
+    this.ref.detectChanges();
   }
   saveVendor(): void {
     if (this.vendorForm.invalid) {
