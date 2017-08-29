@@ -10,6 +10,7 @@ using Unicorn.Shared.DTOs.Vendor;
 using Unicorn.Shared.DTOs.Book;
 using System.Data.Entity;
 using System;
+using Unicorn.Shared.DTOs.Review;
 
 namespace Unicorn.Core.Services
 {
@@ -293,6 +294,25 @@ namespace Unicorn.Core.Services
             return customerBooks;
         }
 
+        private ReviewDTO GetReviewDtoByBookId(long id)
+        {
+            return _unitOfWork.ReviewRepository
+                .Query
+                .Where(r => r.BookId == id)
+                .Select(r => new ReviewDTO
+                {
+                    Id = r.Id,
+                    Avatar = r.Avatar,
+                    BookId = id,
+                    Date = r.Date,
+                    Description = r.Description,
+                    From = r.From,
+                    FromAccountId = r.FromAccountId,
+                    To = r.To,
+                    ToAccountId = r.ToAccountId
+                }).Single();
+        }
+
         private CustomerBookDTO BookToCustomerBookDTO(Book b)
         {
             return new CustomerBookDTO
@@ -306,6 +326,7 @@ namespace Unicorn.Core.Services
                 Rating = GetRatingByBookId(b.Id),
                 Status = b.Status,
                 IsHidden = b.IsHidden,
+                Review = GetReviewDtoByBookId(b.Id),
                 Location = new LocationDTO
                 {
                     Id = b.Location.Id,
@@ -359,7 +380,12 @@ namespace Unicorn.Core.Services
 
         public async Task<IEnumerable<VendorBookDTO>> GetFinishedOrdersAsync(string role, long id)
         {
-            return await GetOrdersByStatus(role, id, BookStatus.Finished);
+            var books = await GetOrdersAsync(role, id);
+            if (books == null)
+            {
+                return Enumerable.Empty<VendorBookDTO>();
+            }
+            return books.Where(b => b.Status == BookStatus.Finished || b.Status == BookStatus.Confirmed);
         }
 
         private async Task<IEnumerable<VendorBookDTO>> GetOrdersByStatus(string role, long id, BookStatus status)

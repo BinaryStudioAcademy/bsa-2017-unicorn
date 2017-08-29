@@ -53,4 +53,9 @@ export class DashboardFinishedComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
+  isRated(id: number): boolean {
+    let book = this.books.filter(b => b.Id == id)[0];
+    return book.Status == BookStatus.Confirmed;
+  }
+
 }

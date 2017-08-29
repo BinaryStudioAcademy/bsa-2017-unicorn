@@ -2,11 +2,17 @@ import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { User } from '../../models/user';
 import { NgModel } from '@angular/forms';
 
-import {SuiModalService, TemplateModalConfig, ModalTemplate, ModalSize} from 'ng2-semantic-ui';
+import {SuiModalService, TemplateModalConfig, ModalTemplate, ModalSize, SuiActiveModal} from 'ng2-semantic-ui';
 
 import { CustomerbookService } from '../../services/customerbook.service';
+import { ReviewService } from '../../services/review.service';
 
 import { CustomerBook, BookStatus } from '../../models/book/book.model';
+import { ShortReview } from '../../models/short-review';
+
+export interface IContext {
+  id: number;
+}
 
 @Component({
   selector: 'app-user-tasks',
@@ -16,27 +22,48 @@ import { CustomerBook, BookStatus } from '../../models/book/book.model';
 export class UserTasksComponent implements OnInit {
   
   @ViewChild('modalTemplate')
-  public modalTemplate:ModalTemplate<void, string, string>
+  public modalTemplate:ModalTemplate<IContext, void, void>
 
   @Input() user:User;
-  rev: string;
+
+  currModal: SuiActiveModal<IContext, {}, void>;
+  
+  review: ShortReview = {
+    BookId: 0,
+    Grade: 0,
+    PerformerId: 0,
+    PerformerType: '',
+    Text: ''
+  };
+
+  loader: boolean;
 
   books: CustomerBook[];
 
   constructor(
     private bookService: CustomerbookService,
-    private modalService: SuiModalService
+    private modalService: SuiModalService,
+    private reviewService: ReviewService
   ) { }
 
   ngOnInit() {
+    this.loadData();
+  }
+
+  loadData() {
     this.bookService.getCustomerBooks(this.user.Id)
-      .then(resp => {
-        this.books = resp;
-      });
+    .then(resp => {
+      this.books = resp;
+      console.log(resp);
+    });
+  }
+
+  getBookById(id: number): CustomerBook {
+    return this.books.filter(b => b.Id == id)[0];
   }
 
   getStatus(id: number): string {
-    let status = this.books.filter(b => b.Id == id)[0].Status;
+    let status = this.getBookById(id).Status;
     switch (status) {
       case BookStatus.Pending: return 'Pending';
       case BookStatus.Accepted: return 'Accepted';
@@ -47,14 +74,37 @@ export class UserTasksComponent implements OnInit {
   }
 
   isFinished(id: number): boolean {
-    return this.books.filter(b => b.Id == id)[0].Status == BookStatus.Finished;
+    return this.getBookById(id).Status == BookStatus.Finished;
   }
 
-  openModal() {
-    const config = new TemplateModalConfig<void, string, string>(this.modalTemplate);
+  isRated(id: number): boolean {
+    return this.getBookById(id).Status == BookStatus.Confirmed;
+  }
+
+  openModal(bookId: number) {
+    const config = new TemplateModalConfig<IContext, void, void>(this.modalTemplate);
+    config.context = {id: bookId};
     config.isInverted = true;
     config.size = ModalSize.Tiny;
-    this.modalService.open(config);
+    this.currModal = this.modalService.open(config);
+  }
+
+  saveReview(id: number) {
+    this.loader = true;
+    let book = this.getBookById(id);
+    this.review.BookId = id;
+    this.review.PerformerId = book.PerformerId;
+    this.review.PerformerType = book.PerformerType;
+    this.reviewService.saveReview(this.review).then(resp => {
+      this.loadData();
+      this.loader = false;
+      this.currModal.deny(undefined);
+      this.review.Text = '';
+    }).catch(err => {
+      this.loader = false;
+      this.currModal.deny(undefined);
+      this.review.Text = '';
+    });
   }
 
 }

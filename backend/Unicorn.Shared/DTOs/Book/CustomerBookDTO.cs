@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Unicorn.DataAccess.Entities;
+using Unicorn.Shared.DTOs.Review;
 
 namespace Unicorn.Shared.DTOs.Book
 {
@@ -28,6 +29,8 @@ namespace Unicorn.Shared.DTOs.Book
         public bool IsHidden { get; set; }
 
         public WorkDTO Work { get; set; }
+
+        public ReviewDTO Review { get; set; }
 
         public LocationDTO Location { get; set; }
     }

@@ -16,6 +16,7 @@ import { UserMessagesComponent } from './user-messages/user-messages.component';
 import { PhotoService, Ng2ImgurUploader } from '../services/photo.service';
 import { UserService } from '../services/user.service';
 import { DataService } from "../services/data.service";
+import { ReviewService } from '../services/review.service';
 import { CustomerbookService } from '../services/customerbook.service';
 import { AgmCoreModule } from "@agm/core";
 import { environment } from "../../environments/environment";
@@ -58,7 +59,8 @@ import {ToastModule, ToastsManager, ToastOptions} from 'ng2-toastr/ng2-toastr';
     providers: [
         DataService,
         UserService,
-        CustomerbookService
+        CustomerbookService,
+        ReviewService
     ]
 })
 export class UserModule { }

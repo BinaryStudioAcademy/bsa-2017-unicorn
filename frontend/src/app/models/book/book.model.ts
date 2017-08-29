@@ -1,6 +1,7 @@
 import {Vendor} from '../vendor.model'
 import { Work } from "../work.model";
 import { CompanyShort } from "../company-page/company-short.model";
+import { Review } from '../review.model';
 
 export interface Book {
 	Date: Date;
@@ -21,6 +22,7 @@ export interface CustomerBook {
     PerformerId: number;
     PerformerType: string;
     Rating: number;
+    Review: Review;
     IsHidden: boolean;
     Work: Work;
     Location: Location;
