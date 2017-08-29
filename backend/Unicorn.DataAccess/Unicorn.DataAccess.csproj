@@ -61,6 +61,9 @@
     <Compile Include="Entities\ChatDialog.cs" />
     <Compile Include="Entities\ChatMessage.cs" />
     <Compile Include="Entities\ContactProvider.cs" />
+    <Compile Include="Entities\Enum\BookStatus.cs" />
+    <Compile Include="Entities\Enum\NotificationType.cs" />
+    <Compile Include="Entities\Notification.cs" />
     <Compile Include="Entities\Rating.cs" />
     <Compile Include="Entities\Enum\RoleType.cs" />
     <Compile Include="Entities\SocialAccount.cs" />

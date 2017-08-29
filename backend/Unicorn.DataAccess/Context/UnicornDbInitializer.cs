@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+
 using Unicorn.DataAccess.Entities;
+using Unicorn.DataAccess.Entities.Enum;
 
 namespace Unicorn.DataAccess.Context
 {

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { DataService } from "./data.service";
 
 import { ProfileShortInfo } from "../models/profile-short-info.model";
+import { Notification } from "../models/notification.model";
 
 @Injectable()
 export class AccountService {
@@ -17,5 +18,10 @@ export class AccountService {
   	getShortInfo(id: number): Promise<any> {
 		return this.dataService.getFullRequest<ProfileShortInfo>(`${this.apiController}/${id}`)
 			.catch(err => alert(err));
-  	}
+	}
+	  
+	getNotifications(id: number): Promise<any> {
+		return this.dataService.getFullRequest<Notification>(`${this.apiController}/${id}/notifications`)
+		.catch(err => alert(err));
+	}
 }

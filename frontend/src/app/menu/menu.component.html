@@ -44,7 +44,7 @@
                         <div class="ui middle aligned divided list">
                             <div class="item" *ngFor="let notif of notifications">
                                 <div class="content">
-                                    <a class="header">{{notif}}</a>
+                                    <a class="header">{{notif.Message}}</a>
                                 </div>
                             </div>
                         </div>
@@ -54,6 +54,15 @@
                             <div class="item">
                                 <div class="content">
                                     <a class="header">Empty List</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dropdown-content" *ngIf="newNotification !== undefined">
+                        <div class="ui middle aligned divided list">
+                            <div class="item">
+                                <div class="content">
+                                    <a class="header">{{newNotification.Message}}</a>
                                 </div>
                             </div>
                         </div>

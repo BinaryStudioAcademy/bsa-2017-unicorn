@@ -133,12 +133,6 @@ namespace Unicorn.Core.Services
         }
 
 
-
-        public async Task<ICollection<CompanyDetails>> GetSearchCompanies(string category, string subcategory, int? date)
-        {
-            return await GetSearchCompaniesMethod(category, subcategory, date);
-        }
-
         #endregion
 
         #region PrivateMethods
