@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Unicorn.Core.Interfaces;
 using Unicorn.DataAccess.Entities;
+using Unicorn.DataAccess.Entities.Enum;
 using Unicorn.DataAccess.Interfaces;
 using Unicorn.Shared.DTOs.Chat;
 
@@ -36,13 +37,12 @@ namespace Unicorn.Core.Providers
 
             _unitOfWork.ChatMessageRepository.Create(cmsg);
             await _unitOfWork.SaveAsync();
-
         }
 
         public async Task CreateDialog(ChatDialogDTO dialog)
         {
-            var participant1 = await _unitOfWork.AccountRepository.GetByIdAsync(dialog.ParticipantOneId);
-            var participant2 = await _unitOfWork.AccountRepository.GetByIdAsync(dialog.ParticipantTwoId);
+            var participant1 = await _unitOfWork.AccountRepository.GetByIdAsync(dialog.ParticipantOne.Id);
+            var participant2 = await _unitOfWork.AccountRepository.GetByIdAsync(dialog.ParticipantTwo.Id);
 
             var dl = new ChatDialog
             {
@@ -66,8 +66,8 @@ namespace Unicorn.Core.Providers
             ChatDialogDTO dl = new ChatDialogDTO
             {
                 Id = dialogId,
-                ParticipantOneId = dialog.Participant1.Id,
-                ParticipantTwoId = dialog.Participant2.Id,
+                ParticipantOne = new Participant() { Id = dialog.Participant1.Id, Name = GetName(dialog.Participant1) },
+                ParticipantTwo = new Participant() { Id = dialog.Participant2.Id, Name = GetName(dialog.Participant2) },
                 Messages = dialog.Messages.Select(x => new ChatMessageDTO
                 {
                     DialogId = x.Dialog.Id,
@@ -81,14 +81,59 @@ namespace Unicorn.Core.Providers
             return dl;
         }
 
-        public Task Remove(ChatMessageDTO msg)
+        public IEnumerable<ChatDialogDTO> GetAllDialogs(long accountId)
         {
-            throw new NotImplementedException();
+            string GetName(Account acc)
+            {
+                string name = null;
+
+                switch (acc.Role.Type)
+                {
+                    case RoleType.Customer:
+                        var customer = _unitOfWork.CustomerRepository.Query.First(x => x.Person.Account.Id == acc.Id).Person;
+                        name = $"{customer.Name} {customer.Surname}";
+                        break;
+                    case RoleType.Company:
+                        name = _unitOfWork.CompanyRepository.Query.First(x => x.Account.Id == acc.Id).Name;
+                        break;
+                    case RoleType.Vendor:
+                        var vendor = _unitOfWork.VendorRepository.Query.First(x => x.Person.Account.Id == acc.Id).Person;
+                        name = $"{vendor.Name} {vendor.Surname}";
+                        break;
+                }
+
+                return name;
+            }
+
+            var dialogs = _unitOfWork.ChatDialogRepository.Query
+                .Include(x => x.Participant1)
+                .Include(x => x.Participant2)
+               .Where(x => x.Participant1.Id == accountId || x.Participant2.Id == accountId)               
+               .Select(x => new ChatDialogDTO()
+               {
+                   Id = x.Id,
+                   ParticipantOne = new Participant() { Id = x.Participant1.Id, Name = GetName(x.Participant1) },
+                   ParticipantTwo = new Participant() { Id = x.Participant2.Id, Name = GetName(x.Participant2) },
+               }).ToList();
+
+            return dialogs;
+        }
+
+        public async Task RemoveDialog(long dialogId)
+        {
+            _unitOfWork.ChatDialogRepository.Delete(dialogId);
+            await _unitOfWork.SaveAsync();
+        }
+
+        public async Task RemoveMessage(long messageId)
+        {
+            _unitOfWork.ChatMessageRepository.Delete(messageId);
+            await _unitOfWork.SaveAsync();
         }
 
         public Task Update(ChatMessageDTO msg)
         {
             throw new NotImplementedException();
-        }
+        }       
     }
 }
