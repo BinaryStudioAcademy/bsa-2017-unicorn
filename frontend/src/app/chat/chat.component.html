@@ -14,7 +14,7 @@
     <div class="chat-block">
         <div class="under-chat-block">
             <div class="messages" #messagesBlock scroll-to-bottom="messages">
-                <div class="message-block" *ngFor="let message of messages">
+                <div class="message-block" *ngFor="let message of messages" [ngClass]="{'grey-background': !message.IsReaded, 'normal-background': message.IsReaded}">
                     <div class="message" *ngIf="message.Owner === me">
                         <div class="date-me">
                             {{message.Date|date:'medium'}}
@@ -35,11 +35,10 @@
             </div>
         </div>
         <div class="ui form">
-            <div class="field">
+            <div class="field" style="display: flex;">
+                <textarea #textArea (keydown)="onChange($event)" [ngStyle]="{'height.px': inputHeight}" class="prompt" type="text" placeholder="Type here..." [(ngModel)]="writtenMessage" style="display:inline">                        
+                </textarea>
                 <div class="ui icon input">
-                    <textarea (keyup)="onChange($event)" [ngStyle]="{'height.px': inputHeight}" class="prompt" type="text" placeholder="Type here..." [(ngModel)]="writtenMessage" style="display:inline">
-                        
-                    </textarea>
                     <i class="talk outline link icon" (click)="onWrite()"></i>
                 </div>
             </div>

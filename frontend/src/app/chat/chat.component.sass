@@ -26,20 +26,20 @@ $tab-color: #FF647A;
 
 .messages
     overflow-y: auto;
-    overflow-x: hidden;
-    padding: 0 10px;
+    overflow-x: hidden;    
 
 textarea
-    font-size: 15px;
-    margin: 0!important;
-    width: 100%!important;     
-    min-height: 45px!important
-    max-height: 85px!important;
+    font-size: 14px!important;
+    padding: 12px!important;
+    width: 100%!important;        
+    min-height: 43px!important
+    max-height: 96px!important;
     border-radius: 0!important;
     padding-right: 2em!important;
     overflow-y: auto!important;
     overflow-x: hidden!important;
-    resize: none!important;
+    resize: none!important;    
+    
 
 
 .concrete-message
@@ -50,10 +50,11 @@ textarea
     margin-bottom: 5px;
     font-family: Helvetica, Arial, sans-serif;
     max-width: 45%;
-    min-width: 5%;        
+    min-width: 20%;  
+    word-wrap: break-word;      
 
 .concrete-message.me
-    text-align: right;
+    text-align: left;
 
 .concrete-message.him
     text-align: left;
@@ -91,7 +92,7 @@ textarea
 .message-block
     display: flex;
     flex-direction: column;
-    padding: 5px 0;    
+    padding: 5px 10px;      
 
 .user
     display: flex;    
@@ -128,9 +129,20 @@ textarea
 #active
     background: #f5bec6;
 
+.ui.icon.input
+    flex-basis: 7%;
+
 .talk.outline.link.icon
     background: rgb(176, 213, 247);
     font-size: 1.2em;
     font-weight: 700;
-    color: black;    
-    margin-right: 10px;
+    color: black;   
+    width: 100%; 
+    border-radius: 0;
+
+.grey-background
+    background: rgba(189, 189, 189, 0.24)!important;
+
+.normal-background
+    background: #fff!important;
+    
