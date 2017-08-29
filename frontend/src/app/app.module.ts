@@ -44,6 +44,7 @@ import { AccountService } from "./services/account.service";
 import { NotificationService } from "./services/notifications/notification.service";
 
 import { ChatModule } from "./chat/chat.module";
+import { ReviewModalComponent } from './review/review-modal/review-modal.component';
 
 export class CustomOptions extends ToastOptions {
   animate = 'fade';
@@ -65,7 +66,8 @@ export function getDefaultSignalRConfig(): SignalRConfiguration {
     AppComponent,
     ShellComponent,
     MenuComponent,
-    FooterComponent
+    FooterComponent,
+    ReviewModalComponent
   ],
   imports: [
     SuiModule,
@@ -98,7 +100,10 @@ export function getDefaultSignalRConfig(): SignalRConfiguration {
     NotificationService,
    { provide: ToastOptions, useClass: CustomOptions}
   ],
-  entryComponents: [RegisterComponent],
+  entryComponents: [
+    RegisterComponent,
+    ReviewModalComponent
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

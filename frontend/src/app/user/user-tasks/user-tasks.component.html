@@ -1,30 +1,56 @@
-﻿<table class="ui single line table" *ngIf="user!== undefined" >
-  <thead>
-    <tr>
-      <th>Date of request</th>
-      <th>Type of work</th>
-      <th>Description</th>
-      <th>Vendor</th>
-      <th>Status</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let item of user.Books">
-      <td >{{item.date|date:fullDate}}</td>
-      <td >{{item.workType}}</td>
-      <td >{{item.description}}</td>
-      <td ><a>{{item.vendor}}</a></td>
-      <td >{{item.status}}</td>
-      <td>
-
-        <div class="ui vertical animated button" tabindex="0">
-          <div class="hidden content" style="color:#FF647A;">Chat</div>
-          <div class="visible content">
-            <i class="mail outline icon" style="color:#FF647A;"></i>
-          </div>
+﻿<div class="sixteen wide column" *ngIf="books !== undefined">
+    <div class="ui segment" *ngIf="books.length == 0">
+        <span id="empty-header">There are no tasks</span>
+    </div>
+    <div class="ui segment book-card grid" *ngFor="let book of books">
+        <div class="book-img two wide column">
+            <img class="ui tiny circular image" src="{{book.Work.Icon}}">
         </div>
-      </td>
-    </tr>
-  </tbody>
-</table>
+        <div class="book-info five wide column">
+            <p>{{book.Work.Name}} <span align=right>{{book.Date | date: 'dd/MM/yyyy'}}</span></p>
+            <p>{{book.Description}}</p>
+        </div>
+        <div class="customer-info five wide column">
+            <p>{{book.Performer}}</p>
+            <p><i class="colored call icon"></i>somephone</p>
+            <p><i class="colored map pin icon"></i>{{book.Location.City}},&nbsp;{{book.Location.Adress}}</p>
+        </div>
+        <div class="book-actions four wide column">
+            <div *ngIf="isRated(book.Id); else nonRated">
+                <p>
+                    <sui-rating class="star" [isReadonly]="true" [ngModel]="book.Rating"></sui-rating>
+                </p>
+                <p><a class="rev-link" (click)="showReview(book.Id)">Review</a></p>
+            </div>
+            <ng-template #nonRated>
+                <span *ngIf="!isFinished(book.Id)">{{getStatus(book.Id)}}</span>
+                <a *ngIf="isFinished(book.Id)" class="ui button review-btn" (click)="openModal(book.Id)">Leave review</a>
+            </ng-template>
+
+        </div>
+    </div>
+</div>
+<ng-template let-context let-modal="modal" #modalTemplate>
+    <div class="ui comments content">
+        <div class="comment">
+            <a class="avatar">
+                <img src="{{user.Avatar}}">
+            </a>
+            <div class="content">
+                <a class="author">{{user.Name}}</a>
+                <div class="text">
+                    <sui-rating name="rating" [(ngModel)]="review.Grade" class="star" [isReadonly]="false"></sui-rating>
+                </div>
+            </div>
+        </div>
+        <form class="ui reply form" name="reviewForm" #reviewForm="ngForm">
+            <div class="field">
+                <textarea required placeholder="LEAVE REVIEW" name="review" [(ngModel)]="review.Text" #taskreview="ngModel"></textarea>
+                <div *ngIf="taskreview.invalid && (taskreview.dirty)" class="valid-error">* Required</div>
+            </div>
+            <a (click)="saveReview(context.id)" [ngClass]="{'loading': loader}" class="ui labeled submit icon button review-btn" [ngClass]="{'disabled': reviewForm.invalid}">
+                <i class="icon edit"></i> Save review
+            </a>
+        </form>
+    </div>
+</ng-template>

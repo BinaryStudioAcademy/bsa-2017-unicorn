@@ -48,6 +48,7 @@
     <Compile Include="DTOs\AccountDTO.cs" />
     <Compile Include="DTOs\Book\BookDTO.cs" />
     <Compile Include="DTOs\Book\BookOrderDTO.cs" />
+    <Compile Include="DTOs\Book\CustomerBookDTO.cs" />
     <Compile Include="DTOs\Book\VendorBookDTO.cs" />
     <Compile Include="DTOs\CategoryDTO.cs" />
     <Compile Include="DTOs\Chat\ChatDialogDTO.cs" />
@@ -84,6 +85,7 @@
     <Compile Include="DTOs\Register\CustomerRegisterDTO.cs" />
     <Compile Include="DTOs\Register\VendorRegisterDTO.cs" />
     <Compile Include="DTOs\ReviewDTO.cs" />
+    <Compile Include="DTOs\Review\ShortReviewDTO.cs" />
     <Compile Include="DTOs\RoleDTO.cs" />
     <Compile Include="DTOs\Search\SearchPerformerDTO.cs" />
     <Compile Include="DTOs\ShortProfileInfoDTO.cs" />

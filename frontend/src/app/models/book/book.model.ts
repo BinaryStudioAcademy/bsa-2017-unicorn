@@ -1,6 +1,7 @@
 import {Vendor} from '../vendor.model'
 import { Work } from "../work.model";
 import { CompanyShort } from "../company-page/company-short.model";
+import { Review } from '../review.model';
 import { LocationModel } from '../location.model';
 
 export interface Book {
@@ -13,8 +14,25 @@ export interface Book {
 	Work: Work;
 }
 
+export interface CustomerBook {
+    Id: number;
+    Date: Date;
+    Status: BookStatus;
+    Description: string;
+    Performer: string;
+    PerformerId: number;
+    PerformerType: string;
+    Rating: number;
+    Review: Review;
+    IsHidden: boolean;
+    Work: Work;
+    Location: Location;
+}
+
 export enum BookStatus {
-	Accepted,
+    Pending,
+    Accepted,
+    Declined,
     InProgress,
     Finished,
     Confirmed

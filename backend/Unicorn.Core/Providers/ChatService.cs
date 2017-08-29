@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Unicorn.Core.Interfaces;
 using Unicorn.DataAccess.Entities;
+using Unicorn.DataAccess.Entities.Enum;
 using Unicorn.DataAccess.Interfaces;
 using Unicorn.Shared.DTOs.Chat;
 
@@ -36,13 +37,12 @@ namespace Unicorn.Core.Providers
 
             _unitOfWork.ChatMessageRepository.Create(cmsg);
             await _unitOfWork.SaveAsync();
-
         }
 
         public async Task CreateDialog(ChatDialogDTO dialog)
         {
-            var participant1 = await _unitOfWork.AccountRepository.GetByIdAsync(dialog.ParticipantOneId);
-            var participant2 = await _unitOfWork.AccountRepository.GetByIdAsync(dialog.ParticipantTwoId);
+            var participant1 = await _unitOfWork.AccountRepository.GetByIdAsync(dialog.ParticipantOne.Id);
+            var participant2 = await _unitOfWork.AccountRepository.GetByIdAsync(dialog.ParticipantTwo.Id);
 
             var dl = new ChatDialog
             {
@@ -66,8 +66,8 @@ namespace Unicorn.Core.Providers
             ChatDialogDTO dl = new ChatDialogDTO
             {
                 Id = dialogId,
-                ParticipantOneId = dialog.Participant1.Id,
-                ParticipantTwoId = dialog.Participant2.Id,
+                ParticipantOne = new Participant() { Id = dialog.Participant1.Id },
+                ParticipantTwo = new Participant() { Id = dialog.Participant2.Id },
                 Messages = dialog.Messages.Select(x => new ChatMessageDTO
                 {
                     DialogId = x.Dialog.Id,
@@ -81,9 +81,32 @@ namespace Unicorn.Core.Providers
             return dl;
         }
 
-        public Task Remove(ChatMessageDTO msg)
+        public IEnumerable<ChatDialogDTO> GetAllDialogs(long accountId)
         {
-            throw new NotImplementedException();
+            var dialogs = _unitOfWork.ChatDialogRepository.Query
+                .Include(x => x.Participant1)
+                .Include(x => x.Participant2)
+               .Where(x => x.Participant1.Id == accountId || x.Participant2.Id == accountId)
+               .Select(x => new ChatDialogDTO()
+               {
+                   Id = x.Id,
+                   ParticipantOne = new Participant() { Id = x.Participant1.Id },
+                   ParticipantTwo = new Participant() { Id = x.Participant2.Id },
+               }).ToList();
+
+            return dialogs;
+        }
+
+        public async Task RemoveDialog(long dialogId)
+        {
+            _unitOfWork.ChatDialogRepository.Delete(dialogId);
+            await _unitOfWork.SaveAsync();
+        }
+
+        public async Task RemoveMessage(long messageId)
+        {
+            _unitOfWork.ChatMessageRepository.Delete(messageId);
+            await _unitOfWork.SaveAsync();
         }
 
         public Task Update(ChatMessageDTO msg)

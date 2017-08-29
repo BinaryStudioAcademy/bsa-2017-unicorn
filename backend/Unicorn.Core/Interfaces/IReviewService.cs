@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using Unicorn.DataAccess.Entities;
 using Unicorn.Shared.DTOs;
+using Unicorn.Shared.DTOs.Review;
 
 namespace Unicorn.Core.Interfaces
 {
@@ -15,5 +16,6 @@ namespace Unicorn.Core.Interfaces
         Task<ReviewDTO> GetByIdAsync(long id);
         Task<IEnumerable<ReviewDTO>> GetByReceiverIdAsync(long id);
         Task<IEnumerable<ReviewDTO>> GetBySenderIdAsync(long id);
+        Task SaveReview(ShortReviewDTO review);
     }
 }

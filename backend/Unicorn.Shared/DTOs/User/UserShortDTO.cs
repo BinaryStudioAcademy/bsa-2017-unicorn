@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Unicorn.Shared.DTOs.Book;
 
 namespace Unicorn.Shared.DTOs.User
 {
@@ -16,7 +17,7 @@ namespace Unicorn.Shared.DTOs.User
         public string Email { get; set; }
         public string Phone { get; set; }
         public DateTime DateCreated { get; set; }
-        public ICollection<BookShortDto> Books { get; set; }
+        public ICollection<BookDTO> Books { get; set; }
         public ICollection<HistoryShortDto> History { get; set; }
     }
 }
