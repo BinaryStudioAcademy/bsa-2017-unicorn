@@ -23,18 +23,24 @@ import { UserMainReviewsComponent } from './user-main/user-main-reviews/user-mai
 import { SharedModule } from "../shared/shared.module";
 import {BrowserModule} from '@angular/platform-browser';
 import {ToastModule, ToastsManager, ToastOptions} from 'ng2-toastr/ng2-toastr';
+import { MapModule } from "../map/map.module";
+import { NguiMapModule } from '@ngui/map';
 
 
 
 @NgModule({
     imports: [
-        
+        NguiMapModule.forRoot({
+            apiUrl: 'https://maps.google.com/maps/api/js?key=' + environment.googleMapsKey +
+            '&libraries=visualization,places,drawing'
+          }),
         SuiModule,
         CommonModule,
         UserRoutingModule,
         HttpModule,
         FormsModule,
         FormsModule,
+        MapModule,
         SharedModule,
         BrowserModule, 
         ToastModule.forRoot()

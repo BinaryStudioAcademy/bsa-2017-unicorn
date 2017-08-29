@@ -6,6 +6,8 @@ import { UserService } from "../../services/user.service";
 import {ToastsManager, Toast} from 'ng2-toastr';
 import {ToastOptions} from 'ng2-toastr';
 import { Observable, Observer } from 'rxjs';
+import { NguiMapModule, Marker } from "@ngui/map";
+
 export interface IContext {
     data: string;
 }
@@ -23,28 +25,32 @@ export class UserProfileComponent implements OnInit {
     @ViewChild('userForm') public userForm: NgForm;
     birthday: Date;
     dataLoaded: boolean;
-
+    position;
     constructor(private userService: UserService, 
-        public toastr: ToastsManager, public LocationService: LocationService) {}
+        public toastr: ToastsManager, public LocationService: LocationService) {
+          
+        }
   
     ngOnInit() { 
+        this.position={lat: this.user.Location.Latitude, lng: this.user.Location.Longitude};
         this.dataLoaded=true;
     }
 
-    markerDragged($event)
+    markerDragged(event)
     {
-        this.user.Location.Latitude = $event.coords.lat;
-        this.user.Location.Longitude = $event.coords.lng;
-        this.LocationService.getLocDetails(this.user.Location.Latitude,this.user.Location.Longitude)
+         this.user.Location.Latitude = event.latLng.lat();
+         this.user.Location.Longitude = event.latLng.lng()
+
+         this.LocationService.getLocDetails(this.user.Location.Latitude,this.user.Location.Longitude)
         .subscribe(
-        result => {
+         result => {
            
             this.user.Location.Adress=result.formatted_address;
-            this.user.Location.City=result.address_components[3].short_name;
-        },
-        error => console.log(error),
-        () => console.log('Geocoding completed!')
-        );
+             this.user.Location.City=result.address_components[3].short_name;
+         },
+         error => console.log(error),
+         () => console.log('Geocoding completed!')
+         );
     }
    
     updateUser(): void {

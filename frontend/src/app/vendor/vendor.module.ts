@@ -36,6 +36,7 @@ import { CategoryService } from "../services/category.service";
 import { WorkService } from "../services/work.service";
 import { VendorEditContactsComponent } from './vendor-edit/vendor-edit-contacts/vendor-edit-contacts.component';
 import { ContactService } from "../services/contact.service";
+import { NguiMapModule } from "@ngui/map/dist";
 
 
 @NgModule({
@@ -49,7 +50,11 @@ import { ContactService } from "../services/contact.service";
     CommonModule,
     SharedModule,
     PipeModule,
-    ClickOutsideModule
+    ClickOutsideModule,
+    NguiMapModule.forRoot({
+      apiUrl: 'https://maps.google.com/maps/api/js?key=' + environment.googleMapsKey +
+      '&libraries=visualization,places,drawing'
+    })
   ],
   declarations: [
     VendorDetailsComponent,

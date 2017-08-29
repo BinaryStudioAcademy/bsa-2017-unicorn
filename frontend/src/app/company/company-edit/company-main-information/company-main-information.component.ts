@@ -18,15 +18,16 @@ export class CompanyMainInformationComponent implements OnInit {
   company: CompanyDetails;
   isLoaded: boolean = false;
   map: MapModel;  
-
+  position;
   @ViewChild('companyForm') public companyForm: NgForm;
 
   constructor(private companyService: CompanyService,
     private route: ActivatedRoute, private LocationService: LocationService) { }
-    markerDragged($event)
+    markerDragged(event)
     {
-        this.company.Location.Latitude = $event.coords.lat;
-        this.company.Location.Longitude = $event.coords.lng;
+      this.company.Location.Latitude = event.latLng.lat();
+      this.company.Location.Longitude = event.latLng.lng()
+
         this.LocationService.getLocDetails(this.company.Location.Latitude,this.company.Location.Longitude)
         .subscribe(
         result => {
@@ -39,6 +40,7 @@ export class CompanyMainInformationComponent implements OnInit {
         );
     }
   ngOnInit() {
+    this.position={lat: this.company.Location.Latitude, lng: this.company.Location.Longitude};    
     this.route.params
     .switchMap((params: Params) => this.companyService.getCompanyDetails(params['id'])).subscribe(res => {
       this.company = res;

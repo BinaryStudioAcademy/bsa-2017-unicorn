@@ -50,9 +50,10 @@
         </div>
         <div class="ui container column">
             <h4>Help customers find you</h4>
-            <div class="map">
-
-            </div>
+            <ngui-map class="map" zoom="14" [center]="position">
+                <marker [position]="position" [draggable]="true" (dragend)="markerDragged($event)">
+                </marker>
+            </ngui-map>
         </div>
     </div>
     <div class="ui divider"></div>

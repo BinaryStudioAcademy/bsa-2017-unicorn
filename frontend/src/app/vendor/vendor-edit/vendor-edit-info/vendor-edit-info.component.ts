@@ -33,7 +33,7 @@ export class VendorEditInfoComponent implements OnInit {
   selectedSubcategory: Subcategory;
   works: Work[];
   subcategoryWorks: Work[];
-
+  position;
   @ViewChild('vendorForm') public vendorForm: NgForm;
   
   constructor(
@@ -45,6 +45,7 @@ export class VendorEditInfoComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.position={lat: this.vendor.Location.Latitude, lng: this.vendor.Location.Longitude};
     this.dataLoaded = true;   
     this.categoryService.getAll()
       .then(resp => this.categories = resp.body as Category[]);
@@ -64,20 +65,21 @@ export class VendorEditInfoComponent implements OnInit {
       this.newWork.SubcategoryId = this.selectedSubcategory.Id;
     }
   }
-  markerDragged($event)
+  markerDragged(event)
   {
-      this.vendor.Location.Latitude = $event.coords.lat;
-      this.vendor.Location.Longitude = $event.coords.lng;
-      this.LocationService.getLocDetails(this.vendor.Location.Latitude,this.vendor.Location.Longitude)
+       this.vendor.Location.Latitude = event.latLng.lat();
+       this.vendor.Location.Longitude = event.latLng.lng()
+
+       this.LocationService.getLocDetails(this.vendor.Location.Latitude,this.vendor.Location.Longitude)
       .subscribe(
-      result => {
+       result => {
          
           this.vendor.Location.Adress=result.formatted_address;
-          this.vendor.Location.City=result.address_components[3].short_name;
-      },
-      error => console.log(error),
-      () => console.log('Geocoding completed!')
-      );
+           this.vendor.Location.City=result.address_components[3].short_name;
+       },
+       error => console.log(error),
+       () => console.log('Geocoding completed!')
+       );
   }
   saveVendor(): void {
     if (this.vendorForm.invalid) {

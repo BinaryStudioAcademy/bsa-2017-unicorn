@@ -31,9 +31,10 @@
                 <div class="ui form">
                     <div class="field">
                         <label>Change your location</label>
-                        <div class="map">
-
-                        </div>
+                        <ngui-map class="map" zoom="14" [center]="position">
+                            <marker [position]="position" [draggable]="true" (dragend)="markerDragged($event)">
+                            </marker>
+                        </ngui-map>
                     </div>
                 </div>
             </div>
