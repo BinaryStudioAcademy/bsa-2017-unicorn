@@ -23,7 +23,7 @@
                           [pickerUseNativeOnMobile]="false">
               </div>
               <div class="four wide column">
-                <button class="ui active button main btn-search" (click)="searchPerformers()">SEARCH</button>
+                <button class="ui active button main btn-search" (click)="searchWorks()">SEARCH</button>
               </div>
               <div class="sixteen wide column remove-padding-top">
                 <sui-accordion class="fluid">
@@ -114,17 +114,21 @@
           </div>
       </div>
       <div class="ui divider"></div>
-      <div *ngIf="performers" class="ui grid">
+      <div *ngIf="spinner" class="ui active centered inline ui text loader">Loading</div>
+      <div *ngIf="works" class="ui grid">
         <div class="three column row remove-padding-top">
-          <div class="column cell" *ngFor="let performer of performers.slice((selectedPage - 1) * pageSize, selectedPage * pageSize)">
-            <a href="/{{performer.Link}}" class="ui medium image">
-              <img class="ui fluid image" src="{{performer.Avatar}}"/>
+          <div class="column cell" *ngFor="let work of works.slice((selectedPage - 1) * pageSize, selectedPage * pageSize)">
+            <a href="/{{work.Link}}" class="ui medium image">
+              <img class="ui fluid image" src="{{work.Avatar}}"/>
               <div class="cell-info">
-                <h3 class="info-item">{{performer.Name}}</h3>
-                <h4 class="info-item" *ngIf="performer.PerformerType === 'vendor'">{{performer.Description}}</h4>
+                <h3 class="info-item">{{work.Name}}</h3>
+                <!-- <h4 class="info-item" *ngIf="work.PerformerType === 'vendor'">{{work.PerformerName}}</h4> -->
               </div>
               <div class="row">
-                <h4>{{performer.Location.City}}, {{performer.Location.Adress}}</h4>
+                <h4>{{work.PerformerName}}</h4>
+              </div>
+              <div class="row">
+                <h4>{{work.Location.City}}, {{work.Location.Adress}}</h4>
               </div>
             </a>
             <!-- <div class="categories-container">
@@ -133,27 +137,24 @@
             <div class="ui grid">
               <div class="three column row padding-top">
                 <div class="column">
-                  <sui-rating class="star" [ngModel]="performer.Rating" [isReadonly]="true"></sui-rating>
+                  <sui-rating class="star" [ngModel]="work.Rating" [isReadonly]="true"></sui-rating>
                 </div>
                 <div class="column">                      
-                  <a href="{{performer.Link}}{{tabSuffix}}">Reviews({{performer.ReviewsCount}})</a>
+                  <a href="{{work.Link}}{{tabSuffix}}">Reviews({{work.ReviewsCount}})</a>
                 </div>
               </div>
             </div>            
           </div>
-        </div>
+        </div>        
       </div>
-      <div *ngIf="performers.length > pageSize" class="flex-centered"> 
-        <sui-pagination [collectionSize]="performers.length"
+      <div *ngIf="works.length > pageSize" class="flex-centered"> 
+        <sui-pagination [collectionSize]="works.length"
                         [pageSize]="pageSize"
                         [maxSize]="maxSize"
                         [hasEllipses]="hasEllipses"
                         [(page)]="selectedPage">
         </sui-pagination>     
       </div>
-      <div *ngIf="performers.length == 0" class="ui active inverted dimmer" style="z-index: 0;">
-        <div class="ui text loader">Loading</div>
-      </div> 
   </div>
   <div class="six wide column">
     <div class="row">

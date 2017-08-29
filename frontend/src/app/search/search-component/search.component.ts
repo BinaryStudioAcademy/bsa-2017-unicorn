@@ -5,7 +5,7 @@ import { Review } from '../../models/review.model';
 import { NguiMapModule, Marker } from '@ngui/map';
 
 import { SearchService } from '../../services/search.service';
-import { SearchPerformer } from '../../models/search/search-performer';
+import { SearchWork } from '../../models/search/search-work';
 
 
 @Component({
@@ -34,7 +34,7 @@ export class SearchComponent implements OnInit {
   maxSize = 3;
   hasEllipses = true;
   selectedPage = 1;
-  performers: SearchPerformer[] = [];
+  works: SearchWork[] = [];
   tabSuffix = '?tab=reviews';
   /* map */
   positions = [];
@@ -42,6 +42,8 @@ export class SearchComponent implements OnInit {
 
   autocomplete: google.maps.places.Autocomplete;
   address: any = {};
+
+  spinner: boolean;
 
   constructor(
     private searchService: SearchService,
@@ -53,34 +55,33 @@ export class SearchComponent implements OnInit {
     this.initDarepicker();
     this.getParameters();
     this.createMockSettings();
-    this.searchPerformers();
+    this.searchWorks();
   }
 
-  searchPerformers() {
+  searchWorks() {
+    this.works = [];
+    this.spinner = true;
     if (this.category === undefined || this.subcategory === undefined || this.date === undefined) {
       console.log(this.date);
-      this.getAllPerformers();
+      this.getAllWorks();
     } else {
-      this.getPerformersByBaseFilters(this.category, this.subcategory, this.rawDate);
+      this.getWorksByBaseFilters(this.category, this.subcategory, this.rawDate);
     }
-    // if (this.category === undefined && this.subcategory === undefined) {
-    //   this.getAllPerformers();
-    // } else {
-    //   this.getPerformersByBaseFilters(this.category, this.subcategory, this.rawDate);
-    // }
   }
 
-  getAllPerformers() {
-    this.searchService.getAllPerformers()
-    .then(performers => {
-      this.performers = performers;
+  getAllWorks() {
+    this.searchService.getAllWorks()
+    .then(works => {
+      this.works = works;
+      this.spinner = false;
     });
   }
 
-  getPerformersByBaseFilters(category: string, subcategory: string, date: number) {
-    this.searchService.getPerformersByBaseFilters(category, subcategory, date)
-    .then(performers => {
-      this.performers = performers;
+  getWorksByBaseFilters(category: string, subcategory: string, date: number) {
+    this.searchService.getWorksByBaseFilters(category, subcategory, date)
+    .then(works => {
+      this.works = works;
+      this.spinner = false;
     });
   }
 

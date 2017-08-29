@@ -1,4 +1,4 @@
-export interface SearchPerformer {
+export interface SearchWork {
     Id: number;
     Rating: number;
     ReviewsCount: number;
