@@ -55,7 +55,9 @@ namespace Unicorn.Controllers
             try
             {
                 await _chatService.CreateDialog(dialog);
-                return Request.CreateResponse(HttpStatusCode.OK);
+                long dialogId = await _chatService.FindDialog(dialog.ParticipantOneId, dialog.ParticipantTwoId);
+
+                return Request.CreateResponse(HttpStatusCode.OK, dialogId);
             }
             catch
             {
