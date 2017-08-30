@@ -60,6 +60,7 @@ export class LocationService {
         location.Latitude = 49.841459;
         location.Longitude = 24.031946;
       }
+      console.log(location)
       return location;
     }
 

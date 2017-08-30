@@ -15,6 +15,8 @@ import { LocationModel } from '../../models/location.model';
 })
 export class BookComponent implements OnInit {
   book: BookOrder;
+  formIsSended: boolean;
+  onSending: boolean;
   private defaultLocation: LocationModel;
   private selectedWork: any;
 

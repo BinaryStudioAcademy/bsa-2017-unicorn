@@ -26,7 +26,7 @@ export interface CustomerBook {
     Review: Review;
     IsHidden: boolean;
     Work: Work;
-    Location: Location;
+    Location: LocationModel;
 }
 
 export enum BookStatus {

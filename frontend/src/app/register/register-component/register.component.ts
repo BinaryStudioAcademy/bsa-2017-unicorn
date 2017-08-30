@@ -40,7 +40,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   isLogged: boolean;
 
   roleSelected = false;
-  location: LocationModel;
+  location: LocationModel = new LocationModel();
   isCustomer = false;
   isVendor = false;
   isCompany = false;
@@ -60,7 +60,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.isLogged = false;
     this.error = false;
     this.location = this.locationService.getCurrentLocation();
- 
     this.initRoles();
   }
 
@@ -133,7 +132,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    
+    this.location = this.locationService.getCurrentLocation();
     this.authLoginService.authState.subscribe(user => {
       if (user) {
         this.currentUser = user;
