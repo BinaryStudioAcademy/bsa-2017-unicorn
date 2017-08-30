@@ -19,7 +19,7 @@ namespace Unicorn.Controllers
             _chatService = chatService;
         }
 
-        [HttpGet]       
+        [HttpGet]
         public async Task<HttpResponseMessage> Get(int id)
         {
             try
@@ -78,6 +78,6 @@ namespace Unicorn.Controllers
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
-        }        
+        }
     }
 }
