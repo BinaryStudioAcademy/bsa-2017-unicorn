@@ -13,6 +13,7 @@ import { ImageCropperComponent, CropperSettings } from 'ng2-img-cropper';
 import { PhotoService, Ng2ImgurUploader } from "../../services/photo.service";
 
 import { FormsModule } from '@angular/forms';
+import { Work } from "../../models/work.model";
 
 @Component({
   selector: 'app-vendor-details',
@@ -45,6 +46,7 @@ export class VendorDetailsComponent implements OnInit {
   file: File;
   data: any;
   imageUploaded: boolean;
+  works: Work[];
 
   tabActive: boolean = false;
   constructor(
@@ -69,7 +71,7 @@ export class VendorDetailsComponent implements OnInit {
       .switchMap((params: Params) => this.vendorService.getVendor(params['id']))
       .subscribe(resp => {
         this.vendor = resp.body as Vendor;
-        this.backgroundUrl = this.buildSafeUrl(this.vendor.Background);
+        this.backgroundUrl = this.buildSafeUrl(this.vendor.Background != null ? this.vendor.Background : "https://www.beautycolorcode.com/d8d8d8.png");
       });
     if (this.route.snapshot.queryParams['tab'] === 'reviews') {
       this.tabActive = true;
@@ -105,5 +107,9 @@ export class VendorDetailsComponent implements OnInit {
       console.log(err);
       this.uploading = false;
     });
+  }
+
+  onWorksLoaded(works: Work[]) {
+    this.works = works;
   }
 }

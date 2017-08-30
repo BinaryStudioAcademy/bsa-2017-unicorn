@@ -25,6 +25,11 @@ export class AccountService {
 			.catch(err => alert(err));
 	}
 
+	updateNotification(accountId: number, notification: Notification): Promise<any> {
+		return this.dataService.putFullRequest<Notification[]>(`${this.apiController}/${accountId}/notifications/${notification.Id}`, notification)
+			.catch(err => alert(err));
+	}
+
 	removeNotification(accountId: number, notification: Notification): Promise<any> {
 		return this.dataService.deleteFullRequest<Notification[]>(`${this.apiController}/${accountId}/notifications/${notification.Id}`, notification)
 			.catch(err => alert(err));

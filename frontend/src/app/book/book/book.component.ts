@@ -18,9 +18,11 @@ export class BookComponent implements OnInit {
   formIsSended: boolean;
   onSending: boolean;
   private defaultLocation: Location;
+  private selectedWork: any;
 
   @Input() routePath: string;
   @Input() routeId: number;
+  @Input() works: any;
 
   @ViewChild('bookForm') public bookForm: NgForm;
 
@@ -30,27 +32,31 @@ export class BookComponent implements OnInit {
     this.formIsSended = false;
     this.onSending = true;
 
-      this.defaultLocation = {
-        Id: 0,
-        City: "",
-        Adress: "",
-        PostIndex: "",
-        Latitude: 0,
-        Longitude: 0
-      }
+    this.defaultLocation = {
+      Id: 0,
+      City: "",
+      Adress: "",
+      PostIndex: "",
+      Latitude: 0,
+      Longitude: 0
+    }
 
-      this.book = {
-        date: new Date(),
-        location: this.defaultLocation,
-        description: "",
-        workid: 0, // TODO: selected work from dropdown
-        profile: this.routePath,
-        profileid: this.routeId,
-        customerid: +this.tokenHelper.getClaimByName('profileid'),
-        customerphone: ""
-      }
+    this.book = {
+      date: new Date(),
+      location: this.defaultLocation,
+      description: "",
+      workid: 0,
+      profile: this.routePath,
+      profileid: this.routeId,
+      customerid: +this.tokenHelper.getClaimByName('profileid'),
+      customerphone: ""
+    }
 
-      this.getUserData();
+    this.getUserData();
+  }
+
+  onWorkChange(){
+    this.book.workid = this.selectedWork.Id;
   }
 
   makeOrder() {

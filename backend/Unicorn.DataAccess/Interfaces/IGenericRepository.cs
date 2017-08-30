@@ -11,7 +11,7 @@ namespace Unicorn.DataAccess.Interfaces
         Task<IEnumerable<T>> GetAllAsync();
         Task<T> GetByIdAsync(long id);
         Task<T> GetByIdDeletedAsync(long id);
-        void Create(T item);
+        T Create(T item);
         void Update(T item);
         void Delete(long id);
         Task ForceDelete(long id);

@@ -15,5 +15,6 @@ namespace Unicorn.Core.Interfaces
         Task<IEnumerable<NotificationDTO>> GetByAccountIdAsync(long id);
         Task CreateAsync(long acoountId, NotificationDTO notificationDto);
         Task RemoveAsync(long id);
+        Task UpdateAsync(NotificationDTO notificationDto);
     }
 }

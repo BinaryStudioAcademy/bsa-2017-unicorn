@@ -33,7 +33,8 @@ namespace Unicorn.Core.Services
                 Title = notificationDto.Title,
                 Description = notificationDto.Description,
                 Time = notificationDto.Time,
-                Type = notificationDto.Type
+                Type = notificationDto.Type,
+                IsViewed = false
             };
 
             _unitOfWork.NotificationRepository.Create(notification);
@@ -76,6 +77,7 @@ namespace Unicorn.Core.Services
                 Title = notification.Title,
                 Description = notification.Description,
                 SourceItemId = notification.SourceItemId,
+                IsViewed = notification.IsViewed, 
                 Time = notification.Time,
                 Type = notification.Type
             };
@@ -94,14 +96,25 @@ namespace Unicorn.Core.Services
             return notifications
                 .Where(n => n.AccountId == id)
                 .Select(n => new NotificationDTO()
-            {
-                Id = n.Id,
-                Title = n.Title,
-                Description = n.Description,
-                SourceItemId = n.SourceItemId,
-                Time = n.Time,
-                Type = n.Type
-            }).ToList();
+                {
+                    Id = n.Id,
+                    Title = n.Title,
+                    Description = n.Description,
+                    SourceItemId = n.SourceItemId,
+                    Time = n.Time,
+                    Type = n.Type,
+                    IsViewed = n.IsViewed
+                }).ToList();
+        }
+
+        public async Task UpdateAsync(NotificationDTO notificationDto)
+        {
+            var notification = await _unitOfWork.NotificationRepository.GetByIdAsync(notificationDto.Id);
+
+            notification.IsViewed = notificationDto.IsViewed;
+
+            _unitOfWork.NotificationRepository.Update(notification);
+            await _unitOfWork.SaveAsync();
         }
 
         private readonly IUnitOfWork _unitOfWork;

@@ -28,6 +28,7 @@ namespace Unicorn.Core.Services
                     Id = c.Id,
                     Name = c.Name,
                     Description = c.Description,
+                    Tags = c.Tags,
                     Icon = c.Icon,
                     Subcategories = c.Subcategories.Select(s => new SubcategoryShortDTO()
                     {
@@ -36,6 +37,7 @@ namespace Unicorn.Core.Services
                         Category = c.Name,
                         CategoryId = c.Id,
                         Description = s.Description,
+                        Tags = s.Tags,
                         Icon = s.Icon
                     }).ToList()
                 }).ToListAsync();
