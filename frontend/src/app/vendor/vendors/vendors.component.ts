@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { NguiMapModule, Marker, NguiMap} from "@ngui/map";
+
 import { Performer } from '../../models/performer.model';
 
 import { PerformerService } from '../../services/performer.service';
@@ -40,7 +42,7 @@ export class VendorsComponent implements OnInit {
     });
   }
 
-  onMapReady(map) {
+  onMapReady(map: NguiMap) {
     console.log(map);
   }
 

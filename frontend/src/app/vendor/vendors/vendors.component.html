@@ -5,6 +5,19 @@
 </div> -->
 <div class="ui grid left-padded" id="main">
     <div class="eight wide column">
+        <div class="row" id="search-bar">
+            <div class="ui grid">
+                <div class="six wide column ui input">
+                    <input type="text" placeholder="LOCATION">
+                </div>
+                <div class="six wide column ui input">
+                    <input type="text" placeholder="NAME">
+                </div>
+                <div class="four wide column">
+                    <button class="ui button book-btn">SEARCH</button>
+                </div>
+            </div>
+        </div>
         <div class="ui segment ui grid" *ngFor="let performer of getPerformersPage()">
             <div class="row">
                 <div class="four wide column">
