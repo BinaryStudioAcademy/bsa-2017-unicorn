@@ -13,10 +13,7 @@ export class NotificationService {
 
 	public isConnected: boolean = false;
 
-  	constructor(private signalR: SignalR) 
-  	{ 
-
-	}
+  	constructor(private signalR: SignalR) { }
 	  
 	connect(accountId: number): Promise<any> {
 		let options: IConnectionOptions = { 

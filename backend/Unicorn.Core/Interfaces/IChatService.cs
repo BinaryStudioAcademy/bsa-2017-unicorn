@@ -7,10 +7,10 @@ namespace Unicorn.Core.Interfaces
     public interface IChatService
     {
         Task CreateMessage(ChatMessageDTO msg);
-        Task CreateDialog(ChatDialogDTO dialog);
+        Task<ChatDialogDTO> CreateDialog(ChatDialogDTO dialog);
         Task<ChatDialogDTO> GetDialog(long dialogId);
         Task<IEnumerable<ChatDialogDTO>> GetAllDialogs(long accountId);
-        Task<long> FindDialog(long participantOneId, long participantTwoId);
+        Task<ChatDialogDTO> FindDialog(long participantOneId, long participantTwoId);
         Task RemoveDialog(long dialogId);
         Task RemoveMessage(long messageId);
         Task Update(ChatMessageDTO msg);

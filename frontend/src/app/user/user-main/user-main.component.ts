@@ -22,7 +22,7 @@ export class UserMainComponent implements OnInit {
     .switchMap((params: Params) => this.userService.getUser(params['id']))
     .subscribe(resp => {
       this.user = resp.body as User;
-      this.backgroundUrl = this.buildSafeUrl(this.user.Background);
+      this.backgroundUrl = this.buildSafeUrl(this.user.Background != null ? this.user.Background : "https://www.beautycolorcode.com/d8d8d8.png");
     });
   }
   buildSafeUrl(link: string): SafeResourceUrl {
