@@ -12,6 +12,7 @@ import { PerformerService } from '../../services/performer.service';
 export class VendorsComponent implements OnInit {
 
   performers: Performer[] = [];
+  loaded: boolean;
 
   constructor(
     private performerService: PerformerService
@@ -25,7 +26,12 @@ export class VendorsComponent implements OnInit {
     this.performerService.getAllPerformers().then(resp => {
       console.log(resp);
       this.performers = resp;
+      this.loaded = true;
     });
+  }
+
+  onMapReady(map) {
+    console.log(map);
   }
 
 }

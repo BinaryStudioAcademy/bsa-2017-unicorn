@@ -1,15 +1,13 @@
 @import "../../../global-style-variables.sass"
 
-#main
-    width: 50%
-    margin: 0 auto
-    font-family: 'Verdana', 'Century Gothic', 'Calibri', 'Trebuchet MS', sans-serif
-
 .ui.small.fluid.image
     height: 150px;
     border: 1px solid #E5E5E5;
     object-fit: contain;
     background-size: 20%;
+
+#main
+    font-family: 'Verdana', 'Century Gothic', 'Calibri', 'Trebuchet MS', sans-serif
 
 .per-type
     margin-top: 0
@@ -23,7 +21,8 @@
     font-size: 13px
 
 .book-div
-    margin-top: auto
+    margin: auto !important
+    text-align: center !important
 
 .reviews
     font-size: 12px
@@ -36,4 +35,24 @@
     background-color: #ff6666
     color: white
 
+.left-padded
+    padding-left: 20px
+
+.map-container 
+    position: fixed
+    right: 20px
+    top: calc(15px + #{$header-height})
+    width: 47.5% 
+    height: calc(100vh - 30px - #{$header-height} - #{$footer-height} - #{$separator-height} - #{$separator-margin})    
+    background-color: gray
+
+.map
+    height: 100%
+
+.map-marker
+    font-weight: bold
+    background-color: white
+    padding: 3px
+    border: 1px solid black
+    border-radius: 5px
 

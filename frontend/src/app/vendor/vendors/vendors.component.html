@@ -1,5 +1,10 @@
-<div id="main">
+<!-- <div id="main">
     <div class="vendors-content ">
+        
+    </div>
+</div> -->
+<div class="ui grid left-padded" id="main">
+    <div class="eight wide column">
         <div class="ui segment ui grid" *ngFor="let performer of performers">
             <div class="row">
                 <div class="four wide column">
@@ -15,9 +20,20 @@
                     <p class="location"><i class="colored map pin icon"></i>{{performer.Location.City}}, {{performer.Location.Adress}}</p>
                     <p class="reviews"><a href="{{performer.Link}}?tab=reviews">Reviews({{performer.ReviewsCount}})</a></p>
                 </div>
-                <div class="four wide column">
-                    <a href="{{performer.Link}}" class="ui button fluid book-btn">Details</a>
+                <div class="four wide column book-div">
+                    <a href="{{performer.Link}}" class="ui button book-btn">Details</a>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="eight wide column">
+        <div class="row">
+            <div class="map-container">
+                <ngui-map (mapReady$)="onMapReady($event)" class="map" zoom="3" center="center" *ngIf="loaded">
+                    <custom-marker *ngFor="let per of performers" [position]="[per.Location.Latitude, per.Location.Longitude]">
+                        <span class="map-marker">{{per.Name}}</span>
+                    </custom-marker>
+                </ngui-map>
             </div>
         </div>
     </div>
