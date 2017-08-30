@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using Unicorn.Core.Interfaces;
+using Unicorn.Shared.DTOs.Notification;
 
 namespace Unicorn.Controllers
 {
@@ -44,6 +45,15 @@ namespace Unicorn.Controllers
                 return Request.CreateResponse(HttpStatusCode.NotFound);
             else
                 return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+        [HttpPut]
+        [Route("{id}/notifications/{notificationId}")]
+        public async Task<HttpResponseMessage> UpdateNotifications(long id, long notificationId, [FromBody]NotificationDTO notificationDto)
+        {
+            await _notificationService.UpdateAsync(notificationDto);
+
+            return Request.CreateResponse(HttpStatusCode.NoContent);
         }
 
         [HttpDelete]
