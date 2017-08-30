@@ -4,6 +4,7 @@ import { BookCard, BookStatus } from '../../../models/dashboard/book-card';
 
 import { DashboardService } from '../../../services/dashboard/dashboard.service';
 import { DashMessagingService } from '../../../services/dashboard/dash-messaging.service';
+import { NotificationService } from "../../../services/notifications/notification.service";
 
 import {ToastsManager, Toast} from 'ng2-toastr';
 import {ToastOptions} from 'ng2-toastr';
@@ -24,6 +25,7 @@ export class DashboardProgressComponent implements OnInit, OnDestroy {
   constructor(
     private dashboardService: DashboardService,
     private dashMessaging: DashMessagingService,
+    private notificationService: NotificationService,
     private toastr: ToastsManager) { }
 
   ngOnInit() {
@@ -31,6 +33,7 @@ export class DashboardProgressComponent implements OnInit, OnDestroy {
     this.sub = this.dashMessaging.pendingEvent$.subscribe(() => {
       this.loadData();
     });
+    this.notificationService.listen<any>("RefreshOrders", () => this.loadData());
   }
 
   ngOnDestroy() {

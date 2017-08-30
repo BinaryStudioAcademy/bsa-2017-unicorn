@@ -11,6 +11,7 @@ using Unicorn.Core.Interfaces;
 using Unicorn.Shared.DTOs.Notification;
 using Unicorn.DataAccess.Entities;
 using Unicorn.DataAccess.Interfaces;
+using Unicorn.DataAccess.Entities.Enum;
 
 namespace Unicorn.Core.Services
 {
@@ -37,6 +38,15 @@ namespace Unicorn.Core.Services
 
             _unitOfWork.NotificationRepository.Create(notification);
             await _unitOfWork.SaveAsync();
+
+            switch (notification.Type)
+            {
+                case NotificationType.TaskNotification:
+                    await _proxy.RefreshOrdersForAccount(accountId);
+                    break;
+                default:
+                    break;
+            }
 
             notificationDto.Id = notification.Id;
             await _proxy.SendNotification(accountId, notificationDto);

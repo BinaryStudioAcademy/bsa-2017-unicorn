@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using Unicorn.Core.Interfaces;
+using Unicorn.Shared.DTOs;
 using Unicorn.Shared.DTOs.Popular;
 
 namespace Unicorn.Controllers
@@ -40,6 +41,13 @@ namespace Unicorn.Controllers
         public async Task<List<PerformerDTO>> GetPerformersById(long id) // id - category id
         {
             return await _popularService.GetPopularPerformers(id);
+        }
+
+        [HttpGet]
+        [Route("popular/allperformers")]
+        public async Task<List<FullPerformerDTO>> GetAllPerformers()
+        {
+            return await _popularService.GetAllPerformersAsync();
         }
 
 

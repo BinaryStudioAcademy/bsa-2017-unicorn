@@ -29,7 +29,8 @@ namespace Unicorn.Controllers
             IHistoryService historyService,
             IWorkService workService,
             IContactService contactService,
-            IRatingService ratingService)
+            IRatingService ratingService,
+            INotificationProxy notificationProxy)
         {
             _vendorService = vendorService;
             _reviewService = reviewService;
@@ -39,6 +40,7 @@ namespace Unicorn.Controllers
             _workService = workService;
             _contactService = contactService;
             _ratingService = ratingService;
+            _notificationProxy = notificationProxy;
         }
 
         #region Get
@@ -104,6 +106,7 @@ namespace Unicorn.Controllers
         [Route("{id}/orders")]
         public async Task<HttpResponseMessage> GetVendorOrders(long id)
         {
+            await _notificationProxy.RefreshOrdersForAccount(19);
             var result = await _bookService.GetOrdersAsync("vendor", id);
 
             if (result == null)
@@ -300,5 +303,6 @@ namespace Unicorn.Controllers
         private IRatingService _ratingService;
         private IWorkService _workService;
         private IContactService _contactService;
+        private INotificationProxy _notificationProxy;
     }
 }
