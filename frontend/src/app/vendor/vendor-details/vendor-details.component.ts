@@ -36,8 +36,11 @@ export class VendorDetailsComponent implements OnInit {
   isOwner: boolean;
   dataLoaded: boolean;
 
+  // Data for book component
   routePath: string;
   routeid: number;
+  works: Work[];
+  selectedWorkId: number;
 
   cropperSettings: CropperSettings;
   vendor: Vendor;
@@ -46,7 +49,6 @@ export class VendorDetailsComponent implements OnInit {
   file: File;
   data: any;
   imageUploaded: boolean;
-  works: Work[];
 
   tabActive: boolean = false;
   constructor(
@@ -73,8 +75,13 @@ export class VendorDetailsComponent implements OnInit {
         this.vendor = resp.body as Vendor;
         this.backgroundUrl = this.buildSafeUrl(this.vendor.Background);
       });
+
     if (this.route.snapshot.queryParams['tab'] === 'reviews') {
       this.tabActive = true;
+    }
+
+    if (this.route.snapshot.queryParams['work']) {
+      this.selectedWorkId = +this.route.snapshot.queryParams['work'];
     }
   }
 
@@ -112,4 +119,5 @@ export class VendorDetailsComponent implements OnInit {
   onWorksLoaded(works: Work[]) {
     this.works = works;
   }
+
 }
