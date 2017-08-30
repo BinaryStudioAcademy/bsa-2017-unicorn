@@ -32,11 +32,8 @@ export class IndexComponent implements OnInit {
   initContent() {
     this.title = 'Happy unicorn';
     this.slogan = 'We scratch your cat right now, because we can.';
-
     this.placeholderCategory = 'SCRATCH';
-    this.placeholderSubcategory = 'MY CAT';
-    this.searchCategory = '';
-    this.searchSubcategory = '';
+    this.placeholderSubcategory = 'CAT';
     /* labels */
     this.labelSearch = 'What to do';
     this.labelDate = 'When to do it';
@@ -48,28 +45,18 @@ export class IndexComponent implements OnInit {
     this.subcategories = ['Subcategory1', 'Subcategory2', 'Subcategory3'];
   }
 
-  searchVendor() {
-    if (this.searchDate === undefined) {
-      this.searchDate = new Date();
-      this.searchDate.setHours(0);
-      this.searchDate.setMinutes(0);
-      this.searchDate.setSeconds(0);
-      this.searchDate.setMilliseconds(0);
+  searchPerformer() {
+    if (this.searchCategory === undefined || this.searchSubcategory === undefined || this.searchDate === undefined) {
+      this.router.navigate(['/search']);
+    } else {
+      this.router.navigate(['/search'], {
+        queryParams: {
+          'category': this.searchCategory,
+          'subcategory': this.searchSubcategory,
+          'date': this.searchDate.getTime() / 1000
+        }
+      });
     }
-    if (this.searchCategory === '') {
-      this.searchCategory = this.placeholderCategory;
-    }
-    if (this.searchSubcategory === '') {
-      this.searchSubcategory = this.placeholderSubcategory;
-    }
-
-    this.router.navigate(['/search'], {
-      queryParams: {
-        'category': this.searchCategory,
-        'subcategory': this.searchSubcategory,
-        'date': this.searchDate.getTime() / 1000
-      }
-    });
   }
 
 }

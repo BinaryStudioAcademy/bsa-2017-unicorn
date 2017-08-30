@@ -10,6 +10,7 @@ namespace Unicorn.Core.Interfaces
         Task CreateDialog(ChatDialogDTO dialog);
         Task<ChatDialogDTO> GetDialog(long dialogId);
         Task<IEnumerable<ChatDialogDTO>> GetAllDialogs(long accountId);
+        Task<long> FindDialog(long participantOneId, long participantTwoId);
         Task RemoveDialog(long dialogId);
         Task RemoveMessage(long messageId);
         Task Update(ChatMessageDTO msg);

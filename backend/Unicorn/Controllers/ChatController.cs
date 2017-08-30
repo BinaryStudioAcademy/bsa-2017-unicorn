@@ -19,7 +19,7 @@ namespace Unicorn.Controllers
             _chatService = chatService;
         }
 
-        [HttpGet]       
+        [HttpGet]
         public async Task<HttpResponseMessage> Get(int id)
         {
             try
@@ -55,7 +55,9 @@ namespace Unicorn.Controllers
             try
             {
                 await _chatService.CreateDialog(dialog);
-                return Request.CreateResponse(HttpStatusCode.OK);
+                long dialogId = await _chatService.FindDialog(dialog.ParticipantOneId, dialog.ParticipantTwoId);
+
+                return Request.CreateResponse(HttpStatusCode.OK, dialogId);
             }
             catch
             {
@@ -76,6 +78,6 @@ namespace Unicorn.Controllers
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
-        }        
+        }
     }
 }
