@@ -33,7 +33,7 @@
                                             <company-vendors></company-vendors>
                                         </div>
                                         <div class="ui segment" suiTabContent="5">
-                                            <company-contacts></company-contacts>
+                                            <company-contacts [name]="company.Name"></company-contacts>
                                         </div>
                                     </div>
                                     <div *ngIf="isUser||isGuest" class="six wide column">

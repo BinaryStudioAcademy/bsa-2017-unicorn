@@ -30,6 +30,7 @@ export class CompanyDetailsComponent implements OnInit {
       .switchMap((params: Params) => this.companyService.getCompanyShort(params['id']))
       .subscribe(res => {
         this.company = res;
+        //console.log(this.company.Name); 
       });
     if (this.route.snapshot.queryParams['tab'] === 'reviews') {
       this.tabActive = true;

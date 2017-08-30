@@ -24,8 +24,7 @@ export class ChatComponent implements OnInit {
   myParticipant: string;
   selectedId: number;
   writtenMessage: string;  
-  inputHeight: number = 43;
-  isLoaded: boolean = false;
+  inputHeight: number = 43;  
   containerHeight = 300;
 
   constructor(private chatService: ChatService,
@@ -42,10 +41,11 @@ export class ChatComponent implements OnInit {
           this.messages = this.dialogs[0].Messages;
           this.me = this.dialogs[0].ParticipantOneId;
           this.myParticipant = this.dialogs[0].ParticipantName;
+          console.log(this.dialogs);
         }
         else{
           this.messages = null;
-          this.containerHeight = 100;
+          this.containerHeight = 150;
         }
       }
     });

@@ -17,6 +17,7 @@ export class CompanyContactsComponent implements OnInit {
   contacts: Contact[];
   providers: ContactProvider[];
   blockAddButtons: boolean = false;
+  chatOpen: boolean = false;
   
   phones: Contact[];
   messengers: Contact[];

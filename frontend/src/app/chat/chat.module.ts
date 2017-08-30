@@ -4,6 +4,7 @@ import { ChatComponent } from "./chat.component";
 import { FormsModule } from '@angular/forms'
 import { MomentModule } from "angular2-moment";
 import { ChatService } from "../services/chat/chat.service";
+import { MiniChatComponent } from './mini-chat/mini-chat.component';
 
 @NgModule({
   imports: [
@@ -12,10 +13,12 @@ import { ChatService } from "../services/chat/chat.service";
     MomentModule
   ],
   declarations: [
-    ChatComponent
+    ChatComponent,
+    MiniChatComponent
   ],
   exports: [
-    ChatComponent
+    ChatComponent,
+    MiniChatComponent
   ],
   providers: [
     ChatService

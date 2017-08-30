@@ -3,7 +3,7 @@
         <div class="header" style="display: flex; justify-content: space-between; align-items: center;">
             <div>Our contacts</div>
             <div>
-                <button class="ui active button"> <i class="comments icon"></i> START A CHAT </button>
+                <button class="ui active button" (click)="createChat()"> <i class="comments icon"></i> START A CHAT </button>
             </div>
         </div>
         <div class="phones">
@@ -55,3 +55,4 @@
         </div>
     </div>
 </div>
+<app-mini-chat [dialog]="dialog" *ngIf="openChat"></app-mini-chat>
