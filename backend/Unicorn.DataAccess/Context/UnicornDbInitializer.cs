@@ -1079,7 +1079,7 @@ namespace Unicorn.DataAccess.Context
             Work work5 = new Work()
             {
                 Id = 5,
-                Icon = "http://nordwest-fc.ru/pictures/nochyu-v-mashine-video-16.jpg",
+                Icon = "https://www.fmcsa.dot.gov/sites/fmcsa.dot.gov/files/TruckDriver1%5B1%5D.jpg",
                 Description = "Driving services",
                 IsDeleted = false,
                 Name = "Driver",

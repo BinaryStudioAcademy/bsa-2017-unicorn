@@ -159,11 +159,11 @@
   <div class="six wide column">
     <div class="row">
       <div class="map-container">
-        <ngui-map class="map" zoom="14" center="Brampton, Canada">
-          <marker *ngFor="let marker of markers" 
-              [position]="marker.pos"
-              [label]="marker.title"
-              [title]="marker.title"></marker>
+        <ngui-map class="map" zoom="3" center="center">
+          <marker *ngFor="let work of works.slice((selectedPage - 1) * pageSize, selectedPage * pageSize)" 
+              [position]="[work.Location.Latitude, work.Location.Longitude]"
+              [label]="work.PerformerName"
+              [title]="work.PerformerName"></marker>
         </ngui-map>
       </div>
     </div>
