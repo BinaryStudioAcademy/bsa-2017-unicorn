@@ -36,7 +36,16 @@ export class LocationService {
             });
         })
     }
-
+    getGoogle() : Promise<any> {
+        return new Promise((resolve, reject) => {
+            if(google) resolve(google);
+            setInterval(function() {
+                if (google) {
+                    resolve(google);
+                }
+            }, 300);
+        });
+    }
     getCurrentLocation() {
         var location = new LocationModel();
          if (navigator.geolocation)
