@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { AuthGuard } from '../guards/auth.guard';
+import { DashboardGuard } from '../guards/dashboard.guard';
 
 import { DashboardComponent } from './dashboard-component/dashboard.component';
 
@@ -11,7 +12,7 @@ import { DashboardComponent } from './dashboard-component/dashboard.component';
       {
         path: 'dashboard',
         component: DashboardComponent,
-        canActivate: [AuthGuard]
+        canActivate: [DashboardGuard, AuthGuard]
       }
     ]),
     RouterModule.forChild([
@@ -20,6 +21,9 @@ import { DashboardComponent } from './dashboard-component/dashboard.component';
   ],
   exports: [
     RouterModule
+  ],
+  providers: [
+    DashboardGuard
   ]
 })
 export class DashboardRoutingModule { }
