@@ -10,15 +10,17 @@ using Unicorn.DataAccess.Entities;
 using Unicorn.DataAccess.Entities.Enum;
 using Unicorn.DataAccess.Interfaces;
 using Unicorn.Shared.DTOs;
+using Unicorn.Shared.DTOs.Notification;
 using Unicorn.Shared.DTOs.Review;
 
 namespace Unicorn.Core.Services
 {
     public class ReviewService : IReviewService
     {
-        public ReviewService(IUnitOfWork unitOfWork)
+        public ReviewService(IUnitOfWork unitOfWork, INotificationService notificationService)
         {
             _unitOfWork = unitOfWork;
+            _notificationService = notificationService;
         }
 
         public async Task<ReviewDTO> GetByIdAsync(long id)
@@ -34,6 +36,7 @@ namespace Unicorn.Core.Services
 
             return reviews
                 .Where(r => r.ToAccountId == id)
+                .OrderBy(r => r.Date)
                 .Select(r => ReviewToDTO(r)).ToList();
 
         }
@@ -68,7 +71,9 @@ namespace Unicorn.Core.Services
                 To = review.To,
                 ToAccountId = review.ToAccountId,
                 Date = review.Date,
-                Avatar = review.Avatar
+                Avatar = review.Avatar,
+                Grade = review.Grade,
+                WorkName = review.WorkName
             };
         }
 
@@ -88,25 +93,30 @@ namespace Unicorn.Core.Services
                 .Include(b => b.Company.Account)
                 .SingleAsync(b => b.Id == reviewDto.BookId);
 
-            var review = new Review();
-            review.BookId = reviewDto.BookId;
-            review.Description = reviewDto.Text;
-            review.Avatar = book.Customer.Person.Account.Avatar;
-            review.From = book.Customer.Person.Name;
-            review.FromAccountId = book.Customer.Person.Account.Id;
-            if (reviewDto.PerformerType == "vendor")
+            if(!string.IsNullOrEmpty(reviewDto.Text.Trim()))
             {
-                review.To = book.Vendor.Person.Name;
-                review.ToAccountId = book.Vendor.Person.Account.Id;
-            }
-            else
-            {
-                review.To = book.Company.Name;
-                review.ToAccountId = book.Company.Account.Id;
-            }
-            review.Date = DateTime.Now;
+                var review = new Review();
+                review.BookId = reviewDto.BookId;
+                review.Description = reviewDto.Text;
+                review.Grade = reviewDto.Grade;
+                review.Avatar = book.Customer.Person.Account.Avatar;
+                review.WorkName = book.Work.Name;
+                review.From = book.Customer.Person.Name;
+                review.FromAccountId = book.Customer.Person.Account.Id;
+                if (reviewDto.PerformerType == "vendor")
+                {
+                    review.To = book.Vendor.Person.Name;
+                    review.ToAccountId = book.Vendor.Person.Account.Id;
+                }
+                else
+                {
+                    review.To = book.Company.Name;
+                    review.ToAccountId = book.Company.Account.Id;
+                }
+                review.Date = DateTime.Now;
 
-            _unitOfWork.ReviewRepository.Create(review);
+                _unitOfWork.ReviewRepository.Create(review);
+            }
             
             book.Status = BookStatus.Confirmed;
             _unitOfWork.BookRepository.Update(book);
@@ -121,8 +131,21 @@ namespace Unicorn.Core.Services
 
             await _unitOfWork.SaveAsync();
 
+            var notification = new NotificationDTO()
+            {
+                Title = $"New review",
+                Description = $"{book.Customer.Person.Name} {book.Customer.Person.Surname} send review for your work {book.Work.Name}.",
+                SourceItemId = book.Id,
+                Time = DateTime.Now,
+                Type = NotificationType.TaskNotification
+            };
+
+            var receiverId = rating.Reciever.Id;
+            await _notificationService.CreateAsync(receiverId, notification);
+
         }
 
         private IUnitOfWork _unitOfWork;
+        private INotificationService _notificationService;
     }
 }

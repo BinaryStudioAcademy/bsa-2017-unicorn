@@ -27,6 +27,7 @@ export class CompanyMainInformationComponent implements OnInit {
     this.route.params
     .switchMap((params: Params) => this.companyService.getCompanyDetails(params['id'])).subscribe(res => {
       this.company = res;
+      this.company.FoundationDate = new Date(this.company.FoundationDate);
       this.map = {
         center: {lat: this.company.Location.Latitude, lng: this.company.Location.Longitude},
         zoom: 18,    

@@ -41,8 +41,8 @@ a
     display: block;
     position: fixed;
     background-color: rgba(255, 255, 255, 1.0);
-    min-width: 200px;
-    width: 270px;
+    min-width: 270px;
+    width: 360px;
     right: 0px;
     margin-top: 14px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
@@ -58,9 +58,6 @@ a
 
 .circular.bell.outline.icon
     margin-right: -10px;
-
-.item
-    margin: 15px 0;
 
 .mainInfo
     display: flex;
@@ -93,9 +90,39 @@ a
     height: 100%;
     width: 100%;
 
-.new-notification
-    position: absolute;
-    z-index: 3;
-    width: 6em;
-    height: 4em;
-    background: white;
+.notification-list
+    max-height: 25em;
+    overflow: auto;
+
+.ui.list /deep/ .item
+    padding: 15px 0;
+
+.notification-list .item
+    &:hover
+        background: rgba(251, 226, 230, 0.33)!important;
+        color: black!important;
+        cursor: pointer;
+
+.notification-title
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 7px;
+
+.notification-title p
+    color: #666;
+    font-size: 12px;
+
+.notification-title h5
+    margin: 0;
+
+.item.header
+    display: flex
+    justify-content: center;
+
+.item.header h5
+    width: auto
+    margin: 10px 10px 0px 10px
+    font-family: 'Century Gothic', 'Calibri', 'Trebuchet MS', sans-serif
+    color: gray
+    font-size: 20px
+    font-weight: bold

@@ -8,4 +8,6 @@ export interface Review {
     To: string;
     Description: string;
     BookId: number;
+    Grade: number;
+    WorkName: string;
 }

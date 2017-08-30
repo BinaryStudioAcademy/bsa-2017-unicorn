@@ -17,7 +17,7 @@ export class NotificationService {
 
 	}
 	  
-	connect(accountId: number) {
+	connect(accountId: number): Promise<any> {
 		let options: IConnectionOptions = { 
 			hubName: 'NotificationHub',
 			url: environment.apiUrl,
@@ -50,6 +50,11 @@ export class NotificationService {
 		}
 
 		return this.connection.invoke(methodName, parameter);
+	}
+
+	disconnect() {
+		if (this.connection !== undefined)
+			this.connection.stop();
 	}
 	
 

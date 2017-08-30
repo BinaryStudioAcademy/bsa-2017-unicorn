@@ -9,7 +9,7 @@
         </div>
         <div class="content">
             <sui-rating class="star" [isReadonly]="true" [ngModel]="book.Rating"></sui-rating>
-            <span class="center floated review"><a href="#">Review</a></span>
+            <span class="center floated review"><a *ngIf="book.Review" (click)="showReview(book.Id)">Review</a></span>
             <sui-checkbox name="hide" class="right floated" [(ngModel)]="book.IsHidden" (ngModelChange)="updateBook(book.Id)">Hide</sui-checkbox>
         </div>
 

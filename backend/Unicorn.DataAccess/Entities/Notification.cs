@@ -16,7 +16,9 @@ namespace Unicorn.DataAccess.Entities
         public long SourceItemId { get; set; }
         public NotificationType Type { get; set; }
         public DateTime Time { get; set; }
-        public string Message { get; set; }
+
+        public string Title { get; set; }
+        public string Description { get; set; }
 
         public bool IsDeleted { get; set; }
     }
