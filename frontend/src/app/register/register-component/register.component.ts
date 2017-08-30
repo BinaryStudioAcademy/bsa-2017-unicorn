@@ -137,16 +137,16 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.authLoginService.authState.subscribe(user => {
       if (user) {
         this.currentUser = user;
-        this.locationService.getLocDetails(this.location.Latitude,this.location.Longitude)
-        .subscribe(
-        result => {
+        // this.locationService.getLocDetails(this.location.Latitude,this.location.Longitude)
+        // .subscribe(
+        // result => {
           
-             this.location.Adress=result.formatted_address;
-              this.location.City=result.address_components[3].short_name;
-         },
-          error => console.log(error),
-          () => console.log('Geocoding completed!')
-          );
+        //      this.location.Adress=result.formatted_address;
+        //       this.location.City=result.address_components[3].short_name;
+        //  },
+        //   error => console.log(error),
+        //   () => console.log('Geocoding completed!')
+        //   );
       } else {
         this.currentUser = null;
       }
