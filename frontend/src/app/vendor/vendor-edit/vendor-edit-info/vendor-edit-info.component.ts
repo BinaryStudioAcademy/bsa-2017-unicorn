@@ -23,7 +23,6 @@ import { WorkService } from "../../../services/work.service";
 export class VendorEditInfoComponent implements OnInit {
   @Input() vendor: Vendor;
   
-  birthday: Date;
   location: Location;
   map: MapModel;
   dataLoaded: boolean;
@@ -78,9 +77,13 @@ export class VendorEditInfoComponent implements OnInit {
       return;
     }
     this.dataLoaded = false;
-    this.vendor.Birthday = this.birthday;
+    this.vendor.Birthday.setDate(this.vendor.Birthday.getDate() + 1);
     this.vendorService.updateVendor(this.vendor)
-      .then(resp => this.vendor = resp.body as Vendor)
+      .then(resp => {
+        this.vendor = resp.body as Vendor;
+        this.vendor.Birthday = new Date(this.vendor.Birthday);
+        this.vendor.Birthday.setDate(this.vendor.Birthday.getDate() - 1);
+      })
       .then(() => this.dataLoaded = true);
   }
 

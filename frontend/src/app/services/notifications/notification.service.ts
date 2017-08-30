@@ -53,9 +53,8 @@ export class NotificationService {
 	}
 
 	disconnect() {
-		if(this.connection !== undefined){
+		if (this.connection !== undefined)
 			this.connection.stop();
-		}
 	}
 	
 

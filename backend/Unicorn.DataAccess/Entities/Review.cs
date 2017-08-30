@@ -22,6 +22,10 @@ namespace Unicorn.DataAccess.Entities
 
         public string Description { get; set; }
 
+        public string WorkName { get; set; }
+
+        public int Grade { get; set; }
+
         public long BookId { get; set; }
     }
 }

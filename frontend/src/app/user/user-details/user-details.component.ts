@@ -71,6 +71,7 @@ export class UserDetailsComponent implements OnInit {
       .switchMap((params: Params) => this.userService.getUser(params['id']))
       .subscribe(resp => {
         this.user = resp.body as User;
+        this.user.Birthday = new Date(this.user.Birthday);
         this.backgroundUrl = this.buildSafeUrl(this.user.Background);
       });
   }
