@@ -14,6 +14,8 @@ namespace Unicorn.Shared.DTOs
 
         public string Description { get; set; }
 
+        public string Tags { get; set; }
+
         public ICollection<SubcategoryShortDTO> Subcategories { get; set; }
     }
 }

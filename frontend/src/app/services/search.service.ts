@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { SearchPerformer } from '../models/search/search-performer';
+import { SearchWork } from '../models/search/search-work';
 
 import { DataService } from './data.service';
 
@@ -9,8 +9,13 @@ export class SearchService {
 
   constructor(private dataService: DataService) { }
 
-  getSearchPerformers(): Promise<SearchPerformer[]> {
-    return this.dataService.getRequest<SearchPerformer[]>('search/performers');
+  getWorksByBaseFilters(category: string, subcategory: string, date: number): Promise<SearchWork[]> {
+    const query = `search?category=${category}&subcategory=${subcategory}&date=${date}`;
+    return this.dataService.getRequest<SearchWork[]>(query);
+  }
+
+  getAllWorks(): Promise<SearchWork[]> {
+    return this.dataService.getRequest<SearchWork[]>('search');
   }
 
 }

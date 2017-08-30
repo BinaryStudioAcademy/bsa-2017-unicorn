@@ -21,7 +21,7 @@
                                 <div class="row">
                                     <div class="container column">
                                         <div class="ui segment" suiTabContent="1">
-                                            <company-general-information></company-general-information>
+                                            <company-general-information (notify)='onWorksLoaded($event)'></company-general-information>
                                         </div>
                                         <div class="ui segment" suiTabContent="2">
                                             <company-portfolio></company-portfolio>
@@ -39,7 +39,7 @@
                                     <div *ngIf="isUser||isGuest" class="six wide column">
                                         <div class="ui segment">
                                             <app-sign-block *ngIf="isGuest"></app-sign-block>
-                                            <app-book *ngIf="!isGuest" [routePath]="routePath" [routeId]="routeid"></app-book>
+                                            <app-book *ngIf="!isGuest" [routePath]="routePath" [routeId]="routeid" [works]="works"></app-book>
                                         </div>
                                     </div>
                                 </div>

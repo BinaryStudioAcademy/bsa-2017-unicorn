@@ -60,7 +60,7 @@ namespace Unicorn.Core.Services
                 .Include(x => x.Messages)
                 .Include(x => x.Participant1)
                 .Include(x => x.Participant2)
-                .SingleAsync(x => x.Id == dialogId);            
+                .SingleAsync(x => x.Id == dialogId);
 
             ChatDialogDTO dl = new ChatDialogDTO
             {
@@ -81,7 +81,7 @@ namespace Unicorn.Core.Services
         }
 
         public async Task<IEnumerable<ChatDialogDTO>> GetAllDialogs(long accountId)
-        {           
+        {
             var dialogs = await _unitOfWork.ChatDialogRepository.Query
                 .Include(x => x.Participant1)
                 .Include(x => x.Participant2)
@@ -105,6 +105,16 @@ namespace Unicorn.Core.Services
             }).ToList();
 
             return result;
+        }
+
+        public async Task<long> FindDialog(long participantOneId, long participantTwoId)
+        {
+            var res = await _unitOfWork.ChatDialogRepository.Query
+                 .Include(x => x.Participant1)
+                 .Include(x => x.Participant2)
+                .FirstOrDefaultAsync(x => (x.Participant1.Id == participantOneId && x.Participant2.Id == participantTwoId) || (x.Participant1.Id == participantTwoId && x.Participant2.Id == participantOneId));
+
+            return res.Id;
         }
 
         public async Task RemoveDialog(long dialogId)

@@ -1,4 +1,5 @@
-export interface SearchPerformer {
+import { Location } from '../location.model';
+export interface SearchWork {
     Id: number;
     Rating: number;
     ReviewsCount: number;

@@ -5,7 +5,7 @@ import { Review } from '../../models/review.model';
 import { NguiMapModule, Marker } from '@ngui/map';
 
 import { SearchService } from '../../services/search.service';
-import { SearchPerformer } from '../../models/search/search-performer';
+import { SearchWork } from '../../models/search/search-work';
 
 
 @Component({
@@ -34,14 +34,17 @@ export class SearchComponent implements OnInit {
   maxSize = 3;
   hasEllipses = true;
   selectedPage = 1;
-  performers: SearchPerformer[] = [];
+  works: SearchWork[] = [];
   tabSuffix = '?tab=reviews';
   /* map */
   positions = [];
   markers = [];
+  center: string;
 
   autocomplete: google.maps.places.Autocomplete;
   address: any = {};
+
+  spinner: boolean;
 
   constructor(
     private searchService: SearchService,
@@ -53,13 +56,33 @@ export class SearchComponent implements OnInit {
     this.initDarepicker();
     this.getParameters();
     this.createMockSettings();
-    this.searchPerformers();
+    this.searchWorks();
   }
 
-  searchPerformers() {
-    this.searchService.getSearchPerformers()
-    .then(performers => {
-      this.performers = performers;
+  searchWorks() {
+    this.works = [];
+    this.spinner = true;
+    if (this.category === undefined || this.subcategory === undefined || this.rawDate === undefined) {
+      this.clearBaseFilter();
+      this.getAllWorks();
+    } else {
+      this.getWorksByBaseFilters(this.category, this.subcategory, this.rawDate);
+    }
+  }
+
+  getAllWorks() {
+    this.searchService.getAllWorks()
+    .then(works => {
+      this.works = works;
+      this.spinner = false;
+    });
+  }
+
+  getWorksByBaseFilters(category: string, subcategory: string, date: number) {
+    this.searchService.getWorksByBaseFilters(category, subcategory, date)
+    .then(works => {
+      this.works = works;
+      this.spinner = false;
     });
   }
 
@@ -89,6 +112,7 @@ export class SearchComponent implements OnInit {
       this.rawDate = this.route.snapshot.queryParams['date'];
       this.date = this.convertDate(this.rawDate);
     }
+    console.log(this.category, this.subcategory, this.date);
   }
 
   convertDate(date: number) {
@@ -104,6 +128,13 @@ export class SearchComponent implements OnInit {
     /* datepicker settings */
     this.mode = 'date';           /* select day */
     this.firstDayOfWeek = '1';    /* start calendar from first day of week */
+  }
+
+  clearBaseFilter() {
+    this.category = undefined;
+    this.subcategory = undefined;
+    this.date = undefined;
+    this.rawDate = undefined;
   }
 
 }
