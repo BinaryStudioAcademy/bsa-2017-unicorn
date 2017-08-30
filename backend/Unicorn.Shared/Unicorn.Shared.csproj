@@ -70,6 +70,7 @@
     <Compile Include="DTOs\Contact\ContactDTO.cs" />
     <Compile Include="DTOs\Contact\ContactShortDTO.cs" />
     <Compile Include="DTOs\CustomerDTO.cs" />
+    <Compile Include="DTOs\FullPerformerDTO.cs" />
     <Compile Include="DTOs\History\HistoryDTO.cs" />
     <Compile Include="DTOs\History\VendorHistoryDTO.cs" />
     <Compile Include="DTOs\LocationDTO.cs" />
@@ -87,7 +88,7 @@
     <Compile Include="DTOs\ReviewDTO.cs" />
     <Compile Include="DTOs\Review\ShortReviewDTO.cs" />
     <Compile Include="DTOs\RoleDTO.cs" />
-    <Compile Include="DTOs\Search\SearchPerformerDTO.cs" />
+    <Compile Include="DTOs\Search\SearchWorkDTO.cs" />
     <Compile Include="DTOs\ShortProfileInfoDTO.cs" />
     <Compile Include="DTOs\SocialAccountDTO.cs" />
     <Compile Include="DTOs\Subcategory\SubcategoryDTO.cs" />

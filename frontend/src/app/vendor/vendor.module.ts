@@ -31,6 +31,7 @@ import { ReviewService } from '../services/review.service';
 import { DataService } from "../services/data.service";
 import { LocationService } from "../services/location.service";
 import { DashboardService } from '../services/dashboard/dashboard.service';
+import { PerformerService } from '../services/performer.service';
 
 import { CategoryService } from "../services/category.service";
 import { WorkService } from "../services/work.service";
@@ -79,7 +80,8 @@ import { NguiMapModule } from "@ngui/map/dist";
     CategoryService,
     WorkService,
     ContactService,
-    DashboardService
+    DashboardService,
+    PerformerService
   ]
 })
 export class VendorModule { }

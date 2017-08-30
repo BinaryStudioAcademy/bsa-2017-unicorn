@@ -4,6 +4,7 @@ import { BookCard, BookStatus } from '../../../models/dashboard/book-card';
 
 import { DashMessagingService } from '../../../services/dashboard/dash-messaging.service';
 import { DashboardService } from '../../../services/dashboard/dashboard.service';
+import { NotificationService } from "../../../services/notifications/notification.service";
 
 import {ToastsManager, Toast} from 'ng2-toastr';
 import {ToastOptions} from 'ng2-toastr';
@@ -23,11 +24,13 @@ export class DashboardPendingsComponent implements OnInit {
   constructor(
     private dashboardService: DashboardService,
     private dashMessaging: DashMessagingService,
+    private notificationService: NotificationService,
     private toastr: ToastsManager
   ) { }
 
   ngOnInit() {
     this.loadData();
+    this.notificationService.listen<any>("RefreshOrders", () => this.loadData());
   }
 
   loadData() {

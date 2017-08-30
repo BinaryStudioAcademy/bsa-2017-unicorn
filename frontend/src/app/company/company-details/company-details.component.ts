@@ -4,6 +4,7 @@ import { ActivatedRoute, Params } from "@angular/router";
 import { CompanyShort } from "../../models/company-page/company-short.model";
 import { CompanyService } from "../../services/company-services/company.service";
 import { TokenHelperService } from '../../services/helper/tokenhelper.service';
+import { CompanyWork } from "../../models/company-page/company-work.model";
 
 @Component({
   selector: 'app-company-details',
@@ -17,6 +18,7 @@ export class CompanyDetailsComponent implements OnInit {
   tabActive: boolean = false;
   routePath: string;
   routeid: number;
+  works: CompanyWork[];
 
   constructor(private companyService: CompanyService,
     private route: ActivatedRoute,
@@ -46,5 +48,9 @@ export class CompanyDetailsComponent implements OnInit {
     const userRoleId = +this.tokenHelperService.getClaimByName('roleid');
     this.isGuest = userRoleId === 1;
     this.isUser = userRoleId === 2;
+  }
+
+  onWorksLoaded(works: CompanyWork[]) {
+    this.works = works;
   }
 }

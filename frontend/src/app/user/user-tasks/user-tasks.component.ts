@@ -10,6 +10,7 @@ import { ReviewService } from '../../services/review.service';
 
 import { CustomerBook, BookStatus } from '../../models/book/book.model';
 import { ShortReview } from '../../models/short-review';
+import { NotificationService } from "../../services/notifications/notification.service";
 
 export interface IContext {
   id: number;
@@ -38,23 +39,33 @@ export class UserTasksComponent implements OnInit {
   };
 
   loader: boolean;
+  error: boolean;
 
   books: CustomerBook[];
 
   constructor(
     private bookService: CustomerbookService,
     private modalService: SuiModalService,
-    private reviewService: ReviewService
+    private reviewService: ReviewService,
+    private notificationService: NotificationService
   ) { }
 
   ngOnInit() {
     this.loadData();
+    this.notificationService.listen<any>("RefreshOrders", () => this.loadData());
   }
 
   loadData() {
     this.bookService.getCustomerBooks(this.user.Id)
     .then(resp => {
-      this.books = resp;
+      this.books = resp.filter(b => b.Status != BookStatus.Confirmed && b.Status != BookStatus.Declined)
+        .sort((b1, b2) => b1.Status - b2.Status)
+        .sort((b1, b2) => {
+          if (b1.Status !== b2.Status) return 0;
+          let f = new Date(b1.Date).getTime();
+          let s = new Date(b2.Date).getTime();
+          return f - s;
+        });
       console.log(resp);
     });
   }
@@ -92,10 +103,21 @@ export class UserTasksComponent implements OnInit {
 
   showReview(id: number) {
     let book = this.getBookById(id);
-    this.modalService.open(new ReviewModal(book.Review));
+    this.modalService.open(new ReviewModal(book.Review))
+      .onDeny(this.clearData);
+  }
+
+  clearData() {
+    this.error = false;
+    this.review.Grade = 0;
+    this.review.Text = '';
   }
 
   saveReview(id: number) {
+    if (this.review.Grade == 0) {
+      this.error = true;
+      return;
+    }
     this.loader = true;
     let book = this.getBookById(id);
     this.review.BookId = id;
@@ -105,11 +127,11 @@ export class UserTasksComponent implements OnInit {
       this.loadData();
       this.loader = false;
       this.currModal.deny(undefined);
-      this.review.Text = '';
+      this.clearData();
     }).catch(err => {
       this.loader = false;
       this.currModal.deny(undefined);
-      this.review.Text = '';
+      this.clearData();
     });
   }
 

@@ -21,5 +21,9 @@ namespace Unicorn.Shared.DTOs
         public string Description { get; set; }
 
         public long BookId { get; set; }
+
+        public string WorkName { get; set; }
+
+        public int Grade { get; set; }
     }
 }

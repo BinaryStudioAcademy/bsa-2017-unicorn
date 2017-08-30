@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Unicorn.Core.Interfaces;
 using Unicorn.DataAccess.Interfaces;
+using Unicorn.Shared.DTOs;
 using Unicorn.Shared.DTOs.Popular;
 
 namespace Unicorn.Core.Services
@@ -19,6 +20,74 @@ namespace Unicorn.Core.Services
         {
             _uow = uow;
             _ratingService = ratingService;
+        }
+
+        public async Task<List<FullPerformerDTO>> GetAllPerformersAsync()
+        {
+            var reviews = await _uow.ReviewRepository.GetAllAsync();
+
+            var vendorsList = await _uow.VendorRepository
+                .Query
+                .Include(v => v.Person)
+                .Include(v => v.Person.Account)
+                .ToListAsync();
+
+            var vendors = vendorsList
+                .Select(v => new FullPerformerDTO
+                {
+                    Id = v.Id,
+                    Avatar = v.Person.Account.Avatar,
+                    Name = v.Person.Name,
+                    Description = v.Position,
+                    Rating = CalculateRating(v.Person.Account.Id),
+                    ReviewsCount = reviews.Count(r => r.ToAccountId == v.Person.Account.Id),
+                    PerformerType = "vendor",
+                    Link = "vendor/" + v.Id,
+                    Location = new LocationDTO
+                    {
+                        Id = v.Person.Location.Id,
+                        City = v.Person.Location.City,
+                        Adress = v.Person.Location.Adress,
+                        Latitude = v.Person.Location.Latitude,
+                        Longitude = v.Person.Location.Longitude,
+                        PostIndex = v.Person.Location.PostIndex
+                    }
+                }).ToList();
+
+            var companiesList = await _uow.CompanyRepository
+                .Query
+                .Include(c => c.Account)
+                .ToListAsync();
+
+            var companies = companiesList
+                .Select(c => new FullPerformerDTO
+                {
+                    Id = c.Id,
+                    Avatar = c.Account.Avatar,
+                    Name = c.Name,
+                    Description = c.Description,
+                    Rating = CalculateRating(c.Account.Id),
+                    ReviewsCount = reviews.Count(r => r.ToAccountId == c.Account.Id),
+                    PerformerType = "company",
+                    Link = "company/" + c.Id,
+                    Location = new LocationDTO
+                    {
+                        Id = c.Location.Id,
+                        City = c.Location.City,
+                        Adress = c.Location.Adress,
+                        Latitude = c.Location.Latitude,
+                        Longitude = c.Location.Longitude,
+                        PostIndex = c.Location.PostIndex
+                    },
+                }).ToList();
+
+            var performers = vendors
+                .Concat(companies)
+                .OrderByDescending(p => p.Rating)
+                .Distinct()
+                .ToList();
+
+            return performers;
         }
 
         public async Task<List<PopularCategoryDTO>> GetPopularCategories()

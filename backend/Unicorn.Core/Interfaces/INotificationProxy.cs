@@ -11,5 +11,6 @@ namespace Unicorn.Core.Interfaces
     public interface INotificationProxy
     {
         Task SendNotification(long accountId, NotificationDTO notification);
+        Task RefreshOrdersForAccount(long accountId);
     }
 }

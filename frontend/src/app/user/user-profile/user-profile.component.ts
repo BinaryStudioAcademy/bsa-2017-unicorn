@@ -23,6 +23,8 @@ export class UserProfileComponent implements OnInit {
     @Input() user: User;
 
     @ViewChild('userForm') public userForm: NgForm;
+    lat: number = 48.464921;
+    lng: number = 35.045798;
     birthday: Date;
     dataLoaded: boolean;
     position;
@@ -65,14 +67,12 @@ export class UserProfileComponent implements OnInit {
             this.toastr.error('Sorry, you must fill all inputs', 'Error!');
             return;
         }
-        if(this.birthday!=undefined)
-         { 
-           this.user.Birthday=this.birthday;
-           this.user.Birthday.setDate( this.user.Birthday.getDate()+1);
-         }
-        
+
+        this.user.Birthday.setDate( this.user.Birthday.getDate() + 1);
         this.userService.updateUser(this.user)
           .then(resp => {this.user = resp.body as User;
+            this.user.Birthday = new Date(this.user.Birthday);
+            this.user.Birthday.setDate( this.user.Birthday.getDate() - 1);
             this.dataLoaded = true;
             this.toastr.success('Changes were saved', 'Success!');})
           .catch(x=>{ this.dataLoaded = true;

@@ -5,6 +5,7 @@ export class Notification {
 	Title: string;
 	Description: string;
 	Time: Date;
+	IsViewed: boolean;
 }
 
 export enum NotificationType {

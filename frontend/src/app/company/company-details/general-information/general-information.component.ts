@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CompanyDetails } from "../../../models/company-page/company-details.model";
 import { CompanyService } from "../../../services/company-services/company.service";
 import { ActivatedRoute, Params } from "@angular/router";
@@ -18,6 +18,7 @@ categories: CompanyCategory[] = [];
 selectedCategory: CompanyCategory;
 categoryWorks: CompanyWork[];
 openedCategoryDetails: boolean = false;
+@Output() notify: EventEmitter<CompanyWork[]> = new EventEmitter<CompanyWork[]>();
 
 constructor(private companyService: CompanyService,
   private route: ActivatedRoute) { }
@@ -26,12 +27,13 @@ constructor(private companyService: CompanyService,
     this.route.params
     .switchMap((params: Params) => this.companyService.getCompanyDetails(params['id']))
     .subscribe(res => {
-      this.company = res;
+      this.company = res;      
       this.company.Works.forEach(work => {
         if(this.categories.find(x => x.Id === work.Subcategory.Category.Id) === undefined){
           this.categories.push(work.Subcategory.Category);
         }
       });
+      this.notify.emit(this.company.Works);
       this.companyService.getCompanyRating(this.company.Id).
       then(resp => this.rating = resp.body as number);      
     });   

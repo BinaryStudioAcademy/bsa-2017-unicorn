@@ -10,7 +10,7 @@
         </div>
         <div class="content">
             <sui-rating class="star" [isReadonly]="true" [ngModel]="book.Rating"></sui-rating>
-            <span class="right floated"><a (click)="showReview(book.Id)">Review</a></span>
+            <span *ngIf="book.Review" class="right floated"><a (click)="showReview(book.Id)">Review</a></span>
         </div>
     </div>
 </div>

@@ -1,6 +1,10 @@
 import { Component, OnInit, Input, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { NgForm } from '@angular/forms';
+
+import { NguiMapModule, Marker } from "@ngui/map";
 import { SuiModule } from 'ng2-semantic-ui';
+import { ToastsManager, Toast } from 'ng2-toastr';
+import { ToastOptions } from 'ng2-toastr';
 
 import { LocationModel } from "../../../models/location.model"
 import { Vendor } from "../../../models/vendor.model";
@@ -22,7 +26,6 @@ import { WorkService } from "../../../services/work.service";
 export class VendorEditInfoComponent implements OnInit {
   @Input() vendor: Vendor;
   
-  birthday: Date;
   location: LocationModel;
   map: MapModel;
   dataLoaded: boolean;
@@ -45,7 +48,8 @@ export class VendorEditInfoComponent implements OnInit {
     private categoryService: CategoryService,
     private workService: WorkService,
     private LocationService: LocationService,
-    private ref: ChangeDetectorRef
+    private ref: ChangeDetectorRef,
+    private toastr: ToastsManager
   ) { }
 
   ngOnInit() {
@@ -117,10 +121,19 @@ export class VendorEditInfoComponent implements OnInit {
       return;
     }
     this.dataLoaded = false;
-    this.vendor.Birthday = this.birthday;
+    this.vendor.Birthday.setDate(this.vendor.Birthday.getDate() + 1);
     this.vendorService.updateVendor(this.vendor)
-      .then(resp => this.vendor = resp.body as Vendor)
-      .then(() => this.dataLoaded = true);
+      .then(resp => {
+        this.vendor = resp.body as Vendor;
+        this.vendor.Birthday = new Date(this.vendor.Birthday);
+        this.vendor.Birthday.setDate(this.vendor.Birthday.getDate() - 1);
+        this.dataLoaded = true;
+        this.toastr.success('Changes were saved', 'Success!');
+      })
+      .catch(err => { 
+        this.dataLoaded = true;
+        this.toastr.error('Sorry, something went wrong', 'Error!');
+      });
   }
 
 }

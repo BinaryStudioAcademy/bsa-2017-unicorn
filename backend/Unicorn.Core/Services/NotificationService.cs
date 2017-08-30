@@ -11,6 +11,7 @@ using Unicorn.Core.Interfaces;
 using Unicorn.Shared.DTOs.Notification;
 using Unicorn.DataAccess.Entities;
 using Unicorn.DataAccess.Interfaces;
+using Unicorn.DataAccess.Entities.Enum;
 
 namespace Unicorn.Core.Services
 {
@@ -32,11 +33,21 @@ namespace Unicorn.Core.Services
                 Title = notificationDto.Title,
                 Description = notificationDto.Description,
                 Time = notificationDto.Time,
-                Type = notificationDto.Type
+                Type = notificationDto.Type,
+                IsViewed = false
             };
 
             _unitOfWork.NotificationRepository.Create(notification);
             await _unitOfWork.SaveAsync();
+
+            switch (notification.Type)
+            {
+                case NotificationType.TaskNotification:
+                    await _proxy.RefreshOrdersForAccount(accountId);
+                    break;
+                default:
+                    break;
+            }
 
             notificationDto.Id = notification.Id;
             await _proxy.SendNotification(accountId, notificationDto);
@@ -66,6 +77,7 @@ namespace Unicorn.Core.Services
                 Title = notification.Title,
                 Description = notification.Description,
                 SourceItemId = notification.SourceItemId,
+                IsViewed = notification.IsViewed, 
                 Time = notification.Time,
                 Type = notification.Type
             };
@@ -84,14 +96,25 @@ namespace Unicorn.Core.Services
             return notifications
                 .Where(n => n.AccountId == id)
                 .Select(n => new NotificationDTO()
-            {
-                Id = n.Id,
-                Title = n.Title,
-                Description = n.Description,
-                SourceItemId = n.SourceItemId,
-                Time = n.Time,
-                Type = n.Type
-            }).ToList();
+                {
+                    Id = n.Id,
+                    Title = n.Title,
+                    Description = n.Description,
+                    SourceItemId = n.SourceItemId,
+                    Time = n.Time,
+                    Type = n.Type,
+                    IsViewed = n.IsViewed
+                }).ToList();
+        }
+
+        public async Task UpdateAsync(NotificationDTO notificationDto)
+        {
+            var notification = await _unitOfWork.NotificationRepository.GetByIdAsync(notificationDto.Id);
+
+            notification.IsViewed = notificationDto.IsViewed;
+
+            _unitOfWork.NotificationRepository.Update(notification);
+            await _unitOfWork.SaveAsync();
         }
 
         private readonly IUnitOfWork _unitOfWork;
