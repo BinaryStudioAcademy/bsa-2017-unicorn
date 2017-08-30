@@ -35,10 +35,14 @@ export class VendorEditOrdersComponent implements OnInit {
     this.changedOrders.splice(this.changedOrders.findIndex(o => o.Id === order.Id), 1);
   }
 
+  refreshOrders(): void {
+    this.vendorService.getOrders(this.vendorId)
+    .then(resp => this.orders = resp.body as VendorBook[]);
+  }
+
   ngOnInit() {
     this.changedOrders = [];
-    this.vendorService.getOrders(this.vendorId)
-      .then(resp => this.orders = resp.body as VendorBook[]);
+    this.refreshOrders();
   }
 
 }

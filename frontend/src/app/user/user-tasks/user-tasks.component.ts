@@ -10,6 +10,7 @@ import { ReviewService } from '../../services/review.service';
 
 import { CustomerBook, BookStatus } from '../../models/book/book.model';
 import { ShortReview } from '../../models/short-review';
+import { NotificationService } from "../../services/notifications/notification.service";
 
 export interface IContext {
   id: number;
@@ -45,11 +46,13 @@ export class UserTasksComponent implements OnInit {
   constructor(
     private bookService: CustomerbookService,
     private modalService: SuiModalService,
-    private reviewService: ReviewService
+    private reviewService: ReviewService,
+    private notificationService: NotificationService
   ) { }
 
   ngOnInit() {
     this.loadData();
+    this.notificationService.listen<any>("RefreshOrders", () => this.loadData());
   }
 
   loadData() {
