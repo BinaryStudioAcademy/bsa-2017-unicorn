@@ -10,15 +10,17 @@ using Unicorn.DataAccess.Entities;
 using Unicorn.DataAccess.Entities.Enum;
 using Unicorn.DataAccess.Interfaces;
 using Unicorn.Shared.DTOs;
+using Unicorn.Shared.DTOs.Notification;
 using Unicorn.Shared.DTOs.Review;
 
 namespace Unicorn.Core.Services
 {
     public class ReviewService : IReviewService
     {
-        public ReviewService(IUnitOfWork unitOfWork)
+        public ReviewService(IUnitOfWork unitOfWork, INotificationService notificationService)
         {
             _unitOfWork = unitOfWork;
+            _notificationService = notificationService;
         }
 
         public async Task<ReviewDTO> GetByIdAsync(long id)
@@ -129,8 +131,21 @@ namespace Unicorn.Core.Services
 
             await _unitOfWork.SaveAsync();
 
+            var notification = new NotificationDTO()
+            {
+                Title = $"New review",
+                Description = $"{book.Customer.Person.Name} {book.Customer.Person.Surname} send review for your work {book.Work.Name}.",
+                SourceItemId = book.Id,
+                Time = DateTime.Now,
+                Type = NotificationType.TaskNotification
+            };
+
+            var receiverId = rating.Reciever.Id;
+            await _notificationService.CreateAsync(receiverId, notification);
+
         }
 
         private IUnitOfWork _unitOfWork;
+        private INotificationService _notificationService;
     }
 }

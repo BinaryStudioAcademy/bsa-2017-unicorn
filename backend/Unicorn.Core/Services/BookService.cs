@@ -147,7 +147,7 @@ namespace Unicorn.Core.Services
 
         public async Task Create(BookOrderDTO book)
         {
-            Work work = await _unitOfWork.WorkRepository.GetByIdAsync(book.WorkId);
+            // Work work = await _unitOfWork.WorkRepository.GetByIdAsync(book.WorkId);
             Customer customer = await _unitOfWork.CustomerRepository.GetByIdAsync(book.CustomerId);
             Location location = null;
 
@@ -182,6 +182,20 @@ namespace Unicorn.Core.Services
                     .Include(v => v.Person.Account)
                     .SingleAsync(v => v.Id == book.ProfileId);
             }
+
+            var mockSubcategory = await _unitOfWork.SubcategoryRepository.GetByIdAsync(1);
+
+            Work work = new Work()
+            {
+                Vendor = vendor,
+                Company = company,
+                Icon = "http://www.freeiconspng.com/uploads/pictures-icon-11.gif",
+                Description = "It\'s temporary mock",
+                IsDeleted = false,
+                Name = "Mock work",
+                Orders = 0,
+                Subcategory = mockSubcategory,
+            };
 
             Book _book = new Book()
             {
@@ -408,6 +422,7 @@ namespace Unicorn.Core.Services
                     break;
             }
 
+            notification.Time = DateTime.Now;
             await _notificationService.CreateAsync(receiverId, notification);
         }
 

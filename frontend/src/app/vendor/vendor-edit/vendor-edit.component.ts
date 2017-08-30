@@ -60,6 +60,7 @@ export class VendorEditComponent implements OnInit {
       .switchMap((params: Params) => this.vendorService.getVendor(params['id']))
       .subscribe(resp => {
         this.vendor = resp.body as Vendor;
+        this.vendor.Birthday = new Date(this.vendor.Birthday);
         this.backgroundUrl = this.buildSafeUrl(this.vendor.Background);
       });
   }
