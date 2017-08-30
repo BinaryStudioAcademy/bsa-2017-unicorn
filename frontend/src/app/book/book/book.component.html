@@ -2,12 +2,15 @@
     <form class="ui form book-form" [class.loading]="onSending" name="bookForm" #bookForm="ngForm">
         <div class="field">
             <label>Choose work</label>
-            <select class="ui fluid dropdown">
-      <option value="1">Work type</option>
-      <option value="2">Work type</option>
-      <option value="3">Work type</option>
-      <option value="4">Work type</option>
-    </select>
+            <sui-select 
+            class="selection" 
+            [(ngModel)]="selectedWork" 
+            (selectedOptionChange)="onWorkChange()"
+            [optionTemplate]="optionWorkTemplate"
+            name="selectWork">
+                <sui-select-option class="select-option" *ngFor="let work of works" [value]="work">
+                </sui-select-option>
+            </sui-select>
         </div>
         <div class="field">
             <div class="ui left icon input">
@@ -43,4 +46,7 @@
           </div>
           <p>Your request has been received and added to our internal tracking system for future review.</p>
     </div>
+</ng-template>
+<ng-template let-option #optionWorkTemplate>
+    {{option.Name}}
 </ng-template>
