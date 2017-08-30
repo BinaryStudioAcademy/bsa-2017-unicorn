@@ -97,63 +97,106 @@ namespace Unicorn.Core.Services
         {
             var reviews = await _unitOfWork.ReviewRepository.GetAllAsync();
 
-            //var vendorsWorksList = await _unitOfWork.WorkRepository
-            //    .Query
-            //    .Where(w => w.Vendor != null)
-            //    .Include(w => w.Vendor.Person)
-            //    .Include(w => w.Vendor.Person.Account)
-            //    .ToListAsync();
+            var vendorsWorksList = new List<Work>();
 
-            //if (category != null)
-            //{
-
-            //}
-
-            var vendorsWorksList = await _unitOfWork.WorkRepository
+            if (category != null && subcategory == null)
+            {
+                vendorsWorksList = await _unitOfWork.WorkRepository
                 .Query
                 .Where(w => w.Vendor != null)
-                //.Where(w =>
-                //    (category != null && (w.Subcategory.Category.Name.Contains(category) || w.Subcategory.Category.Tags.Contains(category))
-                //    ))
-                .Where(w => w.Vendor != null && 
-                    (w.Subcategory.Name.Contains(subcategory) || w.Subcategory.Tags.Contains(subcategory)) &&
-                    (w.Subcategory.Category.Name.Contains(category) || w.Subcategory.Category.Tags.Contains(category)))
+                .Where(w => category != null && (
+                        w.Subcategory.Category.Name.Contains(category) ||
+                        w.Subcategory.Category.Tags.Contains(category)
+                     ))
                 .Include(w => w.Vendor.Person)
                 .Include(w => w.Vendor.Person.Account)
                 .ToListAsync();
+            }
 
+            if (category == null && subcategory != null)
+            {
+                vendorsWorksList = await _unitOfWork.WorkRepository
+                .Query
+                .Where(w => w.Vendor != null)
+                .Where(w => subcategory != null && (
+                        w.Subcategory.Name.Contains(subcategory) ||
+                        w.Subcategory.Tags.Contains(subcategory)
+                    ))
+                .Include(w => w.Vendor.Person)
+                .Include(w => w.Vendor.Person.Account)
+                .ToListAsync();
+            }
+
+            if (category != null && subcategory != null)
+            {
+                vendorsWorksList = await _unitOfWork.WorkRepository
+                .Query
+                .Where(w => w.Vendor != null)
+                .Where(w => category != null && (
+                        w.Subcategory.Category.Name.Contains(category) ||
+                        w.Subcategory.Category.Tags.Contains(category)
+                     ))
+                .Where(w => subcategory != null && (
+                        w.Subcategory.Name.Contains(subcategory) ||
+                        w.Subcategory.Tags.Contains(subcategory)
+                    ))
+                .Include(w => w.Vendor.Person)
+                .Include(w => w.Vendor.Person.Account)
+                .ToListAsync();
+            }
+            
 
             var vendorsWorks = CreateVendorsWorks(vendorsWorksList, reviews);
 
-            var companiesWorksList = await _unitOfWork.WorkRepository
+            
+
+
+            var companiesWorksList = new List<Work>();
+
+            if (category != null && subcategory == null)
+            {
+                companiesWorksList = await _unitOfWork.WorkRepository
                 .Query
-                .Where(w => w.Company != null &&
-                    (w.Subcategory.Name.Contains(subcategory) || w.Subcategory.Tags.Contains(subcategory)) &&
-                    (w.Subcategory.Category.Name.Contains(category) || w.Subcategory.Category.Tags.Contains(category)))
+                .Where(w => w.Company != null)
+                .Where(w => category != null && (
+                        w.Subcategory.Category.Name.Contains(category) ||
+                        w.Subcategory.Category.Tags.Contains(category)
+                     ))
                 .Include(w => w.Company.Account)
                 .ToListAsync();
+            }
 
-            var companiesWorks = companiesWorksList
-                .Select(w => new SearchWorkDTO
-                {
-                    Id = w.Id,
-                    Avatar = w.Icon,
-                    Name = w.Name,
-                    Rating = CalculateRating(w.Company.Account.Id),
-                    ReviewsCount = reviews.Count(r => r.ToAccountId == w.Company.Account.Id),
-                    PerformerType = "company",
-                    PerformerName = $"{w.Company.Name}",
-                    Link = "company/" + w.Company.Id,
-                    Location = new LocationDTO
-                    {
-                        Id = w.Company.Location.Id,
-                        City = w.Company.Location.City,
-                        Adress = w.Company.Location.Adress,
-                        Latitude = w.Company.Location.Latitude,
-                        Longitude = w.Company.Location.Longitude,
-                        PostIndex = w.Company.Location.PostIndex
-                    },
-                }).ToList();
+            if (category == null && subcategory != null)
+            {
+                companiesWorksList = await _unitOfWork.WorkRepository
+                .Query
+                .Where(w => w.Company != null)
+                .Where(w => subcategory != null && (
+                        w.Subcategory.Name.Contains(subcategory) ||
+                        w.Subcategory.Tags.Contains(subcategory)
+                    ))
+                .Include(w => w.Company.Account)
+                .ToListAsync();
+            }
+
+            if (category != null && subcategory != null)
+            {
+                companiesWorksList = await _unitOfWork.WorkRepository
+                .Query
+                .Where(w => w.Company != null)
+                .Where(w => category != null && (
+                        w.Subcategory.Category.Name.Contains(category) ||
+                        w.Subcategory.Category.Tags.Contains(category)
+                     ))
+                .Where(w => subcategory != null && (
+                        w.Subcategory.Name.Contains(subcategory) ||
+                        w.Subcategory.Tags.Contains(subcategory)
+                    ))
+                .Include(w => w.Company.Account)
+                .ToListAsync();
+            }
+
+            var companiesWorks = CreateCompaniesWorks(companiesWorksList, reviews);
 
             var searchWorks = vendorsWorks
                 .Concat(companiesWorks)
@@ -185,6 +228,31 @@ namespace Unicorn.Core.Services
                         Latitude = w.Vendor.Person.Location.Latitude,
                         Longitude = w.Vendor.Person.Location.Longitude,
                         PostIndex = w.Vendor.Person.Location.PostIndex
+                    },
+                }).ToList();
+        }
+
+        private List<SearchWorkDTO> CreateCompaniesWorks(List<Work> works, IEnumerable<Review> reviews)
+        {
+            return works
+                .Select(w => new SearchWorkDTO
+                {
+                    Id = w.Id,
+                    Avatar = w.Icon,
+                    Name = w.Name,
+                    Rating = CalculateRating(w.Company.Account.Id),
+                    ReviewsCount = reviews.Count(r => r.ToAccountId == w.Company.Account.Id),
+                    PerformerType = "company",
+                    PerformerName = $"{w.Company.Name}",
+                    Link = "company/" + w.Company.Id,
+                    Location = new LocationDTO
+                    {
+                        Id = w.Company.Location.Id,
+                        City = w.Company.Location.City,
+                        Adress = w.Company.Location.Adress,
+                        Latitude = w.Company.Location.Latitude,
+                        Longitude = w.Company.Location.Longitude,
+                        PostIndex = w.Company.Location.PostIndex
                     },
                 }).ToList();
         }
