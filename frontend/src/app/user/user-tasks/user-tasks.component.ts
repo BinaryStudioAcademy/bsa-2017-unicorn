@@ -55,7 +55,7 @@ export class UserTasksComponent implements OnInit {
   loadData() {
     this.bookService.getCustomerBooks(this.user.Id)
     .then(resp => {
-      this.books = resp.filter(b => b.Status != BookStatus.Confirmed)
+      this.books = resp.filter(b => b.Status != BookStatus.Confirmed && b.Status != BookStatus.Declined)
         .sort((b1, b2) => b1.Status - b2.Status)
         .sort((b1, b2) => {
           if (b1.Status !== b2.Status) return 0;
