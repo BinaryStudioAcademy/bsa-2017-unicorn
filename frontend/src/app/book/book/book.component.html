@@ -1,0 +1,52 @@
+<div *ngIf="!formIsSended;else formSended">
+    <form class="ui form book-form" [class.loading]="onSending" name="bookForm" #bookForm="ngForm">
+        <div class="field">
+            <label>Choose work</label>
+            <sui-select 
+            class="selection" 
+            [(ngModel)]="selectedWork" 
+            (selectedOptionChange)="onWorkChange()"
+            [optionTemplate]="optionWorkTemplate"
+            name="selectWork">
+                <sui-select-option class="select-option" *ngFor="let work of works" [value]="work">
+                </sui-select-option>
+            </sui-select>
+        </div>
+        <div class="field">
+            <div class="ui left icon input">
+                <i class="calendar icon"></i>
+                <input required suiDatepicker [(ngModel)]="book.date" name="date" [pickerUseNativeOnMobile]="false" placeholder="DATE" #date="ngModel">
+            </div>
+            <div *ngIf="date.invalid && (date.dirty && date.touched)" class="valid-error">* Required</div>
+        </div>
+        <div class="field">
+            <input required [(ngModel)]="book.location.Adress" (ngModelChange)="adressChanged($event)" name="location" placeholder="FRANKA, 12" #location="ngModel">
+            <div *ngIf="location.invalid && (location.dirty)" class="valid-error">* Required</div>
+        </div>
+        <div class="field">
+            <input required pattern="^\+(?:[0-9]●?){6,14}[0-9]$" [(ngModel)]="book.customerphone" name="phone" placeholder="+380 (XX) XXXXXXX" #phonenumb="ngModel">
+            <div *ngIf="phonenumb.invalid && (phonenumb.dirty)">
+                <div *ngIf="phonenumb.errors.required" class="valid-error">* Required</div>
+                <div *ngIf="phonenumb.errors.pattern" class="valid-error">* Invalid number</div>
+            </div>
+        </div>
+        <div class="field">
+            <textarea rows="3" name="desc" placeholder="TELL US ABOUT YOUR TASK" [(ngModel)]="book.description" #desc="ngModel"></textarea>            
+        </div>
+        <div style="display: flex; justify-content: center;">
+            <button class="ui button" type="submit" (click)="makeOrder()">ORDER</button>
+        </div>
+    </form>
+</div>
+
+<ng-template #formSended>
+    <div class="ui success message">
+        <div class="header">
+            Thank you for your request.
+          </div>
+          <p>Your request has been received and added to our internal tracking system for future review.</p>
+    </div>
+</ng-template>
+<ng-template let-option #optionWorkTemplate>
+    {{option.Name}}
+</ng-template>
