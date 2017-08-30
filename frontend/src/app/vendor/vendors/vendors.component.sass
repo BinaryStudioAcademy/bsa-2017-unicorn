@@ -1,7 +1,7 @@
 @import "../../../global-style-variables.sass"
 
 .ui.small.fluid.image
-    height: 150px;
+    height: 140px;
     border: 1px solid #E5E5E5;
     object-fit: contain;
     background-size: 20%;
@@ -19,9 +19,10 @@
 
 .location
     font-size: 13px
+    cursor: pointer
+    color: gray
 
 .book-div
-    margin: auto !important
     text-align: center !important
 
 .reviews
@@ -55,4 +56,18 @@
     padding: 3px
     border: 1px solid black
     border-radius: 5px
+
+.active-marker
+    border: 2px solid red
+    position: relative
+    z-index: 1
+
+.flex-centered
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+
+#paging 
+    margin-bottom: 20px
 

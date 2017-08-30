@@ -11,8 +11,17 @@ import { PerformerService } from '../../services/performer.service';
 })
 export class VendorsComponent implements OnInit {
 
-  performers: Performer[] = [];
   loaded: boolean;
+
+  /* pagination */
+  pageSize = 10;
+  maxSize = 3;
+  hasEllipses = true;
+  selectedPage = 1;
+  tabSuffix = '?tab=reviews';
+  performers: Performer[] = [];
+
+  selected: string = '';
 
   constructor(
     private performerService: PerformerService
@@ -27,11 +36,20 @@ export class VendorsComponent implements OnInit {
       console.log(resp);
       this.performers = resp;
       this.loaded = true;
+      
     });
   }
 
   onMapReady(map) {
     console.log(map);
+  }
+
+  select(name: string) {
+    this.selected = name;
+  }
+
+  getPerformersPage(): Performer[] {
+    return this.performers.slice((this.selectedPage - 1) * this.pageSize, this.selectedPage * this.pageSize);
   }
 
 }

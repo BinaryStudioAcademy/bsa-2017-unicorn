@@ -1,7 +1,8 @@
 <nav class="navbar">
     <ul>
-        <li><a routerLink="/search" routerLinkActive="active">Search</a></li>
-        <li><a routerLink="#" routerLinkActive="active">Vendors</a></li>
+        <li *ngIf="!isPerformer()"><a routerLink="/search" routerLinkActive="active">Search</a></li>
+        <li *ngIf="isPerformer()"><a routerLink="/dashboard" routerLinkActive="active">Dashboard</a></li>
+        <li><a routerLink="/vendors" routerLinkActive="active">Vendors</a></li>
         <li *ngIf="!isLogged;else authorized"><a (click)="openModal()" routerLinkActive="active">Sign In</a></li>
         <ng-template #authorized>
             <li>
@@ -42,7 +43,7 @@
                     </div>
                     <div class="dropdown-content" *ngIf="showNotifications">
                         <div class="item header">
-                           <h5>NOTIFICATIONS</h5>
+                            <h5>NOTIFICATIONS</h5>
                         </div>
                         <div class="ui middle aligned divided list  notification-list">
                             <div *ngFor="let notif of notifications" (click)="removeNotification(notif)" class="item">
