@@ -2,9 +2,10 @@ import { MessageModel } from "./message.model";
 
 export interface DialogModel {
     Id: number;
-    FirstParticipant: string;
+    ParticipantOneId: number;
     //FirstParticipantsId: number;
-    SecondParticipant: string;
+    ParticipantTwoId: number;
+    ParticipantName: string;
     //SecondParticipantsId: number;
     Messages: MessageModel[];
 }

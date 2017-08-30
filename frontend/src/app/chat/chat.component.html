@@ -1,22 +1,27 @@
-<div class="container" *ngIf="dialogs !== undefined">
-    <div class="users">
+<div class="container" [ngStyle]="{'height.px': containerHeight}" *ngIf="dialogs !== undefined">
+    <div class="users" *ngIf="dialogs !== null && dialogs.length !== 0">
         <div class="upper-user" (click)="onSelect(dialog.Id)" *ngFor="let dialog of dialogs">
             <div class="user" [ngClass]="{'active': dialog.Id === selectedId}">
                 <img class="ui avatar image" src="http://psand.ru/wp-content/uploads/2016/04/Kak-ustanovit-svoy-unikalnyiy-avatar-dlya-vseh-saytov-na-WordPress.png">
                 <div class="dialog-inf">
-                    <div class="userName"> {{dialog.SecondParticipant}} </div>
+                    <div class="userName"> {{dialog.ParticipantName}} </div>
                     <div class="lastMessageDate" *ngIf="messages !== undefined">
-                        {{messages[0].Date|amTimeAgo}}
+                        {{dialog.Messages[dialog.Messages.length - 1].Date|amTimeAgo}}
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <div class="no-content no-dialogs" *ngIf="dialogs === null || dialogs.length === 0">
+        No dialogs
+    </div>
+
+
     <div class="chat-block">
-        <div class="under-chat-block">
+        <div class="under-chat-block" *ngIf="messages !== undefined && messages !== null && messages.length !== 0">
             <div class="messages" #messagesBlock>
                 <div class="message-block" *ngFor="let message of messages" [ngClass]="{'grey-background': !message.IsReaded, 'normal-background': message.IsReaded}">
-                    <div class="message" *ngIf="message.Owner === me">
+                    <div class="message" *ngIf="message.OwnerId === me" [ngClass]="{'loading':message.isLoaded}">
                         <div class="date-me">
                             {{message.Date|amTimeAgo}}
                         </div>
@@ -24,7 +29,7 @@
                             {{message.Message}}
                         </div>
                     </div>
-                    <div class="message" *ngIf="message.Owner === myParticipant">
+                    <div class="message" *ngIf="message.OwnerId !== me">
                         <div class="date-him">
                             {{message.Date|amTimeAgo}}
                         </div>
@@ -35,7 +40,13 @@
                 </div>
             </div>
         </div>
-        <div class="ui form">
+        <div class="no-content no-messages" *ngIf="messages !== undefined && (messages === null || messages.length === 0)">
+            No messages
+        </div>
+        <div *ngIf="dialogs !== undefined && dialogs !== null && messages === undefined" class="ui active inverted dimmer" style="z-index: 0;">
+            <div class="ui text loader">Loading</div>
+        </div>
+        <div class="ui form" *ngIf="dialogs !== undefined && dialogs !== null && messages !== undefined && messages !== null">
             <div class="field" style="display: flex;">
                 <textarea #textArea (keydown)="onChange($event)" [ngStyle]="{'height.px': inputHeight}" class="prompt" type="text" placeholder="Type here..." [(ngModel)]="writtenMessage" style="display:inline">                        
                 </textarea>
@@ -46,5 +57,7 @@
         </div>
         <a name="send-button"></a>
     </div>
-
+</div>
+<div *ngIf="dialogs === undefined" class="ui active inverted dimmer" style="z-index: 0;">
+    <div class="ui text loader">Loading</div>
 </div>

@@ -1,7 +1,10 @@
 export interface MessageModel{
-    Id: number;
+    DialogId: number;
     IsReaded: boolean;
-    Owner: string;    
+    OwnerId: number;    
     Message: string;
     Date: Date;
+
+
+    isLoaded: boolean;
 }
