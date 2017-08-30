@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Unicorn.Shared.DTOs.Subcategory;
 
 namespace Unicorn.Shared.DTOs.Search
 {
-    public class SearchPerformerDTO
+    public class SearchWorkDTO
     {
         public long Id { get; set; }
 
@@ -20,10 +21,10 @@ namespace Unicorn.Shared.DTOs.Search
 
         public string PerformerType { get; set; } //vendor or company
 
+        public string PerformerName { get; set; }
+
         public string Link { get; set; }
 
         public LocationDTO Location { get; set; }
-
-        public string Description { get; set; }
     }
 }

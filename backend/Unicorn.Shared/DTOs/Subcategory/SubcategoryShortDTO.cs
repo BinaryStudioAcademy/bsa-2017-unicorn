@@ -14,6 +14,8 @@ namespace Unicorn.Shared.DTOs.Subcategory
 
         public string Description { get; set; }
 
+        public string Tags { get; set; }
+
         public long CategoryId { get; set; }
 
         public string Category { get; set; }
