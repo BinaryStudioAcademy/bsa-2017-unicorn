@@ -3,7 +3,11 @@
         <div class="header" style="display: flex; justify-content: space-between; align-items: center;">
             <div>Our contacts</div>
             <div>
-                <button class="ui active button" (click)="createChat()"> <i class="comments icon"></i> START A CHAT </button>
+                <button class="ui active button" [ngClass]="{'loading':isLoaded}" (click)="createChat()"> 
+                    <div *ngIf="!isLoaded">
+                        <i class="comments icon"></i> START A CHAT 
+                    </div>
+                </button>
             </div>
         </div>
         <div class="phones">

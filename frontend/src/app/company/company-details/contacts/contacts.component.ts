@@ -28,6 +28,7 @@ export class ContactsComponent implements OnInit {
   ownerId: string;
   companyId: number;
   dialog: DialogModel;
+  isLoaded: boolean = false;
   
   map: MapModel;
 
@@ -58,21 +59,25 @@ export class ContactsComponent implements OnInit {
   }
   
   createChat(){
+    this.isLoaded = true;
     this.chatService.getDialogs(+this.ownerId).then(res => {
-      let wasCreated = res.find(x => x.ParticipantName === this.name);
-      if(wasCreated !== undefined && wasCreated !== null){
-        this.dialog = wasCreated;
-      }
-      else{
-        this.dialog = {
-          Id: null,
-          ParticipantOneId: +this.ownerId,
-          ParticipantTwoId: this.companyId,
-          ParticipantName: this.name,
-          Messages: null
-        };
-      }
-      this.openChat = true;
+      if(res !== null){
+        let wasCreated = res.find(x => x.ParticipantName === this.name);
+        if(wasCreated !== undefined && wasCreated !== null){
+          this.dialog = wasCreated;
+          this.isLoaded = false;
+          return;
+        }
+    }      
+    this.dialog = {
+      Id: null,
+      ParticipantOneId: +this.ownerId,
+      ParticipantTwoId: this.companyId,
+      ParticipantName: this.name,
+      Messages: null
+    };    
+    this.openChat = true;
+    this.isLoaded = false;
     });  
   }
 }

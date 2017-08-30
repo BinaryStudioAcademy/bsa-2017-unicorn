@@ -1,5 +1,13 @@
 <div class="container">
     <div class="chat-block">
+        <div class="header">
+            <div>
+                {{dialog.ParticipantName}}
+            </div>
+            <div>
+                <i class="remove icon close-icon" (click)="deleteSelectedVendor(vendor)"></i>
+            </div>
+        </div>
         <div class="under-chat-block" *ngIf="messages !== undefined && messages !== null && messages.length !== 0">
             <div class="messages" #messagesBlock>
                 <div class="message-block" *ngFor="let message of messages" [ngClass]="{'grey-background': !message.IsReaded, 'normal-background': message.IsReaded}">
@@ -25,10 +33,10 @@
         <div class="no-content no-messages" *ngIf="messages !== undefined && (messages === null || messages.length === 0)">
             No messages
         </div>
-        <div *ngIf="dialogs !== undefined && dialogs !== null && messages === undefined" class="ui active inverted dimmer" style="z-index: 0;">
+        <div *ngIf="dialog !== undefined && dialog !== null && messages === undefined" class="ui active inverted dimmer" style="z-index: 0;">
             <div class="ui text loader">Loading</div>
         </div>
-        <div class="ui form" *ngIf="dialogs !== undefined && dialogs !== null && messages !== undefined && messages !== null">
+        <div class="ui form" *ngIf="dialog !== undefined && messages !== undefined">
             <div class="field" style="display: flex;">
                 <textarea #textArea (keydown)="onChange($event)" [ngStyle]="{'height.px': inputHeight}" class="prompt" type="text" placeholder="Type here..." [(ngModel)]="writtenMessage" style="display:inline">                        
                         </textarea>

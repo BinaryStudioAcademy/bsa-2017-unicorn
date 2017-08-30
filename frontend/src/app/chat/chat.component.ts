@@ -41,7 +41,7 @@ export class ChatComponent implements OnInit {
           this.messages = this.dialogs[0].Messages;
           this.me = this.dialogs[0].ParticipantOneId;
           this.myParticipant = this.dialogs[0].ParticipantName;
-          console.log(this.dialogs);
+          //console.log(this.dialogs);
         }
         else{
           this.messages = null;
