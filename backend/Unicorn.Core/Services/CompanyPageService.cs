@@ -294,7 +294,7 @@ namespace Unicorn.Core.Services
                             BookId = x.BookId,
                             Grade = x.Grade,
                             WorkName = x.WorkName
-                        }).ToList()
+                        }).OrderByDescending(x => x.Date).ToList()
                 };
 
                 return companyReviews;

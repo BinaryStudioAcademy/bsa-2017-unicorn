@@ -124,9 +124,11 @@ export class UserTasksComponent implements OnInit {
       this.loadData();
       this.loader = false;
       this.currModal.deny(undefined);
+      this.clearData();
     }).catch(err => {
       this.loader = false;
       this.currModal.deny(undefined);
+      this.clearData();
     });
   }
 

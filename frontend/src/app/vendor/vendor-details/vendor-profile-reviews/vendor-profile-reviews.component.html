@@ -1,6 +1,3 @@
-<div *ngIf="reviews === undefined || reviews.length == 0" class="no-reviews">
-    There are no reviews
-</div>
 <div *ngIf="reviews !== undefined" class="ui vertically divided grid" id="main">
     <div *ngFor="let review of reviews" class="row">
         <div class="sixteen wide column">

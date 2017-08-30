@@ -328,7 +328,9 @@ namespace Unicorn.Core.Services
                     From = r.From,
                     FromAccountId = r.FromAccountId,
                     To = r.To,
-                    ToAccountId = r.ToAccountId
+                    ToAccountId = r.ToAccountId,
+                    Grade = r.Grade,
+                    WorkName = r.WorkName
                 }).SingleOrDefault();
         }
 

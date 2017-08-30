@@ -34,6 +34,7 @@ namespace Unicorn.Core.Services
 
             return reviews
                 .Where(r => r.ToAccountId == id)
+                .OrderBy(r => r.Date)
                 .Select(r => ReviewToDTO(r)).ToList();
 
         }
@@ -90,27 +91,30 @@ namespace Unicorn.Core.Services
                 .Include(b => b.Company.Account)
                 .SingleAsync(b => b.Id == reviewDto.BookId);
 
-            var review = new Review();
-            review.BookId = reviewDto.BookId;
-            review.Description = reviewDto.Text;
-            review.Grade = reviewDto.Grade;
-            review.Avatar = book.Customer.Person.Account.Avatar;
-            review.WorkName = book.Work.Name;
-            review.From = book.Customer.Person.Name;
-            review.FromAccountId = book.Customer.Person.Account.Id;
-            if (reviewDto.PerformerType == "vendor")
+            if(!string.IsNullOrEmpty(reviewDto.Text.Trim()))
             {
-                review.To = book.Vendor.Person.Name;
-                review.ToAccountId = book.Vendor.Person.Account.Id;
-            }
-            else
-            {
-                review.To = book.Company.Name;
-                review.ToAccountId = book.Company.Account.Id;
-            }
-            review.Date = DateTime.Now;
+                var review = new Review();
+                review.BookId = reviewDto.BookId;
+                review.Description = reviewDto.Text;
+                review.Grade = reviewDto.Grade;
+                review.Avatar = book.Customer.Person.Account.Avatar;
+                review.WorkName = book.Work.Name;
+                review.From = book.Customer.Person.Name;
+                review.FromAccountId = book.Customer.Person.Account.Id;
+                if (reviewDto.PerformerType == "vendor")
+                {
+                    review.To = book.Vendor.Person.Name;
+                    review.ToAccountId = book.Vendor.Person.Account.Id;
+                }
+                else
+                {
+                    review.To = book.Company.Name;
+                    review.ToAccountId = book.Company.Account.Id;
+                }
+                review.Date = DateTime.Now;
 
-            _unitOfWork.ReviewRepository.Create(review);
+                _unitOfWork.ReviewRepository.Create(review);
+            }
             
             book.Status = BookStatus.Confirmed;
             _unitOfWork.BookRepository.Update(book);

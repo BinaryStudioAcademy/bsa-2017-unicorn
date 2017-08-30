@@ -18,7 +18,7 @@
             <p>
                 <sui-rating class="star" [isReadonly]="true" [ngModel]="book.Rating"></sui-rating>
             </p>
-            <p><a class="rev-link" (click)="showReview(book.Id)">Review</a></p>
+            <p *ngIf="book.Review"><a class="rev-link" (click)="showReview(book.Id)">Review</a></p>
         </div>
     </div>
 </div>

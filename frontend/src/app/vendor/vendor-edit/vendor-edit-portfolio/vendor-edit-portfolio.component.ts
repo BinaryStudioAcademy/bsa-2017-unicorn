@@ -3,15 +3,17 @@ import { Component, OnInit, Input } from '@angular/core';
 import {SuiModule} from 'ng2-semantic-ui';
 
 import { VendorService } from "../../../services/vendor.service";
+import { DashboardService } from '../../../services/dashboard/dashboard.service';
 
 import { Vendor } from '../../../models/vendor.model';
 import { PortfolioItem } from '../../../models/portfolio-item.model';
 import { History } from '../../../models/history';
 import { VendorHistory } from "../../../models/vendor-history.model";
-
 import { BookCard, BookStatus } from '../../../models/dashboard/book-card';
 
-import { DashboardService } from '../../../services/dashboard/dashboard.service';
+import {SuiModalService, TemplateModalConfig, ModalTemplate, ModalSize, SuiActiveModal} from 'ng2-semantic-ui';
+import { ReviewModal } from '../../..//review/review-modal/review-modal.component';
+
 
 @Component({
   selector: 'app-vendor-edit-portfolio',
@@ -25,7 +27,8 @@ export class VendorEditPortfolioComponent implements OnInit {
 
   constructor(
     private vendorService: VendorService,
-    private dashboardService: DashboardService
+    private dashboardService: DashboardService,
+    private modalService: SuiModalService
   ) { }
 
   ngOnInit() {
@@ -34,8 +37,13 @@ export class VendorEditPortfolioComponent implements OnInit {
 
   loadData() {
     this.dashboardService.getPortfolioBooks('vendor', this.vendorId).then(resp => {
-      this.books = resp;
+      this.books = resp.filter(b => b.Status == BookStatus.Confirmed);
     });
+  }
+
+  showReview(id: number) {
+    let book = this.books.filter(b => b.Id == id)[0];
+    this.modalService.open(new ReviewModal(book.Review));
   }
 
   updateBook(id: number) {
