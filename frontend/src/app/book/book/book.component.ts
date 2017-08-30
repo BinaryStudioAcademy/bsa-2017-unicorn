@@ -7,7 +7,6 @@ import { UserService } from '../../services/user.service';
 import { TokenHelperService } from '../../services/helper/tokenhelper.service';
 import { BookOrder } from '../../models/book/book-order';
 import { Location } from '../../models/location.model';
-import { Work } from '../../models/work.model';
 
 @Component({
   selector: 'app-book',
@@ -19,11 +18,11 @@ export class BookComponent implements OnInit {
   formIsSended: boolean;
   onSending: boolean;
   private defaultLocation: Location;
-  private selectedWork: Work;
+  private selectedWork: any;
 
   @Input() routePath: string;
   @Input() routeId: number;
-  @Input() works: Work;
+  @Input() works: any;
 
   @ViewChild('bookForm') public bookForm: NgForm;
 
@@ -46,7 +45,7 @@ export class BookComponent implements OnInit {
       date: new Date(),
       location: this.defaultLocation,
       description: "",
-      workid: 0, // TODO: selected work from dropdown
+      workid: 0,
       profile: this.routePath,
       profileid: this.routeId,
       customerid: +this.tokenHelper.getClaimByName('profileid'),
@@ -54,6 +53,10 @@ export class BookComponent implements OnInit {
     }
 
     this.getUserData();
+  }
+
+  onWorkChange(){
+    this.book.workid = this.selectedWork.Id;
   }
 
   makeOrder() {

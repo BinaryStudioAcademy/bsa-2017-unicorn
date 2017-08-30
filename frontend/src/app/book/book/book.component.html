@@ -5,7 +5,8 @@
             <sui-select 
             class="selection" 
             [(ngModel)]="selectedWork" 
-            [optionTemplate]="optionSubcategoryTemplate" 
+            (selectedOptionChange)="onWorkChange()"
+            [optionTemplate]="optionWorkTemplate"
             name="selectWork">
                 <sui-select-option class="select-option" *ngFor="let work of works" [value]="work">
                 </sui-select-option>
@@ -45,4 +46,7 @@
           </div>
           <p>Your request has been received and added to our internal tracking system for future review.</p>
     </div>
+</ng-template>
+<ng-template let-option #optionWorkTemplate>
+    {{option.Name}}
 </ng-template>

@@ -30,7 +30,7 @@
                         <div class="row">
                             <div class="container column">
                                 <div class="ui segment" suiTabContent="1">
-                                    <app-vendor-profile-info [vendor]="vendor"></app-vendor-profile-info>
+                                    <app-vendor-profile-info [vendor]="vendor" (notify)='onWorksLoaded($event)'></app-vendor-profile-info>
                                 </div>
                                 <div class="container column">
                                     <div class="ui segment" suiTabContent="2">
@@ -51,7 +51,7 @@
                             <div *ngIf="isUser||isGuest" class="six wide column">
                                 <div class="ui segment">
                                     <app-sign-block *ngIf="isGuest"></app-sign-block>
-                                    <app-book *ngIf="!isGuest" [routePath]="routePath" [routeId]="routeid"></app-book>
+                                    <app-book *ngIf="!isGuest" [routePath]="routePath" [routeId]="routeid" [works]="works"></app-book>
                                 </div>
                             </div>
                         </div>
