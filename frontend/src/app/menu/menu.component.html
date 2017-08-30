@@ -41,28 +41,39 @@
 
                     </div>
                     <div class="dropdown-content" *ngIf="showNotifications">
-                        <div class="ui middle aligned divided list">
-                            <div class="item" *ngFor="let notif of notifications">
+                        <div class="ui middle aligned divided list  notification-list">
+                            <div *ngFor="let notif of notifications" (click)="removeNotification(notif)" class="item">
                                 <div class="content">
-                                    <a class="header">{{notif.Message}}</a>
+                                    <div class="notification-title">
+                                        <h5>{{notif.Title}}</h5>
+                                        <p>{{notif.Time | amTimeAgo}}</p>
+                                    </div>
+                                    <div class="description">
+                                        <p>{{notif.Description}}</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="dropdown-content" *ngIf="!isNotificationExist() && showNotifications">
-                        <div class="ui middle aligned divided list">
+                        <div class="ui middle aligned divided list  notification-list">
                             <div class="item">
                                 <div class="content">
-                                    <a class="header">Empty List</a>
+                                    <h5>Nothing here</h5>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="dropdown-content" *ngIf="newNotification !== undefined">
-                        <div class="ui middle aligned divided list">
+                        <div class="ui middle aligned divided list notification-list">
                             <div class="item">
                                 <div class="content">
-                                    <a class="header">{{newNotification.Message}}</a>
+                                    <div class="content">
+                                        <h5>{{newNotification.Title}}</h5>
+                                        <div class="description">
+                                            <p>{{newNotification.Description}}</p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

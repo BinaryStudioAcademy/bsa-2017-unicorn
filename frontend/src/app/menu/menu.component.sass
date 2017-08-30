@@ -59,9 +59,6 @@ a
 .circular.bell.outline.icon
     margin-right: -10px;
 
-.item
-    margin: 15px 0;
-
 .mainInfo
     display: flex;
     flex-direction: row;
@@ -93,9 +90,26 @@ a
     height: 100%;
     width: 100%;
 
-.new-notification
-    position: absolute;
-    z-index: 3;
-    width: 6em;
-    height: 4em;
-    background: white;
+.notification-list
+    max-height: 25em;
+    overflow: auto;
+
+.ui.list /deep/ .item
+    padding: 15px 0;
+
+.notification-list .item
+    &:hover
+        background: rgba(251, 226, 230, 0.33)!important;
+        color: black!important;
+        cursor: pointer;
+
+.notification-title
+    display: flex;
+    justify-content: space-between;
+
+.notification-title p
+    color: #666;
+    font-size: 12px;
+
+.notification-title h5
+    margin: 0;

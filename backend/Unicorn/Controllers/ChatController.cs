@@ -35,11 +35,11 @@ namespace Unicorn.Controllers
 
         [HttpGet]
         [Route("dialogs/{id}")]
-        public HttpResponseMessage GetAllDialogs(int id)
+        public async Task<HttpResponseMessage> GetAllDialogs(int id)
         {
             try
             {
-                var result = _chatService.GetAllDialogs(id);
+                var result = await _chatService.GetAllDialogs(id);
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }
             catch

@@ -8,8 +8,8 @@ namespace Unicorn.Core.Interfaces
     {
         Task CreateMessage(ChatMessageDTO msg);
         Task CreateDialog(ChatDialogDTO dialog);
-        Task <ChatDialogDTO> GetDialog(long dialogId);
-        IEnumerable<ChatDialogDTO> GetAllDialogs(long accountId);
+        Task<ChatDialogDTO> GetDialog(long dialogId);
+        Task<IEnumerable<ChatDialogDTO>> GetAllDialogs(long accountId);
         Task RemoveDialog(long dialogId);
         Task RemoveMessage(long messageId);
         Task Update(ChatMessageDTO msg);
