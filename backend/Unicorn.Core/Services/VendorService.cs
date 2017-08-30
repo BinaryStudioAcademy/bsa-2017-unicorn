@@ -174,7 +174,7 @@ namespace Unicorn.Core.Services
 
             vendor.WorkLetter = vendorDto.WorkLetter;
             vendor.Position = vendorDto.Position;
-            vendor.Person.Birthday = vendorDto.Birthday.AddDays(1); // Dirty hack, fix this later
+            vendor.Person.Birthday = vendorDto.Birthday; // Dirty hack, fix this later
             vendor.Person.Name = vendorDto.Name;
             vendor.Person.Surname = vendorDto.Surname;
             vendor.Person.MiddleName = vendorDto.MiddleName;
