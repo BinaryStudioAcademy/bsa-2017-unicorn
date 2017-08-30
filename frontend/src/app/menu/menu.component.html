@@ -87,7 +87,7 @@
                     *ngIf="(!haveNewNotifications() && isNotificationsShow && !isArchivedNotificationsShown) || (!haveArchivedNotifications() && isNotificationsShow && isArchivedNotificationsShown)">
                         <div class="item header">
                             <h5>NOTIFICATIONS</h5>
-                            <i (click)="toggleNotifications()" class="archive link icon"></i>
+                            <i (click)="toggleNotifications()" class="archive link icon" [ngClass]="{'red': isArchivedNotificationsShown}"></i>
                         </div>
                         <div class="ui middle aligned divided list  notification-list">
                             <div class="item">

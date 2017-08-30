@@ -61,7 +61,7 @@ export class VendorEditComponent implements OnInit {
       .subscribe(resp => {
         this.vendor = resp.body as Vendor;
         this.vendor.Birthday = new Date(this.vendor.Birthday);
-        this.backgroundUrl = this.buildSafeUrl(this.vendor.Background);
+        this.backgroundUrl = this.buildSafeUrl(this.vendor.Background != null ? this.vendor.Background : "https://www.beautycolorcode.com/d8d8d8.png");
       });
   }
 
@@ -109,7 +109,6 @@ export class VendorEditComponent implements OnInit {
     }
     this.dataLoaded = false;
     this.photoService.uploadToImgur(this.file).then(resp => {
-
       let path = resp;
       console.log(path);
       this.photoService.saveAvatar(path)
