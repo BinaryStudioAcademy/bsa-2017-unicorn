@@ -835,7 +835,10 @@ namespace Unicorn.DataAccess.Context
                 IsDeleted = false,
                 Description = "Sewing",
                 Name = "Care of clothes",
-                Tags = @""
+                Tags = @"stitchery,stitching,needlework,dressmaking,seamstress,stitch,tailoring,couture,fashion,thread,
+                        design,seam,intersection,knitting,quilting,crocheting,embroidery,needlecraft,serger,sewing machine,
+                        embroidering,smocking,felting,woodworking,needlepoint,handwork,quilters,tatting,woodcarving,scrapbooking,
+                        darning,beading,crocheter,crewel,embroiderers,stitchers,bobbin lace,quilter,bookbinding,woodcraft"
             };
 
             Category category2 = new Category()
@@ -848,8 +851,7 @@ namespace Unicorn.DataAccess.Context
                 Tags = @"care,scratch,caregiver,infirmary,healthcare,health,caring,caregiving,elderly,paramedic,
                         clinic,nursery,convalescence,lactation,profession,infant,retirement,breastfeeding,medic,resting,
                         accommodation,pension,feeding,corpsman,lactating,rest,suckler,attendant,weaning,conservation,
-                        endowment,ranger,upbringing,orderly,guarding,infancy,attentionbreast-feeding,
-                        health-care,nursing"
+                        endowment,ranger,upbringing,orderly,guarding,infancy,attentionbreast-feeding,health-care,nursing"
             };
 
             Category category3 = new Category()
@@ -859,7 +861,10 @@ namespace Unicorn.DataAccess.Context
                 IsDeleted = false,
                 Description = "Transportations",
                 Name = "Car services",
-                Tags = @""
+                Tags = @"transport,transit,conveyance,shipping,department of transportation,transfer,transferral,transportation system,freight,rail,
+                        trucking,commuter,commuting,transporting,travel,cargo,services,communications,transports,conveyances,
+                        cartage,communication,haulage,traffic,mobility,maritime,passenger,airlift,delivery,ride,
+                        hauling,transmission,relocation,transported,locomotion,transporter,road,haul,vehicle,limousine,"
             };
 
             Category category4 = new Category()
@@ -868,8 +873,11 @@ namespace Unicorn.DataAccess.Context
                 Icon = "http://pop.h-cdn.co/assets/cm/15/05/54cb5d94587ec_-_tallest-buildings-05-1214-lgn.jpg",
                 IsDeleted = false,
                 Description = "Buildings",
-                Name = "Buider services",
-                Tags = @""
+                Name = "Builder services",
+                Tags = @"augmenting,constructing,constructed,construct,rebuild,reconstructing,creating,reinforcing,establishing,
+                        reconstruct,forming,create,cultivating,develop,consolidating,establish,consolidate,expand,furthering,enhancing,
+                        achieving,bolstering,providing,reinforce,capitalizing,generate,boosting,created,strengthen,improve,
+                        placing,integrate,promoting,preparing,enhance,basing,acquire,encourage,relying,introducing"
             };
 
             Category category5 = new Category()
@@ -879,7 +887,10 @@ namespace Unicorn.DataAccess.Context
                 IsDeleted = false,
                 Description = "Media processing",
                 Name = "Photo and Video",
-                Tags = @""
+                Tags = @"myspace,avatar,camera,closeup,footage,frame,shoot,alien,cam,file,
+                        images,map,snap,archive,caption,essay,foreground,graph,image,mat,microdot,
+                        mosaic,panel,photo-electric,photoelectric,photography,pic,picture,pictures,print,
+                        radiograph,reportage,retake,scan,scenic,shot,speed,still,thumbnail,toner"
             };
 
             Category category6 = new Category()
@@ -889,7 +900,10 @@ namespace Unicorn.DataAccess.Context
                 IsDeleted = false,
                 Description = "Developing",
                 Name = "Developer Service",
-                Tags = @""
+                Tags = @"development,underdeveloped,nonindustrial,creating,producing,designing,implementing,emerging,establishing,
+                        expanding,formulating,enhancing,devising,acquiring,promoting,cultivating,fostering,constructing,improving,
+                        strengthening,introducing,providing,evolving,forming,crafting,growing,build,evolve,forging,advancing,
+                        upgrading,nurturing,increasing,create,expand,finalizing,formulate,enhance,developmental,creation"
             };
 
             Category category7 = new Category()
@@ -899,7 +913,10 @@ namespace Unicorn.DataAccess.Context
                 IsDeleted = false,
                 Description = "Electronic parts supplier",
                 Name = "Electronic parts",
-                Tags = @""
+                Tags = @"computerized,automated,digital,paperless,online,computer,computerization,computerised,audiovisual,electrical,
+                        opto,electric,wire,informatics,internet,virtual,mailing,magnetic,cyber,document,desktop,web,computing,electron,
+                        information,email,edr,electrons,website,esd,broadcast,numerical,line,computerisation,e-business,e-commerce,
+                        e-finance,e-government,e-health,e-learning"
             };
 
             Category category8 = new Category()
@@ -909,7 +926,10 @@ namespace Unicorn.DataAccess.Context
                 IsDeleted = false,
                 Description = "Food and beverages",
                 Name = "Food service",
-                Tags = @""
+                Tags = @"eat,feeds,recharge,restoring,restore,powering,buy,served,eaten,cooked,prepared,
+                        ate,drink,prepare,consumed,cook,grow,preparing,supplied,contaminated,stored,serving,
+                        digested,consume,sharing,tasted,processed,imported,obtaining,ingested,
+                        buying,purchase,store,deprived,taste,digest,beg,searching,chew,begging"
             };
 
             Category category9 = new Category()
@@ -919,7 +939,10 @@ namespace Unicorn.DataAccess.Context
                 IsDeleted = false,
                 Description = "Package delivery",
                 Name = "Delivery service",
-                Tags = @""
+                Tags = @"delivering,delivered,deliver,delivers,transporting,providing,distributing,distribute,provide,implementing,
+                        rendered,provides,render,achieving,disseminate,implement,carrying,administer,obtaining,execute,provided,submitting,
+                        remitting,handing,fulfilling,placing,realizing,enforcing,recognizing,submit,granting,carried,perform,shed,
+                        recognize,extradite,ensure,improve,allow,facilitate"
             };
 
             context.Categories.AddRange(new List<Category>()
@@ -939,7 +962,10 @@ namespace Unicorn.DataAccess.Context
                 Name = "Washing",
                 IsDeleted = false,
                 Category = category1,
-                Tags = @""
+                Tags = @"apparel,wear,vesture,wearing apparel,garments,dresses,fashions,attire,uniforms,outfits,
+                        shirts,gowns,costumes,outerwear,garment,linens,robes,jackets,garbs,duds,dressing,vests,
+                        fatigues,suits,textiles,naked,washing,habits,children,straitjackets,threads,woodworking,
+                        plainclothes,claws,clones,inflatable,cases,affairs,guises,plain-clothes"
             };
 
             Subcategory subcategory2 = new Subcategory()
@@ -958,10 +984,14 @@ namespace Unicorn.DataAccess.Context
             {
                 Id = 3,
                 Description = "Subacategory lory service",
-                Name = "Lory service",
+                Name = "Lorry service",
                 IsDeleted = false,
                 Category = category3,
-                Tags = @""
+                Tags = @"camion,hgv,truck,van,tractor,bus,vehicle,car,tanker,lgv,wagon,container,
+                        minivan,cargo,freight,flatbed,highway,road,trunk,pickup,truckload,rig,
+                        trucking,semi,firecracker,heavy,juggernaut,heavyweight,coach,heavy-duty,
+                        tractor-trailer,minibus,haulage,tractor trailer,haulier,horsebox,
+                        concrete mixer,forklift,hackney carriage,dumper"
             };
 
             Subcategory subcategory4 = new Subcategory()
@@ -971,7 +1001,10 @@ namespace Unicorn.DataAccess.Context
                 Name = "Painting and plastering work",
                 IsDeleted = false,
                 Category = category4,
-                Tags = @""
+                Tags = @"primed,ground,grounded,rendering,case,float,floating,fur,lath,mortarboard,
+                        plasterwork,staff,baseboard,let,bronzing,daub,fresco,gesso,lay,painter,
+                        secco,sgraffito,size,browning,calcimine,cat,compost,dots,doy,dpt,furring,key,
+                        keying,keys,lime,lock,locking,locks,mastic,mortar"
             };
 
             Subcategory subcategory5 = new Subcategory()
@@ -981,7 +1014,10 @@ namespace Unicorn.DataAccess.Context
                 Name = "Photosession",
                 IsDeleted = false,
                 Category = category5,
-                Tags = @""
+                Tags = @"shoot,hoot,reload,bath,camera,archive,block,blur,caption,chart,
+                        epic,figure,footage,foreground,frame,gallery,graph,image,imagery,
+                        inset,locket,map,mat,mosaic,ops,panel,picture,pictures,retake,scan,
+                        sepia,shot,snap,snapshot,speed,sunset,after,before,charts,copy"
             };
 
             Subcategory subcategory6 = new Subcategory()
@@ -991,7 +1027,10 @@ namespace Unicorn.DataAccess.Context
                 Name = "Web Development",
                 IsDeleted = false,
                 Category = category6,
-                Tags = @""
+                Tags = @"www,network,world wide web,net,vane,entanglement,website,websites,webpage,online,
+                        homepage,internet,portal,site,intranet,sites,page,webcast,cyberspace,spider,networks,
+                        cyber,virtual,networking,posted,available,electronic,enabled,update,Webb,weave,
+                        fabric,trophic,weft,chain,address,retina,sling,nets,system"
             };
 
             Subcategory subcategory7 = new Subcategory()
@@ -1001,7 +1040,10 @@ namespace Unicorn.DataAccess.Context
                 Name = "Computer parts",
                 IsDeleted = false,
                 Category = category7,
-                Tags = @""
+                Tags = @"busbar,card,computer architecture,fragmentation,hardware,kludge,link,linux,machine,motherboard,
+                        multiprocessing,panel,Intel,Opengl,cognitive science,abacus,adapter,alphabet,architecture,area,
+                        array,assembler,assembly,background,binary,bits,block,box,brain,branch,bridge,bush,button,cards,
+                        chassis,clock,configuration,core,coring,cracker"
             };
 
             Subcategory subcategory8 = new Subcategory()
@@ -1011,7 +1053,10 @@ namespace Unicorn.DataAccess.Context
                 Name = "Fast food",
                 IsDeleted = false,
                 Category = category8,
-                Tags = @""
+                Tags = @"fries,snack,bite,diet,snacks,cola,taco,Togo,soda,fryer,spork,automat,chili,
+                        deli,Mac,arch,wrap,combo,fry,tempura,wahoo,blt,breakfast,donut,malt,sauce,
+                        steam,toy,chain,emu,teens,cheeseburger,diner,foodie,pizza,eater,burrito,
+                        enchiladas,escargot,falafel"
             };
 
             Subcategory subcategory9 = new Subcategory()
@@ -1021,7 +1066,10 @@ namespace Unicorn.DataAccess.Context
                 Name = "Express delivery",
                 IsDeleted = false,
                 Category = category9,
-                Tags = @""
+                Tags = @"bundle,packet,parcel,box,plan,deal,proposal,bundles,pkg,kit,program,bailout,scheme,packs,
+                        solution,wrapper,toolkit,measures,suite,bag,piece,envelope,packets,pact,pouch,crate,
+                        omnibus,toolbox,kits,contract,pack,shipment,carton,array,module,wrap,combination,
+                        plans,document,parcels"
             };
 
             context.Subcategories.AddRange(new List<Subcategory>()

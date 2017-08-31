@@ -65,14 +65,6 @@ export class SearchComponent implements OnInit {
     this.getWorksByBaseFilters(this.category, this.subcategory, this.rawDate);
   }
 
-  // getAllWorks() {
-  //   this.searchService.getAllWorks()
-  //   .then(works => {
-  //     this.works = works;
-  //     this.spinner = false;
-  //   });
-  // }
-
   getWorksByBaseFilters(category: string, subcategory: string, date: number) {
     this.searchService.getWorksByBaseFilters(category, subcategory, date)
     .then(works => {
@@ -124,12 +116,5 @@ export class SearchComponent implements OnInit {
     this.mode = 'date';           /* select day */
     this.firstDayOfWeek = '1';    /* start calendar from first day of week */
   }
-
-  // clearBaseFilter() {
-  //   this.category = undefined;
-  //   this.subcategory = undefined;
-  //   this.date = undefined;
-  //   this.rawDate = undefined;
-  // }
 
 }

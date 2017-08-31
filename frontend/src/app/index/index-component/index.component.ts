@@ -59,8 +59,7 @@ export class IndexComponent implements OnInit {
           'category': this.searchCategory,
           'subcategory': this.searchSubcategory,
           'date': d
-        },
-        skipLocationChange: true
+        }
       });
     }
   }

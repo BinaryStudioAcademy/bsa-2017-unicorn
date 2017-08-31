@@ -22,9 +22,4 @@ export class SearchService {
     const query = `search?category=${category}&subcategory=${subcategory}&date=${d}`;
     return this.dataService.getRequest<SearchWork[]>(query);
   }
-
-  // getAllWorks(): Promise<SearchWork[]> {
-  //   return this.dataService.getRequest<SearchWork[]>('search');
-  // }
-
 }
