@@ -2,16 +2,16 @@
   <div class="ten wide column settings-container">
       <div id="search-panel" class="row remove-padding-top">
           <div class="ui grid">
-              <div class="eight wide column remove-padding-bottom">
+              <div class="six wide column remove-padding-bottom">
                 <label>What to do</label>
               </div>
-              <div class="eight wide column remove-padding-bottom">
+              <div class="ten wide column remove-padding-bottom">
                 <label>When to do it</label>                  
               </div>
-              <div class="four wide column ui input">
+              <div class="three wide column ui input">
                 <input type="text" placeholder="SCRATCH" [(ngModel)]="category">
               </div>
-              <div class="four wide column  ui input">
+              <div class="three wide column  ui input">
                 <input type="text" placeholder="CAT" [(ngModel)]="subcategory">
               </div>
               <div class="four wide column ui left icon input">
@@ -22,8 +22,9 @@
                           [pickerFirstDayOfWeek]="firstDayOfWeek" 
                           [pickerUseNativeOnMobile]="false">
               </div>
-              <div class="four wide column">
-                <button class="ui active button main btn-search" (click)="searchWorks()">SEARCH</button>
+              <div class="six wide column search-btn-div">
+                <button class="ui button" (click)="reset()">RESET</button>
+                <button class="ui active button main button-right" (click)="searchWorks()">SEARCH</button>                
               </div>
               <div class="sixteen wide column remove-padding-top">
                 <sui-accordion class="fluid">
@@ -77,8 +78,8 @@
                           </div>
                         </div>                                   
                         <div class="sixteen wide column remove-padding-top">
-                          <button class="ui active button main button-right" (click)="searchCompany()">APPLY</button>
-                          <button class="ui active button secondary button-right" (click)="resetFilters()">RESET</button>
+                          <!-- <button class="ui active button main button-right" (click)="searchCompany()">APPLY</button>
+                          <button class="ui active button secondary button-right" (click)="resetFilters()">RESET</button> -->
                         </div>
                       </div>
                     </div>
