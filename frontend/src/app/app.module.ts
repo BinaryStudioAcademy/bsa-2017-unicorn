@@ -9,6 +9,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 
 import { AuthenticationLoginService } from './services/auth/authenticationlogin.service';
 import { AuthenticationEventService } from './services/events/authenticationevent.service';
+import { ChatEventsService } from "./services/events/chat-events.service";
 
 import { HelperService } from './services/helper/helper.service';
 import { ModalService } from "./services/modal/modal.service";
@@ -97,6 +98,7 @@ export function getDefaultSignalRConfig(): SignalRConfiguration {
   providers: [
     AuthenticationLoginService,
     AuthenticationEventService,
+    ChatEventsService,
     HelperService,
     TokenHelperService,
     AccountService,

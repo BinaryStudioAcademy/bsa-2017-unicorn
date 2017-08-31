@@ -3,6 +3,7 @@ import { MessageModel } from "../../models/chat/message.model";
 import { ChatService } from "../../services/chat/chat.service";
 import { TokenHelperService } from "../../services/helper/tokenhelper.service";
 import { DialogModel } from "../../models/chat/dialog.model";
+import { ChatEventsService } from "../../services/events/chat-events.service";
 
 @Component({
   selector: 'app-mini-chat',
@@ -25,18 +26,26 @@ export class MiniChatComponent implements OnInit {
   myParticipant: string;
   writtenMessage: string;  
   inputHeight: number = 33;
-  noMessages: boolean = false;  
+  noMessages: boolean = false;
+  needScroll: boolean = false;  
 
 
   constructor(private chatService: ChatService,
-    private tokenHelper: TokenHelperService) { }
+    private tokenHelper: TokenHelperService,
+    private chatEventsService: ChatEventsService) { }
 
   ngOnInit() {
     this.ownerId = +this.tokenHelper.getClaimByName('accountid');    
     this.dialog.Messages === null ? this.messages = [] : this.messages = this.dialog.Messages;
     this.me = this.dialog.ParticipantOneId;
     this.myParticipant = this.dialog.ParticipantName;  
-    this.scrollMessages();
+    this.startScroll();
+  }
+
+  ngAfterViewChecked() {
+    if (this.needScroll) {
+      this.scrollMessages();
+    }
   }
 
   onChange(event){  
@@ -88,7 +97,7 @@ export class MiniChatComponent implements OnInit {
     };
     this.writtenMessage = undefined;
     this.messages.push(message);     
-    this.scrollMessages();      
+    this.startScroll();    
     this.chatService.addMessage(message).then(res =>  {     
       this.messages.find(x => x.isLoaded).isLoaded = false;
     });    
@@ -108,15 +117,18 @@ export class MiniChatComponent implements OnInit {
   }
 
 
+  startScroll() {
+    this.needScroll = true;
+  }
+
   scrollMessages(){ 
-    this.noMessages = true;  
-    setTimeout(() => {
-      if(this.messagesElement !== undefined){
-        this.messagesElement.nativeElement.scrollTop = this.messagesElement.nativeElement.scrollHeight;
+    //this.noMessages = true;
+      if (this.messagesElement && this.messagesElement.nativeElement.scrollTop !== this.messagesElement.nativeElement.scrollHeight) {
+        this.messagesElement.nativeElement.scrollTop = this.messagesElement.nativeElement.scrollHeight; 
+        this.needScroll = false; 
+        this.noMessages = false;
       }
-      this.noMessages = false;
-    }, 0);
-  } 
+  }
   normalTeaxareaSize(){
     if(this.textarea !== undefined){ 
       this.textarea.nativeElement.style.height = 33 + 'px';     
@@ -128,6 +140,10 @@ export class MiniChatComponent implements OnInit {
       var height = this.textarea.nativeElement.scrollHeight;      
       this.textarea.nativeElement.style.height = height + 2 + 'px';
     }
+  }
+
+  closeChat(){
+    this.chatEventsService.closechat();
   }
 
 }

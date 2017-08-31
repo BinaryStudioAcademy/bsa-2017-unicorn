@@ -5,7 +5,7 @@
                 {{dialog.ParticipantName}}
             </div>
             <div>
-                <i class="remove icon close-icon" (click)="deleteSelectedVendor(vendor)"></i>
+                <i class="remove icon close-icon" (click)="closeChat()"></i>
             </div>
         </div>
         <div class="under-chat-block" *ngIf="messages !== undefined && messages !== null && messages.length !== 0">

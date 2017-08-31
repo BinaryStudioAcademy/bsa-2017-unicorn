@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { DialogModel } from "../models/chat/dialog.model";
 import { MessageModel } from "../models/chat/message.model";
 import { NgClass } from '@angular/common';
@@ -25,18 +25,19 @@ export class ChatComponent implements OnInit {
   writtenMessage: string;  
   inputHeight: number = 43;  
   containerHeight = 300;
-  noMessages: boolean = false; 
+  noMessages: boolean = true; 
   needScroll: boolean = false;
 
   constructor(private chatService: ChatService,
-    private tokenHelper: TokenHelperService) { }
+    private tokenHelper: TokenHelperService,
+    private cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.initialize().then(() => this.startScroll());   
   } 
 
   ngAfterViewChecked() {
-    if (this.needScroll) {
+    if (this.needScroll) {      
       this.scrollMessages();
     }
   }
@@ -139,6 +140,7 @@ export class ChatComponent implements OnInit {
         this.messagesElement.nativeElement.scrollTop = this.messagesElement.nativeElement.scrollHeight; 
         this.needScroll = false; 
         this.noMessages = false;
+        this.cdr.detectChanges();
       }
   }
   normalTeaxareaSize(){

@@ -7,6 +7,7 @@ import { Contact } from "../../../models/contact.model";
 import { ChatService } from "../../../services/chat/chat.service";
 import { TokenHelperService } from "../../../services/helper/tokenhelper.service";
 import { DialogModel } from "../../../models/chat/dialog.model";
+import { ChatEventsService } from "../../../services/events/chat-events.service";
 
 @Component({
   selector: 'company-contacts',
@@ -38,7 +39,8 @@ export class ContactsComponent implements OnInit {
   constructor(private companyService: CompanyService,
     private route: ActivatedRoute,
     private chatService: ChatService,
-    private tokenHelper: TokenHelperService) { }
+    private tokenHelper: TokenHelperService,
+    private chatEventsService: ChatEventsService) { }
 
   ngOnInit() { 
     this.route.params
@@ -64,26 +66,26 @@ export class ContactsComponent implements OnInit {
   }
   
   createChat(){
-    if(!this.openChat){
-      this.isLoaded = true;
-      this.chatService.findDialog(this.ownerId, this.accountId).then(res => {
-        if(res !== null){        
-          this.dialog = res; 
-          this.dialog.ParticipantName = this.name;       
-          this.isLoaded = false;
-          this.openChat = true;
-          return;       
-      }      
-      this.dialog = {
-        Id: null,
-        ParticipantOneId: this.ownerId,
-        ParticipantTwoId: this.accountId,
-        ParticipantName: this.name,
-        Messages: null
-      };    
-      this.openChat = true;
-      this.isLoaded = false;
-      });  
-    }
+    this.isLoaded = true;
+    this.chatService.findDialog(this.ownerId, this.accountId).then(res => {
+      if(res !== null){        
+        this.dialog = res; 
+        this.dialog.ParticipantName = this.name;       
+        this.isLoaded = false;
+        this.openChat = true;                      
+      } 
+      else{     
+        this.dialog = {
+          Id: null,
+          ParticipantOneId: this.ownerId,
+          ParticipantTwoId: this.accountId,
+          ParticipantName: this.name,
+          Messages: null
+        };    
+        this.openChat = true;
+        this.isLoaded = false;
+      }
+      this.chatEventsService.openChat(this.dialog);     
+    });
   }
 }
