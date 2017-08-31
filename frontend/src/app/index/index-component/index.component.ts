@@ -46,14 +46,19 @@ export class IndexComponent implements OnInit {
   }
 
   searchPerformer() {
-    if (this.searchCategory === undefined || this.searchSubcategory === undefined || this.searchDate === undefined) {
+    let d: number;
+    if (this.searchDate !== undefined) {
+      d = this.searchDate.getTime() / 1000;
+    }
+    if (this.searchCategory === undefined && this.searchSubcategory === undefined && this.searchDate === undefined) {
       this.router.navigate(['/search']);
     } else {
+      console.log(this.searchCategory, this.searchSubcategory, this.searchDate);
       this.router.navigate(['/search'], {
         queryParams: {
           'category': this.searchCategory,
           'subcategory': this.searchSubcategory,
-          'date': this.searchDate.getTime() / 1000
+          'date': d
         }
       });
     }

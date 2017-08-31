@@ -54,6 +54,7 @@ export class VendorEditWorksComponent implements OnInit {
   selectedCategory: Category;
   selectedSubcategory: Subcategory;
   selectedWork: Work;
+  pendingWorks: Work[];
 
   isEditOpen: boolean;
 
@@ -78,6 +79,7 @@ export class VendorEditWorksComponent implements OnInit {
     this.categoryService.getAll()
       .then(resp => this.categories = resp.body as Category[]);
     this.subcategories = [];
+    this.pendingWorks = [];
     this.clearSelectedWork();
   }
 
@@ -102,13 +104,26 @@ export class VendorEditWorksComponent implements OnInit {
   createWork(): void {
     this.selectedWork.CategoryId = this.selectedCategory.Id;
     this.selectedWork.SubcategoryId = this.selectedSubcategory.Id;
+
+    this.selectedWork.Subcategory = this.selectedSubcategory.Name;
+    this.selectedWork.Category = this.selectedCategory.Name;
+
+    let work = this.selectedWork;
+
+    this.pendingWorks.push(work);
+    this.works.push(work)
     this.vendorService.postVendorWork(this.vendorId, this.selectedWork)
       .then(resp => {
-        this.works = resp.body as Work[];
+        this.pendingWorks.splice(this.pendingWorks.findIndex(w => w === work), 1);
+        work.Id = (resp.body as Work).Id;
         this.toastr.success('Changes were saved', 'Success!')
       })
-      .catch(err => this.toastr.error('Sorry, something went wrong', 'Error!'));
+      .catch(err => {
+        this.pendingWorks.splice(this.pendingWorks.findIndex(w => w === work), 1);
+        this.toastr.error('Sorry, something went wrong', 'Error!');
+      });
     this.clearSelectedWork();
+    this.isEditOpen = false;
   }
 
   updateWork(): void {
@@ -118,6 +133,7 @@ export class VendorEditWorksComponent implements OnInit {
       .then(() => this.toastr.success('Changes were saved', 'Success!'))
       .catch(() => this.toastr.error('Sorry, something went wrong', 'Error!'));
     this.clearSelectedWork();
+    this.isEditOpen = false;
   }
 
   removeWork(work: Work): void {
@@ -140,15 +156,25 @@ export class VendorEditWorksComponent implements OnInit {
           this.isEditOpen = false;
           this.clearSelectedWork();
         }
-    
+
+        this.pendingWorks.push(work);
+
         this.vendorService.removeVendorWork(this.vendorId, work.Id, work)
           .then(resp => {
-            this.works = resp.body as Work[];
+            this.pendingWorks.splice(this.pendingWorks.findIndex(w => w === work), 1);
+            this.works.splice(this.works.findIndex(w => w.Id === work.Id));
             this.toastr.success('Changes were saved', 'Success!');
           })
-          .catch(() => this.toastr.error('Sorry, something went wrong', 'Error!'));
+          .catch(() => {
+            this.pendingWorks.splice(this.pendingWorks.findIndex(w => w === work), 1);
+            this.toastr.error('Sorry, something went wrong', 'Error!');
+          });
        })
       .onDeny(result => {  /* deny callback */   });
+  }
+
+  isWorkPending(work: Work): boolean {
+    return this.pendingWorks.includes(work);
   }
 
   clearSelectedWork(): void {

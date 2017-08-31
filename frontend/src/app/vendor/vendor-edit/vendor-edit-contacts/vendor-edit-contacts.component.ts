@@ -1,5 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
+
+import { ToastsManager, Toast } from 'ng2-toastr';
+import { ToastOptions } from 'ng2-toastr';
+
 import { Contact } from "../../../models/contact.model";
+
 import { VendorService } from "../../../services/vendor.service";
 import { ContactService } from "../../../services/contact.service";
 import { ContactProvider } from "../../../models/contact-provider.model";
@@ -39,7 +44,8 @@ export class VendorEditContactsComponent implements OnInit {
 
   constructor(
     private vendorService: VendorService,
-    private contactService: ContactService
+    private contactService: ContactService,
+    private toastr: ToastsManager
   ) { }
 
   ngOnInit() {
@@ -71,10 +77,19 @@ export class VendorEditContactsComponent implements OnInit {
   }
 
   removeContact(contact: Contact): void {
-    this.vendorService.removeContact(this.vendorId, contact);
-    this.contacts.splice(this.contacts.findIndex(c => c.Id === contact.Id), 1);
-    this.filterContacts();
-    this.filterProviders();
+    this.pendingContactas.push(contact);
+
+    this.vendorService.removeContact(this.vendorId, contact)
+      .then(() => {
+        this.contacts.splice(this.contacts.findIndex(c => c.Id === contact.Id), 1);
+        this.pendingContactas.splice(this.contacts.findIndex(c => c.Id === contact.Id), 1);
+        this.filterContacts();
+        this.filterProviders();
+      })
+      .catch(() => {
+        this.pendingContactas.splice(this.contacts.findIndex(c => c.Id === contact.Id), 1);
+        this.toastr.error('Sorry, something went wrong', 'Error!');
+      });
   }
 
   createContact(contact: Contact): void {
@@ -92,16 +107,24 @@ export class VendorEditContactsComponent implements OnInit {
 
     this.pendingContactas.push(contact);
     this.contacts.push(contact);
-    this.filterContacts()
-    this.filterContacts()
+    this.filterContacts();
+    this.filterProviders();
 
     this.vendorService.postVendorContact(this.vendorId, contact)
       .then(resp => {
         this.pendingContactas.splice(this.pendingContactas.findIndex(c => c === contact), 1);
         contact.Id = (resp.body as Contact).Id;
+        this.filterContacts();
+        this.filterProviders();
+        this.toastr.success('Changes were saved', 'Success!');
       })
-      .then(() => this.filterContacts())
-      .then(() => this.filterContacts());
+      .catch(() => {
+        this.pendingContactas.splice(this.pendingContactas.findIndex(c => c === contact), 1);
+        this.contacts.splice(this.pendingContactas.findIndex(c => c === contact), 1);
+        this.filterContacts();
+        this.filterProviders();
+        this.toastr.error('Sorry, something went wrong', 'Error!');
+      });
   }
 
   updateContact(contact: Contact): void {
