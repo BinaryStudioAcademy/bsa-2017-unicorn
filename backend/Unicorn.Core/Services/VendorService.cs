@@ -116,6 +116,7 @@ namespace Unicorn.Core.Services
                 Surname = vendor.Person.Surname,
                 MiddleName = vendor.Person.MiddleName,
                 Id = vendor.Id,
+                AccountId = vendor.Person.Account.Id,
                 City = vendor.Person.Account.Location.City,
                 Location = new LocationDTO()
                 {

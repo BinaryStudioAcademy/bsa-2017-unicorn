@@ -19,4 +19,5 @@ export interface Vendor {
 	Company: string;
 	CompanyId: number;
 	Birthday: Date;
+	AccountId: number;
 }

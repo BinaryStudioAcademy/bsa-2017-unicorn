@@ -65,7 +65,8 @@
                     <a class="item" suiTabHeader="1">EDIT</a>
                     <a class="item" suiTabHeader="2">WORKS</a>
                     <a class="item" suiTabHeader="3">PORTFOLIO</a>
-                    <a class="item" suiTabHeader="4">CONTACTS</a>
+                    <a class="item" suiTabHeader="4">MESSAGES</a>
+                    <a class="item" suiTabHeader="5">CONTACTS</a>
                 </div>
                 <div class="row">
                     <div class="ui grid equal width container">
@@ -84,6 +85,11 @@
                                 </div>
                                 <div class="container column">
                                     <div class="ui segment" suiTabContent="4">
+                                        <app-vendor-edit-messages></app-vendor-edit-messages>
+                                    </div>
+                                </div>
+                                <div class="container column">
+                                    <div class="ui segment" suiTabContent="5">
                                         <app-vendor-edit-contacts [vendorId]="vendor.Id"></app-vendor-edit-contacts>
                                     </div>
                                 </div>

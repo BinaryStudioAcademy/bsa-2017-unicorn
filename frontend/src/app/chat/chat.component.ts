@@ -44,8 +44,8 @@ export class ChatComponent implements OnInit {
 
   initialize(){
     this.ownerId = +this.tokenHelper.getClaimByName('accountid');    
-    return this.chatService.getDialogs(this.ownerId).then(res => {
-      if(res !== undefined && res !== null){
+    return this.chatService.getDialogs(this.ownerId).then(res => {      
+      if(res !== undefined){
         this.dialogs = res;
         if(this.dialogs !== null && this.dialogs.length !== 0){
           this.containerHeight = 300;
@@ -88,7 +88,7 @@ export class ChatComponent implements OnInit {
       let str = this.writtenMessage;
       str = str.replace((/\n{2,}/ig), "\n");
       str = str.replace((/\s{2,}/ig), " ");      
-      if(str !== " " && str !== "\n"){
+      if(str !== " " && str !== "\n" && str != ""){
         this.writtenMessage = this.writtenMessage.trim();
         this.addMessage();
         this.writtenMessage = undefined;
@@ -107,11 +107,11 @@ export class ChatComponent implements OnInit {
       IsReaded: false, 
       OwnerId: this.ownerId,
       Message: this.writtenMessage, 
-      Date: new Date(),
+      Date: new Date(Date.now()),
       isLoaded: true
-    };
+    };    
     this.messages.push(message);     
-    this.scrollMessages();         
+    this.startScroll();     
     this.chatService.addMessage(message).then(() =>  {
       this.messages.find(x => x.isLoaded).isLoaded = false;
     });
@@ -126,6 +126,7 @@ export class ChatComponent implements OnInit {
       }
     });
     if(isChanged){
+      this.dialogs.find(x => x.Id === this.dialog.Id).IsReadedLastMessage = true;      
       this.chatService.updateMessages(this.dialog.Id, this.ownerId);
     }
   }

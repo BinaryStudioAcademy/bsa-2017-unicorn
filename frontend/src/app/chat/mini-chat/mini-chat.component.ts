@@ -64,7 +64,7 @@ export class MiniChatComponent implements OnInit {
       let str = this.writtenMessage;
       str = str.replace((/\n{2,}/ig), "\n");
       str = str.replace((/\s{2,}/ig), " ");      
-      if(str !== " " && str !== "\n"){
+      if(str !== " " && str !== "\n" && str != ""){
         this.writtenMessage = this.writtenMessage.trim();
         if(this.dialog.Id === null){
           this.noMessages = true;
@@ -94,7 +94,7 @@ export class MiniChatComponent implements OnInit {
       Message: this.writtenMessage, 
       Date: new Date(),
       isLoaded: true
-    };
+    };    
     this.writtenMessage = undefined;
     this.messages.push(message);     
     this.startScroll();    
@@ -121,8 +121,7 @@ export class MiniChatComponent implements OnInit {
     this.needScroll = true;
   }
 
-  scrollMessages(){ 
-    //this.noMessages = true;
+  scrollMessages(){     
       if (this.messagesElement && this.messagesElement.nativeElement.scrollTop !== this.messagesElement.nativeElement.scrollHeight) {
         this.messagesElement.nativeElement.scrollTop = this.messagesElement.nativeElement.scrollHeight; 
         this.needScroll = false; 

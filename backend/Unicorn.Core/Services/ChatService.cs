@@ -29,7 +29,7 @@ namespace Unicorn.Core.Services
             ChatMessage cmsg = new ChatMessage
             {
                 IsReaded = false,
-                Date = msg.Date,
+                Date = DateTime.Now,
                 Dialog = dialog,
                 Owner = owner,
                 Message = msg.Message
@@ -102,17 +102,20 @@ namespace Unicorn.Core.Services
             var dialogs = await _unitOfWork.ChatDialogRepository.Query
                 .Include(x => x.Participant1)
                 .Include(x => x.Participant2)
+                .Include(x => x.Messages)
                .Where(x => x.Participant1.Id == accountId || x.Participant2.Id == accountId)
                .ToListAsync();
+
+            var messages = await _unitOfWork.ChatMessageRepository.GetAllAsync();
 
             if (dialogs.Count == 0)
             {
                 return null;
             }
 
-            var names = dialogs.SelectMany(x => new List<Account> {x.Participant1, x.Participant2});
-            var names2 = names.Where(x => x.Id != accountId);
-            var names3 = names2.Select(GetName).ToList();
+            var names = dialogs.SelectMany(x => new List<Account> {x.Participant1, x.Participant2})
+                .Where(x => x.Id != accountId)
+                .Select(GetName).ToList();
             int i = 0;
 
             var result = dialogs.Select(x => new ChatDialogDTO()
@@ -120,7 +123,9 @@ namespace Unicorn.Core.Services
                 Id = x.Id,
                 ParticipantOneId = x.Participant1.Id,
                 ParticipantTwoId = x.Participant2.Id,
-                ParticipantName = names3[i++]
+                ParticipantName = names[i++],
+                IsReadedLastMessage = x.Messages?.Where(y => y.Owner.Id != accountId).LastOrDefault()?.IsReaded ?? true,
+                LastMessageTime = x.Messages?.LastOrDefault()?.Date
             }).ToList();
 
             return result;

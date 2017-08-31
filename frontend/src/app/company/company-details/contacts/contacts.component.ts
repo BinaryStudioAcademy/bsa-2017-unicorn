@@ -59,14 +59,16 @@ export class ContactsComponent implements OnInit {
       this.phones = this.company.Contacts.filter(x => x.Type === "Phone");      
       this.emails = this.company.Contacts.filter(x => x.Type === "Email");
       this.messengers = this.company.Contacts.filter(x => x.Type === "Messenger");
-      this.socials = this.company.Contacts.filter(x => x.Type === "Social");
-      //console.log("account: "+ this.accountId + "; owner: " + this.ownerId);
+      this.socials = this.company.Contacts.filter(x => x.Type === "Social");      
     });     
     
   }
   
   createChat(){
     this.isLoaded = true;
+    if(this.ownerId === undefined){
+      this.ownerId = +this.tokenHelper.getClaimByName('accountid');
+    }
     this.chatService.findDialog(this.ownerId, this.accountId).then(res => {
       if(res !== null){        
         this.dialog = res; 

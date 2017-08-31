@@ -9,6 +9,8 @@ namespace Unicorn.Shared.DTOs.Vendor
     {
         public long Id { get; set; }
 
+        public long AccountId { get; set; }
+
         public string Name { get; set; }
 
         public string Surname { get; set; }

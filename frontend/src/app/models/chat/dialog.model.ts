@@ -2,10 +2,10 @@ import { MessageModel } from "./message.model";
 
 export interface DialogModel {
     Id: number;
-    ParticipantOneId: number;
-    //FirstParticipantsId: number;
+    ParticipantOneId: number;    
     ParticipantTwoId: number;
-    ParticipantName: string;
-    //SecondParticipantsId: number;
+    ParticipantName: string;    
     Messages: MessageModel[];
+    IsReadedLastMessage: boolean;
+    LastMessageTime: Date;
 }
