@@ -1,13 +1,14 @@
 @import "../../../global-style-variables.sass"
 
 .ui.small.fluid.image
-    height: 140px;
+    height: 135px;
     border: 1px solid #E5E5E5;
     object-fit: contain;
     background-size: 20%;
 
 #main
     font-family: 'Verdana', 'Century Gothic', 'Calibri', 'Trebuchet MS', sans-serif
+    min-height: 550px
 
 .per-type
     margin-top: 0
@@ -41,10 +42,10 @@
 
 .map-container 
     position: fixed
-    right: 20px
-    top: calc(15px + #{$header-height})
-    width: 47.5% 
-    height: calc(100vh - 30px - #{$header-height} - #{$footer-height} - #{$separator-height} - #{$separator-margin})    
+    right: 10px
+    top: calc(20px + #{$header-height})
+    width: 49% 
+    height: calc(100vh - 40px - #{$header-height} - #{$footer-height} - #{$separator-height} - #{$separator-margin})    
     background-color: gray
 
 .map
@@ -71,8 +72,12 @@
 #paging 
     margin-bottom: 20px
 
+.search-btn-div
+    text-align: center
+
 #search-bar
-    margin-top: 10px
+    margin-top: 20px
+    margin-bottom: 20px
     // position: fixed
     // top: calc(#{$header-height} + 1px)
     // background-color: rgba(255, 255, 255, 1.0)

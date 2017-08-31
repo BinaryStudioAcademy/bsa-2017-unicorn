@@ -8,13 +8,21 @@
         <div class="row" id="search-bar">
             <div class="ui grid">
                 <div class="six wide column ui input">
-                    <input type="text" placeholder="LOCATION">
+                    <input
+                    places-auto-complete
+                    (initialized$)="initialized($event)"
+                    (place_changed)="placeChanged(place)"
+                    [types]="['geocode']"
+                        type="text" 
+                        name="location" 
+                        placeholder="LOCATION" 
+                        [(ngModel)]="city">
                 </div>
                 <div class="six wide column ui input">
-                    <input type="text" placeholder="NAME">
+                    <input type="text" name="name" placeholder="NAME" [(ngModel)]="name">
                 </div>
-                <div class="four wide column">
-                    <button class="ui button book-btn">SEARCH</button>
+                <div class="four wide column search-btn-div">
+                    <a class="ui button fluid book-btn" [ngClass]="{'loading': searchLoading}" (click)="search()">SEARCH</a>
                 </div>
             </div>
         </div>
@@ -30,7 +38,7 @@
                         <sui-rating class="star" [isReadonly]="true" [ngModel]="performer.Rating"></sui-rating>
                     </p>
                     <p class="desc">{{performer.Description}}</p>
-                    <p class="location" (click)="select(performer.Name)">
+                    <p class="location" (click)="select(performer.Name, performer.Location)">
                         <i class="colored map pin icon"></i>{{performer.Location.City}}, {{performer.Location.Adress}}
                     </p>
                     <p class="reviews">
@@ -55,7 +63,7 @@
     <div class="eight wide column">
         <div class="row">
             <div class="map-container">
-                <ngui-map (mapReady$)="onMapReady($event)" class="map" zoom="3" center="center" *ngIf="loaded">
+                <ngui-map (mapReady$)="onMapReady($event)" class="map" zoom="6" [center]="center" *ngIf="loaded">
                     <custom-marker *ngFor="let per of getPerformersPage()" 
                         [position]="[per.Location.Latitude, per.Location.Longitude]">
                         <span class="map-marker" [ngClass]="{'active-marker': selected == per.Name}">

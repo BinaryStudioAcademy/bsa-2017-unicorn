@@ -50,6 +50,12 @@ namespace Unicorn.Controllers
             return await _popularService.GetAllPerformersAsync();
         }
 
+        [HttpGet]
+        [Route("popular/search")]
+        public async Task<List<FullPerformerDTO>> GetFilteredPerformers(string city = null, string name = null)
+        {
+            return await _popularService.GetPerformersByFilterAsync(city, name);
+        }
 
     }
 }
