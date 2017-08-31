@@ -16,6 +16,9 @@ import { DialogModel } from "../../../models/chat/dialog.model";
 export class ContactsComponent implements OnInit {
   @Input()
   name: string;
+
+  @Input()
+  accountId: number;
   
   company: CompanyContacts;
   phones: Contact[];
@@ -25,7 +28,7 @@ export class ContactsComponent implements OnInit {
 
 
   openChat: boolean = false;
-  ownerId: string;
+  ownerId: number;
   companyId: number;
   dialog: DialogModel;
   isLoaded: boolean = false;
@@ -43,7 +46,7 @@ export class ContactsComponent implements OnInit {
     .subscribe(res => {       
       this.company = res;
       this.companyId = res.Id;      
-      this.ownerId = this.tokenHelper.getClaimByName('accountid');
+      this.ownerId = +this.tokenHelper.getClaimByName('accountid');
       this.map = {
         center: {lat: this.company.Location.Latitude, lng: this.company.Location.Longitude},
         zoom: 18,    
@@ -55,29 +58,32 @@ export class ContactsComponent implements OnInit {
       this.emails = this.company.Contacts.filter(x => x.Type === "Email");
       this.messengers = this.company.Contacts.filter(x => x.Type === "Messenger");
       this.socials = this.company.Contacts.filter(x => x.Type === "Social");
+      //console.log("account: "+ this.accountId + "; owner: " + this.ownerId);
     });     
+    
   }
   
   createChat(){
-    this.isLoaded = true;
-    this.chatService.getDialogs(+this.ownerId).then(res => {
-      if(res !== null){
-        let wasCreated = res.find(x => x.ParticipantName === this.name);
-        if(wasCreated !== undefined && wasCreated !== null){
-          this.dialog = wasCreated;
+    if(!this.openChat){
+      this.isLoaded = true;
+      this.chatService.findDialog(this.ownerId, this.accountId).then(res => {
+        if(res !== null){        
+          this.dialog = res; 
+          this.dialog.ParticipantName = this.name;       
           this.isLoaded = false;
-          return;
-        }
-    }      
-    this.dialog = {
-      Id: null,
-      ParticipantOneId: +this.ownerId,
-      ParticipantTwoId: this.companyId,
-      ParticipantName: this.name,
-      Messages: null
-    };    
-    this.openChat = true;
-    this.isLoaded = false;
-    });  
+          this.openChat = true;
+          return;       
+      }      
+      this.dialog = {
+        Id: null,
+        ParticipantOneId: this.ownerId,
+        ParticipantTwoId: this.accountId,
+        ParticipantName: this.name,
+        Messages: null
+      };    
+      this.openChat = true;
+      this.isLoaded = false;
+      });  
+    }
   }
 }

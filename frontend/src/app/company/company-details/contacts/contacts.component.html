@@ -2,7 +2,7 @@
     <div class="flex-contacts">
         <div class="header" style="display: flex; justify-content: space-between; align-items: center;">
             <div>Our contacts</div>
-            <div>
+            <div *ngIf="accountId !== +ownerId">
                 <button class="ui active button" [ngClass]="{'loading':isLoaded}" (click)="createChat()"> 
                     <div *ngIf="!isLoaded">
                         <i class="comments icon"></i> START A CHAT 
@@ -58,5 +58,8 @@
             <app-map [inputMap]="map"></app-map>
         </div>
     </div>
+</div>
+<div *ngIf="company === undefined" class="ui active inverted dimmer" style="z-index: 0;">
+    <div class="ui text loader">Loading</div>
 </div>
 <app-mini-chat [dialog]="dialog" *ngIf="openChat"></app-mini-chat>

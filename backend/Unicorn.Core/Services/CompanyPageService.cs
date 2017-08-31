@@ -148,6 +148,7 @@ namespace Unicorn.Core.Services
                         new ShortCompanyDTO
                         {
                             Id = company.Id,
+                            AccountId = company.Account.Id,
                             Avatar = company.Account.Avatar,
                             Name = company.Name,
                             Location = new LocationDTO
@@ -175,6 +176,7 @@ namespace Unicorn.Core.Services
                 var companyDTO = new ShortCompanyDTO
                         {
                             Id = company.Id,
+                            AccountId = company.Account.Id,
                             Avatar = company.Account.Avatar,
                             Name = company.Name,
                             Location = new LocationDTO

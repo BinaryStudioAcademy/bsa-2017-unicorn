@@ -441,7 +441,7 @@ namespace Unicorn.DataAccess.Context
                 DateCreated = new DateTime(2017, 08, 11, 00, 55, 16),
                 Avatar = "https://www.xing.com/image/3_4_a_99233ef95_25270136_1/mehmet-altun-foto.1024x1024.jpg",
                 IsDeleted = false,
-                Role = role1,
+                Role = role3,
                 Contacts = new List<Contact> { contact8, contact9, contact10, contact11, contact12, contact13, contact14 }
             };
 
@@ -453,7 +453,7 @@ namespace Unicorn.DataAccess.Context
                 DateCreated = new DateTime(2017, 08, 11, 00, 57, 16),
                 Avatar = "http://revivre.ee/wp-content/uploads/2013/07/photodune-4276142-smiling-portraits-xl_411.jpg",
                 IsDeleted = false,
-                Role = role2,
+                Role = role3,
                 Contacts = new List<Contact> { contact15, contact16, contact17, contact18, contact19, contact20, contact21 }
 
             };
@@ -478,7 +478,7 @@ namespace Unicorn.DataAccess.Context
                 DateCreated = new DateTime(2017, 08, 11, 01, 00, 16),
                 Avatar = "http://www.actionagainstabduction.org/wp-content/uploads/2015/07/Lucy_Holmes.jpg",
                 IsDeleted = false,
-                Role = role1,
+                Role = role3,
                 Contacts = new List<Contact> { contact29, contact30, contact31, contact32, contact33, contact34, contact35 }
             };
 
@@ -502,7 +502,7 @@ namespace Unicorn.DataAccess.Context
                 DateCreated = new DateTime(2017, 08, 11, 22, 57, 15),
                 Avatar = "https://s-media-cache-ak0.pinimg.com/736x/88/e3/b0/88e3b020ed58b7b5734b87f9661e010d--hugo-chávez-archaeology.jpg",
                 IsDeleted = false,
-                Role = role4,
+                Role = role3,
                 Contacts = new List<Contact> { contact43, contact44, contact45, contact46, contact47, contact48, contact49 }
             };
 
@@ -514,7 +514,7 @@ namespace Unicorn.DataAccess.Context
                 DateCreated = new DateTime(2017, 08, 12, 02, 14, 15),
                 Avatar = "https://articlemanager.blob.core.windows.net/article-images/2_your-logo-design.jpg",
                 IsDeleted = false,
-                Role = role2,
+                Role = role4,
                 Contacts = new List<Contact> { contact50, contact51, contact52, contact53, contact54, contact55, contact56 }
             };
 
@@ -526,7 +526,7 @@ namespace Unicorn.DataAccess.Context
                 DateCreated = new DateTime(2017, 08, 11, 22, 57, 15),
                 Avatar = "https://tribkcpq.files.wordpress.com/2016/07/s032965871-300.jpg?quality=85&strip=all&w=770",
                 IsDeleted = false,
-                Role = role1,
+                Role = role4,
                 Contacts = new List<Contact> { contact57, contact58, contact59, contact60, contact61, contact62, contact63 }
             };
 
@@ -538,7 +538,7 @@ namespace Unicorn.DataAccess.Context
                 DateCreated = new DateTime(2017, 08, 11, 22, 00, 00),
                 Avatar = "http://www.nmc-corp.com/uploadedImages/NebraskaMachineryCompany/Logo_Library/NMC%20CAT%20Power%20Systems%20Mark.png",
                 IsDeleted = false,
-                Role = role5,
+                Role = role4,
                 Contacts = new List<Contact> { contact64, contact65, contact66, contact67, contact68, contact69, contact70 }
             };
 
@@ -550,7 +550,7 @@ namespace Unicorn.DataAccess.Context
                 DateCreated = new DateTime(2017, 08, 11, 22, 00, 00),
                 Avatar = "https://www.ifak.eu/sites/www.ifak.eu/files/Mitarbeiterfotos/Steinmann.jpg",
                 IsDeleted = false,
-                Role = role5,
+                Role = role2,
                 Contacts = new List<Contact> { contact71, contact72, contact73, contact74, contact75, contact76, contact77 }
             };
 
@@ -562,7 +562,7 @@ namespace Unicorn.DataAccess.Context
                 DateCreated = new DateTime(2017, 08, 11, 22, 00, 00),
                 Avatar = "https://www.kellerag.com/fileadmin/_processed_/csm_KAUSSEN-Sascha_95ed03675a.jpg",
                 IsDeleted = false,
-                Role = role5,
+                Role = role2,
                 Contacts = new List<Contact> { contact78, contact79, contact80, contact81, contact82, contact83, contact84 }
             };
 
@@ -574,7 +574,7 @@ namespace Unicorn.DataAccess.Context
                 DateCreated = new DateTime(2017, 08, 11, 22, 00, 00),
                 Avatar = "http://top101news.com/wp-content/uploads/2016/10/Paul-Walker-Top-Most-Popular-Persons-Who-Died-in-Road-Accident-2018.jpg",
                 IsDeleted = false,
-                Role = role5,
+                Role = role2,
                 Contacts = new List<Contact> { contact85, contact86, contact87, contact88, contact89, contact90, contact91 }
             };
             
@@ -586,7 +586,7 @@ namespace Unicorn.DataAccess.Context
                 DateCreated = new DateTime(2017, 08, 01, 20, 00, 00),
                 Avatar = "http://techbox.dennikn.sk/wp-content/uploads/2016/02/Google-logo-01.jpg",
                 IsDeleted = false,
-                Role = role5,
+                Role = role4,
                 Contacts = new List<Contact> { contact92, contact93, contact94, contact95, contact96, contact97, contact98 }
             };
 
@@ -598,7 +598,7 @@ namespace Unicorn.DataAccess.Context
                 DateCreated = new DateTime(2017, 08, 23, 20, 00, 00),
                 Avatar = "http://vneconomictimes.com/cache/uploads/media/images/2016/MAY/Siemens_logo_640_auto.jpg",
                 IsDeleted = false,
-                Role = role5,
+                Role = role4,
                 Contacts = new List<Contact> { contact99, contact100, contact101, contact102, contact103, contact104, contact105 }
             };
 
@@ -610,7 +610,7 @@ namespace Unicorn.DataAccess.Context
                 DateCreated = new DateTime(2017, 08, 19, 06, 00, 00),
                 Avatar = "http://www.geekets.com/wp-content/uploads/2013/01/dell_logo020307.jpg",
                 IsDeleted = false,
-                Role = role5,
+                Role = role4,
                 Contacts = new List<Contact> { contact106, contact107, contact108, contact109, contact110, contact111, contact112 }
             };
 
@@ -622,7 +622,7 @@ namespace Unicorn.DataAccess.Context
                 DateCreated = new DateTime(2017, 08, 14, 16, 00, 00),
                 Avatar = "http://cdn.playbuzz.com/cdn/21053f7d-f84d-4cb5-85d5-387fbb08692a/1c8e0442-5d13-435e-aa93-85b3804cfbc5.jpg",
                 IsDeleted = false,
-                Role = role5,
+                Role = role4,
                 Contacts = new List<Contact> { contact113, contact114, contact115, contact116, contact117, contact118, contact119 }
             };
 
@@ -634,7 +634,7 @@ namespace Unicorn.DataAccess.Context
                 DateCreated = new DateTime(2017, 08, 11, 12, 00, 00),
                 Avatar = "http://open4business.com.ua/wp-content/uploads/2015/07/NovaPoshta-1-800x494.jpg",
                 IsDeleted = false,
-                Role = role5,
+                Role = role4,
                 Contacts = new List<Contact> { contact120, contact121, contact122, contact123, contact124, contact125, contact126 }
             };
 

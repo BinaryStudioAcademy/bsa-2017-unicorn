@@ -7,8 +7,8 @@ namespace Unicorn.DataAccess.Entities
     {
         public long Id { get; set; }
         public bool IsDeleted { get; set; }
-        public Account Participant1 { get; set; }
-        public Account Participant2 { get; set; }
+        public virtual Account Participant1 { get; set; }
+        public virtual Account Participant2 { get; set; }
         public virtual ICollection<ChatMessage> Messages { get; set; }
     }
 }

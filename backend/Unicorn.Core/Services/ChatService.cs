@@ -100,7 +100,9 @@ namespace Unicorn.Core.Services
                 return null;
             }
 
-            var names = dialogs.SelectMany(x => new List<Account> { x.Participant1, x.Participant2 }).Where(x => x.Id != accountId).Select(x => GetName(x)).ToList();
+            var names = dialogs.SelectMany(x => new List<Account> {x.Participant1, x.Participant2});
+            var names2 = names.Where(x => x.Id != accountId);
+            var names3 = names2.Select(GetName).ToList();
             int i = 0;
 
             var result = dialogs.Select(x => new ChatDialogDTO()
@@ -108,7 +110,7 @@ namespace Unicorn.Core.Services
                 Id = x.Id,
                 ParticipantOneId = x.Participant1.Id,
                 ParticipantTwoId = x.Participant2.Id,
-                ParticipantName = names[i++]
+                ParticipantName = names3[i++]
             }).ToList();
 
             return result;
@@ -117,11 +119,17 @@ namespace Unicorn.Core.Services
         public async Task<ChatDialogDTO> FindDialog(long participantOneId, long participantTwoId)
         {
             var res = await _unitOfWork.ChatDialogRepository.Query
-                 .Include(x => x.Participant1)
-                 .Include(x => x.Participant2)
-                 .Include(x => x.Messages)
-                .FirstOrDefaultAsync(x => (x.Participant1.Id == participantOneId && x.Participant2.Id == participantTwoId) || (x.Participant1.Id == participantTwoId && x.Participant2.Id == participantOneId));
+                .Include(x => x.Participant1)
+                .Include(x => x.Participant2)
+                .Include(x => x.Messages)
+                .FirstOrDefaultAsync(
+                    x => (x.Participant1.Id == participantOneId && x.Participant2.Id == participantTwoId) ||
+                         (x.Participant1.Id == participantTwoId && x.Participant2.Id == participantOneId));
 
+            if (res == null)
+            {
+                return null;
+            }
             return new ChatDialogDTO
             {
                 Id = res.Id,
@@ -136,6 +144,7 @@ namespace Unicorn.Core.Services
                     OwnerId = x.Owner.Id
                 }).ToList()
             };
+
         }
 
         public async Task RemoveDialog(long dialogId)
