@@ -55,6 +55,7 @@ export class TokenHelperService {
     switch (roleId) {
       case '2':
           roleName = 'user';
+          break;
       case '3':
           roleName = 'vendor';
           break;

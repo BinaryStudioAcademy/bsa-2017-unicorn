@@ -1,7 +1,7 @@
 <div *ngIf="vendor !== undefined" class="ui grid container">
     <div class="row">
         <div class="sixteen wide column container">
-            <div class="vendor-header" [style.backgroundImage]="{'backgroundUrl': backgroundUrl !== null}">
+            <div class="vendor-header" [style.backgroundImage]="backgroundUrl">
                 <label id="banner-loader" for="banner-input" class="ui icon button basic" [ngClass]="{'loading': uploading}">
           <i class="icon up-color" [ngClass]="{'upload': !uploading}"></i>
           </label>

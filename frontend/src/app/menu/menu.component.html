@@ -1,7 +1,8 @@
 <nav class="navbar">
     <ul>
-        <li><a routerLink="/search" routerLinkActive="active">Search</a></li>
-        <li><a routerLink="#" routerLinkActive="active">Vendors</a></li>
+        <li *ngIf="!isPerformer()"><a routerLink="/search" routerLinkActive="active">Search</a></li>
+        <li *ngIf="isPerformer()"><a routerLink="/dashboard" routerLinkActive="active">Dashboard</a></li>
+        <li><a routerLink="/vendors" routerLinkActive="active">Vendors</a></li>
         <li *ngIf="!isLogged;else authorized"><a (click)="openModal()" routerLinkActive="active">Sign In</a></li>
         <ng-template #authorized>
             <li>
@@ -87,7 +88,7 @@
                     *ngIf="(!haveNewNotifications() && isNotificationsShow && !isArchivedNotificationsShown) || (!haveArchivedNotifications() && isNotificationsShow && isArchivedNotificationsShown)">
                         <div class="item header">
                             <h5>NOTIFICATIONS</h5>
-                            <i (click)="toggleNotifications()" class="archive link icon"></i>
+                            <i (click)="toggleNotifications()" class="archive link icon" [ngClass]="{'red': isArchivedNotificationsShown}"></i>
                         </div>
                         <div class="ui middle aligned divided list  notification-list">
                             <div class="item">
