@@ -60,8 +60,7 @@ export class MenuComponent implements OnInit {
   ngOnInit() {
     this.roleRouter = new RoleRouter();
     if (this.isLogged) {
-      let accountId = +this.tokenHelper.getClaimByName("accountid");
-      this.accountService.getShortInfo(accountId)
+      this.accountService.getShortInfo(+this.tokenHelper.getClaimByName("accountid"))
         .then(resp => {
           if(resp !== undefined){
             this.profileInfo = resp.body as ProfileShortInfo;
@@ -71,18 +70,17 @@ export class MenuComponent implements OnInit {
             this.profileUrl = "";
           }
         });
-      this.setProfileRoute();
-
-      this.notificationService.connect(accountId)
+      this.notificationService.connect(+this.tokenHelper.getClaimByName("accountid"))
         .then(() => this.notificationService
           .listen<Notification>("OnNotificationRecieved", notification => this.addNotification(notification)));
-      this.accountService.getNotifications(accountId)
+      this.accountService.getNotifications(+this.tokenHelper.getClaimByName("accountid"))
         .then(resp => {
           this.notifications = (resp.body as Notification[]);
           this.newNotifications = this.notifications.filter(n => !n.IsViewed);
           this.archivedNotifications = this.notifications.filter(n => n.IsViewed);
           this.sortNotificationsByTime();
         });
+      this.setProfileRoute();
     }
     else {
       this.initEmptyProfile();
@@ -96,7 +94,16 @@ export class MenuComponent implements OnInit {
     this.onLogIn = this.authEventService.loginEvent$
       .subscribe(() => {
         this.isLogged = true;
-        this.notificationService.connect(+this.tokenHelper.getClaimByName("accountid"));
+        this.notificationService.connect(+this.tokenHelper.getClaimByName("accountid"))
+        .then(() => this.notificationService
+          .listen<Notification>("OnNotificationRecieved", notification => this.addNotification(notification)));
+      this.accountService.getNotifications(+this.tokenHelper.getClaimByName("accountid"))
+        .then(resp => {
+          this.notifications = (resp.body as Notification[]);
+          this.newNotifications = this.notifications.filter(n => !n.IsViewed);
+          this.archivedNotifications = this.notifications.filter(n => n.IsViewed);
+          this.sortNotificationsByTime();
+        });
         this.accountService.getShortInfo(+this.tokenHelper.getClaimByName("accountid"))
           .then(resp => this.profileInfo = resp.body as ProfileShortInfo);
         this.setProfileRoute();
@@ -194,6 +201,7 @@ export class MenuComponent implements OnInit {
   }
 
   addNotification(notification: Notification): void {
+    notification.Time = new Date(notification.Time);
     this.newNotification = notification;
 
     this.notifications.push(notification);

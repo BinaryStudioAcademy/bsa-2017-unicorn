@@ -2,16 +2,16 @@
   <div class="ten wide column settings-container">
       <div id="search-panel" class="row remove-padding-top">
           <div class="ui grid">
-              <div class="eight wide column remove-padding-bottom">
+              <div class="six wide column remove-padding-bottom">
                 <label>What to do</label>
               </div>
-              <div class="eight wide column remove-padding-bottom">
+              <div class="ten wide column remove-padding-bottom">
                 <label>When to do it</label>                  
               </div>
-              <div class="four wide column ui input">
+              <div class="three wide column ui input">
                 <input type="text" placeholder="SCRATCH" [(ngModel)]="category">
               </div>
-              <div class="four wide column  ui input">
+              <div class="three wide column  ui input">
                 <input type="text" placeholder="CAT" [(ngModel)]="subcategory">
               </div>
               <div class="four wide column ui left icon input">
@@ -22,8 +22,9 @@
                           [pickerFirstDayOfWeek]="firstDayOfWeek" 
                           [pickerUseNativeOnMobile]="false">
               </div>
-              <div class="four wide column">
-                <button class="ui active button main btn-search" (click)="searchWorks()">SEARCH</button>
+              <div class="six wide column search-btn-div">
+                <button class="ui button" (click)="reset()">RESET</button>
+                <button class="ui active button main button-right" (click)="searchWorks()">SEARCH</button>                
               </div>
               <div class="sixteen wide column remove-padding-top">
                 <sui-accordion class="fluid">
@@ -77,8 +78,8 @@
                           </div>
                         </div>                                   
                         <div class="sixteen wide column remove-padding-top">
-                          <button class="ui active button main button-right" (click)="searchCompany()">APPLY</button>
-                          <button class="ui active button secondary button-right" (click)="resetFilters()">RESET</button>
+                          <!-- <button class="ui active button main button-right" (click)="searchCompany()">APPLY</button>
+                          <button class="ui active button secondary button-right" (click)="resetFilters()">RESET</button> -->
                         </div>
                       </div>
                     </div>
@@ -121,31 +122,19 @@
           <div class="column cell" *ngFor="let work of works">
             <a routerLink="/{{work.Link}}" [queryParams]="{work: work.Id}" class="ui medium image">
               <img class="ui fluid image" src="{{work.Avatar}}"/>
-              <div class="cell-info">
-                <h3 class="info-item">{{work.Name}}</h3>
-              </div>
-              <div class="row">
-                <h4>{{work.PerformerName}}</h4>
+              <div class="row cell-info">
+                <p class="cell-title">{{work.Name}}<p>
+                <p>{{work.PerformerName}}<p>                                
               </div>
             </a>
-              <div class="row">
+            <div class="row margin-height">
                 <p class="location" (click)="selectWork(work.PerformerName, work.Location)">
                     <i class="colored map pin icon"></i>{{work.Location.City}}, {{work.Location.Adress}}</p>
-              </div>
-            
-            <!-- <div class="categories-container">
-              <div class="category" *ngFor="let work of company.Works">{{work.Subcategory.Category.Name}}</div>
-            </div> -->
-            <div class="ui grid">
-              <div class="three column row padding-top">
-                <div class="column">
-                  <sui-rating class="star" [ngModel]="work.Rating" [isReadonly]="true"></sui-rating>
-                </div>
-                <div class="column">                      
-                  <a routerLink="/{{work.Link}}" [queryParams]="{tab: 'reviews'}">Reviews({{work.ReviewsCount}})</a>
-                </div>
-              </div>
-            </div>            
+            </div>
+            <div class="column margin-height">
+                <sui-rating class="star" [ngModel]="work.Rating" [isReadonly]="true"></sui-rating>
+                <a style="float: right" routerLink="/{{work.Link}}" [queryParams]="{tab: 'reviews'}">Reviews({{work.ReviewsCount}})</a>                  
+            </div>
           </div>
         </div>        
       </div>

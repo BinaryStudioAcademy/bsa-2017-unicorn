@@ -79,6 +79,12 @@ export class SearchComponent implements OnInit {
     }).catch(err => this.spinner = false);
   }
 
+  reset() {
+    this.category = undefined;
+    this.subcategory = undefined;
+    this.date = undefined;
+  }
+
   resetFilters() {
     this.filtersIsOpen = false;
   }
