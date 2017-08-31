@@ -44,7 +44,7 @@
     position: fixed
     right: 10px
     top: calc(20px + #{$header-height})
-    width: 49% 
+    width: 48% 
     height: calc(100vh - 40px - #{$header-height} - #{$footer-height} - #{$separator-height} - #{$separator-margin})    
     background-color: gray
 
@@ -73,7 +73,14 @@
     margin-bottom: 20px
 
 .search-btn-div
-    text-align: center
+    display: flex !important
+    flex-wrap: nowrap
+
+.search-btn-div > button
+    width: 100%
+
+.search-btn-div > a
+    width: 100%
 
 #search-bar
     margin-top: 20px
@@ -85,4 +92,14 @@
     // z-index: 1
     // padding-top: 10px
     // padding-bottom: 10px
+
+.desc-div
+    height: 40px
+    overflow: hidden
+
+.ui.active.button.secondary
+  background: transparent;
+  color: $primary-color;
+  border: solid 1px $primary-color;
+  margin-right: 10px;
 

@@ -65,6 +65,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.initRoles();
   }
 
+  isLoading(): boolean {
+    return this.floader || this.gloader || this.tloader;
+  }
+
   handleErrorLogin() {
     this.zone.run(() => this.error = true);
   }

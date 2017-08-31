@@ -7,7 +7,7 @@
     <div class="eight wide column">
         <div class="row" id="search-bar">
             <div class="ui grid">
-                <div class="six wide column ui input">
+                <div class="five wide column ui input">
                     <input
                     places-auto-complete
                     (initialized$)="initialized($event)"
@@ -18,11 +18,13 @@
                         placeholder="LOCATION" 
                         [(ngModel)]="city">
                 </div>
-                <div class="six wide column ui input">
+                <div class="five wide column ui input">
                     <input type="text" name="name" placeholder="NAME" [(ngModel)]="name">
                 </div>
-                <div class="four wide column search-btn-div">
-                    <a class="ui button fluid book-btn" [ngClass]="{'loading': searchLoading}" (click)="search()">SEARCH</a>
+                <div class="six wide column search-btn-div">
+                        <a class="ui button book-btn" [ngClass]="{'loading': searchLoading}" (click)="search()">SEARCH</a>
+                        <button class="ui button" (click)="reset()">RESET</button>
+                    <!-- <a class="ui button fluid book-btn" [ngClass]="{'loading': searchLoading}" (click)="search()">SEARCH</a> -->
                 </div>
             </div>
         </div>
@@ -37,7 +39,9 @@
                     <p>{{performer.Name}} <span class="per-type">{{performer.PerformerType}}</span>
                         <sui-rating class="star" [isReadonly]="true" [ngModel]="performer.Rating"></sui-rating>
                     </p>
-                    <p class="desc">{{performer.Description}}</p>
+                    <div class="desc-div">
+                        <p class="desc">{{performer.Description}}</p>
+                    </div>
                     <p class="location" (click)="select(performer.Name, performer.Location)">
                         <i class="colored map pin icon"></i>{{performer.Location.City}}, {{performer.Location.Adress}}
                     </p>
@@ -46,7 +50,7 @@
                     </p>
                 </div>
                 <div class="four wide column book-div">
-                    <a href="{{performer.Link}}" class="ui button book-btn">Details</a>
+                    <a href="{{performer.Link}}" class="ui active secondary button">Details</a>
                 </div>
             </div>
         </div>

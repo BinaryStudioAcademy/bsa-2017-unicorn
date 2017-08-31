@@ -82,7 +82,13 @@ export class VendorsComponent implements OnInit {
         this.performers = resp;
         this.searchLoading = false;
         this.mapRedirect();
+        this.ref.detectChanges();
       }).catch(err => this.searchLoading = false);
+  }
+
+  reset() {
+    this.city = '';
+    this.name = '';
   }
 
   initialized(autocomplete: any) {
