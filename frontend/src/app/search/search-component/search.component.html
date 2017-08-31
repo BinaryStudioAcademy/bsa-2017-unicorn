@@ -119,7 +119,7 @@
       <div *ngIf="works" class="ui grid" id="works-grid">
         <div class="three column row remove-padding-top">
           <div class="column cell" *ngFor="let work of works.slice((selectedPage - 1) * pageSize, selectedPage * pageSize)">
-            <a href="/{{work.Link}}{{workSuffix}}{{work.Id}}" class="ui medium image">
+            <a routerLink="/{{work.Link}}" [queryParams]="{work: work.Id}" class="ui medium image">
               <img class="ui fluid image" src="{{work.Avatar}}"/>
               <div class="cell-info">
                 <h3 class="info-item">{{work.Name}}</h3>
@@ -141,7 +141,7 @@
                   <sui-rating class="star" [ngModel]="work.Rating" [isReadonly]="true"></sui-rating>
                 </div>
                 <div class="column">                      
-                  <a href="{{work.Link}}{{tabSuffix}}">Reviews({{work.ReviewsCount}})</a>
+                  <a routerLink="/{{work.Link}}" [queryParams]="{tab: 'reviews'}">Reviews({{work.ReviewsCount}})</a>
                 </div>
               </div>
             </div>            

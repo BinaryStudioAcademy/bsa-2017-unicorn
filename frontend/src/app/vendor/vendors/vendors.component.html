@@ -31,7 +31,7 @@
         <div class="ui segment ui grid" *ngFor="let performer of getPerformersPage()">
             <div class="row">
                 <div class="four wide column">
-                    <a href="{{performer.Link}}">
+                    <a routerLink="/{{performer.Link}}">
                         <img class="ui small fluid image" src="{{performer.Avatar}}">
                     </a>
                 </div>
@@ -46,11 +46,11 @@
                         <i class="colored map pin icon"></i>{{performer.Location.City}}, {{performer.Location.Adress}}
                     </p>
                     <p class="reviews">
-                        <a href="{{performer.Link}}?tab=reviews">Reviews({{performer.ReviewsCount}})</a>
+                        <a routerLink="/{{performer.Link}}" [queryParams]="{tab: 'reviews'}">Reviews({{performer.ReviewsCount}})</a>
                     </p>
                 </div>
                 <div class="four wide column book-div">
-                    <a href="{{performer.Link}}" class="ui active secondary button">Details</a>
+                    <a routerLink="/{{performer.Link}}" class="ui active secondary button">Details</a>
                 </div>
             </div>
         </div>
@@ -71,7 +71,7 @@
                     <custom-marker *ngFor="let per of getPerformersPage()" 
                         [position]="[per.Location.Latitude, per.Location.Longitude]">
                         <span class="map-marker" [ngClass]="{'active-marker': selected == per.Name}">
-                            <a href="{{per.Link}}">{{per.Name}}</a>
+                            <a routerLink="/{{per.Link}}">{{per.Name}}</a>
                         </span>
                     </custom-marker>
                 </ngui-map>
