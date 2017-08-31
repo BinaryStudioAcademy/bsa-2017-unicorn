@@ -19,7 +19,8 @@ export class NotificationService {
 		let options: IConnectionOptions = { 
 			hubName: 'NotificationHub',
 			url: environment.apiUrl,
-			qs: { accountId: accountId },			
+			qs: { accountId: accountId },	
+			transport: [ ConnectionTransports.webSockets, ConnectionTransports.longPolling ]
 		};
 
 		return this.signalR.connect(options)
