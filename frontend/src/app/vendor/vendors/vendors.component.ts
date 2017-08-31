@@ -97,6 +97,7 @@ export class VendorsComponent implements OnInit {
 
   placeChanged() {
     let place = this.autocomplete.getPlace();
+    this.search();
     //this.center = place.geometry.location;
     this.search();
     for (let i = 0; i < place.address_components.length; i++) {
