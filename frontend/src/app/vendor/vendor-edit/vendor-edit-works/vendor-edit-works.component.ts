@@ -109,6 +109,7 @@ export class VendorEditWorksComponent implements OnInit {
       })
       .catch(err => this.toastr.error('Sorry, something went wrong', 'Error!'));
     this.clearSelectedWork();
+    this.isEditOpen = false;
   }
 
   updateWork(): void {
@@ -118,6 +119,7 @@ export class VendorEditWorksComponent implements OnInit {
       .then(() => this.toastr.success('Changes were saved', 'Success!'))
       .catch(() => this.toastr.error('Sorry, something went wrong', 'Error!'));
     this.clearSelectedWork();
+    this.isEditOpen = false;
   }
 
   removeWork(work: Work): void {
