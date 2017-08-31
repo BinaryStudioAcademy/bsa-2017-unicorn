@@ -73,7 +73,7 @@ export class VendorService {
   }
 
   postVendorWork(vendorId: number, work: Work): Promise<any> {
-    return this.dataService.postFullRequest<Work[]>(`${this.apiController}/${vendorId}/works`, work)
+    return this.dataService.postFullRequest<Work>(`${this.apiController}/${vendorId}/works`, work)
       .catch(err => alert(err));
   }
 

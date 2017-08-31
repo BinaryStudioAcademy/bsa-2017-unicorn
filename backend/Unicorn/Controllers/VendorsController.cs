@@ -64,6 +64,21 @@ namespace Unicorn.Controllers
                 return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
+
+        [HttpPut]
+        [Route("{id}")]
+        public async Task<HttpResponseMessage> UpdateVendor(long id, [FromBody]ShortVendorDTO vendor)
+        {
+            await _vendorService.UpdateAsync(vendor);
+
+            var result = await _vendorService.GetByIdAsync(id);
+
+            if (result == null)
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            else
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
         [HttpGet]
         [Route("{id}/categories")]
         public async Task<HttpResponseMessage> GetVendorCategories(long id)
@@ -86,6 +101,19 @@ namespace Unicorn.Controllers
                 return Request.CreateResponse(HttpStatusCode.NotFound);
             else
                 return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+        [HttpPost]
+        [Route("{id}/works")]
+        public async Task<HttpResponseMessage> CreateVendorWork(long id, [FromBody]WorkDTO workDto)
+        {
+            workDto.VendorId = id;
+            var result = await _workService.CreateAsync(workDto);
+
+            if (result == null)
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            else
+                return Request.CreateResponse(HttpStatusCode.Created, result);
         }
 
         [HttpPut]
@@ -127,6 +155,22 @@ namespace Unicorn.Controllers
         [Route("{id}/orders")]
         public async Task<HttpResponseMessage> GetVendorOrders(long id)
         {
+            var result = await _bookService.GetOrdersAsync("vendor", id);
+
+            if (result == null)
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            else
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+        [HttpPut]
+        [Route("{id}/orders/{orderId}")]
+        public async Task<HttpResponseMessage> UpdateVendor(long id, long orderId, [FromBody]VendorBookDTO order)
+        {
+            var book = await _bookService.GetByIdAsync(orderId);
+            book.Status = order.Status;
+            await _bookService.Update(book);
+
             var result = await _bookService.GetOrdersAsync("vendor", id);
 
             if (result == null)
@@ -226,51 +270,6 @@ namespace Unicorn.Controllers
         {
             await _portfolioService.CreateAsync(id, itemDto);
             return Request.CreateResponse(HttpStatusCode.Created);
-        }
-
-        [HttpPost]
-        [Route("{id}/works")]
-        public async Task<HttpResponseMessage> CreateVendorWork(long id, [FromBody]WorkDTO workDto)
-        {
-            workDto.VendorId = id;
-            await _workService.CreateAsync(workDto);
-
-            var result = await _vendorService.GetVendorWorksAsync(id);
-
-            if (result == null)
-                return Request.CreateResponse(HttpStatusCode.NotFound);
-            else
-                return Request.CreateResponse(HttpStatusCode.Created, result);
-        }
-
-        [HttpPut]
-        [Route("{id}")]
-        public async Task<HttpResponseMessage> UpdateVendor(long id, [FromBody]ShortVendorDTO vendor)
-        {
-            await _vendorService.UpdateAsync(vendor);
-
-            var result = await _vendorService.GetByIdAsync(id);
-
-            if (result == null)
-                return Request.CreateResponse(HttpStatusCode.NotFound);
-            else
-                return Request.CreateResponse(HttpStatusCode.OK, result);
-        }
-
-        [HttpPut]
-        [Route("{id}/orders/{orderId}")]
-        public async Task<HttpResponseMessage> UpdateVendor(long id, long orderId, [FromBody]VendorBookDTO order)
-        {
-            var book = await _bookService.GetByIdAsync(orderId);
-            book.Status = order.Status;
-            await _bookService.Update(book);
-
-            var result = await _bookService.GetOrdersAsync("vendor", id);
-
-            if (result == null)
-                return Request.CreateResponse(HttpStatusCode.NotFound);
-            else
-                return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         private IVendorService _vendorService;

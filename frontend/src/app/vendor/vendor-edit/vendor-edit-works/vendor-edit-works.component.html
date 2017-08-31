@@ -18,7 +18,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let work of works">
+                  <tr *ngFor="let work of works" [ngClass]="{'disabled': isWorkPending(work)}">
                     <td (click)="onWorkSelect(work)">
                       <img *ngIf="work.Icon !== '' && work.Icon !== null" class="ui avatar image" src="{{work.Icon}}">
                       <img *ngIf="work.Icon === '' || work.Icon === null" class="ui avatar image" src="https://semantic-ui.com/images/wireframe/square-image.png">
@@ -27,9 +27,10 @@
                     <td (click)="onWorkSelect(work)">{{work.Category}}</td>
                     <td (click)="onWorkSelect(work)">{{work.Subcategory}}</td>
                     <td class="right aligned">
-                      <button (click)="removeWork(work)" class="ui icon button">
+                      <button *ngIf="!isWorkPending(work)" (click)="removeWork(work)" class="ui icon button">
                         <i class="remove icon"></i>
                       </button>
+                      <i *ngIf="isWorkPending(work)" class="notched circle loading icon"></i>
                     </td>
                   </tr>
                 </tbody>
