@@ -11,7 +11,7 @@
                 </div>
                 <div class="field">
                     <label>Description</label>
-                    <textarea name="description" [(ngModel)]="company.Description" #desc="ngModel"></textarea>                    
+                    <textarea name="description" [(ngModel)]="company.Description" #desc="ngModel"></textarea>
                 </div>
                 <div class="field">
                     <label>Foundation date</label>
@@ -22,7 +22,7 @@
                 </div>
                 <div class="field">
                     <label>CEO</label>
-                    <input name="director" type="text" [(ngModel)]="company.Director" #dir="ngModel">                    
+                    <input name="director" type="text" [(ngModel)]="company.Director" #dir="ngModel">
                 </div>
             </div>
         </div>
@@ -31,7 +31,13 @@
                 <div class="ui form">
                     <div class="field">
                         <label>Change your location</label>
-                        <app-map [inputMap]="map"></app-map>
+                        <div class="ui input">
+                            <input places-auto-complete (initialized$)="initialized($event)" (place_changed)="placeChanged($event)" [types]="['geocode']" placeholder="TYPE HERE..." />
+                        </div>
+                        <ngui-map class="map" zoom="14" [center]="position" style="margin-top: 5px">
+                            <marker [position]="position" [draggable]="true" (dragend)="markerDragged($event)">
+                            </marker>
+                        </ngui-map>
                     </div>
                 </div>
             </div>

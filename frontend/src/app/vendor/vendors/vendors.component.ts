@@ -3,7 +3,7 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { NguiMapModule, Marker, NguiMap} from "@ngui/map";
 
 import { Performer } from '../../models/performer.model';
-import { Location } from '../../models/location.model';
+import { LocationModel } from '../../models/location.model';
 
 import { PerformerService } from '../../services/performer.service';
 
@@ -65,7 +65,7 @@ export class VendorsComponent implements OnInit {
     }
   }
 
-  select(name: string, loc: Location) {
+  select(name: string, loc: LocationModel) {
     this.center = new google.maps.LatLng(loc.Latitude, loc.Longitude);
     this.selected = name;
     this.ref.detectChanges();

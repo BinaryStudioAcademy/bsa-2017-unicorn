@@ -39,7 +39,7 @@
     </ng-template>
 
 
-    <app-register-user *ngIf="roles['customer']" [social]="currentUser" [modal]="modal"></app-register-user>
-    <app-register-vendor *ngIf="roles['vendor']" [social]="currentUser" [modal]="modal"></app-register-vendor>
-    <app-register-company *ngIf="roles['company']" [social]="currentUser" [modal]="modal"></app-register-company>
+    <app-register-user *ngIf="roles['customer']" [social]="currentUser" [modal]="modal" [location]="location"></app-register-user>
+    <app-register-vendor *ngIf="roles['vendor']" [social]="currentUser" [modal]="modal" [location]="location"></app-register-vendor>
+    <app-register-company *ngIf="roles['company']" [social]="currentUser" [modal]="modal" [location]="location"></app-register-company>
 </div>

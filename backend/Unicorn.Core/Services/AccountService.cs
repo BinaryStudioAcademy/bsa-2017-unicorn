@@ -28,6 +28,15 @@ namespace Unicorn.Core.Services
                     Avatar = account.Avatar,
                     DateCreated = account.DateCreated,
                     Email = account.Email,
+                    Location = new LocationDTO()
+                    {
+                        Id = account.Location.Id,
+                        PostIndex = account.Location.PostIndex,
+                        Adress = account.Location.Adress,
+                        City = account.Location.City,
+                        Latitude = account.Location.Latitude,
+                        Longitude = account.Location.Longitude
+                    },
                     EmailConfirmed = account.EmailConfirmed,
                     SocialAccounts = account.SocialAccounts.Select(x => new SocialAccountDTO { Id = x.Id, Provider = x.Provider, Uid = x.Uid}).ToList(),
                     Role = new RoleDTO { Id = account.Role.Id, Name = account.Role.Name }
@@ -47,6 +56,15 @@ namespace Unicorn.Core.Services
                 DateCreated = account.DateCreated,
                 Email = account.Email,
                 EmailConfirmed =account.EmailConfirmed,
+                Location = new LocationDTO()
+                {
+                    Id = account.Location.Id,
+                    PostIndex = account.Location.PostIndex,
+                    Adress = account.Location.Adress,
+                    City = account.Location.City,
+                    Latitude = account.Location.Latitude,
+                    Longitude = account.Location.Longitude
+                },
                 SocialAccounts = account.SocialAccounts.Select(x => new SocialAccountDTO { Id = x.Id, Provider = x.Provider, Uid= x.Uid}).ToList(),
                 Role = new RoleDTO { Id = account.Role.Id, Name = account.Role.Name }
             };

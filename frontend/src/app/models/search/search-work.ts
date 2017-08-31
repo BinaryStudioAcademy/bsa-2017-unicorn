@@ -1,4 +1,4 @@
-import { Location } from '../location.model';
+import { LocationModel } from '../location.model';
 export interface SearchWork {
     Id: number;
     Rating: number;
@@ -7,6 +7,6 @@ export interface SearchWork {
     Avatar: string;
     PerformerType: string;
     Link: string;
-    Location: Location;
+    Location: LocationModel;
     Description: string;
 }

@@ -64,6 +64,7 @@ namespace Unicorn.Core.Services
                 .Where(x => string.IsNullOrEmpty(subcategory) || (x.Subcategory.Name.Contains(subcategory) || x.Subcategory.Tags.Contains(subcategory)))
                 .Include(w => w.Vendor.Person)
                 .Include(w => w.Vendor.Person.Account)
+                .Include(w => w.Vendor.Person.Account.Location)
                 .ToListAsync();
 
             var vendorsWorks = CreateVendorsWorks(vendorsWorksList, reviews);
@@ -74,6 +75,7 @@ namespace Unicorn.Core.Services
             .Where(x => string.IsNullOrEmpty(category) || (x.Subcategory.Category.Name.Contains(category) || x.Subcategory.Category.Tags.Contains(category)))
             .Where(x => string.IsNullOrEmpty(subcategory) || (x.Subcategory.Name.Contains(subcategory) || x.Subcategory.Tags.Contains(subcategory)))
             .Include(w => w.Company.Account)
+            .Include(w => w.Company.Account.Location)
             .ToListAsync();
 
             var companiesWorks = CreateCompaniesWorks(companiesWorksList, reviews);
@@ -102,12 +104,12 @@ namespace Unicorn.Core.Services
                     Link = "vendor/" + w.Vendor.Id,
                     Location = new LocationDTO
                     {
-                        Id = w.Vendor.Person.Location.Id,
-                        City = w.Vendor.Person.Location.City,
-                        Adress = w.Vendor.Person.Location.Adress,
-                        Latitude = w.Vendor.Person.Location.Latitude,
-                        Longitude = w.Vendor.Person.Location.Longitude,
-                        PostIndex = w.Vendor.Person.Location.PostIndex
+                        Id = w.Vendor.Person.Account.Location.Id,
+                        City = w.Vendor.Person.Account.Location.City,
+                        Adress = w.Vendor.Person.Account.Location.Adress,
+                        Latitude = w.Vendor.Person.Account.Location.Latitude,
+                        Longitude = w.Vendor.Person.Account.Location.Longitude,
+                        PostIndex = w.Vendor.Person.Account.Location.PostIndex
                     },
                 }).ToList();
         }
@@ -127,12 +129,12 @@ namespace Unicorn.Core.Services
                     Link = "company/" + w.Company.Id,
                     Location = new LocationDTO
                     {
-                        Id = w.Company.Location.Id,
-                        City = w.Company.Location.City,
-                        Adress = w.Company.Location.Adress,
-                        Latitude = w.Company.Location.Latitude,
-                        Longitude = w.Company.Location.Longitude,
-                        PostIndex = w.Company.Location.PostIndex
+                        Id = w.Company.Account.Location.Id,
+                        City = w.Company.Account.Location.City,
+                        Adress = w.Company.Account.Location.Adress,
+                        Latitude = w.Company.Account.Location.Latitude,
+                        Longitude = w.Company.Account.Location.Longitude,
+                        PostIndex = w.Company.Account.Location.PostIndex
                     },
                 }).ToList();
         }

@@ -1,4 +1,4 @@
-import { Location } from '../models/location.model';
+import { LocationModel } from '../models/location.model';
 
 export interface Performer {
     Id: number;
@@ -8,6 +8,6 @@ export interface Performer {
     Avatar: string;
     PerformerType: string;
     Link: string;
-    Location: Location;
+    Location: LocationModel;
     Description: string;
 }

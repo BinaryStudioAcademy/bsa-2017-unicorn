@@ -2,13 +2,14 @@ import {Vendor} from '../vendor.model'
 import { Work } from "../work.model";
 import { CompanyShort } from "../company-page/company-short.model";
 import { Review } from '../review.model';
+import { LocationModel } from '../location.model';
 
 export interface Book {
 	Date: Date;
 	Description: string;
 	Vendor: Vendor;
 	Company: CompanyShort;
-	Location: Location;
+	Location: LocationModel;
 	Status: BookStatus;
 	Work: Work;
 }
@@ -25,7 +26,7 @@ export interface CustomerBook {
     Review: Review;
     IsHidden: boolean;
     Work: Work;
-    Location: Location;
+    Location: LocationModel;
 }
 
 export enum BookStatus {

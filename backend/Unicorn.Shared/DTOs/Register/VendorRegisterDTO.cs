@@ -20,5 +20,6 @@ namespace Unicorn.Shared.DTOs.Register
         public int Experience { get; set; }
         public string Position { get; set; }
         public string Speciality { get; set; }
+        public LocationDTO Location { get; set; }
     }
 }

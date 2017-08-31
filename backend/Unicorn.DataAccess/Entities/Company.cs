@@ -23,9 +23,7 @@ namespace Unicorn.DataAccess.Entities
         public string DirectorContact { get; set; }
 
         public virtual Account Account { get; set; }
-
-        public virtual Location Location { get; set; }
-
+       
         public virtual ICollection<Vendor> Vendors { get; set; }
 
         public virtual ICollection<Work> Works { get; set; }

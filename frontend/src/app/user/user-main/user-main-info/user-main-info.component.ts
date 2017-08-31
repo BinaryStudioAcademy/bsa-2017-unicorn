@@ -2,11 +2,12 @@ import { Component, OnInit, Input,ViewChild, AfterViewChecked } from '@angular/c
 import { NgModel, NgForm } from '@angular/forms';
 import {SuiModule} from 'ng2-semantic-ui';
 import { User } from '../../../models/user';
-import { AgmMap } from "@agm/core";
 import { NguiMapModule, Marker } from "@ngui/map";
 import { UserService } from "../../../services/user.service";
 import { LocationService } from "../../../services/location.service";
 import { Review} from "../../../models/review.model"
+import { MapModel } from "../../../models/map.model";
+
 @Component({
   selector: 'app-user-main-info',
   templateUrl: './user-main-info.component.html',
@@ -14,21 +15,21 @@ import { Review} from "../../../models/review.model"
 })
 export class UserMainInfoComponent implements OnInit {
   @Input() user: User;
-  @ViewChild(AgmMap) private map: any;
-  lat: number = 48.464921;
-  lng: number = 35.045798;
   rating: number;
   reviewsCount: number;
+  map: MapModel;
   constructor(private userService: UserService) {}
-  ngOnInit() { 
+  ngOnInit() {
      this.userService.getRating(this.user.Id)
-     .then(resp => this.rating = resp.body as number);
+     .then(resp =>{ this.rating = resp.body as number;
+      this.map = {
+        center: {lat: this.user.Location.Latitude, lng: this.user.Location.Longitude},
+        zoom: 18,    
+        title: this.user.Name,
+        label: this.user.Name,
+        markerPos: {lat: this.user.Location.Latitude, lng: this.user.Location.Longitude}    
+      };  });
      this.userService.getReviews(this.user.Id)
      .then(resp => this.reviewsCount = (resp.body as Review[]).length)
   }
-  mapClicked($event: MouseEvent){
-    this.lat=$event.clientX;
-    this.lng=$event.clientY;
-  
-}
 }

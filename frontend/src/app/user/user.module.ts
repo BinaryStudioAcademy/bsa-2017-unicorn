@@ -18,7 +18,6 @@ import { UserService } from '../services/user.service';
 import { DataService } from "../services/data.service";
 import { ReviewService } from '../services/review.service';
 import { CustomerbookService } from '../services/customerbook.service';
-import { AgmCoreModule } from "@agm/core";
 import { environment } from "../../environments/environment";
 import { UserMainComponent } from './user-main/user-main.component';
 import { UserMainInfoComponent } from './user-main/user-main-info/user-main-info.component';
@@ -26,20 +25,24 @@ import { UserMainReviewsComponent } from './user-main/user-main-reviews/user-mai
 import { SharedModule } from "../shared/shared.module";
 import {BrowserModule} from '@angular/platform-browser';
 import {ToastModule, ToastsManager, ToastOptions} from 'ng2-toastr/ng2-toastr';
+import { MapModule } from "../map/map.module";
+import { NguiMapModule } from '@ngui/map';
 
 
 
 @NgModule({
     imports: [
-        AgmCoreModule.forRoot({
-            apiKey: environment.googleMapsKey
-        }),
+        NguiMapModule.forRoot({
+            apiUrl: 'https://maps.google.com/maps/api/js?key=' + environment.googleMapsKey +
+            '&libraries=visualization,places,drawing&language=en'
+          }),
         SuiModule,
         CommonModule,
         UserRoutingModule,
         HttpModule,
         FormsModule,
         FormsModule,
+        MapModule,
         SharedModule,
         BrowserModule, 
         ToastModule.forRoot()
