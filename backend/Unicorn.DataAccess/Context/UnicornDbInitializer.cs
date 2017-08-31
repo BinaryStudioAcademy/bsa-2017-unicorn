@@ -434,186 +434,186 @@ namespace Unicorn.DataAccess.Context
             Location location2 = new Location()
             {
                 Id = 2,
-                Adress = "Instytutska 13",
-                Latitude = 50.446969,
-                Longitude = 30.531165,
+                Adress = "Plosha Rinok 1",
+                Latitude = 49.841377,                
+                Longitude = 24.031699,
                 IsDeleted = false,
-                City = "Kiev",
-                PostIndex = "61002"
+                City = "Lviv",
+                PostIndex = "71002"
             };
 
             Location location3 = new Location()
             {
                 Id = 3,
-                Adress = "Instytutska 13",
-                Latitude = 50.446969,
-                Longitude = 30.531165,
+                Adress = "Soborna 10",
+                Latitude = 49.233213, 
+                Longitude = 28.473971,
                 IsDeleted = false,
-                City = "Kiev",
-                PostIndex = "61002"
+                City = "Vinnitsya",
+                PostIndex = "21002"
             };
 
             Location location4 = new Location()
             {
                 Id = 4,
-                Adress = "Instytutska 13",
-                Latitude = 50.446969,
-                Longitude = 30.531165,
+                Adress = "Svobodu 48/1",
+                Latitude = 49.421336,
+                Longitude = 26.988326,
                 IsDeleted = false,
-                City = "Kiev",
-                PostIndex = "61002"
+                City = "Khmel'nyts'kyi",
+                PostIndex = "51002"
             };
 
             Location location5 = new Location()
             {
                 Id = 5,
-                Adress = "Instytutska 13",
-                Latitude = 50.446969,
-                Longitude = 30.531165,
+                Adress = "Zamkova 7",
+                Latitude = 49.551702,
+                Longitude = 25.58925,
                 IsDeleted = false,
-                City = "Kiev",
-                PostIndex = "61002"
+                City = "Ternopil",
+                PostIndex = "41002"
             };
 
             Location location6 = new Location()
             {
                 Id = 6,
-                Adress = "Instytutska 13",
-                Latitude = 50.446969,
-                Longitude = 30.531165,
+                Adress = "Shevchenka 195",
+                Latitude = 49.442816,
+                Longitude = 32.062539,
                 IsDeleted = false,
-                City = "Kiev",
-                PostIndex = "61002"
+                City = "Cherkasy",
+                PostIndex = "31002"
             };
 
             Location location7 = new Location()
             {
                 Id = 7,
-                Adress = "Instytutska 13",
-                Latitude = 50.446969,
-                Longitude = 30.531165,
+                Adress = "Yarmakova 15",
+                Latitude = 49.794918,
+                Longitude = 30.124247,
                 IsDeleted = false,
-                City = "Kiev",
-                PostIndex = "61002"
+                City = "Bila Tserkva",
+                PostIndex = "81002"
             };
 
             Location location8 = new Location()
             {
                 Id = 8,
-                Adress = "Instytutska 13",
-                Latitude = 50.446969,
-                Longitude = 30.531165,
+                Adress = "Barikadna 4A",
+                Latitude = 48.462562,                
+                Longitude = 35.052371,
                 IsDeleted = false,
-                City = "Kiev",
-                PostIndex = "61002"
+                City = "Dnipro",
+                PostIndex = "91002"
             };
 
             Location location9 = new Location()
             {
                 Id = 9,
-                Adress = "Instytutska 13",
-                Latitude = 50.446969,
-                Longitude = 30.531165,
+                Adress = "Universitetska 23",
+                Latitude = 49.989473,
+                Longitude = 36.230405,
                 IsDeleted = false,
-                City = "Kiev",
-                PostIndex = "61002"
+                City = "Kharkiv",
+                PostIndex = "71102"
             };
 
             Location location10 = new Location()
             {
                 Id = 10,
-                Adress = "Instytutska 13",
-                Latitude = 50.446969,
-                Longitude = 30.531165,
+                Adress = "Kipornosa 23",
+                Latitude = 51.491648,
+                Longitude = 31.293969,
                 IsDeleted = false,
-                City = "Kiev",
-                PostIndex = "61002"
+                City = "Chernihiv",
+                PostIndex = "41032"
             };
 
             Location location11 = new Location()
             {
                 Id = 11,
-                Adress = "Instytutska 13",
-                Latitude = 50.446969,
-                Longitude = 30.531165,
+                Adress = "Kondratiyka 5",
+                Latitude = 50.750931,
+                Longitude = 25.320614,
                 IsDeleted = false,
-                City = "Kiev",
-                PostIndex = "61002"
+                City = "Luts'k",
+                PostIndex = "11502"
             };
 
             Location location12 = new Location()
             {
                 Id = 12,
-                Adress = "Instytutska 13",
-                Latitude = 50.446969,
-                Longitude = 30.531165,
+                Adress = "Chervona 11A",
+                Latitude = 49.823970,
+                Longitude = 24.006666,
                 IsDeleted = false,
-                City = "Kiev",
-                PostIndex = "61002"
+                City = "Lviv",
+                PostIndex = "71014"
             };
 
 
             Location location13 = new Location()
             {
                 Id = 13,
-                Adress = "Instytutska 13",
-                Latitude = 50.446969,
-                Longitude = 30.531165,
+                Adress = "Zelena 21",
+                Latitude = 49.833720,
+                Longitude = 24.038185,
                 IsDeleted = false,
-                City = "Kiev",
-                PostIndex = "61002"
+                City = "Lviv",
+                PostIndex = "71054"
             };
 
             Location location14 = new Location()
             {
                 Id = 14,
-                Adress = "Instytutska 13",
-                Latitude = 50.446969,
-                Longitude = 30.531165,
+                Adress = "Krytogirna 7",
+                Latitude = 49.791558,
+                Longitude = 30.141250,
                 IsDeleted = false,
-                City = "Kiev",
-                PostIndex = "61002"
+                City = "Bila Tserkva",
+                PostIndex = "81032"
             };
 
             Location location15 = new Location()
             {
                 Id = 15,
-                Adress = "Instytutska 13",
-                Latitude = 50.446969,
-                Longitude = 30.531165,
+                Adress = "Borova 10A",
+                Latitude = 50.413609,
+                Longitude = 30.670130,
                 IsDeleted = false,
                 City = "Kiev",
-                PostIndex = "61002"
+                PostIndex = "61302"
             };
             Location location16 = new Location()
             {
                 Id = 16,
-                Adress = "Instytutska 13",
-                Latitude = 50.446969,
-                Longitude = 30.531165,
+                Adress = "Kioto 27",
+                Latitude = 50.467732,
+                Longitude = 30.650091,
                 IsDeleted = false,
                 City = "Kiev",
-                PostIndex = "61002"
+                PostIndex = "65002"
             };
             Location location17 = new Location()
             {
                 Id = 17,
-                Adress = "Instytutska 13",
-                Latitude = 50.446969,
-                Longitude = 30.531165,
+                Adress = "Nagirna 14",
+                Latitude = 50.473794,
+                Longitude = 30.481694,
                 IsDeleted = false,
                 City = "Kiev",
-                PostIndex = "61002"
+                PostIndex = "61562"
             };
             Location location18 = new Location()
             {
                 Id = 18,
-                Adress = "Instytutska 13",
-                Latitude = 50.446969,
-                Longitude = 30.531165,
+                Adress = "Festivalna 63",
+                Latitude = 50.346039,
+                Longitude = 30.547797,
                 IsDeleted = false,
                 City = "Kiev",
-                PostIndex = "61002"
+                PostIndex = "61882"
             };
 
             context.Locations.AddRange(new List<Location>() { location1, location2, location3, location4, location5, location6, location7, location8, location9, location10, location11, location12, location13, location14, location15, location16, location17, location18 });
