@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
+import { BookComponent } from '../../book/book/book.component';
 
 import 'rxjs/add/operator/switchMap';
 
@@ -26,6 +27,8 @@ import { Work } from "../../models/work.model";
 })
 export class VendorDetailsComponent implements OnInit {
 
+  @ViewChild('bookComponent') bookComponent: BookComponent;
+
   @ViewChild('cropper', undefined)
   cropper: ImageCropperComponent;
   enabled: boolean = false;
@@ -36,8 +39,11 @@ export class VendorDetailsComponent implements OnInit {
   isOwner: boolean;
   dataLoaded: boolean;
 
+  // Data for book component
   routePath: string;
   routeid: number;
+  works: Work[];
+  selectedWorkId: number;
 
   cropperSettings: CropperSettings;
   vendor: Vendor;
@@ -46,7 +52,6 @@ export class VendorDetailsComponent implements OnInit {
   file: File;
   data: any;
   imageUploaded: boolean;
-  works: Work[];
 
   tabActive: boolean = false;
   constructor(
@@ -73,8 +78,13 @@ export class VendorDetailsComponent implements OnInit {
         this.vendor = resp.body as Vendor;
         this.backgroundUrl = this.buildSafeUrl(this.vendor.Background != null ? this.vendor.Background : "https://www.beautycolorcode.com/d8d8d8.png");
       });
+
     if (this.route.snapshot.queryParams['tab'] === 'reviews') {
       this.tabActive = true;
+    }
+
+    if (this.route.snapshot.queryParams['work']) {
+      this.selectedWorkId = +this.route.snapshot.queryParams['work'];
     }
   }
 
@@ -110,6 +120,11 @@ export class VendorDetailsComponent implements OnInit {
   }
 
   onWorksLoaded(works: Work[]) {
-    this.works = works;
+    if (this.isUser) {
+      this.works = works;
+      let work = this.works.find(x => x.Id === this.selectedWorkId);
+      this.bookComponent.selectWork(work);
+    }
   }
+
 }

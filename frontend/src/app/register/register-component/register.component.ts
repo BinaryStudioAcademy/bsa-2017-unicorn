@@ -44,7 +44,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
   isCustomer = false;
   isVendor = false;
   isCompany = false;
-  
+
+  floader: boolean;
+  gloader: boolean;
+  tloader: boolean;
+
   constructor(
     public modal: SuiModal<void>,
     private zone: NgZone,
@@ -61,6 +65,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.error = false;
     this.location = this.locationService.getCurrentLocation();
     this.initRoles();
+  }
+
+  isLoading(): boolean {
+    return this.floader || this.gloader || this.tloader;
   }
 
   handleErrorLogin() {
@@ -90,31 +98,40 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   loginWithGoogle() {
+    this.gloader = true;
     this.authLoginService.loginWithGoogle()
       .then(resp => {
+        this.gloader = false;
         this.handleResponse(resp);
       })
       .catch(err => {
+        this.gloader = false;
         this.handleErrorLogin();
       });
   }
 
   loginWithFacebook() {
+    this.floader = true;
     this.authLoginService.loginWithFacebook()
       .then(resp => {
+        this.floader = false;
         this.handleResponse(resp);
       })
       .catch(err => {
+        this.floader = false;
         this.handleErrorLogin();
       });
   }
 
   loginWithTwitter() {
+    this.tloader = true;
     this.authLoginService.loginWithTwitter()
       .then(resp => {
+        this.tloader = false;
         this.handleResponse(resp);
       })
       .catch(err => {
+        this.tloader = false;
         this.handleErrorLogin();
       });
   }

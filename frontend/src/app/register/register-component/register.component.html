@@ -3,15 +3,15 @@
 </div>
 <div class="content" id="scroll-reg">
     <div class="social-buttons" *ngIf="!isLogged;else authorized">
-        <button class="ui facebook button" (click)="loginWithFacebook()">
+        <button class="ui facebook button" [ngClass]="{'loading': floader, 'disabled': isLoading()}" (click)="loginWithFacebook()">
         <i class="facebook icon"></i>
         Facebook
       </button>
-        <button class="ui google plus button" (click)="loginWithGoogle()">
+        <button class="ui google plus button" [ngClass]="{'loading': gloader, 'disabled': isLoading()}" (click)="loginWithGoogle()">
         <i class="google plus icon"></i>
         Google 
       </button>
-        <button class="ui twitter button" (click)="loginWithTwitter()">
+        <button class="ui twitter button" [ngClass]="{'loading': tloader, 'disabled': isLoading()}" (click)="loginWithTwitter()">
         <i class="twitter icon"></i>
         Twitter
       </button>

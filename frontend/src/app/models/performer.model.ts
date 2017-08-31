@@ -1,3 +1,5 @@
+import { Location } from '../models/location.model';
+
 export interface Performer {
     Id: number;
     Rating: number;

@@ -15,4 +15,9 @@ export class PerformerService {
     return this.dataService.getRequest('popular/allperformers');
   }
 
+  getPerformersByFilters(city: string, name: string): Promise<Performer[]> {
+    let uriParams = `city=${city ? city : ''}&name=${name ? name : ''}`;
+    return this.dataService.getRequest(`popular/search?${uriParams}`);
+  }
+
 }
