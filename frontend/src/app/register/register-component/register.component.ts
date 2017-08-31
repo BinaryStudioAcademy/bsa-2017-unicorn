@@ -149,12 +149,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.locationService.getLocDetails(this.location.Latitude, this.location.Longitude).subscribe(
-      result => {
-        this.location.Adress=(result.address_components[1].short_name+','+result.address_components[0].short_name)
-        this.location.City=result.address_components[3].short_name;
-      }
-    )
+    // this.locationService.getLocDetails(this.location.Latitude, this.location.Longitude).subscribe(
+    //   result => {
+    //     this.location.Adress=(result.address_components[1].short_name+','+result.address_components[0].short_name)
+    //     this.location.City=result.address_components[3].short_name;
+    //   }
+    // )
     this.authLoginService.authState.subscribe(user => {
       if (user) {
         this.currentUser = user;
