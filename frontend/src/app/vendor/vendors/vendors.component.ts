@@ -95,15 +95,15 @@ export class VendorsComponent implements OnInit {
     this.autocomplete = autocomplete;
   }
 
-  placeChanged() {
-    let place = this.autocomplete.getPlace();
+  placeChanged(event) {
+   // let place = this.autocomplete.getPlace();
     this.search();
     //this.center = place.geometry.location;
-    this.search();
-    for (let i = 0; i < place.address_components.length; i++) {
-      let addressType = place.address_components[i].types[0];
-      this.address[addressType] = place.address_components[i].long_name;
-    }
+    // this.search();
+    // for (let i = 0; i < place.address_components.length; i++) {
+    //   let addressType = place.address_components[i].types[0];
+    //   this.address[addressType] = place.address_components[i].long_name;
+    // }
     this.ref.detectChanges();
   }
 
