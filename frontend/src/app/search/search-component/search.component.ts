@@ -35,8 +35,6 @@ export class SearchComponent implements OnInit {
   hasEllipses = true;
   selectedPage = 1;
   works: SearchWork[] = [];  
-  tabSuffix = '?tab=reviews';
-  workSuffix = '?work=';
   /* map */
   positions = [];
   markers = [];
@@ -116,6 +114,5 @@ export class SearchComponent implements OnInit {
     /* datepicker settings */
     this.mode = 'date';           /* select day */
     this.firstDayOfWeek = '1';    /* start calendar from first day of week */
-  }
-
+  }  
 }
