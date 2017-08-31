@@ -25,7 +25,6 @@ namespace Unicorn.Core.Services
             foreach (var person in persons)
             {
                 var account = await _unitOfWork.AccountRepository.GetByIdAsync(person.Account.Id);
-                var location = await _unitOfWork.LocationRepository.GetByIdAsync(person.Location.Id);
                 var persontDto = new PersonDTO()
                 {
                     Id = person.Id,
@@ -43,16 +42,17 @@ namespace Unicorn.Core.Services
                          DateCreated = account.DateCreated,
                          Email = account.Email,
                          EmailConfirmed = account.EmailConfirmed,
+                         Location = new LocationDTO()
+                         {
+                             Id = account.Location.Id,
+                             City = account.Location.City,
+                             Adress = account.Location.Adress,
+                             Latitude = account.Location.Latitude,
+                             Longitude = account.Location.Longitude,
+                             PostIndex = account.Location.PostIndex
+                         },
                          SocialAccounts = account.SocialAccounts.Select(x => new SocialAccountDTO { Id = x.Id, Provider = x.Provider, Uid = x.Uid }).ToList()
-                     },
-                    Location = new LocationDTO()
-                    {
-                        Id = location.Id,
-                        Adress = location.Adress,
-                        City = location.City,
-                        Latitude = location.Latitude,
-                        Longitude = location.Longitude,
-                    }
+                     }
                 };
                 dataReturn.Add(persontDto);
             }
@@ -63,7 +63,6 @@ namespace Unicorn.Core.Services
         {
             var person = await _unitOfWork.PersonRepository.GetByIdAsync(id);
             var account = await _unitOfWork.AccountRepository.GetByIdAsync(person.Account.Id);
-            var location = await _unitOfWork.LocationRepository.GetByIdAsync(person.Location.Id);
 
             var persontDto = new PersonDTO()
             {
@@ -82,15 +81,16 @@ namespace Unicorn.Core.Services
                     DateCreated = account.DateCreated,
                     Email = account.Email,
                     EmailConfirmed = account.EmailConfirmed,
+                    Location = new LocationDTO()
+                    {
+                        Id = account.Location.Id,
+                        City = account.Location.City,
+                        Adress = account.Location.Adress,
+                        Latitude = account.Location.Latitude,
+                        Longitude = account.Location.Longitude,
+                        PostIndex = account.Location.PostIndex
+                    },
                     SocialAccounts = account.SocialAccounts.Select(x => new SocialAccountDTO { Id = x.Id, Provider = x.Provider, Uid = x.Uid }).ToList()
-                },
-                Location = new LocationDTO()
-                {
-                    Id = location.Id,
-                    Adress = location.Adress,
-                    City = location.City,
-                    Latitude = location.Latitude,
-                    Longitude = location.Longitude,
                 }
             };
             return persontDto;

@@ -1,3 +1,5 @@
+import { LocationModel } from '../../models/location.model'
+
 export interface Customer {
     birthday: any;
     phone: string;
@@ -8,4 +10,5 @@ export interface Customer {
     firstName: string;
     middleName: string;
     lastName: string;
+    location: LocationModel;
 }

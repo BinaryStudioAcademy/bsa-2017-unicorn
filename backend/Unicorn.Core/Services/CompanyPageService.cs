@@ -139,8 +139,8 @@ namespace Unicorn.Core.Services
 
         private async Task<ICollection<ShortCompanyDTO>> GetAllCompaniesMethod()
         {
-            var companies = await _unitOfWork.CompanyRepository.GetAllAsync();
-
+            var companies = await _unitOfWork.CompanyRepository.Query.
+                  Include(c => c.Account.Location).ToListAsync();
             if (companies.Any())
             {
                 var companiesDTO = companies.Select(
@@ -153,11 +153,11 @@ namespace Unicorn.Core.Services
                             Name = company.Name,
                             Location = new LocationDTO
                             {
-                                Id = company.Location.Id,
-                                City = company.Location.City,
-                                Adress = company.Location.Adress,
-                                Longitude = company.Location.Longitude,
-                                Latitude = company.Location.Latitude
+                                Id = company.Account.Location.Id,
+                                City = company.Account.Location.City,
+                                Adress = company.Account.Location.Adress,
+                                Longitude = company.Account.Location.Longitude,
+                                Latitude = company.Account.Location.Latitude
                             }
                         }).ToList();
                 return companiesDTO;
@@ -169,7 +169,8 @@ namespace Unicorn.Core.Services
 
         private async Task<ShortCompanyDTO> GetCompanyShortMethod(long id)
         {
-            var company = await _unitOfWork.CompanyRepository.GetByIdAsync(id);
+            var company = await _unitOfWork.CompanyRepository.Query.
+                Include(c => c.Account.Location).SingleAsync(c => c.Id == id);
 
             if (company != null)
             {
@@ -181,11 +182,11 @@ namespace Unicorn.Core.Services
                             Name = company.Name,
                             Location = new LocationDTO
                             {
-                                Id = company.Location.Id,
-                                City = company.Location.City,
-                                Adress = company.Location.Adress,
-                                Longitude = company.Location.Longitude,
-                                Latitude = company.Location.Latitude
+                                Id = company.Account.Location.Id,
+                                City = company.Account.Location.City,
+                                Adress = company.Account.Location.Adress,
+                                Longitude = company.Account.Location.Longitude,
+                                Latitude = company.Account.Location.Latitude
                             }
                 };
                 return companyDTO;
@@ -195,7 +196,8 @@ namespace Unicorn.Core.Services
 
         private async Task<CompanyDetails> GetCompanyDetailsMethod(long id)
         {
-            var company = await _unitOfWork.CompanyRepository.GetByIdAsync(id);
+            var company = await _unitOfWork.CompanyRepository.Query.
+                Include(c => c.Account.Location).SingleAsync(c => c.Id == id);
             var reviews = await _unitOfWork.ReviewRepository.GetAllAsync();
 
             if (company != null)
@@ -208,7 +210,7 @@ namespace Unicorn.Core.Services
                     Description = company.Description,
                     FoundationDate = company.FoundationDate,
                     Director = company.Director,
-                    City = company.Location.City,
+                    City = company.Account.Location.City,
                     ReviewsCount = reviews.Count(p => p.ToAccountId == company.Account.Id),
                     Works = company.Works.Select(z => new CompanyWork()
                     {
@@ -232,11 +234,11 @@ namespace Unicorn.Core.Services
                     }).ToList(),
                     Location = new LocationDTO
                     {
-                        Id = company.Location.Id,
-                        Adress = company.Location?.Adress ?? "default",
-                        City = company.Location?.City ?? "default",
-                        Latitude = company.Location?.Latitude ?? 0,
-                        Longitude = company.Location?.Longitude ?? 0
+                        Id = company.Account.Location.Id,
+                        Adress = company.Account.Location?.Adress ?? "default",
+                        City = company.Account.Location?.City ?? "default",
+                        Latitude = company.Account.Location?.Latitude ?? 0,
+                        Longitude = company.Account.Location?.Longitude ?? 0
                     },
                 };
 
@@ -248,7 +250,8 @@ namespace Unicorn.Core.Services
 
         private async Task SaveCompanyDetailsMethod(CompanyDetails companyDetailsDTO)
         {
-            var company = await _unitOfWork.CompanyRepository.GetByIdAsync(companyDetailsDTO.Id);
+            var company = await _unitOfWork.CompanyRepository.Query.
+                Include(c => c.Account.Location).SingleAsync(c => c.Id == companyDetailsDTO.Id);
 
             if (company != null)
             {
@@ -257,7 +260,7 @@ namespace Unicorn.Core.Services
                 company.Director = companyDetailsDTO.Director;
                 company.Description = companyDetailsDTO.Description;
                 company.FoundationDate = companyDetailsDTO.FoundationDate;
-                company.Location = new Location
+                company.Account.Location = new Location
                 {
                     Adress = companyDetailsDTO.Location.Adress,
                     City = companyDetailsDTO.Location.City,
@@ -401,7 +404,8 @@ namespace Unicorn.Core.Services
 
         private async Task<CompanyContacts> GetCompanyContactsMethod(long id)
         {
-            var company = await _unitOfWork.CompanyRepository.GetByIdAsync(id);
+            var company = await _unitOfWork.CompanyRepository.Query.
+                Include(c => c.Account.Location).SingleAsync(c=>c.Id==id);
 
             if (company != null)
             {
@@ -418,11 +422,11 @@ namespace Unicorn.Core.Services
                     }).ToList(),
                     Location = new LocationDTO
                     {
-                        Id = company.Location.Id,
-                        Adress = company.Location?.Adress ?? "default",
-                        City = company.Location?.City ?? "default",
-                        Latitude = company.Location?.Latitude ?? 0,
-                        Longitude = company.Location?.Longitude ?? 0
+                        Id = company.Account.Location.Id,
+                        Adress = company.Account.Location?.Adress ?? "default",
+                        City = company.Account.Location?.City ?? "default",
+                        Latitude = company.Account.Location?.Latitude ?? 0,
+                        Longitude = company.Account.Location?.Longitude ?? 0
                     }
                 };
 
@@ -663,6 +667,69 @@ namespace Unicorn.Core.Services
             return company.Account.Id;
         }
 
+        private async Task<ICollection<CompanyDetails>> GetSearchCompaniesMethod(string category, string subcategory, int? date)
+        {
+            var companies = await _unitOfWork.CompanyRepository.Query.Include(c => c.Account.Location).ToListAsync();
+            var reviews = await _unitOfWork.ReviewRepository.GetAllAsync();
+
+            if (companies.Any())
+            {
+                var companiesDetail = companies.Select(
+                    company =>
+                        new CompanyDetails
+                        {
+                            Id = company.Id,
+                            Avatar = company.Account?.Avatar ?? "default",
+                            Name = company.Name,
+                            Description = company.Description,
+                            Rating = CalculateCompanyRating(company.Account.Id),
+                            FoundationDate = company.FoundationDate,
+                            Director = company.Director,
+                            City = company.Account.Location.City,
+                            ReviewsCount = reviews.Count(p => p.ToAccountId == company.Account.Id),
+                            Works = company.Works.Select(z => new CompanyWork()
+                            {
+                                Id = z.Id,
+                                Description = z.Description,
+                                Name = z.Name,
+
+                                Subcategory = new CompanySubcategory
+                                {
+                                    Id = z.Subcategory.Id,
+                                    Name = z.Subcategory.Name,
+                                    Description = z.Subcategory.Description,
+                                    Category = new CompanyCategory
+                                    {
+                                        Id = z.Subcategory.Category.Id,
+                                        Description = z.Subcategory.Category.Description,
+                                        Icon = z.Subcategory.Category.Icon,
+                                        Name = z.Subcategory.Category.Name,
+                                    }
+                                }
+                            }).ToList(),
+                            Location = new LocationDTO
+                            {
+                                Id = company.Account.Location.Id,
+                                Adress = company.Account.Location?.Adress ?? "default",
+                                City = company.Account.Location?.City ?? "default",
+                                Latitude = company.Account.Location?.Latitude ?? 0,
+                                Longitude = company.Account.Location?.Longitude ?? 0
+                            },
+                        }).ToList();
+                return companiesDetail;
+            }
+            return null;           
+        }
+
+        private double CalculateCompanyRating(long recieverId)
+        {
+            var ratings = _unitOfWork.RatingRepository.Query
+                  .Include(y => y.Reciever)
+                  .Where(p => p.Reciever.Id == recieverId)
+                  .ToList();
+
+            return ratings.Any() ? ratings.Average(z => z.Grade) : 0;
+        }
 
         #endregion
     }

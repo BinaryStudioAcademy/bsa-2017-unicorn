@@ -9,7 +9,7 @@ namespace Unicorn.Core.Interfaces
         Task<IEnumerable<WorkDTO>> GetAllAsync();
         Task<WorkDTO> GetByIdAsync(long id);
         Task RemoveByIdAsync(long id);
-        Task CreateAsync(WorkDTO dto);
+        Task<WorkDTO> CreateAsync(WorkDTO dto);
         Task UpdateAsync(WorkDTO dto);
     }
 }

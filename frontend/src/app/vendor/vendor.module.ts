@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 
 import { SuiModule } from 'ng2-semantic-ui';
 import { environment } from '../../environments/environment';
-import { NguiMapModule } from "@ngui/map/dist";
 import { ClickOutsideModule } from 'ng-click-outside';
 
 import { VendorRoutingModule } from './vendor-routing.module';
@@ -38,10 +37,15 @@ import { CategoryService } from "../services/category.service";
 import { WorkService } from "../services/work.service";
 import { VendorEditContactsComponent } from './vendor-edit/vendor-edit-contacts/vendor-edit-contacts.component';
 import { ContactService } from "../services/contact.service";
+import { NguiMapModule } from "@ngui/map/dist";
 
 
 @NgModule({
   imports: [
+    NguiMapModule.forRoot({
+      apiUrl: 'https://maps.google.com/maps/api/js?key=' + environment.googleMapsKey +
+      '&libraries=visualization,places,drawing'
+    }),
     VendorRoutingModule,
     FormsModule,
     SuiModule,
@@ -50,8 +54,12 @@ import { ContactService } from "../services/contact.service";
     SignBlockModule,
     CommonModule,
     SharedModule,
-    ClickOutsideModule,    
-    PipeModule
+    PipeModule,
+    ClickOutsideModule,
+    NguiMapModule.forRoot({
+      apiUrl: 'https://maps.google.com/maps/api/js?key=' + environment.googleMapsKey +
+      '&libraries=visualization,places,drawing'
+    })
   ],
   declarations: [
     VendorDetailsComponent,

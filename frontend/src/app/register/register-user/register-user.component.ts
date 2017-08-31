@@ -7,6 +7,8 @@ import { SuiActiveModal } from 'ng2-semantic-ui';
 import { Customer } from '../models/customer';
 import { HelperService } from '../../services/helper/helper.service';
 import { AuthenticationEventService } from '../../services/events/authenticationevent.service';
+import { LocationModel } from '../../models/location.model'
+import { LocationService } from "../../services/location.service";
 
 @Component({
   selector: 'app-register-user',
@@ -17,7 +19,8 @@ export class RegisterUserComponent implements OnInit {
 
   @Input() social: firebase.User;
   @Input() public modal: SuiActiveModal<void, void, void>;
-
+  @Input() location: LocationModel;
+  
   mode: string;
   success = false;
   phone: string;
@@ -29,7 +32,8 @@ export class RegisterUserComponent implements OnInit {
 
   constructor(private registerService: RegisterService,
     private helperService: HelperService,
-    private authEventService: AuthenticationEventService) { }
+    private authEventService: AuthenticationEventService,
+    private locationService: LocationService) { }
 
   ngOnInit() {
     this.mode = 'date';
@@ -55,7 +59,8 @@ export class RegisterUserComponent implements OnInit {
       middleName: this.middleName,
       lastName: this.lastName,
       provider: this.social.providerData[0].providerId,
-      uid: this.social.uid
+      uid: this.social.uid,
+      location: this.location
     }
   }
 

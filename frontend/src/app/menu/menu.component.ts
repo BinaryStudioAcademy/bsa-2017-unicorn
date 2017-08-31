@@ -228,4 +228,9 @@ export class MenuComponent implements OnInit {
     this.newNotifications.sort((a, b) => b.Time.getTime() - a.Time.getTime());
     this.archivedNotifications.sort((a, b) => b.Time.getTime() - a.Time.getTime());
   }
+
+  isPerformer(): boolean {
+    let roleId = +this.tokenHelper.getClaimByName("roleid");
+    return roleId === 3 || roleId === 4;
+  }
 }

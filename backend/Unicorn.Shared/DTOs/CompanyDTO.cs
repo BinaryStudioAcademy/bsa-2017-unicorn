@@ -20,9 +20,7 @@ namespace Unicorn.Shared.DTOs
         public double Rating { get; set; }
 
         public string Director { get; set; }
-
-        public LocationDTO Location { get; set; }
-
+        
         public ICollection<ReviewDTO> Reviews { get; set; }
 
         public ICollection<VendorDTO> Vendors { get; set; }

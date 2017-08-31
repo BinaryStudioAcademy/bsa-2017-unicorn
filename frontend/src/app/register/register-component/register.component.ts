@@ -9,8 +9,10 @@ import * as firebase from 'firebase/app';
 import { HelperService } from '../../services/helper/helper.service';
 
 import { RegisterService } from '../../services/register.service';
-
+import { NguiMapModule } from "@ngui/map";
 import { ComponentModalConfig, ModalSize, SuiModal } from 'ng2-semantic-ui';
+import { LocationService } from "../../services/location.service";
+import { LocationModel } from "../../models/location.model";
 
 export class RegisterModal extends ComponentModalConfig<void> {
   constructor() {
@@ -28,7 +30,6 @@ export class RegisterModal extends ComponentModalConfig<void> {
 })
 export class RegisterComponent implements OnInit, OnDestroy {
   private currentUser: firebase.User = null;
-
   mode: string;
   error: boolean = false;
 
@@ -39,10 +40,14 @@ export class RegisterComponent implements OnInit, OnDestroy {
   isLogged: boolean;
 
   roleSelected = false;
-
+  location: LocationModel = new LocationModel();
   isCustomer = false;
   isVendor = false;
   isCompany = false;
+
+  floader: boolean;
+  gloader: boolean;
+  tloader: boolean;
 
   constructor(
     public modal: SuiModal<void>,
@@ -50,15 +55,20 @@ export class RegisterComponent implements OnInit, OnDestroy {
     private helperService: HelperService,
     public registerService: RegisterService,
     public authLoginService: AuthenticationLoginService,
-    private authEventService: AuthenticationEventService) {
+    private authEventService: AuthenticationEventService,
+    private locationService: LocationService) {
 
     this.mode = 'date';
     this.authLoginService.signOut();
 
     this.isLogged = false;
     this.error = false;
-
+    this.location = this.locationService.getCurrentLocation();
     this.initRoles();
+  }
+
+  isLoading(): boolean {
+    return this.floader || this.gloader || this.tloader;
   }
 
   handleErrorLogin() {
@@ -88,31 +98,40 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   loginWithGoogle() {
+    this.gloader = true;
     this.authLoginService.loginWithGoogle()
       .then(resp => {
+        this.gloader = false;
         this.handleResponse(resp);
       })
       .catch(err => {
+        this.gloader = false;
         this.handleErrorLogin();
       });
   }
 
   loginWithFacebook() {
+    this.floader = true;
     this.authLoginService.loginWithFacebook()
       .then(resp => {
+        this.floader = false;
         this.handleResponse(resp);
       })
       .catch(err => {
+        this.floader = false;
         this.handleErrorLogin();
       });
   }
 
   loginWithTwitter() {
+    this.tloader = true;
     this.authLoginService.loginWithTwitter()
       .then(resp => {
+        this.tloader = false;
         this.handleResponse(resp);
       })
       .catch(err => {
+        this.tloader = false;
         this.handleErrorLogin();
       });
   }
@@ -130,9 +149,16 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    // this.locationService.getLocDetails(this.location.Latitude, this.location.Longitude).subscribe(
+    //   result => {
+    //     this.location.Adress=(result.address_components[1].short_name+','+result.address_components[0].short_name)
+    //     this.location.City=result.address_components[3].short_name;
+    //   }
+    // )
     this.authLoginService.authState.subscribe(user => {
       if (user) {
         this.currentUser = user;
+        
       } else {
         this.currentUser = null;
       }
@@ -151,6 +177,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   selectRole(role: string) {
+    
     this.clearRoles();
     this.roles[role] = true;
   }

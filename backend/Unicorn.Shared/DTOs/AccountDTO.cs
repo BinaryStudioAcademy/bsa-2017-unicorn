@@ -14,6 +14,8 @@ namespace Unicorn.Shared.DTOs
         public DateTime DateCreated { get; set; }
 
         public string Avatar { get; set; }
+
+        public LocationDTO Location { get; set; }
        
         public virtual RoleDTO Role { get; set; }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
 import { NguiMapModule, Marker } from "@ngui/map";
@@ -6,7 +6,7 @@ import { SuiModule } from 'ng2-semantic-ui';
 import { ToastsManager, Toast } from 'ng2-toastr';
 import { ToastOptions } from 'ng2-toastr';
 
-import { Location } from "../../../models/location.model"
+import { LocationModel } from "../../../models/location.model"
 import { Vendor } from "../../../models/vendor.model";
 import { MapModel } from "../../../models/map.model";
 import { Work } from "../../../models/work.model";
@@ -26,7 +26,7 @@ import { WorkService } from "../../../services/work.service";
 export class VendorEditInfoComponent implements OnInit {
   @Input() vendor: Vendor;
   
-  location: Location;
+  location: LocationModel;
   map: MapModel;
   dataLoaded: boolean;
   
@@ -36,7 +36,10 @@ export class VendorEditInfoComponent implements OnInit {
   selectedSubcategory: Subcategory;
   works: Work[];
   subcategoryWorks: Work[];
-
+  position;
+  autocomplete: google.maps.places.Autocomplete;
+  address: any = {};
+  marker;
   @ViewChild('vendorForm') public vendorForm: NgForm;
   
   constructor(
@@ -44,24 +47,19 @@ export class VendorEditInfoComponent implements OnInit {
     private vendorService: VendorService,
     private categoryService: CategoryService,
     private workService: WorkService,
+    private LocationService: LocationService,
+    private ref: ChangeDetectorRef,
     private toastr: ToastsManager
   ) { }
 
   ngOnInit() {
+    this.position={lat: this.vendor.Location.Latitude, lng: this.vendor.Location.Longitude};
     this.dataLoaded = true;   
     this.categoryService.getAll()
       .then(resp => this.categories = resp.body as Category[]);
     this.workService.getAll()
       .then(resp => this.works = resp.body as Work[])
-    this.locationService.getById(this.vendor.LocationId)
-      .then(resp => this.location = resp.body as Location)
-      .then(() => this.map = {
-          center: {lat: this.location.Latitude, lng: this.location.Longitude},
-          zoom: 18,    
-          title: "Overcat 9000",
-          label: "",
-          markerPos: {lat: this.location.Latitude, lng: this.location.Longitude}
-        });
+   
   }
 
   onDateSelected(date: Date): void {
@@ -75,13 +73,34 @@ export class VendorEditInfoComponent implements OnInit {
       this.newWork.SubcategoryId = this.selectedSubcategory.Id;
     }
   }
+  markerDragged(event)
+  {
+       this.vendor.Location.Latitude = event.latLng.lat();
+       this.vendor.Location.Longitude = event.latLng.lng()
+  }
+  initialized(autocomplete: any) {
+    this.autocomplete = autocomplete;
+  }
 
+  placeChanged(event) {
+    //let container = document.getElementById('autocomplete').textContent;
+    this.vendor.Location.Latitude = event.geometry.location.lat();
+    this.vendor.Location.Longitude = event.geometry.location.lng()
+    this.position = {lat: this.vendor.Location.Latitude, lng: this.vendor.Location.Longitude}
+    this.ref.detectChanges();
+  }
   saveVendor(): void {
     if (this.vendorForm.invalid) {
       return;
     }
     this.dataLoaded = false;
     this.vendor.Birthday.setDate(this.vendor.Birthday.getDate() + 1);
+    this.LocationService.getLocDetails(this.vendor.Location.Latitude,this.vendor.Location.Longitude)
+    .subscribe(
+     result => {
+       
+        this.vendor.Location.Adress=(result.address_components[1].short_name+','+result.address_components[0].short_name)
+         this.vendor.Location.City=result.address_components[3].short_name;
     this.vendorService.updateVendor(this.vendor)
       .then(resp => {
         this.vendor = resp.body as Vendor;
@@ -93,7 +112,7 @@ export class VendorEditInfoComponent implements OnInit {
       .catch(err => { 
         this.dataLoaded = true;
         this.toastr.error('Sorry, something went wrong', 'Error!');
-      });
+      });})
   }
 
 }

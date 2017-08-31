@@ -118,7 +118,7 @@
       <div *ngIf="works" class="ui grid">
         <div class="three column row remove-padding-top">
           <div class="column cell" *ngFor="let work of works.slice((selectedPage - 1) * pageSize, selectedPage * pageSize)">
-            <a href="/{{work.Link}}" class="ui medium image">
+            <a href="/{{work.Link}}{{workSuffix}}{{work.Id}}" class="ui medium image">
               <img class="ui fluid image" src="{{work.Avatar}}"/>
               <div class="cell-info">
                 <h3 class="info-item">{{work.Name}}</h3>

@@ -6,7 +6,7 @@ import { BookOrderService } from '../../services/book-order.service';
 import { UserService } from '../../services/user.service';
 import { TokenHelperService } from '../../services/helper/tokenhelper.service';
 import { BookOrder } from '../../models/book/book-order';
-import { Location } from '../../models/location.model';
+import { LocationModel } from '../../models/location.model';
 
 @Component({
   selector: 'app-book',
@@ -17,12 +17,12 @@ export class BookComponent implements OnInit {
   book: BookOrder;
   formIsSended: boolean;
   onSending: boolean;
-  private defaultLocation: Location;
+  private defaultLocation: LocationModel;
   private selectedWork: any;
 
   @Input() routePath: string;
   @Input() routeId: number;
-  @Input() works: any;
+  @Input() works: any;  
 
   @ViewChild('bookForm') public bookForm: NgForm;
 
@@ -55,8 +55,13 @@ export class BookComponent implements OnInit {
     this.getUserData();
   }
 
-  onWorkChange(){
+  onWorkChange() {
     this.book.workid = this.selectedWork.Id;
+  }
+
+  selectWork(work) {
+    this.selectedWork = work;
+    this.onWorkChange();
   }
 
   makeOrder() {

@@ -1,47 +1,71 @@
-﻿<div class="container">
+﻿<link rel="stylesheet" href="https://unpkg.com/semantic-ui-calendar/dist/calendar.min.css">
+
+<div class="two column stackable ui grid">
     <div class="column">
-        <div class="ui input" *ngIf="user !== undefined">
-            <div class="elem">
+        <div class="ui form">
+            <div class="field">
+                <label class="gray_font">You info:</label>
                 <form name="userForm" #userForm="ngForm">
-                    <input required type="text" class="red" [(ngModel)]="user.Name" name="name" placeholder="NAME" #name="ngModel">
-                    <div *ngIf="name.invalid" class="valid-error">* Required</div>
-                    <input required type="text" [(ngModel)]="user.SurName" name="surname" placeholder="LASTNAME" #surname="ngModel">
-                    <div *ngIf="surname.invalid" class="valid-error">* Required</div>
-                    <input type="text" [(ngModel)]="user.MiddleName" name="middlename" placeholder="MIDLENAME (OPTIONAL)" #middlename="ngModel">                    
-                    <input pattern="\S+@\S+\.\S+" required type="text" [(ngModel)]="user.Email" name="email" placeholder="EMAIL" #email="ngModel">
-                    <div *ngIf="email.invalid && (email.dirty || email.touched)">
-                        <div *ngIf="email.errors.required" class="valid-error">* Required</div>
-                        <div *ngIf="email.errors.pattern" class="valid-error">* Invalid mail</div>
-                    </div>
-                    <input pattern="^\+(?:[0-9]●?){6,14}[0-9]$" required type="text" [(ngModel)]="user.Phone" name="phone" placeholder="PHONE" #phone="ngModel">
-                    <div *ngIf="phone.invalid && (phone.dirty || phone.touched)">
-                        <div *ngIf="phone.errors.required" class="valid-error">* Required</div>
-                        <div *ngIf="phone.errors.pattern" class="valid-error">* Invalid number</div>
+                    <div class="ui form">
+                        <div class="field">
+                            <input required type="text" class="red" [(ngModel)]="user.Name" name="name" placeholder="NAME" #name="ngModel">
+                            <div *ngIf="name.invalid" class="valid-error">* Required</div>
+                        </div>
+                        <div class="field">
+                            <input required type="text" [(ngModel)]="user.SurName" name="surname" placeholder="LASTNAME" #surname="ngModel">
+                            <div *ngIf="surname.invalid" class="valid-error">* Required</div>
+                        </div>
+                        <div class="field">
+                            <input type="text" [(ngModel)]="user.MiddleName" name="middlename" placeholder="MIDDLENAME (OPTIONAL)" #middlename="ngModel">
+                        </div>
+                        <div class="field">
+                            <input pattern="\S+@\S+\.\S+" required type="text" [(ngModel)]="user.Email" name="email" placeholder="EMAIL" #email="ngModel">
+                            <div *ngIf="email.invalid && (email.dirty || email.touched)">
+                                <div *ngIf="email.errors.required" class="valid-error">* Required</div>
+                                <div *ngIf="email.errors.pattern" class="valid-error">* Invalid mail</div>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <input pattern="^\+(?:[0-9]●?){6,14}[0-9]$" required type="text" [(ngModel)]="user.Phone" name="phone" placeholder="PHONE" #phone="ngModel">
+                            <div *ngIf="phone.invalid && (phone.dirty || phone.touched)">
+                                <div *ngIf="phone.errors.required" class="valid-error">* Required</div>
+                                <div *ngIf="phone.errors.pattern" class="valid-error">* Invalid number</div>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui left icon input">
+                                <i class="calendar icon"></i>
+                                <input suiDatepicker pickerMode="date" [(ngModel)]="user.Birthday" name="birthday" [placeholder]="BIRTHDAY">
+                            </div>
+                        </div>
                     </div>
                 </form>
             </div>
         </div>
-        <div class="elem" *ngIf="user !== undefined">
-            <div class="ui left icon input">
-                <i class="calendar icon" style="margin-left: 15px; margin-top: 10px;"></i>
-                <input suiDatepicker [(ngModel)]="user.Birthday" name="birthday" pickerMode="date" placeholder="Birthday">
+    </div>
+
+    <div class="column">
+        <div class="ui form">
+            <div class="field">
+                <label class="gray_font">Your location:</label>
+                <div class="ui icon input">
+                    <input places-auto-complete id="autocomplete" (initialized$)="initialized($event)" (place_changed)="placeChanged($event)" [types]="['geocode']" placeholder="TYPE HERE..." />
+                </div>
+                <ngui-map class="map" zoom="14" [center]="position">
+                    <marker [position]="position" [draggable]="true" (dragend)="markerDragged($event)">
+                    </marker>
+                </ngui-map>
             </div>
 
         </div>
     </div>
-    <div class="column">
-        <label class="gray_font">Your location:</label>
-        <div class="map">
-            <agm-map [latitude]="lat" [longitude]="lng" [zoom]="18" style="height: 20em;">
-                <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
-            </agm-map>
-        </div>
-    </div>
-
 </div>
 <div class="ui divider"></div>
-
-<div class="row">
-    <button *ngIf="dataLoaded" class="ui basic button" align="center" (click)="updateUser()"><p style="color:#FF647A;">Save</p></button>
-    <div *ngIf="!dataLoaded" class="ui active loading button">Loading</div>
+<div class="ui grid">
+    <div class="centered row">
+        <div class="three wide column">
+            <button *ngIf="dataLoaded" (click)="updateUser()" class="ui basic button"><h5>Save</h5></button>
+            <button *ngIf="!dataLoaded" class="ui loading button">Loading</button>
+        </div>
+    </div>
 </div>

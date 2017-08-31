@@ -6,7 +6,7 @@ import { UserService } from "../../../services/user.service";
 @Component({
   selector: 'app-user-main-reviews',
   templateUrl: './user-main-reviews.component.html',
-  styleUrls: ['./user-main-reviews.component.css']
+  styleUrls: ['./user-main-reviews.component.sass']
 })
 export class UserMainReviewsComponent implements OnInit, AfterContentInit  {
 

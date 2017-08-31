@@ -1,3 +1,5 @@
+import { LocationModel } from '../models/location.model';
+
 export interface Performer {
     Id: number;
     Rating: number;
@@ -6,6 +8,6 @@ export interface Performer {
     Avatar: string;
     PerformerType: string;
     Link: string;
-    Location: Location;
+    Location: LocationModel;
     Description: string;
 }

@@ -43,8 +43,6 @@ namespace Unicorn.Controllers
             _notificationProxy = notificationProxy;
         }
 
-        #region Get
-
         [HttpGet]
         [Route("")]
         public async Task<HttpResponseMessage> GetAll()
@@ -58,6 +56,21 @@ namespace Unicorn.Controllers
         [Route("{id}")]
         public async Task<HttpResponseMessage> GetById(long id)
         {
+            var result = await _vendorService.GetByIdAsync(id);
+
+            if (result == null)
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            else
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+
+        [HttpPut]
+        [Route("{id}")]
+        public async Task<HttpResponseMessage> UpdateVendor(long id, [FromBody]ShortVendorDTO vendor)
+        {
+            await _vendorService.UpdateAsync(vendor);
+
             var result = await _vendorService.GetByIdAsync(id);
 
             if (result == null)
@@ -90,6 +103,42 @@ namespace Unicorn.Controllers
                 return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
+        [HttpPost]
+        [Route("{id}/works")]
+        public async Task<HttpResponseMessage> CreateVendorWork(long id, [FromBody]WorkDTO workDto)
+        {
+            workDto.VendorId = id;
+            var result = await _workService.CreateAsync(workDto);
+
+            if (result == null)
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            else
+                return Request.CreateResponse(HttpStatusCode.Created, result);
+        }
+
+        [HttpPut]
+        [Route("{id}/works/{workId}")]
+        public async Task<HttpResponseMessage> UpdateVendorWork(long id, long workId, [FromBody]WorkDTO workDto)
+        {
+            await _workService.UpdateAsync(workDto);
+
+            return Request.CreateResponse(HttpStatusCode.OK);
+        }
+
+        [HttpDelete]
+        [Route("{id}/works/{workId}")]
+        public async Task<HttpResponseMessage> UpdateVendorWork(long id, long workId)
+        {
+            await _workService.RemoveByIdAsync(workId);
+
+            var result = await _vendorService.GetVendorWorksAsync(id);
+
+            if (result == null)
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            else
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
         [HttpGet]
         [Route("{id}/history")]
         public async Task<HttpResponseMessage> GetVendorHistory(long id)
@@ -106,7 +155,6 @@ namespace Unicorn.Controllers
         [Route("{id}/orders")]
         public async Task<HttpResponseMessage> GetVendorOrders(long id)
         {
-            await _notificationProxy.RefreshOrdersForAccount(19);
             var result = await _bookService.GetOrdersAsync("vendor", id);
 
             if (result == null)
@@ -115,7 +163,21 @@ namespace Unicorn.Controllers
                 return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
-#region Contacts
+        [HttpPut]
+        [Route("{id}/orders/{orderId}")]
+        public async Task<HttpResponseMessage> UpdateVendor(long id, long orderId, [FromBody]VendorBookDTO order)
+        {
+            var book = await _bookService.GetByIdAsync(orderId);
+            book.Status = order.Status;
+            await _bookService.Update(book);
+
+            var result = await _bookService.GetOrdersAsync("vendor", id);
+
+            if (result == null)
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            else
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
 
         [HttpGet]
         [Route("{id}/contacts")]
@@ -167,8 +229,6 @@ namespace Unicorn.Controllers
             return Request.CreateResponse(HttpStatusCode.NoContent);
         }
 
-        #endregion
-
         [HttpGet]
         [Route("{id}/reviews")]
         public async Task<HttpResponseMessage> GetVendorReviews(long id)
@@ -203,10 +263,7 @@ namespace Unicorn.Controllers
             else
                 return Request.CreateResponse(HttpStatusCode.OK, result);
         }
-#endregion
         
-        #region Post
-
         [HttpPost]
         [Route("{id}/portfolio")]
         public async Task<HttpResponseMessage> GetVendorPortfolio(long id, [FromBody] PortfolioItemDTO itemDto)
@@ -214,86 +271,6 @@ namespace Unicorn.Controllers
             await _portfolioService.CreateAsync(id, itemDto);
             return Request.CreateResponse(HttpStatusCode.Created);
         }
-
-        [HttpPost]
-        [Route("{id}/works")]
-        public async Task<HttpResponseMessage> CreateVendorWork(long id, [FromBody]WorkDTO workDto)
-        {
-            workDto.VendorId = id;
-            await _workService.CreateAsync(workDto);
-
-            var result = await _vendorService.GetVendorWorksAsync(id);
-
-            if (result == null)
-                return Request.CreateResponse(HttpStatusCode.NotFound);
-            else
-                return Request.CreateResponse(HttpStatusCode.Created, result);
-        }
-
-        #endregion
-
-        #region Put
-
-        [HttpPut]
-        [Route("{id}")]
-        public async Task<HttpResponseMessage> UpdateVendor(long id, [FromBody]ShortVendorDTO vendor)
-        {
-            await _vendorService.UpdateAsync(vendor);
-
-            var result = await _vendorService.GetByIdAsync(id);
-
-            if (result == null)
-                return Request.CreateResponse(HttpStatusCode.NotFound);
-            else
-                return Request.CreateResponse(HttpStatusCode.OK, result);
-        }
-
-        [HttpPut]
-        [Route("{id}/orders/{orderId}")]
-        public async Task<HttpResponseMessage> UpdateVendor(long id, long orderId, [FromBody]VendorBookDTO order)
-        {
-            var book = await _bookService.GetByIdAsync(orderId);
-            book.Status = order.Status;
-            await _bookService.Update(book);
-
-            var result = await _bookService.GetOrdersAsync("vendor", id);
-
-            if (result == null)
-                return Request.CreateResponse(HttpStatusCode.NotFound);
-            else
-                return Request.CreateResponse(HttpStatusCode.OK, result);
-        }
-
-
-        [HttpPut]
-        [Route("{id}/works/{workId}")]
-        public async Task<HttpResponseMessage> UpdateVendorWork(long id, long workId, [FromBody]WorkDTO workDto)
-        {
-            await _workService.UpdateAsync(workDto);
-
-            return Request.CreateResponse(HttpStatusCode.OK);
-        }
-
-
-        #endregion
-
-        #region Delete
-
-        [HttpDelete]
-        [Route("{id}/works/{workId}")]
-        public async Task<HttpResponseMessage> UpdateVendorWork(long id, long workId)
-        {
-            await _workService.RemoveByIdAsync(workId);
-
-            var result = await _vendorService.GetVendorWorksAsync(id);
-
-            if (result == null)
-                return Request.CreateResponse(HttpStatusCode.NotFound);
-            else
-                return Request.CreateResponse(HttpStatusCode.OK, result);
-        }
-
-        #endregion
 
         private IVendorService _vendorService;
         private IReviewService _reviewService;

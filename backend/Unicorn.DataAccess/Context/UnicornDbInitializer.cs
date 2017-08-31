@@ -419,6 +419,207 @@ namespace Unicorn.DataAccess.Context
 
             #endregion
 
+            #region Locations
+            Location location1 = new Location()
+            {
+                Id = 1,
+                Adress = "Instytutska 13",
+                Latitude = 50.446969,
+                Longitude = 30.531165,
+                IsDeleted = false,
+                City = "Kiev",
+                PostIndex = "61002"
+            };
+
+            Location location2 = new Location()
+            {
+                Id = 2,
+                Adress = "Instytutska 13",
+                Latitude = 50.446969,
+                Longitude = 30.531165,
+                IsDeleted = false,
+                City = "Kiev",
+                PostIndex = "61002"
+            };
+
+            Location location3 = new Location()
+            {
+                Id = 3,
+                Adress = "Instytutska 13",
+                Latitude = 50.446969,
+                Longitude = 30.531165,
+                IsDeleted = false,
+                City = "Kiev",
+                PostIndex = "61002"
+            };
+
+            Location location4 = new Location()
+            {
+                Id = 4,
+                Adress = "Instytutska 13",
+                Latitude = 50.446969,
+                Longitude = 30.531165,
+                IsDeleted = false,
+                City = "Kiev",
+                PostIndex = "61002"
+            };
+
+            Location location5 = new Location()
+            {
+                Id = 5,
+                Adress = "Instytutska 13",
+                Latitude = 50.446969,
+                Longitude = 30.531165,
+                IsDeleted = false,
+                City = "Kiev",
+                PostIndex = "61002"
+            };
+
+            Location location6 = new Location()
+            {
+                Id = 6,
+                Adress = "Instytutska 13",
+                Latitude = 50.446969,
+                Longitude = 30.531165,
+                IsDeleted = false,
+                City = "Kiev",
+                PostIndex = "61002"
+            };
+
+            Location location7 = new Location()
+            {
+                Id = 7,
+                Adress = "Instytutska 13",
+                Latitude = 50.446969,
+                Longitude = 30.531165,
+                IsDeleted = false,
+                City = "Kiev",
+                PostIndex = "61002"
+            };
+
+            Location location8 = new Location()
+            {
+                Id = 8,
+                Adress = "Instytutska 13",
+                Latitude = 50.446969,
+                Longitude = 30.531165,
+                IsDeleted = false,
+                City = "Kiev",
+                PostIndex = "61002"
+            };
+
+            Location location9 = new Location()
+            {
+                Id = 9,
+                Adress = "Instytutska 13",
+                Latitude = 50.446969,
+                Longitude = 30.531165,
+                IsDeleted = false,
+                City = "Kiev",
+                PostIndex = "61002"
+            };
+
+            Location location10 = new Location()
+            {
+                Id = 10,
+                Adress = "Instytutska 13",
+                Latitude = 50.446969,
+                Longitude = 30.531165,
+                IsDeleted = false,
+                City = "Kiev",
+                PostIndex = "61002"
+            };
+
+            Location location11 = new Location()
+            {
+                Id = 11,
+                Adress = "Instytutska 13",
+                Latitude = 50.446969,
+                Longitude = 30.531165,
+                IsDeleted = false,
+                City = "Kiev",
+                PostIndex = "61002"
+            };
+
+            Location location12 = new Location()
+            {
+                Id = 12,
+                Adress = "Instytutska 13",
+                Latitude = 50.446969,
+                Longitude = 30.531165,
+                IsDeleted = false,
+                City = "Kiev",
+                PostIndex = "61002"
+            };
+
+
+            Location location13 = new Location()
+            {
+                Id = 13,
+                Adress = "Instytutska 13",
+                Latitude = 50.446969,
+                Longitude = 30.531165,
+                IsDeleted = false,
+                City = "Kiev",
+                PostIndex = "61002"
+            };
+
+            Location location14 = new Location()
+            {
+                Id = 14,
+                Adress = "Instytutska 13",
+                Latitude = 50.446969,
+                Longitude = 30.531165,
+                IsDeleted = false,
+                City = "Kiev",
+                PostIndex = "61002"
+            };
+
+            Location location15 = new Location()
+            {
+                Id = 15,
+                Adress = "Instytutska 13",
+                Latitude = 50.446969,
+                Longitude = 30.531165,
+                IsDeleted = false,
+                City = "Kiev",
+                PostIndex = "61002"
+            };
+            Location location16 = new Location()
+            {
+                Id = 16,
+                Adress = "Instytutska 13",
+                Latitude = 50.446969,
+                Longitude = 30.531165,
+                IsDeleted = false,
+                City = "Kiev",
+                PostIndex = "61002"
+            };
+            Location location17 = new Location()
+            {
+                Id = 17,
+                Adress = "Instytutska 13",
+                Latitude = 50.446969,
+                Longitude = 30.531165,
+                IsDeleted = false,
+                City = "Kiev",
+                PostIndex = "61002"
+            };
+            Location location18 = new Location()
+            {
+                Id = 18,
+                Adress = "Instytutska 13",
+                Latitude = 50.446969,
+                Longitude = 30.531165,
+                IsDeleted = false,
+                City = "Kiev",
+                PostIndex = "61002"
+            };
+
+            context.Locations.AddRange(new List<Location>() { location1, location2, location3, location4, location5, location6, location7, location8, location9, location10, location11, location12, location13, location14, location15, location16, location17, location18 });
+
+            #endregion
+
             #region Accounts
 
             Account account1 = new Account()
@@ -430,6 +631,7 @@ namespace Unicorn.DataAccess.Context
                 Avatar = "http://www.arteinterattiva.it/wp-content/uploads/2014/08/013.png",
                 IsDeleted = false,
                 Role = role3,
+                Location = location1,
                 Contacts = new List<Contact> { contact1, contact2, contact3, contact4, contact5, contact6, contact7}
             };
 
@@ -442,6 +644,7 @@ namespace Unicorn.DataAccess.Context
                 Avatar = "https://www.xing.com/image/3_4_a_99233ef95_25270136_1/mehmet-altun-foto.1024x1024.jpg",
                 IsDeleted = false,
                 Role = role3,
+                Location = location2,
                 Contacts = new List<Contact> { contact8, contact9, contact10, contact11, contact12, contact13, contact14 }
             };
 
@@ -454,6 +657,7 @@ namespace Unicorn.DataAccess.Context
                 Avatar = "http://revivre.ee/wp-content/uploads/2013/07/photodune-4276142-smiling-portraits-xl_411.jpg",
                 IsDeleted = false,
                 Role = role3,
+                Location = location3,
                 Contacts = new List<Contact> { contact15, contact16, contact17, contact18, contact19, contact20, contact21 }
 
             };
@@ -467,6 +671,7 @@ namespace Unicorn.DataAccess.Context
                 Avatar = "http://coodiv.net/project/skyhost/HTML/img/quote/44-3.jpg",
                 IsDeleted = false,
                 Role = role3,
+                Location = location4,
                 Contacts = new List<Contact> { contact22, contact23, contact24, contact25, contact26, contact27, contact28 }
             };
 
@@ -479,6 +684,7 @@ namespace Unicorn.DataAccess.Context
                 Avatar = "http://www.actionagainstabduction.org/wp-content/uploads/2015/07/Lucy_Holmes.jpg",
                 IsDeleted = false,
                 Role = role3,
+                Location = location5,
                 Contacts = new List<Contact> { contact29, contact30, contact31, contact32, contact33, contact34, contact35 }
             };
 
@@ -491,6 +697,7 @@ namespace Unicorn.DataAccess.Context
                 Avatar = "http://1.bp.blogspot.com/_A1-gDagxbUM/S_lmQ5ZiIwI/AAAAAAAAAH4/tfLxn-zR314/s1600/Tom+Cruise.jpg",
                 IsDeleted = false,
                 Role = role3,
+                Location = location6,
                 Contacts = new List<Contact> { contact36, contact37, contact38, contact39, contact40, contact41, contact42 }
             };
 
@@ -503,6 +710,7 @@ namespace Unicorn.DataAccess.Context
                 Avatar = "https://s-media-cache-ak0.pinimg.com/736x/88/e3/b0/88e3b020ed58b7b5734b87f9661e010d--hugo-chávez-archaeology.jpg",
                 IsDeleted = false,
                 Role = role3,
+                Location = location7,
                 Contacts = new List<Contact> { contact43, contact44, contact45, contact46, contact47, contact48, contact49 }
             };
 
@@ -515,6 +723,7 @@ namespace Unicorn.DataAccess.Context
                 Avatar = "https://articlemanager.blob.core.windows.net/article-images/2_your-logo-design.jpg",
                 IsDeleted = false,
                 Role = role4,
+                Location = location8,
                 Contacts = new List<Contact> { contact50, contact51, contact52, contact53, contact54, contact55, contact56 }
             };
 
@@ -527,6 +736,7 @@ namespace Unicorn.DataAccess.Context
                 Avatar = "https://tribkcpq.files.wordpress.com/2016/07/s032965871-300.jpg?quality=85&strip=all&w=770",
                 IsDeleted = false,
                 Role = role4,
+                Location = location9,
                 Contacts = new List<Contact> { contact57, contact58, contact59, contact60, contact61, contact62, contact63 }
             };
 
@@ -539,6 +749,7 @@ namespace Unicorn.DataAccess.Context
                 Avatar = "http://www.nmc-corp.com/uploadedImages/NebraskaMachineryCompany/Logo_Library/NMC%20CAT%20Power%20Systems%20Mark.png",
                 IsDeleted = false,
                 Role = role4,
+                Location = location10,
                 Contacts = new List<Contact> { contact64, contact65, contact66, contact67, contact68, contact69, contact70 }
             };
 
@@ -551,6 +762,7 @@ namespace Unicorn.DataAccess.Context
                 Avatar = "https://www.ifak.eu/sites/www.ifak.eu/files/Mitarbeiterfotos/Steinmann.jpg",
                 IsDeleted = false,
                 Role = role2,
+                Location = location11,
                 Contacts = new List<Contact> { contact71, contact72, contact73, contact74, contact75, contact76, contact77 }
             };
 
@@ -563,6 +775,7 @@ namespace Unicorn.DataAccess.Context
                 Avatar = "https://www.kellerag.com/fileadmin/_processed_/csm_KAUSSEN-Sascha_95ed03675a.jpg",
                 IsDeleted = false,
                 Role = role2,
+                Location = location12,
                 Contacts = new List<Contact> { contact78, contact79, contact80, contact81, contact82, contact83, contact84 }
             };
 
@@ -575,6 +788,7 @@ namespace Unicorn.DataAccess.Context
                 Avatar = "http://top101news.com/wp-content/uploads/2016/10/Paul-Walker-Top-Most-Popular-Persons-Who-Died-in-Road-Accident-2018.jpg",
                 IsDeleted = false,
                 Role = role2,
+                Location = location13,
                 Contacts = new List<Contact> { contact85, contact86, contact87, contact88, contact89, contact90, contact91 }
             };
             
@@ -587,6 +801,7 @@ namespace Unicorn.DataAccess.Context
                 Avatar = "http://techbox.dennikn.sk/wp-content/uploads/2016/02/Google-logo-01.jpg",
                 IsDeleted = false,
                 Role = role4,
+                Location = location14,
                 Contacts = new List<Contact> { contact92, contact93, contact94, contact95, contact96, contact97, contact98 }
             };
 
@@ -599,6 +814,7 @@ namespace Unicorn.DataAccess.Context
                 Avatar = "http://vneconomictimes.com/cache/uploads/media/images/2016/MAY/Siemens_logo_640_auto.jpg",
                 IsDeleted = false,
                 Role = role4,
+                Location = location15,
                 Contacts = new List<Contact> { contact99, contact100, contact101, contact102, contact103, contact104, contact105 }
             };
 
@@ -611,6 +827,7 @@ namespace Unicorn.DataAccess.Context
                 Avatar = "http://www.geekets.com/wp-content/uploads/2013/01/dell_logo020307.jpg",
                 IsDeleted = false,
                 Role = role4,
+                Location = location16,
                 Contacts = new List<Contact> { contact106, contact107, contact108, contact109, contact110, contact111, contact112 }
             };
 
@@ -623,6 +840,7 @@ namespace Unicorn.DataAccess.Context
                 Avatar = "http://cdn.playbuzz.com/cdn/21053f7d-f84d-4cb5-85d5-387fbb08692a/1c8e0442-5d13-435e-aa93-85b3804cfbc5.jpg",
                 IsDeleted = false,
                 Role = role4,
+                Location = location17,
                 Contacts = new List<Contact> { contact113, contact114, contact115, contact116, contact117, contact118, contact119 }
             };
 
@@ -635,6 +853,7 @@ namespace Unicorn.DataAccess.Context
                 Avatar = "http://open4business.com.ua/wp-content/uploads/2015/07/NovaPoshta-1-800x494.jpg",
                 IsDeleted = false,
                 Role = role4,
+                Location = location18,
                 Contacts = new List<Contact> { contact120, contact121, contact122, contact123, contact124, contact125, contact126 }
             };
 
@@ -835,7 +1054,10 @@ namespace Unicorn.DataAccess.Context
                 IsDeleted = false,
                 Description = "Sewing",
                 Name = "Care of clothes",
-                Tags = @""
+                Tags = @"stitchery,stitching,needlework,dressmaking,seamstress,stitch,tailoring,couture,fashion,thread,
+                        design,seam,intersection,knitting,quilting,crocheting,embroidery,needlecraft,serger,sewing machine,
+                        embroidering,smocking,felting,woodworking,needlepoint,handwork,quilters,tatting,woodcarving,scrapbooking,
+                        darning,beading,crocheter,crewel,embroiderers,stitchers,bobbin lace,quilter,bookbinding,woodcraft"
             };
 
             Category category2 = new Category()
@@ -848,8 +1070,7 @@ namespace Unicorn.DataAccess.Context
                 Tags = @"care,scratch,caregiver,infirmary,healthcare,health,caring,caregiving,elderly,paramedic,
                         clinic,nursery,convalescence,lactation,profession,infant,retirement,breastfeeding,medic,resting,
                         accommodation,pension,feeding,corpsman,lactating,rest,suckler,attendant,weaning,conservation,
-                        endowment,ranger,upbringing,orderly,guarding,infancy,attentionbreast-feeding,
-                        health-care,nursing"
+                        endowment,ranger,upbringing,orderly,guarding,infancy,attentionbreast-feeding,health-care,nursing"
             };
 
             Category category3 = new Category()
@@ -859,7 +1080,10 @@ namespace Unicorn.DataAccess.Context
                 IsDeleted = false,
                 Description = "Transportations",
                 Name = "Car services",
-                Tags = @""
+                Tags = @"transport,transit,conveyance,shipping,department of transportation,transfer,transferral,transportation system,freight,rail,
+                        trucking,commuter,commuting,transporting,travel,cargo,services,communications,transports,conveyances,
+                        cartage,communication,haulage,traffic,mobility,maritime,passenger,airlift,delivery,ride,
+                        hauling,transmission,relocation,transported,locomotion,transporter,road,haul,vehicle,limousine,"
             };
 
             Category category4 = new Category()
@@ -868,8 +1092,11 @@ namespace Unicorn.DataAccess.Context
                 Icon = "http://pop.h-cdn.co/assets/cm/15/05/54cb5d94587ec_-_tallest-buildings-05-1214-lgn.jpg",
                 IsDeleted = false,
                 Description = "Buildings",
-                Name = "Buider services",
-                Tags = @""
+                Name = "Builder services",
+                Tags = @"augmenting,constructing,constructed,construct,rebuild,reconstructing,creating,reinforcing,establishing,
+                        reconstruct,forming,create,cultivating,develop,consolidating,establish,consolidate,expand,furthering,enhancing,
+                        achieving,bolstering,providing,reinforce,capitalizing,generate,boosting,created,strengthen,improve,
+                        placing,integrate,promoting,preparing,enhance,basing,acquire,encourage,relying,introducing"
             };
 
             Category category5 = new Category()
@@ -879,7 +1106,10 @@ namespace Unicorn.DataAccess.Context
                 IsDeleted = false,
                 Description = "Media processing",
                 Name = "Photo and Video",
-                Tags = @""
+                Tags = @"myspace,avatar,camera,closeup,footage,frame,shoot,alien,cam,file,
+                        images,map,snap,archive,caption,essay,foreground,graph,image,mat,microdot,
+                        mosaic,panel,photo-electric,photoelectric,photography,pic,picture,pictures,print,
+                        radiograph,reportage,retake,scan,scenic,shot,speed,still,thumbnail,toner"
             };
 
             Category category6 = new Category()
@@ -889,7 +1119,10 @@ namespace Unicorn.DataAccess.Context
                 IsDeleted = false,
                 Description = "Developing",
                 Name = "Developer Service",
-                Tags = @""
+                Tags = @"development,underdeveloped,nonindustrial,creating,producing,designing,implementing,emerging,establishing,
+                        expanding,formulating,enhancing,devising,acquiring,promoting,cultivating,fostering,constructing,improving,
+                        strengthening,introducing,providing,evolving,forming,crafting,growing,build,evolve,forging,advancing,
+                        upgrading,nurturing,increasing,create,expand,finalizing,formulate,enhance,developmental,creation"
             };
 
             Category category7 = new Category()
@@ -899,7 +1132,10 @@ namespace Unicorn.DataAccess.Context
                 IsDeleted = false,
                 Description = "Electronic parts supplier",
                 Name = "Electronic parts",
-                Tags = @""
+                Tags = @"computerized,automated,digital,paperless,online,computer,computerization,computerised,audiovisual,electrical,
+                        opto,electric,wire,informatics,internet,virtual,mailing,magnetic,cyber,document,desktop,web,computing,electron,
+                        information,email,edr,electrons,website,esd,broadcast,numerical,line,computerisation,e-business,e-commerce,
+                        e-finance,e-government,e-health,e-learning"
             };
 
             Category category8 = new Category()
@@ -909,7 +1145,10 @@ namespace Unicorn.DataAccess.Context
                 IsDeleted = false,
                 Description = "Food and beverages",
                 Name = "Food service",
-                Tags = @""
+                Tags = @"eat,feeds,recharge,restoring,restore,powering,buy,served,eaten,cooked,prepared,
+                        ate,drink,prepare,consumed,cook,grow,preparing,supplied,contaminated,stored,serving,
+                        digested,consume,sharing,tasted,processed,imported,obtaining,ingested,
+                        buying,purchase,store,deprived,taste,digest,beg,searching,chew,begging"
             };
 
             Category category9 = new Category()
@@ -919,7 +1158,10 @@ namespace Unicorn.DataAccess.Context
                 IsDeleted = false,
                 Description = "Package delivery",
                 Name = "Delivery service",
-                Tags = @""
+                Tags = @"delivering,delivered,deliver,delivers,transporting,providing,distributing,distribute,provide,implementing,
+                        rendered,provides,render,achieving,disseminate,implement,carrying,administer,obtaining,execute,provided,submitting,
+                        remitting,handing,fulfilling,placing,realizing,enforcing,recognizing,submit,granting,carried,perform,shed,
+                        recognize,extradite,ensure,improve,allow,facilitate"
             };
 
             context.Categories.AddRange(new List<Category>()
@@ -939,7 +1181,10 @@ namespace Unicorn.DataAccess.Context
                 Name = "Washing",
                 IsDeleted = false,
                 Category = category1,
-                Tags = @""
+                Tags = @"apparel,wear,vesture,wearing apparel,garments,dresses,fashions,attire,uniforms,outfits,
+                        shirts,gowns,costumes,outerwear,garment,linens,robes,jackets,garbs,duds,dressing,vests,
+                        fatigues,suits,textiles,naked,washing,habits,children,straitjackets,threads,woodworking,
+                        plainclothes,claws,clones,inflatable,cases,affairs,guises,plain-clothes"
             };
 
             Subcategory subcategory2 = new Subcategory()
@@ -958,10 +1203,14 @@ namespace Unicorn.DataAccess.Context
             {
                 Id = 3,
                 Description = "Subacategory lory service",
-                Name = "Lory service",
+                Name = "Lorry service",
                 IsDeleted = false,
                 Category = category3,
-                Tags = @""
+                Tags = @"camion,hgv,truck,van,tractor,bus,vehicle,car,tanker,lgv,wagon,container,
+                        minivan,cargo,freight,flatbed,highway,road,trunk,pickup,truckload,rig,
+                        trucking,semi,firecracker,heavy,juggernaut,heavyweight,coach,heavy-duty,
+                        tractor-trailer,minibus,haulage,tractor trailer,haulier,horsebox,
+                        concrete mixer,forklift,hackney carriage,dumper"
             };
 
             Subcategory subcategory4 = new Subcategory()
@@ -971,7 +1220,10 @@ namespace Unicorn.DataAccess.Context
                 Name = "Painting and plastering work",
                 IsDeleted = false,
                 Category = category4,
-                Tags = @""
+                Tags = @"primed,ground,grounded,rendering,case,float,floating,fur,lath,mortarboard,
+                        plasterwork,staff,baseboard,let,bronzing,daub,fresco,gesso,lay,painter,
+                        secco,sgraffito,size,browning,calcimine,cat,compost,dots,doy,dpt,furring,key,
+                        keying,keys,lime,lock,locking,locks,mastic,mortar"
             };
 
             Subcategory subcategory5 = new Subcategory()
@@ -981,7 +1233,10 @@ namespace Unicorn.DataAccess.Context
                 Name = "Photosession",
                 IsDeleted = false,
                 Category = category5,
-                Tags = @""
+                Tags = @"shoot,hoot,reload,bath,camera,archive,block,blur,caption,chart,
+                        epic,figure,footage,foreground,frame,gallery,graph,image,imagery,
+                        inset,locket,map,mat,mosaic,ops,panel,picture,pictures,retake,scan,
+                        sepia,shot,snap,snapshot,speed,sunset,after,before,charts,copy"
             };
 
             Subcategory subcategory6 = new Subcategory()
@@ -991,7 +1246,10 @@ namespace Unicorn.DataAccess.Context
                 Name = "Web Development",
                 IsDeleted = false,
                 Category = category6,
-                Tags = @""
+                Tags = @"www,network,world wide web,net,vane,entanglement,website,websites,webpage,online,
+                        homepage,internet,portal,site,intranet,sites,page,webcast,cyberspace,spider,networks,
+                        cyber,virtual,networking,posted,available,electronic,enabled,update,Webb,weave,
+                        fabric,trophic,weft,chain,address,retina,sling,nets,system"
             };
 
             Subcategory subcategory7 = new Subcategory()
@@ -1001,7 +1259,10 @@ namespace Unicorn.DataAccess.Context
                 Name = "Computer parts",
                 IsDeleted = false,
                 Category = category7,
-                Tags = @""
+                Tags = @"busbar,card,computer architecture,fragmentation,hardware,kludge,link,linux,machine,motherboard,
+                        multiprocessing,panel,Intel,Opengl,cognitive science,abacus,adapter,alphabet,architecture,area,
+                        array,assembler,assembly,background,binary,bits,block,box,brain,branch,bridge,bush,button,cards,
+                        chassis,clock,configuration,core,coring,cracker"
             };
 
             Subcategory subcategory8 = new Subcategory()
@@ -1011,7 +1272,10 @@ namespace Unicorn.DataAccess.Context
                 Name = "Fast food",
                 IsDeleted = false,
                 Category = category8,
-                Tags = @""
+                Tags = @"fries,snack,bite,diet,snacks,cola,taco,Togo,soda,fryer,spork,automat,chili,
+                        deli,Mac,arch,wrap,combo,fry,tempura,wahoo,blt,breakfast,donut,malt,sauce,
+                        steam,toy,chain,emu,teens,cheeseburger,diner,foodie,pizza,eater,burrito,
+                        enchiladas,escargot,falafel"
             };
 
             Subcategory subcategory9 = new Subcategory()
@@ -1021,7 +1285,10 @@ namespace Unicorn.DataAccess.Context
                 Name = "Express delivery",
                 IsDeleted = false,
                 Category = category9,
-                Tags = @""
+                Tags = @"bundle,packet,parcel,box,plan,deal,proposal,bundles,pkg,kit,program,bailout,scheme,packs,
+                        solution,wrapper,toolkit,measures,suite,bag,piece,envelope,packets,pact,pouch,crate,
+                        omnibus,toolbox,kits,contract,pack,shipment,carton,array,module,wrap,combination,
+                        plans,document,parcels"
             };
 
             context.Subcategories.AddRange(new List<Subcategory>()
@@ -1166,17 +1433,7 @@ namespace Unicorn.DataAccess.Context
                 Birthday = new DateTime(1976, 08, 08),
                 Gender = "male",
                 IsDeleted = false,
-                Location = new Location()
-                {
-                    Id = 1,
-                    Adress = "Lebedeva-Kumacha 7a str.",
-                    City = "Kiev",
-                    Latitude = 50.437,
-                    Longitude = 30.439,
-                    IsDeleted = false,
-                    PostIndex = "03110"
-                },
-                Phone = "803-604-7259"
+                Phone = "+8036047259"
             };
 
             Person person2 = new Person()
@@ -1188,16 +1445,7 @@ namespace Unicorn.DataAccess.Context
                 Birthday = new DateTime(1989, 08, 11),
                 Gender = "male",
                 IsDeleted = false,
-                Location = new Location()
-                {
-                    Adress = "Akademica Palladina 9 pr.",
-                    City = "Kiev",
-                    Latitude = 50.461199,
-                    Longitude = 30.355651,
-                    IsDeleted = false,
-                    PostIndex = "03179"
-                },
-                Phone = "646-319-4092"
+                Phone = "+6463194092"
             };
 
             Person person3 = new Person()
@@ -1209,16 +1457,7 @@ namespace Unicorn.DataAccess.Context
                 Birthday = new DateTime(1995, 01, 10),
                 Gender = "male",
                 IsDeleted = false,
-                Location = new Location()
-                {
-                    Adress = "Main Square 8",
-                    City = "Lviv",
-                    Latitude = 38.148089,
-                    Longitude = 63.114765,
-                    IsDeleted = false,
-                    PostIndex = "79013"
-                },
-                Phone = "206-237-6702"
+                Phone = "+2062376702"
             };
 
             Person person4 = new Person()
@@ -1231,17 +1470,7 @@ namespace Unicorn.DataAccess.Context
                 Birthday = new DateTime(1985, 05, 12),
                 Gender = "male",
                 IsDeleted = false,
-                Location = new Location()
-                {
-                    Id = 4,
-                    Adress = "Akademica Palladina 7 pr.",
-                    City = "Kiev",
-                    Latitude = 50.461199,
-                    Longitude = 30.355651,
-                    IsDeleted = false,
-                    PostIndex = "79053"
-                },
-                Phone = "+38-095-366-11-37",
+                Phone = "+380953661137",
             };
 
             Person person5 = new Person()
@@ -1254,16 +1483,7 @@ namespace Unicorn.DataAccess.Context
                 Birthday = new DateTime(1989, 09, 11),
                 Gender = "female",
                 IsDeleted = false,
-                Location = new Location()
-                {
-                    Adress = "Yawornitskogo st.8",
-                    City = "Kharkiv",
-                    Longitude = 69.651308,
-                    Latitude = 75.084123,
-                    IsDeleted = false,
-                    PostIndex = "54136"
-                },
-                Phone = "+38-044-555-55-55"
+                Phone = "+380445555555"
             };
 
             Person person6 = new Person()
@@ -1276,17 +1496,7 @@ namespace Unicorn.DataAccess.Context
                 Birthday = new DateTime(1977, 09, 23),
                 Gender = "male",
                 IsDeleted = false,
-                Location = new Location()
-                {
-                    Id = 6,
-                    Adress = "Shevchenko str.",
-                    City = "Boryspol",
-                    Latitude = 50.461199,
-                    Longitude = 30.355651,
-                    IsDeleted = false,
-                    PostIndex = "27123"
-                },
-                Phone = "+38-044-666-66-66",
+                Phone = "+380446666666",
             };
 
             Person person7 = new Person()
@@ -1299,16 +1509,7 @@ namespace Unicorn.DataAccess.Context
                 Birthday = new DateTime(1998, 11, 10),
                 Gender = "male",
                 IsDeleted = false,
-                Location = new Location()
-                {
-                    Adress = "Puliya 7 pr.",
-                    City = "Dnipro",
-                    Longitude = 44.119637,
-                    Latitude = 99.131470,
-                    IsDeleted = false,
-                    PostIndex = "09304"
-                },
-                Phone = "+38-044-777-77-77",
+                Phone = "+380447777777",
             };
 
             Person person8 = new Person()
@@ -1321,16 +1522,7 @@ namespace Unicorn.DataAccess.Context
                 Birthday = new DateTime(1995, 2, 27),
                 Gender = "male",
                 IsDeleted = false,
-                Location = new Location()
-                {
-                    Adress = "Zamarstynivska 15a",
-                    City = "Lviv",
-                    Longitude = 16.312059,
-                    Latitude = 22.963471,
-                    IsDeleted = false,
-                    PostIndex = "96341"
-                },
-                Phone = "+38-044-888-88-88"
+                Phone = "+380448888888"
             };
 
             Person person9 = new Person()
@@ -1343,16 +1535,7 @@ namespace Unicorn.DataAccess.Context
                 Birthday = new DateTime(1995, 2, 27),
                 Gender = "male",
                 IsDeleted = false,
-                Location = new Location()
-                {
-                    Adress = "Dom Kolotushkina",
-                    City = "Boston",
-                    Longitude = 19.16348,
-                    Latitude = 99.11074,
-                    IsDeleted = false,
-                    PostIndex = "013279"
-                },
-                Phone = "+38-044-999-99-99"
+                Phone = "+380449999999"
             };
 
             Person person10 = new Person()
@@ -1365,16 +1548,7 @@ namespace Unicorn.DataAccess.Context
                 Birthday = new DateTime(1992, 1, 20),
                 Gender = "male",
                 IsDeleted = false,
-                Phone = "+38-095-444-44-44",
-                Location = new Location()
-                {
-                    Adress = "Center 2a",
-                    City = "Madrid",
-                    Longitude = 75.944219,
-                    Latitude = 71.124861,
-                    IsDeleted = false,
-                    PostIndex = "99304"
-                },
+                Phone = "+380954444444"
             };
 
             context.Persons.AddRange(new List<Person>() { person1, person2, person3, person4, person5, person6, person7, person8, person9, person10 });
@@ -1493,16 +1667,6 @@ namespace Unicorn.DataAccess.Context
                 Director = "Alex Moren",
                 Staff = 2,
                 IsDeleted = false,
-                Location = new Location()
-                {
-                    Id = 1,
-                    Adress = "Stepana Bandery 7",
-                    City = "Lviv",
-                    Latitude = 56.357890,
-                    Longitude = 118.13458,
-                    IsDeleted = false,
-                    PostIndex = "79054"
-                },
                 Vendors = new List<Vendor>() { vendor1, vendor2 },
                 Works = new List<Work> { work1, work2}
 
@@ -1518,15 +1682,6 @@ namespace Unicorn.DataAccess.Context
                 Director = "John Snow",
                 Staff = 2,
                 IsDeleted = false,
-                Location = new Location()
-                {
-                    Adress = "Akademica Palladina 7 pr.",
-                    City = "Kiev",
-                    Latitude = 50.461199,
-                    Longitude = 30.355651,
-                    IsDeleted = false,
-                    PostIndex = "03179"
-                },
                 Vendors = new List<Vendor>() { vendor4, vendor5},
                 Works = new List<Work> { work3, work4 }
             };
@@ -1541,16 +1696,6 @@ namespace Unicorn.DataAccess.Context
                 Director = "Jaime Lannister",
                 Staff = 1,
                 IsDeleted = false,
-                Location = new Location()
-                {
-                    Id = 6,
-                    Adress = "Shevchenko str.",
-                    City = "Boryspol",
-                    Latitude = 50.461199,
-                    Longitude = 30.355651,
-                    IsDeleted = false,
-                    PostIndex = "27123"
-                },
                 Vendors = new List<Vendor>() { vendor6 },
                 Works = new List<Work> { work5, work6 }
             };
@@ -1565,15 +1710,6 @@ namespace Unicorn.DataAccess.Context
                 Director = "Sergey Grin",
                 Staff = 1,
                 IsDeleted = false,
-                Location = new Location()
-                {
-                    Adress = "Soborna St",
-                    City = "Vinnitsa",
-                    Latitude = 49.233256,                    
-                    Longitude = 28.467229,
-                    IsDeleted = false,
-                    PostIndex = "21021"
-                },
                 Vendors = new List<Vendor>(),
                 Works = new List<Work> { work7 }
             };
@@ -1588,15 +1724,6 @@ namespace Unicorn.DataAccess.Context
                 Director = "Rob Morris",
                 Staff = 1,
                 IsDeleted = false,
-                Location = new Location()
-                {
-                    Adress = "Balkivs'ka St",
-                    City = "Odessa",
-                    Latitude = 46.44124,
-                    Longitude = 30.715554,
-                    IsDeleted = false,
-                    PostIndex = "23445"
-                },
                 Vendors = new List<Vendor>(),
                 Works = new List<Work> { work8 }
             };
@@ -1611,15 +1738,6 @@ namespace Unicorn.DataAccess.Context
                 Director = "Alok Ohrie",
                 Staff = 1,
                 IsDeleted = false,
-                Location = new Location()
-                {
-                    Adress = "Peremohy Ave, 82",
-                    City = "Chernihiv",
-                    Latitude = 51.492639,                    
-                    Longitude = 31.292565,
-                    IsDeleted = false,
-                    PostIndex = "24326"
-                },
                 Vendors = new List<Vendor>(),
                 Works = new List<Work> { work9 }
             };
@@ -1634,15 +1752,6 @@ namespace Unicorn.DataAccess.Context
                 Director = "Don Thompson",
                 Staff = 1,
                 IsDeleted = false,
-                Location = new Location()
-                {
-                    Adress = "Pushkina Ave, 39А",
-                    City = "Dnipro",
-                    Latitude = 48.466027,
-                    Longitude = 35.025498,
-                    IsDeleted = false,
-                    PostIndex = "27000"
-                },
                 Vendors = new List<Vendor>(),
                 Works = new List<Work> { work10 }
             };
@@ -1657,15 +1766,6 @@ namespace Unicorn.DataAccess.Context
                 Director = "Sergey Kovalenko",
                 Staff = 1,
                 IsDeleted = false,
-                Location = new Location()
-                {
-                    Adress = "Rus'ka St, 18",
-                    City = "Ternopil",
-                    Latitude = 49.550626,
-                    Longitude = 25.590897,
-                    IsDeleted = false,
-                    PostIndex = "26911"
-                },
                 Vendors = new List<Vendor>(),
                 Works = new List<Work> { work11 }
             };

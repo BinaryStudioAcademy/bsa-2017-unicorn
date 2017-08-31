@@ -2,11 +2,13 @@ import { Component, OnInit, Input } from '@angular/core';
 
 import * as firebase from 'firebase/app';
 import { RegisterService } from '../../services/register.service';
-
 import { SuiActiveModal } from 'ng2-semantic-ui';
 import { Vendor } from '../models/vendor';
 import { HelperService } from '../../services/helper/helper.service';
 import { AuthenticationEventService } from '../../services/events/authenticationevent.service';
+import { LocationModel } from '../../models/location.model'
+import { LocationService } from "../../services/location.service";
+
 
 @Component({
   selector: 'app-register-vendor',
@@ -17,6 +19,7 @@ export class RegisterVendorComponent implements OnInit {
 
   @Input() social: firebase.User;
   @Input() public modal: SuiActiveModal<void, void, void>;
+  @Input() location: LocationModel;
 
   experience: number;
   position: string;
@@ -25,7 +28,6 @@ export class RegisterVendorComponent implements OnInit {
   middleName: string;
   lastName: string;
   email: string;
-
   mode: string;
 
   phone: string;
@@ -33,11 +35,12 @@ export class RegisterVendorComponent implements OnInit {
 
   constructor(private registerService: RegisterService,
     private helperService: HelperService,
-    private authEventService: AuthenticationEventService) { }
+    private authEventService: AuthenticationEventService,
+    private locationService: LocationService
+  ) { }
 
   ngOnInit() {
     this.mode = 'date';
-
     this.email = this.social.email || null;
     this.phone = this.social.phoneNumber || null;
     this.initName();
@@ -48,6 +51,7 @@ export class RegisterVendorComponent implements OnInit {
     let nameValues = displayName.split(' ');
     this.firstName = nameValues[0] || null;
     this.lastName = nameValues[1] || null;
+    
   }
 
   aggregateInfo(): Vendor {
@@ -63,7 +67,8 @@ export class RegisterVendorComponent implements OnInit {
       uid: this.social.uid,
       experience: this.experience,
       position: this.position,
-      speciality: this.speciality
+      speciality: this.speciality,
+      location: this.location
     };
   }
 

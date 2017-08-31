@@ -44,14 +44,14 @@
                                 </div>
                                 <div class="container column">
                                     <div class="ui segment" suiTabContent="4">
-                                        <app-vendor-profile-contacts [vendorId]="vendor.Id" [locationId]="vendor.LocationId"></app-vendor-profile-contacts>
+                                        <app-vendor-profile-contacts [vendorId]="vendor.Id"></app-vendor-profile-contacts>
                                     </div>
                                 </div>
                             </div>
                             <div *ngIf="isUser||isGuest" class="six wide column">
                                 <div class="ui segment">
                                     <app-sign-block *ngIf="isGuest"></app-sign-block>
-                                    <app-book *ngIf="!isGuest" [routePath]="routePath" [routeId]="routeid" [works]="works"></app-book>
+                                    <app-book #bookComponent *ngIf="!isGuest" [routePath]="routePath" [routeId]="routeid" [works]="works"></app-book>
                                 </div>
                             </div>
                         </div>

@@ -16,6 +16,7 @@ export class RegisterService {
     }  
 
   confirmCustomer(customer: Customer): Promise<any> {
+    
     return this.dataService.postFullRequest<any>('membership/customer', customer)
       .catch(err => alert(err));
   }

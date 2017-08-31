@@ -18,7 +18,6 @@ namespace Unicorn.Shared.DTOs
 
         public string Phone { get; set; }
 
-
         public AccountDTO Account { get; set; }
 
         public LocationDTO Location { get; set; }

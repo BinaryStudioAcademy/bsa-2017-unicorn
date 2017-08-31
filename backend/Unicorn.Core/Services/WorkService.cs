@@ -20,7 +20,7 @@ namespace Unicorn.Core.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task CreateAsync(WorkDTO dto)
+        public async Task<WorkDTO> CreateAsync(WorkDTO dto)
         {
             var subcategory = await _unitOfWork.SubcategoryRepository.GetByIdAsync(dto.SubcategoryId);
             var vendor = await _unitOfWork.VendorRepository.GetByIdAsync(dto.VendorId);
@@ -39,6 +39,10 @@ namespace Unicorn.Core.Services
 
             _unitOfWork.WorkRepository.Create(work);
             await _unitOfWork.SaveAsync();
+
+            dto.Id = work.Id;
+
+            return dto;
         }
 
         public async Task<IEnumerable<WorkDTO>> GetAllAsync()

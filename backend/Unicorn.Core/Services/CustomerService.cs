@@ -54,14 +54,21 @@ namespace Unicorn.Core.Services
 
             socialAccounts.Add(socialAccount);
             account.SocialAccounts = socialAccounts;
-
+            account.Location = new Location()
+            {
+                Adress = customerDto.Location.Adress,
+                City = customerDto.Location.City,
+                IsDeleted = false,
+                Latitude = customerDto.Location.Latitude,
+                Longitude = customerDto.Location.Longitude,
+                PostIndex = customerDto.Location.PostIndex
+            };
             person.Birthday = customerDto.Birthday;
             person.Phone = customerDto.Phone;
             person.Name = customerDto.FirstName;
             person.MiddleName = customerDto.MiddleName;
             person.Surname = customerDto.LastName;
             person.Account = account;
-            person.Location = new Location();
 
             customer.Person = person;
             customer.Books = new List<Book>();
@@ -82,7 +89,15 @@ namespace Unicorn.Core.Services
                 customer.Person.Account.Email = userDTO.Email;
                 customer.Person.Phone = userDTO.Phone;
                 customer.Person.Birthday = userDTO.Birthday;
-
+                customer.Person.Account.Location = new Location()
+                {
+                    Adress = userDTO.Location.Adress,
+                    City = userDTO.Location.City,
+                    IsDeleted = false,
+                    Latitude = userDTO.Location.Latitude,
+                    Longitude = userDTO.Location.Longitude,
+                    PostIndex = userDTO.Location.PostIndex
+                };
                 _unitOfWork.CustomerRepository.Update(customer);
                 await _unitOfWork.SaveAsync();
             }
@@ -100,48 +115,24 @@ namespace Unicorn.Core.Services
             var customer = await _unitOfWork.CustomerRepository.
                 Query.Include(c => c.History.Select(h => h.Vendor.Person)).
                 Include(c => c.Books.Select(h => h.Vendor.Person)).
+                Include(c => c.Person.Account.Location).
                 SingleAsync(c => c.Id == id);
             if (customer != null)
             {
-                //var books = await _unitOfWork.BookRepository
-                //    .Query
-                //    .Include(b => b.Work)
-                //    .Include(b => b.Customer)
-                //    .Include(b => b.Vendor)
-                //    .Include(b => b.Company)
-                //    .Include(b => b.Location)
-                //    .Where(b => b.Customer.Id == id)
-                //    .ToListAsync();
-                //var bookDtos = books
-                //    .Select(b => new BookDTO
-                //    {
-                //        Id = b.Id,
-                //        Date = b.Date,
-                //        Description = b.Description,
-                //        Status = b.Status,
-                //        Work = new WorkDTO
-                //        {
-                //            Id = b.Work.Id,
-                //            Icon = b.Work.Icon,
-                //            Name = b.Work.Name                           
-                //        },
-                //        Location = new LocationDTO
-                //        {
-                //            Id = b.Location.Id,
-                //            Adress = b.Location.Adress,
-                //            City = b.Location.City,
-                //            Latitude = b.Location.Latitude,
-                //            Longitude = b.Location.Longitude,
-                //            PostIndex = b.Location.PostIndex
-                //        }
-                //    }).ToList();
                 var customerDto = new UserShortDTO()
                 {
                     Id = customer.Id,
                     Name = customer.Person.Name,
                     SurName = customer.Person.Surname,
                     MiddleName = customer.Person.MiddleName,
-                    LocationId = customer.Person.Location.Id,
+                    Location = new LocationDTO()
+                    {
+                        Adress = customer.Person.Account.Location.Adress,
+                        City = customer.Person.Account.Location.City,
+                        Latitude = customer.Person.Account.Location.Latitude,
+                        Longitude = customer.Person.Account.Location.Longitude,
+                        PostIndex = customer.Person.Account.Location.PostIndex
+                    },
                     Birthday = customer.Person.Birthday,
                     Phone = customer.Person.Phone,
                     Avatar = customer.Person.Account.Avatar,
@@ -179,12 +170,12 @@ namespace Unicorn.Core.Services
             {
                 Location = new Shared.DTOs.LocationDTO()
                 {
-                    Id = customer.Person.Location.Id,
-                    Adress = customer.Person.Location.Adress,
-                    City = customer.Person.Location.City,
-                    Latitude = customer.Person.Location.Latitude,
-                    Longitude = customer.Person.Location.Longitude,
-                    PostIndex = customer.Person.Location.PostIndex
+                    Id = customer.Person.Account.Location.Id,
+                    Adress = customer.Person.Account.Location.Adress,
+                    City = customer.Person.Account.Location.City,
+                    Latitude = customer.Person.Account.Location.Latitude,
+                    Longitude = customer.Person.Account.Location.Longitude,
+                    PostIndex = customer.Person.Account.Location.PostIndex
                 },
                 Phone = customer.Person.Phone
             };

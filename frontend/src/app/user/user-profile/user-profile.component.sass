@@ -1,54 +1,32 @@
 ﻿@import "../../../global-style-variables.sass";
 
-.gray_font
-    color: gray;
-    text-decoration: none;
-    font-family: 'Verdana', 'Century Gothic', 'Calibri', 'Trebuchet MS', sans-serif;
-    font-size: 15px;
-    margin-top: 1.3em;
-    margin-bottom: 1.3em;
-.map 
-  width: 35em;
-  height: 20em;
-  background: green;	
-  
-.ui input
-    margin: 20px;
-    margin-bottom: 0px;
-    width: 300px;
-    display: flex;
+.ui.form .field>label
+	margin-left: 0.5em;
+	padding-bottom: 0.5em;
 
-.valid-error
-    margin: 0 0 0 20px !important;
-  
-.ui form
-    display: inline;
-
-.container
-    display: flex;
-    justify-content: space-evenly;
-.column
-     display: flex;
-     flex-direction: column;
-.elem
-    display: block;
-.row
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
 .ui.basic.button
    box-shadow: 0 0 0 1px $primary_color;
    color:  $primary_color;
    background: none;
-   padding: 10px;
-   width: 100px;
-   height: 40px;
-   margin-right: 0px;
-   margin-top: 5px;
-   align-self: center;
-.ui.active.loading.button
-   box-shadow: 0 0 0 1px $primary_color;
-   color:  $primary_color;
-   background: none;
-   width: 100px;
-   height: 40px;
+   width: 8em;
+   margin-bottom: 1.5em;
+
+.ui.loading.button
+  padding: 15px;
+  width: 8em;
+  margin-bottom: 1.5em;
+
+.ui.basic.button h5
+	color: $primary-color;
+
+.map
+  width: 100%;
+  height: 17.5em;
+  margin-top: 15px;
+.gray_font
+    color: gray !important;
+    text-decoration: none;
+    font-family: 'Verdana', 'Century Gothic', 'Calibri', 'Trebuchet MS', sans-serif;
+    font-size: 15px;
+    margin-top: 2em;
+    margin-bottom: 0.5em;
