@@ -56,7 +56,11 @@ export class DashboardProgressComponent implements OnInit, OnDestroy {
       this.loads[book.Id] = false;
       this.dashMessaging.changeProgress();
       this.toastr.success('Finished task');
-    }).catch(err => this.toastr.error('Cannot finish task'));
+    })
+    .catch(err => {
+      this.loads[book.Id] = false;      
+      this.toastr.error('Cannot finish task');
+    });
   }
 
 }
