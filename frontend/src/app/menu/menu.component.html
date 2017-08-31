@@ -43,12 +43,8 @@
                     </div>
                     <div class="dropdown-content" *ngIf="isNotificationsShow">
                         <div class="item header">
-<<<<<<< HEAD
-                            <h5>NOTIFICATIONS</h5>
-=======
                            <h5>NOTIFICATIONS</h5>
                            <i (click)="toggleNotifications()" class="archive link icon" [ngClass]="{'red': isArchivedNotificationsShown}"></i>
->>>>>>> develop
                         </div>
                         <div *ngIf="!isArchivedNotificationsShown; then newNotificationsList; else archivedNotificationsList">
                             
