@@ -5,6 +5,8 @@ import { CompanyContacts } from "../../../models/company-page/company-contacts.m
 import { ContactProvider } from "../../../models/contact-provider.model";
 import { Contact } from "../../../models/contact.model";
 import { ContactService } from "../../../services/contact.service";
+import { ToastsManager, Toast } from 'ng2-toastr';
+import { ToastOptions } from 'ng2-toastr';
 
 @Component({
   selector: 'app-company-contacts',
@@ -43,7 +45,8 @@ export class CompanyContactsComponent implements OnInit {
 
   constructor(private companyService: CompanyService,
     private route: ActivatedRoute,
-    private contactService: ContactService) { }
+    private contactService: ContactService,
+    private toastr: ToastsManager) { }
 
   ngOnInit() {
     this.pendingContactas = [];
@@ -82,10 +85,19 @@ export class CompanyContactsComponent implements OnInit {
   }
 
   removeContact(contact: Contact): void {    
-    this.companyService.deleteCompanyContact(this.companyId, contact.Id);
-    this.contacts.splice(this.contacts.findIndex(c => c.Id === contact.Id), 1);
-    this.filterContacts();
-    this.filterProviders();
+    this.pendingContactas.push(contact);
+    
+    this.companyService.deleteCompanyContact(this.companyId, contact.Id)
+      .then(() => {
+         this.contacts.splice(this.contacts.findIndex(c => c.Id === contact.Id), 1);
+         this.pendingContactas.splice(this.contacts.findIndex(c => c.Id === contact.Id), 1);
+         this.filterContacts();
+         this.filterProviders();
+      })
+      .catch(() => {
+         this.pendingContactas.splice(this.contacts.findIndex(c => c.Id === contact.Id), 1);
+         this.toastr.error('Sorry, something went wrong', 'Error!');
+      });
   }
 
   editPhoneOpenClickOutside()  {

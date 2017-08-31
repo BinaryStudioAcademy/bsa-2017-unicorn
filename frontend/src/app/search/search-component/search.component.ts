@@ -2,10 +2,11 @@ import { Component, ChangeDetectorRef, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 
 import { Review } from '../../models/review.model';
-import { NguiMapModule, Marker } from '@ngui/map';
+import { NguiMapModule, Marker, NguiMap} from '@ngui/map';
 
 import { SearchService } from '../../services/search.service';
 import { SearchWork } from '../../models/search/search-work';
+import { LocationModel } from '../../models/location.model';
 
 
 @Component({
@@ -34,18 +35,20 @@ export class SearchComponent implements OnInit {
   maxSize = 3;
   hasEllipses = true;
   selectedPage = 1;
-  works: SearchWork[] = [];  
-  tabSuffix = '?tab=reviews';
-  workSuffix = '?work=';
+  works: SearchWork[] = [];
   /* map */
   positions = [];
   markers = [];
-  center: string;
+
+  center: google.maps.LatLng;
 
   autocomplete: google.maps.places.Autocomplete;
   address: any = {};
 
+  selected: string = '';
+
   spinner: boolean;
+  loaded: boolean;
 
   constructor(
     private searchService: SearchService,
@@ -71,11 +74,35 @@ export class SearchComponent implements OnInit {
     .then(works => {
       this.works = works;
       this.spinner = false;
-    });
+      this.loaded = true;
+      this.mapRedirect();
+    }).catch(err => this.spinner = false);
   }
 
   resetFilters() {
     this.filtersIsOpen = false;
+  }
+
+  onMapReady(map: NguiMap) {
+  }
+
+  mapRedirect() {
+    if (this.works && this.works.length > 0) {
+      let loc = this.works[0].Location;
+      console.log(loc.Latitude, loc.Longitude);
+      this.center = new google.maps.LatLng(loc.Latitude, loc.Longitude);
+      this.ref.detectChanges();
+    }
+  }
+
+  selectWork(name: string, loc: LocationModel) {
+    this.center = new google.maps.LatLng(loc.Latitude, loc.Longitude);
+    this.selected = name;
+    this.ref.detectChanges();
+  }
+
+  getWorksPage(): SearchWork[] {
+    return this.works.slice((this.selectedPage - 1) * this.pageSize, this.selectedPage * this.pageSize);
   }
 
   initialized(autocomplete: any) {
@@ -117,5 +144,4 @@ export class SearchComponent implements OnInit {
     this.mode = 'date';           /* select day */
     this.firstDayOfWeek = '1';    /* start calendar from first day of week */
   }
-
 }

@@ -44,12 +44,17 @@ export class DashboardPendingsComponent implements OnInit {
     let book: BookCard = this.books.filter(b => b.Id == id)[0];
     book.Status = BookStatus.Accepted;
     this.aloads[book.Id] = true;
-    this.dashboardService.update(book).then(resp => {
-      this.loadData();
+    this.dashboardService.update(book)
+    .then(resp => {
+      this.books.splice(this.books.findIndex(b => b.Id === id), 1);
+      this.dashMessaging.changePending();      
       this.aloads[book.Id] = false;
-      this.dashMessaging.changePending();
       this.toastr.success('Accepted task');
-    }).catch(err => this.toastr.error('Ops. Cannot accept task'));
+    })
+    .catch(err => {
+      this.aloads[book.Id] = false;      
+      this.toastr.error('Ops. Cannot accept task');
+    });
   }
 
   decline(id: number) {
@@ -57,10 +62,13 @@ export class DashboardPendingsComponent implements OnInit {
     book.Status = BookStatus.Declined;
     this.dloads[book.Id] = true;
     this.dashboardService.update(book).then(resp => {
-      this.loadData();
+      this.books.splice(this.books.findIndex(b => b.Id === id), 1);
       this.dloads[book.Id] = false;
       this.toastr.success('Declined task');
-    }).catch(err => this.toastr.error('Ops. Cannot decline task'));
+    }).catch(err => {
+      this.dloads[book.Id] = false;
+      this.toastr.error('Ops. Cannot decline task');
+    });
   }
 
 }

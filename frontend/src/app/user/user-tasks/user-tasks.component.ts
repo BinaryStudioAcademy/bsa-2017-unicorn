@@ -124,7 +124,7 @@ export class UserTasksComponent implements OnInit {
     this.review.PerformerId = book.PerformerId;
     this.review.PerformerType = book.PerformerType;
     this.reviewService.saveReview(this.review).then(resp => {
-      this.loadData();
+      this.books.splice(this.books.findIndex(b => b.Id === id), 1)
       this.loader = false;
       this.currModal.deny(undefined);
       this.clearData();

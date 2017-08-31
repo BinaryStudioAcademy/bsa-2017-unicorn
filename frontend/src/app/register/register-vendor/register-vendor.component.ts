@@ -35,8 +35,7 @@ export class RegisterVendorComponent implements OnInit {
 
   constructor(private registerService: RegisterService,
     private helperService: HelperService,
-    private authEventService: AuthenticationEventService,
-    private locationService: LocationService
+    private authEventService: AuthenticationEventService
   ) { }
 
   ngOnInit() {

@@ -38,30 +38,33 @@ export class LocationService {
     }
     getGoogle() : Promise<any> {
         return new Promise((resolve, reject) => {
-            if(google) resolve(google);
-            setInterval(function() {
-                if (google) {
+            if(typeof google === 'object' && typeof google.maps === 'object') resolve(google);
+            let id = setInterval(function() {
+                if (typeof google === 'object' && typeof google.maps === 'object') {
                     resolve(google);
+                    clearInterval(id);
                 }
             }, 300);
         });
     }
     getCurrentLocation() {
         var location = new LocationModel();
-    //       if (navigator.geolocation)
-    //        {
-    //          navigator.geolocation.getCurrentPosition(position => {
-    //          location.Latitude = position.coords.latitude || 49.841459;
-    //          location.Longitude = position.coords.longitude || 24.031946;
-            
-    //        });
-    //    } else 
-      {
+           if (navigator.geolocation)
+           {
+               navigator.geolocation.getCurrentPosition(position => {
+               location.Latitude = position.coords.latitude || 49.841459;
+              location.Longitude = position.coords.longitude || 24.031946;
+           })}
+            else 
+     {
         location.Latitude = 49.841459;
         location.Longitude = 24.031946;
-      }
-      console.log(location)
-      
+     }
+     if(location.Latitude===undefined)
+        {
+            location.Latitude = 49.841459;
+            location.Longitude = 24.031946;
+        }
       return location;
     }
 
