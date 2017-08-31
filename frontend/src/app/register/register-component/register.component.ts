@@ -9,7 +9,7 @@ import * as firebase from 'firebase/app';
 import { HelperService } from '../../services/helper/helper.service';
 
 import { RegisterService } from '../../services/register.service';
-import { NguiMapModule } from "@ngui/map";
+import { NguiMapModule, NgMapApiLoader, NgMapAsyncApiLoader, NguiMap } from "@ngui/map";
 import { ComponentModalConfig, ModalSize, SuiModal } from 'ng2-semantic-ui';
 import { LocationService } from "../../services/location.service";
 import { LocationModel } from "../../models/location.model";
@@ -26,7 +26,7 @@ export class RegisterModal extends ComponentModalConfig<void> {
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
-  providers: [RegisterService]
+  providers: [RegisterService, NgMapAsyncApiLoader]
 })
 export class RegisterComponent implements OnInit, OnDestroy {
   private currentUser: firebase.User = null;
@@ -56,7 +56,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
     public registerService: RegisterService,
     public authLoginService: AuthenticationLoginService,
     private authEventService: AuthenticationEventService,
-    private locationService: LocationService) {
+    private locationService: LocationService,
+    private apiLoader: NgMapAsyncApiLoader
+  ) {
 
     this.mode = 'date';
     this.authLoginService.signOut();
@@ -149,12 +151,17 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    // this.locationService.getLocDetails(this.location.Latitude, this.location.Longitude).subscribe(
-    //   result => {
-    //     this.location.Adress=(result.address_components[1].short_name+','+result.address_components[0].short_name)
-    //     this.location.City=result.address_components[3].short_name;
-    //   }
-    // )
+    
+    this.apiLoader.load();
+    this.locationService.getGoogle().then((g) => {
+      this.locationService.getLocDetails(this.location.Latitude, this.location.Longitude).subscribe(
+        result => {
+          this.location.Adress=(result.address_components[1].short_name+','+result.address_components[0].short_name)
+          this.location.City=result.address_components[3].short_name;
+        }
+      );
+    });
+    
     this.authLoginService.authState.subscribe(user => {
       if (user) {
         this.currentUser = user;

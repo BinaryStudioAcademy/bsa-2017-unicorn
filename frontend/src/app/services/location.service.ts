@@ -38,10 +38,11 @@ export class LocationService {
     }
     getGoogle() : Promise<any> {
         return new Promise((resolve, reject) => {
-            if(google) resolve(google);
-            setInterval(function() {
-                if (google) {
+            if(typeof google === 'object' && typeof google.maps === 'object') resolve(google);
+            let id = setInterval(function() {
+                if (typeof google === 'object' && typeof google.maps === 'object') {
                     resolve(google);
+                    clearInterval(id);
                 }
             }, 300);
         });
