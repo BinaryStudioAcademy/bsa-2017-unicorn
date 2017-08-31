@@ -120,9 +120,11 @@ export class VendorDetailsComponent implements OnInit {
   }
 
   onWorksLoaded(works: Work[]) {
-    this.works = works;
-    let work = this.works.find(x => x.Id === this.selectedWorkId);
-    this.bookComponent.selectWork(work);
+    if (this.isUser) {
+      this.works = works;
+      let work = this.works.find(x => x.Id === this.selectedWorkId);
+      this.bookComponent.selectWork(work);
+    }
   }
 
 }
