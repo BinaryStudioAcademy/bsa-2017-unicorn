@@ -44,12 +44,14 @@ export class DashboardPendingsComponent implements OnInit {
     let book: BookCard = this.books.filter(b => b.Id == id)[0];
     book.Status = BookStatus.Accepted;
     this.aloads[book.Id] = true;
-    this.dashboardService.update(book).then(resp => {
-      this.loadData();
+    this.dashboardService.update(book)
+    .then(resp => {
+      this.books.splice(this.books.findIndex(b => b.Id === id), 1);
       this.aloads[book.Id] = false;
       this.dashMessaging.changePending();
       this.toastr.success('Accepted task');
-    }).catch(err => this.toastr.error('Ops. Cannot accept task'));
+    })
+    .catch(err => this.toastr.error('Ops. Cannot accept task'));
   }
 
   decline(id: number) {
