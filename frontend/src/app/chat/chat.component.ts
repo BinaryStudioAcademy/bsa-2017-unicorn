@@ -27,19 +27,24 @@ export class ChatComponent implements OnInit, AfterContentInit {
   writtenMessage: string;  
   inputHeight: number = 43;  
   containerHeight = 300;
-  noMessages: boolean = true;
+  noMessages: boolean = true; 
+  needScroll: boolean = false;
 
   constructor(private chatService: ChatService,
     private tokenHelper: TokenHelperService) { }
 
   ngOnInit() {
-    this.initialize().then(() => {   
-    this.scrollMessages();     
-    });    
+    this.initialize().then(() => this.startScroll());   
   }
 
   ngAfterContentInit(){
     
+  }
+
+  ngAfterViewChecked() {
+    if (this.needScroll) {
+      this.scrollMessages();
+    }
   }
 
   initialize(){
@@ -50,7 +55,7 @@ export class ChatComponent implements OnInit, AfterContentInit {
         if(this.dialogs !== null && this.dialogs.length !== 0){
           this.containerHeight = 300;
           this.selectedId = this.dialogs[0].Id;
-          this.getDialog();         
+          return this.getDialog();         
         }
         else{
           this.messages = [];
@@ -65,7 +70,8 @@ export class ChatComponent implements OnInit, AfterContentInit {
       this.dialog = res;
       this.messages = this.dialog.Messages;
       this.me = this.dialog.ParticipantOneId;
-      this.myParticipant = this.dialog.ParticipantTwoId;   
+      this.myParticipant = this.dialog.ParticipantTwoId; 
+      this.noMessages = false;  
     });    
   }
 
@@ -82,10 +88,7 @@ export class ChatComponent implements OnInit, AfterContentInit {
 
   onSelect(dialogId: number) {    
     this.selectedId = dialogId;
-    this.getDialog().then(() => {
-      this.scrollMessages();   
-    });    
-    
+    this.getDialog().then(() => this.startScroll());   
   }
 
   onWrite(){  
@@ -116,37 +119,20 @@ export class ChatComponent implements OnInit, AfterContentInit {
       isLoaded: true
     };
     this.messages.push(message); 
-    if(this.messages.length >= 4){ 
-      this.scrollMessages();  
-    }    
-    this.chatService.addMessage(message).then(() =>  {
-      this.messages.find(x => x.isLoaded).isLoaded = false;
-    });
+    this.startScroll();  
+
+    this.chatService.addMessage(message).then(() => this.messages.find(x => x.isLoaded).isLoaded = false);
   }
 
+  startScroll() {
+    this.needScroll = true;
+  }
 
   scrollMessages(){ 
-    // this.noMessages = true;  
-    // setTimeout(() => {
-    //   if(this.messagesElement !== undefined){
-    //     this.messagesElement.nativeElement.scrollTop = this.messagesElement.nativeElement.scrollHeight;
-    //   }
-    //   this.noMessages = false;
-    // }, 0);
-    let oldTop: any; 
-    this.noMessages = true;  
-
-    let timerId = setInterval(() => {      
-      if(this.messagesElement !== undefined){ 
-        let oldTop = this.messagesElement.nativeElement.scrollTop;        
-        this.messagesElement.nativeElement.scrollTop = this.messagesElement.nativeElement.scrollHeight;  
-        console.log(this.messagesElement);          
-        if(this.messagesElement.nativeElement.scrollTop !== oldTop){          
-          this.noMessages = false;
-          clearInterval(timerId);
-        }
-      }      
-    }, 10);     
+      if (this.messagesElement && this.messagesElement.nativeElement.scrollTop !== this.messagesElement.nativeElement.scrollHeight) {
+        this.messagesElement.nativeElement.scrollTop = this.messagesElement.nativeElement.scrollHeight; 
+        this.needScroll = false; 
+      }
   }
   normalTeaxareaSize(){
     if(this.textarea !== undefined){ 
