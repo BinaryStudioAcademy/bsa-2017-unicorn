@@ -62,20 +62,7 @@ export class SearchComponent implements OnInit {
   searchWorks() {
     this.works = [];
     this.spinner = true;
-    if (this.category === undefined || this.subcategory === undefined || this.rawDate === undefined) {
-      this.clearBaseFilter();
-      this.getAllWorks();
-    } else {
-      this.getWorksByBaseFilters(this.category, this.subcategory, this.rawDate);
-    }
-  }
-
-  getAllWorks() {
-    this.searchService.getAllWorks()
-    .then(works => {
-      this.works = works;
-      this.spinner = false;
-    });
+    this.getWorksByBaseFilters(this.category, this.subcategory, this.rawDate);
   }
 
   getWorksByBaseFilters(category: string, subcategory: string, date: number) {
@@ -128,13 +115,6 @@ export class SearchComponent implements OnInit {
     /* datepicker settings */
     this.mode = 'date';           /* select day */
     this.firstDayOfWeek = '1';    /* start calendar from first day of week */
-  }
-
-  clearBaseFilter() {
-    this.category = undefined;
-    this.subcategory = undefined;
-    this.date = undefined;
-    this.rawDate = undefined;
   }
 
 }
