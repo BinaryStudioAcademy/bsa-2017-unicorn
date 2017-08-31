@@ -33,7 +33,7 @@ namespace Unicorn.DataAccess.Repositories
             return await Deleted.SingleOrDefaultAsync(i => i.Id == id);
         }
 
-        public void Create(T entity)
+        public T Create(T entity)
         {
             try
             {
@@ -41,7 +41,7 @@ namespace Unicorn.DataAccess.Repositories
                 {
                     throw new ArgumentNullException(nameof(entity));
                 }
-                Entities.Add(entity);
+                return Entities.Add(entity);
             }
             catch (Exception ex)
             {

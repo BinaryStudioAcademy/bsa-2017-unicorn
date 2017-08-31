@@ -3,6 +3,8 @@ import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { ImageCropperComponent, CropperSettings } from "ng2-img-cropper";
 import { SafeResourceUrl, DomSanitizer } from "@angular/platform-browser";
 import { SuiModalService, TemplateModalConfig, ModalTemplate, ModalSize, SuiActiveModal } from 'ng2-semantic-ui';
+import { ToastsManager, Toast } from 'ng2-toastr';
+import { ToastOptions } from 'ng2-toastr';
 
 import { VendorService } from "../../../services/vendor.service";
 import { ModalService } from "../../../services/modal/modal.service";
@@ -52,6 +54,7 @@ export class VendorEditWorksComponent implements OnInit {
   selectedCategory: Category;
   selectedSubcategory: Subcategory;
   selectedWork: Work;
+  pendingWorks: Work[];
 
   isEditOpen: boolean;
 
@@ -62,6 +65,7 @@ export class VendorEditWorksComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private suiModalService: SuiModalService,
     private modalService: ModalService,
+    private toastr: ToastsManager
   ) {
     this.cropperSettings = modalService.cropperSettings;
     this.data = {};
@@ -75,6 +79,7 @@ export class VendorEditWorksComponent implements OnInit {
     this.categoryService.getAll()
       .then(resp => this.categories = resp.body as Category[]);
     this.subcategories = [];
+    this.pendingWorks = [];
     this.clearSelectedWork();
   }
 
@@ -99,16 +104,36 @@ export class VendorEditWorksComponent implements OnInit {
   createWork(): void {
     this.selectedWork.CategoryId = this.selectedCategory.Id;
     this.selectedWork.SubcategoryId = this.selectedSubcategory.Id;
+
+    this.selectedWork.Subcategory = this.selectedSubcategory.Name;
+    this.selectedWork.Category = this.selectedCategory.Name;
+
+    let work = this.selectedWork;
+
+    this.pendingWorks.push(work);
+    this.works.push(work)
     this.vendorService.postVendorWork(this.vendorId, this.selectedWork)
-      .then(resp => this.works = resp.body as Work[]);
+      .then(resp => {
+        this.pendingWorks.splice(this.pendingWorks.findIndex(w => w === work), 1);
+        work.Id = (resp.body as Work).Id;
+        this.toastr.success('Changes were saved', 'Success!')
+      })
+      .catch(err => {
+        this.pendingWorks.splice(this.pendingWorks.findIndex(w => w === work), 1);
+        this.toastr.error('Sorry, something went wrong', 'Error!');
+      });
     this.clearSelectedWork();
+    this.isEditOpen = false;
   }
 
   updateWork(): void {
     this.selectedWork.CategoryId = this.selectedCategory.Id;
     this.selectedWork.SubcategoryId = this.selectedSubcategory.Id;
-    this.vendorService.updateVendorWork(this.vendorId, this.selectedWork.Id, this.selectedWork);
+    this.vendorService.updateVendorWork(this.vendorId, this.selectedWork.Id, this.selectedWork)
+      .then(() => this.toastr.success('Changes were saved', 'Success!'))
+      .catch(() => this.toastr.error('Sorry, something went wrong', 'Error!'));
     this.clearSelectedWork();
+    this.isEditOpen = false;
   }
 
   removeWork(work: Work): void {
@@ -131,11 +156,25 @@ export class VendorEditWorksComponent implements OnInit {
           this.isEditOpen = false;
           this.clearSelectedWork();
         }
-    
+
+        this.pendingWorks.push(work);
+
         this.vendorService.removeVendorWork(this.vendorId, work.Id, work)
-          .then(resp => this.works = resp.body as Work[]);
+          .then(resp => {
+            this.pendingWorks.splice(this.pendingWorks.findIndex(w => w === work), 1);
+            this.works.splice(this.works.findIndex(w => w.Id === work.Id));
+            this.toastr.success('Changes were saved', 'Success!');
+          })
+          .catch(() => {
+            this.pendingWorks.splice(this.pendingWorks.findIndex(w => w === work), 1);
+            this.toastr.error('Sorry, something went wrong', 'Error!');
+          });
        })
       .onDeny(result => {  /* deny callback */   });
+  }
+
+  isWorkPending(work: Work): boolean {
+    return this.pendingWorks.includes(work);
   }
 
   clearSelectedWork(): void {

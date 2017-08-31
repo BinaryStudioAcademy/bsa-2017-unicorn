@@ -72,7 +72,7 @@ export class UserDetailsComponent implements OnInit {
       .subscribe(resp => {
         this.user = resp.body as User;
         this.user.Birthday = new Date(this.user.Birthday);
-        this.backgroundUrl = this.buildSafeUrl(this.user.Background);
+        this.backgroundUrl = this.buildSafeUrl(this.user.Background != null ? this.user.Background : "https://www.beautycolorcode.com/d8d8d8.png");
       });
   }
 
@@ -83,14 +83,17 @@ export class UserDetailsComponent implements OnInit {
   bannerListener($event) {
     let file: File = $event.target.files[0];
     this.uploading = true;
-    this.photoService.uploadToImgur(file).then(link => {
+    this.photoService.uploadToImgur(file)
+    .then(link => {
       console.log(link);
       return this.photoService.saveBanner(link);
-    }).then(link => {
+    })
+    .then(link => {
       this.backgroundUrl = this.buildSafeUrl(link);
       this.uploading = false;
       this.toastr.success('Your background was updated', 'Success!');
-    }).catch(err => {
+    })
+    .catch(err => {
       console.log(err);
       this.uploading = false;
       this.toastr.error('Sorry, something went wrong', 'Error!');

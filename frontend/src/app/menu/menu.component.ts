@@ -38,8 +38,12 @@ export class MenuComponent implements OnInit {
   profileUrl: string;
 
   showAccountDetails: boolean;
-  showNotifications: boolean;
+  isNotificationsShow: boolean = false
+  isArchivedNotificationsShown: boolean = false;
   notifications: Notification[];
+  archivedNotifications: Notification[];
+  newNotifications: Notification[];
+
   newNotification: Notification;
 
   constructor(
@@ -75,6 +79,8 @@ export class MenuComponent implements OnInit {
       this.accountService.getNotifications(accountId)
         .then(resp => {
           this.notifications = (resp.body as Notification[]);
+          this.newNotifications = this.notifications.filter(n => !n.IsViewed);
+          this.archivedNotifications = this.notifications.filter(n => n.IsViewed);
           this.sortNotificationsByTime();
         });
     }
@@ -149,20 +155,7 @@ export class MenuComponent implements OnInit {
 
   onShowDetails() {
     this.showAccountDetails = !this.showAccountDetails;
-    this.showNotifications = false;
-  }
-
-  onShowNotifications() {
-    this.showNotifications = !this.showNotifications;
-    this.showAccountDetails = false;
-  }
-
-  getNotificationClass(): string {
-    return this.isNotificationExist() ? "red" : "";
-  }
-
-  isNotificationExist(): boolean {
-    return this.notifications && this.notifications.length != 0;
+    this.isNotificationsShow = false;
   }
 
   setProfileRoute(): void {
@@ -185,20 +178,59 @@ export class MenuComponent implements OnInit {
     }
   }
 
+  haveNewNotifications(): boolean {
+    return this.newNotifications && this.newNotifications.length != 0;
+  }
+
+  haveArchivedNotifications(): boolean {
+    return this.archivedNotifications && this.archivedNotifications.length != 0;
+  }
+
+  showNotifications() {
+    this.isNotificationsShow = !this.isNotificationsShow;
+    this.isArchivedNotificationsShown = false;
+    this.showAccountDetails = false;
+    this.newNotification = undefined;
+  }
+
   addNotification(notification: Notification): void {
-    this.notifications.push(notification);
-    this.sortNotificationsByTime();
     this.newNotification = notification;
+
+    this.notifications.push(notification);
+    this.newNotifications = this.notifications.filter(n => !n.IsViewed);
+    this.sortNotificationsByTime();
+
     setTimeout(() => this.newNotification = undefined, 3000);
+  }
+
+  archiveNotification(notification: Notification){
+    notification.IsViewed = true;
+    this.newNotifications.splice(this.newNotifications.findIndex(n => n.Id === notification.Id), 1)
+    this.archivedNotifications.push(notification);
+    this.sortNotificationsByTime();
+    this.accountService.updateNotification(+this.tokenHelper.getClaimByName("accountid"), notification);
+  }
+
+  toggleNotifications(): void {
+    this.isArchivedNotificationsShown = !this.isArchivedNotificationsShown;
   }
 
   removeNotification(notification: Notification): void {
     this.notifications.splice(this.notifications.findIndex(n => n.Id === notification.Id), 1);
+    this.archivedNotifications.splice(this.notifications.findIndex(n => n.Id === notification.Id), 1);
     this.accountService.removeNotification(+this.tokenHelper.getClaimByName("accountid"), notification);
   }
 
   sortNotificationsByTime(): void {
     this.notifications.forEach(n => n.Time = new Date(n.Time));
+    
     this.notifications.sort((a, b) => b.Time.getTime() - a.Time.getTime());
+    this.newNotifications.sort((a, b) => b.Time.getTime() - a.Time.getTime());
+    this.archivedNotifications.sort((a, b) => b.Time.getTime() - a.Time.getTime());
+  }
+
+  isPerformer(): boolean {
+    let roleId = +this.tokenHelper.getClaimByName("roleid");
+    return roleId === 3 || roleId === 4;
   }
 }

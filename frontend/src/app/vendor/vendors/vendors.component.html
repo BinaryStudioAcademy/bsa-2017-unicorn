@@ -1,6 +1,24 @@
-<div id="main">
+<!-- <div id="main">
     <div class="vendors-content ">
-        <div class="ui segment ui grid" *ngFor="let performer of performers">
+        
+    </div>
+</div> -->
+<div class="ui grid left-padded" id="main">
+    <div class="eight wide column">
+        <div class="row" id="search-bar">
+            <div class="ui grid">
+                <div class="six wide column ui input">
+                    <input type="text" placeholder="LOCATION">
+                </div>
+                <div class="six wide column ui input">
+                    <input type="text" placeholder="NAME">
+                </div>
+                <div class="four wide column">
+                    <button class="ui button book-btn">SEARCH</button>
+                </div>
+            </div>
+        </div>
+        <div class="ui segment ui grid" *ngFor="let performer of getPerformersPage()">
             <div class="row">
                 <div class="four wide column">
                     <a href="{{performer.Link}}">
@@ -12,12 +30,39 @@
                         <sui-rating class="star" [isReadonly]="true" [ngModel]="performer.Rating"></sui-rating>
                     </p>
                     <p class="desc">{{performer.Description}}</p>
-                    <p class="location"><i class="colored map pin icon"></i>{{performer.Location.City}}, {{performer.Location.Adress}}</p>
-                    <p class="reviews"><a href="{{performer.Link}}?tab=reviews">Reviews({{performer.ReviewsCount}})</a></p>
+                    <p class="location" (click)="select(performer.Name)">
+                        <i class="colored map pin icon"></i>{{performer.Location.City}}, {{performer.Location.Adress}}
+                    </p>
+                    <p class="reviews">
+                        <a href="{{performer.Link}}?tab=reviews">Reviews({{performer.ReviewsCount}})</a>
+                    </p>
                 </div>
-                <div class="four wide column">
-                    <a href="{{performer.Link}}" class="ui button fluid book-btn">Details</a>
+                <div class="four wide column book-div">
+                    <a href="{{performer.Link}}" class="ui button book-btn">Details</a>
                 </div>
+            </div>
+        </div>
+        <div *ngIf="performers.length > pageSize" class="flex-centered" id="paging">
+            <sui-pagination 
+                [collectionSize]="performers.length" 
+                [pageSize]="pageSize" 
+                [maxSize]="maxSize" 
+                [hasEllipses]="hasEllipses" 
+                [(page)]="selectedPage">
+            </sui-pagination>
+        </div>
+    </div>
+    <div class="eight wide column">
+        <div class="row">
+            <div class="map-container">
+                <ngui-map (mapReady$)="onMapReady($event)" class="map" zoom="3" center="center" *ngIf="loaded">
+                    <custom-marker *ngFor="let per of getPerformersPage()" 
+                        [position]="[per.Location.Latitude, per.Location.Longitude]">
+                        <span class="map-marker" [ngClass]="{'active-marker': selected == per.Name}">
+                            <a href="{{per.Link}}">{{per.Name}}</a>
+                        </span>
+                    </custom-marker>
+                </ngui-map>
             </div>
         </div>
     </div>

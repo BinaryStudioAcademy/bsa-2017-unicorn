@@ -42,6 +42,10 @@ import { ContactService } from "../services/contact.service";
 
 @NgModule({
   imports: [
+    NguiMapModule.forRoot({
+      apiUrl: 'https://maps.google.com/maps/api/js?key=' + environment.googleMapsKey +
+      '&libraries=visualization,places,drawing'
+    }),
     VendorRoutingModule,
     FormsModule,
     SuiModule,

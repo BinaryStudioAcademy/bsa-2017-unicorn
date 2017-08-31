@@ -1,7 +1,10 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
+
 import { NguiMapModule, Marker } from "@ngui/map";
 import { SuiModule } from 'ng2-semantic-ui';
+import { ToastsManager, Toast } from 'ng2-toastr';
+import { ToastOptions } from 'ng2-toastr';
 
 import { Location } from "../../../models/location.model"
 import { Vendor } from "../../../models/vendor.model";
@@ -40,7 +43,8 @@ export class VendorEditInfoComponent implements OnInit {
     private locationService: LocationService, 
     private vendorService: VendorService,
     private categoryService: CategoryService,
-    private workService: WorkService
+    private workService: WorkService,
+    private toastr: ToastsManager
   ) { }
 
   ngOnInit() {
@@ -83,8 +87,13 @@ export class VendorEditInfoComponent implements OnInit {
         this.vendor = resp.body as Vendor;
         this.vendor.Birthday = new Date(this.vendor.Birthday);
         this.vendor.Birthday.setDate(this.vendor.Birthday.getDate() - 1);
+        this.dataLoaded = true;
+        this.toastr.success('Changes were saved', 'Success!');
       })
-      .then(() => this.dataLoaded = true);
+      .catch(err => { 
+        this.dataLoaded = true;
+        this.toastr.error('Sorry, something went wrong', 'Error!');
+      });
   }
 
 }
