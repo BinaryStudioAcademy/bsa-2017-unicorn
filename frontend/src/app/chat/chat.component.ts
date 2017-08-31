@@ -13,6 +13,7 @@ import { TokenHelperService } from "../services/helper/tokenhelper.service";
 export class ChatComponent implements OnInit {
   @ViewChild('messagesBlock')
   private messagesElement: any;
+
   @ViewChild('textArea')
   private textarea: any;
 

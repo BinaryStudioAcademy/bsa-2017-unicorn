@@ -82,6 +82,8 @@ export class ContactsComponent implements OnInit {
           ParticipantOneId: this.ownerId,
           ParticipantTwoId: this.accountId,
           ParticipantName: this.name,
+          LastMessageTime: null,
+          IsReadedLastMessage: null,
           Messages: null
         };    
         this.openChat = true;

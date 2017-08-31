@@ -79,7 +79,9 @@ export class VendorProfileContactsComponent implements OnInit {
           ParticipantOneId: this.ownerId,
           ParticipantTwoId: this.accountId,
           ParticipantName: this.vendor.Name + " " + this.vendor.Surname,
-          Messages: null
+          Messages: null,
+          LastMessageTime: null,
+          IsReadedLastMessage: null
         };    
         this.openChat = true;
         this.isLoaded = false;
