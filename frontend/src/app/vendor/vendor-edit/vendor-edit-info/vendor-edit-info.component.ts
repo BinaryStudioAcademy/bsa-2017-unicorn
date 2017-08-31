@@ -77,43 +77,16 @@ export class VendorEditInfoComponent implements OnInit {
   {
        this.vendor.Location.Latitude = event.latLng.lat();
        this.vendor.Location.Longitude = event.latLng.lng()
-
-       this.LocationService.getLocDetails(this.vendor.Location.Latitude,this.vendor.Location.Longitude)
-      .subscribe(
-       result => {
-         
-          this.vendor.Location.Adress=result.formatted_address;
-           this.vendor.Location.City=result.address_components[3].short_name;
-       },
-       error => console.log(error),
-       () => console.log('Geocoding completed!')
-       );
   }
   initialized(autocomplete: any) {
     this.autocomplete = autocomplete;
   }
 
   placeChanged(event) {
-    let place = this.autocomplete.getPlace();
-    for (let i = 0; i < place.address_components.length; i++) {
-      let addressType = place.address_components[i].types[0];
-      this.address[addressType] = place.address_components[i].long_name;
-    }
-
-    this.position = this.address.locality;
+    let container = document.getElementById('autocomplete').textContent;
     this.vendor.Location.Latitude = event.geometry.location.lat();
     this.vendor.Location.Longitude = event.geometry.location.lng()
-
-    this.LocationService.getLocDetails(this.vendor.Location.Latitude,this.vendor.Location.Longitude)
-   .subscribe(
-    result => {
-      
-       this.vendor.Location.Adress=result.formatted_address;
-        this.vendor.Location.City=result.address_components[3].short_name;
-    },
-    error => console.log(error),
-    () => console.log('Geocoding completed!')
-    );
+    this.position = {lat: this.vendor.Location.Latitude, lng: this.vendor.Location.Longitude}
     this.ref.detectChanges();
   }
   saveVendor(): void {
@@ -122,6 +95,12 @@ export class VendorEditInfoComponent implements OnInit {
     }
     this.dataLoaded = false;
     this.vendor.Birthday.setDate(this.vendor.Birthday.getDate() + 1);
+    this.LocationService.getLocDetails(this.vendor.Location.Latitude,this.vendor.Location.Longitude)
+    .subscribe(
+     result => {
+       
+        this.vendor.Location.Adress=(result.address_components[1].short_name+','+result.address_components[0].short_name)
+         this.vendor.Location.City=result.address_components[3].short_name;
     this.vendorService.updateVendor(this.vendor)
       .then(resp => {
         this.vendor = resp.body as Vendor;
@@ -133,7 +112,7 @@ export class VendorEditInfoComponent implements OnInit {
       .catch(err => { 
         this.dataLoaded = true;
         this.toastr.error('Sorry, something went wrong', 'Error!');
-      });
+      });})
   }
 
 }

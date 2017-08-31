@@ -45,18 +45,7 @@ export class UserProfileComponent implements OnInit {
     markerDragged(event)
     {
          this.user.Location.Latitude = event.latLng.lat();
-         this.user.Location.Longitude = event.latLng.lng()
-
-         this.LocationService.getLocDetails(this.user.Location.Latitude,this.user.Location.Longitude)
-        .subscribe(
-         result => {
-           
-            this.user.Location.Adress=result.formatted_address;
-             this.user.Location.City=result.address_components[3].short_name;
-         },
-         error => console.log(error),
-         () => console.log('Geocoding completed!')
-         );
+         this.user.Location.Longitude = event.latLng.lng();
     }
    
     updateUser(): void {
@@ -67,16 +56,27 @@ export class UserProfileComponent implements OnInit {
             this.toastr.error('Sorry, you must fill all inputs', 'Error!');
             return;
         }
-
+       
         this.user.Birthday.setDate( this.user.Birthday.getDate() + 1);
-        this.userService.updateUser(this.user)
-          .then(resp => {this.user = resp.body as User;
-            this.user.Birthday = new Date(this.user.Birthday);
-            this.user.Birthday.setDate( this.user.Birthday.getDate() - 1);
-            this.dataLoaded = true;
-            this.toastr.success('Changes were saved', 'Success!');})
-          .catch(x=>{ this.dataLoaded = true;
-            this.toastr.error('Sorry, something went wrong', 'Error!');});
+        this.LocationService.getLocDetails(this.user.Location.Latitude,this.user.Location.Longitude)
+        .subscribe(
+         result => {
+           
+            this.user.Location.Adress=(result.address_components[1].short_name+','+result.address_components[0].short_name)
+             this.user.Location.City=result.address_components[3].short_name;
+             this.userService.updateUser(this.user)
+             .then(resp => {this.user = resp.body as User;
+               this.user.Birthday = new Date(this.user.Birthday);
+               this.user.Birthday.setDate( this.user.Birthday.getDate() - 1);
+               this.dataLoaded = true;
+               this.toastr.success('Changes were saved', 'Success!');})
+             .catch(x=>{ this.dataLoaded = true;
+               this.toastr.error('Sorry, something went wrong', 'Error!');});
+         },
+         error => console.log(error),
+         () => console.log('Geocoding completed!')
+         );
+     
       }
 
       initialized(autocomplete: any) {
@@ -84,26 +84,17 @@ export class UserProfileComponent implements OnInit {
       }
     
       placeChanged(event) {
-        let place = this.autocomplete.getPlace();
-        for (let i = 0; i < place.address_components.length; i++) {
-          let addressType = place.address_components[i].types[0];
-          this.address[addressType] = place.address_components[i].long_name;
-        }
+      //  let place = this.autocomplete.getPlace();
+        let container = document.getElementById('autocomplete').textContent;
+        // for (let i = 0; i < place.address_components.length; i++) {
+        //   let addressType = place.address_components[i].types[0];
+        //   this.address[addressType] = place.address_components[i].long_name;
+        // }
     
-        this.position = this.address.locality;
+       // this.position = this.address.locality;
         this.user.Location.Latitude = event.geometry.location.lat();
         this.user.Location.Longitude = event.geometry.location.lng()
-
-        this.LocationService.getLocDetails(this.user.Location.Latitude,this.user.Location.Longitude)
-       .subscribe(
-        result => {
-          
-           this.user.Location.Adress=result.formatted_address;
-            this.user.Location.City=result.address_components[3].short_name;
-        },
-        error => console.log(error),
-        () => console.log('Geocoding completed!')
-        );
+        this.position = {lat: this.user.Location.Latitude, lng: this.user.Location.Longitude}
         this.ref.detectChanges();
       }
 }

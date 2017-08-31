@@ -31,18 +31,7 @@ export class CompanyMainInformationComponent implements OnInit {
     markerDragged(event)
     {
       this.company.Location.Latitude = event.latLng.lat();
-      this.company.Location.Longitude = event.latLng.lng()
-
-        this.LocationService.getLocDetails(this.company.Location.Latitude,this.company.Location.Longitude)
-        .subscribe(
-        result => {
-           
-            this.company.Location.Adress=result.formatted_address;
-            this.company.Location.City=result.address_components[3].short_name;
-        },
-        error => console.log(error),
-        () => console.log('Geocoding completed!')
-        );
+      this.company.Location.Longitude = event.latLng.lng();
     }
   ngOnInit() {
        
@@ -66,33 +55,26 @@ export class CompanyMainInformationComponent implements OnInit {
       return;
     }
     this.isLoaded = true;
-    this.companyService.saveCompanyDetails(this.company).then(() => {this.isLoaded = false});
+    this.LocationService.getLocDetails(this.company.Location.Latitude,this.company.Location.Longitude)
+    .subscribe(
+     result => {
+       
+        this.company.Location.Adress=(result.address_components[1].short_name+','+result.address_components[0].short_name)
+         this.company.Location.City=result.address_components[3].short_name;
+         this.companyService.saveCompanyDetails(this.company).then(() => {this.isLoaded = false});
+     });
   }
+
+
   initialized(autocomplete: any) {
     this.autocomplete = autocomplete;
   }
 
   placeChanged(event) {
-    let place = this.autocomplete.getPlace();
-    for (let i = 0; i < place.address_components.length; i++) {
-      let addressType = place.address_components[i].types[0];
-      this.address[addressType] = place.address_components[i].long_name;
-    }
-
-    this.position = this.address.locality;
+    let container = document.getElementById('autocomplete').textContent;
     this.company.Location.Latitude = event.geometry.location.lat();
     this.company.Location.Longitude = event.geometry.location.lng()
-
-    this.LocationService.getLocDetails(this.company.Location.Latitude,this.company.Location.Longitude)
-   .subscribe(
-    result => {
-      
-       this.company.Location.Adress=result.formatted_address;
-        this.company.Location.City=result.address_components[3].short_name;
-    },
-    error => console.log(error),
-    () => console.log('Geocoding completed!')
-    );
+    this.position = {lat: this.company.Location.Latitude, lng: this.company.Location.Longitude}
     this.ref.detectChanges();
   }
 }

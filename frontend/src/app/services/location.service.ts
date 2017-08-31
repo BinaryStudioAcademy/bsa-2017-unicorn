@@ -48,24 +48,21 @@ export class LocationService {
     }
     getCurrentLocation() {
         var location = new LocationModel();
-         if (navigator.geolocation)
-          {
-            navigator.geolocation.getCurrentPosition(position => {
-            location.Latitude = position.coords.latitude || 49.841459;
-            location.Longitude = position.coords.longitude || 24.031946;
+    //       if (navigator.geolocation)
+    //        {
+    //          navigator.geolocation.getCurrentPosition(position => {
+    //          location.Latitude = position.coords.latitude || 49.841459;
+    //          location.Longitude = position.coords.longitude || 24.031946;
             
-           });
-         } else 
+    //        });
+    //    } else 
       {
         location.Latitude = 49.841459;
         location.Longitude = 24.031946;
       }
       console.log(location)
+      
       return location;
     }
 
-    getFullLocation()
-    {
-       
-    }
 }
