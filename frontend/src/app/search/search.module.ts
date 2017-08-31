@@ -8,9 +8,11 @@ import { SearchRoutingModule } from './search-routing.module';
 
 import { Review } from '../models/review.model';
 import { environment } from '../../environments/environment';
-import { NguiMapModule } from '@ngui/map';
+// import { NguiMapModule } from '@ngui/map';
+import { NguiMapModule } from "@ngui/map/dist";
 import { CompanyService } from '../services/company-services/company.service';
 // import { MapComponent } from '../map/map.component';
+import { MapModule } from '../map/map.module';
 
 import { SearchService } from '../services/search.service';
 
@@ -22,11 +24,12 @@ import { SearchService } from '../services/search.service';
       apiUrl: 'https://maps.google.com/maps/api/js?key=' + environment.googleMapsKey +
       '&libraries=visualization,places,drawing&language=en&region=GB'
     }),
-    CommonModule,
     SearchRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    SuiModule
+    SuiModule,
+    MapModule,
+    CommonModule
   ],
   declarations: [
     SearchComponent,
