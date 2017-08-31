@@ -3,8 +3,6 @@ export interface MessageModel{
     IsReaded: boolean;
     OwnerId: number;    
     Message: string;
-    Date: Date;
-
-
+    Date: Date; 
     isLoaded: boolean;
 }

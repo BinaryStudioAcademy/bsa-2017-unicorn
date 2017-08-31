@@ -32,15 +32,11 @@ export class MiniChatComponent implements OnInit {
     private tokenHelper: TokenHelperService) { }
 
   ngOnInit() {
-    this.ownerId = +this.tokenHelper.getClaimByName('accountid');
-    //console.log(this.dialog);  
+    this.ownerId = +this.tokenHelper.getClaimByName('accountid');    
     this.dialog.Messages === null ? this.messages = [] : this.messages = this.dialog.Messages;
     this.me = this.dialog.ParticipantOneId;
-    this.myParticipant = this.dialog.ParticipantName;    
-    if(this.dialog.Messages.length >=4){
-      this.scrollMessages();
-    }
-    //console.log(this.messages);    
+    this.myParticipant = this.dialog.ParticipantName;  
+    this.scrollMessages();
   }
 
   onChange(event){  
@@ -91,31 +87,35 @@ export class MiniChatComponent implements OnInit {
       isLoaded: true
     };
     this.writtenMessage = undefined;
-    this.messages.push(message); 
-    if(this.messages.length >= 4){
-      this.scrollMessages();  
-    }
-    this.chatService.addMessage(message).then(res =>  {
-      //console.log(res);
+    this.messages.push(message);     
+    this.scrollMessages();      
+    this.chatService.addMessage(message).then(res =>  {     
       this.messages.find(x => x.isLoaded).isLoaded = false;
+    });    
+  }
+
+  readNotReadedMessages(){
+    let isChanged = false;
+    this.messages.filter(x => !x.IsReaded).forEach(mes => {
+      if(mes.OwnerId !== this.ownerId){
+        mes.IsReaded = true;
+        isChanged = true;
+      }
     });
-    //console.log(this.messages); 
+    if(isChanged){
+      this.chatService.updateMessages(this.dialog.Id, this.ownerId);
+    }
   }
 
 
   scrollMessages(){ 
-    let oldTop: any; 
-    //console.log(this.messagesElement);  
-    let timerId = setInterval(() => {      
-      if(this.messagesElement !== undefined){ 
-        let oldTop = this.messagesElement.nativeElement.scrollTop;        
-        this.messagesElement.nativeElement.scrollTop = this.messagesElement.nativeElement.scrollHeight;        
-        if(this.messagesElement.nativeElement.scrollTop != oldTop){          
-          this.noMessages = false;
-          clearInterval(timerId);
-        }
-      }      
-    }, 10);     
+    this.noMessages = true;  
+    setTimeout(() => {
+      if(this.messagesElement !== undefined){
+        this.messagesElement.nativeElement.scrollTop = this.messagesElement.nativeElement.scrollHeight;
+      }
+      this.noMessages = false;
+    }, 0);
   } 
   normalTeaxareaSize(){
     if(this.textarea !== undefined){ 

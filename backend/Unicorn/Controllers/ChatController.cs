@@ -79,6 +79,21 @@ namespace Unicorn.Controllers
         }
 
         [HttpPost]
+        [Route("messages/update/{dialogId}")]
+        public async Task<HttpResponseMessage> ReadNotReadedMessages(long dialogId, [FromBody] long ownerId)
+        {
+            try
+            {
+                await _chatService.UpdateNotReadedMessage(dialogId, ownerId);
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
+        }
+
+        [HttpPost]
         [Route("send")]
         public async Task<HttpResponseMessage> SendMessage(ChatMessageDTO msg)
         {

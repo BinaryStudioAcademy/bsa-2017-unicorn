@@ -27,5 +27,8 @@ export class ChatService {
   addMessage(message: MessageModel):Promise<MessageModel>{
     return this.dataService.postRequest("chat/send", message);
   }
+  updateMessages(dialogId: number, ownerId: number):Promise<MessageModel>{
+    return this.dataService.postRequest("chat/messages/update/"+ dialogId, ownerId);
+  }
 
 }

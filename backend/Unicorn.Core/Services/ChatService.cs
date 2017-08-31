@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
+using Castle.Core.Internal;
 using Unicorn.Core.Interfaces;
 using Unicorn.DataAccess.Entities;
 using Unicorn.DataAccess.Entities.Enum;
@@ -37,6 +38,15 @@ namespace Unicorn.Core.Services
             _unitOfWork.ChatMessageRepository.Create(cmsg);
             await _unitOfWork.SaveAsync();
         }
+
+        public async Task UpdateNotReadedMessage(long dialogId, long ownerId)
+        {
+            var dialog = await _unitOfWork.ChatDialogRepository.GetByIdAsync(dialogId);
+            dialog.Messages.Where(x => !x.IsReaded && x.Owner.Id != ownerId).ForEach(mes => mes.IsReaded = true);
+            _unitOfWork.ChatDialogRepository.Update(dialog);
+            await _unitOfWork.SaveAsync();
+        }
+
 
         public async Task<ChatDialogDTO> CreateDialog(ChatDialogDTO dialog)
         {

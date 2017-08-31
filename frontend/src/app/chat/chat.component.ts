@@ -20,9 +20,7 @@ export class ChatComponent implements OnInit, AfterContentInit {
   ownerId: number;
   dialogs: DialogModel[];
   dialog: DialogModel;
-  messages: MessageModel[];
-  me: number;
-  myParticipant: number;
+  messages: MessageModel[];  
   selectedId: number;
   writtenMessage: string;  
   inputHeight: number = 43;  
@@ -63,9 +61,7 @@ export class ChatComponent implements OnInit, AfterContentInit {
   getDialog(){
     return this.chatService.getDialog(this.selectedId).then(res => {
       this.dialog = res;
-      this.messages = this.dialog.Messages;
-      this.me = this.dialog.ParticipantOneId;
-      this.myParticipant = this.dialog.ParticipantTwoId;   
+      this.messages = this.dialog.Messages;      
     });    
   }
 
@@ -115,38 +111,49 @@ export class ChatComponent implements OnInit, AfterContentInit {
       Date: new Date(),
       isLoaded: true
     };
-    this.messages.push(message); 
-    if(this.messages.length >= 4){ 
-      this.scrollMessages();  
-    }    
+    this.messages.push(message);     
+    this.scrollMessages();         
     this.chatService.addMessage(message).then(() =>  {
       this.messages.find(x => x.isLoaded).isLoaded = false;
     });
   }
 
+  readNotReadedMessages(){
+    let isChanged = false;
+    this.messages.filter(x => !x.IsReaded).forEach(mes => {
+      if(mes.OwnerId !== this.ownerId){
+        mes.IsReaded = true;
+        isChanged = true;
+      }
+    });
+    if(isChanged){
+      this.chatService.updateMessages(this.dialog.Id, this.ownerId);
+    }
+  }
+
 
   scrollMessages(){ 
-    // this.noMessages = true;  
-    // setTimeout(() => {
-    //   if(this.messagesElement !== undefined){
-    //     this.messagesElement.nativeElement.scrollTop = this.messagesElement.nativeElement.scrollHeight;
-    //   }
-    //   this.noMessages = false;
-    // }, 0);
-    let oldTop: any; 
     this.noMessages = true;  
+    setTimeout(() => {
+      if(this.messagesElement !== undefined){
+        this.messagesElement.nativeElement.scrollTop = this.messagesElement.nativeElement.scrollHeight;
+      }
+      this.noMessages = false;
+    }, 0);
+    // let oldTop: any; 
+    // this.noMessages = true;  
 
-    let timerId = setInterval(() => {      
-      if(this.messagesElement !== undefined){ 
-        let oldTop = this.messagesElement.nativeElement.scrollTop;        
-        this.messagesElement.nativeElement.scrollTop = this.messagesElement.nativeElement.scrollHeight;  
-        console.log(this.messagesElement);          
-        if(this.messagesElement.nativeElement.scrollTop !== oldTop){          
-          this.noMessages = false;
-          clearInterval(timerId);
-        }
-      }      
-    }, 10);     
+    // let timerId = setInterval(() => {      
+    //   if(this.messagesElement !== undefined){ 
+    //     let oldTop = this.messagesElement.nativeElement.scrollTop;        
+    //     this.messagesElement.nativeElement.scrollTop = this.messagesElement.nativeElement.scrollHeight;  
+    //     console.log(this.messagesElement);          
+    //     if(this.messagesElement.nativeElement.scrollTop !== oldTop){          
+    //       this.noMessages = false;
+    //       clearInterval(timerId);
+    //     }
+    //   }      
+    // }, 10);     
   }
   normalTeaxareaSize(){
     if(this.textarea !== undefined){ 

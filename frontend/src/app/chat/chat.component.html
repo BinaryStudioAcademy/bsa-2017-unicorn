@@ -48,7 +48,7 @@
         </div>
         <div class="ui form" *ngIf="dialogs !== undefined && messages !== undefined">
             <div class="field" style="display: flex;">
-                <textarea #textArea (keydown)="onChange($event)" [disabled]="noMessages" [ngStyle]="{'height.px': inputHeight}" class="prompt" type="text" placeholder="Type here..." [(ngModel)]="writtenMessage" style="display:inline">                        
+                <textarea #textArea (keydown)="onChange($event)" (focus)="readNotReadedMessages()" [disabled]="noMessages" [ngStyle]="{'height.px': inputHeight}" class="prompt" type="text" placeholder="Type here..." [(ngModel)]="writtenMessage" style="display:inline">                        
                 </textarea>
                 <div class="ui icon input">
                     <i class="talk outline link icon" (click)="onWrite()"></i>
