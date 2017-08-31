@@ -22,8 +22,7 @@ export class BookComponent implements OnInit {
 
   @Input() routePath: string;
   @Input() routeId: number;
-  @Input() works: any;
-  @Input() selectedWorkId: number;
+  @Input() works: any;  
 
   @ViewChild('bookForm') public bookForm: NgForm;
 
@@ -53,11 +52,16 @@ export class BookComponent implements OnInit {
       customerphone: ""
     }
 
-    this.getUserData();    
+    this.getUserData();
   }
 
   onWorkChange() {
     this.book.workid = this.selectedWork.Id;
+  }
+
+  selectWork(work) {
+    this.selectedWork = work;
+    this.onWorkChange();
   }
 
   makeOrder() {

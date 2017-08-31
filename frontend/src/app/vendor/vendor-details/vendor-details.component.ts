@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
+import { BookComponent } from '../../book/book/book.component';
 
 import 'rxjs/add/operator/switchMap';
 
@@ -25,6 +26,8 @@ import { Work } from "../../models/work.model";
     ModalService]
 })
 export class VendorDetailsComponent implements OnInit {
+
+  @ViewChild('bookComponent') bookComponent: BookComponent;
 
   @ViewChild('cropper', undefined)
   cropper: ImageCropperComponent;
@@ -118,6 +121,8 @@ export class VendorDetailsComponent implements OnInit {
 
   onWorksLoaded(works: Work[]) {
     this.works = works;
+    let work = this.works.find(x => x.Id === this.selectedWorkId);
+    this.bookComponent.selectWork(work);
   }
 
 }

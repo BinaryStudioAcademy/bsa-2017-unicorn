@@ -51,7 +51,7 @@
                             <div *ngIf="isUser||isGuest" class="six wide column">
                                 <div class="ui segment">
                                     <app-sign-block *ngIf="isGuest"></app-sign-block>
-                                    <app-book *ngIf="!isGuest" [routePath]="routePath" [routeId]="routeid" [works]="works" [selectedWorkId]="selectedWorkId"></app-book>
+                                    <app-book #bookComponent *ngIf="!isGuest" [routePath]="routePath" [routeId]="routeid" [works]="works"></app-book>
                                 </div>
                             </div>
                         </div>
