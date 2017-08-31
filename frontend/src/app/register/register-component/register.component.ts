@@ -98,6 +98,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
       }
     }
   }
+  
 
   loginWithGoogle() {
     this.gloader = true;
