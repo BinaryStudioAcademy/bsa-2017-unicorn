@@ -62,10 +62,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
     this.mode = 'date';
     this.authLoginService.signOut();
-
+    console.log(this.location);
     this.isLogged = false;
     this.error = false;
-    this.location = this.locationService.getCurrentLocation();
+    
     this.initRoles();
   }
 
@@ -152,7 +152,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    
+    this.location = this.locationService.getCurrentLocation();
+    console.log(this.location);
     this.apiLoader.load();
     this.locationService.getGoogle().then((g) => {
       this.locationService.getLocDetails(this.location.Latitude, this.location.Longitude).subscribe(

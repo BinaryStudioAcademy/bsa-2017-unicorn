@@ -32,8 +32,7 @@ export class RegisterUserComponent implements OnInit {
 
   constructor(private registerService: RegisterService,
     private helperService: HelperService,
-    private authEventService: AuthenticationEventService,
-    private locationService: LocationService) { }
+    private authEventService: AuthenticationEventService) { }
 
   ngOnInit() {
     this.mode = 'date';

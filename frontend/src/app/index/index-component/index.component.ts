@@ -23,7 +23,9 @@ export class IndexComponent implements OnInit {
 
   constructor(
     private router: Router
-  ) { }
+  ) {
+    navigator.geolocation.getCurrentPosition(()=>{});
+   }
 
   ngOnInit() {
     this.initContent();
