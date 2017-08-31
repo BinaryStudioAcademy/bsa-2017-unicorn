@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, AfterContentInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { DialogModel } from "../models/chat/dialog.model";
 import { MessageModel } from "../models/chat/message.model";
 import { NgClass } from '@angular/common';
@@ -10,7 +10,7 @@ import { TokenHelperService } from "../services/helper/tokenhelper.service";
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.sass']
 })
-export class ChatComponent implements OnInit, AfterContentInit {
+export class ChatComponent implements OnInit {
   @ViewChild('messagesBlock')
   private messagesElement: any;
 
@@ -25,19 +25,20 @@ export class ChatComponent implements OnInit, AfterContentInit {
   writtenMessage: string;  
   inputHeight: number = 43;  
   containerHeight = 300;
-  noMessages: boolean = true;
+  noMessages: boolean = false; 
+  needScroll: boolean = false;
 
   constructor(private chatService: ChatService,
     private tokenHelper: TokenHelperService) { }
 
   ngOnInit() {
-    this.initialize().then(() => {   
-    this.scrollMessages();     
-    });    
-  }
+    this.initialize().then(() => this.startScroll());   
+  } 
 
-  ngAfterContentInit(){
-    
+  ngAfterViewChecked() {
+    if (this.needScroll) {
+      this.scrollMessages();
+    }
   }
 
   initialize(){
@@ -48,7 +49,7 @@ export class ChatComponent implements OnInit, AfterContentInit {
         if(this.dialogs !== null && this.dialogs.length !== 0){
           this.containerHeight = 300;
           this.selectedId = this.dialogs[0].Id;
-          this.getDialog();         
+          return this.getDialog();         
         }
         else{
           this.messages = [];
@@ -78,10 +79,7 @@ export class ChatComponent implements OnInit, AfterContentInit {
 
   onSelect(dialogId: number) {    
     this.selectedId = dialogId;
-    this.getDialog().then(() => {
-      this.scrollMessages();   
-    });    
-    
+    this.getDialog().then(() => this.startScroll());   
   }
 
   onWrite(){  
@@ -130,30 +128,18 @@ export class ChatComponent implements OnInit, AfterContentInit {
       this.chatService.updateMessages(this.dialog.Id, this.ownerId);
     }
   }
-
+    
+  startScroll() {
+    this.needScroll = true;
+  }
 
   scrollMessages(){ 
-    this.noMessages = true;  
-    setTimeout(() => {
-      if(this.messagesElement !== undefined){
-        this.messagesElement.nativeElement.scrollTop = this.messagesElement.nativeElement.scrollHeight;
+    this.noMessages = true;
+      if (this.messagesElement && this.messagesElement.nativeElement.scrollTop !== this.messagesElement.nativeElement.scrollHeight) {
+        this.messagesElement.nativeElement.scrollTop = this.messagesElement.nativeElement.scrollHeight; 
+        this.needScroll = false; 
+        this.noMessages = false;
       }
-      this.noMessages = false;
-    }, 0);
-    // let oldTop: any; 
-    // this.noMessages = true;  
-
-    // let timerId = setInterval(() => {      
-    //   if(this.messagesElement !== undefined){ 
-    //     let oldTop = this.messagesElement.nativeElement.scrollTop;        
-    //     this.messagesElement.nativeElement.scrollTop = this.messagesElement.nativeElement.scrollHeight;  
-    //     console.log(this.messagesElement);          
-    //     if(this.messagesElement.nativeElement.scrollTop !== oldTop){          
-    //       this.noMessages = false;
-    //       clearInterval(timerId);
-    //     }
-    //   }      
-    // }, 10);     
   }
   normalTeaxareaSize(){
     if(this.textarea !== undefined){ 
