@@ -34,8 +34,9 @@ export class SearchComponent implements OnInit {
   maxSize = 3;
   hasEllipses = true;
   selectedPage = 1;
-  works: SearchWork[] = [];
+  works: SearchWork[] = [];  
   tabSuffix = '?tab=reviews';
+  workSuffix = '?work=';
   /* map */
   positions = [];
   markers = [];
