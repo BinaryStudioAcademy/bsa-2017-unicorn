@@ -1,6 +1,6 @@
 <div class="ui grid remove-margin-top-bottom">
   <div class="ten wide column settings-container">
-      <div class="row remove-padding-top">
+      <div id="search-panel" class="row remove-padding-top">
           <div class="ui grid">
               <div class="eight wide column remove-padding-bottom">
                 <label>What to do</label>
@@ -112,10 +112,11 @@
                 </h5>              
               </div>
           </div>
+        <div class="ui fluid divider"></div>
       </div>
-      <div class="ui divider"></div>
+
       <div *ngIf="spinner" class="ui active centered inline ui text loader">Loading</div>
-      <div *ngIf="works" class="ui grid">
+      <div *ngIf="works" class="ui grid" id="works-grid">
         <div class="three column row remove-padding-top">
           <div class="column cell" *ngFor="let work of works.slice((selectedPage - 1) * pageSize, selectedPage * pageSize)">
             <a href="/{{work.Link}}{{workSuffix}}{{work.Id}}" class="ui medium image">
