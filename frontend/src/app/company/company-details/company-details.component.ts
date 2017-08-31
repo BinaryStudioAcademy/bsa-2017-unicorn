@@ -40,11 +40,11 @@ export class CompanyDetailsComponent implements OnInit {
     if (this.route.snapshot.queryParams['tab'] === 'reviews') {
       this.tabActive = true;
     }
-    
+
     if (this.route.snapshot.queryParams['work']) {
       this.selectedWorkId = +this.route.snapshot.queryParams['work'];
     }
-  
+
     this.getCurrentRole();
   }
 
@@ -60,8 +60,10 @@ export class CompanyDetailsComponent implements OnInit {
   }
 
   onWorksLoaded(works: CompanyWork[]) {
-    this.works = works;
-    let work = this.works.find(x => x.Id === this.selectedWorkId);
-    this.bookComponent.selectWork(work);
+    if (this.isUser) {
+      this.works = works;
+      let work = this.works.find(x => x.Id === this.selectedWorkId);
+      this.bookComponent.selectWork(work);
+    }
   }
 }
