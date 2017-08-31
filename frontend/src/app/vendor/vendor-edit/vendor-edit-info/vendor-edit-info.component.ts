@@ -83,7 +83,7 @@ export class VendorEditInfoComponent implements OnInit {
   }
 
   placeChanged(event) {
-    let container = document.getElementById('autocomplete').textContent;
+    //let container = document.getElementById('autocomplete').textContent;
     this.vendor.Location.Latitude = event.geometry.location.lat();
     this.vendor.Location.Longitude = event.geometry.location.lng()
     this.position = {lat: this.vendor.Location.Latitude, lng: this.vendor.Location.Longitude}

@@ -71,7 +71,7 @@ export class CompanyMainInformationComponent implements OnInit {
   }
 
   placeChanged(event) {
-    let container = document.getElementById('autocomplete').textContent;
+  //  let container = document.getElementById('autocomplete').textContent;
     this.company.Location.Latitude = event.geometry.location.lat();
     this.company.Location.Longitude = event.geometry.location.lng()
     this.position = {lat: this.company.Location.Latitude, lng: this.company.Location.Longitude}
