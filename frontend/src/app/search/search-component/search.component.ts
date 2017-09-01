@@ -5,8 +5,12 @@ import { Review } from '../../models/review.model';
 import { NguiMapModule, Marker, NguiMap} from '@ngui/map';
 
 import { SearchService } from '../../services/search.service';
+import { CategoryService } from '../../services/category.service';
+
 import { SearchWork } from '../../models/search/search-work';
 import { LocationModel } from '../../models/location.model';
+import { Category } from '../../models/category.model';
+import { Subcategory } from '../../models/subcategory.model';
 
 
 @Component({
@@ -20,16 +24,18 @@ export class SearchComponent implements OnInit {
   subcategory: string;
   date: Date;
   rawDate: number;
-  /* filter */
-  filtersIsOpen: boolean;
   /* datepicker */
   mode: string;
   firstDayOfWeek: string;
-  /* multi-select */
-  selCat: string[];
-  filterCat: string[];
-  selSubcat: string[];
-  filterSubcat: string[];
+  /* advanced filters */
+  companyName: string;
+  reviewsChecked: boolean;
+  ratingCompare: string;
+  ratingFilter: number;
+  categories: Category[];
+  selCategories: string[];
+  subcategories: Subcategory[];
+  selSubcategories: string[];
   /* pagination */
   pageSize = 20;
   maxSize = 3;
@@ -52,6 +58,7 @@ export class SearchComponent implements OnInit {
 
   constructor(
     private searchService: SearchService,
+    private categoryService: CategoryService,
     private route: ActivatedRoute,
     private ref: ChangeDetectorRef
   ) { }
@@ -59,7 +66,7 @@ export class SearchComponent implements OnInit {
   ngOnInit() {
     this.initDarepicker();
     this.getParameters();
-    this.createMockSettings();
+    this.initAdvancedFilters();
     this.searchWorks();
   }
 
@@ -83,10 +90,48 @@ export class SearchComponent implements OnInit {
     this.category = undefined;
     this.subcategory = undefined;
     this.date = undefined;
+    this.companyName = undefined;
+    this.reviewsChecked = false;
+    this.ratingCompare = 'greater';
+    this.ratingFilter = 0;
+    this.selCategories = [];
+    this.selSubcategories = [];
   }
 
-  resetFilters() {
-    this.filtersIsOpen = false;
+  initAdvancedFilters() {
+    this.ratingCompare = 'greater';
+    this.ratingFilter = 0;
+    this.categoryService.getAll()
+    .then(resp => {
+      this.categories = resp.body as Category[];
+      console.log('categories');
+      console.log(this.categories);
+    });
+  }
+
+  categoriesChanged() {
+    this.selSubcategories = [];
+    this.subcategories = [];
+    this.subcategories = getSubcategories(this.categories, this.selCategories);
+    console.log(this.ratingCompare);
+    console.log(this.ratingFilter);
+
+    function getSubcategories(categories, selected) {
+      let result = [];
+      for (let i = 0; i < categories.length; i++) {
+        for (let j = 0; j < selected.length; j++) {
+          if (categories[i].Name === selected[j]) {
+            result = result.concat(categories[i].Subcategories);
+          }
+        }
+      }
+      return result;
+    }
+  }
+
+  subcategoriesChanged() {
+    console.log('subcat: ');
+    console.log(this.selSubcategories);
   }
 
   onMapReady(map: NguiMap) {
@@ -138,11 +183,6 @@ export class SearchComponent implements OnInit {
 
   convertDate(date: number) {
     return new Date(1000 * date);
-  }
-
-  createMockSettings() {
-    this.filterCat  = ['Category 1', 'Category 2', 'Category 3', 'Category 4', 'Category 5', 'Category 6'];
-    this.filterSubcat  = ['Subategory 1', 'Subategory 2', 'Subategory 3', 'Subategory 4', 'Subategory 5', 'Subategory 6'];
   }
 
   initDarepicker() {

@@ -15,6 +15,7 @@ import { CompanyService } from '../services/company-services/company.service';
 import { MapModule } from '../map/map.module';
 
 import { SearchService } from '../services/search.service';
+import { CategoryService } from '../services/category.service';
 
 
 
@@ -37,7 +38,8 @@ import { SearchService } from '../services/search.service';
   ],
   providers: [
     CompanyService,
-    SearchService
+    SearchService,
+    CategoryService,
   ]
 })
 export class SearchModule { }

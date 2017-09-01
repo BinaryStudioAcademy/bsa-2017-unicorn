@@ -2,8 +2,11 @@
   <div class="ten wide column settings-container">
       <div id="search-panel" class="row remove-padding-top">
           <div class="ui grid">
-              <div class="six wide column remove-padding-bottom">
-                <label>What to do</label>
+              <div class="three wide column remove-padding-bottom">
+                <label>Category</label>
+              </div>
+              <div class="three wide column remove-padding-bottom">
+                <label>Subategory</label>
               </div>
               <div class="ten wide column remove-padding-bottom">
                 <label>When to do it</label>                  
@@ -35,13 +38,88 @@
                     </div>
                     <div content>
                       <div class="ui grid container segment">
-                        <div class="six wide column remove-padding-bottom">  
-                            <div class="ui icon input">                        
-                              <input type="text" placeholder="COMPANY NAME" [(ngModel)]="searchCategory">
-                              <i class="search icon"></i>
+                        <div class="eight wide column remove-padding-bottom">  
+                            <div class="ui icon input full-width">                        
+                              <input type="text" placeholder="COMPANY NAME" [(ngModel)]="companyName">
                             </div>
                         </div>
-                        <div class="four wide column remove-padding-bottom padding-top">  
+                        <div class="eight wide column remove-padding-bottom">  
+                          <div class="ui icon input full-width">                        
+                            <input places-auto-complete
+                            (initialized$)="initialized($event)"
+                            (place_changed)="placeChanged(place)"
+                            [types]="['geocode']" 
+                            placeholder="LOCATION"/>
+                          </div>
+                        </div>
+                        <div class="eight wide column remove-padding-bottom padding-top">
+                          <div class="rating-container">
+                            <div class="rating-box">
+                              <label>Rating</label>
+                              <sui-select class="inline" [(ngModel)]="ratingCompare" placeholder="rating">
+                                <sui-select-option value="greater"></sui-select-option>
+                                <sui-select-option value="lower"></sui-select-option>
+                              </sui-select>
+                            </div>
+                            <sui-rating class="star" [(ngModel)]="ratingFilter"></sui-rating>                       
+                          </div>                             
+                        </div>  
+                        <div class="eight wide column remove-padding-bottom padding-top">  
+                          <label>Distance 5km</label>  
+                        </div> 
+                        <div class="eight wide column remove-padding-bottom padding-top">  
+                          <sui-checkbox [(ngModel)]="reviewsChecked">
+                            Only with reviews
+                          </sui-checkbox>                        
+                        </div>  
+                        <div class="eight wide column remove-padding-bottom padding-top">  
+                          <div class="field">
+                            <sui-checkbox class="slider">10+ km</sui-checkbox>                            
+                          </div>
+                        </div>
+                        <div class="eight wide column">
+                          <sui-multi-select [(ngModel)]="selCategories"
+                                            [options]="categories"                                            
+                                            icon="list"
+                                            placeholder="CATEGORIES"
+                                            (ngModelChange)="categoriesChanged()"
+                                            #select>
+                            <div class="ui icon search input">
+                                <i class="search icon"></i>
+                                <input suiSelectSearch type="text" placeholder="Search options...">
+                            </div>
+                            <div class="divider"></div>
+                            <div class="header">
+                                <i class="list icon"></i>
+                                Categories
+                            </div>
+                            <div class="scrolling menu">
+                                <sui-select-option *ngFor="let category of categories" [value]="category.Name"></sui-select-option>
+                            </div>
+                          </sui-multi-select>
+                        </div>    
+                        <div class="eight wide column">
+                          <sui-multi-select [(ngModel)]="selSubcategories"
+                                            [options]="subcategories"                                            
+                                            icon="list"
+                                            placeholder="SUBCATEGORIES"
+                                            (ngModelChange)="subcategoriesChanged()"
+                                            #select>
+                            <div class="ui icon search input">
+                                <i class="search icon"></i>
+                                <input suiSelectSearch type="text" placeholder="Search options...">
+                            </div>
+                            <div class="divider"></div>
+                            <div class="header">
+                                <i class="list icon"></i>
+                                Subcategories
+                            </div>
+                            <div class="scrolling menu">
+                                <sui-select-option *ngFor="let subcategory of subcategories" [value]="subcategory.Name"></sui-select-option>
+                            </div>
+                          </sui-multi-select>
+                        </div>
+                        <!-- <div class="four wide column remove-padding-bottom padding-top">  
                             <div class="ui checkbox">
                               <input type="checkbox" name="example">
                               <label class="checkbox-position">Only with reviews</label>
@@ -76,11 +154,7 @@
                             [types]="['geocode']" 
                             placeholder="LOCATION"/>
                           </div>
-                        </div>                                   
-                        <div class="sixteen wide column remove-padding-top">
-                          <!-- <button class="ui active button main button-right" (click)="searchCompany()">APPLY</button>
-                          <button class="ui active button secondary button-right" (click)="resetFilters()">RESET</button> -->
-                        </div>
+                        </div>                                    -->
                       </div>
                     </div>
                   </sui-accordion-panel> 
@@ -159,14 +233,6 @@
                 </custom-marker>
             </ngui-map>
         </div>
-      <!-- <div class="map-container">
-        <ngui-map class="map" zoom="3" center="center">
-          <marker *ngFor="let work of getWorksPage()" 
-              [position]="[work.Location.Latitude, work.Location.Longitude]"
-              [label]="work.PerformerName"
-              [title]="work.PerformerName"></marker>
-        </ngui-map>
-      </div> -->
     </div>
   </div>
 </div>
