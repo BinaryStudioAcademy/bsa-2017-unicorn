@@ -4,6 +4,7 @@ import { MessageModel } from "../models/chat/message.model";
 import { NgClass } from '@angular/common';
 import { ChatService } from "../services/chat/chat.service";
 import { TokenHelperService } from "../services/helper/tokenhelper.service";
+import { NotificationService } from "../services/notifications/notification.service";
 
 @Component({
   selector: 'app-chat',
@@ -30,10 +31,12 @@ export class ChatComponent implements OnInit {
 
   constructor(private chatService: ChatService,
     private tokenHelper: TokenHelperService,
-    private cdr: ChangeDetectorRef) { }
+    private cdr: ChangeDetectorRef,
+    private notificationService: NotificationService) { }
 
   ngOnInit() {
-    this.initialize().then(() => this.startScroll());   
+    this.initialize().then(() => this.startScroll());  
+    this.notificationService.listen<any>("RefreshMessages", () => this.addMessage()); 
   } 
 
   ngAfterViewChecked() {

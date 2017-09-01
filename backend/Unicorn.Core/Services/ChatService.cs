@@ -9,22 +9,61 @@ using Unicorn.DataAccess.Entities;
 using Unicorn.DataAccess.Entities.Enum;
 using Unicorn.DataAccess.Interfaces;
 using Unicorn.Shared.DTOs.Chat;
+using Unicorn.Shared.DTOs.Notification;
 
 namespace Unicorn.Core.Services
 {
     public class ChatService : IChatService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly INotificationService _notificationService;
 
-        public ChatService(IUnitOfWork unitOfWork)
+        public ChatService(IUnitOfWork unitOfWork, INotificationService notificationService)
         {
             _unitOfWork = unitOfWork;
+            _notificationService = notificationService;
         }
+        
+
+        private async Task<string> GetParticipant(Role role, long ownerId)
+        {
+            if (role.Type == RoleType.Company)
+            {
+                var participant = await _unitOfWork.CompanyRepository
+                    .Query.SingleAsync(x => x.Account.Id == ownerId);
+                return participant.Name + "(company)";
+            }
+            else if (role.Type == RoleType.Vendor || role.Type == RoleType.Customer)
+            {
+                var participant = await _unitOfWork.PersonRepository
+                    .Query.SingleAsync(x => x.Account.Id == ownerId);
+
+                return participant.Name + " " + participant.Surname + "(person)";
+            }
+            else
+            {
+                var participantPerson = await _unitOfWork.PersonRepository.Query
+                    .Include(p => p.Account).FirstOrDefaultAsync(p => p.Account.Id == ownerId);
+                if (participantPerson == null)
+                {
+                    var participantCompany = await _unitOfWork.CompanyRepository.Query
+                        .Include(p => p.Account).SingleAsync(p => p.Account.Id == ownerId);
+
+                    return participantCompany.Name + "(company)";
+
+                }
+
+                return participantPerson.Name + " " + participantPerson.Surname + "(person)";
+
+            }
+        }
+
 
         public async Task CreateMessage(ChatMessageDTO msg)
         {
             var dialog = await _unitOfWork.ChatDialogRepository.GetByIdAsync(msg.DialogId);
             var owner = await _unitOfWork.AccountRepository.GetByIdAsync(msg.OwnerId);
+            var participant = await GetParticipant(owner.Role, owner.Id);
 
             ChatMessage cmsg = new ChatMessage
             {
@@ -37,6 +76,27 @@ namespace Unicorn.Core.Services
 
             _unitOfWork.ChatMessageRepository.Create(cmsg);
             await _unitOfWork.SaveAsync();
+
+
+            var notification = new NotificationDTO()
+            {
+                Title = $"New message from {participant}",
+                Description = $"{participant} sent you a message. Check your messages to read it.",
+                SourceItemId = cmsg.Id,
+                Time = DateTime.Now,
+                Type = NotificationType.ChatNotification
+            };
+
+            long receiverId;
+            if (dialog.Participant1.Id != owner.Id)
+            {
+                receiverId = dialog.Participant1.Id;
+            }
+            else
+            {
+                receiverId = dialog.Participant2.Id;
+            }
+            await _notificationService.CreateAsync(receiverId, notification);
         }
 
         public async Task UpdateNotReadedMessage(long dialogId, long ownerId)

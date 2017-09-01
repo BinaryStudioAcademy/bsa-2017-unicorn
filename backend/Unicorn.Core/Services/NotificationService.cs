@@ -45,6 +45,9 @@ namespace Unicorn.Core.Services
                 case NotificationType.TaskNotification:
                     await _proxy.RefreshOrdersForAccount(accountId);
                     break;
+                case NotificationType.ChatNotification:
+                    await _proxy.RefreshMessagesForAccount(accountId);
+                    break;
                 default:
                     break;
             }

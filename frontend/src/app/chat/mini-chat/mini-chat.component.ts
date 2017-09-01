@@ -1,9 +1,10 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { MessageModel } from "../../models/chat/message.model";
 import { ChatService } from "../../services/chat/chat.service";
 import { TokenHelperService } from "../../services/helper/tokenhelper.service";
 import { DialogModel } from "../../models/chat/dialog.model";
 import { ChatEventsService } from "../../services/events/chat-events.service";
+import { NotificationService } from "../../services/notifications/notification.service";
 
 @Component({
   selector: 'app-mini-chat',
@@ -32,13 +33,16 @@ export class MiniChatComponent implements OnInit {
 
   constructor(private chatService: ChatService,
     private tokenHelper: TokenHelperService,
-    private chatEventsService: ChatEventsService) { }
+    private chatEventsService: ChatEventsService,
+    private cdr: ChangeDetectorRef,
+    private notificationService: NotificationService) { }
 
   ngOnInit() {
     this.ownerId = +this.tokenHelper.getClaimByName('accountid');    
     this.dialog.Messages === null ? this.messages = [] : this.messages = this.dialog.Messages;
     this.me = this.dialog.ParticipantOneId;
     this.myParticipant = this.dialog.ParticipantName;  
+    this.notificationService.listen<any>("RefreshMessages", () => this.addMessage()); 
     this.startScroll();
   }
 
@@ -66,8 +70,7 @@ export class MiniChatComponent implements OnInit {
       str = str.replace((/\s{2,}/ig), " ");      
       if(str !== " " && str !== "\n" && str != ""){
         this.writtenMessage = this.writtenMessage.trim();
-        if(this.dialog.Id === null){
-          this.noMessages = true;
+        if(this.dialog.Id === null){          
           this.chatService.addDialog(this.dialog).then(res => {
             this.dialog.Id = res.Id;            
             this.addMessage();      
@@ -121,11 +124,13 @@ export class MiniChatComponent implements OnInit {
     this.needScroll = true;
   }
 
-  scrollMessages(){     
+  scrollMessages(){   
+    this.noMessages = true;  
       if (this.messagesElement && this.messagesElement.nativeElement.scrollTop !== this.messagesElement.nativeElement.scrollHeight) {
         this.messagesElement.nativeElement.scrollTop = this.messagesElement.nativeElement.scrollHeight; 
         this.needScroll = false; 
         this.noMessages = false;
+        this.cdr.detectChanges();
       }
   }
   normalTeaxareaSize(){
