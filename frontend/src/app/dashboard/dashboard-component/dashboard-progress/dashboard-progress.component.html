@@ -17,7 +17,7 @@
         </div>
         <div class="book-actions four wide column">
             <div class="">
-                <a (click)="finish(book.Id)" class="ui button accept-btn" [ngClass]="{'loading': loads[book.Id]}">Finish</a>
+                <a (click)="finish(book.Id)" class="ui button accept-btn" [ngClass]="{'loading': loads[book.Id], 'disabled': loads[book.Id]}">Finish</a>
             </div>
         </div>
     </div>
