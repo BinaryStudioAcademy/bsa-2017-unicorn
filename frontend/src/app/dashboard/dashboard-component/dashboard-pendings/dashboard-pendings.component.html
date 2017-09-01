@@ -21,3 +21,23 @@
         </div>
     </div>
 </div>
+<ng-template let-context let-modal="modal" #declineModal>
+    <div class="ui content">
+        <form class="ui reply form" name="reviewForm" #declineForm="ngForm">
+            <div class="field">
+                <textarea required 
+                    placeholder="TYPE THE REASON" 
+                    name="reason" 
+                    [(ngModel)]="reason" 
+                    #reasonText="ngModel"></textarea>
+            </div>
+            <div class="save-btn">
+                <a (click)="declineConfirm(context.id)" 
+                    [ngClass]="{'loading': loader, 'disabled': declineForm.invalid || loader}" 
+                    class="ui basic button decline-confirm">
+                    <p *ngIf="!loader" style="color:#FF647A;">Save</p>
+                </a>
+            </div>
+        </form>
+    </div>
+</ng-template>

@@ -22,7 +22,10 @@
                 <p><a class="rev-link" (click)="showReview(book.Id)">Review</a></p>
             </div>
             <ng-template #nonRated>
-                <span *ngIf="!isFinished(book.Id)">{{getStatus(book.Id)}}</span>
+                <span *ngIf="!isFinished(book.Id)">
+                    {{getStatus(book.Id)}} &nbsp;&nbsp;
+                    <span class="declined-lbl" (click)="showReason(book.DeclinedReason)" *ngIf="isReason(book.Id)">Why?</span>
+                </span>
                 <a *ngIf="isFinished(book.Id)" class="ui button review-btn" (click)="openModal(book.Id)">Leave review</a>
             </ng-template>
 
@@ -51,6 +54,15 @@
                 <a (click)="saveReview(context.id)" [ngClass]="{'loading': loader, 'disabled': reviewForm.invalid || loader}" class="ui basic button">
                     <p *ngIf="!loader" style="color:#FF647A;">Save</p>
                 </a>
+            </div>
+        </form>
+    </div>
+</ng-template>
+<ng-template let-context let-modal="modal" #reasonModal>
+    <div class="ui content">
+        <form class="ui reply form">
+            <div class="field">
+                <textarea readonly name="reason">{{context.reason}}</textarea>
             </div>
         </form>
     </div>

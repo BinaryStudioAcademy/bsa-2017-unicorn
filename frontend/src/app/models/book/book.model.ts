@@ -22,6 +22,7 @@ export interface CustomerBook {
     Performer: string;
     PerformerId: number;
     PerformerType: string;
+    DeclinedReason: string;
     Rating: number;
     Review: Review;
     IsHidden: boolean;

@@ -11,6 +11,7 @@ export interface BookCard {
     CustomerId: number;
     IsHidden: boolean;
     CustomerPhone: string;
+    DeclinedReason: string;
     Rating: number;
     Review: Review;
     Work: Work;

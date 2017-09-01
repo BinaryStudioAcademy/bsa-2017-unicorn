@@ -272,6 +272,7 @@ namespace Unicorn.Core.Services
                     Description = b.Description,
                     Rating = GetRatingByBookId(b.Id),
                     Review = GetReviewDtoByBookId(b.Id),
+                    DeclinedReason = b.DeclinedReason,
                     IsHidden = b.IsHidden,
                     Location = new LocationDTO()
                     {
@@ -352,6 +353,7 @@ namespace Unicorn.Core.Services
                 Status = b.Status,
                 IsHidden = b.IsHidden,
                 Review = GetReviewDtoByBookId(b.Id),
+                DeclinedReason = b.DeclinedReason,
                 Location = new LocationDTO
                 {
                     Id = b.Location.Id,
@@ -382,6 +384,10 @@ namespace Unicorn.Core.Services
 
             book.Status = bookDto.Status;
             book.IsHidden = bookDto.IsHidden;
+            if (bookDto.DeclinedReason != null)
+            {
+                book.DeclinedReason = bookDto.DeclinedReason;
+            }
 
             _unitOfWork.BookRepository.Update(book);
             await _unitOfWork.SaveAsync();

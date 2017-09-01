@@ -19,6 +19,8 @@ namespace Unicorn.Shared.DTOs.Book
 
         public string Description { get; set; }
 
+        public string DeclinedReason { get; set; }
+
         public string Performer { get; set; }
 
         public long PerformerId { get; set; }
