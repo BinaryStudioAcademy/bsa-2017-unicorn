@@ -168,7 +168,8 @@ namespace Unicorn.Core.Services
             //var customer = await _unitOfWork.CustomerRepository.GetByIdAsync(id);
             var customer = await _unitOfWork.CustomerRepository
                 .Query
-                .Include(x => x.Person.Account.Location).FirstAsync(x => x.Id == id);
+                .Include(x => x.Person.Account.Location)
+                .FirstAsync(x => x.Id == id);
 
             return new UserForOrder()
             {
