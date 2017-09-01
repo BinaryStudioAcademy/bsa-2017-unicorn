@@ -48,7 +48,7 @@
                 <textarea placeholder="LEAVE REVIEW" name="review" [(ngModel)]="review.Text" #taskreview="ngModel"></textarea>
             </div>
             <div class="save-btn">
-                <a (click)="saveReview(context.id)" [ngClass]="{'loading': loader, 'disabled': reviewForm.invalid}" class="ui basic button">
+                <a (click)="saveReview(context.id)" [ngClass]="{'loading': loader, 'disabled': reviewForm.invalid || loader}" class="ui basic button">
                     <p *ngIf="!loader" style="color:#FF647A;">Save</p>
                 </a>
             </div>
