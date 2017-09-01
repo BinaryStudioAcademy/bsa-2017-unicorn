@@ -35,7 +35,8 @@ export class ChatComponent implements OnInit {
     private notificationService: NotificationService) { }
 
   ngOnInit() {
-    this.initialize().then(() => this.startScroll());       
+    this.initialize().then(() => this.startScroll());      
+    this.notificationService.listen<any>("RefreshMessages", () => {this.chatService.addMessage(message)}); 
   } 
 
   ngAfterViewChecked() {
@@ -113,8 +114,7 @@ export class ChatComponent implements OnInit {
       isLoaded: true
     };    
     this.messages.push(message);     
-    this.startScroll();     
-    this.notificationService.listen<any>("RefreshMessages", () => this.chatService.addMessage(message));    
+    this.startScroll();             
     this.chatService.addMessage(message).then(() =>  {
       this.messages.find(x => x.isLoaded).isLoaded = false;
     });

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Unicorn.Shared.DTOs.Chat;
 using Unicorn.Shared.DTOs.Notification;
 
 namespace Unicorn.Core.Interfaces
@@ -16,5 +16,6 @@ namespace Unicorn.Core.Interfaces
         Task CreateAsync(long acoountId, NotificationDTO notificationDto);
         Task RemoveAsync(long id);
         Task UpdateAsync(NotificationDTO notificationDto);
+        //Task CreateAsync<T>(long receiverId, NotificationDTO notification, T payload);
     }
 }

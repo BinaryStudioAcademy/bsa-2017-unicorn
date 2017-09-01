@@ -27,7 +27,7 @@ export class MiniChatComponent implements OnInit {
   myParticipant: string;
   writtenMessage: string;  
   inputHeight: number = 33;
-  noMessages: boolean = false;
+  noMessages: boolean = true;
   needScroll: boolean = false;  
 
 

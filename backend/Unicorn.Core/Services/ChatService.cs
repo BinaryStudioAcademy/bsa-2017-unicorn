@@ -97,6 +97,7 @@ namespace Unicorn.Core.Services
                 receiverId = dialog.Participant2.Id;
             }
             await _notificationService.CreateAsync(receiverId, notification);
+            //await _notificationService.CreateAsync(receiverId, notification, msg);
         }
 
         public async Task UpdateNotReadedMessage(long dialogId, long ownerId)
