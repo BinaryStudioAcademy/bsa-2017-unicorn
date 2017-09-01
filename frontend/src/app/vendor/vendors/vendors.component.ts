@@ -24,6 +24,7 @@ export class VendorsComponent implements OnInit {
   selectedPage = 1;
   tabSuffix = '?tab=reviews';
   performers: Performer[] = [];
+  reviewsTab = 'reviews';
 
   /* city */
   city: string;

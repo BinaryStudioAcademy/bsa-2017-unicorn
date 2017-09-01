@@ -23,6 +23,8 @@ export class PopularTasksComponent implements OnInit {
   sperformers: Performer[];
   tperformers: Performer[];
 
+  reviewsTab = 'reviews';
+
   loaded: boolean = false;
 
   constructor(private popularService: PopularService) { }

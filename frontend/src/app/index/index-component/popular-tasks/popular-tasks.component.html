@@ -21,7 +21,7 @@
                     </div>
                     <div class="per-info">
                         <sui-rating class="star" [ngModel]="bestPerformers[i].Rating" [isReadonly]="true"></sui-rating>
-                        <a routerLink="/{{performer.Link}}" [queryParams]="{tab: 'reviews'}">Reviews({{bestPerformers[i].ReviewsCount}})</a>
+                        <a routerLink="/{{performer.Link}}" [queryParams]="{tab: reviewsTab}">Reviews({{bestPerformers[i].ReviewsCount}})</a>
                     </div>
                 </div>
             </div>
@@ -41,7 +41,7 @@
                     </div>
                     <div class="per-info">
                         <sui-rating class="star" [ngModel]="fperformers[i].Rating" [isReadonly]="true"></sui-rating>
-                        <a routerLink="/{{performer.Link}}" [queryParams]="{tab: 'reviews'}">Reviews({{fperformers[i].ReviewsCount}})</a>
+                        <a routerLink="/{{performer.Link}}" [queryParams]="{tab: reviewsTab}">Reviews({{fperformers[i].ReviewsCount}})</a>
                     </div>
                 </div>
             </div>
@@ -61,7 +61,7 @@
                     </div>
                     <div class="per-info">
                         <sui-rating class="star" [ngModel]="sperformers[i].Rating" [isReadonly]="true"></sui-rating>
-                        <a routerLink="/{{performer.Link}}" [queryParams]="{tab: 'reviews'}">Reviews({{sperformers[i].ReviewsCount}})</a>
+                        <a routerLink="/{{performer.Link}}" [queryParams]="{tab: reviewsTab}">Reviews({{sperformers[i].ReviewsCount}})</a>
                     </div>
                 </div>
             </div>
@@ -81,7 +81,7 @@
                     </div>
                     <div class="per-info">
                         <sui-rating class="star" [ngModel]="tperformers[i].Rating" [isReadonly]="true"></sui-rating>
-                        <a routerLink="/{{performer.Link}}" [queryParams]="{tab: 'reviews'}">Reviews({{tperformers[i].ReviewsCount}})</a>
+                        <a routerLink="/{{performer.Link}}" [queryParams]="{tab: reviewsTab}">Reviews({{tperformers[i].ReviewsCount}})</a>
                     </div>
                 </div>
             </div>

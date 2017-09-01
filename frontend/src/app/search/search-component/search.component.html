@@ -133,7 +133,7 @@
             </div>
             <div class="column margin-height">
                 <sui-rating class="star" [ngModel]="work.Rating" [isReadonly]="true"></sui-rating>
-                <a style="float: right" routerLink="/{{work.Link}}" [queryParams]="{tab: 'reviews'}">Reviews({{work.ReviewsCount}})</a>                  
+                <a style="float: right" routerLink="/{{work.Link}}" [queryParams]="{tab: reviewsTab}">Reviews({{work.ReviewsCount}})</a>                  
             </div>
           </div>
         </div>        

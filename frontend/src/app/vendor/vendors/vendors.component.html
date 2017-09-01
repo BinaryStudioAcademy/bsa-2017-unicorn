@@ -46,7 +46,7 @@
                         <i class="colored map pin icon"></i>{{performer.Location.City}}, {{performer.Location.Adress}}
                     </p>
                     <p class="reviews">
-                        <a routerLink="/{{performer.Link}}" [queryParams]="{tab: 'reviews'}">Reviews({{performer.ReviewsCount}})</a>
+                        <a routerLink="/{{performer.Link}}" [queryParams]="{tab: reviewsTab}">Reviews({{performer.ReviewsCount}})</a>
                     </p>
                 </div>
                 <div class="four wide column book-div">
