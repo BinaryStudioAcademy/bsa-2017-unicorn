@@ -106,8 +106,6 @@ namespace Unicorn.Core.Services
                .Where(x => x.Participant1.Id == accountId || x.Participant2.Id == accountId)
                .ToListAsync();
 
-            var messages = await _unitOfWork.ChatMessageRepository.GetAllAsync();
-
             if (dialogs.Count == 0)
             {
                 return null;

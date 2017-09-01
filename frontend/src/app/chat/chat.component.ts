@@ -101,13 +101,13 @@ export class ChatComponent implements OnInit {
   }   
   
 
-  addMessage(){
+  addMessage(){    
     let message = {
       DialogId: this.selectedId,
       IsReaded: false, 
       OwnerId: this.ownerId,
       Message: this.writtenMessage, 
-      Date: new Date(Date.now()),
+      Date: new Date(),
       isLoaded: true
     };    
     this.messages.push(message);     
