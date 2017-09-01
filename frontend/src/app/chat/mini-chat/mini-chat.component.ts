@@ -41,8 +41,7 @@ export class MiniChatComponent implements OnInit {
     this.ownerId = +this.tokenHelper.getClaimByName('accountid');    
     this.dialog.Messages === null ? this.messages = [] : this.messages = this.dialog.Messages;
     this.me = this.dialog.ParticipantOneId;
-    this.myParticipant = this.dialog.ParticipantName;  
-    this.notificationService.listen<any>("RefreshMessages", () => this.addMessage()); 
+    this.myParticipant = this.dialog.ParticipantName;      
     this.startScroll();
   }
 
@@ -101,6 +100,7 @@ export class MiniChatComponent implements OnInit {
     this.writtenMessage = undefined;
     this.messages.push(message);     
     this.startScroll();    
+    this.notificationService.listen<any>("RefreshMessages", () => this.chatService.addMessage(message)); 
     this.chatService.addMessage(message).then(res =>  {     
       this.messages.find(x => x.isLoaded).isLoaded = false;
     });    
