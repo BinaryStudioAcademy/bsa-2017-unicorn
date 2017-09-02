@@ -19,14 +19,16 @@ namespace Unicorn.Core.Services
     public class BookService : IBookService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMailService _mailService;
         ILocationService _locationService;
         private INotificationService _notificationService;
 
-        public BookService(IUnitOfWork unitOfWork, ILocationService location, INotificationService notificationService)
+        public BookService(IUnitOfWork unitOfWork, ILocationService location, INotificationService notificationService, IMailService mailService)
         {
             _unitOfWork = unitOfWork;
             _locationService = location;
             _notificationService = notificationService;
+            _mailService = mailService;
         }
 
         public async Task<IEnumerable<BookDTO>> GetAllAsync()
@@ -200,10 +202,20 @@ namespace Unicorn.Core.Services
             _unitOfWork.BookRepository.Create(_book);
             await _unitOfWork.SaveAsync();
 
+            string notificationDescription = $"{_book.Customer.Person.Name} {_book.Customer.Person.Surname} booked {_book.Work?.Name}. Check your dashboard to find out details.";
+            string receiverEmail = vendor != null ? vendor.Person.Account.Email : company.Account.Email;
+            _mailService.Send(new Shared.DTOs.Email.EmailMessage
+            {
+                ReceiverEmail = receiverEmail,
+                Subject = "You have a new order",
+                Body = notificationDescription,
+                IsHtml = false
+            });
+
             var notification = new NotificationDTO()
             {
                 Title = $"New order for {_book.Work.Name}",
-                Description = $"{_book.Customer.Person.Name} {_book.Customer.Person.Surname} booked {_book.Work?.Name}. Check your dashboard to find out details.",
+                Description = notificationDescription,
                 SourceItemId = _book.Id,
                 Time = DateTime.Now,
                 Type = NotificationType.TaskNotification

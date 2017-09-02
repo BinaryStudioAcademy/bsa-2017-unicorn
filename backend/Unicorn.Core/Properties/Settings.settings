@@ -14,5 +14,20 @@
     <Setting Name="TokenLifeTime" Type="System.Int32" Scope="Application">
       <Value Profile="(Default)">10</Value>
     </Setting>
+    <Setting Name="EmailLogin" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">bsa17.net@gmail.com</Value>
+    </Setting>
+    <Setting Name="EmailPassword" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Txe7TYkqT79LwDjn</Value>
+    </Setting>
+    <Setting Name="EmailSMTP" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">smtp.gmail.com</Value>
+    </Setting>
+    <Setting Name="EmailPort" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">25</Value>
+    </Setting>
+    <Setting Name="EmailSSL" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

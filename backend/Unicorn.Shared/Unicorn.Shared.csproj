@@ -70,6 +70,8 @@
     <Compile Include="DTOs\Contact\ContactDTO.cs" />
     <Compile Include="DTOs\Contact\ContactShortDTO.cs" />
     <Compile Include="DTOs\CustomerDTO.cs" />
+    <Compile Include="DTOs\Email\EmailHost.cs" />
+    <Compile Include="DTOs\Email\EmailMessage.cs" />
     <Compile Include="DTOs\FullPerformerDTO.cs" />
     <Compile Include="DTOs\History\HistoryDTO.cs" />
     <Compile Include="DTOs\History\VendorHistoryDTO.cs" />
