@@ -9,12 +9,12 @@ import { Router } from '@angular/router';
 })
 export class DbComponent implements OnInit {
 
-  constructor(private router: Router, private dbCreater: DbcreationService) { }
+  constructor(private dbCreater: DbcreationService) { }
 
   ngOnInit() {
     this.dbCreater.RecreateDatabase().then(x => {
       localStorage.removeItem('token');
-      this.router.navigate(['index']);
+      location.href = 'index';
     }).catch(err => {
       console.log('err', err);
     });
