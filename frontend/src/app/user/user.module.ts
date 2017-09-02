@@ -27,7 +27,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {ToastModule, ToastsManager, ToastOptions} from 'ng2-toastr/ng2-toastr';
 import { MapModule } from "../map/map.module";
 import { NguiMapModule } from '@ngui/map';
-
+import { ChatModule } from "../chat/chat.module";
 
 
 @NgModule({
@@ -45,6 +45,7 @@ import { NguiMapModule } from '@ngui/map';
         MapModule,
         SharedModule,
         BrowserModule, 
+        ChatModule,
         ToastModule.forRoot()
 
     ],
