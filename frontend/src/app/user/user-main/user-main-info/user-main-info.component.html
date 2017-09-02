@@ -23,7 +23,7 @@
                 <a class="label" style="padding-top: 0px ">
                     <i class="colored mail icon "></i> {{user.Email}}
                 </a>
-                <div>
+                <div align="right">
                     <button class="ui active button" *ngIf="user.AccountId !== ownerId" [ngClass]="{'loading':isLoaded}" (click)="createChat()">
                     <i class="comments icon"></i> START A CHAT
                </button>
