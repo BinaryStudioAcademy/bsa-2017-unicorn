@@ -53,17 +53,17 @@
         <div *ngIf="noMessages && messages !== undefined && messages !== null && messages.length !== 0" class="chat-block-dimmer ui active inverted dimmer" style="z-index: 0;">
             <div class="ui text loader">Loading</div>
         </div>
-        <div class="ui form" *ngIf="dialogs !== undefined && dialogs !== null  && messages !== undefined">
-            <div class="field" style="display: flex;">
-                <textarea #textArea (keydown)="onChange($event)" (focus)="readNotReadedMessages()" [disabled]="noMessages" [ngStyle]="{'height.px': inputHeight}" class="prompt" type="text" placeholder="Type here..." [(ngModel)]="writtenMessage" style="display:inline">                        
+        <div class="ui form" *ngIf="dialogs !== undefined && dialogs !== null  && messages !== undefined" [ngClass]="{'disabled-div':noMessages}">
+            <div class=" field " style="display: flex; ">
+                <textarea #textArea (keydown)="onChange($event) " (click)="readNotReadedMessages() " [ngStyle]="{ 'height.px': inputHeight} " class="prompt " type="text " placeholder="Type here... " [(ngModel)]="writtenMessage " style="display:inline ">                        
                 </textarea>
-                <div class="ui icon input">
-                    <i class="talk outline link icon" (click)="onWrite()"></i>
+                <div class="ui icon input ">
+                    <i class="talk outline link icon " (click)="onWrite() "></i>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<div *ngIf="dialogs === undefined" class="ui active inverted dimmer" style="z-index: 0;">
-    <div class="ui text loader">Loading</div>
+<div *ngIf="dialogs===u ndefined " class="ui active inverted dimmer " style="z-index: 0; ">
+    <div class="ui text loader ">Loading</div>
 </div>

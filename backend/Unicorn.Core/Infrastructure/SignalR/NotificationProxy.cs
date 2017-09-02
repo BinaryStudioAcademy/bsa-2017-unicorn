@@ -27,9 +27,14 @@ namespace Unicorn.Core.Infrastructure.SignalR
             await _context.Clients.Group($"accountId={accountId}").RefreshOrders();
         }
 
-        public async Task RefreshMessagesForAccount(long accountId)
+        public async Task RefreshMessagesForAccount<T>(long accountId, T payload)
         {
-            await _context.Clients.Group($"accountId={accountId}").RefreshMessages();
+            await _context.Clients.Group($"accountId={accountId}").RefreshMessages(payload);
+        }
+
+        public async Task ReadNotReadedMessages(long accountId)
+        {
+            await _context.Clients.Group($"accountId={accountId}").ReadNotReadedMessages();
         }
 
         private IHubContext _context;

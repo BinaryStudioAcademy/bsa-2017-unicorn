@@ -12,6 +12,7 @@ using Unicorn.Shared.DTOs.Notification;
 using Unicorn.DataAccess.Entities;
 using Unicorn.DataAccess.Interfaces;
 using Unicorn.DataAccess.Entities.Enum;
+using Unicorn.Shared.DTOs.Chat;
 
 namespace Unicorn.Core.Services
 {
@@ -23,9 +24,9 @@ namespace Unicorn.Core.Services
             _proxy = proxy;
         }
 
-        public async Task CreateAsync(long accountId, NotificationDTO notificationDto)
+        private Notification CreateNotification(long accountId, NotificationDTO notificationDto)
         {
-            var notification = new Notification()
+            return new Notification()
             {
                 AccountId = accountId,
                 IsDeleted = false,
@@ -36,6 +37,19 @@ namespace Unicorn.Core.Services
                 Type = notificationDto.Type,
                 IsViewed = false
             };
+        }
+
+        public async Task CreateAsync(long accountId, NotificationDTO notificationDto)
+        {
+            var notification = CreateNotification(accountId, notificationDto);
+
+            var lastNotification = _unitOfWork.NotificationRepository.Query.LastOrDefault(
+                x => !x.IsViewed && x.Type == NotificationType.ChatNotification);
+
+            if (lastNotification != null)
+            {
+                _unitOfWork.NotificationRepository.Delete(lastNotification.Id);
+            }
 
             _unitOfWork.NotificationRepository.Create(notification);
             await _unitOfWork.SaveAsync();
@@ -45,15 +59,33 @@ namespace Unicorn.Core.Services
                 case NotificationType.TaskNotification:
                     await _proxy.RefreshOrdersForAccount(accountId);
                     break;
+            }
+
+            notificationDto.Id = notification.Id;
+            await _proxy.SendNotification(accountId, notificationDto);
+        }
+
+        public async Task CreateAsync<T>(long accountId, NotificationDTO notificationDto, T payload)
+        {
+            var notification = CreateNotification(accountId, notificationDto);
+
+            _unitOfWork.NotificationRepository.Create(notification);
+            await _unitOfWork.SaveAsync();
+
+            switch (notification.Type)
+            {
                 case NotificationType.ChatNotification:
-                    await _proxy.RefreshMessagesForAccount(accountId);
-                    break;
-                default:
+                    await _proxy.RefreshMessagesForAccount(accountId, payload);
                     break;
             }
 
             notificationDto.Id = notification.Id;
             await _proxy.SendNotification(accountId, notificationDto);
+        }
+
+        public async Task CreateAsync(long accountId)
+        {
+            await _proxy.ReadNotReadedMessages(accountId);
         }
 
         public async Task<IEnumerable<NotificationDTO>> GetAllAsync()

@@ -96,8 +96,7 @@ namespace Unicorn.Core.Services
             {
                 receiverId = dialog.Participant2.Id;
             }
-            await _notificationService.CreateAsync(receiverId, notification);
-            //await _notificationService.CreateAsync(receiverId, notification, msg);
+            await _notificationService.CreateAsync(receiverId, notification, msg);
         }
 
         public async Task UpdateNotReadedMessage(long dialogId, long ownerId)
@@ -105,6 +104,17 @@ namespace Unicorn.Core.Services
             var dialog = await _unitOfWork.ChatDialogRepository.GetByIdAsync(dialogId);
             dialog.Messages.Where(x => !x.IsReaded && x.Owner.Id != ownerId).ForEach(mes => mes.IsReaded = true);
             _unitOfWork.ChatDialogRepository.Update(dialog);
+
+            long receiverId;
+            if (dialog.Participant1.Id != ownerId)
+            {
+                receiverId = dialog.Participant1.Id;
+            }
+            else
+            {
+                receiverId = dialog.Participant2.Id;
+            }
+            await _notificationService.CreateAsync(receiverId);
             await _unitOfWork.SaveAsync();
         }
 

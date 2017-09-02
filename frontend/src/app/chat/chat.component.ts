@@ -35,18 +35,23 @@ export class ChatComponent implements OnInit {
     private notificationService: NotificationService) { }
 
   ngOnInit() {
-    this.initialize().then(() => this.startScroll());      
-    this.notificationService.listen<any>("RefreshMessages", () => {this.chatService.addMessage(message)}); 
+    this.getDialogs().then(() => this.startScroll());      
+    this.notificationService.listen<any>("RefreshMessages", res => {
+      this.getMessage(res);
+    }); 
+    this.notificationService.listen<any>("ReadNotReadedMessages", () => {
+      this.messagesWereReaded();
+    }); 
   } 
 
   ngAfterViewChecked() {
     if (this.needScroll) {      
       this.scrollMessages();
     }
-  }
+  }  
 
-  initialize(){
-    this.ownerId = +this.tokenHelper.getClaimByName('accountid');    
+  getDialogs(){
+    this.ownerId = +this.tokenHelper.getClaimByName('accountid');
     return this.chatService.getDialogs(this.ownerId).then(res => {      
       if(res !== undefined){
         this.dialogs = res;
@@ -63,7 +68,28 @@ export class ChatComponent implements OnInit {
     });    
   }
 
+  getMessage(mes: MessageModel){
+    if(!this.dialogs){
+      this.getDialogs().then(() => {       
+        this.startScroll();   
+      });
+    }
+    else{
+      this.messages.push(mes);     
+      this.startScroll();   
+    }      
+  }
+
+  messagesWereReaded(){
+    this.messages.filter(x => !x.IsReaded).forEach(mes => {
+      if(mes.OwnerId === this.ownerId){
+        mes.IsReaded = true;        
+      }
+    });
+  }
+
   getDialog(){
+    this.messages = undefined;
     return this.chatService.getDialog(this.selectedId).then(res => {
       this.dialog = res;
       this.messages = this.dialog.Messages;      
@@ -77,6 +103,7 @@ export class ChatComponent implements OnInit {
       } 
       else{ 
         this.changeTextareaSize();
+        this.readNotReadedMessages();
       }
     }, 0);
   }
@@ -86,7 +113,8 @@ export class ChatComponent implements OnInit {
     this.getDialog().then(() => this.startScroll());   
   }
 
-  onWrite(){  
+  onWrite(){ 
+    this.readNotReadedMessages();
     if(this.writtenMessage !== undefined){
       let str = this.writtenMessage;
       str = str.replace((/\n{2,}/ig), "\n");
