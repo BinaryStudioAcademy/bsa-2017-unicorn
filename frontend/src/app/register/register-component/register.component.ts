@@ -40,7 +40,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   isLogged: boolean;
 
   roleSelected = false;
-  location: LocationModel = new LocationModel();
+  location: LocationModel;
   isCustomer = false;
   isVendor = false;
   isCompany = false;
@@ -62,7 +62,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
     this.mode = 'date';
     this.authLoginService.signOut();
-    console.log(this.location);
+    navigator.geolocation.getCurrentPosition(()=>{});
     this.isLogged = false;
     this.error = false;
     
@@ -153,16 +153,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.location = this.locationService.getCurrentLocation();
-    console.log(this.location);
-    this.apiLoader.load();
-    this.locationService.getGoogle().then((g) => {
-      this.locationService.getLocDetails(this.location.Latitude, this.location.Longitude).subscribe(
-        result => {
-          this.location.Adress=(result.address_components[1].short_name+','+result.address_components[0].short_name)
-          this.location.City=result.address_components[3].short_name;
-        }
-      );
-    });
     
     this.authLoginService.authState.subscribe(user => {
       if (user) {
@@ -172,6 +162,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
         this.currentUser = null;
       }
     });
+    
   }
 
   ngOnDestroy() {
