@@ -13,7 +13,7 @@ namespace Unicorn.Shared.DTOs.Notification
         public long Id { get; set; }
         public NotificationType Type { get; set; }
         public long SourceItemId { get; set; }
-        public DateTime Time { get; set; }
+        public DateTimeOffset Time { get; set; }
 
         public string Title { get; set; }
         public string Description { get; set; }

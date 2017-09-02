@@ -52,7 +52,7 @@ namespace Unicorn.DataAccess.Context
                .HasColumnType("datetime2");
             modelBuilder.Entity<Notification>()
                .Property(n => n.Time)
-               .HasColumnType("datetime2");
+               .HasColumnType("datetimeoffset");
 
         }
     }

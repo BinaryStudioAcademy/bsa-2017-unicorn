@@ -15,9 +15,9 @@ namespace Unicorn.Shared.DTOs.History
 
         public CompanyDTO Company { get; set; }
 
-        public DateTime Date { get; set; }
+        public DateTimeOffset Date { get; set; }
 
-        public DateTime DateFinished { get; set; }
+        public DateTimeOffset DateFinished { get; set; }
 
         public string BookDescription { get; set; }
 
