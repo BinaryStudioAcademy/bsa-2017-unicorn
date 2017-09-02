@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Net.Mail;
 using Unicorn.Core.Interfaces;
 using Unicorn.Shared.DTOs.Email;
@@ -11,7 +12,7 @@ namespace Unicorn.Core.Services
         private readonly string Password;
         private readonly EmailHost EmailHost;
 
-        MailService()
+        public MailService()
         {
             Login = Properties.Settings.Default.EmailLogin;
             Password = Properties.Settings.Default.EmailPassword;

@@ -24,7 +24,7 @@
       <Value Profile="(Default)">smtp.gmail.com</Value>
     </Setting>
     <Setting Name="EmailPort" Type="System.Int32" Scope="Application">
-      <Value Profile="(Default)">25</Value>
+      <Value Profile="(Default)">587</Value>
     </Setting>
     <Setting Name="EmailSSL" Type="System.Boolean" Scope="Application">
       <Value Profile="(Default)">True</Value>

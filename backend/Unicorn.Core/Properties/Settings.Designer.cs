@@ -88,7 +88,7 @@ namespace Unicorn.Core.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("25")]
+        [global::System.Configuration.DefaultSettingValueAttribute("587")]
         public int EmailPort {
             get {
                 return ((int)(this["EmailPort"]));
