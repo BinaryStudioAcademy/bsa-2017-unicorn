@@ -15,7 +15,7 @@ namespace Unicorn.DataAccess.Entities
         public long AccountId { get; set; }
         public long SourceItemId { get; set; }
         public NotificationType Type { get; set; }
-        public DateTime Time { get; set; }
+        public DateTimeOffset Time { get; set; }
 
         public string Title { get; set; }
         public string Description { get; set; }

@@ -14,20 +14,28 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="column">
+                    <div *ngIf="vendor.WorkLetter !== undefined && vendor.WorkLetter !== null && vendor.WorkLetter !== ''; else aboutIsEmpty" class="column">
                         <h4>About</h4>
                         <p>{{vendor.WorkLetter}}</p>
                     </div>
+                    <ng-template #aboutIsEmpty>
+                        <div class="column">
+                            <h4>There is nothing about this vendor</h4>
+                        </div>
+                    </ng-template>
                 </div>
                 <div class="ui divider"></div>
                 <div class="row">
                     <div class="column">
                         <div class="ui container">
-                            <div class="flex-body">
-                                <div *ngFor="let category of workCategories" class="four wide column flex-category" [ngClass]="{'selected-category': selectedCategory===category}"
+                            <div *ngIf="workCategories === undefined" class="ui active inverted dimmer" style="z-index: 0;">
+                                <div class="ui text loader">Loading</div>
+                            </div>
+                            <div class="flex-body" *ngIf="workCategories !== null">
+                                <div *ngFor="let category of workCategories" class="four wide column flex-category" id="divCategory{{category.Id}}" [ngClass]="{'selected-category': selectedCategory===category}"
                                     (click)="onCategorySelect(category)">
-                                    <img class="ui tiny circular image image-category" src="{{category.Icon}}">
-                                    <h5>{{category.Name}}</h5>
+                                    <img class="ui circular image image-category" src={{category.Icon}} id="imgCategory{{category.Id}}">
+                                    <h5 class="category-name" id="h5Category{{category.Id}}">{{category.Name}}</h5>
                                 </div>
                             </div>
                         </div>
@@ -36,28 +44,31 @@
                 <div class="ui divider"></div>
                 <div class="row">
                     <div class="column">
-                        <h4 *ngIf="selectedCategory !== undefined">{{selectedCategory.Name}}</h4>
-                        <sui-accordion class="styled fluid">
-                            <sui-accordion-panel *ngFor="let work of categoryWorks">
-                                <div title class="ui container work-preview-title">
-                                    <i class="dropdown icon"></i>{{work.Name}}
-                                </div>
-                                <div content>
-                                    <div class="ui container grid">
-                                        <div class="three column container row">
-                                            <div class="left floated column">
-                                                <p>{{work.Description}}</p>
-                                            </div>
-                                            <div class="right floated column">
-                                                <a class="ui tag label">{{work.Subcategory}}</a>
+                        <div *ngIf="openedCategoryDetails" (clickOutside)="closeCategoryDetails($event)">
+                            <h4 *ngIf="selectedCategory !== undefined">{{selectedCategory.Name}}</h4>
+                            <sui-accordion class="styled fluid">
+                                <sui-accordion-panel *ngFor="let work of categoryWorks">
+                                    <div title class="ui container work-preview-title">
+                                        <i class="dropdown icon"></i>{{work.Name}}
+                                    </div>
+                                    <div content>
+                                        <div class="ui container grid">
+                                            <div class="three column container row">
+                                                <div class="left floated column">
+                                                    <p>{{work.Description}}</p>
+                                                </div>
+                                                <div class="right floated column">
+                                                    <a class="ui tag label">{{work.Subcategory}}</a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </sui-accordion-panel>
-                        </sui-accordion>
+                                </sui-accordion-panel>
+                            </sui-accordion>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
