@@ -14,7 +14,6 @@ import { NotificationService } from "../services/notifications/notification.serv
 export class ChatComponent implements OnInit {
   @ViewChild('messagesBlock')
   private messagesElement: any;
-
   @ViewChild('textArea')
   private textarea: any;
 
