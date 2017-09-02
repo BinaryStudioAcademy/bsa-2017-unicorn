@@ -27,6 +27,7 @@ export class VendorProfileInfoComponent implements OnInit {
   workCategories: Category[];
   reviewsCount: number;
   selectedCategory: Category;
+  openedCategoryDetails: boolean = false;
 
   constructor(private vendorService: VendorService) { }
 
@@ -39,12 +40,28 @@ export class VendorProfileInfoComponent implements OnInit {
     this.vendorService.getVendorWorks(this.vendor.Id)
       .then(resp => { this.works = resp.body as Work[]; this.notify.emit(this.works); })
       .then(() => this.vendorService.getCategories(this.vendor.Id))
-      .then(resp => this.workCategories = resp.body as Category[])
-      .then(() => this.onCategorySelect(this.workCategories[0]));
+      .then(resp => this.workCategories = resp.body as Category[]);
   }
 
   onCategorySelect(category: Category): void {
-    this.selectedCategory = category;
-    this.categoryWorks = this.works.filter(w => w.CategoryId === this.selectedCategory.Id);
+    if(this.selectedCategory !== category){
+      setTimeout(() => {
+        this.openedCategoryDetails = true;
+        this.selectedCategory = category;
+        this.categoryWorks = this.works.filter(w => w.CategoryId === this.selectedCategory.Id);
+      }, 50); 
+    }
+    else{
+      this.openedCategoryDetails = false;
+      this.selectedCategory = undefined;
+    }
+  }
+
+  closeCategoryDetails(event){     
+    if(!(event.target.id.includes("divCategory") || event.target.id.includes("imgCategory") ||
+      event.target.id.includes("h5Category"))){
+      this.openedCategoryDetails = false;
+      this.selectedCategory = undefined;
+    }
   }
 }

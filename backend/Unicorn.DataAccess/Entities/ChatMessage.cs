@@ -9,7 +9,7 @@ namespace Unicorn.DataAccess.Entities
         public bool IsDeleted { get; set; }
         public bool IsReaded { get; set; }
         public virtual ChatDialog Dialog { get; set; }
-        public DateTime Date { get; set; }
+        public DateTimeOffset Date { get; set; }
         public string Message { get; set; }
         public virtual Account Owner { get; set; }
     }

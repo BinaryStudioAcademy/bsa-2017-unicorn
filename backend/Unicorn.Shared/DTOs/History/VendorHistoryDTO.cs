@@ -9,7 +9,7 @@ namespace Unicorn.Shared.DTOs.History
     public class VendorHistoryDTO
     {
         public long Id { get; set; }
-        public DateTime Date { get; set; }
+        public DateTimeOffset Date { get; set; }
         public string BookDescription { get; set; }
         public string WorkDescription { get; set; }
         public long WorkId { get; set; }

@@ -18,7 +18,7 @@ namespace Unicorn.DataAccess.Entities
 
         public string Avatar { get; set; }
 
-        public DateTime Date { get; set; }
+        public DateTimeOffset Date { get; set; }
 
         public string Description { get; set; }
 
