@@ -34,6 +34,8 @@ export class RegisterVendorComponent implements OnInit {
   phone: string;
   birthday;
 
+  loader: boolean;
+
   constructor(private registerService: RegisterService,
     private helperService: HelperService,
     private authEventService: AuthenticationEventService,
@@ -86,12 +88,14 @@ export class RegisterVendorComponent implements OnInit {
   confirmRegister(formData) {
     if (formData.valid) {
       let regInfo = this.aggregateInfo();
+      this.loader = true;
       this.registerService.confirmVendor(regInfo).then(resp => {
+        this.loader = false;
         this.modal.deny(null);
         localStorage.setItem('token', resp.headers.get('token'));
         this.authEventService.signIn();
         this.helperService.redirectAfterAuthentication();
-      });
+      }).catch(err => this.loader = false);
     }
   }
 }

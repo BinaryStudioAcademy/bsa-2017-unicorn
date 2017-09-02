@@ -50,7 +50,10 @@
                 </sui-message>
             </div> -->
             <div class="field">
-                <a align=center [ngClass]="{'disabled': companyForm.invalid}" class="ui button reg-btn" (click)="confirmRegister(companyForm)">REGISTER</a>
+                <a align=center 
+                    [ngClass]="{'disabled': companyForm.invalid, 'loading': loader}" 
+                    class="ui button reg-btn" 
+                    (click)="confirmRegister(companyForm)">REGISTER</a>
             </div>
         </form>
     </div>

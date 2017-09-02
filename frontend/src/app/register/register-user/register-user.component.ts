@@ -31,6 +31,8 @@ export class RegisterUserComponent implements OnInit {
   lastName: string;
   email: string; 
 
+  loader: boolean;
+
   constructor(private registerService: RegisterService,
     private helperService: HelperService,
     private authEventService: AuthenticationEventService,
@@ -93,12 +95,14 @@ export class RegisterUserComponent implements OnInit {
     if (formData.valid) {
      
       let regInfo = this.aggregateInfo();
+      this.loader = true;
       this.registerService.confirmCustomer(regInfo).then(resp => {
+        this.loader = false;
         this.modal.deny(null);
         localStorage.setItem('token', resp.headers.get('token'));
         this.authEventService.signIn();
         this.helperService.redirectAfterAuthentication();
-      });
+      }).catch(err => this.loader = false);
   }
 
 }}

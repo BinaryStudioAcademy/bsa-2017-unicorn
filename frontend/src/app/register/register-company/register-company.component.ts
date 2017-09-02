@@ -28,6 +28,9 @@ export class RegisterCompanyComponent implements OnInit {
   staff: number;
   email: string;
   foundation: any;
+
+  loader: boolean;
+
   constructor(private registerService: RegisterService,
     private helperService: HelperService,
     private authEventService: AuthenticationEventService,
@@ -68,12 +71,14 @@ export class RegisterCompanyComponent implements OnInit {
   confirmRegister(formData) {
     if (formData.valid) {
       let regInfo = this.aggregateInfo();
+      this.loader = true;
       this.registerService.confirmCompany(regInfo).then(resp => {
+        this.loader = false;
         this.modal.deny(null);
         localStorage.setItem('token', resp.headers.get('token'));
         this.authEventService.signIn();
         this.helperService.redirectAfterAuthentication();
-      });
+      }).catch(err => this.loader = false);
     }
   }
 }
