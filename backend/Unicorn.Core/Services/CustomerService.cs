@@ -122,6 +122,7 @@ namespace Unicorn.Core.Services
                 var customerDto = new UserShortDTO()
                 {
                     Id = customer.Id,
+                    AccountId = customer.Person.Account.Id,
                     Name = customer.Person.Name,
                     SurName = customer.Person.Surname,
                     MiddleName = customer.Person.MiddleName,
