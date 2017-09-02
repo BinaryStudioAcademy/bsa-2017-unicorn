@@ -19,6 +19,8 @@ namespace Unicorn.DataAccess.Entities
 
         public string CustomerPhone { get; set; }
 
+        public string DeclinedReason { get; set; }
+
         public virtual Vendor Vendor { get; set; }
 
         public virtual Company Company { get; set; } 

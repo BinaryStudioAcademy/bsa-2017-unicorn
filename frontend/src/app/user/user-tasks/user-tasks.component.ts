@@ -12,8 +12,12 @@ import { CustomerBook, BookStatus } from '../../models/book/book.model';
 import { ShortReview } from '../../models/short-review';
 import { NotificationService } from "../../services/notifications/notification.service";
 
-export interface IContext {
+export interface IReviewContext {
   id: number;
+}
+
+export interface IDeclinedReasonContext {
+  reason: string;
 }
 
 @Component({
@@ -24,11 +28,13 @@ export interface IContext {
 export class UserTasksComponent implements OnInit {
   
   @ViewChild('modalTemplate')
-  public modalTemplate:ModalTemplate<IContext, void, void>
+  public modalTemplate:ModalTemplate<IReviewContext, void, void>
+  @ViewChild('reasonModal')
+  public reasonModal:ModalTemplate<IDeclinedReasonContext, void, void>
 
   @Input() user:User;
 
-  currModal: SuiActiveModal<IContext, {}, void>;
+  currModal: SuiActiveModal<IReviewContext, {}, void>;
   
   review: ShortReview = {
     BookId: 0,
@@ -58,7 +64,7 @@ export class UserTasksComponent implements OnInit {
   loadData() {
     this.bookService.getCustomerBooks(this.user.Id)
     .then(resp => {
-      this.books = resp.filter(b => b.Status != BookStatus.Confirmed && b.Status != BookStatus.Declined)
+      this.books = resp.filter(b => b.Status != BookStatus.Confirmed)
         .sort((b1, b2) => b1.Status - b2.Status)
         .sort((b1, b2) => {
           if (b1.Status !== b2.Status) return 0;
@@ -78,6 +84,7 @@ export class UserTasksComponent implements OnInit {
     let status = this.getBookById(id).Status;
     switch (status) {
       case BookStatus.Pending: return 'Pending';
+      case BookStatus.Declined: return 'Declined';
       case BookStatus.Accepted: return 'Accepted';
       case BookStatus.Finished: return 'Finished';
       case BookStatus.Confirmed: return 'Rated';
@@ -89,12 +96,17 @@ export class UserTasksComponent implements OnInit {
     return this.getBookById(id).Status == BookStatus.Finished;
   }
 
+  isReason(id: number): boolean {
+    let book = this.getBookById(id);
+    return book.Status == BookStatus.Declined && book.DeclinedReason !== undefined && book.DeclinedReason !== null;
+  }
+
   isRated(id: number): boolean {
     return this.getBookById(id).Status == BookStatus.Confirmed;
   }
 
   openModal(bookId: number) {
-    const config = new TemplateModalConfig<IContext, void, void>(this.modalTemplate);
+    const config = new TemplateModalConfig<IReviewContext, void, void>(this.modalTemplate);
     config.context = {id: bookId};
     config.isInverted = true;
     config.size = ModalSize.Tiny;
@@ -105,6 +117,14 @@ export class UserTasksComponent implements OnInit {
     let book = this.getBookById(id);
     this.modalService.open(new ReviewModal(book.Review))
       .onDeny(this.clearData);
+  }
+
+  showReason(reason: string) {
+    const config = new TemplateModalConfig<IDeclinedReasonContext, void, void>(this.reasonModal);
+    config.context = {reason: reason};
+    config.isInverted = true;
+    config.size = ModalSize.Tiny;
+    this.currModal = this.modalService.open(config);
   }
 
   clearData() {

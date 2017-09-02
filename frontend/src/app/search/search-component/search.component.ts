@@ -39,6 +39,7 @@ export class SearchComponent implements OnInit {
   /* map */
   positions = [];
   markers = [];
+  reviewsTab = 'reviews';
 
   center: google.maps.LatLng;
 

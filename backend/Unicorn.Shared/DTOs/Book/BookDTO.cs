@@ -16,6 +16,7 @@ namespace Unicorn.Shared.DTOs.Book
 
         public string Description { get; set; }
 
+        public string DeclinedReason { get; set; }
 
         public CustomerDTO Customer { get; set; }
 
