@@ -54,7 +54,9 @@
             </div>
 
             <div class="field">
-                <a [ngClass]="{'disabled': vendorForm.invalid}" class="ui button reg-btn" (click)="confirmRegister(vendorForm)">REGISTER</a>
+                <a [ngClass]="{'disabled': vendorForm.invalid, 'loading': loader}" 
+                    class="ui button reg-btn" 
+                    (click)="confirmRegister(vendorForm)">REGISTER</a>
             </div>
 
         </form>
