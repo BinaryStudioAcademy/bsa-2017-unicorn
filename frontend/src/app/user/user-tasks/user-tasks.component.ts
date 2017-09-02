@@ -70,7 +70,7 @@ export class UserTasksComponent implements OnInit {
           if (b1.Status !== b2.Status) return 0;
           let f = new Date(b1.Date).getTime();
           let s = new Date(b2.Date).getTime();
-          return f - s;
+          return s - f;
         });
       console.log(resp);
     });
