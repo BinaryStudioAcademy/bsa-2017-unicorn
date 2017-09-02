@@ -9,6 +9,7 @@ import { HelperService } from '../../services/helper/helper.service';
 import { AuthenticationEventService } from '../../services/events/authenticationevent.service';
 import { LocationModel } from '../../models/location.model'
 import { LocationService } from "../../services/location.service";
+import { NgMapAsyncApiLoader } from "@ngui/map/dist";
 
 @Component({
   selector: 'app-register-company',
@@ -29,9 +30,20 @@ export class RegisterCompanyComponent implements OnInit {
   foundation: any;
   constructor(private registerService: RegisterService,
     private helperService: HelperService,
-    private authEventService: AuthenticationEventService) { }
+    private authEventService: AuthenticationEventService,
+    public LocationService: LocationService,
+    private apiLoader: NgMapAsyncApiLoader) { }
 
   ngOnInit() {
+    this.apiLoader.load();
+    this.LocationService.getGoogle().then((g) => {
+      this.LocationService.getLocDetails(this.location.Latitude, this.location.Longitude).subscribe(
+        result => {
+          this.location.Adress=(result.address_components[1].short_name+','+result.address_components[0].short_name)
+          this.location.City=result.address_components[3].short_name;
+        }
+      );
+    });
     this.mode = 'date';
     this.email = this.social.email || null;
     this.phone = this.social.phoneNumber || null;

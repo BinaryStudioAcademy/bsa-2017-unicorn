@@ -74,7 +74,6 @@
     <Compile Include="DTOs\History\HistoryDTO.cs" />
     <Compile Include="DTOs\History\VendorHistoryDTO.cs" />
     <Compile Include="DTOs\LocationDTO.cs" />
-    <Compile Include="DTOs\Notification\ConnectedAccount.cs" />
     <Compile Include="DTOs\Notification\NotificationDTO.cs" />
     <Compile Include="DTOs\PermissionDTO.cs" />
     <Compile Include="DTOs\PersonDTO.cs" />
