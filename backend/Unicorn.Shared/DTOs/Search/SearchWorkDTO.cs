@@ -26,5 +26,7 @@ namespace Unicorn.Shared.DTOs.Search
         public string Link { get; set; }
 
         public LocationDTO Location { get; set; }
+
+        public double Distance { get; set; }
     }
 }
