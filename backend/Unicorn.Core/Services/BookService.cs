@@ -184,7 +184,7 @@ namespace Unicorn.Core.Services
                     .Include(v => v.Person.Account)
                     .SingleAsync(v => v.Id == book.ProfileId);
             }
-            
+
             Book _book = new Book()
             {
                 IsDeleted = false,
@@ -202,16 +202,20 @@ namespace Unicorn.Core.Services
             _unitOfWork.BookRepository.Create(_book);
             await _unitOfWork.SaveAsync();
 
-            string notificationDescription = $"{_book.Customer.Person.Name} {_book.Customer.Person.Surname} booked {_book.Work?.Name}. Check your dashboard to find out details.";
+            /* Send Email to vendor */
+            string dashBoardLink = "http://unicorn-bsa.tk/dashboard";
+            string notificationDescription = $"{_book.Customer.Person.Name} {_book.Customer.Person.Surname} booked {_book.Work?.Name}. Check your <a href=" + dashBoardLink + ">dashboard</a> to find out details.";
             string receiverEmail = vendor != null ? vendor.Person.Account.Email : company.Account.Email;
+
             _mailService.Send(new Shared.DTOs.Email.EmailMessage
             {
                 ReceiverEmail = receiverEmail,
                 Subject = "You have a new order",
                 Body = notificationDescription,
-                IsHtml = false
+                IsHtml = true
             });
 
+            /* Create notification and send to vendor */
             var notification = new NotificationDTO()
             {
                 Title = $"New order for {_book.Work.Name}",
