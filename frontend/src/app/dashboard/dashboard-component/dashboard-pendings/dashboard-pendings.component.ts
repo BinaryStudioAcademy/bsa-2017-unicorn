@@ -72,6 +72,7 @@ export class DashboardPendingsComponent implements OnInit {
   }
 
   decline(id: number) {
+    this.reason = '';
     const config = new TemplateModalConfig<IDeclineConfirm, void, void>(this.modalTemplate);
     config.context = {id: id};
     config.isInverted = true;

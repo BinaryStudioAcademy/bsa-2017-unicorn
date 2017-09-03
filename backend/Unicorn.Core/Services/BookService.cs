@@ -443,5 +443,13 @@ namespace Unicorn.Core.Services
             }
             return books.Where(b => b.Status == status);
         }
+
+        public async Task DeleteBook(long id)
+        {
+            var book = await _unitOfWork.BookRepository.GetByIdAsync(id);
+            book.IsDeleted = true;
+            _unitOfWork.BookRepository.Update(book);
+            await _unitOfWork.SaveAsync();
+        }
     }
 }

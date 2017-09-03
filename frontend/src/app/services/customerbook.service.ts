@@ -13,4 +13,8 @@ export class CustomerbookService {
   getCustomerBooks(id: number): Promise<CustomerBook[]> {
     return this.dataService.getRequest<CustomerBook[]>(`book/customer/${id}`);
   }
+
+  deleteBook(book: CustomerBook): Promise<any> {
+    return this.dataService.deleteRequest(`book/${book.Id}`);
+  }
 }

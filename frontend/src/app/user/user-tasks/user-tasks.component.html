@@ -24,12 +24,15 @@
             <ng-template #nonRated>
                 <span *ngIf="!isFinished(book.Id)">
                     {{getStatus(book.Id)}} &nbsp;&nbsp;
-                    <span class="declined-lbl" (click)="showReason(book.DeclinedReason)" *ngIf="isReason(book.Id)">Why?</span>
+                    <span class="declined-lbl" (click)="showReason(book.DeclinedReason)" *ngIf="isReason(book)">Why?</span>
                 </span>
                 <a *ngIf="isFinished(book.Id)" class="ui button review-btn" (click)="openModal(book.Id)">Leave review</a>
             </ng-template>
-
         </div>
+        <i class="remove icon red absolute-icon" 
+            *ngIf="isReason(book) && !isDeleting(book)" 
+            (click)="deleteDeclinedBook(book)"></i>
+        <i class="notched circle loading icon red absolute-icon" *ngIf="isDeleting(book)"></i>
     </div>
 </div>
 <ng-template let-context let-modal="modal" #modalTemplate>
