@@ -9,6 +9,7 @@ import { CompanyCategory } from "../../../models/company-page/company-category.m
 import { CompanySubcategory } from "../../../models/company-page/company-subcategory.model";
 import { LocationService } from "../../../services/location.service";
 import { NguiMapModule, Marker } from "@ngui/map";
+import {ToastsManager, Toast} from 'ng2-toastr';
 
 @Component({
   selector: 'app-company-main-information',
@@ -27,7 +28,9 @@ export class CompanyMainInformationComponent implements OnInit {
 
   constructor(private companyService: CompanyService,
     private route: ActivatedRoute, private LocationService: LocationService,
-    private ref: ChangeDetectorRef) { }
+    private ref: ChangeDetectorRef,
+    private toastr: ToastsManager
+  ) { }
     markerDragged(event)
     {
       this.company.Location.Latitude = event.latLng.lat();
@@ -58,10 +61,15 @@ export class CompanyMainInformationComponent implements OnInit {
     this.LocationService.getLocDetails(this.company.Location.Latitude,this.company.Location.Longitude)
     .subscribe(
      result => {
-       
         this.company.Location.Adress=(result.address_components[1].short_name+','+result.address_components[0].short_name)
-         this.company.Location.City=result.address_components[3].short_name;
-         this.companyService.saveCompanyDetails(this.company).then(() => {this.isLoaded = false});
+        this.company.Location.City=result.address_components[3].short_name;
+        this.companyService.saveCompanyDetails(this.company).then(() => {
+          this.isLoaded = false;
+          this.toastr.success('Changes were saved', 'Success!');
+        })
+        .catch(err => {
+          this.toastr.error('Something goes wrong', 'Error!');
+        });
      });
   }
 

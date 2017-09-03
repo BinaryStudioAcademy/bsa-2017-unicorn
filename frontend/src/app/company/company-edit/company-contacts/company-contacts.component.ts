@@ -93,6 +93,7 @@ export class CompanyContactsComponent implements OnInit {
          this.pendingContactas.splice(this.contacts.findIndex(c => c.Id === contact.Id), 1);
          this.filterContacts();
          this.filterProviders();
+         this.toastr.success('Contact was removed', 'Success!');
       })
       .catch(() => {
          this.pendingContactas.splice(this.contacts.findIndex(c => c.Id === contact.Id), 1);
@@ -152,13 +153,16 @@ export class CompanyContactsComponent implements OnInit {
             this.filterContacts();
             this.pendingContactas.splice(this.pendingContactas.findIndex(c => c === contact), 1);
             this.blockAddButtons = false;
-          });            
+            this.toastr.success('Contact was created', 'Success!');
+          }).catch(err => this.toastr.error('Sorry, something went wrong', 'Error!'));            
       });
       
   }
 
   updateContact(contact: Contact): void {
-    this.companyService.saveCompanyContact(contact);
+    this.companyService.saveCompanyContact(contact).then(res => {
+      this.toastr.success('Contact was updated');
+    }).catch(err => this.toastr.error('Sorry, something went wrong', 'Error!'));
     this.cleanAllSellections();
     this.hideAllEditFields();
   }

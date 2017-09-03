@@ -1,4 +1,6 @@
 ﻿using System;
+
+using Unicorn.Shared.DTOs.Review;
 using Unicorn.Shared.DTOs.Vendor;
 
 namespace Unicorn.Shared.DTOs.History

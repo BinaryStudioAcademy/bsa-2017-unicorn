@@ -10,6 +10,7 @@ import { ModalService } from "../../../services/modal/modal.service";
 import { PhotoService, Ng2ImgurUploader } from "../../../services/photo.service";
 
 import { ImageCropperComponent, CropperSettings } from "ng2-img-cropper";
+import {ToastsManager, Toast} from 'ng2-toastr';
 import { SafeResourceUrl, DomSanitizer } from "@angular/platform-browser";
 import { SuiModalService, TemplateModalConfig, ModalTemplate, ModalSize, SuiActiveModal } from 'ng2-semantic-ui';
 
@@ -64,7 +65,9 @@ export class CompanyWorksComponent implements OnInit {
     private photoService: PhotoService,
     private sanitizer: DomSanitizer,
     private suiModalService: SuiModalService,
-    private modalService: ModalService,) {
+    private modalService: ModalService,
+    private toastr: ToastsManager
+  ) {
       this.cropperSettings = modalService.cropperSettings;
       this.data = {};
       this.imageUploaded = false; 
@@ -134,8 +137,9 @@ export class CompanyWorksComponent implements OnInit {
     this.companyService.deleteCompanyWork(companyId, this.work.Id)
       .then(() => {
         this.initializeThisCompany();  
-        this.work = null;        
-      });
+        this.work = null;   
+        this.toastr.success('Work was deleted');     
+      }).catch(err => this.toastr.error('Something goes wrong', 'Error!'));
   }
 
   saveWorkChanges() {
@@ -146,7 +150,8 @@ export class CompanyWorksComponent implements OnInit {
         this.companyService.saveCompanyWork(this.work)
           .then(() => {
             this.initializeThisCompany();
-          });     
+            this.toastr.success('Work was updated');
+          }).catch(err => this.toastr.error('Something goes wrong', 'Error!')); ;     
     }
   }
 
@@ -162,7 +167,8 @@ export class CompanyWorksComponent implements OnInit {
       this.companyService.addCompanyWork(this.companyId, this.work)
       .then(() => {
         this.initializeThisCompany();
-      });        
+        this.toastr.success('Work was added');
+      }).catch(err => this.toastr.error('Something goes wrong', 'Error!'));        
     }
   }
 

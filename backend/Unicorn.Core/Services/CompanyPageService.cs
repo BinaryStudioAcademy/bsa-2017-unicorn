@@ -11,18 +11,21 @@ using Unicorn.Shared.DTOs;
 using Unicorn.Shared.DTOs.Company;
 using Unicorn.Shared.DTOs.CompanyPage;
 using Unicorn.Shared.DTOs.Contact;
+using Unicorn.Shared.DTOs.Review;
 
 namespace Unicorn.Core.Services
 {
     public class CompanyPageService:ICompanyPageService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IReviewService _reviewService;
 
         #region PublicMethods
 
-        public CompanyPageService(IUnitOfWork unitOfWork)
+        public CompanyPageService(IUnitOfWork unitOfWork, IReviewService reviewService)
         {
             _unitOfWork = unitOfWork;
+            _reviewService = reviewService;
         }
 
         public async Task<ICollection<ShortCompanyDTO>> GetAllCompanies()
@@ -279,27 +282,13 @@ namespace Unicorn.Core.Services
         private async Task<CompanyReviews> GetCompanyReviewsMethod(long id)
         {
             var company = await _unitOfWork.CompanyRepository.GetByIdAsync(id);
-            var reviews = await _unitOfWork.ReviewRepository.GetAllAsync();
+            var reviews = await _reviewService.GetBySenderIdAsync(company.Account.Id);
 
             if (reviews.Any())
             {
                 var companyReviews = new CompanyReviews()
                 {
-                    Reviews = reviews.Where(p => p.ToAccountId == company.Account.Id)
-                        .Select(x => new ReviewDTO
-                        {
-                            Id = x.Id,
-                            Avatar = x.Avatar,
-                            Date = x.Date,
-                            From = x.From,
-                            FromAccountId = x.FromAccountId,
-                            To = x.To,
-                            ToAccountId = x.ToAccountId,
-                            Description = x.Description,
-                            BookId = x.BookId,
-                            Grade = x.Grade,
-                            WorkName = x.WorkName
-                        }).OrderByDescending(x => x.Date).ToList()
+                    Reviews = reviews.OrderByDescending(x => x.Date).ToList()
                 };
 
                 return companyReviews;

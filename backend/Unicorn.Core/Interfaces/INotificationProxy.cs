@@ -12,5 +12,7 @@ namespace Unicorn.Core.Interfaces
     {
         Task SendNotification(long accountId, NotificationDTO notification);
         Task RefreshOrdersForAccount(long accountId);
+        Task RefreshMessagesForAccount<T>(long accountId, T payload);
+        Task ReadNotReadedMessages(long accountId);
     }
 }

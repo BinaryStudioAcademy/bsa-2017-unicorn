@@ -2153,61 +2153,51 @@ namespace Unicorn.DataAccess.Context
             {
                 BookId = 1,
                 Description = "qwert",
-                From = "NameSurname",
-                FromAccountId = 2,
+                Sender = account2,
                 To = "NameSurname",
                 ToAccountId = 6,
                 IsDeleted = false,
                 Date = DateTime.Now,
-                Avatar = "https://image.flaticon.com/icons/png/512/78/78373.png"
             };
             Review review2 = new Review()
             {
                 BookId = 1,
                 Description = "qwert",
-                From = "NameSurname",
-                FromAccountId = 2,
+                Sender = account2,
                 To = "NameSurname",
                 ToAccountId = 1,
                 IsDeleted = false,
                 Date = DateTime.Now,
-                Avatar = "https://image.flaticon.com/icons/png/512/78/78373.png"
             };
             Review review3 = new Review()
             {
                 BookId = 1,
                 Description = "qwert",
-                From = "NameSurname",
-                FromAccountId = 2,
+                Sender = account2,
                 To = "NameSurname",
                 ToAccountId = 6,
                 IsDeleted = false,
                 Date = DateTime.Now,
-                Avatar = "https://image.flaticon.com/icons/png/512/78/78373.png"
             };
             Review review4 = new Review()
             {
                 BookId = 1,
                 Description = "qwert",
-                From = "NameSurname",
-                FromAccountId = 2,
+                Sender = account2,
                 To = "NameSurname",
                 ToAccountId = 6,
                 IsDeleted = false,
                 Date = DateTime.Now,
-                Avatar = "https://image.flaticon.com/icons/png/512/78/78373.png"
             };
             Review review5 = new Review()
             {
                 BookId = 1,
                 Description = "qwert",
-                From = "NameSurname",
-                FromAccountId = 2,
+                Sender = account2,
                 To = "NameSurname",
                 ToAccountId = 11,
                 IsDeleted = false,
                 Date = DateTime.Now,
-                Avatar = "https://image.flaticon.com/icons/png/512/78/78373.png"
             };
 
             context.Reviews.AddRange(new List<Review>() { review1, review2, review3, review4, review5 });

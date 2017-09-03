@@ -12,7 +12,8 @@ namespace Unicorn.Core.Interfaces
 {
     public interface IReviewService
     {
-        Task<IEnumerable<ReviewDTO>> GetByBookIdAsync(long id);
+        Task<ReviewDTO> GetByBookIdAsync(long id);
+        ReviewDTO GetByBookId(long id);
         Task<ReviewDTO> GetByIdAsync(long id);
         Task<IEnumerable<ReviewDTO>> GetByReceiverIdAsync(long id);
         Task<IEnumerable<ReviewDTO>> GetBySenderIdAsync(long id);
