@@ -43,13 +43,14 @@ namespace Unicorn.Core.Services
         {
             var notification = CreateNotification(accountId, notificationDto);
 
-            var lastNotification = _unitOfWork.NotificationRepository.Query.LastOrDefault(
-                x => !x.IsViewed && x.Type == NotificationType.ChatNotification);
-
-            if (lastNotification != null)
-            {
-                _unitOfWork.NotificationRepository.Delete(lastNotification.Id);
-            }
+            _unitOfWork.NotificationRepository.Query
+                .Where(n => !n.IsDeleted && !n.IsViewed && n.Type == NotificationType.ChatNotification)
+                .ToList()
+                .ForEach(n => 
+                {
+                    n.IsViewed = true;
+                    _unitOfWork.NotificationRepository.Update(n);
+                });
 
             _unitOfWork.NotificationRepository.Create(notification);
             await _unitOfWork.SaveAsync();

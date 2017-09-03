@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Unicorn.Shared.DTOs
+namespace Unicorn.Shared.DTOs.Review
 {
     public class ReviewDTO
     {

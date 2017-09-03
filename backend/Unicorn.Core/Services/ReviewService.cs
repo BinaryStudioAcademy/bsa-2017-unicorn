@@ -25,56 +25,106 @@ namespace Unicorn.Core.Services
 
         public async Task<ReviewDTO> GetByIdAsync(long id)
         {
-            var review = await _unitOfWork.ReviewRepository.GetByIdAsync(id);
+            var review = await _unitOfWork.ReviewRepository.Query
+                .Include(r => r.Sender)
+                .SingleAsync(r => r.Id == id);
 
             return ReviewToDTO(review);
         }
 
         public async Task<IEnumerable<ReviewDTO>> GetByReceiverIdAsync(long id)
         {
-            var reviews = await _unitOfWork.ReviewRepository.GetAllAsync();
+            var reviews = await _unitOfWork.ReviewRepository.Query
+                .Include(r => r.Sender)
+                .Where(r => r.ToAccountId == id)
+                .ToListAsync();
 
             return reviews
-                .Where(r => r.ToAccountId == id)
                 .OrderBy(r => r.Date)
                 .Select(r => ReviewToDTO(r)).ToList();
 
         }
 
-       
-
         public async Task<IEnumerable<ReviewDTO>> GetBySenderIdAsync(long id)
         {
-            var reviews = await _unitOfWork.ReviewRepository.GetAllAsync();
+            var reviews = await _unitOfWork.ReviewRepository.Query
+                .Include(r => r.Sender)
+                .Where(r => r.Sender.Id == id)
+                .ToListAsync();
             return reviews
-                .Where(r => r.FromAccountId == id)
                 .Select(r => ReviewToDTO(r)).ToList();
         }
 
-        public async Task<IEnumerable<ReviewDTO>> GetByBookIdAsync(long id)
+        public async Task<ReviewDTO> GetByBookIdAsync(long id)
         {
-            var reviews = await _unitOfWork.ReviewRepository.GetAllAsync();
-            return reviews
-                .Where(r => r.BookId == id)
-                .Select(r => ReviewToDTO(r)).ToList();
+            var review = await _unitOfWork.ReviewRepository.Query
+                .Include(r => r.Sender)
+                .SingleAsync(r => r.BookId == id);
+
+            return ReviewToDTO(review);
+        }
+
+        public ReviewDTO GetByBookId(long id)
+        {
+            var review = _unitOfWork.ReviewRepository.Query
+                .Include(r => r.Sender)
+                .SingleOrDefault(r => r.BookId == id);
+
+            if (review != null)
+                return ReviewToDTO(review);
+            else
+                return null;
         }
 
         private ReviewDTO ReviewToDTO(Review review)
         {
-            return new ReviewDTO()
+            var reviewDto = new ReviewDTO()
             {
                 Id = review.Id,
                 BookId = review.BookId,
                 Description = review.Description,
-                From = review.From,
-                FromAccountId = review.FromAccountId,
+                Avatar = review.Sender.Avatar,
+                FromAccountId = review.Sender.Id,
                 To = review.To,
                 ToAccountId = review.ToAccountId,
                 Date = review.Date,
-                Avatar = review.Avatar,
                 Grade = review.Grade,
                 WorkName = review.WorkName
             };
+
+            switch (review.Sender.Role.Id)
+            {
+                case 2:
+                case 3:
+                    var person = _unitOfWork.PersonRepository.Query
+                        .Include(p => p.Account)
+                        .Single(p => p.Account.Id == review.Sender.Id);
+                    reviewDto.From = $"{person.Name} {person.Surname}";
+                    break;
+                case 4:
+                    var company = _unitOfWork.CompanyRepository.Query
+                        .Include(p => p.Account)
+                        .Single(p => p.Account.Id == review.Sender.Id);
+                    reviewDto.From = company.Name;
+                    break;
+                case 5:
+                    var adminPerson = _unitOfWork.PersonRepository.Query
+                        .Include(p => p.Account)
+                        .FirstOrDefault(x => x.Account.Id == review.Sender.Id);
+                    if (adminPerson == null)
+                    {
+                        var adminCompany = _unitOfWork.CompanyRepository.Query
+                            .Include(p => p.Account)
+                            .Single(p => p.Account.Id == review.Sender.Id);
+                    }
+
+                    reviewDto.From = $"{adminPerson.Name} {adminPerson.Surname}";
+                    break;
+                default:
+                    return null;
+            }
+
+            return reviewDto;
         }
 
         public async Task SaveReview(ShortReviewDTO reviewDto)
@@ -99,10 +149,8 @@ namespace Unicorn.Core.Services
                 review.BookId = reviewDto.BookId;
                 review.Description = reviewDto.Text;
                 review.Grade = reviewDto.Grade;
-                review.Avatar = book.Customer.Person.Account.Avatar;
                 review.WorkName = book.Work.Name;
-                review.From = book.Customer.Person.Name;
-                review.FromAccountId = book.Customer.Person.Account.Id;
+                review.Sender = book.Customer.Person.Account;
                 if (reviewDto.PerformerType == "vendor")
                 {
                     review.To = book.Vendor.Person.Name;

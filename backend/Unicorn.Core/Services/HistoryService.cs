@@ -9,6 +9,7 @@ using Unicorn.Core.Interfaces;
 using Unicorn.DataAccess.Interfaces;
 using Unicorn.Shared.DTOs;
 using Unicorn.Shared.DTOs.History;
+using Unicorn.Shared.DTOs.Review;
 using Unicorn.Shared.DTOs.Vendor;
 
 namespace Unicorn.Core.Services
@@ -100,7 +101,9 @@ namespace Unicorn.Core.Services
                 Customer = new CustomerDTO()
                 {
                     Id = history.Customer.Id,
-                    Person = new PersonDTO() { Id = history.Customer.Person.Id,
+                    Person = new PersonDTO()
+                    {
+                        Id = history.Customer.Person.Id,
                         Name = history.Customer.Person.Name,
                         Surname = history.Customer.Person.Surname,
                         Phone = history.Customer.Person.Phone }
@@ -112,9 +115,10 @@ namespace Unicorn.Core.Services
                 historyDto.Review = new ReviewDTO()
                 {
                     Id = history.Review.Id,
-                    From = history.Review.From,
-                    FromAccountId = history.Review.FromAccountId,
-                    Avatar = history.Review.Avatar,
+
+                    FromAccountId = history.Review.Sender.Id,
+                    Avatar = history.Review.Sender.Avatar,
+                    From = $"{history.Customer.Person.Name} {history.Customer.Person.Surname}",
                     Date = history.Review.Date,
                     Description = history.Review.Description,
                     BookId = history.Review.BookId,

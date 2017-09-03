@@ -9,14 +9,10 @@ namespace Unicorn.DataAccess.Entities
         public long Id { get; set; }
         public bool IsDeleted { get; set; }
 
-        public long FromAccountId { get; set; }
-
-        public string From { get; set; }
+        public Account Sender { get; set; }
 
         public long ToAccountId { get; set; }
         public string To {get; set; }
-
-        public string Avatar { get; set; }
 
         public DateTimeOffset Date { get; set; }
 

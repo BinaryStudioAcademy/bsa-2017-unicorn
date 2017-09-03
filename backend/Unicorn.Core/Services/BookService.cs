@@ -19,14 +19,16 @@ namespace Unicorn.Core.Services
     public class BookService : IBookService
     {
         private readonly IUnitOfWork _unitOfWork;
-        ILocationService _locationService;
-        private INotificationService _notificationService;
+        private readonly ILocationService _locationService;
+        private readonly INotificationService _notificationService;
+        private readonly IReviewService _reviewService;
 
-        public BookService(IUnitOfWork unitOfWork, ILocationService location, INotificationService notificationService)
+        public BookService(IUnitOfWork unitOfWork, ILocationService location, INotificationService notificationService, IReviewService reviewService)
         {
             _unitOfWork = unitOfWork;
             _locationService = location;
             _notificationService = notificationService;
+            _reviewService = reviewService;
         }
 
         public async Task<IEnumerable<BookDTO>> GetAllAsync()
@@ -271,7 +273,7 @@ namespace Unicorn.Core.Services
                     Date = b.Date,
                     Description = b.Description,
                     Rating = GetRatingByBookId(b.Id),
-                    Review = GetReviewDtoByBookId(b.Id),
+                    Review = _reviewService.GetByBookId(b.Id),
                     DeclinedReason = b.DeclinedReason,
                     IsHidden = b.IsHidden,
                     Location = new LocationDTO()
@@ -318,27 +320,6 @@ namespace Unicorn.Core.Services
             return customerBooks;
         }
 
-        private ReviewDTO GetReviewDtoByBookId(long id)
-        {
-            return _unitOfWork.ReviewRepository
-                .Query
-                .Where(r => r.BookId == id)
-                .Select(r => new ReviewDTO
-                {
-                    Id = r.Id,
-                    Avatar = r.Avatar,
-                    BookId = id,
-                    Date = r.Date,
-                    Description = r.Description,
-                    From = r.From,
-                    FromAccountId = r.FromAccountId,
-                    To = r.To,
-                    ToAccountId = r.ToAccountId,
-                    Grade = r.Grade,
-                    WorkName = r.WorkName
-                }).SingleOrDefault();
-        }
-
         private CustomerBookDTO BookToCustomerBookDTO(Book b)
         {
             return new CustomerBookDTO
@@ -352,7 +333,7 @@ namespace Unicorn.Core.Services
                 Rating = GetRatingByBookId(b.Id),
                 Status = b.Status,
                 IsHidden = b.IsHidden,
-                Review = GetReviewDtoByBookId(b.Id),
+                Review = _reviewService.GetByBookId(b.Id),
                 DeclinedReason = b.DeclinedReason,
                 Location = new LocationDTO
                 {
