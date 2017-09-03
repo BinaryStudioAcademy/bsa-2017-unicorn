@@ -15,4 +15,5 @@ export interface User
 	Phone:string;
 	DateCreated: Date;
 	Birthday: Date;
+	AccountId: number;
 }
