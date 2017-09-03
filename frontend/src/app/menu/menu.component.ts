@@ -250,4 +250,26 @@ export class MenuComponent implements OnInit {
     let roleId = +this.tokenHelper.getClaimByName("roleid");
     return roleId === 3 || roleId === 4;
   }
+
+  notificationClick(notification: Notification): void {
+    let role = this.tokenHelper.getRoleName();
+    let id = +this.tokenHelper.getClaimByName('profileid');
+    if (notification.Type === NotificationType.TaskNotification) {
+      if (role === 'user') {
+        this.router.navigate([`user/${id}/edit`], {
+          queryParams: {
+            tab: 'tasks'
+          }
+        });
+      } else {
+        this.router.navigate(['dashboard']);
+      }
+    } else {
+      this.router.navigate([`${role}/${id}/edit`], {
+        queryParams: {
+          tab: 'messages'
+        }
+      });
+    }
+  }
 }

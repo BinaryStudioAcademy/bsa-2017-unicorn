@@ -56,7 +56,7 @@
                             <div *ngFor="let notif of newNotifications" (click)="archiveNotification(notif)" class="item">
                                 <div class="content">
                                     <div class="notification-title">
-                                        <h5>{{notif.Title}}</h5>
+                                        <h5 (click)="notificationClick(notif)">{{notif.Title}}</h5>
                                         <p>{{notif.Time | amTimeAgo}}</p>
                                     </div>
                                     <div class="description">
