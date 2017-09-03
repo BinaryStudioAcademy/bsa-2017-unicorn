@@ -5,8 +5,12 @@ import { Review } from '../../models/review.model';
 import { NguiMapModule, Marker, NguiMap} from '@ngui/map';
 
 import { SearchService } from '../../services/search.service';
+import { CategoryService } from '../../services/category.service';
+
 import { SearchWork } from '../../models/search/search-work';
 import { LocationModel } from '../../models/location.model';
+import { Category } from '../../models/category.model';
+import { Subcategory } from '../../models/subcategory.model';
 
 
 @Component({
@@ -20,18 +24,26 @@ export class SearchComponent implements OnInit {
   subcategory: string;
   date: Date;
   rawDate: number;
-  /* filter */
-  filtersIsOpen: boolean;
   /* datepicker */
   mode: string;
   firstDayOfWeek: string;
-  /* multi-select */
-  selCat: string[];
-  filterCat: string[];
-  selSubcat: string[];
-  filterSubcat: string[];
+  /* advanced filters */
+  vendorName: string;
+  ratingCompare: string;
+  ratingCmp: string;
+  rating: number;
+  reviewsChecked: boolean;
+  latitude: number;
+  longitude: number;
+  slider: number;
+  distance: number;
+  categories: Category[];
+  selCategories: string[];
+  subcategories: Subcategory[];
+  selSubcategories: string[];
+  sort: string;
   /* pagination */
-  pageSize = 20;
+  pageSize = '20';
   maxSize = 3;
   hasEllipses = true;
   selectedPage = 1;
@@ -45,6 +57,7 @@ export class SearchComponent implements OnInit {
 
   autocomplete: google.maps.places.Autocomplete;
   address: any = {};
+  place: any;
 
   selected: string = '';
 
@@ -53,6 +66,7 @@ export class SearchComponent implements OnInit {
 
   constructor(
     private searchService: SearchService,
+    private categoryService: CategoryService,
     private route: ActivatedRoute,
     private ref: ChangeDetectorRef
   ) { }
@@ -60,11 +74,11 @@ export class SearchComponent implements OnInit {
   ngOnInit() {
     this.initDarepicker();
     this.getParameters();
-    this.createMockSettings();
-    this.searchWorks();
+    this.initAdvancedFilters();
+    this.loadWorks();
   }
 
-  searchWorks() {
+  loadWorks() {
     this.works = [];
     this.spinner = true;
     this.getWorksByBaseFilters(this.category, this.subcategory, this.rawDate);
@@ -80,14 +94,93 @@ export class SearchComponent implements OnInit {
     }).catch(err => this.spinner = false);
   }
 
+  searchWorks() {
+    this.works = [];
+    this.spinner = true;
+    this.distance = this.slider;
+    this.ratingCmp = this.convertRatingType(this.ratingCompare);
+    this.getWorksByAdvFilters(this.category, this.subcategory, this.rawDate, this.vendorName,
+           this.ratingCmp, this.rating, this.reviewsChecked,
+           this.latitude, this.longitude, this.distance,
+           this.selCategories, this.selSubcategories, this.sort);
+  }
+
+  convertRatingType(rating: string) {
+    switch (rating) {
+      case 'greater':
+        return 'ge';
+      case 'lower':
+        return 'le';
+      default:
+        return 'ge';
+    }
+  }
+
+  getWorksByAdvFilters(category: string, subcategory: string, date: number,
+      vendor: string, ratingcompare: string, rating: number, reviews: boolean,
+      latitude: number, longitude: number, distance: number,
+      categories: string[], subcategories: string[], sort: string) {
+
+    this.searchService.getWorksByAdvFilters(category, subcategory, date,
+    vendor, ratingcompare, rating, reviews, latitude, longitude, distance,
+    categories, subcategories, sort)
+    .then(works => {
+      this.works = works;
+      this.spinner = false;
+      this.loaded = true;
+      this.mapRedirect();
+    }).catch(err => this.spinner = false);
+  }
+
   reset() {
     this.category = undefined;
     this.subcategory = undefined;
     this.date = undefined;
+    this.vendorName = undefined;
+    this.ratingCompare = 'greater';
+    this.rating = undefined;
+    this.place = undefined;
+    this.latitude = undefined;
+    this.longitude = undefined;
+    this.slider = 0;
+    this.distance = undefined;
+    this.reviewsChecked = false;
+    this.selCategories = [];
+    this.selSubcategories = [];
   }
 
-  resetFilters() {
-    this.filtersIsOpen = false;
+  initAdvancedFilters() {
+    this.ratingCompare = 'greater';
+    this.rating = 0;
+    this.slider = 0;
+    this.categoryService.getAll()
+    .then(resp => {
+      this.categories = resp.body as Category[];
+    });
+    this.sort = 'rating';
+  }
+
+  categoriesChanged() {
+    this.selSubcategories = [];
+    this.subcategories = [];
+    this.subcategories = getSubcategories(this.categories, this.selCategories);
+
+    function getSubcategories(categories, selected) {
+      let result = [];
+      for (let i = 0; i < categories.length; i++) {
+        for (let j = 0; j < selected.length; j++) {
+          if (categories[i].Name === selected[j]) {
+            result = result.concat(categories[i].Subcategories);
+          }
+        }
+      }
+      return result;
+    }
+  }
+
+  subcategoriesChanged() {
+    console.log('subcat: ');
+    console.log(this.selSubcategories);
   }
 
   onMapReady(map: NguiMap) {
@@ -109,7 +202,8 @@ export class SearchComponent implements OnInit {
   }
 
   getWorksPage(): SearchWork[] {
-    return this.works.slice((this.selectedPage - 1) * this.pageSize, this.selectedPage * this.pageSize);
+    const pageSize = Number(this.pageSize);
+    return this.works.slice((this.selectedPage - 1) * pageSize, this.selectedPage * pageSize);
   }
 
   initialized(autocomplete: any) {
@@ -117,12 +211,14 @@ export class SearchComponent implements OnInit {
   }
 
   placeChanged() {
-    let place = this.autocomplete.getPlace();
+    const place = this.autocomplete.getPlace();
+    this.latitude = place.geometry.location.lat();
+    this.longitude = place.geometry.location.lng();
     console.log(place);
-    for (let i = 0; i < place.address_components.length; i++) {
-      let addressType = place.address_components[i].types[0];
-      this.address[addressType] = place.address_components[i].long_name;
-    }
+    // for (let i = 0; i < place.address_components.length; i++) {
+    //   let addressType = place.address_components[i].types[0];
+    //   this.address[addressType] = place.address_components[i].long_name;
+    // }
     this.ref.detectChanges();
   }
 
@@ -139,11 +235,6 @@ export class SearchComponent implements OnInit {
 
   convertDate(date: number) {
     return new Date(1000 * date);
-  }
-
-  createMockSettings() {
-    this.filterCat  = ['Category 1', 'Category 2', 'Category 3', 'Category 4', 'Category 5', 'Category 6'];
-    this.filterSubcat  = ['Subategory 1', 'Subategory 2', 'Subategory 3', 'Subategory 4', 'Subategory 5', 'Subategory 6'];
   }
 
   initDarepicker() {
