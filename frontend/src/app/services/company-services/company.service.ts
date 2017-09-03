@@ -53,7 +53,7 @@ export class CompanyService {
     return this.dataService.putRequest("company/vendors", companyVendors);
   }
   deleteCompanyVendor(companyId: number, vendorId: number):Promise<Vendor>{
-    return this.dataService.deleteRequest("company/vendor/"+ companyId + "/" + vendorId, {});
+    return this.dataService.deleteRequest("company/vendor/"+ companyId + "/" + vendorId);
   }
 
 
@@ -68,7 +68,7 @@ export class CompanyService {
     return this.dataService.putRequest("company/contact/" + companyId, companyContact);
   }
   deleteCompanyContact(companyId: number, contactId: number):Promise<Contact>{
-    return this.dataService.deleteRequest("company/contact/"+ companyId + "/" + contactId, {});
+    return this.dataService.deleteRequest("company/contact/"+ companyId + "/" + contactId);
   }
 
 
@@ -83,7 +83,7 @@ export class CompanyService {
     return this.dataService.putRequest("company/work/" + companyId, companyWork);
   }
   deleteCompanyWork(companyId: number, workId: number):Promise<CompanyWork>{
-    return this.dataService.deleteRequest("company/work/"+ companyId + "/" + workId, {});
+    return this.dataService.deleteRequest("company/work/"+ companyId + "/" + workId);
   }
 
 
