@@ -33,18 +33,18 @@ namespace Unicorn.Controllers
                                                             sort );
         }
 
-        //[HttpGet]
-        //[Route("search")]
-        //public async Task<List<SearchWorkDTO>> GetPerformersByBaseFilters(string category, string subcategory, int? date)
-        //{
-        //    return await _searchService.GetWorksByBaseFilters(category, subcategory, date);
-        //}
+        [HttpGet]
+        [Route("search")]
+        public async Task<List<SearchWorkDTO>> GetPerformersByBaseFilters(string category, string subcategory, int? date)
+        {
+            return await _searchService.GetWorksByBaseFilters(category, subcategory, date);
+        }
 
-        //[HttpGet]
-        //[Route("search")]
-        //public async Task<List<SearchWorkDTO>> GetAllPerformers()
-        //{
-        //    return await _searchService.GetAllWorks();
-        //}
+        [HttpGet]
+        [Route("search")]
+        public async Task<List<SearchWorkDTO>> GetAllPerformers()
+        {
+            return await _searchService.GetAllWorks();
+        }
     }
 }

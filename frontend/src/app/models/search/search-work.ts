@@ -9,4 +9,5 @@ export interface SearchWork {
     Link: string;
     Location: LocationModel;
     Description: string;
+    Distance: number;
 }

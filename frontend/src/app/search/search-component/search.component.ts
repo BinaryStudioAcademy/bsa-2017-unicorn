@@ -28,16 +28,22 @@ export class SearchComponent implements OnInit {
   mode: string;
   firstDayOfWeek: string;
   /* advanced filters */
-  companyName: string;
-  reviewsChecked: boolean;
+  vendorName: string;
   ratingCompare: string;
-  ratingFilter: number;
+  ratingCmp: string;
+  rating: number;
+  reviewsChecked: boolean;
+  latitude: number;
+  longitude: number;
+  slider: number;
+  distance: number;
   categories: Category[];
   selCategories: string[];
   subcategories: Subcategory[];
   selSubcategories: string[];
+  sort: string;
   /* pagination */
-  pageSize = 20;
+  pageSize = '20';
   maxSize = 3;
   hasEllipses = true;
   selectedPage = 1;
@@ -51,12 +57,12 @@ export class SearchComponent implements OnInit {
 
   autocomplete: google.maps.places.Autocomplete;
   address: any = {};
+  place: any;
 
   selected: string = '';
 
   spinner: boolean;
   loaded: boolean;
-  slider: number;
 
   constructor(
     private searchService: SearchService,
@@ -69,10 +75,10 @@ export class SearchComponent implements OnInit {
     this.initDarepicker();
     this.getParameters();
     this.initAdvancedFilters();
-    this.searchWorks();
+    this.loadWorks();
   }
 
-  searchWorks() {
+  loadWorks() {
     this.works = [];
     this.spinner = true;
     this.getWorksByBaseFilters(this.category, this.subcategory, this.rawDate);
@@ -88,36 +94,76 @@ export class SearchComponent implements OnInit {
     }).catch(err => this.spinner = false);
   }
 
+  searchWorks() {
+    this.works = [];
+    this.spinner = true;
+    this.distance = this.slider;
+    this.ratingCmp = this.convertRatingType(this.ratingCompare);
+    this.getWorksByAdvFilters(this.category, this.subcategory, this.rawDate, this.vendorName,
+           this.ratingCmp, this.rating, this.reviewsChecked,
+           this.latitude, this.longitude, this.distance,
+           this.selCategories, this.selSubcategories, this.sort);
+  }
+
+  convertRatingType(rating: string) {
+    switch (rating) {
+      case 'greater':
+        return 'ge';
+      case 'lower':
+        return 'le';
+      default:
+        return 'ge';
+    }
+  }
+
+  getWorksByAdvFilters(category: string, subcategory: string, date: number,
+      vendor: string, ratingcompare: string, rating: number, reviews: boolean,
+      latitude: number, longitude: number, distance: number,
+      categories: string[], subcategories: string[], sort: string) {
+
+    this.searchService.getWorksByAdvFilters(category, subcategory, date,
+    vendor, ratingcompare, rating, reviews, latitude, longitude, distance,
+    categories, subcategories, sort)
+    .then(works => {
+      this.works = works;
+      this.spinner = false;
+      this.loaded = true;
+      this.mapRedirect();
+    }).catch(err => this.spinner = false);
+  }
+
   reset() {
     this.category = undefined;
     this.subcategory = undefined;
     this.date = undefined;
-    this.companyName = undefined;
-    this.reviewsChecked = false;
+    this.vendorName = undefined;
     this.ratingCompare = 'greater';
-    this.ratingFilter = 0;
+    this.rating = undefined;
+    this.place = undefined;
+    this.latitude = undefined;
+    this.longitude = undefined;
+    this.slider = 0;
+    this.distance = undefined;
+    this.reviewsChecked = false;
     this.selCategories = [];
     this.selSubcategories = [];
-    console.log(this.slider);
   }
 
   initAdvancedFilters() {
     this.ratingCompare = 'greater';
-    this.ratingFilter = 0;
+    this.rating = 0;
+    this.slider = 0;
     this.categoryService.getAll()
     .then(resp => {
       this.categories = resp.body as Category[];
-      console.log('categories');
-      console.log(this.categories);
     });
+    this.sort = 'rating';
   }
 
   categoriesChanged() {
     this.selSubcategories = [];
     this.subcategories = [];
     this.subcategories = getSubcategories(this.categories, this.selCategories);
-    console.log(this.ratingCompare);
-    console.log(this.ratingFilter);
 
     function getSubcategories(categories, selected) {
       let result = [];
@@ -156,7 +202,8 @@ export class SearchComponent implements OnInit {
   }
 
   getWorksPage(): SearchWork[] {
-    return this.works.slice((this.selectedPage - 1) * this.pageSize, this.selectedPage * this.pageSize);
+    const pageSize = Number(this.pageSize);
+    return this.works.slice((this.selectedPage - 1) * pageSize, this.selectedPage * pageSize);
   }
 
   initialized(autocomplete: any) {
@@ -164,12 +211,14 @@ export class SearchComponent implements OnInit {
   }
 
   placeChanged() {
-    let place = this.autocomplete.getPlace();
+    const place = this.autocomplete.getPlace();
+    this.latitude = place.geometry.location.lat();
+    this.longitude = place.geometry.location.lng();
     console.log(place);
-    for (let i = 0; i < place.address_components.length; i++) {
-      let addressType = place.address_components[i].types[0];
-      this.address[addressType] = place.address_components[i].long_name;
-    }
+    // for (let i = 0; i < place.address_components.length; i++) {
+    //   let addressType = place.address_components[i].types[0];
+    //   this.address[addressType] = place.address_components[i].long_name;
+    // }
     this.ref.detectChanges();
   }
 
