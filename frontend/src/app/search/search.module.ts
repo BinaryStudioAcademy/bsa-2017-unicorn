@@ -16,7 +16,7 @@ import { MapModule } from '../map/map.module';
 
 import { SearchService } from '../services/search.service';
 import { CategoryService } from '../services/category.service';
-
+import { MdlModule } from '@angular-mdl/core';
 
 
 @NgModule({
@@ -30,7 +30,8 @@ import { CategoryService } from '../services/category.service';
     ReactiveFormsModule,
     SuiModule,
     MapModule,
-    CommonModule
+    CommonModule,
+    MdlModule
   ],
   declarations: [
     SearchComponent,

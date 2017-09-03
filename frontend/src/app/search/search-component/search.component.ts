@@ -55,6 +55,7 @@ export class SearchComponent implements OnInit {
 
   spinner: boolean;
   loaded: boolean;
+  slider: number;
 
   constructor(
     private searchService: SearchService,
@@ -96,6 +97,7 @@ export class SearchComponent implements OnInit {
     this.ratingFilter = 0;
     this.selCategories = [];
     this.selSubcategories = [];
+    console.log(this.slider);
   }
 
   initAdvancedFilters() {

@@ -73,9 +73,10 @@
                           </sui-checkbox>                        
                         </div>  
                         <div class="eight wide column remove-padding-bottom padding-top">  
-                          <div class="field">
+                          <mdl-slider min="0" max="100" [(ngModel)]="slider"></mdl-slider>
+                          <!-- <div class="field">
                             <sui-checkbox class="slider">10+ km</sui-checkbox>                            
-                          </div>
+                          </div> -->
                         </div>
                         <div class="eight wide column">
                           <sui-multi-select [(ngModel)]="selCategories"
