@@ -7,9 +7,10 @@ using Unicorn.Shared.DTOs.Offer;
 
 namespace Unicorn.Core.Interfaces
 {
-    interface IOfferService
+    public interface IOfferService
     {
-        Task CreateOffersAsync(ShortOfferDTO offer);
-        Task<OfferDTO> GetOffersAsync(long vendorId);
+        Task CreateOffersAsync(IEnumerable<ShortOfferDTO> offer);
+        Task<IEnumerable<OfferDTO>> GetOffersAsync(long vendorId);
+        Task UpdateOfferAsync(OfferDTO offer);
     }
 }

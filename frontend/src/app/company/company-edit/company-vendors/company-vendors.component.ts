@@ -1,7 +1,10 @@
 import { Component, OnInit, ViewChild, NgZone } from '@angular/core';
 import { ActivatedRoute, Params } from "@angular/router";
 import { CompanyService } from "../../../services/company-services/company.service";
+import { OfferService } from "../../../services/offer.service";
 import { CompanyVendors } from "../../../models/company-page/company-vendors.model";
+import { Offer } from '../../../models/offer/offer.model';
+import { ShortOffer } from '../../../models/offer/shortoffer.model';
 import { Vendor } from "../../../models/company-page/vendor";
 import { SuiModalService, TemplateModalConfig, ModalTemplate, ModalSize, SuiActiveModal } from 'ng2-semantic-ui';
 import {ToastsManager, Toast} from 'ng2-toastr';
@@ -30,7 +33,8 @@ export class CompanyVendorsComponent implements OnInit {
     private route: ActivatedRoute,
     private zone: NgZone,
     private suiModalService: SuiModalService,
-    private toastr: ToastsManager
+    private toastr: ToastsManager,
+    private offerService: OfferService
   ) { }
 
   ngOnInit() { 
@@ -93,7 +97,8 @@ export class CompanyVendorsComponent implements OnInit {
   addVendors(){      
     if(this.selectedVendors.length !== 0){
       this.selectedVendors.forEach(vendor => {this.company.Vendors.push(vendor);});      
-      this.saveCompanyVendors();  
+      //this.saveCompanyVendors(); 
+      this.offerVendors(); 
       this.selectedVendors = undefined;
       this.zone.run(() => { this.selectedVendor = null; });  
       this.company = undefined;    
@@ -108,6 +113,25 @@ export class CompanyVendorsComponent implements OnInit {
       this.initializeThisCompany();
       this.toastr.success('Changes were saved', 'Success!');
     }).catch(err => this.toastr.error('Something goes wrong', 'Error!'));
+  }
+
+  offerVendors() {
+    let offers: ShortOffer[] = [];
+    this.selectedVendors.forEach(vendor => {
+      let offer: ShortOffer = {
+        AttachedMessage: 'stub',
+        CompanyId: this.companyId,
+        VendorId: vendor.Id
+      }
+      offers.push(offer);
+    });
+    this.offerService.createOffers(offers).then(resp => {
+      this.initializeThisCompany();
+      this.toastr.success('Offers were sended', 'Success!');
+    }).catch(err => {
+      this.toastr.error('Something goes wrong', 'Error!');
+    });
+    
   }
 
   openDeleteModal(vendor: Vendor){

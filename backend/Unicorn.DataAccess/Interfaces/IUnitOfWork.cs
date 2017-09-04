@@ -28,6 +28,7 @@ namespace Unicorn.DataAccess.Interfaces
         IGenericRepository<ContactProvider> ContactProviderRepository { get; }
         IGenericRepository<Rating> RatingRepository { get; }
         IGenericRepository<Notification> NotificationRepository { get; }
+        IGenericRepository<Offer> OfferRepository { get; }
         Task SaveAsync();
     }
 }

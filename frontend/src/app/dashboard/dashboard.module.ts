@@ -6,6 +6,7 @@ import { DashboardComponent } from './dashboard-component/dashboard.component';
 import { DashboardPendingsComponent } from './dashboard-component/dashboard-pendings/dashboard-pendings.component';
 import { DashboardProgressComponent } from './dashboard-component/dashboard-progress/dashboard-progress.component';
 import { DashboardFinishedComponent } from './dashboard-component/dashboard-finished/dashboard-finished.component';
+import { DashboardOffersComponent } from './dashboard-component/dashboard-offers/dashboard-offers.component';
 
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { SuiModule } from 'ng2-semantic-ui';
@@ -15,7 +16,8 @@ import { DataService } from '../services/data.service';
 import { DashboardService } from '../services/dashboard/dashboard.service';
 import { TokenHelperService } from '../services/helper/tokenhelper.service';
 import { DashMessagingService } from '../services/dashboard/dash-messaging.service';
-import { DashboardOffersComponent } from './dashboard-component/dashboard-offers/dashboard-offers.component';
+import { OfferService } from '../services/offer.service';
+
 
 
 @NgModule({
@@ -37,7 +39,8 @@ import { DashboardOffersComponent } from './dashboard-component/dashboard-offers
     DashboardService,
     DataService,
     DashMessagingService,
-    TokenHelperService
+    TokenHelperService,
+    OfferService
   ]
 })
 export class DashboardModule { }

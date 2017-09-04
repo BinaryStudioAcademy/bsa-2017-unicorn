@@ -5,23 +5,65 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Cors;
+using Unicorn.Core.Interfaces;
 using Unicorn.Shared.DTOs.Offer;
 
 namespace Unicorn.Controllers
 {
+    [EnableCors("*", "*", "*")]
     public class OfferController : ApiController
     {
-        [HttpPost]
-        public async Task<IHttpActionResult> SendOffersAsync(ShortOfferDTO offer)
+        private readonly IOfferService _offerService;
+
+        public OfferController(IOfferService offerService)
         {
-            throw new NotImplementedException();
+            _offerService = offerService;
+        }
+
+        [HttpPost]
+        [Route("offer")]
+        public async Task<HttpResponseMessage> SendOffersAsync(IEnumerable<ShortOfferDTO> offers)
+        {
+            try
+            {
+                await _offerService.CreateOffersAsync(offers);
+            }
+            catch
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
+            return Request.CreateResponse(HttpStatusCode.OK);
         }
 
         [HttpGet]
-        [Route("offer/{id}")]
-        public async Task<IHttpActionResult> GetOffersAsync(int id)
+        [Route("offer/vendor/{id}")]
+        public async Task<HttpResponseMessage> GetOffersAsync(long id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var offers = await _offerService.GetOffersAsync(id);
+                return Request.CreateResponse(HttpStatusCode.OK, offers);
+            }
+            catch
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
+        }
+
+        [HttpPut]
+        [Route("offer")]
+        public async Task<HttpResponseMessage> UpdateOfferAsync(OfferDTO offer)
+        {
+            try
+            {
+                await _offerService.UpdateOfferAsync(offer);
+            }
+            catch
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
+            return Request.CreateResponse(HttpStatusCode.OK);
         }
     }
 }
