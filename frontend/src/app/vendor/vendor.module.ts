@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { SuiModule } from 'ng2-semantic-ui';
+import { MdlModule } from '@angular-mdl/core';
 import { environment } from '../../environments/environment';
 import { ClickOutsideModule } from 'ng-click-outside';
 
@@ -62,7 +63,8 @@ import { VendorEditMessagesComponent } from './vendor-edit/vendor-edit-messages/
     NguiMapModule.forRoot({
       apiUrl: 'https://maps.google.com/maps/api/js?key=' + environment.googleMapsKey +
       '&libraries=visualization,places,drawing'
-    })
+    }),
+    MdlModule
   ],
   declarations: [
     VendorDetailsComponent,
