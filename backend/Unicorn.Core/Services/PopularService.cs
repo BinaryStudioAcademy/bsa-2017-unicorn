@@ -264,6 +264,7 @@ namespace Unicorn.Core.Services
                 .Concat(companies)
                 .OrderByDescending(p => p.Rating)
                 .Distinct()
+                .Take(5)
                 .ToList();
 
             return performers;

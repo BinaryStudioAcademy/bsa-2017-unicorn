@@ -46,6 +46,8 @@ export class UserTasksComponent implements OnInit {
 
   loader: boolean;
   error: boolean;
+  deleteLoader: boolean;
+  deleteLoads: {[id: number]: boolean} = {};
 
   books: CustomerBook[];
 
@@ -70,7 +72,7 @@ export class UserTasksComponent implements OnInit {
           if (b1.Status !== b2.Status) return 0;
           let f = new Date(b1.Date).getTime();
           let s = new Date(b2.Date).getTime();
-          return f - s;
+          return s - f;
         });
       console.log(resp);
     });
@@ -96,8 +98,7 @@ export class UserTasksComponent implements OnInit {
     return this.getBookById(id).Status == BookStatus.Finished;
   }
 
-  isReason(id: number): boolean {
-    let book = this.getBookById(id);
+  isReason(book: CustomerBook): boolean {
     return book.Status == BookStatus.Declined && book.DeclinedReason !== undefined && book.DeclinedReason !== null;
   }
 
@@ -153,6 +154,21 @@ export class UserTasksComponent implements OnInit {
       this.currModal.deny(undefined);
       this.clearData();
     });
+  }
+
+  deleteDeclinedBook(book: CustomerBook) {
+    this.deleteLoads[book.Id] = true;
+    this.bookService.deleteBook(book).then(res => {
+      this.books.splice(this.books.findIndex(b => b.Id === book.Id), 1);
+      this.deleteLoader;
+      this.deleteLoads[book.Id] = false;
+    }).catch(err => {
+      this.deleteLoads[book.Id] = false;
+    });
+  }
+
+  isDeleting(book: CustomerBook): boolean {
+    return this.deleteLoads[book.Id];
   }
 
 }

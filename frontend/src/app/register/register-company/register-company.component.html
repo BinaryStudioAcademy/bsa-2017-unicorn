@@ -8,7 +8,7 @@
             </div>
 
             <div class="field">
-                <textarea rows="3" name="desc" placeholder="DESCRIPTION (OPTIONAL)" [(ngModel)]="description" #desc="ngModel"></textarea>               
+                <textarea rows="3" name="desc" placeholder="DESCRIPTION (OPTIONAL)" [(ngModel)]="description" #desc="ngModel"></textarea>
             </div>
 
             <div class="field">
@@ -38,7 +38,9 @@
                     <input suiDatepicker placeholder="FOUNDATION" name="foundation" [(ngModel)]="foundation" [pickerMode]="mode">
                 </div>
             </div>
-
+            <div class="field">
+                <input places-auto-complete id="autocomplete" (initialized$)="initialized($event)" (place_changed)="placeChanged($event)" [types]="['geocode']" placeholder="LOCATION" value={{location.City}}/>
+            </div>
             <!-- <div *ngIf="error" class="error-field">
                 <sui-message class="error">
                     <div class="header">
@@ -48,7 +50,10 @@
                 </sui-message>
             </div> -->
             <div class="field">
-                <a align=center [ngClass]="{'disabled': companyForm.invalid}" class="ui button reg-btn" (click)="confirmRegister(companyForm)">REGISTER</a>
+                <a align=center 
+                    [ngClass]="{'disabled': companyForm.invalid, 'loading': loader}" 
+                    class="ui button reg-btn" 
+                    (click)="confirmRegister(companyForm)">REGISTER</a>
             </div>
         </form>
     </div>

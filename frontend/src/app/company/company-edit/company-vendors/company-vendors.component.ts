@@ -4,6 +4,7 @@ import { CompanyService } from "../../../services/company-services/company.servi
 import { CompanyVendors } from "../../../models/company-page/company-vendors.model";
 import { Vendor } from "../../../models/company-page/vendor";
 import { SuiModalService, TemplateModalConfig, ModalTemplate, ModalSize, SuiActiveModal } from 'ng2-semantic-ui';
+import {ToastsManager, Toast} from 'ng2-toastr';
 
 @Component({
   selector: 'app-company-vendors',
@@ -28,7 +29,9 @@ export class CompanyVendorsComponent implements OnInit {
   constructor(private companyService: CompanyService,
     private route: ActivatedRoute,
     private zone: NgZone,
-    private suiModalService: SuiModalService) { }
+    private suiModalService: SuiModalService,
+    private toastr: ToastsManager
+  ) { }
 
   ngOnInit() { 
     this.initializeThisCompany();   
@@ -76,8 +79,9 @@ export class CompanyVendorsComponent implements OnInit {
     this.company = undefined;  
     this.companyService.deleteCompanyVendor(this.companyId, this.vendor.Id)
       .then(() => {
-        this.initializeThisCompany();   
-      });     
+        this.initializeThisCompany();
+        this.toastr.success('Changes were saved', 'Success!');   
+      }).catch(err => this.toastr.error('Something goes wrong', 'Error!'));     
   }
 
   deleteSelectedVendor(vendor: Vendor){
@@ -102,7 +106,8 @@ export class CompanyVendorsComponent implements OnInit {
     this.companyService.addCompanyVendors(this.company).then(() => {
       this.isLoaded = false;      
       this.initializeThisCompany();
-    });
+      this.toastr.success('Changes were saved', 'Success!');
+    }).catch(err => this.toastr.error('Something goes wrong', 'Error!'));
   }
 
   openDeleteModal(vendor: Vendor){

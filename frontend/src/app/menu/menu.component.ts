@@ -13,7 +13,7 @@ import { TokenHelperService } from '../services/helper/tokenhelper.service';
 import { AccountService } from "../services/account.service";
 
 import { ProfileShortInfo } from "../models/profile-short-info.model";
-import { Notification } from "../models/notification.model";
+import { Notification, NotificationType } from "../models/notification.model";
 
 import { RoleRouter } from "../helpers/rolerouter";
 import { NotificationService } from "../services/notifications/notification.service";
@@ -204,6 +204,15 @@ export class MenuComponent implements OnInit {
     notification.Time = new Date(notification.Time);
     this.newNotification = notification;
 
+    if (notification.Type = NotificationType.ChatNotification) {
+      var chatNotification = this.notifications.find(n => n.Type === NotificationType.ChatNotification);
+      
+      while (chatNotification !== undefined) {
+        this.archiveNotification(chatNotification);
+        chatNotification = this.notifications.find(n => n.Type === NotificationType.ChatNotification);
+      }
+    }
+
     this.notifications.push(notification);
     this.newNotifications = this.notifications.filter(n => !n.IsViewed);
     this.sortNotificationsByTime();
@@ -240,5 +249,27 @@ export class MenuComponent implements OnInit {
   isPerformer(): boolean {
     let roleId = +this.tokenHelper.getClaimByName("roleid");
     return roleId === 3 || roleId === 4;
+  }
+
+  notificationClick(notification: Notification): void {
+    let role = this.tokenHelper.getRoleName();
+    let id = +this.tokenHelper.getClaimByName('profileid');
+    if (notification.Type === NotificationType.TaskNotification) {
+      if (role === 'user') {
+        this.router.navigate([`user/${id}/edit`], {
+          queryParams: {
+            tab: 'tasks'
+          }
+        });
+      } else {
+        this.router.navigate(['dashboard']);
+      }
+    } else {
+      this.router.navigate([`${role}/${id}/edit`], {
+        queryParams: {
+          tab: 'messages'
+        }
+      });
+    }
   }
 }

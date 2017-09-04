@@ -20,16 +20,18 @@ namespace Unicorn.Core.Services
     public class BookService : IBookService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly ILocationService _locationService;
+        private readonly INotificationService _notificationService;
+        private readonly IReviewService _reviewService;
         private readonly IMailService _mailService;
-        ILocationService _locationService;
-        private INotificationService _notificationService;
 
-        public BookService(IUnitOfWork unitOfWork, ILocationService location, INotificationService notificationService, IMailService mailService)
+        public BookService(IUnitOfWork unitOfWork, ILocationService location, INotificationService notificationService, IReviewService reviewService, IMailService mailService)
         {
             _unitOfWork = unitOfWork;
             _locationService = location;
             _notificationService = notificationService;
             _mailService = mailService;
+            _reviewService = reviewService;
         }
 
         public async Task<IEnumerable<BookDTO>> GetAllAsync()
@@ -286,7 +288,7 @@ namespace Unicorn.Core.Services
                     Date = b.Date,
                     Description = b.Description,
                     Rating = GetRatingByBookId(b.Id),
-                    Review = GetReviewDtoByBookId(b.Id),
+                    Review = _reviewService.GetByBookId(b.Id),
                     DeclinedReason = b.DeclinedReason,
                     IsHidden = b.IsHidden,
                     Location = new LocationDTO()
@@ -333,27 +335,6 @@ namespace Unicorn.Core.Services
             return customerBooks;
         }
 
-        private ReviewDTO GetReviewDtoByBookId(long id)
-        {
-            return _unitOfWork.ReviewRepository
-                .Query
-                .Where(r => r.BookId == id)
-                .Select(r => new ReviewDTO
-                {
-                    Id = r.Id,
-                    Avatar = r.Avatar,
-                    BookId = id,
-                    Date = r.Date,
-                    Description = r.Description,
-                    From = r.From,
-                    FromAccountId = r.FromAccountId,
-                    To = r.To,
-                    ToAccountId = r.ToAccountId,
-                    Grade = r.Grade,
-                    WorkName = r.WorkName
-                }).SingleOrDefault();
-        }
-
         private CustomerBookDTO BookToCustomerBookDTO(Book b)
         {
             return new CustomerBookDTO
@@ -367,7 +348,7 @@ namespace Unicorn.Core.Services
                 Rating = GetRatingByBookId(b.Id),
                 Status = b.Status,
                 IsHidden = b.IsHidden,
-                Review = GetReviewDtoByBookId(b.Id),
+                Review = _reviewService.GetByBookId(b.Id),
                 DeclinedReason = b.DeclinedReason,
                 Location = new LocationDTO
                 {
@@ -492,6 +473,14 @@ namespace Unicorn.Core.Services
                 return Enumerable.Empty<VendorBookDTO>();
             }
             return books.Where(b => b.Status == status);
+        }
+
+        public async Task DeleteBook(long id)
+        {
+            var book = await _unitOfWork.BookRepository.GetByIdAsync(id);
+            book.IsDeleted = true;
+            _unitOfWork.BookRepository.Update(book);
+            await _unitOfWork.SaveAsync();
         }
     }
 }

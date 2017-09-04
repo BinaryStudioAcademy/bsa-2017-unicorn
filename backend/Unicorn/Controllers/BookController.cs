@@ -122,5 +122,21 @@ namespace Unicorn.Controllers
 
             return Request.CreateResponse(HttpStatusCode.OK, books);
         }
+
+        [HttpDelete]
+        [Route("book/{id}")]
+        public async Task<HttpResponseMessage> DeleteBook(long id)
+        {
+            try
+            {
+                await _bookService.DeleteBook(id);
+            }
+            catch
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK);
+        }
     }
 }

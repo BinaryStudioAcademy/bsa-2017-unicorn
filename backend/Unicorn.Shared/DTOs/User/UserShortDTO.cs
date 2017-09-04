@@ -7,6 +7,7 @@ namespace Unicorn.Shared.DTOs.User
     public class UserShortDTO
     {
         public long Id { get; set; }
+        public long AccountId { get; set; }
         public string Name { get; set; }
         public string MiddleName { get; set; }
         public string SurName { get; set; }

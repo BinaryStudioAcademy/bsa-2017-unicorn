@@ -92,7 +92,7 @@ export class DataService {
       .catch(this.handleError);
   }
 
-  deleteRequest<T>(url: string, payload: Object): Promise<T> {
+  deleteRequest<T>(url: string): Promise<T> {
     return this.http
       .delete<T>(this.buildUrl(url), {headers: this.getHeaders()})
       .toPromise()

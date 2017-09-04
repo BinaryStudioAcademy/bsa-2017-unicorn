@@ -7,7 +7,7 @@
             </div>
 
             <div class="field">
-                <input type="text" name="middlename" placeholder="MIDDLE NAME (OPTIONAL)" [(ngModel)]="middleName" #middlename="ngModel">                
+                <input type="text" name="middlename" placeholder="MIDDLE NAME (OPTIONAL)" [(ngModel)]="middleName" #middlename="ngModel">
             </div>
 
             <div class="field">
@@ -52,9 +52,13 @@
                     <div *ngIf="phonenumb.errors.pattern" class="valid-error">* Invalid number</div>
                 </div>
             </div>
-
             <div class="field">
-                <a [ngClass]="{'disabled': vendorForm.invalid}" class="ui button reg-btn" (click)="confirmRegister(vendorForm)">REGISTER</a>
+                <input places-auto-complete id="autocomplete" (initialized$)="initialized($event)" (place_changed)="placeChanged($event)" [types]="['geocode']" placeholder="LOCATION" value={{location.City}}/>
+            </div>
+            <div class="field">
+                <a [ngClass]="{'disabled': vendorForm.invalid, 'loading': loader}" 
+                    class="ui button reg-btn" 
+                    (click)="confirmRegister(vendorForm)">REGISTER</a>
             </div>
 
         </form>

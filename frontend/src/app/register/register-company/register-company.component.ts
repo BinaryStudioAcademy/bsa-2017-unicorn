@@ -9,6 +9,7 @@ import { HelperService } from '../../services/helper/helper.service';
 import { AuthenticationEventService } from '../../services/events/authenticationevent.service';
 import { LocationModel } from '../../models/location.model'
 import { LocationService } from "../../services/location.service";
+import { NgMapAsyncApiLoader } from "@ngui/map/dist";
 
 @Component({
   selector: 'app-register-company',
@@ -27,11 +28,25 @@ export class RegisterCompanyComponent implements OnInit {
   staff: number;
   email: string;
   foundation: any;
+
+  loader: boolean;
+
   constructor(private registerService: RegisterService,
     private helperService: HelperService,
-    private authEventService: AuthenticationEventService) { }
+    private authEventService: AuthenticationEventService,
+    public LocationService: LocationService,
+    private apiLoader: NgMapAsyncApiLoader) { }
 
   ngOnInit() {
+    this.apiLoader.load();
+    this.LocationService.getGoogle().then((g) => {
+      this.LocationService.getLocDetails(this.location.Latitude, this.location.Longitude).subscribe(
+        result => {
+          this.location.Adress=(result.address_components[1].short_name+','+result.address_components[0].short_name)
+          this.location.City=result.address_components[3].short_name;
+        }
+      );
+    });
     this.mode = 'date';
     this.email = this.social.email || null;
     this.phone = this.social.phoneNumber || null;
@@ -56,12 +71,14 @@ export class RegisterCompanyComponent implements OnInit {
   confirmRegister(formData) {
     if (formData.valid) {
       let regInfo = this.aggregateInfo();
+      this.loader = true;
       this.registerService.confirmCompany(regInfo).then(resp => {
+        this.loader = false;
         this.modal.deny(null);
         localStorage.setItem('token', resp.headers.get('token'));
         this.authEventService.signIn();
         this.helperService.redirectAfterAuthentication();
-      });
+      }).catch(err => this.loader = false);
     }
   }
 }

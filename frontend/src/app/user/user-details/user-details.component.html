@@ -63,8 +63,8 @@
             <sui-tabset>
                 <div class="ui pointing secondary menu">
                     <a class="item" suiTabHeader="1">Profile</a>
-                    <a class="item" suiTabHeader="2">Tasks</a>
-                    <a class="item" suiTabHeader="3">Messages</a>
+                    <a class="item" suiTabHeader="2" [isActive]="tasksTabActive">Tasks</a>
+                    <a class="item" suiTabHeader="3" [isActive]="messagesTabActive">Messages</a>
                     <a class="item" suiTabHeader="4">History</a>
                 </div>
                 <div class="row">
