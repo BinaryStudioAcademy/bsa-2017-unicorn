@@ -8,5 +8,6 @@ namespace Unicorn.Shared.DTOs.Offer
 {
     public class ShortOfferDTO
     {
+        
     }
 }

@@ -3,37 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
+using Unicorn.Shared.DTOs.Offer;
 
 namespace Unicorn.Controllers
 {
     public class OfferController : ApiController
     {
-        // GET api/<controller>
-        public IEnumerable<string> Get()
+        [HttpPost]
+        public async Task<IHttpActionResult> SendOffersAsync(ShortOfferDTO offer)
         {
-            return new string[] { "value1", "value2" };
+            throw new NotImplementedException();
         }
 
-        // GET api/<controller>/5
-        public string Get(int id)
+        [HttpGet]
+        [Route("offer/{id}")]
+        public async Task<IHttpActionResult> GetOffersAsync(int id)
         {
-            return "value";
-        }
-
-        // POST api/<controller>
-        public void Post([FromBody]string value)
-        {
-        }
-
-        // PUT api/<controller>/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE api/<controller>/5
-        public void Delete(int id)
-        {
+            throw new NotImplementedException();
         }
     }
 }
