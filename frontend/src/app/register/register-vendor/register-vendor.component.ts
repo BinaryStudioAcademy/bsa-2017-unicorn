@@ -9,6 +9,9 @@ import { AuthenticationEventService } from '../../services/events/authentication
 import { LocationModel } from '../../models/location.model'
 import { LocationService } from "../../services/location.service";
 import { NgMapAsyncApiLoader } from "@ngui/map/dist";
+import { TokenHelperService } from "../../services/helper/tokenhelper.service";
+import { VendorService } from "../../services/vendor.service";
+import { Contact } from "../../models/contact.model";
 
 
 @Component({
@@ -40,7 +43,9 @@ export class RegisterVendorComponent implements OnInit {
     private helperService: HelperService,
     private authEventService: AuthenticationEventService,
     public LocationService: LocationService,
-    private apiLoader: NgMapAsyncApiLoader
+    private tokenHelper: TokenHelperService,
+    private apiLoader: NgMapAsyncApiLoader,
+    private vendorService: VendorService
   ) { }
 
   ngOnInit() {
@@ -89,10 +94,24 @@ export class RegisterVendorComponent implements OnInit {
     if (formData.valid) {
       let regInfo = this.aggregateInfo();
       this.loader = true;
+
+      var emailContact = new Contact();
+      emailContact.Provider = "email";
+      emailContact.ProviderId = 2;
+      emailContact.Type = "Email";
+      emailContact.Value = regInfo.email;
+
+      var phoneContact = new Contact();
+      phoneContact.Provider = "phone";
+      phoneContact.ProviderId = 1;
+      phoneContact.Type = "Phone";
+      phoneContact.Value = regInfo.phone;
       this.registerService.confirmVendor(regInfo).then(resp => {
         this.loader = false;
         this.modal.deny(null);
         localStorage.setItem('token', resp.headers.get('token'));
+        this.vendorService.postVendorContact(+this.tokenHelper.getClaimByName('profileid'),emailContact);
+        this.vendorService.postVendorContact(+this.tokenHelper.getClaimByName('profileid'),phoneContact);
         this.authEventService.signIn();
         this.helperService.redirectAfterAuthentication();
       }).catch(err => this.loader = false);

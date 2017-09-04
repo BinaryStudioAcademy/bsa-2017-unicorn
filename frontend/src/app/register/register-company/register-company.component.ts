@@ -10,6 +10,9 @@ import { AuthenticationEventService } from '../../services/events/authentication
 import { LocationModel } from '../../models/location.model'
 import { LocationService } from "../../services/location.service";
 import { NgMapAsyncApiLoader } from "@ngui/map/dist";
+import { Contact } from "../../models/contact.model";
+import { TokenHelperService } from "../../services/helper/tokenhelper.service";
+import { CompanyService } from "../../services/company-services/company.service";
 
 @Component({
   selector: 'app-register-company',
@@ -35,7 +38,9 @@ export class RegisterCompanyComponent implements OnInit {
     private helperService: HelperService,
     private authEventService: AuthenticationEventService,
     public LocationService: LocationService,
-    private apiLoader: NgMapAsyncApiLoader) { }
+    private apiLoader: NgMapAsyncApiLoader, 
+    private tokenHelper: TokenHelperService,
+    private companyService: CompanyService) { }
 
   ngOnInit() {
     this.apiLoader.load();
@@ -72,10 +77,23 @@ export class RegisterCompanyComponent implements OnInit {
     if (formData.valid) {
       let regInfo = this.aggregateInfo();
       this.loader = true;
+      var emailContact = new Contact();
+      emailContact.Provider = "email";
+      emailContact.ProviderId = 2;
+      emailContact.Type = "Email";
+      emailContact.Value = regInfo.email;
+
+      var phoneContact = new Contact();
+      phoneContact.Provider = "phone";
+      phoneContact.ProviderId = 1;
+      phoneContact.Type = "Phone";
+      phoneContact.Value = regInfo.phone;
       this.registerService.confirmCompany(regInfo).then(resp => {
         this.loader = false;
         this.modal.deny(null);
         localStorage.setItem('token', resp.headers.get('token'));
+        this.companyService.addCompanyContact(+this.tokenHelper.getClaimByName('profileid'),emailContact);
+        this.companyService.addCompanyContact(+this.tokenHelper.getClaimByName('profileid'),phoneContact);
         this.authEventService.signIn();
         this.helperService.redirectAfterAuthentication();
       }).catch(err => this.loader = false);
