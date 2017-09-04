@@ -13,6 +13,7 @@ using System;
 using Unicorn.Shared.DTOs.Review;
 using Unicorn.DataAccess.Entities.Enum;
 using Unicorn.Shared.DTOs.Notification;
+using Unicorn.Shared.DTOs.Email;
 
 namespace Unicorn.Core.Services
 {
@@ -201,21 +202,23 @@ namespace Unicorn.Core.Services
 
             _unitOfWork.BookRepository.Create(_book);
             await _unitOfWork.SaveAsync();
-
-            string notificationDescription = $"{_book.Customer.Person.Name} {_book.Customer.Person.Surname} booked {_book.Work?.Name}. Check your dashboard to find out details.";
+            
+            /* Send Message */
+            string msg = EmailTemplate.NewOrderTemplate(_book.Customer.Person.Name, _book.Customer.Person.Surname, _book.Work?.Name);
             string receiverEmail = vendor != null ? vendor.Person.Account.Email : company.Account.Email;
-            _mailService.Send(new Shared.DTOs.Email.EmailMessage
+            _mailService.Send(new EmailMessage
             {
                 ReceiverEmail = receiverEmail,
                 Subject = "You have a new order",
-                Body = notificationDescription,
-                IsHtml = false
+                Body = msg,
+                IsHtml = true
             });
 
+            /* Send Notification */
             var notification = new NotificationDTO()
             {
                 Title = $"New order for {_book.Work.Name}",
-                Description = notificationDescription,
+                Description = $"{_book.Customer.Person.Name} {_book.Customer.Person.Surname} booked {_book.Work?.Name}. Check your dashboard to find out details.",
                 SourceItemId = _book.Id,
                 Time = DateTime.Now,
                 Type = NotificationType.TaskNotification
