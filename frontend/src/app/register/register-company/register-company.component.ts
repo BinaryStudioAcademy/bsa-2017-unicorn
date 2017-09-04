@@ -88,6 +88,7 @@ export class RegisterCompanyComponent implements OnInit {
       phoneContact.ProviderId = 1;
       phoneContact.Type = "Phone";
       phoneContact.Value = regInfo.phone;
+      
       this.registerService.confirmCompany(regInfo).then(resp => {
         this.loader = false;
         this.modal.deny(null);
