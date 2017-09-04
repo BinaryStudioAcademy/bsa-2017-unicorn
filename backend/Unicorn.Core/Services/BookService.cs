@@ -89,8 +89,7 @@ namespace Unicorn.Core.Services
         }
 
         public async Task<BookDTO> GetByIdAsync(long id)
-        {
-            //var book = await _unitOfWork.BookRepository.GetByIdAsync(id);
+        {            
             var book = await _unitOfWork.BookRepository.Query
                 .Include(b => b.Location)
                 .Include(b => b.Vendor)

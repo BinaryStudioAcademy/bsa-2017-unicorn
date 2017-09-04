@@ -68,8 +68,7 @@ namespace Unicorn.Core.Services
                     ValidateLifetime = true
                 };
 
-                ClaimsPrincipal claimsPrincipal = securityTokenHandler.ValidateToken(tokenString, validationParameters, out securityToken);
-
+                securityTokenHandler.ValidateToken(tokenString, validationParameters, out securityToken);
                 result = true;
             }
             catch (Exception)

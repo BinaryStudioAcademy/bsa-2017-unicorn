@@ -136,9 +136,8 @@ namespace Unicorn.Core.Services
         public async Task CreateAsync(VendorRegisterDTO ShortVendorDTO)
         {
             var account = new Account();
-            var role = await _unitOfWork.RoleRepository.GetByIdAsync((long)RoleType.Vendor);
-            var permissions = new List<Permission>();
-            var socialAccounts = new List<SocialAccount>();
+            var role = await _unitOfWork.RoleRepository.GetByIdAsync((long)RoleType.Vendor);            
+            var socialAccounts = new List<SocialAccount>();            
             var socialAccount = new SocialAccount();
             var vendor = new Vendor();
             var person = new Person();
