@@ -8,6 +8,7 @@ using Unicorn.DataAccess.Interfaces;
 using Unicorn.Shared.DTOs;
 using Unicorn.Shared.DTOs.Search;
 using System.Device.Location;
+using System;
 using Unicorn.Shared.DTOs.Subcategory;
 
 namespace Unicorn.Core.Services
@@ -25,7 +26,7 @@ namespace Unicorn.Core.Services
                                                                    string vendor, string ratingcompare, double? rating, bool? reviews,
                                                                    double? latitude, double? longitude, double? distance,
                                                                    string[] categories, string[] subcategories,
-                                                                   string sort  )
+                                                                   int? sort  )
         {
             var reviewsList = await _unitOfWork.ReviewRepository.GetAllAsync();
 
@@ -66,13 +67,13 @@ namespace Unicorn.Core.Services
 
             switch (sort)
             {
-                case "rating":
+                case (int?)Sort.RATING:
                     searchWorksOrdered = searchWorks.OrderByDescending(x => x.Rating).ToList();
                     break;
-                case "name":
+                case (int?)Sort.NAME:
                     searchWorksOrdered = searchWorks.OrderBy(x => x.Name).ToList();
                     break;
-                case "distance":
+                case (int?)Sort.DISTANCE:
                     searchWorksOrdered = searchWorks.OrderBy(x => x.Distance).ToList();
                     break;
                 default:

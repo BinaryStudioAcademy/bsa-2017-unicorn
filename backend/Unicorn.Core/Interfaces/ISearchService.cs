@@ -14,6 +14,6 @@ namespace Unicorn.Core.Interfaces
                                                       string vendor, string ratingcompare, double? rating, bool? reviews,
                                                       double? latitude, double? longitude, double? distance,
                                                       string[] categories, string[] subcategories,
-                                                      string sort  );
+                                                      int? sort  );
     }
 }

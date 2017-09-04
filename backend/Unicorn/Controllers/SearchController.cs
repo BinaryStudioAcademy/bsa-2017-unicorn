@@ -24,7 +24,7 @@ namespace Unicorn.Controllers
                                                                         string vendor, string ratingcompare, double? rating, bool? reviews,
                                                                         double? latitude, double? longitude, double? distance,
                                                                         [FromUri] string[] categories, [FromUri] string[] subcategories,
-                                                                        string sort  )
+                                                                        int? sort  )
         {
             return await _searchService.GetWorksByFilters(  category, subcategory, date,
                                                             vendor, ratingcompare, rating, reviews,

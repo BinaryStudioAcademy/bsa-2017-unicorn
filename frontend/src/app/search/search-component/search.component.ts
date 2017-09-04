@@ -8,6 +8,7 @@ import { SearchService } from '../../services/search.service';
 import { CategoryService } from '../../services/category.service';
 
 import { SearchWork } from '../../models/search/search-work';
+import { Sort } from '../../models/search/sort';
 import { LocationModel } from '../../models/location.model';
 import { Category } from '../../models/category.model';
 import { Subcategory } from '../../models/subcategory.model';
@@ -28,6 +29,7 @@ export class SearchComponent implements OnInit {
   mode: string;
   firstDayOfWeek: string;
   /* advanced filters */
+  togglePanel: boolean;
   vendorName: string;
   ratingCompare: string;
   ratingCmp: string;
@@ -42,6 +44,7 @@ export class SearchComponent implements OnInit {
   subcategories: Subcategory[];
   selSubcategories: string[];
   sort: string;
+  selSort: number;
   /* pagination */
   pageSize = '20';
   maxSize = 3;
@@ -98,11 +101,13 @@ export class SearchComponent implements OnInit {
     this.works = [];
     this.spinner = true;
     this.distance = this.slider;
+    this.togglePanel = false;
     this.ratingCmp = this.convertRatingType(this.ratingCompare);
-    this.getWorksByAdvFilters(this.category, this.subcategory, this.rawDate, this.vendorName,
-           this.ratingCmp, this.rating, this.reviewsChecked,
+    this.selSort = this.convertSortType(this.sort);
+    this.getWorksByAdvFilters(this.category, this.subcategory, this.rawDate,
+           this.vendorName, this.ratingCmp, this.rating, this.reviewsChecked,
            this.latitude, this.longitude, this.distance,
-           this.selCategories, this.selSubcategories, this.sort);
+           this.selCategories, this.selSubcategories, this.selSort);
   }
 
   convertRatingType(rating: string) {
@@ -116,10 +121,23 @@ export class SearchComponent implements OnInit {
     }
   }
 
+  convertSortType (sort: string): number {
+    switch (sort) {
+      case 'rating':
+        return 1;
+      case 'name':
+        return 2;
+      case 'distance':
+        return 3;
+      default:
+        return 1;
+    }
+  }
+
   getWorksByAdvFilters(category: string, subcategory: string, date: number,
       vendor: string, ratingcompare: string, rating: number, reviews: boolean,
       latitude: number, longitude: number, distance: number,
-      categories: string[], subcategories: string[], sort: string) {
+      categories: string[], subcategories: string[], sort: number) {
 
     this.searchService.getWorksByAdvFilters(category, subcategory, date,
     vendor, ratingcompare, rating, reviews, latitude, longitude, distance,
@@ -143,21 +161,50 @@ export class SearchComponent implements OnInit {
     this.latitude = undefined;
     this.longitude = undefined;
     this.slider = 0;
-    this.distance = undefined;
+    this.distance = 0;
     this.reviewsChecked = false;
     this.selCategories = [];
     this.selSubcategories = [];
+    this.searchWorks();
   }
 
   initAdvancedFilters() {
-    this.ratingCompare = 'greater';
-    this.rating = 0;
-    this.slider = 0;
+    // this.ratingCompare = 'greater';
+    // this.rating = 0;
+    // this.slider = 0;
+    this.reset();
     this.categoryService.getAll()
     .then(resp => {
       this.categories = resp.body as Category[];
     });
     this.sort = 'rating';
+  }
+
+  isAnyFilterSelected() {
+    if (this.vendorName === undefined &&
+        this.ratingCompare === 'greater' &&
+        this.rating === undefined &&
+        this.place === undefined &&
+        this.latitude === undefined &&
+        this.longitude === undefined &&
+        this.slider === 0 &&
+        this.distance === 0 &&
+        this.reviewsChecked === false &&
+        this.selCategories.length === 0 &&
+        this.selSubcategories.length === 0
+      ) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  showSlider() {
+    if (this.slider >= 100) {
+      return this.slider.toString() + '+';
+    } else {
+      return this.slider.toString();
+    }
   }
 
   categoriesChanged() {
@@ -179,17 +226,21 @@ export class SearchComponent implements OnInit {
   }
 
   subcategoriesChanged() {
-    console.log('subcat: ');
-    console.log(this.selSubcategories);
+    // console.log('subcat: ');
+    // console.log(this.selSubcategories);
   }
 
   onMapReady(map: NguiMap) {
   }
 
+  emptyWorks() {
+    return !this.spinner && this.works.length === 0;
+  }
+
   mapRedirect() {
     if (this.works && this.works.length > 0) {
-      let loc = this.works[0].Location;
-      console.log(loc.Latitude, loc.Longitude);
+      const loc = this.works[0].Location;
+      // console.log(loc.Latitude, loc.Longitude);
       this.center = new google.maps.LatLng(loc.Latitude, loc.Longitude);
       this.ref.detectChanges();
     }
@@ -202,8 +253,14 @@ export class SearchComponent implements OnInit {
   }
 
   getWorksPage(): SearchWork[] {
-    const pageSize = Number(this.pageSize);
-    return this.works.slice((this.selectedPage - 1) * pageSize, this.selectedPage * pageSize);
+    return this.works.slice((this.selectedPage - 1) * Number(this.pageSize), this.selectedPage * Number(this.pageSize));
+  }
+
+  pageSizeChanged() {
+    // check if sliced works are out of range
+    if ((this.works.length - (this.selectedPage - 1) * Number(this.pageSize)) <= 0) {
+      this.selectedPage = 1;
+    }
   }
 
   initialized(autocomplete: any) {
@@ -214,7 +271,7 @@ export class SearchComponent implements OnInit {
     const place = this.autocomplete.getPlace();
     this.latitude = place.geometry.location.lat();
     this.longitude = place.geometry.location.lng();
-    console.log(place);
+    // console.log(place);
     // for (let i = 0; i < place.address_components.length; i++) {
     //   let addressType = place.address_components[i].types[0];
     //   this.address[addressType] = place.address_components[i].long_name;
@@ -230,7 +287,7 @@ export class SearchComponent implements OnInit {
       this.rawDate = this.route.snapshot.queryParams['date'];
       this.date = this.convertDate(this.rawDate);
     }
-    console.log(this.category, this.subcategory, this.date);
+    // console.log(this.category, this.subcategory, this.date);
   }
 
   convertDate(date: number) {
