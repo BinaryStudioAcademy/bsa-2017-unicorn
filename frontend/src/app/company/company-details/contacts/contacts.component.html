@@ -3,7 +3,7 @@
         <div class="header" style="display: flex; justify-content: space-between; align-items: center;">
             <div>Our contacts</div>
             <div *ngIf="accountId !== ownerId">
-                <button class="ui active button" [ngClass]="{'loading':isLoaded}" (click)="createChat()"> 
+                <button class="ui active button" *ngIf="!isGuest" [ngClass]="{'loading':isLoaded}" (click)="createChat()"> 
                     <div *ngIf="!isLoaded">
                         <i class="comments icon"></i> START A CHAT 
                     </div>
