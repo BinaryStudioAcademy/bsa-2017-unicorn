@@ -20,6 +20,6 @@ export class HelperService {
     }
 
     let path = new RoleRouter().getRouteByRole(userRoleId);
-    userRoleId === 2 ? this.router.navigate([path]) : this.router.navigate([path, userClaims['profileid']]);
+    userRoleId === 2 ? this.router.navigate([path]) : this.router.navigate([path, userClaims['profileid'], 'edit']);
   }
 }
