@@ -51,7 +51,7 @@ namespace Unicorn.Core.Services
         public async Task<ContactShortDTO> CreateAsync(long accountId, ContactShortDTO contactDto)
         {
             var account = await _unitOfWork.AccountRepository.GetByIdAsync(accountId);
-            var provider = await _unitOfWork.ContactProviderRepository.GetByIdAsync(contactDto.ProviderId); ;
+            var provider = await _unitOfWork.ContactProviderRepository.GetByIdAsync(contactDto.ProviderId);
             var contact = new Contact()
             {
                 Account = account,
