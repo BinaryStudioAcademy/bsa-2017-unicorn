@@ -15,6 +15,7 @@ import { DataService } from '../services/data.service';
 import { DashboardService } from '../services/dashboard/dashboard.service';
 import { TokenHelperService } from '../services/helper/tokenhelper.service';
 import { DashMessagingService } from '../services/dashboard/dash-messaging.service';
+import { DashboardOffersComponent } from './dashboard-component/dashboard-offers/dashboard-offers.component';
 
 
 @NgModule({
@@ -29,12 +30,14 @@ import { DashMessagingService } from '../services/dashboard/dash-messaging.servi
     DashboardComponent,
     DashboardPendingsComponent,
     DashboardProgressComponent,
-    DashboardFinishedComponent
+    DashboardFinishedComponent,
+    DashboardOffersComponent
   ],
   providers: [
     DashboardService,
     DataService,
-    DashMessagingService
+    DashMessagingService,
+    TokenHelperService
   ]
 })
 export class DashboardModule { }
