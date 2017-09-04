@@ -201,19 +201,8 @@ namespace Unicorn.Core.Services
             };
 
             _unitOfWork.BookRepository.Create(_book);
-            await _unitOfWork.SaveAsync();
+            await _unitOfWork.SaveAsync();          
             
-            /* Send Message */
-            string msg = EmailTemplate.NewOrderTemplate(_book.Customer.Person.Name, _book.Customer.Person.Surname, _book.Work?.Name);
-            string receiverEmail = vendor != null ? vendor.Person.Account.Email : company.Account.Email;
-            _mailService.Send(new EmailMessage
-            {
-                ReceiverEmail = receiverEmail,
-                Subject = "You have a new order",
-                Body = msg,
-                IsHtml = true
-            });
-
             /* Send Notification */
             var notification = new NotificationDTO()
             {
@@ -226,6 +215,17 @@ namespace Unicorn.Core.Services
 
             var receiverId = vendor != null ? vendor.Person.Account.Id : company.Account.Id;
             await _notificationService.CreateAsync(receiverId, notification);
+
+            /* Send Message */
+            string msg = EmailTemplate.NewOrderTemplate(_book.Customer.Person.Name, _book.Customer.Person.Surname, _book.Work?.Name);
+            string receiverEmail = vendor != null ? vendor.Person.Account.Email : company.Account.Email;
+            _mailService.Send(new EmailMessage
+            {
+                ReceiverEmail = receiverEmail,
+                Subject = "You have a new order",
+                Body = msg,
+                IsHtml = true
+            });
         }
 
         private int GetRatingByBookId(long id)
@@ -408,19 +408,21 @@ namespace Unicorn.Core.Services
             await _unitOfWork.SaveAsync();
 
             if (isStatusChanged)
-            {
+            {               
+                /* Send Notification */
                 var notification = new NotificationDTO();
                 string performerName = book.Vendor != null ? $"{book.Vendor.Person.Name} {book.Vendor.Person.Surname}" : book.Company.Name;
                 long receiverId = book.Customer.Person.Account.Id;
 
+                string newBookStatus = null;
                 switch (book.Status)
                 {
                     case BookStatus.Accepted:
-                        notification.Title = "Order accepted";
+                        notification.Title = newBookStatus = "Order accepted";
                         notification.Description = $"{performerName} accepted your order ({book.Work.Name}).";
                         break;
                     case BookStatus.Finished:
-                        notification.Title = "Work was finished";
+                        notification.Title = newBookStatus = "Work was finished";
                         notification.Description = $"{performerName} finished {book.Work.Name} and waiting for your confirmation.";
                         break;
                     case BookStatus.Confirmed:
@@ -429,13 +431,27 @@ namespace Unicorn.Core.Services
                         notification.Description = $"{book.Work.Name} was confirmed  by {book.Customer.Person.Name} {book.Customer.Person.Surname}.";
                         break;
                     case BookStatus.Declined:
-                        notification.Title = "Order was declined";
+                        notification.Title = newBookStatus = "Order was declined";
                         notification.Description = $"{performerName} decline your order ({book.Work.Name}).";
                         break;
                 }
 
                 notification.Time = DateTime.Now;
                 await _notificationService.CreateAsync(receiverId, notification);
+
+                /* Send Message */
+                if (book.Status != BookStatus.Confirmed) // Only for customer events
+                {
+                    string msg = EmailTemplate.OrderStatusChanged(book.Work.Name, newBookStatus, book.Customer.Id);
+                    string receiverEmail = book.Vendor != null ? book.Vendor.Person.Account.Email : book.Company.Account.Email;
+                    _mailService.Send(new EmailMessage
+                    {
+                        ReceiverEmail = receiverEmail,
+                        Subject = "Work status changed",
+                        Body = msg,
+                        IsHtml = true
+                    });
+                }
             }
         }
 

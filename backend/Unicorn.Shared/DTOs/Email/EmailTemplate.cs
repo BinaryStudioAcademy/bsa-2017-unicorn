@@ -7,7 +7,7 @@
         private static string footer = "<div class=footer><table border=0 cellpadding=0 cellspacing=0><tr><td class=content-block><span class=apple-link>Unicorn Inc, Chornovola Ave 59, Lviv 79058</span></td></tr><tr><td class=\"content-block powered-by\">Powered by <a href=http://unicorn-bsa.tk>Unicorn Project</a>.</td></tr></table></div></div></td><td>&nbsp;</td></tr></table></body></html>";
 
         private const string dashBoardLink = "http://unicorn-bsa.tk/dashboard";
-        private const string accountLink = "http://unicorn-bsa.tk/account/";
+        private const string accountLink = "http://unicorn-bsa.tk/user/";
 
         private static string BuildHtml(string body)
         {
@@ -22,7 +22,7 @@
 
         public static string OrderStatusChanged(string workName, string status, long accountId)
         {
-            string body = $"<body class><table border=0 cellpadding=0 cellspacing=0 class=body><tr><td>&nbsp;</td><td class=container><div class=content><table class=main><tr><td class=wrapper><table border=0 cellpadding=0 cellspacing=0><tr><td><p>Hi there,</p><p>Status of your work ({workName}) was changed to <<{status}>>. You can review details in your account.</p><table border=0 cellpadding=0 cellspacing=0 class=\"btn btn-primary\"><tbody><tr><td align=center><table border=0 cellpadding=0 cellspacing=0><tbody><tr><td> <a href={accountLink}{accountId} target=_blank>Go To Account</a> </td></tr></tbody></table></td></tr></tbody></table></td></tr></table></td></tr></table>";
+            string body = $"<body class><table border=0 cellpadding=0 cellspacing=0 class=body><tr><td>&nbsp;</td><td class=container><div class=content><table class=main><tr><td class=wrapper><table border=0 cellpadding=0 cellspacing=0><tr><td><p>Hi there,</p><p>New information about your task ({workName}): <b>{status}</b>. You can review details in your account.</p><table border=0 cellpadding=0 cellspacing=0 class=\"btn btn-primary\"><tbody><tr><td align=center><table border=0 cellpadding=0 cellspacing=0><tbody><tr><td> <a href={accountLink}{accountId} target=_blank>Go To Account</a> </td></tr></tbody></table></td></tr></tbody></table></td></tr></table></td></tr></table>";
             return BuildHtml(body);
         }
     }
