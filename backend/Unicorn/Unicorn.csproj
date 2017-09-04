@@ -229,6 +229,7 @@
     <Compile Include="Controllers\ContactsController.cs" />
     <Compile Include="Controllers\DbController.cs" />
     <Compile Include="Controllers\MembershipController.cs" />
+    <Compile Include="Controllers\OfferController.cs" />
     <Compile Include="Controllers\PopularController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
