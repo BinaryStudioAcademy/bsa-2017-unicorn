@@ -23,42 +23,67 @@ namespace Unicorn.Core.Services
             _ratingService = ratingService;
         }
 
-        public async Task<List<FullPerformerDTO>> GetPerformersByFilterAsync(string city, string name)
+        public async Task<List<FullPerformerDTO>> GetPerformersByFilterAsync(string city, string name, string role, double minRating, bool withReviews, string categoriesString)
         {
             var reviews = await _uow.ReviewRepository.GetAllAsync();
-            var vendorsQuery = _uow.VendorRepository
+            var categories = !string.IsNullOrEmpty(categoriesString) ? categoriesString.Split('+').Select(c => Int64.Parse(c)) : new List<long>();
+
+            IQueryable<Vendor> vendorsQuery = null;
+            IQueryable<Company> companiesQuery = null;
+
+            if (role == "vendor" || string.IsNullOrEmpty(role))
+            {
+                vendorsQuery = _uow.VendorRepository
+                    .Query
+                    .Include(v => v.Works
+                        .Select(w => w.Subcategory.Category))
+                    .Include(v => v.Person)
+                    .Include(v => v.Person.Account)
+                    .Include(v => v.Person.Account.Location);
+            }
+            if (role == "company" || string.IsNullOrEmpty(role))
+            {
+                companiesQuery = _uow.CompanyRepository
                 .Query
-                .Include(v => v.Person)
-                .Include(v => v.Person.Account)
-                .Include(v => v.Person.Account.Location);
-            var companiesQuery = _uow.CompanyRepository
-                .Query
+                .Include(c => c.Works)
                 .Include(c => c.Account)
                 .Include(c => c.Account.Location);
+            }
             if (!string.IsNullOrEmpty(city))
             {
-                vendorsQuery = vendorsQuery
+                vendorsQuery = vendorsQuery?
                     .Where(v => v.Person.Account.Location.City.Contains(city));
-                companiesQuery = companiesQuery
+                companiesQuery = companiesQuery?
                     .Where(c => c.Account.Location.City.Contains(city));
             }
             if (!string.IsNullOrEmpty(name))
             {
-                vendorsQuery = vendorsQuery
+                vendorsQuery = vendorsQuery?
                     .Where(v => v.Person.Name.Contains(name));
-                companiesQuery = companiesQuery
+                companiesQuery = companiesQuery?
                     .Where(c => c.Name.Contains(name));
             }
-            var vendorsList = await vendorsQuery.ToListAsync();
+
+            foreach (var categoryId in categories)
+            {
+                vendorsQuery = vendorsQuery?
+                    .Where(v => v.Works.Any(w => w.Subcategory.Category.Id == categoryId));
+                companiesQuery = companiesQuery?
+                    .Where(c => c.Works.Any(w => w.Subcategory.Category.Id == categoryId));
+            }
+
+            var vendorsList = vendorsQuery != null ? await vendorsQuery.ToListAsync() : new List<Vendor>();
             var vendors = vendorsList
                 .Select(v => VendorToFullPerformer(v, reviews))
                 .ToList();
-            var companiesList = await companiesQuery.ToListAsync();
+            var companiesList = vendorsQuery != null ? await companiesQuery.ToListAsync() : new List<Company>();
             var companies = companiesList
                 .Select(c => CompanyToFullPerformer(c, reviews))
                 .ToList();
 
-            return ConcatPerformers(vendors, companies);
+            return ConcatPerformers(vendors, companies)
+                .Where(p => !withReviews || p.ReviewsCount > 0)
+                .Where(p => p.Rating >= minRating).ToList();
         }
         public async Task<List<FullPerformerDTO>> GetAllPerformersAsync()
         {
