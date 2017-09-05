@@ -17,6 +17,7 @@ import { ChatEventsService } from "../../../services/events/chat-events.service"
 export class ContactsComponent implements OnInit {
   @Input()
   name: string;
+  @Input() isGuest: boolean;
 
   @Input()
   accountId: number;
@@ -26,9 +27,7 @@ export class ContactsComponent implements OnInit {
   messengers: Contact[];
   socials: Contact[];
   emails: Contact[];
-
-
-  openChat: boolean = false;
+  
   ownerId: number;
   companyId: number;
   dialog: DialogModel;
@@ -73,8 +72,7 @@ export class ContactsComponent implements OnInit {
       if(res !== null){        
         this.dialog = res; 
         this.dialog.ParticipantName = this.name;       
-        this.isLoaded = false;
-        this.openChat = true;                      
+        this.isLoaded = false;              
       } 
       else{     
         this.dialog = {
@@ -82,11 +80,11 @@ export class ContactsComponent implements OnInit {
           ParticipantOneId: this.ownerId,
           ParticipantTwoId: this.accountId,
           ParticipantName: this.name,
+          ParticipantAvatar: null,
           LastMessageTime: null,
           IsReadedLastMessage: null,
           Messages: null
-        };    
-        this.openChat = true;
+        };
         this.isLoaded = false;
       }
       this.chatEventsService.openChat(this.dialog);     

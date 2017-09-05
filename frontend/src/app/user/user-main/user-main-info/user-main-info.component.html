@@ -24,7 +24,7 @@
                     <i class="colored mail icon "></i> {{user.Email}}
                 </a>
                 <div align="right">
-                    <button class="ui active button" *ngIf="user.AccountId !== ownerId" [ngClass]="{'loading':isLoaded}" (click)="createChat()">
+                    <button class="ui active button" *ngIf="user.AccountId !== ownerId && !isGuest" [ngClass]="{'loading':isLoaded}" (click)="createChat()">
                     <i class="comments icon"></i> START A CHAT
                </button>
                 </div>

@@ -84,9 +84,9 @@ namespace Unicorn.Core.Services
             await _proxy.SendNotification(accountId, notificationDto);
         }
 
-        public async Task CreateAsync(long accountId)
+        public async Task CreateAsync(long accountId, long dialogId)
         {
-            await _proxy.ReadNotReadedMessages(accountId);
+            await _proxy.ReadNotReadedMessages(accountId, dialogId);
         }
 
         public async Task<IEnumerable<NotificationDTO>> GetAllAsync()

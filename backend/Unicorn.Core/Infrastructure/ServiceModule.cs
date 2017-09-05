@@ -39,6 +39,7 @@ namespace Unicorn.Core.Infrastructure
                 .WithConstructorArgument("context", GlobalHost.ConnectionManager.GetHubContext<NotificationHub>());
             Bind<INotificationService>().To<NotificationService>();
             Bind<ISearchService>().To<SearchService>();
+            Bind<IOfferService>().To<OfferService>();
         }
     }
 }

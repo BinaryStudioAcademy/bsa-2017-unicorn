@@ -1,6 +1,34 @@
 <div class="ui container grid" *ngIf="company !== undefined">
     <div class="row">
         <div class="column">
+            <table class="ui selectable padded single line table" *ngIf="pendingVendors && pendingVendors.length !== 0">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Name</th>
+                        <th>Experience</th>
+                         <th>Position</th>
+                        <th>Rating</th>
+                        <th class="right aligned">Pending..</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let offer of pendingVendors">
+                            <td><img class="ui avatar image vendor-icon" src="{{offer.Vendor.Avatar}}"></td>
+                            <td>{{offer.Vendor.FIO}}</td>
+                            <td>{{offer.Vendor.Experience}}</td>
+                            <td>{{offer.Vendor.Position}}</td>
+                            <td>
+                                <sui-rating class="star" [ngModel]="offer.Vendor.Rating" [isReadonly]="true"></sui-rating>
+                            </td>
+                            <td class="right aligned">
+                                <button class="ui button icon">
+                                    <i class="remove icon"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             <table class="ui selectable padded single line table">
                 <thead>
                     <tr>
@@ -77,6 +105,12 @@
                                     <label>Position: </label> {{vendor.Position}}
                                 </div>
                                 <div class="ui divider"></div>
+                                <div>
+                                    <a (click)="openMessageModal(vendor)" class="add-mess">
+                                        <span *ngIf="!messages[vendor.Id]">Add message</span>
+                                        <span *ngIf="messages[vendor.Id]">Edit message</span> 
+                                    </a>
+                                </div>
                             </div>
                         </div>
                         <div class="delete-vendor">
@@ -118,9 +152,28 @@
                 <div class="ui active button file-upload-save" (click)="activeModal.deny(null)">
                     <label class="button-text">Cancel</label>
                 </div>
-                <!-- <div class="ui approve button" (click)="deleteWork()">Approve</div>
-            <div class="ui cancel button" (click)="activeModal.deny(null)">Cancel</div> -->
             </div>
         </div>
     </div>
 </ng-template>
+
+<ng-template let-context let-modal="modal" #messageModal>
+        <div class="ui content">
+            <form class="ui reply form" name="reviewForm" #messageForm="ngForm">
+                <div class="field">
+                    <textarea required 
+                        placeholder="ADDITIONAL MESSAGE" 
+                        name="reason" 
+                        [(ngModel)]="messages[context.id]" 
+                        #reasonText="ngModel"></textarea>
+                </div>
+                <div class="save-btn">
+                    <a (click)="saveMessage()" 
+                        [ngClass]="{'disabled': messageForm.invalid}" 
+                        class="ui basic button decline-confirm">
+                        <p *ngIf="!loader" style="color:#FF647A;">Save</p>
+                    </a>
+                </div>
+            </form>
+        </div>
+    </ng-template>

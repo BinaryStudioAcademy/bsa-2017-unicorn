@@ -16,6 +16,9 @@ export class ChatService {
   getDialog(dialogId: number):Promise<DialogModel>{
     return this.dataService.getRequest<DialogModel>("chat/" + dialogId);  
   }
+  getDialogByOwner(dialogId: number, ownerId: number):Promise<DialogModel>{
+    return this.dataService.getRequest<DialogModel>("chat/" + dialogId + "/" + ownerId);  
+  }
   addDialog(dialog: DialogModel):Promise<DialogModel>{
     return this.dataService.postRequest("chat/dialog", dialog);  
   }

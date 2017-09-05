@@ -3,6 +3,7 @@ export interface Review {
     Avatar: string;
     Date: Date;
     FromAccountId: number;
+    FromProfileId: number;
     From: string;
     ToAccountId: number;
     To: string;

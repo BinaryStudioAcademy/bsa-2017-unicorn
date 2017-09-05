@@ -205,11 +205,11 @@ export class MenuComponent implements OnInit {
     this.newNotification = notification;
 
     if (notification.Type = NotificationType.ChatNotification) {
-      var chatNotification = this.notifications.find(n => n.Type === NotificationType.ChatNotification);
+      var chatNotification = this.newNotifications.find(n => n.Type === NotificationType.ChatNotification);
       
       while (chatNotification !== undefined) {
         this.archiveNotification(chatNotification);
-        chatNotification = this.notifications.find(n => n.Type === NotificationType.ChatNotification);
+        chatNotification = this.newNotifications.find(n => n.Type === NotificationType.ChatNotification);
       }
     }
 
@@ -222,7 +222,7 @@ export class MenuComponent implements OnInit {
 
   archiveNotification(notification: Notification){
     notification.IsViewed = true;
-    this.newNotifications.splice(this.newNotifications.findIndex(n => n.Id === notification.Id), 1)
+    this.newNotifications.splice(this.newNotifications.findIndex(n => n.Id === notification.Id), 1);
     this.archivedNotifications.push(notification);
     this.sortNotificationsByTime();
     this.accountService.updateNotification(+this.tokenHelper.getClaimByName("accountid"), notification);

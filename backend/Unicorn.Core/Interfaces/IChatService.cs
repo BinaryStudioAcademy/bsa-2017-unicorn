@@ -10,6 +10,7 @@ namespace Unicorn.Core.Interfaces
         Task UpdateNotReadedMessage(long dialogId, long ownerId);
         Task<ChatDialogDTO> CreateDialog(ChatDialogDTO dialog);
         Task<ChatDialogDTO> GetDialog(long dialogId);
+        Task<ChatDialogDTO> GetDialog(long dialogId, long ownerId);
         Task<IEnumerable<ChatDialogDTO>> GetAllDialogs(long accountId);
         Task<ChatDialogDTO> FindDialog(long participantOneId, long participantTwoId);
         Task RemoveDialog(long dialogId);

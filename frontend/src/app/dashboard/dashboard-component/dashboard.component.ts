@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+
+import { TokenHelperService } from '../../services/helper/tokenhelper.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,12 +10,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor() { }
+  isVendor: boolean
+
+  constructor(
+    private route: ActivatedRoute,
+    private tokenHelper: TokenHelperService
+  ) { }
 
   ngOnInit() {
-    
+    this.initRole();
   }
 
-
+  initRole() {
+    let role = +this.tokenHelper.getClaimByName('roleid');
+    this.isVendor = role === 3;
+  }
 
 }

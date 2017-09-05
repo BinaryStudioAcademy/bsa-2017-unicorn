@@ -34,6 +34,21 @@ namespace Unicorn.Controllers
         }
 
         [HttpGet]
+        [Route("{dialogId}/{ownerId}")]
+        public async Task<HttpResponseMessage> Get(long dialogId, long ownerId)
+        {
+            try
+            {
+                var result = await _chatService.GetDialog(dialogId, ownerId);
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+            catch
+            {
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            }
+        }
+
+        [HttpGet]
         [Route("dialogs/{id}")]
         public async Task<HttpResponseMessage> GetAllDialogs(int id)
         {

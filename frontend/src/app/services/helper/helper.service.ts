@@ -12,8 +12,14 @@ export class HelperService {
   public redirectAfterAuthentication() {
     const userClaims = this.tokenHelper.getAllClaims();
     const userRoleId = +userClaims['roleid'];
+    console.log('roelid', userRoleId);
+
+    if (userRoleId === 3 || userRoleId === 4) {
+      this.router.navigate(['dashboard']);
+      return;
+    }
 
     let path = new RoleRouter().getRouteByRole(userRoleId);
-    userRoleId === 2 ? this.router.navigate([path]) : this.router.navigate([path, userClaims['profileid']]);
+    userRoleId === 2 ? this.router.navigate([path]) : this.router.navigate([path, userClaims['profileid'], 'edit']);
   }
 }

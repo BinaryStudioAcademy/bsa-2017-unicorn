@@ -78,6 +78,8 @@
     <Compile Include="DTOs\History\VendorHistoryDTO.cs" />
     <Compile Include="DTOs\LocationDTO.cs" />
     <Compile Include="DTOs\Notification\NotificationDTO.cs" />
+    <Compile Include="DTOs\Offer\OfferDTO.cs" />
+    <Compile Include="DTOs\Offer\ShortOfferDTO.cs" />
     <Compile Include="DTOs\PermissionDTO.cs" />
     <Compile Include="DTOs\PersonDTO.cs" />
     <Compile Include="DTOs\Popular\PerformerDTO.cs" />
@@ -93,6 +95,7 @@
     <Compile Include="DTOs\Review\ShortReviewDTO.cs" />
     <Compile Include="DTOs\RoleDTO.cs" />
     <Compile Include="DTOs\Search\SearchWorkDTO.cs" />
+    <Compile Include="DTOs\Search\Sort.cs" />
     <Compile Include="DTOs\ShortProfileInfoDTO.cs" />
     <Compile Include="DTOs\SocialAccountDTO.cs" />
     <Compile Include="DTOs\Subcategory\SubcategoryDTO.cs" />
