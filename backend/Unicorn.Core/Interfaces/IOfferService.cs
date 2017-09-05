@@ -10,7 +10,8 @@ namespace Unicorn.Core.Interfaces
     public interface IOfferService
     {
         Task CreateOffersAsync(IEnumerable<ShortOfferDTO> offer);
-        Task<IEnumerable<OfferDTO>> GetOffersAsync(long vendorId);
+        Task<IEnumerable<OfferDTO>> GetVendorOffersAsync(long vendorId);
+        Task<IEnumerable<OfferDTO>> GetCompanyOffersAsync(long vendorId);
         Task UpdateOfferAsync(OfferDTO offer);
     }
 }

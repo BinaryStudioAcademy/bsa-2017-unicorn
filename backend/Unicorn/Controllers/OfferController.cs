@@ -38,11 +38,26 @@ namespace Unicorn.Controllers
 
         [HttpGet]
         [Route("offer/vendor/{id}")]
-        public async Task<HttpResponseMessage> GetOffersAsync(long id)
+        public async Task<HttpResponseMessage> GetVendorOffersAsync(long id)
         {
             try
             {
-                var offers = await _offerService.GetOffersAsync(id);
+                var offers = await _offerService.GetVendorOffersAsync(id);
+                return Request.CreateResponse(HttpStatusCode.OK, offers);
+            }
+            catch
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
+        }
+
+        [HttpGet]
+        [Route("offer/company/{id}")]
+        public async Task<HttpResponseMessage> GetCompanyOffersAsync(long id)
+        {
+            try
+            {
+                var offers = await _offerService.GetCompanyOffersAsync(id);
                 return Request.CreateResponse(HttpStatusCode.OK, offers);
             }
             catch

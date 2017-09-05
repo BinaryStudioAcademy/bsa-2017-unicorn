@@ -22,6 +22,10 @@ export class OfferService {
     return this.dataService.getRequest(`offer/vendor/${id}`);
   }
 
+  getCompanyOffers(id: number): Promise<Offer[]> {
+    return this.dataService.getRequest(`offer/company/${id}`);
+  }
+
   updateOffer(offer: Offer): Promise<any> {
     return this.dataService.putRequest('offer', offer);
   }

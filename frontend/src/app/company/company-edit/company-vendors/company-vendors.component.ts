@@ -9,6 +9,10 @@ import { Vendor } from "../../../models/company-page/vendor";
 import { SuiModalService, TemplateModalConfig, ModalTemplate, ModalSize, SuiActiveModal } from 'ng2-semantic-ui';
 import {ToastsManager, Toast} from 'ng2-toastr';
 
+export interface IMessageContext {
+  id: number;
+}
+
 @Component({
   selector: 'app-company-vendors',
   templateUrl: './company-vendors.component.html',
@@ -18,7 +22,9 @@ export class CompanyVendorsComponent implements OnInit {
   @ViewChild('modalDeleteTemplate')
   public modalDeleteTemplate: ModalTemplate<void, {}, void>;
   private activeModal: SuiActiveModal<void, {}, void>;
-  
+  private messModal: SuiActiveModal<IMessageContext, {}, void>;
+  @ViewChild('messageModal')
+  public modalTemplate:ModalTemplate<IMessageContext, void, void>;
 
   company: CompanyVendors;  
   companyId: number;   
@@ -28,6 +34,10 @@ export class CompanyVendorsComponent implements OnInit {
   selectedVendors: Vendor[] = [];
   selectedVendor: Vendor;
   vendor: Vendor;
+
+  pendingVendors: Offer[] = [];
+
+  messages: {[bookId: number]: string} = {};
 
   constructor(private companyService: CompanyService,
     private route: ActivatedRoute,
@@ -47,12 +57,36 @@ export class CompanyVendorsComponent implements OnInit {
       this.company = res;   
       this.allVendors = this.company.AllVendors;
       this.companyId = this.company.Id;  
+      this.offerService.getCompanyOffers(this.route.snapshot.params['id']).then(resp => {
+        this.pendingVendors = resp;
+        console.log('pend', resp);
+        this.pendingVendors.forEach(p => {
+          this.allVendors = this.allVendors.filter(x => x.Id !== p.Vendor.Id);
+        });
+      });
     });
+    
+  }
+
+  saveMessage() {
+    console.log(this.messages);
+    this.messModal.deny(undefined);
+  }
+
+  openMessageModal(vendor: Vendor) {
+    const config = new TemplateModalConfig<IMessageContext, void, void>(this.modalTemplate);
+    config.context = {id: vendor.Id};
+    config.isInverted = true;
+    config.size = ModalSize.Tiny;
+    this.messModal = this.suiModalService.open(config);
   }
 
   changeVendor(){
     this.selectedVendors.push(this.selectedVendor);
     this.allVendors = this.allVendors.filter(x => x.Id !== this.selectedVendor.Id);
+    this.pendingVendors.forEach(p => {
+      this.allVendors = this.allVendors.filter(x => x.Id !== p.Vendor.Id);
+    });
     this.zone.run(() => { this.selectedVendor = null; });  
   }
 
@@ -119,7 +153,7 @@ export class CompanyVendorsComponent implements OnInit {
     let offers: ShortOffer[] = [];
     this.selectedVendors.forEach(vendor => {
       let offer: ShortOffer = {
-        AttachedMessage: 'stub',
+        AttachedMessage: this.messages[vendor.Id],
         CompanyId: this.companyId,
         VendorId: vendor.Id
       }

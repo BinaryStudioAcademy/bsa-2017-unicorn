@@ -30,11 +30,31 @@ namespace Unicorn.Core.Services
             }
         }
 
-        public async Task<IEnumerable<OfferDTO>> GetOffersAsync(long vendorId)
+        public async Task<IEnumerable<OfferDTO>> GetCompanyOffersAsync(long companyId)
+        {
+            var companiesQuery = await _unitOfWork.OfferRepository
+                .Query
+                .Include(o => o.Vendor)
+                .Include(o => o.Vendor.Person)
+                .Include(o => o.Vendor.Person.Account)
+                .Include(o => o.Company)
+                .Include(o => o.Company.Account)
+                .Where(o => o.Company.Id == companyId && o.Status == OfferStatus.Pending)
+                .ToListAsync();
+
+            var vendors = companiesQuery
+                .Select(o => OfferToDto(o));
+
+            return vendors;
+        }
+
+        public async Task<IEnumerable<OfferDTO>> GetVendorOffersAsync(long vendorId)
         {
             var vendorsQuery = await _unitOfWork.OfferRepository
                 .Query
                 .Include(o => o.Vendor)
+                .Include(o => o.Vendor.Person)
+                .Include(o => o.Vendor.Person.Account)
                 .Include(o => o.Company)
                 .Include(o => o.Company.Account)
                 .Where(o => o.Vendor.Id == vendorId && o.Status == OfferStatus.Pending)
@@ -109,6 +129,15 @@ namespace Unicorn.Core.Services
                     Avatar = offer.Company.Account.Avatar,
                     Name = offer.Company.Name,
                     Rating = CalculateAverageRating(offer.Company.Account.Id)
+                },
+                Vendor = new Shared.DTOs.Vendor.VendorDTO
+                {
+                    Id = offer.Vendor.Id,
+                    Avatar = offer.Vendor.Person.Account.Avatar,
+                    FIO = offer.Vendor.Person.Name,
+                    Experience = offer.Vendor.Experience,
+                    Position = offer.Vendor.Position,
+                    Rating = CalculateAverageRating(offer.Vendor.Person.Account.Id)
                 }
             };
         }
