@@ -113,9 +113,20 @@ namespace Unicorn.Core.Services
                 }
             }
 
+            if (distance == 0 || distance == null)
+            {
+                if (!string.IsNullOrEmpty(city))
+                    performersQuery = performersQuery?
+                        .Where(p => p.Location.City.Contains(city));
+            }
+            else
+            {
+                performersQuery = performersQuery?
+                    .Where(p => p.Distance <= distance);
+            }
+
             performersQuery = performersQuery
-                .Where(p => !withReviews || p.ReviewsCount > 0)
-                .Where(p => p.Distance <= distance);
+                .Where(p => !withReviews || p.ReviewsCount > 0);
 
             switch (sort)
             {

@@ -4,7 +4,7 @@
         <div class="row" id="search-bar">
             <div class="ui grid">
                 <div class="five wide column ui input">
-                    <input places-auto-complete (initialized$)="initialized($event)" (place_changed)="placeChanged(place)" [types]="['geocode']"
+                    <input places-auto-complete (initialized$)="initialized($event)" (place_changed)="placeChanged($event)" [types]="['geocode']"
                         type="text" name="location" placeholder="LOCATION" [(ngModel)]="city">
                 </div>
                 <div class="five wide column ui input">

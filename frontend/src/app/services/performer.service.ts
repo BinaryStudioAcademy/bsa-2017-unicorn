@@ -47,8 +47,8 @@ export class PerformerService {
       uriParams.push(`ratingCondition=${ratingCondition}`);
 
     if (latitude && longitude) {
-      uriParams.push(`&latitude=${latitude}`);
-      uriParams.push(`&longitude=${longitude}`);
+      uriParams.push(`latitude=${latitude}`);
+      uriParams.push(`longitude=${longitude}`);
     }
 
     if (distance && distance >= 0)

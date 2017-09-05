@@ -9,6 +9,7 @@ import { PerformerService } from "../../services/performer.service";
 import { Category } from "../../models/category.model";
 import { CategoryService } from "../../services/category.service";
 import { Subcategory } from "../../models/subcategory.model";
+import { LocationService } from "../../services/location.service";
 
 @Component({
   selector: 'app-vendors',
@@ -59,7 +60,8 @@ export class VendorsComponent implements OnInit {
   constructor(
     private performerService: PerformerService,
     private ref: ChangeDetectorRef,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    private locationService: LocationService
   ) { }
 
   ngOnInit() {
@@ -162,8 +164,15 @@ export class VendorsComponent implements OnInit {
   }
 
   placeChanged(event) {
-    this.search();
-    this.ref.detectChanges();
+    this.locationService.getLocDetails(event.geometry.location.lat(), event.geometry.location.lng())
+      .subscribe(result => {
+        this.city = result.address_components[3].short_name;
+        this.longitude = event.geometry.location.lng();
+        this.latitude = event.geometry.location.lat();
+
+        this.search();
+        this.ref.detectChanges();
+      });
   }
 
 }
