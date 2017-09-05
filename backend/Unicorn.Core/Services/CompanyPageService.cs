@@ -12,6 +12,8 @@ using Unicorn.Shared.DTOs.Company;
 using Unicorn.Shared.DTOs.CompanyPage;
 using Unicorn.Shared.DTOs.Contact;
 using Unicorn.Shared.DTOs.Review;
+using Unicorn.Shared.DTOs.Notification;
+using Unicorn.DataAccess.Entities.Enum;
 
 namespace Unicorn.Core.Services
 {
@@ -19,13 +21,15 @@ namespace Unicorn.Core.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IReviewService _reviewService;
+        private readonly INotificationService _notifyService;
 
         #region PublicMethods
 
-        public CompanyPageService(IUnitOfWork unitOfWork, IReviewService reviewService)
+        public CompanyPageService(IUnitOfWork unitOfWork, IReviewService reviewService, INotificationService notifyService)
         {
             _unitOfWork = unitOfWork;
             _reviewService = reviewService;
+            _notifyService = notifyService;
         }
 
         public async Task<ICollection<ShortCompanyDTO>> GetAllCompanies()
@@ -364,6 +368,18 @@ namespace Unicorn.Core.Services
             {
                 company.Vendors.Remove(vendor);
                 await _unitOfWork.SaveAsync();
+
+                var notification = new NotificationDTO()
+                {
+                    Title = $"New info from {company.Name}",
+                    Description = $"You are dismissed from {company.Name} team.",
+                    SourceItemId = company.Id,
+                    Time = DateTime.Now,
+                    Type = NotificationType.OfferNotification
+                };
+
+                var receiverId = vendor.Person.Account.Id;
+                await _notifyService.CreateAsync(receiverId, notification);
             }
         }
 
