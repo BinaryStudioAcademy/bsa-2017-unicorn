@@ -10,8 +10,8 @@
                 <label>When to do it</label>                  
               </div>
               <div class="three wide column ui input">
-                <!-- <input type="text" placeholder="CATEGORY" [(ngModel)]="category"> -->
-                <sui-select class="selection"
+                <input type="text" placeholder="CATEGORY" [(ngModel)]="category">
+                <!-- <sui-select class="selection"
                             [(ngModel)]="category"
                             [options]="categories"
                             [optionFormatter]="formatter"
@@ -20,7 +20,7 @@
                       <sui-select-option *ngFor="let category of categories" [value]="category.Name">                              
                                 </sui-select-option>
                     </div>       
-                </sui-select>
+                </sui-select> -->
               </div>
               <div class="three wide column  ui input">
                 <input type="text" placeholder="SUBCATEGORY" [(ngModel)]="subcategory">
