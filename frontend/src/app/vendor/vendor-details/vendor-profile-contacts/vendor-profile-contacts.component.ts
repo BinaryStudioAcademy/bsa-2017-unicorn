@@ -22,6 +22,7 @@ import { ChatEventsService } from "../../../services/events/chat-events.service"
 export class VendorProfileContactsComponent implements OnInit {
   @Input() private vendorId: number;
   @Input() private accountId: number;
+  @Input() private isGuest: boolean;
   
   contacts: Contact[];
   location: LocationModel;

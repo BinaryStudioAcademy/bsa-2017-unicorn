@@ -10,11 +10,11 @@ import {SuiModalService, TemplateModalConfig, ModalTemplate, ModalSize, SuiActiv
 
 import {ToastsManager, Toast} from 'ng2-toastr';
 import {ToastOptions} from 'ng2-toastr';
+import { MapModel } from "../../../models/map.model";
 
 export interface IDeclineConfirm {
   id: number;
 }
-
 @Component({
   selector: 'app-dashboard-pendings',
   templateUrl: './dashboard-pendings.component.html',
@@ -23,6 +23,7 @@ export interface IDeclineConfirm {
 export class DashboardPendingsComponent implements OnInit {
 
   @ViewChild('declineModal')
+  @ViewChild('mapModal')
   public modalTemplate:ModalTemplate<IDeclineConfirm, void, void>
   currModal: SuiActiveModal<IDeclineConfirm, {}, void>;
 
@@ -33,7 +34,7 @@ export class DashboardPendingsComponent implements OnInit {
 
   reason: string;
   loader: boolean;
-
+  map: MapModel;
   constructor(
     private dashboardService: DashboardService,
     private dashMessaging: DashMessagingService,
@@ -45,12 +46,14 @@ export class DashboardPendingsComponent implements OnInit {
   ngOnInit() {
     this.loadData();
     this.notificationService.listen<any>("RefreshOrders", () => this.loadData());
+    
   }
 
   loadData() {
     this.dashboardService.getPendingBooks().then(resp => {
       this.books = resp;
       console.log(this.books);
+      
     });
   }
 
@@ -72,6 +75,7 @@ export class DashboardPendingsComponent implements OnInit {
   }
 
   decline(id: number) {
+    this.reason = '';
     const config = new TemplateModalConfig<IDeclineConfirm, void, void>(this.modalTemplate);
     config.context = {id: id};
     config.isInverted = true;
@@ -95,5 +99,18 @@ export class DashboardPendingsComponent implements OnInit {
       this.toastr.error('Ops. Cannot decline task');
     });
   }
-
+ openMap(id:number)
+ {
+  this.map = {
+    center: {lat: this.books.filter(b => b.Id == id)[0].Location.Latitude, lng: this.books[0].Location.Longitude},
+    zoom: 18,    
+    title: this.books.filter(b => b.Id == id)[0].Customer,
+    label: this.books.filter(b => b.Id == id)[0].Customer,
+    markerPos: {lat: this.books.filter(b => b.Id == id)[0].Location.Latitude, lng: this.books.filter(b => b.Id == id)[0].Location.Longitude}    
+  };  
+  const config = new TemplateModalConfig<IDeclineConfirm, void, void>(this.modalTemplate);
+  config.isInverted = true;
+  config.size = ModalSize.Tiny;
+  this.currModal = this.modalService.open(config);
+ }
 }

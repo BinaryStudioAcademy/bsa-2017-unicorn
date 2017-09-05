@@ -42,6 +42,8 @@ export class VendorEditComponent implements OnInit {
   cropperSettings: CropperSettings;
   dataLoaded: boolean;
 
+  messagesTabActive: boolean;
+
   constructor(
     private route: ActivatedRoute,
     private vendorService: VendorService,
@@ -63,6 +65,9 @@ export class VendorEditComponent implements OnInit {
         this.vendor.Birthday = new Date(this.vendor.Birthday);
         this.backgroundUrl = this.buildSafeUrl(this.vendor.Background != null ? this.vendor.Background : "https://www.beautycolorcode.com/d8d8d8.png");
       });
+      if (this.route.snapshot.queryParams['tab'] === 'messages') {
+        this.messagesTabActive = true;
+      } 
   }
 
   buildSafeUrl(link: string): SafeResourceUrl {

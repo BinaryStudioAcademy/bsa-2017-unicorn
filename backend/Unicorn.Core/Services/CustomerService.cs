@@ -1,4 +1,3 @@
-using AutoMapper;
 using System;
 using System.Linq;
 using System.Collections.Generic;
@@ -10,7 +9,6 @@ using Unicorn.Shared.DTOs.Register;
 using Unicorn.Shared.DTOs.User;
 using System.Data.Entity;
 using Unicorn.DataAccess.Entities.Enum;
-using Unicorn.Shared.DTOs.Book;
 using Unicorn.Shared.DTOs;
 
 namespace Unicorn.Core.Services
@@ -122,6 +120,7 @@ namespace Unicorn.Core.Services
                 var customerDto = new UserShortDTO()
                 {
                     Id = customer.Id,
+                    AccountId = customer.Person.Account.Id,
                     Name = customer.Person.Name,
                     SurName = customer.Person.Surname,
                     MiddleName = customer.Person.MiddleName,
@@ -147,16 +146,7 @@ namespace Unicorn.Core.Services
                         subcategoryName = x.SubcategoryName,
                         vendor = x?.Vendor?.Person?.Name,
                         workDescription = x.WorkDescription
-                    }).ToList(),
-                    //Books = customer.Books?.Select(x => new BookShortDto()
-                    //{
-                    //    Address = x.Location?.Adress,
-                    //    Date = x.Date,
-                    //    Description = x.Description,
-                    //    Vendor = x?.Vendor?.Person?.Name,
-                    //    Status = x.Status,
-                    //    WorkType = x.Work.Subcategory?.Name
-                    //}).ToList()
+                    }).ToList()
                 };
                 return customerDto;
             }
@@ -165,7 +155,6 @@ namespace Unicorn.Core.Services
 
         public async Task<UserForOrder> GetForOrderAsync(long id)
         {
-            //var customer = await _unitOfWork.CustomerRepository.GetByIdAsync(id);
             var customer = await _unitOfWork.CustomerRepository
                 .Query
                 .Include(x => x.Person.Account.Location)
@@ -173,7 +162,7 @@ namespace Unicorn.Core.Services
 
             return new UserForOrder()
             {
-                Location = new Shared.DTOs.LocationDTO()
+                Location = new LocationDTO()
                 {
                     Id = customer.Person.Account.Location.Id,
                     Adress = customer.Person.Account.Location.Adress,

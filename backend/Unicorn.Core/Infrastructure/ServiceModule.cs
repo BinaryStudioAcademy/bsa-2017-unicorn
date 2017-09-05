@@ -17,6 +17,7 @@ namespace Unicorn.Core.Infrastructure
             Bind<IAccountService>().To<AccountService>();
             Bind<IBookService>().To<BookService>();
             Bind<IDBService>().To<DBService>();
+            Bind<IMailService>().To<MailService>();
             Bind<IHistoryService>().To<HistoryService>();
             Bind<ICustomerService>().To<CustomerService>();
             Bind<IChatService>().To<ChatService>();
@@ -38,6 +39,7 @@ namespace Unicorn.Core.Infrastructure
                 .WithConstructorArgument("context", GlobalHost.ConnectionManager.GetHubContext<NotificationHub>());
             Bind<INotificationService>().To<NotificationService>();
             Bind<ISearchService>().To<SearchService>();
+            Bind<IOfferService>().To<OfferService>();
         }
     }
 }

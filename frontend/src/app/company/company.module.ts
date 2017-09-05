@@ -18,6 +18,7 @@ import { environment } from "../../environments/environment";
 import { CompanyEditComponent } from './company-edit/company-edit.component';
 import { DataService } from "../services/data.service";
 import { PhotoService } from '../services/photo.service';
+import { OfferService } from '../services/offer.service';
 import { MapModule } from "../map/map.module";
 import { CompanyMainInformationComponent } from './company-edit/company-main-information/company-main-information.component';
 import { CompanyMessagesComponent } from './company-edit/company-messages/company-messages.component';
@@ -75,7 +76,8 @@ import { NguiMapModule } from "@ngui/map/dist";
   providers: [
     DataService,
     PhotoService,
-    CompanyService
+    CompanyService,
+    OfferService
   ]
 })
 export class CompanyModule { }

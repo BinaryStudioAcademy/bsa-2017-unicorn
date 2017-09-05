@@ -52,6 +52,9 @@ export class UserDetailsComponent implements OnInit {
   file: File;
   imageUploaded: boolean;
 
+  tasksTabActive: boolean;
+  messagesTabActive: boolean;
+
   constructor(
     private route: ActivatedRoute,
     private userService: UserService,
@@ -74,6 +77,11 @@ export class UserDetailsComponent implements OnInit {
         this.user.Birthday = new Date(this.user.Birthday);
         this.backgroundUrl = this.buildSafeUrl(this.user.Background != null ? this.user.Background : "https://www.beautycolorcode.com/d8d8d8.png");
       });
+
+    switch (this.route.snapshot.queryParams['tab']) {
+      case 'tasks': this.tasksTabActive = true; break;
+      case 'messages': this.messagesTabActive = true; break;
+    }
   }
 
   buildSafeUrl(link: string): SafeResourceUrl {

@@ -13,6 +13,8 @@ export class CompanyEditComponent implements OnInit {
   isDimmed: boolean = false;
   company: CompanyShort;  
   uploading: boolean;
+
+  messagesTabActive: boolean;
   
   constructor(private companyService: CompanyService,
     private route: ActivatedRoute,
@@ -22,7 +24,10 @@ export class CompanyEditComponent implements OnInit {
     this.route.params
     .switchMap((params: Params) => this.companyService.getCompanyShort(params['id'])).subscribe(res => {
       this.company = res;
-    });        
+    }); 
+    if (this.route.snapshot.queryParams['tab'] === 'messages') {
+      this.messagesTabActive = true;
+    }       
   }
 
   bannerListener($event) {

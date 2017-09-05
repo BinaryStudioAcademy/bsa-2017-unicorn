@@ -18,6 +18,7 @@ namespace Unicorn.Shared.DTOs.Vendor
 
         public string FIO { get; set; }
 
+        public double Rating { get; set; }
 
         public virtual CompanyDTO Company { get; set; }
 

@@ -17,6 +17,7 @@ import { ChatEventsService } from "../../../services/events/chat-events.service"
 export class ContactsComponent implements OnInit {
   @Input()
   name: string;
+  @Input() isGuest: boolean;
 
   @Input()
   accountId: number;

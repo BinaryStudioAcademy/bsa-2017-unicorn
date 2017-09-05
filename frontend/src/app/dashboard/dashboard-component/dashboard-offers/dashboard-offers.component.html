@@ -1,0 +1,31 @@
+<div class="sixteen wide column" *ngIf="offers !== undefined">
+    <div class="ui segment" *ngIf="offers.length == 0">
+        <span id="empty-header">There are no offers</span>
+    </div>
+    <div class="ui segment book-card grid" *ngFor="let offer of offers">
+        <div class="book-img two wide column">
+            <img class="ui tiny circular image" src="{{offer.Company.Avatar}}">
+        </div>
+        <div class="book-info five wide column">
+            <p>{{offer.Company.Name}} 
+                <span align=right>
+                    <sui-rating class="star" [isReadonly]="true" [ngModel]="offer.Company.Rating">
+                    </sui-rating>
+                </span>
+            </p>
+        </div>
+        <div class="customer-info five wide column">
+            <p>{{offer.AttachedMessage}}</p>
+        </div>
+        <div class="book-actions four wide column">
+            <a 
+                (click)="acceptOffer(offer)" 
+                class="ui button accept-btn"
+                [ngClass]="{'loading': aloads[offer.Id], 'disabled': aloads[offer.Id] || dloads[offer.Id]}">Accept</a>
+            <a 
+                (click)="declineOffer(offer)" 
+                class="ui button basic decline-btn"
+                [ngClass]="{'loading': dloads[offer.Id], 'disabled': aloads[offer.Id] || dloads[offer.Id]}">Decline</a>
+        </div>
+    </div>
+</div>
