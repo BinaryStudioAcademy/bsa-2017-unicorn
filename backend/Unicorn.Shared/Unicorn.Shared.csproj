@@ -94,6 +94,7 @@
     <Compile Include="DTOs\Review\ShortReviewDTO.cs" />
     <Compile Include="DTOs\RoleDTO.cs" />
     <Compile Include="DTOs\Search\SearchWorkDTO.cs" />
+    <Compile Include="DTOs\Search\Sort.cs" />
     <Compile Include="DTOs\ShortProfileInfoDTO.cs" />
     <Compile Include="DTOs\SocialAccountDTO.cs" />
     <Compile Include="DTOs\Subcategory\SubcategoryDTO.cs" />

@@ -26,6 +26,7 @@ export class UserMainInfoComponent implements OnInit {
   ownerId: number;
   dialog: DialogModel;
   isLoaded: boolean = false;
+  isGuest: boolean;
   constructor(private userService: UserService,
     private chatEventsService: ChatEventsService,
     private tokenHelper: TokenHelperService,
@@ -42,7 +43,10 @@ export class UserMainInfoComponent implements OnInit {
         markerPos: {lat: this.user.Location.Latitude, lng: this.user.Location.Longitude}    
       };  
       });
+
      this.ownerId = +this.tokenHelper.getClaimByName('accountid');
+     this.isGuest = this.ownerId === 0;
+          
      this.userService.getReviews(this.user.Id)
      .then(resp => this.reviewsCount = (resp.body as Review[]).length)
   }

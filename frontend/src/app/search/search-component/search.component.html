@@ -3,20 +3,17 @@
   <div class="ten wide column settings-container">
       <div id="search-panel" class="row remove-padding-top">
           <div class="ui grid">
-              <div class="three wide column remove-padding-bottom">
-                <label>Category</label>
-              </div>
-              <div class="three wide column remove-padding-bottom">
-                <label>Subategory</label>
+              <div class="six wide column remove-padding-bottom">
+                <label>What to do</label>
               </div>
               <div class="ten wide column remove-padding-bottom">
                 <label>When to do it</label>                  
               </div>
               <div class="three wide column ui input">
-                <input type="text" placeholder="SCRATCH" [(ngModel)]="category">
+                <input type="text" placeholder="CATEGORY" [(ngModel)]="category">
               </div>
               <div class="three wide column  ui input">
-                <input type="text" placeholder="CAT" [(ngModel)]="subcategory">
+                <input type="text" placeholder="SUBCATEGORY" [(ngModel)]="subcategory">
               </div>
               <div class="four wide column ui left icon input">
                   <i class="calendar icon"></i>
@@ -32,10 +29,10 @@
               </div>
               <div class="sixteen wide column remove-padding-top">
                 <sui-accordion class="fluid">
-                  <sui-accordion-panel [isOpen]="filtersIsOpen">
+                  <sui-accordion-panel [(isOpen)]="togglePanel">
                     <div title>
                       <i class="filter icon"></i>
-                      <label>Additional filters</label>
+                      <label [ngClass]="{'active-filters': isAnyFilterSelected()}">Advanced filters</label>
                     </div>
                     <div content>
                       <div class="ui grid container segment">
@@ -67,7 +64,7 @@
                           </div>                             
                         </div>  
                         <div class="eight wide column remove-padding-bottom padding-top">  
-                          <label>Distance: {{slider}} km</label>  
+                          <label>Distance: {{showSlider()}} km</label>  
                         </div> 
                         <div class="eight wide column remove-padding-bottom padding-top">  
                           <sui-checkbox [(ngModel)]="reviewsChecked">
@@ -75,14 +72,14 @@
                           </sui-checkbox>                        
                         </div>  
                         <div class="eight wide column remove-padding-bottom padding-top"> 
-                          <div class="rating-container">
+                          <div class="distance-container">
                           <label>0</label> 
                           <mdl-slider class="slider" min="0" max="100" [(ngModel)]="slider"></mdl-slider>
-                          <label>100+ km</label>
+                          <label>100+</label>
                           </div>
                         </div>
-                        <div class="eight wide column">
-                          <sui-multi-select [(ngModel)]="selCategories"
+                        <div class="four wide column">
+                          <sui-multi-select class="items-container" [(ngModel)]="selCategories"
                                             [options]="categories"                                            
                                             icon="list"
                                             placeholder="CATEGORIES"
@@ -103,8 +100,8 @@
                             </div>
                           </sui-multi-select>
                         </div>    
-                        <div class="eight wide column">
-                          <sui-multi-select [(ngModel)]="selSubcategories"
+                        <div class="four wide column">
+                          <sui-multi-select class="items-container" [(ngModel)]="selSubcategories"
                                             [options]="subcategories"                                            
                                             icon="list"
                                             placeholder="SUBCATEGORIES"
@@ -134,7 +131,7 @@
                   <div class="content">
                     <i class="sort content descending icon"></i>
                     Sort by
-                    <sui-select class="inline" [(ngModel)]="sort">
+                    <sui-select class="inline" [(ngModel)]="sort" (ngModelChange)="searchWorks()">
                       <sui-select-option value="rating"></sui-select-option>
                       <sui-select-option value="name"></sui-select-option>
                       <sui-select-option value="distance"></sui-select-option>
@@ -147,7 +144,7 @@
                   <div class="content align-right">
                     <i class="block layout icon"></i>
                     Page size:
-                    <sui-select class="inline" [(ngModel)]="pageSize">
+                    <sui-select class="inline" [(ngModel)]="pageSize" (ngModelChange)="pageSizeChanged()">
                       <sui-select-option value="20"></sui-select-option>
                       <sui-select-option value="40"></sui-select-option>
                       <sui-select-option value="60"></sui-select-option>
@@ -157,12 +154,14 @@
               </div>
           </div>
         <div class="ui fluid divider"></div>
-      </div>
-      
+      </div>      
       <div *ngIf="spinner" class="ui active centered inline ui text loader">Loading</div>
+      <div *ngIf="emptyWorks()" class="ui center aligned segment">
+        There are no items to show
+      </div>
       <div *ngIf="works" class="ui grid" id="works-grid">
         <div class="three column row remove-padding-top">
-          <div class="column cell" *ngFor="let work of works">
+          <div class="column cell" *ngFor="let work of getWorksPage()">
             <a routerLink="/{{work.Link}}" [queryParams]="{work: work.Id}" class="ui medium image">
               <img class="ui fluid image" src="{{work.Avatar}}"/>
               <div class="row cell-info">
