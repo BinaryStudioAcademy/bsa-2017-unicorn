@@ -36,7 +36,7 @@
                     </a>
                 </div>
                 <div class="eight wide column main-info">
-                    <p>{{performer.Name}} <span class="per-type">{{performer.PerformerType}}</span>
+                    <p><a routerLink="/{{performer.Link}}">{{performer.Name}}  </a><span class="per-type">{{performer.PerformerType}}</span>
                         <sui-rating class="star" [isReadonly]="true" [ngModel]="performer.Rating"></sui-rating>
                     </p>
                     <div class="desc-div">
