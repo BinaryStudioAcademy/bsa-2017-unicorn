@@ -30,4 +30,8 @@ export class OfferService {
     return this.dataService.putRequest('offer', offer);
   }
 
+  deleteOffer(id: number): Promise<any> {
+    return this.dataService.deleteRequest(`offer/${id}`);
+  }
+
 }

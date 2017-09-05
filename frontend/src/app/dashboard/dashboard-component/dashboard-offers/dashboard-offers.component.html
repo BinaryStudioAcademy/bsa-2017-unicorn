@@ -7,7 +7,8 @@
             <img class="ui tiny circular image" src="{{offer.Company.Avatar}}">
         </div>
         <div class="book-info five wide column">
-            <p>{{offer.Company.Name}} 
+            <p>{{offer.Company.Name}}</p>
+            <p>
                 <span align=right>
                     <sui-rating class="star" [isReadonly]="true" [ngModel]="offer.Company.Rating">
                     </sui-rating>
@@ -29,3 +30,24 @@
         </div>
     </div>
 </div>
+
+<ng-template let-context let-modal="modal" #declineModal>
+    <div class="ui content">
+        <form class="ui reply form" name="reviewForm" #declineForm="ngForm">
+            <div class="field">
+                <textarea 
+                    placeholder="TYPE THE REASON" 
+                    name="reason" 
+                    [(ngModel)]="reason" 
+                    #reasonText="ngModel"></textarea>
+            </div>
+            <div class="save-btn">
+                <a (click)="declineOfferConfirm(context.id)" 
+                    [ngClass]="{'loading': loader, 'disabled': declineForm.invalid || loader}" 
+                    class="ui basic button decline-confirm">
+                    <p *ngIf="!loader" style="color:#FF647A;">Save</p>
+                </a>
+            </div>
+        </form>
+    </div>
+</ng-template>

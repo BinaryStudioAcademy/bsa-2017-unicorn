@@ -13,5 +13,6 @@ namespace Unicorn.Core.Interfaces
         Task<IEnumerable<OfferDTO>> GetVendorOffersAsync(long vendorId);
         Task<IEnumerable<OfferDTO>> GetCompanyOffersAsync(long vendorId);
         Task UpdateOfferAsync(OfferDTO offer);
+        Task DeleteOfferAsync(long id);
     }
 }

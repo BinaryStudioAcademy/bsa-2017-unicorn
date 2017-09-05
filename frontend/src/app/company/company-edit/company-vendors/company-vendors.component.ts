@@ -3,7 +3,7 @@ import { ActivatedRoute, Params } from "@angular/router";
 import { CompanyService } from "../../../services/company-services/company.service";
 import { OfferService } from "../../../services/offer.service";
 import { CompanyVendors } from "../../../models/company-page/company-vendors.model";
-import { Offer } from '../../../models/offer/offer.model';
+import { Offer, OfferStatus } from '../../../models/offer/offer.model';
 import { ShortOffer } from '../../../models/offer/shortoffer.model';
 import { Vendor } from "../../../models/company-page/vendor";
 import { SuiModalService, TemplateModalConfig, ModalTemplate, ModalSize, SuiActiveModal } from 'ng2-semantic-ui';
@@ -11,6 +11,10 @@ import {ToastsManager, Toast} from 'ng2-toastr';
 
 export interface IMessageContext {
   id: number;
+}
+
+export interface IDeclinedReasonContext {
+  reason: string;
 }
 
 @Component({
@@ -21,10 +25,14 @@ export interface IMessageContext {
 export class CompanyVendorsComponent implements OnInit { 
   @ViewChild('modalDeleteTemplate')
   public modalDeleteTemplate: ModalTemplate<void, {}, void>;
+
   private activeModal: SuiActiveModal<void, {}, void>;
   private messModal: SuiActiveModal<IMessageContext, {}, void>;
+
   @ViewChild('messageModal')
   public modalTemplate:ModalTemplate<IMessageContext, void, void>;
+  @ViewChild('reasonModal')
+  public reasonModal:ModalTemplate<IDeclinedReasonContext, void, void>
 
   company: CompanyVendors;  
   companyId: number;   
@@ -58,7 +66,7 @@ export class CompanyVendorsComponent implements OnInit {
       this.allVendors = this.company.AllVendors;
       this.companyId = this.company.Id;  
       this.offerService.getCompanyOffers(this.route.snapshot.params['id']).then(resp => {
-        this.pendingVendors = resp;
+        this.pendingVendors = resp.filter(o => o.Status !== OfferStatus.Accepted);
         console.log('pend', resp);
         this.pendingVendors.forEach(p => {
           this.allVendors = this.allVendors.filter(x => x.Id !== p.Vendor.Id);
@@ -100,6 +108,9 @@ export class CompanyVendorsComponent implements OnInit {
   closeDetailedWindow(){
     this.openedDetailedWindow = false;  
     this.allVendors = this.company.AllVendors;
+    this.pendingVendors.forEach(p => {
+      this.allVendors = this.allVendors.filter(x => x.Id !== p.Vendor.Id);
+    });
     this.selectedVendors = undefined;
     this.zone.run(() => { this.selectedVendor = null; });  
   }
@@ -166,6 +177,40 @@ export class CompanyVendorsComponent implements OnInit {
       this.toastr.error('Something goes wrong', 'Error!');
     });
     
+  }
+
+  deleteOffer(offer: Offer) {
+    this.offerService.deleteOffer(offer.Id).then(resp => {
+      this.initializeThisCompany();
+      this.toastr.success('Offer was deleted', 'Success!');
+    }).catch(err => {
+      this.toastr.error('Something goes wrong', 'Error!');
+    });
+    this.selectedVendors = undefined;
+    this.zone.run(() => { this.selectedVendor = null; });  
+    this.company = undefined;    
+    this.openedDetailedWindow = false;
+  }
+
+  haveReason(offer: Offer): boolean {
+    return offer.DeclinedMessage !== undefined && offer.DeclinedMessage !== null && offer.DeclinedMessage !== '';
+  }
+
+  showReason(reason: string) {
+    const config = new TemplateModalConfig<IDeclinedReasonContext, void, void>(this.reasonModal);
+    config.context = {reason: reason};
+    config.isInverted = true;
+    config.size = ModalSize.Tiny;
+    this.suiModalService.open(config);
+  }
+
+  getOfferStatus(offer: Offer): string {
+    switch (offer.Status) {
+      case OfferStatus.Pending: return 'Pending';
+      case OfferStatus.Declined: return 'Declined';
+      case OfferStatus.Accepted: return 'Accepted';
+    }
+    return '';
   }
 
   openDeleteModal(vendor: Vendor){

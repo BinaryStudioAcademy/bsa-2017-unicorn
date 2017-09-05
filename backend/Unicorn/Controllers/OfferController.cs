@@ -80,5 +80,20 @@ namespace Unicorn.Controllers
             }
             return Request.CreateResponse(HttpStatusCode.OK);
         }
+
+        [HttpDelete]
+        [Route("offer/{id}")]
+        public async Task<HttpResponseMessage> DeleteOfferAsync(long id)
+        {
+            try
+            {
+                await _offerService.DeleteOfferAsync(id);
+            }
+            catch
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
+            return Request.CreateResponse(HttpStatusCode.OK);
+        }
     }
 }

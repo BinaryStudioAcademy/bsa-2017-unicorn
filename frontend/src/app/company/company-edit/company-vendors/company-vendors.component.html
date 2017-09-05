@@ -9,7 +9,8 @@
                         <th>Experience</th>
                          <th>Position</th>
                         <th>Rating</th>
-                        <th class="right aligned">Pending..</th>
+                        <th class="">Offers status</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -21,8 +22,12 @@
                             <td>
                                 <sui-rating class="star" [ngModel]="offer.Vendor.Rating" [isReadonly]="true"></sui-rating>
                             </td>
+                            <td>
+                                <span>{{getOfferStatus(offer)}}</span>
+                                <span class="declined-lbl" (click)="showReason(offer.DeclinedMessage)" *ngIf="haveReason(offer)">Why?</span>
+                            </td>
                             <td class="right aligned">
-                                <button class="ui button icon">
+                                <button (click)="deleteOffer(offer)" class="ui button icon">
                                     <i class="remove icon"></i>
                                 </button>
                             </td>
@@ -124,7 +129,7 @@
     <div class="centered row" *ngIf="openedDetailedWindow">
         <div class="three wide column">
             <button class="ui basic button" (click)="addVendors()" [ngClass]="{'loading':isLoaded}">
-              <h5 *ngIf="!isLoaded">Add</h5>
+              <h5 *ngIf="!isLoaded">Send offer</h5>
             </button>
         </div>
     </div>
@@ -177,3 +182,13 @@
             </form>
         </div>
     </ng-template>
+
+<ng-template let-context let-modal="modal" #reasonModal>
+    <div class="ui content">
+        <form class="ui reply form">
+            <div class="field">
+                <textarea readonly name="reason">{{context.reason}}</textarea>
+            </div>
+        </form>
+    </div>
+</ng-template>

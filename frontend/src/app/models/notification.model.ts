@@ -10,5 +10,6 @@ export class Notification {
 
 export enum NotificationType {
 	TaskNotification,
-	ChatNotification
+	ChatNotification,
+	OfferNotification
 }

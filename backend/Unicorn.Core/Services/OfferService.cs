@@ -9,6 +9,7 @@ using Unicorn.DataAccess.Entities;
 using Unicorn.DataAccess.Entities.Enum;
 using Unicorn.DataAccess.Interfaces;
 using Unicorn.Shared.DTOs;
+using Unicorn.Shared.DTOs.Notification;
 using Unicorn.Shared.DTOs.Offer;
 
 namespace Unicorn.Core.Services
@@ -16,10 +17,12 @@ namespace Unicorn.Core.Services
     public class OfferService : IOfferService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly INotificationService _notifyService;
 
-        public OfferService(IUnitOfWork unitOfWork)
+        public OfferService(IUnitOfWork unitOfWork, INotificationService notifyService)
         {
             _unitOfWork = unitOfWork;
+            _notifyService = notifyService;
         }
 
         public async Task CreateOffersAsync(IEnumerable<ShortOfferDTO> offers)
@@ -39,7 +42,7 @@ namespace Unicorn.Core.Services
                 .Include(o => o.Vendor.Person.Account)
                 .Include(o => o.Company)
                 .Include(o => o.Company.Account)
-                .Where(o => o.Company.Id == companyId && o.Status == OfferStatus.Pending)
+                .Where(o => o.Company.Id == companyId)
                 .ToListAsync();
 
             var vendors = companiesQuery
@@ -77,7 +80,7 @@ namespace Unicorn.Core.Services
             {
                 throw new Exception();
             }
-            if (string.IsNullOrEmpty(offerDto.DeclinedMessage))
+            if (!string.IsNullOrEmpty(offerDto.DeclinedMessage))
             {
                 offer.DeclinedMessage = offerDto.DeclinedMessage;
             }
@@ -88,6 +91,14 @@ namespace Unicorn.Core.Services
             {
                 await AcceptVendorAsync(offer);
             }
+        }
+
+        public async Task DeleteOfferAsync(long id)
+        {
+            var offer = await _unitOfWork.OfferRepository.GetByIdAsync(id);
+            offer.IsDeleted = true;
+            _unitOfWork.OfferRepository.Update(offer);
+            await _unitOfWork.SaveAsync();
         }
 
         private async Task AcceptVendorAsync(Offer offer)
@@ -150,6 +161,5 @@ namespace Unicorn.Core.Services
 
         }
 
-        
     }
 }
