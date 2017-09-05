@@ -38,7 +38,7 @@ export class DashboardPendingsComponent implements OnInit {
 
   reason: string;
   loader: boolean;
-  map: MapModel;
+  map: MapModel; 
   constructor(
     private dashboardService: DashboardService,
     private dashMessaging: DashMessagingService,

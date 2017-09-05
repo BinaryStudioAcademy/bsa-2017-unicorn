@@ -7,8 +7,12 @@
             <img class="ui tiny circular image" src="{{offer.Company.Avatar}}">
         </div>
         <div class="book-info five wide column">
+<<<<<<< HEAD
             <p>{{offer.Company.Name}}</p>
             <p>
+=======
+            <p><a routerLink="/company/{{offer.Company.Id}}">{{offer.Company.Name}}</a> 
+>>>>>>> develop
                 <span align=right>
                     <sui-rating class="star" [isReadonly]="true" [ngModel]="offer.Company.Rating">
                     </sui-rating>
