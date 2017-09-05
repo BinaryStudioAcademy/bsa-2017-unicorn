@@ -13,7 +13,7 @@
         <div class="customer-info five wide column">
             <p>{{book.Customer}}</p>
             <p><i class="colored call icon"></i>{{book.CustomerPhone}}</p>
-            <p><i class="colored map pin icon"></i>{{book.Location.City}},&nbsp;{{book.Location.Adress}}</p>
+            <p (click)="openMap(book.Id)" class="mapInfo"><i class="colored map pin icon"></i>{{book.Location.City}},&nbsp;{{book.Location.Adress}}</p>
         </div>
         <div class="book-actions four wide column">
             <a (click)="accept(book.Id)" class="ui button accept-btn" [ngClass]="{'loading': aloads[book.Id], 'disabled': aloads[book.Id] || dloads[book.Id]}">Accept</a>
@@ -25,20 +25,19 @@
     <div class="ui content">
         <form class="ui reply form" name="reviewForm" #declineForm="ngForm">
             <div class="field">
-                <textarea required 
-                    placeholder="TYPE THE REASON" 
-                    name="reason" 
-                    [(ngModel)]="reason" 
-                    #reasonText="ngModel"></textarea>
+                <textarea required placeholder="TYPE THE REASON" name="reason" [(ngModel)]="reason" #reasonText="ngModel"></textarea>
             </div>
             <div class="save-btn">
-                <a (click)="declineConfirm(context.id)" 
-                    [ngClass]="{'loading': loader, 'disabled': declineForm.invalid || loader}" 
-                    class="ui basic button decline-confirm">
+                <a (click)="declineConfirm(context.id)" [ngClass]="{'loading': loader, 'disabled': declineForm.invalid || loader}" class="ui basic button decline-confirm">
                     <p *ngIf="!loader" style="color:#FF647A;">Save</p>
                 </a>
             </div>
         </form>
+    </div>
+</ng-template>
+<ng-template let-context let-modal="modal" #mapModal>
+    <div class="ui content">
+        <app-map [inputMap]="map"></app-map>
     </div>
 </ng-template>
 <div class="ui active centered inline loader" *ngIf="books === undefined"></div>
