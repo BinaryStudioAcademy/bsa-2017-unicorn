@@ -81,6 +81,7 @@
     <Compile Include="DTOs\PermissionDTO.cs" />
     <Compile Include="DTOs\PersonDTO.cs" />
     <Compile Include="DTOs\Popular\PerformerDTO.cs" />
+    <Compile Include="DTOs\Popular\PerformersPage.cs" />
     <Compile Include="DTOs\Popular\PopularCategoryDTO.cs" />
     <Compile Include="DTOs\PortfolioItemDTO.cs" />
     <Compile Include="DTOs\RatingDTO.cs" />

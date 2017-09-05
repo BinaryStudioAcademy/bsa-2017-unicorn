@@ -24,9 +24,21 @@ namespace Unicorn.Core.Services
             _ratingService = ratingService;
         }
 
+        public PerformersPage GetPerformersPage(int page, int size, List<FullPerformerDTO> performers)
+        {
+            return new PerformersPage
+            {
+                Items = performers.Skip(size * (page - 1))
+                    .Take(size).ToList(),
+                CurrentPage = page,
+                PageSize = size,
+                TotalCount = performers.Count
+            };
+        }
+
         public async Task<List<FullPerformerDTO>> GetPerformersByFilterAsync(
             string city, string name, string role, double? rating, string ratingCondition, bool withReviews, string categoriesString,
-            string subcategoriesString, double? latitude, double? longitude, double? distance, string sort, int page, int pagesize
+            string subcategoriesString, double? latitude, double? longitude, double? distance, string sort
             )
         {
             var reviews = await _uow.ReviewRepository.GetAllAsync();
@@ -54,13 +66,6 @@ namespace Unicorn.Core.Services
                 .Include(c => c.Account)
                 .Include(c => c.Account.Location);
             }
-            //if (!string.IsNullOrEmpty(city))
-            //{
-            //    vendorsQuery = vendorsQuery?
-            //        .Where(v => v.Person.Account.Location.City.Contains(city));
-            //    companiesQuery = companiesQuery?
-            //        .Where(c => c.Account.Location.City.Contains(city));
-            //}
             if (!string.IsNullOrEmpty(name))
             {
                 vendorsQuery = vendorsQuery?
@@ -144,9 +149,7 @@ namespace Unicorn.Core.Services
                     break;
             }
 
-            return performersQuery.ToList()
-                .Skip(pagesize * (page - 1))
-                .Take(pagesize).ToList();
+            return performersQuery.ToList();
         }
         public async Task<List<FullPerformerDTO>> GetAllPerformersAsync()
         {

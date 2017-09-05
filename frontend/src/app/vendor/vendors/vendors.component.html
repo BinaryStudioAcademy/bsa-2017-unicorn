@@ -28,7 +28,8 @@
                                             <div class="inline stackable fields">
                                                 <div class="field">
                                                     <label>Rating</label>
-                                                    <sui-select [(ngModel)]="ratingCondition" placeholder="rating">
+                                                    <sui-select 
+                                                    [(ngModel)]="ratingCondition" placeholder="rating">
                                                         <sui-select-option value="greater"></sui-select-option>
                                                         <sui-select-option value="lower"></sui-select-option>
                                                     </sui-select>
@@ -57,8 +58,7 @@
                                     </div>
                                     <div class="right floated column">
                                         <div class="row">
-                                            <div class="ui form">
-                                                
+                                            <div class="ui form">       
                                                 <div class="field">
                                                     <label>Distance: {{distance}} km</label>
                                                 </div>
@@ -121,7 +121,7 @@
                         <h5 class="ui header">
                             <div class="content">
                                 <i class="sort content descending icon"></i> Sort by
-                                <sui-select class="inline" [(ngModel)]="sort">
+                                <sui-select class="inline" [(ngModel)]="sort" (ngModelChange)="search()">
                                     <sui-select-option value="rating"></sui-select-option>
                                     <sui-select-option value="name"></sui-select-option>
                                     <sui-select-option value="distance"></sui-select-option>
@@ -133,7 +133,7 @@
                         <h5 class="ui header content align-right">
                             <div class="content align-right">
                                 <i class="block layout icon"></i> Page size:
-                                <sui-select class="inline" [(ngModel)]="pageSize">
+                                <sui-select class="inline" [(ngModel)]="pageSize" (ngModelChange)="search()">
                                     <sui-select-option value="20"></sui-select-option>
                                     <sui-select-option value="40"></sui-select-option>
                                     <sui-select-option value="60"></sui-select-option>
@@ -144,10 +144,10 @@
                 </div>
             </div>
         </div>
-        <div class="ui segment ui grid" *ngFor="let performer of getPerformersPage()">
+        <div class="ui segment ui grid" *ngFor="let performer of performers" (click)="select(performer.Name, performer.Location)">
             <div class="row">
                 <div class="four wide column">
-                    <a routerLink="/{{performer.Link}}">
+                    <a>
                         <img class="ui small fluid image" src="{{performer.Avatar}}">
                     </a>
                 </div>
@@ -169,10 +169,13 @@
                     <a routerLink="/{{performer.Link}}" class="ui active secondary button">Details</a>
                 </div>
             </div>
+        </div>  
+        <div *ngIf="searchLoading" class="ui active inverted dimmer" style="z-index: 0;">
+            <div class="ui text loader">Loading</div>
         </div>
         <div *ngIf="performers.length > pageSize" class="flex-centered" id="paging">
-            <sui-pagination [collectionSize]="performers.length" [pageSize]="pageSize" [maxSize]="maxSize" [hasEllipses]="hasEllipses"
-                [(page)]="selectedPage">
+            <sui-pagination [collectionSize]="totalCount" [pageSize]="pageSize" [maxSize]="maxSize" [hasEllipses]="hasEllipses"
+                [(page)]="selectedPage" (pageChange)="search()">
             </sui-pagination>
         </div>
     </div>
@@ -180,7 +183,7 @@
         <div class="row">
             <div class="map-container">
                 <ngui-map (mapReady$)="onMapReady($event)" class="map" zoom="6" [center]="center" *ngIf="loaded">
-                    <custom-marker *ngFor="let per of getPerformersPage()" [position]="[per.Location.Latitude, per.Location.Longitude]">
+                    <custom-marker *ngFor="let per of performers" [position]="[per.Location.Latitude, per.Location.Longitude]">
                         <span class="map-marker" [ngClass]="{'active-marker': selected == per.Name}">
                             <a routerLink="/{{per.Link}}">{{per.Name}}</a>
                         </span>

@@ -16,7 +16,8 @@ namespace Unicorn.Core.Interfaces
         Task<List<FullPerformerDTO>> GetAllPerformersAsync();
         Task<List<FullPerformerDTO>> GetPerformersByFilterAsync(
             string city, string name, string role, double? rating, string ratingCondition, bool withReviews, string categoriesString,
-            string subcategories, double? latitude, double? longitude, double? distance, string sort, int page, int pagesize
+            string subcategoriesString, double? latitude, double? longitude, double? distance, string sort
             );
+        PerformersPage GetPerformersPage(int page, int size, List<FullPerformerDTO> performers);
     }
 }

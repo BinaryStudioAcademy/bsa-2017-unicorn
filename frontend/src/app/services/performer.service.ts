@@ -1,8 +1,9 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 
-import { Performer } from '../models/performer.model';
+import { Performer } from "../models/performer.model";
+import { PerformersPage } from "../models/popular/performers-page.model";
 
-import { DataService } from './data.service';
+import { DataService } from "./data.service";
 
 @Injectable()
 export class PerformerService {
@@ -19,7 +20,7 @@ export class PerformerService {
     city: string, name: string, role: string, rating: number, ratingCondition: string,
     withReviews: boolean, categories: number[], subcategories: number[], page: number, pageSize: number,
     latitude: number, longitude: number, distance: number, sort: string
-  ): Promise<Performer[]> {
+  ): Promise<PerformersPage> {
     let uriParams: string[] = [];
 
     if (categories)

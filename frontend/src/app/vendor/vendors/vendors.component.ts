@@ -23,6 +23,7 @@ export class VendorsComponent implements OnInit {
 
   /* pagination */
   pageSize = '20';
+  totalCount: number = 0;
   maxSize = 3;
   hasEllipses = true;
   selectedPage = 1;
@@ -70,13 +71,7 @@ export class VendorsComponent implements OnInit {
   }
 
   loadData() {
-    this.performerService.getAllPerformers()
-    .then(resp => {
-      console.log(resp);
-      this.performers = resp;
-      this.loaded = true;
-      this.mapRedirect();
-    });
+    this.search();
   }
 
   onMapReady(map: NguiMap) {
@@ -119,7 +114,11 @@ export class VendorsComponent implements OnInit {
         this.selectedPage, Number(this.pageSize), this.latitude, this.longitude, this.distance, this.sort
       )
       .then(resp => {
-        this.performers = resp;
+        this.performers = resp.Items;
+        this.selectedPage = resp.CurrentPage;
+        this.pageSize = resp.PageSize.toString();
+        this.totalCount = resp.TotalCount;
+
         this.searchLoading = false;
         this.mapRedirect();
         this.ref.detectChanges();
