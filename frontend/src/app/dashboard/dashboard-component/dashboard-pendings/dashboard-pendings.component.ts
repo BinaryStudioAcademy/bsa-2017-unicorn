@@ -22,9 +22,13 @@ export interface IDeclineConfirm {
 })
 export class DashboardPendingsComponent implements OnInit {
 
-  @ViewChild('declineModal')
+  
   @ViewChild('mapModal')
   public modalTemplate:ModalTemplate<IDeclineConfirm, void, void>
+
+  @ViewChild('declineModal')
+  public declineTemplate:ModalTemplate<IDeclineConfirm, void, void>
+
   currModal: SuiActiveModal<IDeclineConfirm, {}, void>;
 
   books: BookCard[];
@@ -76,7 +80,7 @@ export class DashboardPendingsComponent implements OnInit {
 
   decline(id: number) {
     this.reason = '';
-    const config = new TemplateModalConfig<IDeclineConfirm, void, void>(this.modalTemplate);
+    const config = new TemplateModalConfig<IDeclineConfirm, void, void>(this.declineTemplate);
     config.context = {id: id};
     config.isInverted = true;
     config.size = ModalSize.Tiny;
