@@ -2,7 +2,7 @@
     <div class="users" *ngIf="dialogs !== null && dialogs.length !== 0">
         <div class="upper-user" (click)="onSelect(_dialog.Id)" *ngFor="let _dialog of dialogs">
             <div class="user" [ngClass]="{'active': _dialog.Id === selectedId}">
-                <img class="ui avatar image" src="http://psand.ru/wp-content/uploads/2016/04/Kak-ustanovit-svoy-unikalnyiy-avatar-dlya-vseh-saytov-na-WordPress.png">
+                <img class="ui avatar image" src="{{_dialog.ParticipantAvatar}}">
                 <div class="dialog-inf">
                     <div class="userName"> {{_dialog.ParticipantName}} </div>
                     <div class="add-inf">

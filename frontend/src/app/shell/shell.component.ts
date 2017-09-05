@@ -19,9 +19,10 @@ export class ShellComponent implements OnInit {
 
   ngOnInit() {
     this.openChat = this.chatEventsService.openChatEvent$
-      .subscribe(dial => {
+      .subscribe(dial => {        
         this.dialog = dial;
         this.isChatOpen = true;
+        this.chatEventsService.initChat(this.dialog);     
       });
 
     this.closeChat = this.chatEventsService.closeChatEvent$

@@ -114,7 +114,7 @@ namespace Unicorn.Core.Services
             {
                 receiverId = dialog.Participant2.Id;
             }
-            await _notificationService.CreateAsync(receiverId);
+            await _notificationService.CreateAsync(receiverId, dialogId);
             await _unitOfWork.SaveAsync();
         }
 
@@ -138,7 +138,8 @@ namespace Unicorn.Core.Services
             {
                 Id = createdDialog.Id,
                 ParticipantOneId = createdDialog.Participant1.Id,
-                ParticipantTwoId = createdDialog.Participant2.Id
+                ParticipantTwoId = createdDialog.Participant2.Id,
+                ParticipantAvatar = createdDialog.Participant2.Avatar
             };
         }
 
@@ -168,6 +169,51 @@ namespace Unicorn.Core.Services
             return dl;
         }
 
+        public async Task<ChatDialogDTO> GetDialog(long dialogId, long ownerId)
+        {
+            var dialog = await _unitOfWork.ChatDialogRepository.Query
+                .Include(x => x.Messages)
+                .Include(x => x.Participant1)
+                .Include(x => x.Participant2)
+                .SingleAsync(x => x.Id == dialogId);
+
+            string avatar;
+            string name;
+
+            if (dialog.Participant1.Id == ownerId)
+            {
+                avatar = dialog.Participant2.Avatar;
+                name = GetName(dialog.Participant2);
+            }
+            else
+            {
+                avatar = dialog.Participant1.Avatar;
+                name = GetName(dialog.Participant1);
+            }
+
+            ChatDialogDTO dl = new ChatDialogDTO
+            {
+                Id = dialogId,
+                ParticipantOneId = dialog.Participant1.Id,
+                ParticipantTwoId = dialog.Participant2.Id,
+                ParticipantName = name,
+                ParticipantAvatar = avatar,
+                IsReadedLastMessage = false,
+                Messages = dialog.Messages.Select(x => new ChatMessageDTO
+                {
+                    DialogId = x.Dialog.Id,
+                    Date = x.Date,
+                    IsReaded = x.IsReaded,
+                    Message = x.Message,
+                    OwnerId = x.Owner.Id
+                }).ToList()
+            };
+
+            return dl;
+        }
+
+
+
         public async Task<IEnumerable<ChatDialogDTO>> GetAllDialogs(long accountId)
         {
             var dialogs = await _unitOfWork.ChatDialogRepository.Query
@@ -185,6 +231,9 @@ namespace Unicorn.Core.Services
             var names = dialogs.SelectMany(x => new List<Account> {x.Participant1, x.Participant2})
                 .Where(x => x.Id != accountId)
                 .Select(GetName).ToList();
+            var avatars = dialogs.SelectMany(x => new List<Account> {x.Participant1, x.Participant2})
+                .Where(x => x.Id != accountId)
+                .Select(x => x.Avatar).ToList();
             int i = 0;
 
             var result = dialogs.Select(x => new ChatDialogDTO()
@@ -192,7 +241,8 @@ namespace Unicorn.Core.Services
                 Id = x.Id,
                 ParticipantOneId = x.Participant1.Id,
                 ParticipantTwoId = x.Participant2.Id,
-                ParticipantName = names[i++],
+                ParticipantName = names[i],
+                ParticipantAvatar = avatars[i++],
                 IsReadedLastMessage = x.Messages?.Where(y => y.Owner.Id != accountId).LastOrDefault()?.IsReaded ?? true,
                 LastMessageTime = x.Messages?.LastOrDefault()?.Date
             }).ToList();
@@ -214,11 +264,27 @@ namespace Unicorn.Core.Services
             {
                 return null;
             }
+
+            string avatar;
+            long ownerId;
+
+            if (res.Participant1.Id == participantOneId)
+            {
+                avatar = res.Participant2.Avatar;
+                ownerId = res.Participant1.Id;
+            }
+            else
+            {
+                avatar = res.Participant1.Avatar;
+                ownerId = res.Participant2.Id;
+            }
             return new ChatDialogDTO
             {
                 Id = res.Id,
                 ParticipantOneId = res.Participant1.Id,
                 ParticipantTwoId = res.Participant2.Id,
+                ParticipantAvatar = avatar,
+                IsReadedLastMessage = res.Messages?.Where(y => y.Owner.Id != ownerId).LastOrDefault()?.IsReaded ?? true,
                 Messages = res.Messages.Select(x => new ChatMessageDTO
                 {
                     DialogId = x.Dialog.Id,
