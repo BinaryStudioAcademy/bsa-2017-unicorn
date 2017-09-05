@@ -11,6 +11,16 @@
               </div>
               <div class="three wide column ui input">
                 <input type="text" placeholder="CATEGORY" [(ngModel)]="category">
+                <!-- <sui-select class="selection"
+                            [(ngModel)]="category"
+                            [options]="categories"
+                            [optionFormatter]="formatter"
+                            #formatted>
+                    <div class="scrolling menu">                                
+                      <sui-select-option *ngFor="let category of categories" [value]="category.Name">                              
+                                </sui-select-option>
+                    </div>       
+                </sui-select> -->
               </div>
               <div class="three wide column  ui input">
                 <input type="text" placeholder="SUBCATEGORY" [(ngModel)]="subcategory">
@@ -45,10 +55,10 @@
                           <div class="ui icon input full-width">                        
                             <input places-auto-complete
                             (initialized$)="initialized($event)"
-                            (place_changed)="placeChanged(place)"
+                            (place_changed)="placeChanged($event)"
                             [types]="['geocode']" 
                             placeholder="LOCATION"
-                            [(ngModel)]="place"/>
+                            />
                           </div>
                         </div>
                         <div class="eight wide column remove-padding-bottom padding-top">
@@ -78,8 +88,8 @@
                           <label>100+</label>
                           </div>
                         </div>
-                        <div class="four wide column">
-                          <sui-multi-select class="items-container" [(ngModel)]="selCategories"
+                        <div class="sixteen wide column remove-padding-bottom">
+                          <sui-multi-select [(ngModel)]="selCategories"
                                             [options]="categories"                                            
                                             icon="list"
                                             placeholder="CATEGORIES"
@@ -100,8 +110,8 @@
                             </div>
                           </sui-multi-select>
                         </div>    
-                        <div class="four wide column">
-                          <sui-multi-select class="items-container" [(ngModel)]="selSubcategories"
+                        <div class="sixteen wide column remove-padding-top-bottom">
+                          <sui-multi-select [(ngModel)]="selSubcategories"
                                             [options]="subcategories"                                            
                                             icon="list"
                                             placeholder="SUBCATEGORIES"
