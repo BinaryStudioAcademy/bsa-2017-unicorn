@@ -62,7 +62,7 @@ export class VendorProfileContactsComponent implements OnInit {
      
   }
 
-  createChat(){
+  createChat(){    
     this.isLoaded = true;
     if(this.ownerId === undefined){
       this.ownerId = +this.tokenHelper.getClaimByName('accountid');
@@ -79,7 +79,8 @@ export class VendorProfileContactsComponent implements OnInit {
           Id: null,
           ParticipantOneId: this.ownerId,
           ParticipantTwoId: this.accountId,
-          ParticipantName: this.vendor.Name + " " + this.vendor.Surname,
+          ParticipantName: this.vendor.Name + " " + this.vendor.MiddleName,
+          ParticipantAvatar: null,
           Messages: null,
           LastMessageTime: null,
           IsReadedLastMessage: null

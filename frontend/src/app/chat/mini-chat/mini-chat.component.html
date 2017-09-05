@@ -1,11 +1,16 @@
-<div class="container">
+<div class="container" *ngIf="!collapsedChat">
     <div class="chat-block">
         <div class="header">
             <div>
                 {{dialog.ParticipantName}}
             </div>
-            <div>
-                <i class="remove icon close-icon" (click)="closeChat()"></i>
+            <div class="icons">
+                <div>
+                    <i class="window minimize icon close-icon" (click)="collapseChat()" style="font-size: 10px"></i>
+                </div>
+                <div>
+                    <i class="remove icon close-icon" (click)="closeChat(dialog.Id)" style="margin: 0"></i>
+                </div>
             </div>
         </div>
         <div class="under-chat-block" *ngIf="messages !== undefined && messages !== null">
@@ -33,9 +38,6 @@
         <div class="no-content no-messages" *ngIf="messages !== undefined && (messages === null || messages.length === 0)">
             No messages
         </div>
-        <div *ngIf="noMessages" class="ui active inverted dimmer" style="z-index: 0;">
-            <div class="ui text loader">Loading</div>
-        </div>
         <div class="ui form" *ngIf="dialog !== undefined && messages !== undefined" [ngClass]="{'disabled-div':noMessages}">
             <div class="field" style="display: flex;">
                 <textarea #textArea (keydown)="onChange($event)" (click)="readNotReadedMessages()" [ngStyle]="{'height.px': inputHeight}" class="prompt" type="text" placeholder="Type here..." [(ngModel)]="writtenMessage" style="display:inline">                        
@@ -44,6 +46,31 @@
                     <i class="talk outline link icon" (click)="onWrite()"></i>
                 </div>
             </div>
+            <div *ngIf="noMessages" class="ui active inverted dimmer" style="z-index: 0;">
+                <div class="ui text loader">Loading</div>
+            </div>
         </div>
     </div>
 </div>
+
+<div class="menu opened-dialogs" *ngIf="openedDialogs.length !== 0 " [ngClass]="{'with-left-border': collapsedChat, 'without-left-border': !collapsedChat}">
+    <a class="open-dialog" *ngFor="let openDialog of openedDialogs" (click)="onSelect(openDialog.Id)" [ngClass]="{'active': openDialog.Id === selectedId}">
+        <div class="open-dialog-avatar">
+            <img class="ui avatar image" src="{{openDialog.ParticipantAvatar}}">
+        </div>
+        <div class="is-readed" *ngIf="openDialog.IsReadedLastMessage === false">
+        </div>
+        <div>
+            <i class="remove icon absolute-icon" (click)="closeChat(openDialog.Id)" style="margin: 0"></i>
+        </div>
+    </a>
+</div>
+
+
+<!-- <div class="opened-dialogs" *ngIf="openedDialogs.length !== 0 ">
+    <div class="open-dialog" *ngFor="let openDialog of openedDialogs">
+        <div class="open-dialog-avatar">
+            <img class="ui avatar image" src="{{openDialog.ParticipantAvatar}}">
+        </div>
+    </div>
+</div> -->

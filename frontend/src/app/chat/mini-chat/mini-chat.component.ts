@@ -5,6 +5,7 @@ import { TokenHelperService } from "../../services/helper/tokenhelper.service";
 import { DialogModel } from "../../models/chat/dialog.model";
 import { ChatEventsService } from "../../services/events/chat-events.service";
 import { NotificationService } from "../../services/notifications/notification.service";
+import { Subscription } from "rxjs/Subscription";
 
 @Component({
   selector: 'app-mini-chat',
@@ -27,6 +28,11 @@ export class MiniChatComponent implements OnInit {
   inputHeight: number = 33;
   noMessages: boolean = false;
   needScroll: boolean = false;  
+  openedDialogs: DialogModel[] = [];
+  selectedId: number;
+  collapsedChat:boolean = false;
+
+  initChat: Subscription;
 
 
   constructor(private chatService: ChatService,
@@ -35,13 +41,19 @@ export class MiniChatComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private notificationService: NotificationService) { }
 
-  ngOnInit() {
-    this.initializeDialog();
+  ngOnInit() {   
+    this.initChat = this.chatEventsService.initChatEvent$
+    .subscribe(dial => {      
+      this.dialog = dial;      
+      this.initializeDialog();     
+    });
+    
+    this.initializeDialog();     
     this.notificationService.listen<any>("RefreshMessages", res => {
       this.getMessage(res);
     }); 
-    this.notificationService.listen<any>("ReadNotReadedMessages", () => {
-      this.messagesWereReaded();
+    this.notificationService.listen<any>("ReadNotReadedMessages", dialId => {
+      this.messagesWereReaded(dialId);
     }); 
   }
 
@@ -51,22 +63,44 @@ export class MiniChatComponent implements OnInit {
     }    
   }
 
-  initializeDialog(){
-    this.ownerId = +this.tokenHelper.getClaimByName('accountid');    
-    this.dialog.Messages === null ? this.messages = [] : this.messages = this.dialog.Messages;
+  initializeDialog(){    
+    this.collapsedChat = false;
+    this.selectedId = this.dialog.Id;
+    this.messages = this.dialog.Messages === null ? [] : this.dialog.Messages;
+    this.ownerId = +this.tokenHelper.getClaimByName('accountid'); 
+    this.workWithDialogs(this.dialog);
     this.startScroll();    
   }
 
-  getMessage(mes: MessageModel){
-    if(this.dialog.Id === null){
-      let participantId = this.ownerId === this.dialog.ParticipantOneId ? this.dialog.ParticipantTwoId : this.dialog.ParticipantOneId;
-      this.chatService.findDialog(this.ownerId, participantId).then(res => {
+  getMessage(mes: MessageModel){   
+    if(this.openedDialogs.length !== 0){
+      let dialog = this.openedDialogs.find(x => x.Id === mes.DialogId);
+      if(dialog && this.selectedId !== dialog.Id){
+        this.openedDialogs.find(x => x.Id === mes.DialogId).Messages.push(mes);
+        this.openedDialogs.find(x => x.Id === mes.DialogId).IsReadedLastMessage = false;
+        return;
+      }
+      else if(dialog && this.selectedId === dialog.Id){
+        this.dialog.IsReadedLastMessage = false;
+        this.dialog.Messages.push(mes);            
+        this.startScroll();   
+        return;
+      }
+      else if(!dialog){       
+        this.chatService.getDialogByOwner(mes.DialogId, this.ownerId).then(res => {          
+          this.workWithDialogs(res);
+       });
+      }
+    }
+    else if(this.dialog.Id === null){
+      this.findDialog(this.dialog.ParticipantOneId, this.dialog.ParticipantTwoId).then(res => {
         if(res){
           this.dialog = res;
           this.messages = this.dialog.Messages;
+          this.workWithDialogs(this.dialog);
           this.startScroll(); 
         }
-      })
+      });;
     }
     else{
       this.messages.push(mes);     
@@ -74,46 +108,80 @@ export class MiniChatComponent implements OnInit {
     }      
   }
 
-  messagesWereReaded(){
-    this.messages.filter(x => !x.IsReaded).forEach(mes => {
-      if(mes.OwnerId === this.ownerId){
-        mes.IsReaded = true;        
+  findDialog(participantOneId: number, participantTwoId: number){    
+    let participantId = this.ownerId === participantOneId ? participantTwoId : participantOneId;
+    return this.chatService.findDialog(this.ownerId, participantId);
+  }
+
+  workWithDialogs(dialog: DialogModel){       
+    if(dialog.Id && !this.openedDialogs.find(x => x.Id === dialog.Id)){
+      if(this.openedDialogs.length === 5){
+        this.openedDialogs.shift();
+        this.openedDialogs.push(dialog);
       }
-    });
+      else{
+        this.openedDialogs.push(dialog);
+      }
+    }
+  }
+
+  messagesWereReaded(dialId: number){
+    if(this.openedDialogs.length !== 0){
+      let dialog = this.openedDialogs.find(x => x.Id === dialId);
+      if(dialog){
+        dialog.Messages.filter(x => !x.IsReaded).forEach(mes => {
+          if(mes.OwnerId === this.ownerId){
+            mes.IsReaded = true;        
+          }
+        });
+      }
+    }    
   }
 
   onChange(event){  
     setTimeout(() => {
-      if(event.key === "Enter" && !event.shiftKey){ 
+      if(event.key === "Enter" && !event.shiftKey){         
         this.onWrite();
       }      
     }, 0);
   }
 
-  onWrite(){  
-    this.readNotReadedMessages();
-    this.noMessages = true; 
+  onSelect(dialogId: number) { 
+    this.collapsedChat = false;   
+    this.selectedId = dialogId;
+    this.dialog = this.openedDialogs.find(x => x.Id === dialogId);
+    this.messages = this.dialog.Messages;
+    this.startScroll();  
+  }
+
+  onWrite(){        
+    this.readNotReadedMessages();    
     if(this.writtenMessage !== undefined){      
       let str = this.writtenMessage;
       str = str.replace((/\n{2,}/ig), "\n");
       str = str.replace((/\s{2,}/ig), " ");      
       if(str !== " " && str !== "\n" && str != ""){
+        this.noMessages = true;  
         this.writtenMessage = this.writtenMessage.trim();
-        if(this.dialog.Id === null){          
-          this.chatService.addDialog(this.dialog).then(res => {
-            this.dialog.Id = res.Id;            
-            this.addMessage();      
+        if(!this.dialog || this.dialog.Id === null){          
+          this.chatService.addDialog(this.dialog).then(res => {            
+            this.dialog.Id = res.Id; 
+            this.dialog.ParticipantAvatar = res.ParticipantAvatar;   
+            this.addMessage(); 
+            this.workWithDialogs(this.dialog);  
             this.writtenMessage = undefined;                   
           });
         }
         else{
           this.addMessage();
+          this.writtenMessage = undefined;
         }  
       }
       else{
         this.writtenMessage = undefined;
+        this.startScroll();
       }
-    } 
+    }
     this.normalTeaxareaSize();  
   }   
 
@@ -126,10 +194,13 @@ export class MiniChatComponent implements OnInit {
       Message: this.writtenMessage, 
       Date: new Date(),
       isLoaded: true
-    };    
-    this.writtenMessage = undefined;
-    this.messages.push(message);     
-    this.startScroll();        
+    };   
+    if(!this.dialog.Messages){
+      this.dialog.Messages = [];
+    }     
+    this.dialog.Messages.push(message);    
+    this.messages = this.dialog.Messages;    
+    this.startScroll();             
     this.chatService.addMessage(message);
   }
 
@@ -142,6 +213,7 @@ export class MiniChatComponent implements OnInit {
       }
     });
     if(isChanged){
+      this.dialog.IsReadedLastMessage = true;
       this.chatService.updateMessages(this.dialog.Id, this.ownerId);
     }
   }
@@ -154,8 +226,8 @@ export class MiniChatComponent implements OnInit {
   scrollMessages(){
       if (this.messagesElement && this.messagesElement.nativeElement.scrollTop !== this.messagesElement.nativeElement.scrollHeight) {
         this.messagesElement.nativeElement.scrollTop = this.messagesElement.nativeElement.scrollHeight; 
-        this.needScroll = false;   
-        this.noMessages = false;     
+        this.needScroll = false;  
+        this.noMessages = false;
         this.cdr.detectChanges();       
       }
   }
@@ -172,8 +244,20 @@ export class MiniChatComponent implements OnInit {
     }
   }
 
-  closeChat(){
-    this.chatEventsService.closechat();
+  closeChat(dialId: number){
+    if(dialId === this.selectedId) {
+      this.openedDialogs = this.openedDialogs.filter(x => x.Id !== this.dialog.Id);
+      this.collapsedChat = true;
+    }
+    else{
+      this.openedDialogs = this.openedDialogs.filter(x => x.Id !== this.dialog.Id);
+    }
+    // this.chatEventsService.closechat();
+  }
+
+  collapseChat(){
+    this.collapsedChat = true;
+    this.selectedId = undefined;
   }
 
 }

@@ -19,14 +19,16 @@ constructor(private companyService: CompanyService,
     this.route.params
     .switchMap((params: Params) => this.companyService.getCompanyReviews(params['id']))
     .subscribe(res => {
-      if(res.Reviews.length == 0){
-        this.isReviewsEmpty = true;
+      if(res !== null){
+        if(res.Reviews.length == 0){
+          this.isReviewsEmpty = true;
+        }
+        else{
+          this.isReviewsEmpty = false;
+        }
+        this.company = res;
+        console.log(res);
       }
-      else{
-        this.isReviewsEmpty = false;
-      }
-      this.company = res;
-      console.log(res);
     });   
   }
 

@@ -31,11 +31,13 @@ export class CompanyPortfolioComponent implements OnInit {
 
   loadData() {
     this.dashboardService.getPortfolioBooks('company', this.companyId).then(resp => {
-      resp.forEach(b => {
-        if (b.Status == BookStatus.Confirmed) {
-          this.books.push(b);
-        }
-      });
+      if(resp !== null){
+        resp.forEach(b => {
+          if (b.Status == BookStatus.Confirmed) {
+            this.books.push(b);
+          }
+        });
+      }
     });
   }
 

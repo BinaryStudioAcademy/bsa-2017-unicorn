@@ -74,8 +74,19 @@ export class ChatComponent implements OnInit {
       });
     }
     else{
-      this.messages.push(mes);     
-      this.startScroll();   
+      let dialog = this.dialogs.find(x => x.Id === mes.DialogId);
+      if(dialog && this.selectedId === dialog.Id){
+        this.messages.push(mes);     
+        this.startScroll();   
+      }
+      else if(dialog && this.selectedId !== dialog.Id){        
+        this.dialogs.find(x => x.Id === mes.DialogId).IsReadedLastMessage = false;
+      }
+      else if(!dialog){
+        this.chatService.getDialogByOwner(mes.DialogId, this.ownerId).then(res => {          
+          this.dialogs.push(res);
+       });
+      }
     }      
   }
 
