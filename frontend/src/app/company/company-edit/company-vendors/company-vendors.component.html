@@ -1,6 +1,7 @@
-<div class="ui container grid" *ngIf="company !== undefined">
+<div class="ui container grid" *ngIf="company !== undefined" id="main-container">
     <div class="row">
         <div class="column">
+            <label *ngIf="pendingVendors && pendingVendors.length !== 0">Offers</label>
             <table class="ui selectable padded single line table" *ngIf="pendingVendors && pendingVendors.length !== 0">
                 <thead>
                     <tr>
@@ -34,6 +35,7 @@
                         </tr>
                     </tbody>
                 </table>
+                <label>Vendors</label>
             <table class="ui selectable padded single line table">
                 <thead>
                     <tr>
@@ -166,6 +168,7 @@
         <div class="ui content">
             <form class="ui reply form" name="reviewForm" #messageForm="ngForm">
                 <div class="field">
+                    <label>Type some information for vendor</label>
                     <textarea required 
                         placeholder="ADDITIONAL MESSAGE" 
                         name="reason" 

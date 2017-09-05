@@ -36,6 +36,7 @@
         <form class="ui reply form" name="reviewForm" #declineForm="ngForm">
             <div class="field">
                 <textarea 
+                    required
                     placeholder="TYPE THE REASON" 
                     name="reason" 
                     [(ngModel)]="reason" 
