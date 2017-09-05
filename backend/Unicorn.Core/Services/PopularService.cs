@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Device.Location;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,42 +24,132 @@ namespace Unicorn.Core.Services
             _ratingService = ratingService;
         }
 
-        public async Task<List<FullPerformerDTO>> GetPerformersByFilterAsync(string city, string name)
+        public PerformersPage GetPerformersPage(int page, int size, List<FullPerformerDTO> performers)
+        {
+            return new PerformersPage
+            {
+                Items = performers.Skip(size * (page - 1))
+                    .Take(size).ToList(),
+                CurrentPage = page,
+                PageSize = size,
+                TotalCount = performers.Count
+            };
+        }
+
+        public async Task<List<FullPerformerDTO>> GetPerformersByFilterAsync(
+            string city, string name, string role, double? rating, string ratingCondition, bool withReviews, string categoriesString,
+            string subcategoriesString, double? latitude, double? longitude, double? distance, string sort
+            )
         {
             var reviews = await _uow.ReviewRepository.GetAllAsync();
-            var vendorsQuery = _uow.VendorRepository
+            var categories = !string.IsNullOrEmpty(categoriesString) ? categoriesString.Split(' ').Select(c => Int64.Parse(c)).ToList() : new List<long>();
+            var subcategories = !string.IsNullOrEmpty(subcategoriesString) ? subcategoriesString.Split(' ').Select(c => Int64.Parse(c)).ToList() : new List<long>();
+
+            IQueryable<Vendor> vendorsQuery = null;
+            IQueryable<Company> companiesQuery = null;
+
+            if (role == "vendor" || role == "all")
+            {
+                vendorsQuery = _uow.VendorRepository
+                    .Query
+                    .Include(v => v.Works
+                        .Select(w => w.Subcategory.Category))
+                    .Include(v => v.Person)
+                    .Include(v => v.Person.Account)
+                    .Include(v => v.Person.Account.Location);
+            }
+            if (role == "company" || role == "all")
+            {
+                companiesQuery = _uow.CompanyRepository
                 .Query
-                .Include(v => v.Person)
-                .Include(v => v.Person.Account)
-                .Include(v => v.Person.Account.Location);
-            var companiesQuery = _uow.CompanyRepository
-                .Query
+                .Include(c => c.Works)
                 .Include(c => c.Account)
                 .Include(c => c.Account.Location);
-            if (!string.IsNullOrEmpty(city))
-            {
-                vendorsQuery = vendorsQuery
-                    .Where(v => v.Person.Account.Location.City.Contains(city));
-                companiesQuery = companiesQuery
-                    .Where(c => c.Account.Location.City.Contains(city));
             }
             if (!string.IsNullOrEmpty(name))
             {
-                vendorsQuery = vendorsQuery
+                vendorsQuery = vendorsQuery?
                     .Where(v => v.Person.Name.Contains(name));
-                companiesQuery = companiesQuery
+                companiesQuery = companiesQuery?
                     .Where(c => c.Name.Contains(name));
             }
-            var vendorsList = await vendorsQuery.ToListAsync();
+
+            var vendorsCategoryQuery = vendorsQuery;
+            var companiesCategoryQuery = companiesQuery;
+
+            foreach (var categoryId in categories)
+            {
+                vendorsCategoryQuery = vendorsCategoryQuery?
+                    .Where(v => v.Works.Any(w => w.Subcategory.Category.Id == categoryId));
+                companiesCategoryQuery = companiesCategoryQuery?
+                    .Where(c => c.Works.Any(w => w.Subcategory.Category.Id == categoryId));
+            }
+
+            foreach (var subcategoryId in subcategories)
+            {
+                vendorsQuery = vendorsQuery?
+                    .Where(v => v.Works.Any(w => w.Subcategory.Id == subcategoryId));
+                companiesQuery = companiesQuery?
+                    .Where(c => c.Works.Any(w => w.Subcategory.Id == subcategoryId));
+            }
+
+            var vendorsList = vendorsQuery != null ? await vendorsQuery.Intersect(vendorsCategoryQuery).ToListAsync() : new List<Vendor>();
             var vendors = vendorsList
-                .Select(v => VendorToFullPerformer(v, reviews))
+                .Select(v => VendorToFullPerformer(v, reviews, longitude, latitude))
                 .ToList();
-            var companiesList = await companiesQuery.ToListAsync();
+            var companiesList = companiesQuery != null ? await companiesQuery.Intersect(companiesCategoryQuery).ToListAsync() : new List<Company>();
             var companies = companiesList
-                .Select(c => CompanyToFullPerformer(c, reviews))
+                .Select(c => CompanyToFullPerformer(c, reviews, longitude, latitude))
                 .ToList();
 
-            return ConcatPerformers(vendors, companies);
+            var performersQuery = ConcatPerformers(vendors, companies).AsQueryable();
+
+            if (rating != null)
+            {
+                switch (ratingCondition)
+                {
+                    case "lower":
+                        performersQuery = performersQuery.Where(p => p.Rating <= rating);
+                        break;
+                    case "grater":
+                    default:
+                        performersQuery = performersQuery.Where(p => p.Rating >= rating);
+                        break;
+                }
+            }
+
+            if (distance == 0 || distance == null)
+            {
+                if (!string.IsNullOrEmpty(city))
+                    performersQuery = performersQuery?
+                        .Where(p => p.Location.City.Contains(city));
+            }
+            else
+            {
+                performersQuery = performersQuery?
+                    .Where(p => p.Distance <= distance);
+            }
+
+            performersQuery = performersQuery
+                .Where(p => !withReviews || p.ReviewsCount > 0);
+
+            switch (sort)
+            {
+                case "rating":
+                    performersQuery = performersQuery.OrderByDescending(x => x.Rating);
+                    break;
+                case "name":
+                    performersQuery = performersQuery.OrderBy(x => x.Name);
+                    break;
+                case "distance":
+                    performersQuery = performersQuery.OrderBy(x => x.Distance);
+                    break;
+                default:
+                    performersQuery = performersQuery.OrderByDescending(x => x.Rating);
+                    break;
+            }
+
+            return performersQuery.ToList();
         }
         public async Task<List<FullPerformerDTO>> GetAllPerformersAsync()
         {
@@ -72,7 +163,7 @@ namespace Unicorn.Core.Services
                 .ToListAsync();
 
             var vendors = vendorsList
-                .Select(v => VendorToFullPerformer(v, reviews)).ToList();
+                .Select(v => VendorToFullPerformer(v, reviews, null, null)).ToList();
 
             var companiesList = await _uow.CompanyRepository
                 .Query
@@ -81,7 +172,7 @@ namespace Unicorn.Core.Services
                 .ToListAsync();
 
             var companies = companiesList
-                .Select(c => CompanyToFullPerformer(c, reviews)).ToList();
+                .Select(c => CompanyToFullPerformer(c, reviews, null, null)).ToList();
 
             return ConcatPerformers(vendors, companies);
         }
@@ -92,54 +183,6 @@ namespace Unicorn.Core.Services
                 .OrderByDescending(p => p.Rating)
                 .Distinct()
                 .ToList();
-        }
-
-        private FullPerformerDTO CompanyToFullPerformer(Company c, IEnumerable<Review> reviews)
-        {
-            return new FullPerformerDTO
-            {
-                Id = c.Id,
-                Avatar = c.Account.Avatar,
-                Name = c.Name,
-                Description = c.Description,
-                Rating = CalculateRating(c.Account.Id),
-                ReviewsCount = reviews.Count(r => r.ToAccountId == c.Account.Id),
-                PerformerType = "company",
-                Link = "company/" + c.Id,
-                Location = new LocationDTO
-                {
-                    Id = c.Account.Location.Id,
-                    City = c.Account.Location.City,
-                    Adress = c.Account.Location.Adress,
-                    Latitude = c.Account.Location.Latitude,
-                    Longitude = c.Account.Location.Longitude,
-                    PostIndex = c.Account.Location.PostIndex
-                }
-            };
-        }
-
-        private FullPerformerDTO VendorToFullPerformer(Vendor v, IEnumerable<Review> reviews)
-        {
-            return new FullPerformerDTO
-            {
-                Id = v.Id,
-                Avatar = v.Person.Account.Avatar,
-                Name = v.Person.Name,
-                Description = v.Position,
-                Rating = CalculateRating(v.Person.Account.Id),
-                ReviewsCount = reviews.Count(r => r.ToAccountId == v.Person.Account.Id),
-                PerformerType = "vendor",
-                Link = "vendor/" + v.Id,
-                Location = new LocationDTO
-                {
-                    Id = v.Person.Account.Location.Id,
-                    City = v.Person.Account.Location.City,
-                    Adress = v.Person.Account.Location.Adress,
-                    Latitude = v.Person.Account.Location.Latitude,
-                    Longitude = v.Person.Account.Location.Longitude,
-                    PostIndex = v.Person.Account.Location.PostIndex
-                }
-            };
         }
 
         public async Task<List<PopularCategoryDTO>> GetPopularCategories()
@@ -268,6 +311,67 @@ namespace Unicorn.Core.Services
                 .ToList();
 
             return performers;
+        }
+
+        private FullPerformerDTO CompanyToFullPerformer(Company c, IEnumerable<Review> reviews, double? longitude, double? latitude)
+        {
+            return new FullPerformerDTO
+            {
+                Id = c.Id,
+                Avatar = c.Account.Avatar,
+                Name = c.Name,
+                Description = c.Description,
+                Rating = CalculateRating(c.Account.Id),
+                ReviewsCount = reviews.Count(r => r.ToAccountId == c.Account.Id),
+                PerformerType = "company",
+                Link = "company/" + c.Id,
+                Location = new LocationDTO
+                {
+                    Id = c.Account.Location.Id,
+                    City = c.Account.Location.City,
+                    Adress = c.Account.Location.Adress,
+                    Latitude = c.Account.Location.Latitude,
+                    Longitude = c.Account.Location.Longitude,
+                    PostIndex = c.Account.Location.PostIndex
+                },
+                Distance = CalculateDistance(c.Account.Location.Latitude, c.Account.Location.Longitude, latitude, longitude)
+            };
+        }
+
+
+        private FullPerformerDTO VendorToFullPerformer(Vendor v, IEnumerable<Review> reviews, double? longitude, double? latitude)
+        {
+            return new FullPerformerDTO
+            {
+                Id = v.Id,
+                Avatar = v.Person.Account.Avatar,
+                Name = v.Person.Name,
+                Description = v.Position,
+                Rating = CalculateRating(v.Person.Account.Id),
+                ReviewsCount = reviews.Count(r => r.ToAccountId == v.Person.Account.Id),
+                PerformerType = "vendor",
+                Link = "vendor/" + v.Id,
+                Location = new LocationDTO
+                {
+                    Id = v.Person.Account.Location.Id,
+                    City = v.Person.Account.Location.City,
+                    Adress = v.Person.Account.Location.Adress,
+                    Latitude = v.Person.Account.Location.Latitude,
+                    Longitude = v.Person.Account.Location.Longitude,
+                    PostIndex = v.Person.Account.Location.PostIndex
+                },
+                Distance = CalculateDistance(v.Person.Account.Location.Latitude, v.Person.Account.Location.Longitude, latitude, longitude)
+            };
+        }
+
+        private double CalculateDistance(double lat1, double long1, double? lat2, double? long2)
+        {
+            if (lat2 == null || long2 == null)
+                return 0;
+            var coord1 = new GeoCoordinate(lat1, long1);
+            var coord2 = new GeoCoordinate((double)lat2, (double)long2);
+            var distance = coord1.GetDistanceTo(coord2) / 1000;
+            return distance;
         }
 
         private double CalculateRating(long recieverId)
