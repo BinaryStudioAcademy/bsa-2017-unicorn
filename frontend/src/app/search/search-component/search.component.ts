@@ -93,6 +93,7 @@ export class SearchComponent implements OnInit {
       this.spinner = false;
       this.loaded = true;
       this.mapRedirect();
+      this.ref.detectChanges();
     }).catch(err => this.spinner = false);
   }
 
@@ -146,6 +147,7 @@ export class SearchComponent implements OnInit {
       this.spinner = false;
       this.loaded = true;
       this.mapRedirect();
+      this.ref.detectChanges();
     }).catch(err => this.spinner = false);
   }
 
@@ -168,9 +170,6 @@ export class SearchComponent implements OnInit {
   }
 
   initAdvancedFilters() {
-    // this.ratingCompare = 'greater';
-    // this.rating = 0;
-    // this.slider = 0;
     this.reset();
     this.categoryService.getAll()
     .then(resp => {
@@ -239,7 +238,6 @@ export class SearchComponent implements OnInit {
   mapRedirect() {
     if (this.works && this.works.length > 0) {
       const loc = this.works[0].Location;
-      // console.log(loc.Latitude, loc.Longitude);
       this.center = new google.maps.LatLng(loc.Latitude, loc.Longitude);
       this.ref.detectChanges();
     }
@@ -255,6 +253,10 @@ export class SearchComponent implements OnInit {
     return this.works.slice((this.selectedPage - 1) * Number(this.pageSize), this.selectedPage * Number(this.pageSize));
   }
 
+  getWorksPage2(): SearchWork[] {
+    return this.works.slice(0, 2);
+  }
+
   pageSizeChanged() {
     // check if sliced works are out of range
     if ((this.works.length - (this.selectedPage - 1) * Number(this.pageSize)) <= 0) {
@@ -266,15 +268,10 @@ export class SearchComponent implements OnInit {
     this.autocomplete = autocomplete;
   }
 
-  placeChanged() {
-    const place = this.autocomplete.getPlace();
-    this.latitude = place.geometry.location.lat();
-    this.longitude = place.geometry.location.lng();
-    // console.log(place);
-    // for (let i = 0; i < place.address_components.length; i++) {
-    //   let addressType = place.address_components[i].types[0];
-    //   this.address[addressType] = place.address_components[i].long_name;
-    // }
+  placeChanged(place: any) {
+    this.place = place;
+    this.latitude = this.place.geometry.location.lat();
+    this.longitude = this.place.geometry.location.lng();
     this.ref.detectChanges();
   }
 
@@ -286,7 +283,6 @@ export class SearchComponent implements OnInit {
       this.rawDate = this.route.snapshot.queryParams['date'];
       this.date = this.convertDate(this.rawDate);
     }
-    // console.log(this.category, this.subcategory, this.date);
   }
 
   convertDate(date: number) {
