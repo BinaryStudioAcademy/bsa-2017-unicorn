@@ -31,7 +31,9 @@ export class PortfolioComponent implements OnInit {
 
   loadData() {
     this.dashboardService.getPortfolioBooks('company', this.companyId).then(resp => {
-      this.books = resp.filter(b => b.IsHidden == false && b.Status == BookStatus.Confirmed);
+      if(resp !== null){
+        this.books = resp.filter(b => b.IsHidden == false && b.Status == BookStatus.Confirmed);
+      }
     });
   }
 

@@ -17,15 +17,21 @@ import { DashboardService } from '../services/dashboard/dashboard.service';
 import { TokenHelperService } from '../services/helper/tokenhelper.service';
 import { DashMessagingService } from '../services/dashboard/dash-messaging.service';
 import { OfferService } from '../services/offer.service';
-
-
+import { NguiMapModule } from "@ngui/map/dist";
+import { environment } from "../../environments/environment";
+import { MapModule } from '../map/map.module';
 
 @NgModule({
   imports: [
+    NguiMapModule.forRoot({
+      apiUrl: 'https://maps.google.com/maps/api/js?key=' + environment.googleMapsKey +
+      '&libraries=visualization,places,drawing'
+    }),
     CommonModule,
     DashboardRoutingModule,
     SuiModule,
     FormsModule,
+    MapModule,
     ToastModule.forRoot()
   ],
   declarations: [

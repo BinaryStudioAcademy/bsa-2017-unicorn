@@ -32,9 +32,9 @@ namespace Unicorn.Core.Infrastructure.SignalR
             await _context.Clients.Group($"accountId={accountId}").RefreshMessages(payload);
         }
 
-        public async Task ReadNotReadedMessages(long accountId)
+        public async Task ReadNotReadedMessages(long accountId, long dialogId)
         {
-            await _context.Clients.Group($"accountId={accountId}").ReadNotReadedMessages();
+            await _context.Clients.Group($"accountId={accountId}").ReadNotReadedMessages(dialogId);
         }
 
         private IHubContext _context;

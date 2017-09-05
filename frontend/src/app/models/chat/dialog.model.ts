@@ -5,6 +5,7 @@ export interface DialogModel {
     ParticipantOneId: number;    
     ParticipantTwoId: number;
     ParticipantName: string;    
+    ParticipantAvatar: string;
     Messages: MessageModel[];
     IsReadedLastMessage: boolean;
     LastMessageTime: Date;

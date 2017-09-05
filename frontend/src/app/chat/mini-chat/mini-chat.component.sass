@@ -4,11 +4,85 @@
 \::-webkit-scrollbar-track
         background: rgba(0, 0, 0, 0.04);
 
+img
+    object-fit: cover;
+
+.ui.loader:after, .ui.loader:before
+    width: 1.3rem;
+    height: 1.3rem;
+    margin: 0 0 0 -0.66rem;
+
+.ui.text.loader
+    padding-top: 1.5rem;
+
+.opened-dialogs
+    width: 50px!important;
+    margin: 0!important;
+    position: fixed;
+    background: white!important;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid lightgray;    
+
+.open-dialog
+    height: 50px;
+    width: 50px;
+    position: relative;
+
+.open-dialog:hover 
+    cursor: pointer;
+    background: #ffd9de; 
+    .absolute-icon
+        display: inline-block;	
+
+.open-dialog.active:before
+    right: 105%;
+    bottom: auto;
+    left: auto;
+    top: 50%;
+    margin: 0 -.5px 0 0;
+    border-bottom: 1px solid #d4d4d5;
+    border-left: 1px solid #d4d4d5;
+    border-right: inherit;
+    border-top: inherit;
+    transform: translateX(50%) translateY(-50%) rotate(45deg);
+    position: absolute;
+
+.open-dialog-avatar    
+    margin: 5px;
+
+.ui.avatar.image
+    width: 40px;
+    height: 40px;
+
+.is-readed
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    bottom: auto;
+    right: auto;
+    width: 10px;
+    height: 10px;     
+    background: #5bb0ff;
+    border-radius: 10px; 
+
+.absolute-icon
+    cursor: pointer;
+    position: absolute;
+    top: -4px;
+    left: auto;
+    bottom: auto;
+    right: -2px;
+    display: none;
+    color: rgba(0,0,0,.6);
+
 .container
     width: 250px;
     height: 300px;
     position: fixed;
-    right: 0;
+    right: 50px;
     bottom: 0;
     border: 1px solid lightgray;
     background: white;
@@ -107,7 +181,7 @@
     border-radius: 0;
 
 .grey-background
-    background: rgba(189, 189, 189, 0.24)!important;
+    background: rgba(124, 241, 203, 0.24)!important;
 
 .normal-background
     background: #fff!important;
@@ -133,7 +207,12 @@ textarea
 
 .close-icon
 	cursor: pointer;	
-	color: rgba(255,255,255,.6);
+	color: rgba(255,255,255,.6)    
+
+.icons
+    display: flex;
+    justify-content: space-between;
+
 
 .close-icon:hover
     color: rgba(255,255,255,1);
@@ -151,3 +230,12 @@ textarea
 .disabled-div
     pointer-events: none;
     opacity: 0.4;
+
+.active
+    background: #fff0f2;
+
+.with-left-border
+    border-left: 1px solid lightgray;
+
+.without-left-border
+    border-left: inherit;

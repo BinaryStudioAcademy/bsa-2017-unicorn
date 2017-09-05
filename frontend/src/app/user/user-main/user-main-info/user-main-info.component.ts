@@ -69,6 +69,7 @@ export class UserMainInfoComponent implements OnInit {
           ParticipantOneId: this.ownerId,
           ParticipantTwoId: this.user.AccountId,
           ParticipantName: this.user.Name + " " + this.user.SurName,
+          ParticipantAvatar: null,
           Messages: null,
           LastMessageTime: null,
           IsReadedLastMessage: null
