@@ -52,9 +52,15 @@ namespace Unicorn.Controllers
 
         [HttpGet]
         [Route("popular/search")]
-        public async Task<List<FullPerformerDTO>> GetFilteredPerformers(string city = null, string name = null, string role = null, double minRating = 0, bool withReviews = false, string categoriesString = null)
+        public async Task<List<FullPerformerDTO>> GetFilteredPerformers(
+            string city = null, string name = null, string role = "all", double? rating = 0, string ratingCondition = "grater", bool withReviews = false, string categoriesString = null,
+            string subcategoriesString = null, double? latitude = null, double? longitude = null, double? distance = null, string sort = "rating", int page = 1, int pagesize = 20
+            )
         {
-            return await _popularService.GetPerformersByFilterAsync(city, name, role, minRating, withReviews, categoriesString);
+            return await _popularService.GetPerformersByFilterAsync(
+                city, name, role, rating, ratingCondition, withReviews, categoriesString,
+                subcategoriesString, latitude, longitude, distance, sort, page, pagesize
+                );
         }
 
     }

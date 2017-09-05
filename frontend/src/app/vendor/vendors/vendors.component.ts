@@ -41,14 +41,14 @@ export class VendorsComponent implements OnInit {
   selected: string = '';
 
   /* advanced filters */
-  role: string;
+  role: string = "all";
   selectedCategories: number[];
   selectedSubcategories: number[];
   rating: number;
   ratingCondition: string;
   withReviews: boolean;
   slider: number;
-  distance: number;
+  distance: number = 0;
   latitude: number;
   longitude: number;
   sort: string;
@@ -101,7 +101,21 @@ export class VendorsComponent implements OnInit {
 
   search() {
     this.searchLoading = true;
-    return this.performerService.getPerformersByFilters(this.city, this.name, this.role, this.rating, this.withReviews, this.selectedCategories)
+    
+    let filteredCategories = this.selectedCategories || [];
+
+    if (this.selectedSubcategories) {
+      this.selectedSubcategories
+        .forEach(sctgId => 
+          filteredCategories = filteredCategories.filter(ctgId => 
+            this.categories.find(c => c.Id === ctgId).Subcategories
+              .find(s => s.Id === sctgId) === undefined));
+        }
+    return this.performerService
+      .getPerformersByFilters(
+        this.city, this.name, this.role, this.rating, this.ratingCondition, this.withReviews, filteredCategories, this.selectedSubcategories, 
+        this.selectedPage, Number(this.pageSize), this.latitude, this.longitude, this.distance, this.sort
+      )
       .then(resp => {
         this.performers = resp;
         this.searchLoading = false;
@@ -138,17 +152,6 @@ export class VendorsComponent implements OnInit {
 
   initialized(autocomplete: any) {
     this.autocomplete = autocomplete;
-  }
-
-  convertRatingType(rating: string) {
-    switch (rating) {
-      case 'greater':
-        return 'ge';
-      case 'lower':
-        return 'le';
-      default:
-        return 'ge';
-    }
   }
 
   categoriesChanged() {

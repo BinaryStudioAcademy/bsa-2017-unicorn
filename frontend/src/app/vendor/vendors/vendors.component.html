@@ -24,38 +24,51 @@
                             <div class="ui grid container segment">
                                 <div class="equal width two column row">
                                     <div class="left floated column">
-                                        <div class="row">
-                                            <div class="column">
-                                                <div class="row">
-                                                    <label class="inline">Rating</label>
-                                                    <sui-select class="inline" [(ngModel)]="ratingCondition" placeholder="rating">
+                                        <div class="ui form">
+                                            <div class="inline stackable fields">
+                                                <div class="field">
+                                                    <label>Rating</label>
+                                                    <sui-select [(ngModel)]="ratingCondition" placeholder="rating">
                                                         <sui-select-option value="greater"></sui-select-option>
                                                         <sui-select-option value="lower"></sui-select-option>
                                                     </sui-select>
-                                                    <label>then</label>
+                                                </div>
+                                                <div class="four wide field">
+                                                    <sui-rating class="star" [(ngModel)]="rating"></sui-rating>
                                                 </div>
                                             </div>
-                                            <div class="row">
-                                            <sui-rating class="star" [(ngModel)]="rating"></sui-rating>
+                                            <div class="field">
+                                                <sui-checkbox [(ngModel)]="withReviews">
+                                                    Only with reviews
+                                                </sui-checkbox>
                                             </div>
-                                            <div class="row">
-                                                <div class="reviews-checkbox">
-                                                    <sui-checkbox [(ngModel)]="withReviews">
-                                                        Only with reviews
-                                                    </sui-checkbox>
+                                            <div class="inline fields">
+                                                    <div class="field">
+                                                        <sui-radio-button name="vendorsOnly" value="vendor" [(ngModel)]="role">Only vendors</sui-radio-button>
+                                                    </div>
+                                                    <div class="field">
+                                                        <sui-radio-button name="companiesOnly" value="company" [(ngModel)]="role">Only companies</sui-radio-button>
+                                                    </div>
+                                                    <div class="field">
+                                                        <sui-radio-button name="all" value="all" [(ngModel)]="role">All</sui-radio-button>
+                                                    </div>
                                                 </div>
-                                            </div>
                                         </div>
                                     </div>
                                     <div class="right floated column">
                                         <div class="row">
-                                            <label>Distance: {{slider}} km</label>
-                                        </div>
-                                        <div class="row">
-                                            <div class="slider-box">
-                                                <label>0</label>
-                                                <mdl-slider class="slider" min="0" max="100" [(ngModel)]="slider"></mdl-slider>
-                                                <label>100+ km</label>
+                                            <div class="ui form">
+                                                
+                                                <div class="field">
+                                                    <label>Distance: {{distance}} km</label>
+                                                </div>
+                                                <div class="field">
+                                                    <div class="slider-box">
+                                                        <label>0</label>
+                                                        <mdl-slider class="slider" min="0" max="100" [(ngModel)]="distance"></mdl-slider>
+                                                        <label>100+ km</label>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

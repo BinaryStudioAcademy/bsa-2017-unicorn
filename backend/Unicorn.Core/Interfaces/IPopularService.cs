@@ -14,6 +14,9 @@ namespace Unicorn.Core.Interfaces
         Task<List<PerformerDTO>> GetPopularPerformers();
         Task<List<PerformerDTO>> GetPopularPerformers(long id);
         Task<List<FullPerformerDTO>> GetAllPerformersAsync();
-        Task<List<FullPerformerDTO>> GetPerformersByFilterAsync(string city, string name, string role, double minRating, bool withReviews, string categoriesString);
+        Task<List<FullPerformerDTO>> GetPerformersByFilterAsync(
+            string city, string name, string role, double? rating, string ratingCondition, bool withReviews, string categoriesString,
+            string subcategories, double? latitude, double? longitude, double? distance, string sort, int page, int pagesize
+            );
     }
 }
