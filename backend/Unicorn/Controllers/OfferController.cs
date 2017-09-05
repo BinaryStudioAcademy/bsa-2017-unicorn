@@ -23,17 +23,11 @@ namespace Unicorn.Controllers
 
         [HttpPost]
         [Route("offer")]
-        public async Task<HttpResponseMessage> SendOffersAsync(IEnumerable<ShortOfferDTO> offers)
+        public async Task SendOffersAsync(IEnumerable<ShortOfferDTO> offers)
         {
-            try
-            {
+            
                 await _offerService.CreateOffersAsync(offers);
-            }
-            catch(Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest);
-            }
-            return Request.CreateResponse(HttpStatusCode.OK);
+            
         }
 
         [HttpGet]

@@ -218,15 +218,15 @@ namespace Unicorn.Core.Services
             await _notificationService.CreateAsync(receiverId, notification);
 
             /* Send Message */
-            //string msg = EmailTemplate.NewOrderTemplate(_book.Customer.Person.Name, _book.Customer.Person.Surname, _book.Work?.Name);
-            //string receiverEmail = vendor != null ? vendor.Person.Account.Email : company.Account.Email;
-            //_mailService.Send(new EmailMessage
-            //{
-            //    ReceiverEmail = receiverEmail,
-            //    Subject = "You have a new order",
-            //    Body = msg,
-            //    IsHtml = true
-            //});
+            string msg = EmailTemplate.NewOrderTemplate(_book.Customer.Person.Name, _book.Customer.Person.Surname, _book.Work?.Name);
+            string receiverEmail = vendor != null ? vendor.Person.Account.Email : company.Account.Email;
+            _mailService.Send(new EmailMessage
+            {
+                ReceiverEmail = receiverEmail,
+                Subject = "You have a new order",
+                Body = msg,
+                IsHtml = true
+            });
         }
 
         private int GetRatingByBookId(long id)
@@ -420,18 +420,18 @@ namespace Unicorn.Core.Services
                 await _notificationService.CreateAsync(receiverId, notification);
 
                 /* Send Message */
-                //if (book.Status != BookStatus.Confirmed) // Only for customer events
-                //{
-                //    string msg = EmailTemplate.OrderStatusChanged(book.Work.Name, newBookStatus, book.Customer.Id);
-                //    string receiverEmail = book.Vendor != null ? book.Vendor.Person.Account.Email : book.Company.Account.Email;
-                //    _mailService.Send(new EmailMessage
-                //    {
-                //        ReceiverEmail = receiverEmail,
-                //        Subject = "Work status changed",
-                //        Body = msg,
-                //        IsHtml = true
-                //    });
-                //}
+                if (book.Status != BookStatus.Confirmed) // Only for customer events
+                {
+                    string msg = EmailTemplate.OrderStatusChanged(book.Work.Name, newBookStatus, book.Customer.Id);
+                    string receiverEmail = book.Vendor != null ? book.Vendor.Person.Account.Email : book.Company.Account.Email;
+                    _mailService.Send(new EmailMessage
+                    {
+                        ReceiverEmail = receiverEmail,
+                        Subject = "Work status changed",
+                        Body = msg,
+                        IsHtml = true
+                    });
+                }
             }
         }
 

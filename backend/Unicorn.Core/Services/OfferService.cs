@@ -47,15 +47,19 @@ namespace Unicorn.Core.Services
                 _unitOfWork.OfferRepository.Create(offer);
                 await _unitOfWork.SaveAsync();
 
-                //string msg = EmailTemplate.NewOfferTemplate(company.Name);
-                //string receiverEmail = "yura27kuchevskiy@gmail.com";
-                //_mailService.Send(new EmailMessage
-                //{
-                //    ReceiverEmail = receiverEmail,
-                //    Subject = "You have a new offer",
-                //    Body = msg,
-                //    IsHtml = true
-                //});
+                /*Send message*/
+
+                string msg = EmailTemplate.NewOfferTemplate(company.Name);
+                string receiverEmail = vendor.Person.Account.Email;
+                _mailService.Send(new EmailMessage
+                {
+                    ReceiverEmail = receiverEmail,
+                    Subject = "You have a new offer",
+                    Body = msg,
+                    IsHtml = true
+                });
+
+                /*Send notification*/
 
                 var notification = new NotificationDTO()
                 {
@@ -133,6 +137,21 @@ namespace Unicorn.Core.Services
             }
 
             var status = offer.Status == OfferStatus.Accepted ? "accepted" : "declined";
+
+            /*Send message*/
+
+            string msg = EmailTemplate.OfferStatusChanged(offer.Vendor.Person.Name, status, offer.Company.Id);
+            string receiverEmail = offer.Company.Account.Email;
+            _mailService.Send(new EmailMessage
+            {
+                ReceiverEmail = receiverEmail,
+                Subject = "Offer status chenged",
+                Body = msg,
+                IsHtml = true
+            });
+
+            /*Send notification*/
+            
             var notification = new NotificationDTO()
             {
                 Title = $"Offer status changed",
