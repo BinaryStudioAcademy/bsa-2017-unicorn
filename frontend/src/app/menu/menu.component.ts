@@ -100,7 +100,6 @@ export class MenuComponent implements OnInit {
       this.accountService.getNotifications(+this.tokenHelper.getClaimByName("accountid"))
         .then(resp => {
           this.notifications = (resp.body as Notification[]);
-          console.log('nnnnnnn',this.notifications);
           this.newNotifications = this.notifications.filter(n => !n.IsViewed);
           this.archivedNotifications = this.notifications.filter(n => n.IsViewed);
           this.sortNotificationsByTime();
@@ -265,12 +264,22 @@ export class MenuComponent implements OnInit {
       } else {
         this.router.navigate(['dashboard']);
       }
-    } else {
+    } else if (notification.Type === NotificationType.ChatNotification) {
       this.router.navigate([`${role}/${id}/edit`], {
         queryParams: {
           tab: 'messages'
         }
       });
+    } else {
+      if (role === 'company') {
+        this.router.navigate([`${role}/${id}/edit`], {
+          queryParams: {
+            tab: 'vendors'
+          }
+        });
+      } else {
+        this.router.navigate(['dashboard']);
+      }
     }
   }
 }

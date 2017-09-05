@@ -29,7 +29,7 @@ namespace Unicorn.Controllers
             {
                 await _offerService.CreateOffersAsync(offers);
             }
-            catch
+            catch(Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
