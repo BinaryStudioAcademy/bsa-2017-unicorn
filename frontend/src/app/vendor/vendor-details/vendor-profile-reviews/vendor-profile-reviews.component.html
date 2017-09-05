@@ -14,7 +14,7 @@
                                 </div>
                             </div>
                             <div class="ten wide column">
-                                <p class="from">{{review.From}}</p>
+                                <p class="from"><a routerLink="/user/{{review.FromProfileId}}">{{review.From}}</a></p>
                                 <p class="review-text">{{review.Description}}</p>
                                 <p class="task"><strong>Review for work: </strong>{{review.WorkName}}</p>
                             </div>

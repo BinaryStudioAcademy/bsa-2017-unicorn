@@ -96,10 +96,12 @@ namespace Unicorn.Core.Services
             {
                 case 2:
                 case 3:
-                    var person = _unitOfWork.PersonRepository.Query
-                        .Include(p => p.Account)
-                        .Single(p => p.Account.Id == review.Sender.Id);
-                    reviewDto.From = $"{person.Name} {person.Surname}";
+                    var customer = _unitOfWork.CustomerRepository.Query
+                        .Include(p => p.Person)
+                        .Include(p => p.Person.Account)
+                        .Single(p => p.Person.Account.Id == review.Sender.Id);
+                    reviewDto.From = $"{customer.Person.Name} {customer.Person.Surname}";
+                    reviewDto.FromProfileId = customer.Id;
                     break;
                 case 4:
                     var company = _unitOfWork.CompanyRepository.Query

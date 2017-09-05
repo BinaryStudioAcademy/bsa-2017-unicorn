@@ -30,13 +30,11 @@
         </div>
         <div class="ui segment ui grid" *ngFor="let performer of getPerformersPage()">
             <div class="row">
-                <div class="four wide column">
-                    <a routerLink="/{{performer.Link}}">
-                        <img class="ui small fluid image" src="{{performer.Avatar}}">
-                    </a>
+                <div class="four wide column">                    
+                        <img class="ui small fluid image" src="{{performer.Avatar}}">                   
                 </div>
                 <div class="eight wide column main-info">
-                    <p>{{performer.Name}} <span class="per-type">{{performer.PerformerType}}</span>
+                    <p><b>{{performer.Name}}</b><span class="per-type">&nbsp;{{performer.PerformerType}}</span>
                         <sui-rating class="star" [isReadonly]="true" [ngModel]="performer.Rating"></sui-rating>
                     </p>
                     <div class="desc-div">
