@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { TokenHelperService } from '../../services/helper/tokenhelper.service'
+
 @Component({
   selector: 'app-index',
   templateUrl: './index.component.html',
@@ -22,7 +24,8 @@ export class IndexComponent implements OnInit {
   subcategories: string[];
 
   constructor(
-    private router: Router
+    private router: Router,
+    private tokenHelper: TokenHelperService
   ) {
     navigator.geolocation.getCurrentPosition(()=>{});
    }
@@ -64,6 +67,11 @@ export class IndexComponent implements OnInit {
         }
       });
     }
+  }
+
+  isPerformer(): boolean {
+    let role = this.tokenHelper.getRoleName();
+    return role === 'vendor' || role === 'company';
   }
 
 }

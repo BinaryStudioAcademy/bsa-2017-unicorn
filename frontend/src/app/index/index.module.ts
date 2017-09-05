@@ -11,6 +11,9 @@ import { SearchPipe } from './search-pipe/search.pipe';
 
 import { DataService } from '../services/data.service';
 import { PopularService } from '../services/popular.service';
+import { CategoryService } from '../services/category.service';
+import { TokenHelperService } from '../services/helper/tokenhelper.service';
+import { WorkFormComponent } from './index-component/work-form/work-form.component';
 
 @NgModule({
   imports: [
@@ -23,11 +26,14 @@ import { PopularService } from '../services/popular.service';
     IndexComponent,
     PopularTasksComponent,
     // FooterComponent,
-    SearchPipe
+    SearchPipe,
+    WorkFormComponent
   ],
   providers: [
     PopularService,
-    DataService
+    DataService,
+    TokenHelperService,
+    CategoryService
   ]
 })
 export class IndexModule { }
