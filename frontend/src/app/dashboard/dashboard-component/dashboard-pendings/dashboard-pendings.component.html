@@ -11,7 +11,7 @@
             <p>{{book.Description}}</p>
         </div>
         <div class="customer-info five wide column">
-            <p>{{book.Customer}}</p>
+            <p><a routerLink="/user/{{book.CustomerId}}">{{book.Customer}}</a></p>
             <p><i class="colored call icon"></i>{{book.CustomerPhone}}</p>
             <p (click)="openMap(book.Id)" class="mapInfo"><i class="colored map pin icon"></i>{{book.Location.City}},&nbsp;{{book.Location.Adress}}</p>
         </div>
