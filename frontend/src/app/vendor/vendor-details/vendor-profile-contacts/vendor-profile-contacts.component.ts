@@ -13,7 +13,7 @@ import { ChatService } from "../../../services/chat/chat.service";
 import { TokenHelperService } from "../../../services/helper/tokenhelper.service";
 import { DialogModel } from "../../../models/chat/dialog.model";
 import { ChatEventsService } from "../../../services/events/chat-events.service";
-
+import {DomSanitizer} from '@angular/platform-browser';
 @Component({
   selector: 'app-vendor-profile-contacts',
   templateUrl: './vendor-profile-contacts.component.html',
@@ -39,7 +39,8 @@ export class VendorProfileContactsComponent implements OnInit {
     private vendorService: VendorService,
     private chatService: ChatService,
     private tokenHelper: TokenHelperService,
-    private chatEventsService: ChatEventsService
+    private chatEventsService: ChatEventsService,
+    private sanitizer:DomSanitizer
   ) { }
 
   ngOnInit() {
@@ -61,7 +62,30 @@ export class VendorProfileContactsComponent implements OnInit {
       .then(resp => this.contacts = resp.body as Contact[])
      
   }
-
+  getBaseUrl(provider:string):string
+  {
+    switch(provider)
+    {
+    case "telegram":
+    return "https://telegram.me/";
+    case "skype":
+    return "skype:";
+    case "vk":
+    return "https://vk.com/";
+    case "linkedin":
+    return "http://www.linkedin.com/in/";
+    case "facebook":
+    return "https://www.facebook.com/";
+    case "phone":
+    return "tel:";
+    case "email":
+    return "mailto:";
+    }
+    return "";
+  }
+  sanitize(url:string){
+    return this.sanitizer.bypassSecurityTrustUrl(url);
+}
   createChat(){    
     this.isLoaded = true;
     if(this.ownerId === undefined){
