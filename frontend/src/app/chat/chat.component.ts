@@ -5,6 +5,8 @@ import { NgClass } from '@angular/common';
 import { ChatService } from "../services/chat/chat.service";
 import { TokenHelperService } from "../services/helper/tokenhelper.service";
 import { NotificationService } from "../services/notifications/notification.service";
+import { ProfileShortInfo } from "../models/profile-short-info.model";
+import { AccountService } from "../services/account.service";
 
 @Component({
   selector: 'app-chat',
@@ -28,10 +30,14 @@ export class ChatComponent implements OnInit {
   noMessages: boolean = true; 
   needScroll: boolean = false;
 
+  searchString: string;
+  searchResults: ProfileShortInfo[];
+
   constructor(private chatService: ChatService,
     private tokenHelper: TokenHelperService,
     private cdr: ChangeDetectorRef,
-    private notificationService: NotificationService) { }
+    private notificationService: NotificationService,
+    private accountService: AccountService) { }
 
   ngOnInit() {
     this.getDialogs().then(() => this.startScroll());      
@@ -41,6 +47,7 @@ export class ChatComponent implements OnInit {
     this.notificationService.listen<any>("ReadNotReadedMessages", () => {
       this.messagesWereReaded();
     }); 
+    this.searchResults = [];
   } 
 
   ngAfterViewChecked() {
@@ -123,7 +130,7 @@ export class ChatComponent implements OnInit {
     this.getDialog().then(() => this.startScroll());   
   }
 
-  onWrite(){ 
+  onWrite(){
     this.readNotReadedMessages();
     if(this.writtenMessage !== undefined){
       let str = this.writtenMessage;
@@ -143,19 +150,33 @@ export class ChatComponent implements OnInit {
   
 
   addMessage(){    
-    let message = {
-      DialogId: this.selectedId,
-      IsReaded: false, 
-      OwnerId: this.ownerId,
-      Message: this.writtenMessage, 
-      Date: new Date(),
-      isLoaded: true
-    };    
-    this.messages.push(message);     
-    this.startScroll();             
-    this.chatService.addMessage(message).then(() =>  {
-      this.messages.find(x => x.isLoaded).isLoaded = false;
-    });
+    if (this.selectedId === null) {
+      let message = this.writtenMessage;
+      this.chatService.addDialog(this.dialog)
+        .then(resp => {
+          this.dialog.Id = resp.Id;
+          this.selectedId = resp.Id;
+          this.writtenMessage = message;
+          this.addMessage();
+          this.writtenMessage = undefined;
+          return;
+        });
+    } else {
+      let message = {
+        DialogId: this.selectedId,
+        IsReaded: false, 
+        OwnerId: this.ownerId,
+        Message: this.writtenMessage, 
+        Date: new Date(),
+        isLoaded: true
+      };    
+      this.messages.push(message);
+      this.startScroll();
+      this.chatService.addMessage(message)
+        .then(() => {
+          this.messages.find(x => x.isLoaded).isLoaded = false;
+        });
+    }
   }
 
 
@@ -198,5 +219,37 @@ export class ChatComponent implements OnInit {
       var height = this.textarea.nativeElement.scrollHeight;      
       this.textarea.nativeElement.style.height = height + 2 + 'px';
     }
+  }
+
+  filterDialogsByPartitipantName(name: string): DialogModel[] {
+    if (name && name !== '')
+      return this.dialogs.filter(d => d.ParticipantName.toLowerCase().includes(name.toLowerCase()));
+    else
+      return this.dialogs;
+  }
+
+  searchNewPartitipants() {
+    this.accountService.searchByTemplate(this.searchString, 20)
+      .then(resp => this.searchResults = resp.filter(x => 
+        this.dialogs.find(d => 
+          d.ParticipantOneId === x.AccountId || d.ParticipantTwoId === x.AccountId) === undefined));
+  }
+
+  createChat(partitipant: ProfileShortInfo) {
+    this.dialog = {
+      Id: null,
+      ParticipantOneId: this.ownerId,
+      ParticipantTwoId: partitipant.AccountId,
+      ParticipantName: partitipant.Name,
+      ParticipantAvatar: partitipant.Avatar,
+      Messages: null,
+      LastMessageTime: null,
+      IsReadedLastMessage: null
+    };
+
+    this.selectedId = this.dialog.Id;
+    this.dialogs.push(this.dialog);
+    // this.searchResults.splice(this.searchResults.findIndex(x => x.AccountId === partitipant.AccountId), 1);
+    this.messages = [];
   }
 }
