@@ -23,17 +23,11 @@ namespace Unicorn.Controllers
 
         [HttpPost]
         [Route("offer")]
-        public async Task<HttpResponseMessage> SendOffersAsync(IEnumerable<ShortOfferDTO> offers)
+        public async Task SendOffersAsync(IEnumerable<ShortOfferDTO> offers)
         {
-            try
-            {
+            
                 await _offerService.CreateOffersAsync(offers);
-            }
-            catch
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest);
-            }
-            return Request.CreateResponse(HttpStatusCode.OK);
+            
         }
 
         [HttpGet]
@@ -73,6 +67,21 @@ namespace Unicorn.Controllers
             try
             {
                 await _offerService.UpdateOfferAsync(offer);
+            }
+            catch
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
+            return Request.CreateResponse(HttpStatusCode.OK);
+        }
+
+        [HttpDelete]
+        [Route("offer/{id}")]
+        public async Task<HttpResponseMessage> DeleteOfferAsync(long id)
+        {
+            try
+            {
+                await _offerService.DeleteOfferAsync(id);
             }
             catch
             {

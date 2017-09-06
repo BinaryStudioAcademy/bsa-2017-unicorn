@@ -25,5 +25,17 @@
             string body = $"<body class><table border=0 cellpadding=0 cellspacing=0 class=body><tr><td>&nbsp;</td><td class=container><div class=content><table class=main><tr><td class=wrapper><table border=0 cellpadding=0 cellspacing=0><tr><td><p>Hi there,</p><p>New information about your task ({workName}): <b>{status}</b>. You can review details in your account.</p><table border=0 cellpadding=0 cellspacing=0 class=\"btn btn-primary\"><tbody><tr><td align=center><table border=0 cellpadding=0 cellspacing=0><tbody><tr><td> <a href={accountLink}{accountId} target=_blank>Go To Account</a> </td></tr></tbody></table></td></tr></tbody></table></td></tr></table></td></tr></table>";
             return BuildHtml(body);
         }
+
+        public static string NewOfferTemplate(string company)
+        {
+            string body = $"<body class><table border=0 cellpadding=0 cellspacing=0 class=body><tr><td>&nbsp;</td><td class=container><div class=content><table class=main><tr><td class=wrapper><table border=0 cellpadding=0 cellspacing=0><tr><td><p>Hi there,</p><p>{company} has offered you to join their team. You can review details of this offer in your dashboard.</p><table border=0 cellpadding=0 cellspacing=0 class=\"btn btn-primary\"><tbody><tr><td align=center><table border=0 cellpadding=0 cellspacing=0><tbody><tr><td> <a href={dashBoardLink} target=_blank>Go To Dashboard</a> </td></tr></tbody></table></td></tr></tbody></table></td></tr></table></td></tr></table>";
+            return BuildHtml(body);
+        }
+
+        public static string OfferStatusChanged(string vendor, string status, long companyId)
+        {
+            string body = $"<body class><table border=0 cellpadding=0 cellspacing=0 class=body><tr><td>&nbsp;</td><td class=container><div class=content><table class=main><tr><td class=wrapper><table border=0 cellpadding=0 cellspacing=0><tr><td><p>Hi there,</p><p>{vendor} has {status} your offer. You can review details of decling reason in your vendors page.</p><table border=0 cellpadding=0 cellspacing=0 class=\"btn btn-primary\"><tbody><tr><td align=center><table border=0 cellpadding=0 cellspacing=0><tbody><tr><td> <a href={$"http://unicorn-bsa.tk/company/{companyId}/edit?tab=vendors"} target=_blank>Go To Vendors page</a> </td></tr></tbody></table></td></tr></tbody></table></td></tr></table></td></tr></table>";
+            return BuildHtml(body);
+        }
     }
 }

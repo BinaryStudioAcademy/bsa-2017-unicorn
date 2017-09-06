@@ -9,6 +9,8 @@ using Unicorn.DataAccess.Entities;
 using Unicorn.DataAccess.Entities.Enum;
 using Unicorn.DataAccess.Interfaces;
 using Unicorn.Shared.DTOs;
+using Unicorn.Shared.DTOs.Email;
+using Unicorn.Shared.DTOs.Notification;
 using Unicorn.Shared.DTOs.Offer;
 
 namespace Unicorn.Core.Services
@@ -16,17 +18,60 @@ namespace Unicorn.Core.Services
     public class OfferService : IOfferService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly INotificationService _notifyService;
+        private readonly IMailService _mailService;
 
-        public OfferService(IUnitOfWork unitOfWork)
+        public OfferService(IUnitOfWork unitOfWork, INotificationService notifyService, IMailService mail)
         {
             _unitOfWork = unitOfWork;
+            _notifyService = notifyService;
+            _mailService = mail;
         }
 
         public async Task CreateOffersAsync(IEnumerable<ShortOfferDTO> offers)
         {
-            foreach (var offer in offers)
+            foreach (var offerDto in offers)
             {
-                await CreateOfferAsync(offer);
+                var vendor = await _unitOfWork.VendorRepository
+                    .Query
+                    .Include(v => v.Person)
+                    .Include(v => v.Person.Account)
+                    .SingleOrDefaultAsync(v => v.Id == offerDto.VendorId);
+                var company = await _unitOfWork.CompanyRepository.GetByIdAsync(offerDto.CompanyId);
+                var offer = new Offer();
+                offer.AttachedMessage = offerDto.AttachedMessage;
+                offer.Vendor = vendor;
+                offer.Company = company;
+                offer.Status = OfferStatus.Pending;
+
+                _unitOfWork.OfferRepository.Create(offer);
+                await _unitOfWork.SaveAsync();
+
+                /*Send message*/
+
+                string msg = EmailTemplate.NewOfferTemplate(company.Name);
+                string receiverEmail = vendor.Person.Account.Email;
+                _mailService.Send(new EmailMessage
+                {
+                    ReceiverEmail = receiverEmail,
+                    Subject = "You have a new offer",
+                    Body = msg,
+                    IsHtml = true
+                });
+
+                /*Send notification*/
+
+                var notification = new NotificationDTO()
+                {
+                    Title = $"New offer from {company.Name}",
+                    Description = $"You are offered to join {company.Name} team. Check your dashboard to find out details.",
+                    SourceItemId = offer.Id,
+                    Time = DateTime.Now,
+                    Type = NotificationType.OfferNotification
+                };
+
+                var receiverId = vendor.Person.Account.Id;
+                await _notifyService.CreateAsync(receiverId, notification);
             }
         }
 
@@ -39,7 +84,7 @@ namespace Unicorn.Core.Services
                 .Include(o => o.Vendor.Person.Account)
                 .Include(o => o.Company)
                 .Include(o => o.Company.Account)
-                .Where(o => o.Company.Id == companyId && o.Status == OfferStatus.Pending)
+                .Where(o => o.Company.Id == companyId)
                 .ToListAsync();
 
             var vendors = companiesQuery
@@ -71,13 +116,15 @@ namespace Unicorn.Core.Services
             var offer = await _unitOfWork.OfferRepository
                 .Query
                 .Include(o => o.Company)
+                .Include(o => o.Company.Account)
                 .Include(o => o.Vendor)
+                .Include(o => o.Vendor.Person)
                 .SingleOrDefaultAsync(o => o.Id == offerDto.Id);
             if (offer == null)
             {
                 throw new Exception();
             }
-            if (string.IsNullOrEmpty(offerDto.DeclinedMessage))
+            if (!string.IsNullOrEmpty(offerDto.DeclinedMessage))
             {
                 offer.DeclinedMessage = offerDto.DeclinedMessage;
             }
@@ -88,6 +135,42 @@ namespace Unicorn.Core.Services
             {
                 await AcceptVendorAsync(offer);
             }
+
+            var status = offer.Status == OfferStatus.Accepted ? "accepted" : "declined";
+
+            /*Send message*/
+
+            string msg = EmailTemplate.OfferStatusChanged(offer.Vendor.Person.Name, status, offer.Company.Id);
+            string receiverEmail = offer.Company.Account.Email;
+            _mailService.Send(new EmailMessage
+            {
+                ReceiverEmail = receiverEmail,
+                Subject = "Offer status chenged",
+                Body = msg,
+                IsHtml = true
+            });
+
+            /*Send notification*/
+            
+            var notification = new NotificationDTO()
+            {
+                Title = $"Offer status changed",
+                Description = $"{offer.Vendor.Person.Name} {status} your offer. Check your vendors page to find out details.",
+                SourceItemId = offer.Id,
+                Time = DateTime.Now,
+                Type = NotificationType.OfferNotification
+            };
+
+            var receiverId = offer.Company.Account.Id;
+            await _notifyService.CreateAsync(receiverId, notification);
+        }
+
+        public async Task DeleteOfferAsync(long id)
+        {
+            var offer = await _unitOfWork.OfferRepository.GetByIdAsync(id);
+            offer.IsDeleted = true;
+            _unitOfWork.OfferRepository.Update(offer);
+            await _unitOfWork.SaveAsync();
         }
 
         private async Task AcceptVendorAsync(Offer offer)
@@ -113,6 +196,16 @@ namespace Unicorn.Core.Services
 
             _unitOfWork.OfferRepository.Create(offer);
             await _unitOfWork.SaveAsync();
+
+            string msg = EmailTemplate.NewOrderTemplate("bbb", "sur", "smth");
+            string receiverEmail = "yura27kuchevskiy@gmail.com";
+            _mailService.Send(new EmailMessage
+            {
+                ReceiverEmail = receiverEmail,
+                Subject = "You have a new order",
+                Body = msg,
+                IsHtml = true
+            });
         }
 
         private OfferDTO OfferToDto(Offer offer)
@@ -150,6 +243,5 @@ namespace Unicorn.Core.Services
 
         }
 
-        
     }
 }

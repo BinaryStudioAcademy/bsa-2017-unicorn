@@ -10,6 +10,8 @@ namespace Unicorn.Shared.DTOs.Review
 
         public long FromAccountId { get; set; }
 
+        public long FromProfileId { get; set; }
+
         public string From { get; set; }
 
         public long ToAccountId { get; set; }

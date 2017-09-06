@@ -3,7 +3,7 @@
         <div class="child-flex" *ngFor="let vendor of company.Vendors">
             <a><img class="ui avatar image vendor-avatar" src={{vendor.Avatar}}></a>
             <div class="content">
-                <div class="header"><a>{{vendor.FIO}}</a></div>{{vendor.Position}}
+                <div class="header"><a routerLink="/vendor/{{vendor.Id}}">{{vendor.FIO}}</a></div>{{vendor.Position}}
             </div>
         </div>
         <div *ngIf="company.Vendors === undefined" class="no-vendors">

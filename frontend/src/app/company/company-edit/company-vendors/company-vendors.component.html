@@ -1,6 +1,7 @@
-<div class="ui container grid" *ngIf="company !== undefined">
+<div class="ui container grid" *ngIf="company !== undefined" id="main-container">
     <div class="row">
         <div class="column">
+            <label *ngIf="pendingVendors && pendingVendors.length !== 0">Offers</label>
             <table class="ui selectable padded single line table" *ngIf="pendingVendors && pendingVendors.length !== 0">
                 <thead>
                     <tr>
@@ -9,7 +10,8 @@
                         <th>Experience</th>
                          <th>Position</th>
                         <th>Rating</th>
-                        <th class="right aligned">Pending..</th>
+                        <th class="">Offers status</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -21,14 +23,19 @@
                             <td>
                                 <sui-rating class="star" [ngModel]="offer.Vendor.Rating" [isReadonly]="true"></sui-rating>
                             </td>
+                            <td>
+                                <span>{{getOfferStatus(offer)}}</span>
+                                <span class="declined-lbl" (click)="showReason(offer.DeclinedMessage)" *ngIf="haveReason(offer)">Why?</span>
+                            </td>
                             <td class="right aligned">
-                                <button class="ui button icon">
+                                <button (click)="deleteOffer(offer)" class="ui button icon">
                                     <i class="remove icon"></i>
                                 </button>
                             </td>
                         </tr>
                     </tbody>
                 </table>
+                <label>Vendors</label>
             <table class="ui selectable padded single line table">
                 <thead>
                     <tr>
@@ -124,7 +131,7 @@
     <div class="centered row" *ngIf="openedDetailedWindow">
         <div class="three wide column">
             <button class="ui basic button" (click)="addVendors()" [ngClass]="{'loading':isLoaded}">
-              <h5 *ngIf="!isLoaded">Add</h5>
+              <h5 *ngIf="!isLoaded">Send offer</h5>
             </button>
         </div>
     </div>
@@ -161,6 +168,7 @@
         <div class="ui content">
             <form class="ui reply form" name="reviewForm" #messageForm="ngForm">
                 <div class="field">
+                    <label>Type some information for vendor</label>
                     <textarea required 
                         placeholder="ADDITIONAL MESSAGE" 
                         name="reason" 
@@ -177,3 +185,13 @@
             </form>
         </div>
     </ng-template>
+
+<ng-template let-context let-modal="modal" #reasonModal>
+    <div class="ui content">
+        <form class="ui reply form">
+            <div class="field">
+                <textarea readonly name="reason">{{context.reason}}</textarea>
+            </div>
+        </form>
+    </div>
+</ng-template>

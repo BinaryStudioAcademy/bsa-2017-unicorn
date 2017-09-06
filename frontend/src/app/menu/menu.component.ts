@@ -48,6 +48,7 @@ export class MenuComponent implements OnInit {
   newNotifications: Notification[];
 
   newNotification: Notification;
+  newNotificationTimeout: number = 5000;
 
   constructor(
     private router: Router,
@@ -234,7 +235,7 @@ export class MenuComponent implements OnInit {
     this.newNotifications = this.notifications.filter(n => !n.IsViewed);
     this.sortNotificationsByTime();
 
-    setTimeout(() => this.newNotification = undefined, 3000);
+    setTimeout(() => this.newNotification = undefined, this.newNotificationTimeout);
   }
 
   archiveNotification(notification: Notification){
@@ -281,12 +282,22 @@ export class MenuComponent implements OnInit {
       } else {
         this.router.navigate(['dashboard']);
       }
-    } else {
+    } else if (notification.Type === NotificationType.ChatNotification) {
       this.router.navigate([`${role}/${id}/edit`], {
         queryParams: {
           tab: 'messages'
         }
       });
+    } else {
+      if (role === 'company') {
+        this.router.navigate([`${role}/${id}/edit`], {
+          queryParams: {
+            tab: 'vendors'
+          }
+        });
+      } else {
+        this.router.navigate(['dashboard']);
+      }
     }
   }
 }
