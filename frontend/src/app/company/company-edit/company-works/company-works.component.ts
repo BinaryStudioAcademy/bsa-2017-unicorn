@@ -186,9 +186,8 @@ export class CompanyWorksComponent implements OnInit {
     return this.sanitizer.bypassSecurityTrustStyle(`url('${link}')`);
   }
 
-  fileChangeListener($event) {
-    var image: any = new Image(); 
-    console.log($event)
+  fileChangeListener($event) {    
+    var image: any = new Image();     
     this.file = $event.target.files[0];   
     var myReader: FileReader = new FileReader();
     var that = this;

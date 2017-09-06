@@ -12,7 +12,7 @@ import { TokenHelperService } from './helper/tokenhelper.service';
 
 export type ImgurUploadOptions = {
     clientId: string,
-    imageData: Blob,
+    imageData: Blob | string,
     title?: string
 };
 
@@ -33,11 +33,11 @@ export class PhotoService {
         this.dataService.setHeader('Content-Type', 'application/json');
     }
 
-    uploadToImgur(image: Blob): Promise<string> {
+    uploadToImgur(image: Blob | string): Promise<string> {
         if (!this.tokenHelper.isTokenValid()) {
             return Promise.reject('Not authenticated');
         }
-        let up = new Ng2ImgurUploader(this.http);
+        let up = new Ng2ImgurUploader(this.http);        
         let op: ImgurUploadOptions = {
             clientId: imgurenvironment.client_id,
             title: 'title',
@@ -62,6 +62,12 @@ export class PhotoService {
         return this.dataService.postFullRequest(`avatar/${this.getId()}`, imageUrl)
             .then(() => {return imageUrl;});
     }
+
+    saveCroppedAvatar(imageUrl: string): Promise<any> {
+        console.log('saveavatar');
+        return this.dataService.postFullRequest(`avatar/cropped/${this.getId()}`, imageUrl)
+            .then(() => {return imageUrl;});
+    }
 }
 
 @Injectable()
@@ -72,16 +78,20 @@ export class Ng2ImgurUploader {
 
     upload(uploadOptions: ImgurUploadOptions) {
         let result = new Subject<ImgurUploadResponse>();
-
-        FileReaderUtils.imageDataToBase64(uploadOptions.imageData)
+        if(typeof uploadOptions.imageData === 'string'){
+            this.sendImgurRequest(uploadOptions.imageData, uploadOptions, result);
+        }
+        else{
+        FileReaderUtils.imageDataToBase64(uploadOptions.imageData as Blob)
             .subscribe(
-                (imageBase64: string) => {
+                (imageBase64: string) => {                    
                     this.sendImgurRequest(imageBase64, uploadOptions, result);
                 },
                 (error: string) => {
                     result.error(error);
                 }
-            );
+            ); 
+        }  
 
         return result;
     }

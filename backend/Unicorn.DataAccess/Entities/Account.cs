@@ -17,6 +17,8 @@ namespace Unicorn.DataAccess.Entities
 
         public string Avatar { get; set; }
 
+        public string CroppedAvatar { get; set; }
+
         public string Background { get; set; } 
 
         public Location Location { get; set; }

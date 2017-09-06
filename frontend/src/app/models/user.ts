@@ -8,6 +8,7 @@ export interface User
 	MiddleName: string;
 	SurName: string;
 	Avatar: string;
+	CroppedAvatar: string;
 	Background: string;
 	Location : LocationModel;
 	History: History[];

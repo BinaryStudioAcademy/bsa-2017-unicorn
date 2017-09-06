@@ -17,6 +17,7 @@ import { Notification, NotificationType } from "../models/notification.model";
 
 import { RoleRouter } from "../helpers/rolerouter";
 import { NotificationService } from "../services/notifications/notification.service";
+import { MenuEventsService } from "../services/events/menu-events.service";
 
 @Component({
   selector: 'app-menu',
@@ -31,6 +32,8 @@ export class MenuComponent implements OnInit {
 
   onLogIn: Subscription;
   onLogOut: Subscription;
+  onCroppAvatar: Subscription;
+  onChangeAvatar: Subscription;
 
   roleRouter: RoleRouter;
 
@@ -53,7 +56,8 @@ export class MenuComponent implements OnInit {
     private authLoginService: AuthenticationLoginService,
     private tokenHelper: TokenHelperService,
     private accountService: AccountService,
-    private notificationService: NotificationService) {
+    private notificationService: NotificationService,
+    private menuEventsService: MenuEventsService) {
     this.isLogged = this.tokenHelper.isTokenValid() && this.tokenHelper.isTokenNotExpired();
   }
 
@@ -117,11 +121,22 @@ export class MenuComponent implements OnInit {
         this.showAccountDetails = false;
         this.profileUrl = "/search";
       });
+
+    this.onCroppAvatar = this.menuEventsService.avatarCroppedEvent$
+    .subscribe(avatar => {
+      this.profileInfo.CroppedAvatar = avatar;
+    });
+
+    this.onChangeAvatar = this.menuEventsService.avatarChangedEvent$
+    .subscribe(avatar => {
+      this.profileInfo.Avatar = avatar;
+    });
   }
 
   initEmptyProfile(){
     this.profileInfo = {
       Avatar: "",
+      CroppedAvatar: "",
       Email: "",
       Name: "",
       Role: ""
@@ -131,6 +146,8 @@ export class MenuComponent implements OnInit {
   ngOnDestroy() {
     this.onLogIn.unsubscribe();
     this.onLogOut.unsubscribe();
+    this.onCroppAvatar.unsubscribe();
+    this.onChangeAvatar.unsubscribe();
   }
 
   openModal() {

@@ -107,6 +107,7 @@ namespace Unicorn.Core.Services
             return new ShortVendorDTO()
             {
                 Avatar = vendor.Person.Account.Avatar,
+                CroppedAvatar = vendor.Person.Account.CroppedAvatar,
                 Background = vendor.Person.Account.Background,
                 Company = vendor.Company?.Name,
                 CompanyId = vendor.Company?.Id,

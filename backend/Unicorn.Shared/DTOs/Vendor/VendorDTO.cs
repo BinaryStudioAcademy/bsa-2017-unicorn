@@ -12,6 +12,8 @@ namespace Unicorn.Shared.DTOs.Vendor
 
         public string Avatar { get; set; }
 
+        public string CroppedAvatar { get; set; }
+
         public double Experience { get; set; }
 
         public string Position { get; set; }

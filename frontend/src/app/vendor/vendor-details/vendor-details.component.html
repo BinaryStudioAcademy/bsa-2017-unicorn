@@ -5,7 +5,8 @@
                 <div *ngIf="vendor!== undefined">
                     <div class="ui small circular image">
                         <div class="avatarMain">
-                            <img id="vendor-avatar" src="{{vendor.Avatar}}" />
+                            <img *ngIf="!vendor.CroppedAvatar" id="vendor-avatar" src="{{vendor.Avatar}}" />
+                            <img *ngIf="vendor.CroppedAvatar" id="vendor-avatar" src="{{vendor.CroppedAvatar}}" />
                         </div>
                     </div>
                 </div>

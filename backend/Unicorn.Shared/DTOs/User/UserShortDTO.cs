@@ -13,6 +13,7 @@ namespace Unicorn.Shared.DTOs.User
         public string SurName { get; set; }
         public DateTime Birthday { get; set; }
         public string Avatar { get; set; }
+        public string CroppedAvatar { get; set; }
         public string Background { get; set; }
         public LocationDTO Location { get; set; }
         public string Email { get; set; }

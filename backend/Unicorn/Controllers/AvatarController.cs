@@ -42,6 +42,26 @@ namespace Unicorn.Controllers
         }
 
         [HttpPost]
+        [Route("avatar/cropped/{id}")]
+        public async Task<IHttpActionResult> UploadCroppedAvatar([FromBody] string imageUrl, int id)
+        {
+            if (string.IsNullOrEmpty(imageUrl))
+            {
+                return BadRequest();
+            }
+            try
+            {
+                await _avatarService.UploadCroppedAvatar(imageUrl, id);
+            }
+            catch (Exception)
+            {
+                return InternalServerError();
+            }
+
+            return Ok();
+        }
+
+        [HttpPost]
         [Route("background/{id}")]
         public async Task<IHttpActionResult> UploadBackground([FromBody] string imageUrl, int id)
         {
