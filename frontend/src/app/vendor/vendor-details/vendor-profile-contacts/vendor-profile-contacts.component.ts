@@ -62,6 +62,14 @@ export class VendorProfileContactsComponent implements OnInit {
       .then(resp => this.contacts = resp.body as Contact[])
      
   }
+  parseUrl(link:string):string
+  {
+    var newstr = link
+    .replace(/.*facebook.com\//,"")
+    .replace(/.*vk.com\//,"")
+    .replace(/.*linkedin.com\//,"");
+    return newstr;
+  }
   getBaseUrl(provider:string):string
   {
     switch(provider)

@@ -47,7 +47,7 @@
             <div class="header">Socials</div>
             <div class="description flex-style" *ngIf="socials !== undefined">
                 <div *ngFor="let social of socials">
-                    <a class="ui label contact" target="_blank" href={{getBaseUrl(social.Provider)}}{{social.Value}}>
+                    <a class="ui label contact" target="_blank" href={{getBaseUrl(social.Provider)}}{{parseUrl(social.Value)}}>
                         <i class="colored {{social.Provider}} icon"></i> {{social.Value}}
                     </a>
                 </div>

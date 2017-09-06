@@ -45,7 +45,7 @@
                     <div class="header">Socials</div>
                     <div class="description flex-style">
                         <div *ngFor="let contact of contacts">
-                            <a class="ui label contact" *ngIf="contact.Type === 'Social'" target="_blank" href={{getBaseUrl(contact.Provider)}}{{contact.Value}}>
+                            <a class="ui label contact" *ngIf="contact.Type === 'Social'" target="_blank" href={{getBaseUrl(contact.Provider)}}{{parseUrl(contact.Value)}}>
                                 <i class="colored {{contact.Provider}} icon"></i> {{contact.Value}}
                             </a>
                         </div>

@@ -64,7 +64,14 @@ export class ContactsComponent implements OnInit {
     });     
     
   }
-  
+  parseUrl(link:string):string
+  {
+    var newstr = link
+    .replace(/.*facebook.com\//,"")
+    .replace(/.*vk.com\//,"")
+    .replace(/.*linkedin.com\//,"");
+    return newstr;
+  }
   getBaseUrl(provider:string):string
   {
     switch(provider)
