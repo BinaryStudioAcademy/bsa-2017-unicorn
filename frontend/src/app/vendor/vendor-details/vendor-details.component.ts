@@ -2,6 +2,8 @@ import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
 import { BookComponent } from '../../book/book/book.component';
+import { AuthenticationEventService } from '../../services/events/authenticationevent.service';
+import { Subscription } from 'rxjs/Subscription';
 
 import 'rxjs/add/operator/switchMap';
 
@@ -53,9 +55,12 @@ export class VendorDetailsComponent implements OnInit {
   data: any;
   imageUploaded: boolean;
 
+  onLogIn: Subscription;
+
   tabActive: boolean = false;
   constructor(
     private route: ActivatedRoute,
+    private authEventService: AuthenticationEventService,
     private vendorService: VendorService,
     private modalService: ModalService,
     private photoService: PhotoService,
@@ -86,6 +91,16 @@ export class VendorDetailsComponent implements OnInit {
     if (this.route.snapshot.queryParams['work']) {
       this.selectedWorkId = +this.route.snapshot.queryParams['work'];
     }
+
+    this.onLogIn = this.authEventService.loginEvent$
+      .subscribe(() => {
+        this.isGuest = !this.isGuest;
+        this.isUser = !this.isUser;
+      });
+  }
+
+  ngOnDestroy() {
+    this.onLogIn.unsubscribe();
   }
 
   getCurrentRole() {
@@ -120,8 +135,8 @@ export class VendorDetailsComponent implements OnInit {
   }
 
   onWorksLoaded(works: Work[]) {
+    this.works = works;
     if (this.isUser) {
-      this.works = works;
       let work = this.works.find(x => x.Id === this.selectedWorkId);
       this.bookComponent.selectWork(work);
     }

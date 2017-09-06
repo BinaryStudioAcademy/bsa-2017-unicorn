@@ -9,21 +9,27 @@
               <div class="ten wide column remove-padding-bottom">
                 <label>When to do it</label>                  
               </div>
-              <div class="three wide column ui input">
-                <input type="text" placeholder="CATEGORY" [(ngModel)]="category">
-                <!-- <sui-select class="selection"
-                            [(ngModel)]="category"
-                            [options]="categories"
-                            [optionFormatter]="formatter"
-                            #formatted>
-                    <div class="scrolling menu">                                
-                      <sui-select-option *ngFor="let category of categories" [value]="category.Name">                              
-                                </sui-select-option>
-                    </div>       
-                </sui-select> -->
+              <div class="three wide column ui input">                  
+                <input type="text" [(ngModel)]="category" (keyup)="filterCategory()" placeholder="CATEGORY">
+                <div class="suggestions" (clickOutside)="onClickedOutside($event)">
+                  <div *ngIf="filterCtgs.length > 0" class="search-list">
+                    <div *ngFor="let item of filterCtgs" (click)="selectCategory(item)" class="search-list-item">
+                      <label innerHTML="{{item.Value}}"></label>
+                      <label class="search-category">{{item.Group}}</label>
+                    </div>
+                  </div>
+                </div>
               </div>
               <div class="three wide column  ui input">
-                <input type="text" placeholder="SUBCATEGORY" [(ngModel)]="subcategory">
+                <input type="text" [(ngModel)]="subcategory" (keyup)="filterSubcategory()" placeholder="SUBCATEGORY">
+                <div class="suggestions" (clickOutside)="onClickedOutside($event)">
+                  <div *ngIf="filterSubctgs.length > 0" class="search-list">
+                    <div *ngFor="let item of filterSubctgs" (click)="selectSubcategory(item)" class="search-list-item">
+                      <label innerHTML="{{item.Value}}"></label>
+                      <label class="search-category">{{item.Group}}</label>
+                    </div>
+                  </div>
+                </div>
               </div>
               <div class="four wide column ui left icon input">
                   <i class="calendar icon"></i>
@@ -167,7 +173,7 @@
       </div>      
       <div *ngIf="spinner" class="ui active centered inline ui text loader">Loading</div>
       <div *ngIf="emptyWorks()" class="ui center aligned segment">
-        There are no items to show
+        No results found
       </div>
       <div *ngIf="works" class="ui grid" id="works-grid">
         <div class="three column row remove-padding-top">
