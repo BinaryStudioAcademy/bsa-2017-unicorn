@@ -14,14 +14,7 @@ export class HelperService {
     const userRoleId = +userClaims['roleid'];
     const pathFrom = window.location.pathname;
 
-    /* Someone wanna break it
-    if (userRoleId === 3 || userRoleId === 4) {
-      this.router.navigate(['dashboard']);
-      return;
-    }
-    */
-
-    let path = pathFrom.includes(('/vendor')) || pathFrom.includes(('/company')) ? pathFrom : new RoleRouter().getRouteByRole(userRoleId);
+    let path = pathFrom.includes(('/vendor/')) || pathFrom.includes(('/company/')) ? pathFrom : new RoleRouter().getRouteByRole(userRoleId);
     userRoleId === 2 ? this.router.navigate([path]) : this.router.navigate([path, userClaims['profileid'], 'edit']);
   }
 }
