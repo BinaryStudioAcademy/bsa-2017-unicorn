@@ -49,7 +49,7 @@ namespace Unicorn.Core.Services
 
                 /*Send message*/
 
-                string msg = EmailTemplate.NewOfferTemplate(company.Name);
+                string msg = EmailTemplate.NewOfferTemplate(company.Name, company.Id);
                 string receiverEmail = vendor.Person.Account.Email;
                 _mailService.Send(new EmailMessage
                 {
@@ -140,12 +140,12 @@ namespace Unicorn.Core.Services
 
             /*Send message*/
 
-            string msg = EmailTemplate.OfferStatusChanged(offer.Vendor.Person.Name, status, offer.Company.Id);
+            string msg = EmailTemplate.OfferStatusChanged(offer.Vendor.Person.Name, status, offer.Company.Id, offer.Vendor.Id);
             string receiverEmail = offer.Company.Account.Email;
             _mailService.Send(new EmailMessage
             {
                 ReceiverEmail = receiverEmail,
-                Subject = "Offer status chenged",
+                Subject = "Offer status changed",
                 Body = msg,
                 IsHtml = true
             });
@@ -182,30 +182,6 @@ namespace Unicorn.Core.Services
             _unitOfWork.VendorRepository.Update(vendor);
             _unitOfWork.CompanyRepository.Update(company);
             await _unitOfWork.SaveAsync();
-        }
-
-        private async Task CreateOfferAsync(ShortOfferDTO offerDto)
-        {
-            var vendor = await _unitOfWork.VendorRepository.GetByIdAsync(offerDto.VendorId);
-            var company = await _unitOfWork.CompanyRepository.GetByIdAsync(offerDto.CompanyId);
-            var offer = new Offer();
-            offer.AttachedMessage = offerDto.AttachedMessage;
-            offer.Vendor = vendor;
-            offer.Company = company;
-            offer.Status = OfferStatus.Pending;
-
-            _unitOfWork.OfferRepository.Create(offer);
-            await _unitOfWork.SaveAsync();
-
-            string msg = EmailTemplate.NewOrderTemplate("bbb", "sur", "smth");
-            string receiverEmail = "yura27kuchevskiy@gmail.com";
-            _mailService.Send(new EmailMessage
-            {
-                ReceiverEmail = receiverEmail,
-                Subject = "You have a new order",
-                Body = msg,
-                IsHtml = true
-            });
         }
 
         private OfferDTO OfferToDto(Offer offer)

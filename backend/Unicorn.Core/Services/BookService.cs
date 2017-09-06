@@ -218,7 +218,7 @@ namespace Unicorn.Core.Services
             await _notificationService.CreateAsync(receiverId, notification);
 
             /* Send Message */
-            string msg = EmailTemplate.NewOrderTemplate(_book.Customer.Person.Name, _book.Customer.Person.Surname, _book.Work?.Name);
+            string msg = EmailTemplate.NewOrderTemplate(_book.Customer.Person.Name, _book.Customer.Person.Surname, _book.Work?.Name, book.CustomerId);
             string receiverEmail = vendor != null ? vendor.Person.Account.Email : company.Account.Email;
             _mailService.Send(new EmailMessage
             {
