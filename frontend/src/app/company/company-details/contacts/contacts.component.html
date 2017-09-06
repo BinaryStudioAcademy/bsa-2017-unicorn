@@ -1,0 +1,64 @@
+<div *ngIf="company !== undefined">
+    <div class="flex-contacts">
+        <div class="header" style="display: flex; justify-content: space-between; align-items: center;">
+            <div>Our contacts</div>
+            <div *ngIf="accountId !== ownerId">
+                <button class="ui active button" *ngIf="!isGuest" [ngClass]="{'loading':isLoaded}" (click)="createChat()"> 
+                    <div *ngIf="!isLoaded">
+                        <i class="comments icon"></i> START A CHAT 
+                    </div>
+                </button>
+            </div>
+        </div>
+        <div class="phones">
+            <div class="header">Phones</div>
+            <div class="description flex-style" *ngIf="phones !== undefined">
+                <div *ngFor="let phone of phones">
+                    <a class="ui label contact" target="_blank" href={{getBaseUrl(phone.Provider)}}{{phone.Value}}>
+                        <i class="colored call icon"></i> {{phone.Value}}
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="ui divider"></div>
+        <div class="emails">
+            <div class="header">Emails</div>
+            <div class="description flex-style" *ngIf="emails !== undefined">
+                <div *ngFor="let email of emails">
+                    <a class="ui label contact" target="_blank" href={{getBaseUrl(email.Provider)}}{{email.Value}}>
+                        <i class="colored mail icon"></i> {{email.Value}}
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="ui divider"></div>
+        <div class="messengers">
+            <div class="header">Messengers</div>
+            <div class="description flex-style" *ngIf="messengers !== undefined">
+                <div *ngFor="let messenger of messengers">
+                    <a class="ui label contact" target="_blank" [href]="sanitize(getBaseUrl(messenger.Provider)+messenger.Value)">
+                        <i class="colored {{messenger.Provider}} icon"></i> {{messenger.Value}}
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="ui divider"></div>
+        <div class="socials">
+            <div class="header">Socials</div>
+            <div class="description flex-style" *ngIf="socials !== undefined">
+                <div *ngFor="let social of socials">
+                    <a class="ui label contact" target="_blank" href={{getBaseUrl(social.Provider)}}{{parseUrl(social.Value)}}>
+                        <i class="colored {{social.Provider}} icon"></i> {{social.Value}}
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="ui divider"></div>
+        <div class="map" *ngIf="map !== undefined">
+            <app-map [inputMap]="map"></app-map>
+        </div>
+    </div>
+</div>
+<div *ngIf="company === undefined" class="ui active inverted dimmer" style="z-index: 0;">
+    <div class="ui text loader">Loading</div>
+</div>

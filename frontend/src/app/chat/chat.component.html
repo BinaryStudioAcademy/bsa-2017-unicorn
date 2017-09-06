@@ -1,0 +1,82 @@
+<div class="container" [ngStyle]="{'height.px': containerHeight}" *ngIf="dialogs !== undefined">
+    <div class="side-bar">
+        <div class="ui fluid icon input dialog-search">
+            <input type="text" [(ngModel)]="searchString" (ngModelChange)="searchNewPartitipants()" placeholder="Search...">
+            <i class="search icon"></i>
+        </div>
+        <div class="users">
+        <div class="upper-user" (click)="onSelect(_dialog.Id)" *ngFor="let _dialog of filterDialogsByPartitipantName(searchString)">
+            <div class="user" [ngClass]="{'active': _dialog.Id === selectedId}">
+                <img class="ui avatar image" src="{{_dialog.ParticipantAvatar}}">
+                <div class="dialog-inf">
+                    <div class="userName"> {{_dialog.ParticipantName}} </div>
+                    <div class="add-inf">
+                        <div class="lastMessageDate" *ngIf="_dialog.LastMessageTime !== null">
+                            {{_dialog.LastMessageTime|amTimeAgo}}
+                        </div>
+                        <div class="is-readed" *ngIf="!_dialog.IsReadedLastMessage">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h5 *ngIf="searchResults.length > 0" class="ui horizontal divider header">
+            <i class="plus icon"></i> Start a chat with
+        </h5>
+        <div class="upper-user" (click)="createChat(partitipant)" *ngFor="let partitipant of searchResults">
+            <div class="user">
+                <img class="ui avatar image" src="{{partitipant.Avatar}}">
+                <div class="dialog-inf">
+                    <div class="userName"> {{partitipant.Name}} </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <div class="chat-block">
+        <div class="under-chat-block" *ngIf="messages !== undefined && messages !== null && messages.length !== 0">
+            <div class="messages" #messagesBlock>
+                <div class="message-block" *ngFor="let message of messages" [ngClass]="{'grey-background': !message.IsReaded, 'normal-background': message.IsReaded}">
+                    <div class="message" *ngIf="message.OwnerId === ownerId" [ngClass]="{'loading':message.isLoaded}">
+                        <div class="date-me">
+                            {{message.Date|amTimeAgo}}
+                        </div>
+                        <div class="concrete-message me">
+                            {{message.Message}}
+                        </div>
+                    </div>
+                    <div class="message" *ngIf="message.OwnerId !== ownerId">
+                        <div class="date-him">
+                            {{message.Date|amTimeAgo}}
+                        </div>
+                        <div class="concrete-message him">
+                            {{message.Message}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="no-content no-messages" *ngIf="messages !== undefined && (messages === null || messages.length === 0)">
+            No messages
+        </div>
+        <div *ngIf="messages === undefined || messages === null " class="chat-block-dimmer ui active inverted dimmer" style="z-index: 0;">
+            <div class="ui text loader">Loading</div>
+        </div>
+        <div *ngIf="noMessages && messages !== undefined && messages !== null && messages.length !== 0" class="chat-block-dimmer ui active inverted dimmer" style="z-index: 0;">
+            <div class="ui text loader">Loading</div>
+        </div>
+        <div class="ui form" *ngIf="dialogs !== undefined && dialogs !== null  && messages !== undefined" [ngClass]="{'disabled-div':noMessages}">
+            <div class=" field " style="display: flex; ">
+                <textarea #textArea (keydown)="onChange($event) " (click)="readNotReadedMessages(dialog) " [ngStyle]="{ 'height.px': inputHeight} " class="prompt " type="text " placeholder="Type here... " [(ngModel)]="writtenMessage " style="display:inline ">                        
+                </textarea>
+                <div class="ui icon input ">
+                    <i class="talk outline link icon " (click)="onWrite() "></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="dialogs===u ndefined " class="ui active inverted dimmer " style="z-index: 0; ">
+    <div class="ui text loader ">Loading</div>
+</div>

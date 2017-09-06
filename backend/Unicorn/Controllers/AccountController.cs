@@ -6,7 +6,9 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Cors;
+
 using Unicorn.Core.Interfaces;
+using Unicorn.Shared.DTOs;
 using Unicorn.Shared.DTOs.Notification;
 
 namespace Unicorn.Controllers
@@ -16,7 +18,7 @@ namespace Unicorn.Controllers
     public class AccountController : ApiController
     {
         public AccountController(
-            IAccountService accountService, 
+            IAccountService accountService,
             INotificationService notificationService)
         {
             _accountService = accountService;
@@ -63,6 +65,13 @@ namespace Unicorn.Controllers
             await _notificationService.RemoveAsync(notificationId);
 
             return Request.CreateResponse(HttpStatusCode.NoContent);
+        }
+
+        [HttpGet]
+        [Route("search")]
+        public async Task<List<ShortProfileInfoDTO>> SearchByTemplate(string template, int count)
+        {
+            return await _accountService.SearchByTemplate(template, count);
         }
 
         private IAccountService _accountService;

@@ -8,6 +8,7 @@ import { ChatService } from "../../../services/chat/chat.service";
 import { TokenHelperService } from "../../../services/helper/tokenhelper.service";
 import { DialogModel } from "../../../models/chat/dialog.model";
 import { ChatEventsService } from "../../../services/events/chat-events.service";
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
   selector: 'company-contacts',
@@ -39,9 +40,10 @@ export class ContactsComponent implements OnInit {
     private route: ActivatedRoute,
     private chatService: ChatService,
     private tokenHelper: TokenHelperService,
-    private chatEventsService: ChatEventsService) { }
+    private chatEventsService: ChatEventsService,
+    private sanitizer:DomSanitizer) { }
 
-  ngOnInit() { 
+  ngOnInit() {
     this.route.params
     .switchMap((params: Params) => this.companyService.getCompanyContacts(params['id']))
     .subscribe(res => {       
@@ -62,7 +64,40 @@ export class ContactsComponent implements OnInit {
     });     
     
   }
+
+  parseUrl(link:string):string
+  {
+    var newstr = link
+    .replace(/.*facebook.com\//,"")
+    .replace(/.*vk.com\//,"")
+    .replace(/.*linkedin.com\//,"");
+    return newstr;
+  }
   
+  getBaseUrl(provider:string):string
+  {
+    switch(provider)
+    {
+    case "telegram":
+    return "https://telegram.me/";
+    case "skype":
+    return "skype:";
+    case "vk":
+    return "https://vk.com/";
+    case "linkedin":
+    return "http://www.linkedin.com/in/";
+    case "facebook":
+    return "https://www.facebook.com/";
+    case "phone":
+    return "tel:";
+    case "email":
+    return "mailto:";
+    }
+    return "";
+  }
+  sanitize(url:string){
+    return this.sanitizer.bypassSecurityTrustUrl(url);
+}
   createChat(){
     this.isLoaded = true;
     if(this.ownerId === undefined){

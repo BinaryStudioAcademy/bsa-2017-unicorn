@@ -1,0 +1,246 @@
+\::-webkit-scrollbar-thumb
+        border-radius: 0;
+
+\::-webkit-scrollbar-track
+        background: rgba(0, 0, 0, 0.04);
+
+img
+    object-fit: cover;
+
+.ui.loader:after, .ui.loader:before
+    width: 1.3rem;
+    height: 1.3rem;
+    margin: 0 0 0 -0.66rem;
+
+.ui.text.loader
+    padding-top: 1.5rem;
+
+.opened-dialogs
+    width: 50px!important;
+    margin: 0!important;
+    position: fixed;
+    background: white!important;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid lightgray;    
+
+.open-dialog
+    height: 50px;
+    width: 50px;
+    position: relative;
+
+.open-dialog:hover 
+    cursor: pointer;
+    background: rgba(176, 213, 247, 0.5); 
+    .absolute-icon
+        display: inline-block;	
+
+.open-dialog.active:before
+    right: 105%;
+    bottom: auto;
+    left: auto;
+    top: 50%;
+    margin: 0 -.5px 0 0;
+    border-bottom: 1px solid #d4d4d5;
+    border-left: 1px solid #d4d4d5;
+    border-right: inherit;
+    border-top: inherit;
+    transform: translateX(50%) translateY(-50%) rotate(45deg);
+    position: absolute;
+
+.open-dialog-avatar    
+    margin: 5px;
+
+.ui.avatar.image
+    width: 40px;
+    height: 40px;
+
+.is-readed
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    bottom: auto;
+    right: auto;
+    width: 10px;
+    height: 10px;     
+    background: #5bb0ff;
+    border-radius: 10px; 
+
+.absolute-icon
+    cursor: pointer;
+    position: absolute;
+    top: -4px;
+    left: auto;
+    bottom: auto;
+    right: -2px;
+    display: none;
+    color: rgba(0,0,0,1);
+
+.container
+    width: 250px;
+    height: 300px;
+    position: fixed;    
+    bottom: 0;
+    border: 1px solid lightgray;
+    background: white;
+
+.with-opened-dialogs
+    right: 50px;
+
+.without-opened-dialogs
+    right: 0;
+
+.under-chat-block
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;  
+    height: 100%;  
+
+.chat-block    
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;    
+    margin: 0;
+    padding: 0;
+    height: 100%;
+
+.messages
+    overflow-y: auto;
+    overflow-x: hidden; 
+
+.message-block
+    display: flex;
+    flex-direction: column;
+    padding: 5px 10px; 
+
+
+.message
+    display: flex;
+    flex-direction: column;
+
+
+.date-me
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 10px;
+    color: grey;
+    text-align: right;    
+    padding-right: 6px;
+
+.date-him
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 10px;
+    color: grey;
+    text-align: left;    
+    padding-left: 6px; 
+
+.him
+    background: #f9ead2;        
+    align-self: flex-start;
+
+.me    
+    background: #5BB0FF;
+    color: #fff;    
+    align-self: flex-end;
+
+.concrete-message
+    display: inline-block;
+    clear: both;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 12px;
+    margin-bottom: 5px;
+    font-family: Helvetica, Arial, sans-serif;
+    max-width: 70%;
+    min-width: 20%;  
+    word-wrap: break-word;      
+
+.concrete-message.me
+    text-align: left;
+
+.concrete-message.him
+    text-align: left;   
+
+
+.no-content
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    color: lightgray;
+    height: 100%;
+
+.no-messages
+    width: 100%;
+
+.ui.icon.input
+    flex-basis: 15%;
+
+.talk.outline.link.icon
+    background: rgb(176, 213, 247);
+    font-size: 1.2em;
+    font-weight: 700;
+    color: black;   
+    width: 100%; 
+    border-radius: 0;
+
+.grey-background
+    background: rgba(124, 241, 203, 0.24)!important;
+
+.normal-background
+    background: #fff!important;
+
+textarea
+    font-size: 12px!important;
+    padding: 8px!important;
+    width: 100%!important;        
+    min-height: 33px!important
+    max-height: 57px!important;
+    border-radius: 0!important;
+    padding-right: 2em!important;
+    overflow-y: auto!important;
+    overflow-x: hidden!important;
+    resize: none!important;  
+
+.him + .me
+    border-bottom-right-radius: 5px;
+
+.me + .me
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+
+.close-icon
+	cursor: pointer;	
+	color: rgba(255,255,255,1)    
+
+.icons
+    display: flex;
+    justify-content: space-between;
+
+
+.close-icon:hover
+    color: rgba(255,255,255,1);
+
+.header
+    padding: 10px;
+    padding-right: 5px;
+    display: flex;
+    justify-content: space-between;
+    height: 15%;
+    align-items: center;
+    color: white;
+    background: rgba(5, 114, 216, 0.71);
+
+.disabled-div
+    pointer-events: none;
+    opacity: 0.4;
+
+.active
+    background: rgba(176, 213, 247, 0.5);
+
+.with-left-border
+    border-left: 1px solid lightgray;
+
+.without-left-border
+    border-left: inherit;

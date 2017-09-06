@@ -139,7 +139,8 @@ namespace Unicorn.Core.Services
                 Id = createdDialog.Id,
                 ParticipantOneId = createdDialog.Participant1.Id,
                 ParticipantTwoId = createdDialog.Participant2.Id,
-                ParticipantAvatar = createdDialog.Participant2.Avatar
+                ParticipantAvatar = createdDialog.Participant2.Avatar,
+                LastMessageTime = DateTimeOffset.Now
             };
         }
 

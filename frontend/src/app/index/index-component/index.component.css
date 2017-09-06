@@ -1,0 +1,258 @@
+.wrapper {
+    padding: 0;
+}
+
+
+/* ------------ Main Section ----------- */
+
+.section-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-image: url(../../../assets/images/housework-dollar-paid.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
+}
+
+.section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-around;
+    /* width: 910px; */
+    height: auto;
+    margin: 50px 10px 100px 10px;
+    background-color: rgba(255, 255, 255, 1.0);
+    border: 1px solid rgba(255, 255, 255, 0.0);
+}
+
+.slogan {
+    width: auto;
+    max-width: 610px;
+    margin: 50px 50px 30px 50px;
+    font-family: 'Century Gothic', 'Calibri', 'Trebuchet MS', sans-serif;
+}
+
+.slogan h1 {
+    color: #FF647A;
+    font-size: 36px;
+}
+
+.slogan p {
+    color: gray;
+    font-size: 26px;
+}
+
+@media screen and (min-width: 490px) {
+    .slogan h1 {
+        color: #FF647A;
+        font-size: 60px;
+    }
+    .slogan p {
+        color: gray;
+        font-size: 40px;
+    }
+}
+
+
+/* ------------ Search Section ----------- */
+
+.search-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-end;
+    width: auto;
+    max-width: 910px;
+    margin: 50px 50px 80px 50px;
+    padding: 20px;
+    font-family: 'Verdana', 'Calibri', 'Trebuchet MS', sans-serif;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+}
+
+.search-container p {
+    font-size: 16px;
+    color: gray;
+}
+
+.search-item {
+    width: 190px;
+    margin: 13px;
+}
+
+.search-input {
+    height: 49px;
+    width: 190px;
+}
+
+.datepicker {
+    width: 190px;
+    height: 49px !important;
+}
+
+.btn-search {
+    width: 190px;
+    height: 49px;
+    color: white;
+    background-color: #FF647A;
+    font-size: 16px;
+}
+
+
+/* ------------ Section 2 ----------- */
+
+.section2-wrapper {
+    margin-top: 10px;
+    margin-bottom: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 92%;
+}
+
+.work-wrapper {
+    margin-top: 10px;
+    margin-bottom: 60px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 92%;
+}
+
+/* ------------ Information ----------- */
+
+.info-wrapper {
+    margin: 20px;
+}
+
+.customer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 50% 0%;
+    background-image: url(../../../assets/images/young-couple.jpg);
+}
+
+.vendor {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 50% 0%;
+    background-image: url(../../../assets/images/office-space.jpg);
+}
+
+.customer-section {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: flex-start;
+    height: 765px;
+    margin: 0 10px;
+}
+
+.info-title {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 260px;
+    font-size: 26px;
+    font-family: 'Century Gothic', 'Calibri', 'Trebuchet MS', sans-serif;
+    background-color: transparent;
+}
+
+.info-title span {
+    color: #FF647A;
+    margin: 0 20px 0 10px;
+    font-weight: bold;
+}
+
+.info-title p {
+    color: gray;
+}
+
+.vendor-section {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    height: 765px;
+    margin: 0 10px;
+}
+
+.info-container {
+    max-width: 910px;
+    margin: 20px;
+    padding: 20px;
+    color: #606060;
+    background-color: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.0);
+    font-family: 'Century Gothic', 'Calibri', 'Trebuchet MS', sans-serif;
+}
+
+.info-container h4 {
+    font-size: 34px;
+}
+
+.info-container p {
+    font-size: 26px;
+}
+
+@media screen and (min-width: 490px) {
+    .info-container h4 {
+        font-size: 44px;
+    }
+    .info-container p {
+        font-size: 32px;
+    }
+}
+
+.suggestions {
+    position: relative;
+}
+
+.search-list {
+    position: absolute; 
+    top: 3px; 
+    border: 1px solid lightgray;
+    min-width: 400px;
+    max-height: 242px;
+    background: white;
+    z-index: 1;
+    overflow: auto;
+}
+
+.search-list-item {
+    display: flex;
+    justify-content: space-between;
+    height: 40px;
+    cursor: pointer;
+    padding: 5px 10px;
+    color: black;
+}
+
+.search-list-item > label {
+    padding-top: 5px;
+}
+
+.search-list-img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.search-category {
+    display: flex;
+    align-items: center;
+    float: right; 
+    font-style: italic; 
+    color: gray;
+}

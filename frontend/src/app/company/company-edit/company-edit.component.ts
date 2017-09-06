@@ -3,6 +3,7 @@ import { PhotoService } from '../../services/photo.service';
 import { Params, ActivatedRoute } from "@angular/router";
 import { CompanyShort } from "../../models/company-page/company-short.model";
 import { CompanyService } from "../../services/company-services/company.service";
+import { MenuEventsService } from "../../services/events/menu-events.service";
 
 @Component({
   selector: 'app-company-edit',
@@ -10,6 +11,7 @@ import { CompanyService } from "../../services/company-services/company.service"
   styleUrls: ['./company-edit.component.sass']
 })
 export class CompanyEditComponent implements OnInit {
+  menuEventsService: MenuEventsService;
   isDimmed: boolean = false;
   company: CompanyShort;  
   uploading: boolean;
@@ -46,6 +48,7 @@ export class CompanyEditComponent implements OnInit {
       return this.photoService.saveAvatar(link);
     }).then(link => {      
         this.company.Avatar = link;
+        this.menuEventsService.changedAvatar(link); 
         this.uploading = false;
       }).catch(err => {
         console.log(err);
