@@ -124,7 +124,7 @@
                                     </svg>
                             Upload image</label>
                     </div>
-                    <div *ngIf="dataLoaded" class="ui active button file-input" (click)="fileSaveListener()">
+                    <div *ngIf="!uploading" class="ui active button file-input" (click)="fileSaveListener()">
                         <input type="submit" id="custom-input" class="inputfile">
                         <label class="btnText" for="submit">
                                 <svg class="svgImage" id="saveImage" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="17" viewBox="0 0 1000 1000" enable-background="new 0 0 1000 1000" xml:space="preserve">
@@ -132,7 +132,7 @@
                                 </svg>
                             Save image</label>
                     </div>
-                    <div *ngIf="!dataLoaded" class="ui active loading button file-upload-save">Loading</div>
+                    <div *ngIf="uploading" class="ui active loading button file-upload-save">Loading</div>
                 </div>
             </div>
             <div class="previewContent" *ngIf="imageUploaded">

@@ -149,6 +149,7 @@ export class UserDetailsComponent implements OnInit {
       this.menuEventsService.croppedAvatar(this.data.image);  
       this.menuEventsService.changedAvatar(values[0]);
       this.dataLoaded = true;
+      this.imageUploaded = false;
       this.toastr.success('Your avatar was updated', 'Success!');
       this.activeModal.deny(null);
     }).catch(err => {

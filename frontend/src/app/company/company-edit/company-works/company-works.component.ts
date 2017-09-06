@@ -56,8 +56,7 @@ export class CompanyWorksComponent implements OnInit {
   work: CompanyWork = { Id: null, Description: null, Name: null, Subcategory: null, Icon: null };
   isLoaded: boolean = false;
   openedDetailedWindow: boolean = false;
-  isDimmed: boolean = false;
-  dataLoaded: boolean = true;
+  isDimmed: boolean = false;  
 
   constructor(private companyService: CompanyService,
     private route: ActivatedRoute,    
@@ -207,11 +206,12 @@ export class CompanyWorksComponent implements OnInit {
     if(!this.file){
       return;
     }
-    this.dataLoaded = false;
+    this.uploading = true;
     this.photoService.uploadToImgur(this.file)
       .then(resp => {        
-        this.dataLoaded = true;
+        this.uploading = false;
         this.work.Icon = this.data.image;
+        this.imageUploaded = false;
         this.activeModal.deny(null);
       })
       .catch(err => {

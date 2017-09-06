@@ -223,6 +223,7 @@ export class VendorEditWorksComponent implements OnInit {
       .then(resp => {
         this.uploading = false;
         this.selectedWork.Icon = this.data.image;
+        this.imageUploaded = false;
         this.activeModal.deny(null);
       })
       .catch(err => {

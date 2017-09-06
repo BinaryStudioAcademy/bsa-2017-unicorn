@@ -129,6 +129,7 @@ export class VendorEditComponent implements OnInit {
       this.menuEventsService.croppedAvatar(this.data.image);  
       this.menuEventsService.changedAvatar(values[0]); 
       this.dataLoaded = true;
+      this.imageUploaded = false;
       this.activeModal.deny(null);
     }).catch(err => console.log(err));
     //console.log(this.data);
