@@ -21,7 +21,10 @@
                         <div *ngIf="filterCtgs.length > 0" class="search-list">
                             <div *ngFor="let item of filterCtgs" (click)="selectCategory(item)" class="search-list-item">
                                 <label innerHTML="{{item.Value}}"></label>
-                                <label class="search-category">{{item.Group}}</label>
+                                <div class="search-category">
+                                    <img src="{{item.Icon}}" class="search-list-img"/>
+                                    {{item.Group}}
+                                </div>
                             </div>
                         </div>
                     </div>

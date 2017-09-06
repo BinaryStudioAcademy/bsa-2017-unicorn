@@ -124,11 +124,25 @@ input.ng-dirty.ng-invalid.ng-touched
     overflow: auto;
 
 .search-list-item
+    display: flex;
+    justify-content: space-between;
+    height: 40px;
     cursor: pointer;
-    padding: 10px;
+    padding: 5px 10px;
     color: black;
 
+.search-list-item > label 
+    padding-top: 5px;
+
+.search-list-img
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+
 .search-category
+    display: flex;
+    align-items: center;
     float: right; 
     font-style: italic; 
     color: gray;
