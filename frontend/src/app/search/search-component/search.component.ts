@@ -8,6 +8,7 @@ import { SearchService } from '../../services/search.service';
 import { CategoryService } from '../../services/category.service';
 
 import { SearchWork } from '../../models/search/search-work';
+import { SearchTag } from '../../models/search/search-tag';
 import { LocationModel } from '../../models/location.model';
 import { Category } from '../../models/category.model';
 import { Subcategory } from '../../models/subcategory.model';
@@ -66,6 +67,9 @@ export class SearchComponent implements OnInit {
   spinner: boolean;
   loaded: boolean;
 
+  filterCtgs: SearchTag[] = [];
+  filterSubctgs: SearchTag[] = [];
+
   constructor(
     private searchService: SearchService,
     private categoryService: CategoryService,
@@ -95,6 +99,75 @@ export class SearchComponent implements OnInit {
       this.mapRedirect();
       this.ref.detectChanges();
     }).catch(err => this.spinner = false);
+  }
+
+  filter(arr, search) {
+    const result = [];
+    if (search !== '' && arr) {
+      for (let i = 0; i < arr.length; i++) {
+        const tags = arr[i].Tags.split(',');
+        for (let j = 0; j < tags.length; j++) {
+          const tag = tags[j].toLowerCase();
+          let input = search.toLowerCase();
+          if (tag.indexOf(input) > -1) {
+            let start = tag.substring(0, tag.indexOf(input));
+            const end = tag.substring(tag.indexOf(input) + input.length);
+            if (start.length > 0) {
+              start = this.capitalizeFirstLetter(start);
+            } else {
+              input = this.capitalizeFirstLetter(input);
+            }
+            const html = start + '<b>' + input + '</b>' + end;
+            const tagObj = {
+              Name: tags[j],
+              Value: html,
+              Group: arr[i].Name
+            };
+            result.push(tagObj);
+          }
+        }
+      }
+    }
+    return result;
+  }
+
+
+  filterCategory() {
+    this.filterCtgs = this.filter(this.categories, this.category);
+    console.log(this.filterCtgs);
+  }
+
+  filterSubcategory() {
+    this.filterSubctgs = this.filter(getAllSubcategories(this.categories), this.subcategory);
+
+    function getAllSubcategories(categories) {
+      let result = [];
+      if (categories) {
+        for (let i = 0; i < categories.length; i++) {
+          result = result.concat(categories[i].Subcategories);
+        }
+      }
+      return result;
+    }
+  }
+
+  selectCategory(item) {
+    this.category = this.capitalizeFirstLetter(item.Name);
+    this.filterCtgs = [];
+  }
+
+  selectSubcategory(item) {
+    this.subcategory = this.capitalizeFirstLetter(item.Name);
+    this.filterSubctgs = [];
+  }
+
+  capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
+  onClickedOutside(e: Event) {
+    this.filterCtgs = [];
+    this.filterSubctgs = [];
   }
 
   searchWorks() {
@@ -223,8 +296,19 @@ export class SearchComponent implements OnInit {
     }
   }
 
+  getSubcategories(categories, selected) {
+    let result = [];
+    for (let i = 0; i < categories.length; i++) {
+      for (let j = 0; j < selected.length; j++) {
+        if (categories[i].Name === selected[j]) {
+          result = result.concat(categories[i].Subcategories);
+        }
+      }
+    }
+    return result;
+  }
+
   subcategoriesChanged() {
-    // console.log('subcat: ');
     // console.log(this.selSubcategories);
   }
 
