@@ -85,7 +85,7 @@ export class VendorsComponent implements OnInit {
     }
   }
 
-  select(name: string, loc: LocationModel) {
+  selectPerformerLocation(name: string, loc: LocationModel) {
     this.center = new google.maps.LatLng(loc.Latitude, loc.Longitude);
     this.selected = name;
     this.ref.detectChanges();

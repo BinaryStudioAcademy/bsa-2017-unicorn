@@ -138,7 +138,7 @@
                 </div>
             </div>
         </div>
-        <div class="ui segment ui grid" *ngFor="let performer of performers" (click)="select(performer.Name, performer.Location)">
+        <div class="ui segment ui grid" *ngFor="let performer of performers" (click)="selectPerformerLocation(performer.Name, performer.Location)">
             <div class="row">
                 <div class="four wide column">                    
                         <img class="ui small fluid image" src="{{performer.Avatar}}">                   
@@ -150,7 +150,7 @@
                     <div class="desc-div">
                         <p class="desc">{{performer.Description}}</p>
                     </div>
-                    <p class="location" (click)="select(performer.Name, performer.Location)">
+                    <p class="location">
                         <i class="colored map pin icon"></i>{{performer.Location.City}}, {{performer.Location.Adress}}
                     </p>
                     <p class="reviews">
