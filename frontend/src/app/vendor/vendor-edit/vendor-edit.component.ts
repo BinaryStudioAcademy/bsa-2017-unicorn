@@ -16,6 +16,7 @@ import { Vendor } from '../../models/vendor.model';
 import { VendorService } from "../../services/vendor.service";
 import { PhotoService } from '../../services/photo.service';
 import { ModalService } from "../../services/modal/modal.service";
+import { MenuEventsService } from "../../services/events/menu-events.service";
 
 @Component({
   selector: 'app-vendor-edit',
@@ -50,7 +51,8 @@ export class VendorEditComponent implements OnInit {
     private vendorService: VendorService,
     private photoService: PhotoService,
     private modalService: ModalService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private menuEventsService: MenuEventsService
   ) {
     this.cropperSettings = modalService.cropperSettings;
     this.data = {};
@@ -93,7 +95,7 @@ export class VendorEditComponent implements OnInit {
     });
   }
 
-  fileChangeListener($event) {
+  fileChangeListener($event) {    
     var image: any = new Image();
     this.file = $event.target.files[0];
     var myReader: FileReader = new FileReader();
@@ -108,6 +110,7 @@ export class VendorEditComponent implements OnInit {
   }
 
   fileSaveListener() {
+    //debugger;
     if (!this.data) {
       console.log("file not upload");
       return;
@@ -117,19 +120,24 @@ export class VendorEditComponent implements OnInit {
       return;
     }
     this.dataLoaded = false;
-    this.photoService.uploadToImgur(this.file).then(resp => {
-      let path = resp;
-      console.log(path);
-      this.photoService.saveAvatar(path)
-        .then(resp => {
-          this.vendor.Avatar = this.data.image;
-          this.dataLoaded = true;
-          this.activeModal.deny(null);
-        })
-        .catch(err => console.log(err));
-    }).catch(err => {
-      console.log(err);
-    });
+    let mass = [];
+    mass.push(this.photoService.uploadToImgur(this.file)
+              .then(res => {
+                  this.photoService.saveAvatar(res);
+                  return res;
+                }));
+    mass.push(this.photoService.uploadToImgur(this.data.image.split('base64,')[1])
+              .then(res => this.photoService.saveCroppedAvatar(res)));
+    Promise.all(mass).then(values => {
+      this.vendor.CroppedAvatar = this.data.image;
+      this.menuEventsService.croppedAvatar(this.data.image);  
+      this.menuEventsService.changedAvatar(values[0]); 
+      this.dataLoaded = true;
+      this.imageUploaded = false;
+      this.activeModal.deny(null);
+    }).catch(err => console.log(err));
+    //console.log(this.data);
+    //console.log(this.data.image);
   }
 
   public openModal() {

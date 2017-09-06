@@ -1,0 +1,53 @@
+<div *ngIf="company !== undefined">
+    <div class="ui container flex-header">
+        <h2 class="ui header">{{company.Name}}
+            <div class="sub header">{{company.City}}
+                <sui-rating class="star" [ngModel]="rating" [isReadonly]="true"></sui-rating>
+                Reviews: {{company.ReviewsCount}}</div>
+        </h2>
+        <div class="center">
+            <b>CEO:</b> <span>{{company.Director}}</span>
+        </div>
+    </div>
+    <div class="ui divider">
+    </div>
+    <div class="ui justified container">
+        {{company.Description}}
+    </div>
+    <div class="ui divider">
+    </div>
+    <div class="ui container">
+        <div class="flex-body" *ngIf="categories !== null">
+            <div *ngFor="let category of categories" class="item flex-category" id="divCategory{{category.Id}}" [ngClass]="{'selected-category': selectedCategory===category}" (click)="onCategorySelect(category)">
+                <img class="ui circular image image-category" src={{category.Icon}} id="imgCategory{{category.Id}}">
+                <h5 class="category-name" id="h5Category{{category.Id}}">{{category.Name}}</h5>
+            </div>
+        </div>
+        <div class="ui divider"></div>
+        <div *ngIf="openedCategoryDetails" (clickOutside)="closeCategoryDetails($event)">
+            <div class="flex-header">
+                <h4 style="display: inline-block;">{{selectedCategory.Name}}</h4>
+            </div>
+            <sui-accordion class="styled fluid">
+                <sui-accordion-panel *ngFor="let work of categoryWorks">
+                    <div title class="ui container work-preview-title">
+                        <i class="dropdown icon"></i>{{work.Name}}
+                    </div>
+                    <div content>
+                        <div class="ui container flex-header">
+                            <div>
+                                <p>{{work.Description}}</p>
+                            </div>
+                            <div>
+                                <a class="ui tag label">{{work.Subcategory.Name}}</a>
+                            </div>
+                        </div>
+                    </div>
+                </sui-accordion-panel>
+            </sui-accordion>
+        </div>
+    </div>
+</div>
+<div *ngIf="company === undefined" class="ui active inverted dimmer" style="z-index: 0;">
+    <div class="ui text loader">Loading</div>
+</div>
