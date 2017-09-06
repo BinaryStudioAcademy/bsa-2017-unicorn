@@ -34,4 +34,8 @@ export class AccountService {
 		return this.dataService.deleteFullRequest<Notification[]>(`${this.apiController}/${accountId}/notifications/${notification.Id}`, notification)
 			.catch(err => alert(err));
 	}
+
+	searchByTemplate(template: string, count: number): Promise<ProfileShortInfo[]> {
+		return this.dataService.getRequest<ProfileShortInfo[]>(`${this.apiController}/search?template=${template}&count=${count}`);
+	}
 }
