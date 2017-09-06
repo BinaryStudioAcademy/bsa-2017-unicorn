@@ -122,6 +122,38 @@ namespace Unicorn.Core.Services
             }
         }
 
+        public async Task<List<ShortProfileInfoDTO>> SearchByTemplate(string template, int count)
+        {
+            var persons = await _unitOfWork.PersonRepository.Query
+                .Include(p => p.Account)
+                .Where(p => p.Account.Email.Contains(template) || (p.Name + " " + p.Surname + " " + p.MiddleName).Contains(template))
+                .Select(p => new ShortProfileInfoDTO
+                {
+                    AccountId = p.Account.Id,
+                    Avatar = p.Account.Avatar,
+                    Email = p.Account.Email,
+                    Role = p.Account.Role.Name,
+                    Name = p.Name + " " + p.Surname + " " + p.MiddleName
+                }).ToListAsync();
+            var companies = await _unitOfWork.CompanyRepository.Query
+                .Include(c => c.Account)
+                .Where(c => c.Account.Email.Contains(template) || c.Name.Contains(template))
+                .Select(c => new ShortProfileInfoDTO
+                {
+                    AccountId = c.Account.Id,
+                    Avatar = c.Account.Avatar,
+                    Email = c.Account.Email,
+                    Role = c.Account.Role.Name,
+                    Name = c.Name
+                }).ToListAsync();
+
+            return companies
+                .Union(persons)
+                .OrderBy(p => p.Name).ToList();
+
+
+        }
+
         private readonly IUnitOfWork _unitOfWork;
     }
 }
