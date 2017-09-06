@@ -9,6 +9,8 @@ import { PopularTasksComponent } from './index-component/popular-tasks/popular-t
 // import { FooterComponent } from '../footer/footer.component';
 import { SearchPipe } from './search-pipe/search.pipe';
 
+import { CompanyService } from "../services/company-services/company.service";
+import { VendorService } from "../services/vendor.service";
 import { DataService } from '../services/data.service';
 import { PopularService } from '../services/popular.service';
 import { CategoryService } from '../services/category.service';
@@ -33,7 +35,9 @@ import { WorkFormComponent } from './index-component/work-form/work-form.compone
     PopularService,
     DataService,
     TokenHelperService,
-    CategoryService
+    CategoryService,
+    VendorService,
+    CompanyService
   ]
 })
 export class IndexModule { }

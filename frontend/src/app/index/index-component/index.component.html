@@ -5,7 +5,10 @@
                 <h1>{{title}}</h1>
                 <p>{{slogan}}</p>
             </div>
-            <div class="search-container">
+            <div class="work-wrapper" *ngIf="isPerformer()">
+                <app-work-form></app-work-form>
+            </div>
+            <div class="search-container" *ngIf="!isPerformer()">
                 <div class="search-item">
                     <p>{{labelSearch}}</p>
                     <div class="ui input fill-horizontal">
@@ -61,9 +64,7 @@
                     </div>
                 </div>
             </div>
-            <div class="section2-wrapper" *ngIf="isPerformer()">
-                <app-work-form></app-work-form>
-            </div>
+            
         </div>
     </div>
 </div>
