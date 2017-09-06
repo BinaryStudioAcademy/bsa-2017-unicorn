@@ -19,7 +19,8 @@
                             <div class="ui items">
                                 <div class="item">
                                     <div class="ui small circular image smallAvatar">
-                                        <img class="profile-avatar" src="{{profileInfo.Avatar}}">
+                                        <img *ngIf="!profileInfo.CroppedAvatar" id="profile-avatar" src="{{profileInfo.Avatar}}" />
+                                        <img *ngIf="profileInfo.CroppedAvatar" id="profile-avatar" src="{{profileInfo.CroppedAvatar}}" />
                                     </div>
                                     <div class="content">
                                         <h5>{{profileInfo.Name}}</h5>
