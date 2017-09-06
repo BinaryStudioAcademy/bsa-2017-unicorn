@@ -36,7 +36,7 @@
             <div class="header">Messengers</div>
             <div class="description flex-style" *ngIf="messengers !== undefined">
                 <div *ngFor="let messenger of messengers">
-                    <a class="ui label contact" target="_blank" href={{getBaseUrl(messenger.Provider)}}{{messenger.Value}}>
+                    <a class="ui label contact" target="_blank" [href]="sanitize(getBaseUrl(messenger.Provider)+messenger.Value)">
                         <i class="colored {{messenger.Provider}} icon"></i> {{messenger.Value}}
                     </a>
                 </div>
