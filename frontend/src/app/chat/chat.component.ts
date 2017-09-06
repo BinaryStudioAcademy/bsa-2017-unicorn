@@ -102,6 +102,7 @@ export class ChatComponent implements OnInit {
         }
         else{
           this.messages = [];
+          this.dialogs = [];
           this.containerHeight = 150;
         }
       }      
