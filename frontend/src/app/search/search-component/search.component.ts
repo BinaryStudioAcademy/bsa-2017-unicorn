@@ -20,6 +20,11 @@ import { Subcategory } from '../../models/subcategory.model';
   styleUrls: ['./search.component.sass']
 })
 export class SearchComponent implements OnInit {
+  spinner: boolean;
+  loaded: boolean;
+  /* search autocomplete */
+  filterCtgs: SearchTag[] = [];
+  filterSubctgs: SearchTag[] = [];
   /* query parameters */
   category: string;
   subcategory: string;
@@ -55,20 +60,11 @@ export class SearchComponent implements OnInit {
   positions = [];
   markers = [];
   reviewsTab = 'reviews';
-
   center: google.maps.LatLng;
-
   autocomplete: google.maps.places.Autocomplete;
   address: any = {};
   place: any;
-
   selected: string = '';
-
-  spinner: boolean;
-  loaded: boolean;
-
-  filterCtgs: SearchTag[] = [];
-  filterSubctgs: SearchTag[] = [];
 
   constructor(
     private searchService: SearchService,
@@ -124,6 +120,9 @@ export class SearchComponent implements OnInit {
               Group: arr[i].Name
             };
             result.push(tagObj);
+            if (result.length > 30) {
+              return result;
+            }
           }
         }
       }
