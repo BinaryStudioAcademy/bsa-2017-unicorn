@@ -28,6 +28,14 @@ namespace Unicorn.Core.Services
             await _unitOfWork.SaveAsync();
         }
 
+        public async Task UploadCroppedAvatar(string imageUrl, long id)
+        {
+            Account account = await _unitOfWork.AccountRepository.GetByIdAsync(id);
+            account.CroppedAvatar = imageUrl;
+            _unitOfWork.AccountRepository.Update(account);
+            await _unitOfWork.SaveAsync();
+        }
+
         public async Task UploadBackground(string imageUrl, long id)
         {
             Account account = await _unitOfWork.AccountRepository.GetByIdAsync(id);

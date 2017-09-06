@@ -11,7 +11,8 @@
             <li>
                 <div class="dropdown">
                     <div *ngIf="profileInfo !== undefined" class="ui small circular image" (click)="onShowDetails()">
-                        <img class="profile-avatar" src="{{profileInfo.Avatar}}">
+                        <img *ngIf="!profileInfo.CroppedAvatar" id="profile-avatar" src="{{profileInfo.Avatar}}" />
+                        <img *ngIf="profileInfo.CroppedAvatar" id="profile-avatar" src="{{profileInfo.CroppedAvatar}}" />
                     </div>
                     <div class="dropdown-content" *ngIf="showAccountDetails && profileInfo !== undefined">
                         <div class="mainInfo">
@@ -43,11 +44,11 @@
                     </div>
                     <div class="dropdown-content" *ngIf="isNotificationsShow">
                         <div class="item header">
-                           <h5>NOTIFICATIONS</h5>
-                           <i (click)="toggleNotifications()" class="archive link icon" [ngClass]="{'red': isArchivedNotificationsShown}"></i>
+                            <h5>NOTIFICATIONS</h5>
+                            <i (click)="toggleNotifications()" class="archive link icon" [ngClass]="{'red': isArchivedNotificationsShown}"></i>
                         </div>
                         <div *ngIf="!isArchivedNotificationsShown; then newNotificationsList; else archivedNotificationsList">
-                            
+
                         </div>
                     </div>
 
@@ -77,15 +78,14 @@
                                         <i (click)="removeNotification(notif)" class="remove link icon"></i>
                                     </div>
                                     <div class="description">
-                                        <p>{{notif.Description}}</p>                                       
+                                        <p>{{notif.Description}}</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </ng-template>
 
-                    <div class="dropdown-content" 
-                    *ngIf="(!haveNewNotifications() && isNotificationsShow && !isArchivedNotificationsShown) || (!haveArchivedNotifications() && isNotificationsShow && isArchivedNotificationsShown)">
+                    <div class="dropdown-content" *ngIf="(!haveNewNotifications() && isNotificationsShow && !isArchivedNotificationsShown) || (!haveArchivedNotifications() && isNotificationsShow && isArchivedNotificationsShown)">
                         <div class="item header">
                             <h5>NOTIFICATIONS</h5>
                             <i (click)="toggleNotifications()" class="archive link icon" [ngClass]="{'red': isArchivedNotificationsShown}"></i>

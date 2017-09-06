@@ -29,9 +29,7 @@ export class UserMainComponent implements OnInit {
     return this.sanitizer.bypassSecurityTrustStyle(`url('${link}')`);
   }
   getImage() : string {
-    
-        return this.user.Avatar ? this.user.Avatar : ''; 
-    
+        return this.user.CroppedAvatar ? this.user.CroppedAvatar : this.user.Avatar ? this.user.Avatar : ''; 
       }
       
     

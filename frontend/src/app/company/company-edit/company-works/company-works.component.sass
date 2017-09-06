@@ -70,7 +70,7 @@ img
 	position: absolute;
 	z-index: -1;
 .inputfile + label 
-    font-size: 1.25em;
+    font-size: 16px;
     font-weight: 700;
     color: $primary-color;
     display: inline-block;
@@ -100,12 +100,6 @@ img
     font-size: 12px;
     margin: 0em 2em;
 
-.svgImage
-    margin-right: 1em;
-
-.file-upload-save > label   
-    font-size: 1.3em;
-
 svg path
     fill: $primary-color;
 
@@ -116,6 +110,12 @@ svg path
 .uploadedImage
     margin-top: 1em;
     margin-bottom: 1em;
+
+.contentContainer
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
 
 .previewContent
     align-self: flex-start;
@@ -131,3 +131,11 @@ svg path
 
 .button-text
 	line-height: 1.2em;
+
+.btnText
+	width: 100%;
+	line-height: 36px;
+	padding: 0 10px;
+
+.file-input
+    padding: 0

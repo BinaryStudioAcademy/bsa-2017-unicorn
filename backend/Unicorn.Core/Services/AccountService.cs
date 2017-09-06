@@ -26,6 +26,7 @@ namespace Unicorn.Core.Services
                 {
                     Id = account.Id,
                     Avatar = account.Avatar,
+                    CroppedAvatar = account.CroppedAvatar,
                     DateCreated = account.DateCreated,
                     Email = account.Email,
                     Location = new LocationDTO()
@@ -53,6 +54,7 @@ namespace Unicorn.Core.Services
             {
                 Id = account.Id,
                 Avatar = account.Avatar,
+                CroppedAvatar = account.CroppedAvatar,
                 DateCreated = account.DateCreated,
                 Email = account.Email,
                 EmailConfirmed =account.EmailConfirmed,
@@ -80,6 +82,7 @@ namespace Unicorn.Core.Services
             var result = new ShortProfileInfoDTO
             {
                 Avatar = account.Avatar,
+                CroppedAvatar = account.CroppedAvatar,
                 Email = account.Email,
                 Role = account.Role.Name
             };

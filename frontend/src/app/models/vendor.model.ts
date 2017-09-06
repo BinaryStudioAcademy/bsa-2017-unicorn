@@ -10,6 +10,7 @@ export interface Vendor {
 	Surname: string;
 	MiddleName: string;
 	Avatar: string;
+	CroppedAvatar: string;
 	Background: string;
 	City: string;
 	Location: LocationModel;

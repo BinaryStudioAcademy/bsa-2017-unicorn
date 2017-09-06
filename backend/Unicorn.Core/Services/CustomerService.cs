@@ -135,6 +135,7 @@ namespace Unicorn.Core.Services
                     Birthday = customer.Person.Birthday,
                     Phone = customer.Person.Phone,
                     Avatar = customer.Person.Account.Avatar,
+                    CroppedAvatar = customer.Person.Account.CroppedAvatar,
                     Background = customer.Person.Account.Background,
                     Email = customer.Person.Account.Email,
                     History = customer.History.Select(x => new HistoryShortDto()

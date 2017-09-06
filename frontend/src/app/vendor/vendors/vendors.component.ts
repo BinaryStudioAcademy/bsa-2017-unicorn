@@ -136,7 +136,7 @@ export class VendorsComponent implements OnInit {
     this.latitude = undefined;
     this.longitude = undefined;
     this.slider = 0;
-    this.distance = undefined;
+    this.distance = 0;
     this.withReviews = false;
   }
 

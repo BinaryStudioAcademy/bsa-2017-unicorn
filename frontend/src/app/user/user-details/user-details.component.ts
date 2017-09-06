@@ -19,6 +19,7 @@ import {
   , ModalTemplate, ModalSize, SuiActiveModal
 } from 'ng2-semantic-ui';
 import { ToastsManager, Toast } from 'ng2-toastr';
+import { MenuEventsService } from "../../services/events/menu-events.service";
 
 @Component({
   selector: 'app-user-details',
@@ -63,7 +64,8 @@ export class UserDetailsComponent implements OnInit {
     private suiModalService: SuiModalService,
     private modalService: ModalService,    
     private tokenHelper: TokenHelperService,
-    public toastr: ToastsManager) { 
+    public toastr: ToastsManager,
+    private menuEventsService: MenuEventsService) { 
       this.cropperSettings = modalService.cropperSettings;
       this.data = {};
       this.imageUploaded = false;
@@ -134,22 +136,22 @@ export class UserDetailsComponent implements OnInit {
       return;
     }
     this.dataLoaded = false;
-    this.photoService.uploadToImgur(this.file).then(resp => {
-
-      let path = resp;
-      console.log(path);
-      this.photoService.saveAvatar(path)
-        .then(resp => {
-          this.user.Avatar = this.data.image;
-          this.dataLoaded = true;
-          this.toastr.success('Your avatar was updated', 'Success!');
-          this.activeModal.deny(null);
-        })
-        .catch(err => {
-          console.log(err);
-          this.toastr.error('Sorry, something went wrong', 'Error!');
-          this.activeModal.deny(null);
-        });
+    let mass = [];
+    mass.push(this.photoService.uploadToImgur(this.file)
+    .then(res => {
+        this.photoService.saveAvatar(res);
+        return res;
+      }));
+    mass.push(this.photoService.uploadToImgur(this.data.image.split('base64,')[1])
+        .then(res => this.photoService.saveCroppedAvatar(res)));
+    Promise.all(mass).then(values => {
+      this.user.CroppedAvatar = this.data.image;
+      this.menuEventsService.croppedAvatar(this.data.image);  
+      this.menuEventsService.changedAvatar(values[0]);
+      this.dataLoaded = true;
+      this.imageUploaded = false;
+      this.toastr.success('Your avatar was updated', 'Success!');
+      this.activeModal.deny(null);
     }).catch(err => {
       console.log(err);
       this.toastr.error('Sorry, something went wrong', 'Error!');
