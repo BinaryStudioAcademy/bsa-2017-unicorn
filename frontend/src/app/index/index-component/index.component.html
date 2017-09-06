@@ -14,13 +14,17 @@
                     <div class="ui input fill-horizontal">
                         <input class="search-input" type="text" placeholder="{{placeholderCategory}}" 
                             [(ngModel)]="searchCategory"
-                            (keyup)="filterCategory()">                        
+                            (keyup)="filterCategory()"
+                            (keyup.Enter)="searchPerformer()">                        
                     </div>
                     <div class="suggestions" (clickOutside)="onClickedOutside($event)">
                         <div *ngIf="filterCtgs.length > 0" class="search-list">
                             <div *ngFor="let item of filterCtgs" (click)="selectCategory(item)" class="search-list-item">
                                 <label innerHTML="{{item.Value}}"></label>
-                                <label class="search-category">{{item.Group}}</label>
+                                <div class="search-category">
+                                    <img src="{{item.Icon}}" class="search-list-img"/>
+                                    {{item.Group}}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -29,7 +33,8 @@
                     <div class="ui input fill-horizontal">
                         <input class="search-input" type="text" placeholder="{{placeholderSubcategory}}" 
                             [(ngModel)]="searchSubcategory"
-                            (keyup)="filterSubcategory()">                        
+                            (keyup)="filterSubcategory()"
+                            (keyup.Enter)="searchPerformer()">                        
                     </div>
                     <div class="suggestions" (clickOutside)="onClickedOutside($event)">
                         <div *ngIf="filterSubctgs.length > 0" class="search-list">
@@ -44,7 +49,12 @@
                     <p>{{labelDate}}</p>
                     <div class="ui left icon input">
                         <i class="calendar icon"></i>
-                        <input class="datepicker" placeholder="RIGHT NOW" suiDatepicker [(ngModel)]="searchDate" [pickerMode]="mode" [pickerFirstDayOfWeek]="firstDayOfWeek" [pickerUseNativeOnMobile]="false">
+                        <input class="datepicker" placeholder="RIGHT NOW" suiDatepicker 
+                            [(ngModel)]="searchDate" 
+                            [pickerMode]="mode" 
+                            [pickerFirstDayOfWeek]="firstDayOfWeek" 
+                            [pickerUseNativeOnMobile]="false"
+                            (keyup.Enter)="searchPerformer()">
                     </div>
                 </div>
                 <div class="search-item">

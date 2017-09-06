@@ -10,18 +10,27 @@
                 <label>When to do it</label>                  
               </div>
               <div class="three wide column ui input">                  
-                <input type="text" [(ngModel)]="category" (keyup)="filterCategory()" placeholder="CATEGORY">
+                <input type="text" [(ngModel)]="category" 
+                                   (keyup)="filterCategory()" 
+                                   (keyup.Enter)="searchWorks()" 
+                                   placeholder="CATEGORY">
                 <div class="suggestions" (clickOutside)="onClickedOutside($event)">
                   <div *ngIf="filterCtgs.length > 0" class="search-list">
                     <div *ngFor="let item of filterCtgs" (click)="selectCategory(item)" class="search-list-item">
                       <label innerHTML="{{item.Value}}"></label>
-                      <label class="search-category">{{item.Group}}</label>
+                      <div class="search-category">
+                        <img src="{{item.Icon}}" class="search-list-img"/>
+                        {{item.Group}}
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
               <div class="three wide column  ui input">
-                <input type="text" [(ngModel)]="subcategory" (keyup)="filterSubcategory()" placeholder="SUBCATEGORY">
+                <input type="text" [(ngModel)]="subcategory" 
+                                   (keyup)="filterSubcategory()" 
+                                   (keyup.Enter)="searchWorks()" 
+                                   placeholder="SUBCATEGORY">
                 <div class="suggestions" (clickOutside)="onClickedOutside($event)">
                   <div *ngIf="filterSubctgs.length > 0" class="search-list">
                     <div *ngFor="let item of filterSubctgs" (click)="selectSubcategory(item)" class="search-list-item">
@@ -37,7 +46,8 @@
                           [(ngModel)]="date" 
                           [pickerMode]="mode" 
                           [pickerFirstDayOfWeek]="firstDayOfWeek" 
-                          [pickerUseNativeOnMobile]="false">
+                          [pickerUseNativeOnMobile]="false"
+                          (keyup.Enter)="searchWorks()">
               </div>
               <div class="six wide column search-btn-div">
                 <button class="ui active button main" (click)="searchWorks()">SEARCH</button>   

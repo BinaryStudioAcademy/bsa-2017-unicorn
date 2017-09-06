@@ -104,7 +104,8 @@ export class IndexComponent implements OnInit {
             const tagObj = {
               Name: tags[j],
               Value: html,
-              Group: arr[i].Name
+              Group: arr[i].Name,
+              Icon: arr[i].Icon
             };
             result.push(tagObj);
             if (result.length > 30) {
