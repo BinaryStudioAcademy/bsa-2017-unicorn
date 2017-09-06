@@ -13,7 +13,7 @@
                 <input type="text" [(ngModel)]="category" (keyup)="filterCategory()" placeholder="CATEGORY">
                 <div class="suggestions" (clickOutside)="onClickedOutside($event)">
                   <div *ngIf="filterCtgs.length > 0" class="search-list">
-                    <div *ngFor="let item of filterCtgs" (click)="selectCategory(item)" class="search-item">
+                    <div *ngFor="let item of filterCtgs" (click)="selectCategory(item)" class="search-list-item">
                       <label innerHTML="{{item.Value}}"></label>
                       <label class="search-category">{{item.Group}}</label>
                     </div>
@@ -24,7 +24,7 @@
                 <input type="text" [(ngModel)]="subcategory" (keyup)="filterSubcategory()" placeholder="SUBCATEGORY">
                 <div class="suggestions" (clickOutside)="onClickedOutside($event)">
                   <div *ngIf="filterSubctgs.length > 0" class="search-list">
-                    <div *ngFor="let item of filterSubctgs" (click)="selectSubcategory(item)" class="search-item">
+                    <div *ngFor="let item of filterSubctgs" (click)="selectSubcategory(item)" class="search-list-item">
                       <label innerHTML="{{item.Value}}"></label>
                       <label class="search-category">{{item.Group}}</label>
                     </div>
