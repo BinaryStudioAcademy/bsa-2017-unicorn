@@ -73,7 +73,38 @@ export class CompanyWorksComponent implements OnInit {
      }
 
   ngOnInit() {
-    this.initializeThisCompany();       
+    //this.initializeThisCompany(); 
+    this.getCompanyAsync().then(() => {
+      this.checkForWork();
+    });    
+  }
+
+  getCompanyAsync(): Promise<any> {
+    return this.companyService.getCompanyWorks(this.route.snapshot.params['id']).then(resp => {
+      this.company = resp;
+      this.companyId = this.company.Id;
+    });
+  }
+
+  checkForWork() {
+    let category = +this.route.snapshot.queryParams['category'];
+    let subcategory = +this.route.snapshot.queryParams['subcategory'];
+    let name = this.route.snapshot.queryParams['name'];
+    if (category && subcategory && name) {
+
+      this.work = {
+        Id: null,
+        Description: null,
+        Name: name,
+        Subcategory: null,
+        Icon: null
+      };
+      this.selectedCategory = this.company.AllCategories.filter(c => c.Id === category)[0];
+      this.setSubcategory(subcategory);
+      if (!this.openedDetailedWindow){
+        this.openedDetailedWindow = true;
+      }
+    }
   }
 
   initializeThisCompany(){
@@ -82,6 +113,11 @@ export class CompanyWorksComponent implements OnInit {
       this.company = res;
       this.companyId = this.company.Id;
     });
+  }
+
+  setSubcategory(id: number) {
+    this.subcategories = this.company.AllCategories.find(x => x.Id == this.selectedCategory.Id).Subcategories;
+    this.zone.run(() => { this.selectedSubcategory = this.subcategories.filter(s => s.Id === id)[0]; });
   }
 
   changeCategory() {

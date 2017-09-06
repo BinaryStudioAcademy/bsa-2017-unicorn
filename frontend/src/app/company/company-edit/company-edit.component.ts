@@ -18,6 +18,7 @@ export class CompanyEditComponent implements OnInit {
 
   messagesTabActive: boolean;
   vendorsTabActive: boolean;
+  worksTabActive: boolean;
   
   constructor(private companyService: CompanyService,
     private route: ActivatedRoute,
@@ -34,6 +35,9 @@ export class CompanyEditComponent implements OnInit {
     if (this.route.snapshot.queryParams['tab'] === 'vendors') {
       this.vendorsTabActive = true;
     }   
+    if (this.route.snapshot.queryParams['tab'] === 'works') {
+      this.worksTabActive = true;
+    }  
   }
 
   bannerListener($event) {

@@ -223,7 +223,7 @@ namespace Unicorn.Core.Services
                 SubcategoryId = w.Subcategory.Id,
                 Name = w.Name,
                 Description = w.Description,
-                Icon = w.Icon
+                Icon = string.IsNullOrEmpty(w.Icon) ? w.Subcategory.Category.Icon : w.Icon
             }).ToList();
         }
     }

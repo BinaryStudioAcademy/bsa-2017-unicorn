@@ -503,7 +503,7 @@ namespace Unicorn.Core.Services
                         Id = z.Id,
                         Description = z.Description,
                         Name = z.Name,
-                        Icon = z.Icon,
+                        Icon = string.IsNullOrEmpty(z.Icon) ? z.Subcategory.Category.Icon : z.Icon,
                         Subcategory = new CompanySubcategory
                         {
                             Id = z.Subcategory.Id,

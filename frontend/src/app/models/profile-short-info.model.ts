@@ -1,4 +1,5 @@
 export class ProfileShortInfo {
+	AccountId: number;
 	Name: string;
 	Avatar: string;
 	CroppedAvatar: string;

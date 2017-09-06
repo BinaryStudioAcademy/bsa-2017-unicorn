@@ -1,6 +1,11 @@
 <div class="container" [ngStyle]="{'height.px': containerHeight}" *ngIf="dialogs !== undefined">
-    <div class="users" *ngIf="dialogs !== null && dialogs.length !== 0">
-        <div class="upper-user" (click)="onSelect(_dialog.Id)" *ngFor="let _dialog of dialogs">
+    <div class="side-bar">
+        <div class="ui fluid icon input dialog-search">
+            <input type="text" [(ngModel)]="searchString" (ngModelChange)="searchNewPartitipants()" placeholder="Search...">
+            <i class="search icon"></i>
+        </div>
+        <div class="users">
+        <div class="upper-user" (click)="onSelect(_dialog.Id)" *ngFor="let _dialog of filterDialogsByPartitipantName(searchString)">
             <div class="user" [ngClass]="{'active': _dialog.Id === selectedId}">
                 <img class="ui avatar image" src="{{_dialog.ParticipantAvatar}}">
                 <div class="dialog-inf">
@@ -15,11 +20,19 @@
                 </div>
             </div>
         </div>
+        <h5 *ngIf="searchResults.length > 0" class="ui horizontal divider header">
+            <i class="plus icon"></i> Start a chat with
+        </h5>
+        <div class="upper-user" (click)="createChat(partitipant)" *ngFor="let partitipant of searchResults">
+            <div class="user">
+                <img class="ui avatar image" src="{{partitipant.Avatar}}">
+                <div class="dialog-inf">
+                    <div class="userName"> {{partitipant.Name}} </div>
+                </div>
+            </div>
+        </div>
+        </div>
     </div>
-    <div class="no-content no-dialogs" *ngIf="dialogs === null || dialogs.length === 0">
-        No dialogs
-    </div>
-
 
     <div class="chat-block">
         <div class="under-chat-block" *ngIf="messages !== undefined && messages !== null && messages.length !== 0">

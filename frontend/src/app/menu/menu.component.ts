@@ -139,6 +139,7 @@ export class MenuComponent implements OnInit {
 
   initEmptyProfile(){
     this.profileInfo = {
+      AccountId: null,
       Avatar: "",
       CroppedAvatar: "",
       Email: "",

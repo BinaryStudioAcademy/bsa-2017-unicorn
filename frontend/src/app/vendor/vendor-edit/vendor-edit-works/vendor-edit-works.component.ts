@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 import { ImageCropperComponent, CropperSettings } from "ng2-img-cropper";
 import { SafeResourceUrl, DomSanitizer } from "@angular/platform-browser";
@@ -65,7 +66,8 @@ export class VendorEditWorksComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private suiModalService: SuiModalService,
     private modalService: ModalService,
-    private toastr: ToastsManager
+    private toastr: ToastsManager,
+    private route: ActivatedRoute
   ) {
     this.cropperSettings = modalService.cropperSettings;
     this.data = {};
@@ -77,10 +79,36 @@ export class VendorEditWorksComponent implements OnInit {
     this.vendorService.getVendorWorks(this.vendorId)
       .then(resp => this.works = resp.body as Work[]);
     this.categoryService.getAll()
-      .then(resp => this.categories = resp.body as Category[]);
+      .then(resp => this.categories = resp.body as Category[])
+      .then(() => this.checkForWork());
     this.subcategories = [];
     this.pendingWorks = [];
     this.clearSelectedWork();
+  }
+
+  checkForWork() {
+    let category = +this.route.snapshot.queryParams['category'];
+    let subcategory = +this.route.snapshot.queryParams['subcategory'];
+    let name = this.route.snapshot.queryParams['name'];
+    if (category && subcategory && name) {
+
+      // this.work = {
+      //   Id: null,
+      //   Description: null,
+      //   Name: name,
+      //   Subcategory: null,
+      //   Icon: null
+      // };
+      this.selectedWork.Name = name;
+      this.selectedCategory = this.categories.filter(c => c.Id === category)[0];
+      this.onCategorySelect();
+      this.selectedSubcategory = this.subcategories.filter(s => s.Id === subcategory)[0];
+      // this.setSubcategory(subcategory);
+      // if (!this.openedDetailedWindow){
+      //   this.openedDetailedWindow = true;
+      // }
+      this.isEditOpen = true;
+    }
   }
 
   editToggle(): void {
@@ -98,6 +126,7 @@ export class VendorEditWorksComponent implements OnInit {
   }
 
   onCategorySelect(): void {
+    this.selectedSubcategory = null;
     this.subcategories = this.selectedCategory.Subcategories;
   }
 

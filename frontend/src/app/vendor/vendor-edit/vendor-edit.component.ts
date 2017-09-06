@@ -44,6 +44,7 @@ export class VendorEditComponent implements OnInit {
   dataLoaded: boolean;
 
   messagesTabActive: boolean;
+  worksTabActive: boolean;
 
   constructor(
     private route: ActivatedRoute,
@@ -69,6 +70,9 @@ export class VendorEditComponent implements OnInit {
       });
       if (this.route.snapshot.queryParams['tab'] === 'messages') {
         this.messagesTabActive = true;
+      }
+      if (this.route.snapshot.queryParams['tab'] === 'works') {
+        this.worksTabActive = true;
       } 
   }
 

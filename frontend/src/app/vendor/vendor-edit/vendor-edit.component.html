@@ -66,7 +66,7 @@
             <sui-tabset *ngIf="vendor !== undefined">
                 <div class="ui pointing secondary menu">
                     <a class="item" suiTabHeader="1">EDIT</a>
-                    <a class="item" suiTabHeader="2">WORKS</a>
+                    <a class="item" suiTabHeader="2" [isActive]="worksTabActive">WORKS</a>
                     <a class="item" suiTabHeader="3">PORTFOLIO</a>
                     <a class="item" suiTabHeader="4" [isActive]="messagesTabActive">MESSAGES</a>
                     <a class="item" suiTabHeader="5">CONTACTS</a>

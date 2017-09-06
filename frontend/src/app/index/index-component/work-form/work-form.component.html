@@ -1,0 +1,78 @@
+<div id="main-content">
+        
+  <div id="work-form">
+    <div class="column-1">
+            <div id="form-header">
+                    <p>Add new service</p>
+                </div>
+        <div class="field">
+            <div class="ui input full-width">
+                <input type="text" [(ngModel)]="serviceName" class="" placeholder="NAME YOUR SERVICE">
+            </div>
+          </div>
+            <div class="field">
+                <ng-template let-option #optionCategoryTemplate>
+                    <img class="ui avatar image category-icon" src="{{option.Icon}}">{{option.Name}}
+                </ng-template>
+                <sui-select class="selection full-width" 
+                [(ngModel)]="selectedCategory" 
+                [optionTemplate]="optionCategoryTemplate" 
+                (selectedOptionChange)="onCategorySelect()" 
+                placeholder="CATEGORY"
+                name="selectCategory">
+                    <sui-select-option class="select-option" *ngFor="let category of categories" [value]="category">
+                    </sui-select-option>
+                </sui-select>
+            </div>
+            <div class="field">
+                <ng-template let-option #optionSubcategoryTemplate>
+                    {{option.Name}}
+                </ng-template>
+                <sui-select 
+                class="selection full-width" 
+                placeholder="SUBCATEGORY"
+                [(ngModel)]="selectedSubcategory" 
+                [optionTemplate]="optionSubcategoryTemplate" 
+                name="selectSubcategory">
+                    <sui-select-option class="select-option" *ngFor="let subcategory of subcategories" [value]="subcategory">
+                    </sui-select-option>
+                </sui-select>
+            </div>
+            <div class="field">
+              <a align=center 
+                class="ui button reg-btn"
+                (click)="createWork()"
+                [ngClass]="{'disabled': !serviceName || !selectedCategory || !selectedSubcategory}" >CREATE</a>
+            </div>
+        </div>
+      <div class="column-2">
+        <div class="advantage">
+            <div class="adv-img">
+                <img src="https://cdn1.iconfinder.com/data/icons/business-and-finance-20/200/vector_65_05-512.png">
+            </div>
+            <div class="adv-desc">
+                <h5>More than 100 services for work</h5>
+                <p>You will be able to work both in your specialty and try your hand at new directions</p>
+            </div>
+        </div>
+        <div class="advantage">
+            <div class="adv-img">
+                <img src="https://maxcdn.icons8.com/Share/icon/nolan/Business//planner1600.png">
+            </div>
+            <div class="adv-desc">
+                <h5>Work at a convenient time for you</h5>
+                <p>Make your own work schedule and earn only when you are comfortable</p>
+            </div>
+        </div>
+        <div class="advantage">
+            <div class="adv-img">
+                <img src="https://maxcdn.icons8.com/office/PNG/512/Objects/money-512.png">
+            </div>
+            <div class="adv-desc">
+                <h5>Earn worthily</h5>
+                <p>Service Unicorn can be for you a source of both additional earnings and basic financial income</p>
+            </div>
+        </div>
+      </div>
+  </div>
+</div>
