@@ -276,10 +276,12 @@ export class ChatComponent implements OnInit {
   }
 
   filterDialogsByPartitipantName(name: string): DialogModel[] {
-    if (name && name !== '')
-      return this.dialogs.filter(d => d.ParticipantName.toLowerCase().includes(name.toLowerCase()));
-    else
-      return this.dialogs;
+    if (this.dialogs && this.dialogs !== null) {
+      if (name && name !== '')
+        return this.dialogs.filter(d => d.ParticipantName.toLowerCase().includes(name.toLowerCase()));
+      else
+        return this.dialogs;
+    }
   }
 
   searchNewPartitipants() {
@@ -303,7 +305,6 @@ export class ChatComponent implements OnInit {
 
     this.selectedId = this.dialog.Id;
     this.dialogs.push(this.dialog);
-    // this.searchResults.splice(this.searchResults.findIndex(x => x.AccountId === partitipant.AccountId), 1);
     this.messages = [];
   }
 }
