@@ -12,15 +12,32 @@
                 <div class="search-item">
                     <p>{{labelSearch}}</p>
                     <div class="ui input fill-horizontal">
-                        <input class="search-input" type="text" placeholder="{{placeholderCategory}}" [(ngModel)]="searchCategory">
-                        <!-- <div style='overflow:auto; width:200px;height:40px;'>
-            <div *ngFor="let category of categories | search:'id,text':searchText">{{category.text}}</div> 
-            </div> -->
+                        <input class="search-input" type="text" placeholder="{{placeholderCategory}}" 
+                            [(ngModel)]="searchCategory"
+                            (keyup)="filterCategory()">                        
+                    </div>
+                    <div class="suggestions" (clickOutside)="onClickedOutside($event)">
+                        <div *ngIf="filterCtgs.length > 0" class="search-list">
+                            <div *ngFor="let item of filterCtgs" (click)="selectCategory(item)" class="search-list-item">
+                                <label innerHTML="{{item.Value}}"></label>
+                                <label class="search-category">{{item.Group}}</label>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="search-item">
                     <div class="ui input fill-horizontal">
-                        <input class="search-input" type="text" placeholder="{{placeholderSubcategory}}" [(ngModel)]="searchSubcategory">
+                        <input class="search-input" type="text" placeholder="{{placeholderSubcategory}}" 
+                            [(ngModel)]="searchSubcategory"
+                            (keyup)="filterSubcategory()">                        
+                    </div>
+                    <div class="suggestions" (clickOutside)="onClickedOutside($event)">
+                        <div *ngIf="filterSubctgs.length > 0" class="search-list">
+                            <div *ngFor="let item of filterSubctgs" (click)="selectSubcategory(item)" class="search-list-item">
+                                <label innerHTML="{{item.Value}}"></label>
+                                <label class="search-category">{{item.Group}}</label>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="search-item">

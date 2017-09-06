@@ -227,6 +227,11 @@ export class SearchComponent implements OnInit {
     this.category = undefined;
     this.subcategory = undefined;
     this.date = undefined;
+    this.resetAdvFilters();
+    this.searchWorks();
+  }
+
+  resetAdvFilters() {
     this.vendorName = undefined;
     this.ratingCompare = 'greater';
     this.rating = undefined;
@@ -238,11 +243,10 @@ export class SearchComponent implements OnInit {
     this.reviewsChecked = false;
     this.selCategories = [];
     this.selSubcategories = [];
-    this.searchWorks();
   }
 
   initAdvancedFilters() {
-    this.reset();
+    this.resetAdvFilters();
     this.categoryService.getAll()
     .then(resp => {
       this.categories = resp.body as Category[];
