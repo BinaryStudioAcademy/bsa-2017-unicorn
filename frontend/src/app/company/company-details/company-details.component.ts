@@ -7,6 +7,9 @@ import { TokenHelperService } from '../../services/helper/tokenhelper.service';
 import { CompanyWork } from "../../models/company-page/company-work.model";
 import { BookComponent } from '../../book/book/book.component';
 
+import { AuthenticationEventService } from '../../services/events/authenticationevent.service';
+import { Subscription } from 'rxjs/Subscription';
+
 @Component({
   selector: 'app-company-details',
   templateUrl: './company-details.component.html',
@@ -24,8 +27,11 @@ export class CompanyDetailsComponent implements OnInit {
   works: CompanyWork[];
   selectedWorkId: number;
 
+  onLogIn: Subscription;
+
   constructor(private companyService: CompanyService,
     private route: ActivatedRoute,
+    private authEventService: AuthenticationEventService,
     private tokenHelperService: TokenHelperService) {
     this.routePath = this.route.root.snapshot.firstChild.url[0].path;
     this.routeid = +this.route.snapshot.paramMap.get('id');
@@ -47,6 +53,16 @@ export class CompanyDetailsComponent implements OnInit {
     }
 
     this.getCurrentRole();
+
+    this.onLogIn = this.authEventService.loginEvent$
+      .subscribe(() => {
+        this.isGuest = !this.isGuest;
+        this.isUser = !this.isUser;
+      });
+  }
+
+  ngOnDestroy() {
+    this.onLogIn.unsubscribe();
   }
 
   getCurrentRole() {
@@ -61,8 +77,8 @@ export class CompanyDetailsComponent implements OnInit {
   }
 
   onWorksLoaded(works: CompanyWork[]) {
+    this.works = works;
     if (this.isUser) {
-      this.works = works;
       let work = this.works.find(x => x.Id === this.selectedWorkId);
       this.bookComponent.selectWork(work);
     }
