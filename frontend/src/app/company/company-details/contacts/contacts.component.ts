@@ -63,6 +63,27 @@ export class ContactsComponent implements OnInit {
     
   }
   
+  getBaseUrl(provider:string):string
+  {
+    switch(provider)
+    {
+    case "telegram":
+    return "https://telegram.me/";
+    case "skype":
+    return "skype:";
+    case "vk":
+    return "https://vk.com/";
+    case "linkedin":
+    return "http://www.linkedin.com/in/";
+    case "facebook":
+    return "https://www.facebook.com/";
+    case "phone":
+    return "tel:";
+    case "email":
+    return "mailto:";
+    }
+    return "";
+  }
   createChat(){
     this.isLoaded = true;
     if(this.ownerId === undefined){

@@ -14,7 +14,7 @@
             <div class="header">Phones</div>
             <div class="description flex-style" *ngIf="phones !== undefined">
                 <div *ngFor="let phone of phones">
-                    <a class="ui label contact">
+                    <a class="ui label contact" target="_blank" href={{getBaseUrl(phone.Provider)}}{{phone.Value}}>
                         <i class="colored call icon"></i> {{phone.Value}}
                     </a>
                 </div>
@@ -25,7 +25,7 @@
             <div class="header">Emails</div>
             <div class="description flex-style" *ngIf="emails !== undefined">
                 <div *ngFor="let email of emails">
-                    <a class="ui label contact">
+                    <a class="ui label contact" target="_blank" href={{getBaseUrl(email.Provider)}}{{email.Value}}>
                         <i class="colored mail icon"></i> {{email.Value}}
                     </a>
                 </div>
@@ -36,7 +36,7 @@
             <div class="header">Messengers</div>
             <div class="description flex-style" *ngIf="messengers !== undefined">
                 <div *ngFor="let messenger of messengers">
-                    <a class="ui label contact">
+                    <a class="ui label contact" target="_blank" href={{getBaseUrl(messenger.Provider)}}{{messenger.Value}}>
                         <i class="colored {{messenger.Provider}} icon"></i> {{messenger.Value}}
                     </a>
                 </div>
@@ -47,7 +47,7 @@
             <div class="header">Socials</div>
             <div class="description flex-style" *ngIf="socials !== undefined">
                 <div *ngFor="let social of socials">
-                    <a class="ui label contact">
+                    <a class="ui label contact" target="_blank" href={{getBaseUrl(social.Provider)}}{{social.Value}}>
                         <i class="colored {{social.Provider}} icon"></i> {{social.Value}}
                     </a>
                 </div>
