@@ -5,6 +5,8 @@ import { NgClass } from '@angular/common';
 import { ChatService } from "../services/chat/chat.service";
 import { TokenHelperService } from "../services/helper/tokenhelper.service";
 import { NotificationService } from "../services/notifications/notification.service";
+import { Subscription } from "rxjs/Subscription";
+import { ChatEventsService } from "../services/events/chat-events.service";
 
 @Component({
   selector: 'app-chat',
@@ -28,10 +30,15 @@ export class ChatComponent implements OnInit {
   noMessages: boolean = true; 
   needScroll: boolean = false;
 
+  dialogCreate: Subscription;
+  messageCreate: Subscription;
+  messageRead: Subscription;
+
   constructor(private chatService: ChatService,
     private tokenHelper: TokenHelperService,
     private cdr: ChangeDetectorRef,
-    private notificationService: NotificationService) { }
+    private notificationService: NotificationService,
+    private chatEventsService: ChatEventsService) { }
 
   ngOnInit() {
     this.getDialogs().then(() => this.startScroll());      
@@ -41,6 +48,33 @@ export class ChatComponent implements OnInit {
     this.notificationService.listen<any>("ReadNotReadedMessages", () => {
       this.messagesWereReaded();
     }); 
+
+    this.dialogCreate = this.chatEventsService.createDialogFromMiniChatToChatEvent$.subscribe(dialog => {
+      this.dialogs.push(this.checkLastMessage(dialog, dialog.Messages[dialog.Messages.length - 1].OwnerId));
+    })
+
+    this.messageCreate = this.chatEventsService.createMessageFromMiniChatToChatEvent$.subscribe(mes => {      
+      if(this.dialogs.find(x => x.Id === mes.DialogId)){
+        if(this.dialog.Id === mes.DialogId){
+          this.messages.push(mes);     
+          this.startScroll();   
+        }
+      }
+    });
+
+    this.messageRead = this.chatEventsService.readMessageFromMiniChatToChatEvent$.subscribe(dialogId => {
+      if(this.dialogs.find(x => x.Id === dialogId)){
+        if(this.dialog.Id === dialogId){
+          this.readNotReadedMessages(this.dialog);
+          if(!this.dialog.IsReadedLastMessage){
+            this.dialog.IsReadedLastMessage= true;
+          }
+        }
+        else{
+          this.dialogs.find(x => x.Id === dialogId).IsReadedLastMessage = true;
+        }
+      }
+    });
   } 
 
   ngAfterViewChecked() {
@@ -67,6 +101,7 @@ export class ChatComponent implements OnInit {
     });    
   }
 
+  //get message, if anybody sent one to us
   getMessage(mes: MessageModel){
     if(!this.dialogs){
       this.getDialogs().then(() => {       
@@ -76,11 +111,12 @@ export class ChatComponent implements OnInit {
     else{
       let dialog = this.dialogs.find(x => x.Id === mes.DialogId);
       if(dialog && this.selectedId === dialog.Id){
-        this.messages.push(mes);     
+        this.messages.push(mes);  
+        this.checkLastMessage(this.dialogs.find(x => x.Id === dialog.Id), mes.OwnerId);
         this.startScroll();   
       }
-      else if(dialog && this.selectedId !== dialog.Id){        
-        this.dialogs.find(x => x.Id === mes.DialogId).IsReadedLastMessage = false;
+      else if(dialog && this.selectedId !== dialog.Id && this.ownerId !== mes.OwnerId){ 
+        this.checkLastMessage(this.dialogs.find(x => x.Id === dialog.Id), mes.OwnerId);
       }
       else if(!dialog){
         this.chatService.getDialogByOwner(mes.DialogId, this.ownerId).then(res => {          
@@ -90,6 +126,19 @@ export class ChatComponent implements OnInit {
     }      
   }
 
+  //check the last message: our or not
+  checkLastMessage(dialog: DialogModel, mesOwner: number):DialogModel{
+    if(this.ownerId !== mesOwner){
+      dialog.IsReadedLastMessage = false;
+      return dialog;
+    }
+    else{
+      dialog.IsReadedLastMessage = true;
+      return dialog;
+    }
+  }
+
+  //check the messages we have sent were readed
   messagesWereReaded(){
     this.messages.filter(x => !x.IsReaded).forEach(mes => {
       if(mes.OwnerId === this.ownerId){
@@ -106,25 +155,28 @@ export class ChatComponent implements OnInit {
     });    
   }
 
+  //events from keyboard
   onChange(event){  
     setTimeout(() => {
-      if(event.key === "Enter" && !event.shiftKey){      
+      if(event.key === "Enter" && !event.shiftKey ){      
         this.onWrite();  
       } 
       else{ 
         this.changeTextareaSize();
-        this.readNotReadedMessages();
+        this.readNotReadedMessages(this.dialog);
       }
     }, 0);
   }
 
+  //select one from dialogs massif
   onSelect(dialogId: number) {    
     this.selectedId = dialogId;
     this.getDialog().then(() => this.startScroll());   
   }
 
+  //check message we want to send 
   onWrite(){ 
-    this.readNotReadedMessages();
+    this.readNotReadedMessages(this.dialog);
     if(this.writtenMessage !== undefined){
       let str = this.writtenMessage;
       str = str.replace((/\n{2,}/ig), "\n");
@@ -141,7 +193,7 @@ export class ChatComponent implements OnInit {
     this.normalTeaxareaSize();
   }   
   
-
+  //send message
   addMessage(){    
     let message = {
       DialogId: this.selectedId,
@@ -151,26 +203,29 @@ export class ChatComponent implements OnInit {
       Date: new Date(),
       isLoaded: true
     };    
-    this.messages.push(message);     
+    this.messages.push(message);   
+    this.chatEventsService.messageCreateFromChatToMiniChat(message); 
     this.startScroll();             
-    this.chatService.addMessage(message).then(() =>  {
-      this.messages.find(x => x.isLoaded).isLoaded = false;
-    });
+    this.chatService.addMessage(message);
   }
 
 
-
-  readNotReadedMessages(){
-    let isChanged = false;
-    this.messages.filter(x => !x.IsReaded).forEach(mes => {
-      if(mes.OwnerId !== this.ownerId){
-        mes.IsReaded = true;
-        isChanged = true;
+  //read messages were readed
+  readNotReadedMessages(dialog: DialogModel){   
+    if(dialog && dialog.Messages){
+      let isChanged = false;
+      dialog.Messages.filter(x => !x.IsReaded).forEach(mes => {
+        if(mes.OwnerId !== this.ownerId){
+          mes.IsReaded = true;
+          isChanged = true;
+        }
+      });
+      if(isChanged){
+        dialog.IsReadedLastMessage = true;  
+        this.dialogs.find(x => x.Id === dialog.Id).IsReadedLastMessage = true; 
+        this.chatEventsService.messageReadFromChatToMiniChat(dialog.Id);           
+        this.chatService.updateMessages(dialog.Id, this.ownerId);
       }
-    });
-    if(isChanged){
-      this.dialogs.find(x => x.Id === this.dialog.Id).IsReadedLastMessage = true;      
-      this.chatService.updateMessages(this.dialog.Id, this.ownerId);
     }
   }
     

@@ -18,6 +18,7 @@ import { Notification, NotificationType } from "../models/notification.model";
 import { RoleRouter } from "../helpers/rolerouter";
 import { NotificationService } from "../services/notifications/notification.service";
 import { MenuEventsService } from "../services/events/menu-events.service";
+import { ChatEventsService } from "../services/events/chat-events.service";
 
 @Component({
   selector: 'app-menu',
@@ -58,7 +59,8 @@ export class MenuComponent implements OnInit {
     private tokenHelper: TokenHelperService,
     private accountService: AccountService,
     private notificationService: NotificationService,
-    private menuEventsService: MenuEventsService) {
+    private menuEventsService: MenuEventsService,
+    private chatEventsService: ChatEventsService) {
     this.isLogged = this.tokenHelper.isTokenValid() && this.tokenHelper.isTokenNotExpired();
   }
 
@@ -121,6 +123,7 @@ export class MenuComponent implements OnInit {
         this.initEmptyProfile();
         this.showAccountDetails = false;
         this.profileUrl = "/search";
+        this.chatEventsService.closechat();
       });
 
     this.onCroppAvatar = this.menuEventsService.avatarCroppedEvent$

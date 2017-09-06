@@ -33,7 +33,7 @@ img
 
 .open-dialog:hover 
     cursor: pointer;
-    background: #ffd9de; 
+    background: rgba(176, 213, 247, 0.5); 
     .absolute-icon
         display: inline-block;	
 
@@ -76,16 +76,21 @@ img
     bottom: auto;
     right: -2px;
     display: none;
-    color: rgba(0,0,0,.6);
+    color: rgba(0,0,0,1);
 
 .container
     width: 250px;
     height: 300px;
-    position: fixed;
-    right: 50px;
+    position: fixed;    
     bottom: 0;
     border: 1px solid lightgray;
     background: white;
+
+.with-opened-dialogs
+    right: 50px;
+
+.without-opened-dialogs
+    right: 0;
 
 .under-chat-block
     display: flex;
@@ -207,7 +212,7 @@ textarea
 
 .close-icon
 	cursor: pointer;	
-	color: rgba(255,255,255,.6)    
+	color: rgba(255,255,255,1)    
 
 .icons
     display: flex;
@@ -232,7 +237,7 @@ textarea
     opacity: 0.4;
 
 .active
-    background: #fff0f2;
+    background: rgba(176, 213, 247, 0.5);
 
 .with-left-border
     border-left: 1px solid lightgray;
