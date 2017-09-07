@@ -7,6 +7,7 @@ import { ReviewModal } from '../../review/review-modal/review-modal.component';
 
 import { CustomerbookService } from '../../services/customerbook.service';
 import { ReviewService } from '../../services/review.service';
+import { NotificationService } from "../../services/notifications/notification.service";
 
 import { CustomerBook, BookStatus } from '../../models/book/book.model';
 import { ShortReview } from '../../models/short-review';
@@ -25,11 +26,13 @@ export class UserHistoryComponent implements OnInit {
     constructor(
       private bookService: CustomerbookService,
       private modalService: SuiModalService,
-      private reviewService: ReviewService
+      private reviewService: ReviewService,
+      private notificationService: NotificationService
     ) { }
   
     ngOnInit() {
       this.loadData();
+      this.notificationService.listen<any>("RefreshOrders", () => this.loadData());
     }
   
     loadData() {
