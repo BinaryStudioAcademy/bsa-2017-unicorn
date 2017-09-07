@@ -116,6 +116,8 @@ export class ContactsComponent implements OnInit {
           ParticipantTwoId: this.accountId,
           ParticipantName: this.name,
           ParticipantAvatar: null,
+          ParticipantType: 'company',
+          ParticipantProfileId: this.companyId,
           LastMessageTime: null,
           IsReadedLastMessage: null,
           Messages: null

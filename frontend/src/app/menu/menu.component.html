@@ -6,15 +6,17 @@
         <li *ngIf="!isLogged;else authorized"><a (click)="openModal()" routerLinkActive="active">Sign In</a></li>
         <ng-template #authorized>
             <li>
-                <i class="small circular inverted bell link outline icon" [ngClass]="{'red': haveNewNotifications()}" (click)="showNotifications()"></i>
+                <i class="small circular inverted bell link outline icon" [ngClass]="{'red': haveNewNotifications()}" 
+                (click)="showNotifications()"></i>
             </li>
             <li>
                 <div class="dropdown">
-                    <div *ngIf="profileInfo !== undefined" class="ui small circular image" (click)="onShowDetails()">
+                    <div *ngIf="profileInfo !== undefined" class="ui small circular image" 
+                    (click)="showDetails()">
                         <img *ngIf="!profileInfo.CroppedAvatar" id="profile-avatar" src="{{profileInfo.Avatar}}" />
                         <img *ngIf="profileInfo.CroppedAvatar" id="profile-avatar" src="{{profileInfo.CroppedAvatar}}" />
                     </div>
-                    <div class="dropdown-content" *ngIf="showAccountDetails && profileInfo !== undefined">
+                    <div class="dropdown-content" *ngIf="showAccountDetails && profileInfo !== undefined" (clickOutside)="hideDetails()">
                         <div class="mainInfo">
                             <div class="ui items">
                                 <div class="item">
@@ -43,13 +45,12 @@
                         </div>
 
                     </div>
-                    <div class="dropdown-content" *ngIf="isNotificationsShow">
-                        <div class="item header">
+                    <div class="dropdown-content" *ngIf="isNotificationsShow" (clickOutside)="hideNotifications()">
+                        <div class="item header notifications-header">
                             <h5>NOTIFICATIONS</h5>
                             <i (click)="toggleNotifications()" class="archive link icon" [ngClass]="{'red': isArchivedNotificationsShown}"></i>
                         </div>
                         <div *ngIf="!isArchivedNotificationsShown; then newNotificationsList; else archivedNotificationsList">
-
                         </div>
                     </div>
 
@@ -65,6 +66,21 @@
                                         <p>{{notif.Description}}</p>
                                     </div>
                                 </div>
+                            </div>
+                            <div 
+                            *ngIf="newNotifications && (newNotifications === null || newNotifications.length === 0)" 
+                            class="notifications-placeholder">
+                                <div class="content">
+                                    <h5>Nothing here</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div 
+                        *ngIf="newNotifications && newNotifications.length > 0" 
+                        (click)="archiveAllNotifications()"
+                        class="archive-all-btn">
+                            <div class="ui horizontal divider">
+                                <h5>Mark all as viewed</h5>
                             </div>
                         </div>
                     </ng-template>
@@ -83,22 +99,14 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </ng-template>
-
-                    <div class="dropdown-content" *ngIf="(!haveNewNotifications() && isNotificationsShow && !isArchivedNotificationsShown) || (!haveArchivedNotifications() && isNotificationsShow && isArchivedNotificationsShown)">
-                        <div class="item header">
-                            <h5>NOTIFICATIONS</h5>
-                            <i (click)="toggleNotifications()" class="archive link icon" [ngClass]="{'red': isArchivedNotificationsShown}"></i>
-                        </div>
-                        <div class="ui middle aligned divided list  notification-list">
-                            <div class="item">
+                            <div *ngIf="archivedNotifications && (archivedNotifications === null || archivedNotifications.length === 0)" 
+                            class="notifications-placeholder">
                                 <div class="content">
                                     <h5>Nothing here</h5>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </ng-template>
                     <div class="dropdown-content" *ngIf="newNotification !== undefined">
                         <div class="ui middle aligned divided list notification-list">
                             <div class="item">

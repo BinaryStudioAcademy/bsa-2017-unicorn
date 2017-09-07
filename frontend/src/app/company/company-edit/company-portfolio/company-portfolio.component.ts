@@ -18,6 +18,8 @@ export class CompanyPortfolioComponent implements OnInit {
   books: BookCard[] = [];
   companyId: number;
 
+  isLoaded: boolean;
+
   constructor(
     private dashboardService: DashboardService,
     private route: ActivatedRoute,
@@ -30,15 +32,19 @@ export class CompanyPortfolioComponent implements OnInit {
   }
 
   loadData() {
-    this.dashboardService.getPortfolioBooks('company', this.companyId).then(resp => {
-      if(resp !== null){
-        resp.forEach(b => {
-          if (b.Status == BookStatus.Confirmed) {
-            this.books.push(b);
-          }
-        });
-      }
-    });
+    this.isLoaded = false;
+    this.dashboardService.getPortfolioBooks('company', this.companyId)
+      .then(resp => {
+        if(resp !== null){
+          resp.forEach(b => {
+            if (b.Status == BookStatus.Confirmed) {
+              this.books.push(b);
+            }
+          });
+        }
+        this.isLoaded = true;
+      })
+      .catch(err => this.isLoaded = true);
   }
 
   updateBook(id: number) {

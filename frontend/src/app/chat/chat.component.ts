@@ -28,7 +28,7 @@ export class ChatComponent implements OnInit {
   selectedId: number;
   writtenMessage: string;  
   inputHeight: number = 43;  
-  containerHeight = 300;
+  containerHeight = 500;
   noMessages: boolean = true; 
   needScroll: boolean = false;
 
@@ -96,14 +96,12 @@ export class ChatComponent implements OnInit {
       if(res !== undefined){
         this.dialogs = res;
         if(this.dialogs !== null && this.dialogs.length !== 0){
-          this.containerHeight = 300;
           this.selectedId = this.dialogs[0].Id;
           return this.getDialog();         
         }
         else{
           this.messages = [];
           this.dialogs = [];
-          this.containerHeight = 150;
         }
       }      
     });    
@@ -179,7 +177,14 @@ export class ChatComponent implements OnInit {
   //select one from dialogs massif
   onSelect(dialogId: number) {    
     this.selectedId = dialogId;
-    this.getDialog().then(() => this.startScroll());   
+    
+    if (this.selectedId !== null)
+      this.getDialog().then(() => this.startScroll());   
+    else
+      this.messages = [];
+
+    this.searchString = '';
+    this.searchResults = [];
   }
 
   //check message we want to send 
@@ -255,7 +260,6 @@ export class ChatComponent implements OnInit {
   }
 
   scrollMessages(){ 
-    this.noMessages = true;
       if (this.messagesElement && this.messagesElement.nativeElement.scrollTop !== this.messagesElement.nativeElement.scrollHeight) {
         this.messagesElement.nativeElement.scrollTop = this.messagesElement.nativeElement.scrollHeight; 
         this.needScroll = false; 
@@ -293,19 +297,28 @@ export class ChatComponent implements OnInit {
   }
 
   createChat(partitipant: ProfileShortInfo) {
+    while (this.dialogs.find(x => !x.Id || x.Id === null) !== undefined) {
+      this.dialogs.splice(this.dialogs.findIndex(x => !x.Id || x.Id === null), 1);
+    }
+  
     this.dialog = {
       Id: null,
       ParticipantOneId: this.ownerId,
       ParticipantTwoId: partitipant.AccountId,
       ParticipantName: partitipant.Name,
       ParticipantAvatar: partitipant.Avatar,
+      ParticipantProfileId: null,
+      ParticipantType: partitipant.Role,
       Messages: null,
       LastMessageTime: null,
-      IsReadedLastMessage: null
+      IsReadedLastMessage: true
     };
 
     this.selectedId = this.dialog.Id;
     this.dialogs.push(this.dialog);
     this.messages = [];
+    this.noMessages = false;
+    this.searchString = '';
+    this.searchResults = [];
   }
 }

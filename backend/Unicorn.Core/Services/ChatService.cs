@@ -23,7 +23,7 @@ namespace Unicorn.Core.Services
             _unitOfWork = unitOfWork;
             _notificationService = notificationService;
         }
-        
+
 
         private async Task<string> GetParticipant(Role role, long ownerId)
         {
@@ -172,6 +172,7 @@ namespace Unicorn.Core.Services
 
         public async Task<ChatDialogDTO> GetDialog(long dialogId, long ownerId)
         {
+
             var dialog = await _unitOfWork.ChatDialogRepository.Query
                 .Include(x => x.Messages)
                 .Include(x => x.Participant1)
@@ -229,10 +230,10 @@ namespace Unicorn.Core.Services
                 return null;
             }
 
-            var names = dialogs.SelectMany(x => new List<Account> {x.Participant1, x.Participant2})
+            var names = dialogs.SelectMany(x => new List<Account> { x.Participant1, x.Participant2 })
                 .Where(x => x.Id != accountId)
                 .Select(GetName).ToList();
-            var avatars = dialogs.SelectMany(x => new List<Account> {x.Participant1, x.Participant2})
+            var avatars = dialogs.SelectMany(x => new List<Account> { x.Participant1, x.Participant2 })
                 .Where(x => x.Id != accountId)
                 .Select(x => x.Avatar).ToList();
             int i = 0;
@@ -268,16 +269,22 @@ namespace Unicorn.Core.Services
 
             string avatar;
             long ownerId;
+            string profileType;
+            long profileId;
 
             if (res.Participant1.Id == participantOneId)
             {
                 avatar = res.Participant2.Avatar;
                 ownerId = res.Participant1.Id;
+                profileType = GetProfileType(res.Participant2.Role.Type);
+                profileId = await GetProfileIdAsync(res.Participant2);
             }
             else
             {
                 avatar = res.Participant1.Avatar;
                 ownerId = res.Participant2.Id;
+                profileType = GetProfileType(res.Participant1.Role.Type);
+                profileId = await GetProfileIdAsync(res.Participant1);
             }
             return new ChatDialogDTO
             {
@@ -285,6 +292,8 @@ namespace Unicorn.Core.Services
                 ParticipantOneId = res.Participant1.Id,
                 ParticipantTwoId = res.Participant2.Id,
                 ParticipantAvatar = avatar,
+                ParticipantType = profileType,
+                ParticipantProfileId = profileId,
                 IsReadedLastMessage = res.Messages?.Where(y => y.Owner.Id != ownerId).LastOrDefault()?.IsReaded ?? true,
                 Messages = res.Messages.Select(x => new ChatMessageDTO
                 {
@@ -335,6 +344,47 @@ namespace Unicorn.Core.Services
             }
 
             return name;
+        }
+
+        private async Task<long> GetProfileIdAsync(Account acc)
+        {
+            if (acc.Role.Type == RoleType.Vendor)
+            {
+                var prof = await _unitOfWork.VendorRepository.Query
+                    .Include(x => x.Person)
+                    .Include(x => x.Person.Account)
+                    .FirstAsync(x => x.Person.Account.Id == acc.Id);
+                return prof.Id;
+            }
+            else if (acc.Role.Type == RoleType.Customer)
+            {
+                var prof = await _unitOfWork.CustomerRepository.Query
+                    .Include(x => x.Person)
+                    .Include(x => x.Person.Account)
+                    .FirstAsync(x => x.Person.Account.Id == acc.Id);
+                return prof.Id;
+            }
+            else
+            {
+                var prof = await _unitOfWork.CompanyRepository.Query
+                   .Include(x => x.Account)
+                   .FirstAsync(x => x.Account.Id == acc.Id);
+                return prof.Id;
+            }
+        }
+
+        private string GetProfileType(RoleType role)
+        {
+            switch (role)
+            {
+                case RoleType.Customer:
+                    return "user";
+                case RoleType.Vendor:
+                    return "vendor";
+                case RoleType.Company:
+                    return "company";
+                default: return "index";
+            }
         }
     }
 }

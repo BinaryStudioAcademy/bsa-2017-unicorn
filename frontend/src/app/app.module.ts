@@ -50,6 +50,7 @@ import { NotificationService } from "./services/notifications/notification.servi
 import { ChatModule } from "./chat/chat.module";
 import { ReviewModalComponent } from './review/review-modal/review-modal.component';
 import { ChatLogicService } from "./services/chat/chat-logic.service";
+import { ClickOutsideModule } from "ng-click-outside/lib";
 
 export class CustomOptions extends ToastOptions {
   animate = 'fade';
@@ -97,6 +98,7 @@ export function getDefaultSignalRConfig(): SignalRConfiguration {
     SignalRModule.forRoot(getDefaultSignalRConfig),
     MomentModule,
     PipeModule,
+    ClickOutsideModule,
     IndexModule // Must be the last module
   ],
   providers: [
