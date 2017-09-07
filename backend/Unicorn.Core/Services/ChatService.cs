@@ -262,47 +262,6 @@ namespace Unicorn.Core.Services
                     x => (x.Participant1.Id == participantOneId && x.Participant2.Id == participantTwoId) ||
                          (x.Participant1.Id == participantTwoId && x.Participant2.Id == participantOneId));
 
-            async Task<long> GetProfileIdAsync(Account acc)
-            {
-                if (acc.Role.Type == RoleType.Vendor)
-                {
-                    var prof = await _unitOfWork.VendorRepository.Query
-                        .Include(x => x.Person)
-                        .Include(x => x.Person.Account)
-                        .FirstAsync(x => x.Person.Account.Id == acc.Id);
-                    return prof.Id;
-                }
-                else if (acc.Role.Type == RoleType.Customer)
-                {
-                    var prof = await _unitOfWork.CustomerRepository.Query
-                        .Include(x => x.Person)
-                        .Include(x => x.Person.Account)
-                        .FirstAsync(x => x.Person.Account.Id == acc.Id);
-                    return prof.Id;
-                }
-                else
-                {
-                    var prof = await _unitOfWork.CompanyRepository.Query
-                       .Include(x => x.Account)
-                       .FirstAsync(x => x.Account.Id == acc.Id);
-                    return prof.Id;
-                }
-            };
-
-            string GetProfileType(RoleType role)
-            {
-                switch (role)
-                {
-                    case RoleType.Customer:
-                        return "user";
-                    case RoleType.Vendor:
-                        return "vendor";
-                    case RoleType.Company:
-                        return "company";
-                    default: return "index";
-                }
-            };
-
             if (res == null)
             {
                 return null;
@@ -385,6 +344,47 @@ namespace Unicorn.Core.Services
             }
 
             return name;
+        }
+
+        private async Task<long> GetProfileIdAsync(Account acc)
+        {
+            if (acc.Role.Type == RoleType.Vendor)
+            {
+                var prof = await _unitOfWork.VendorRepository.Query
+                    .Include(x => x.Person)
+                    .Include(x => x.Person.Account)
+                    .FirstAsync(x => x.Person.Account.Id == acc.Id);
+                return prof.Id;
+            }
+            else if (acc.Role.Type == RoleType.Customer)
+            {
+                var prof = await _unitOfWork.CustomerRepository.Query
+                    .Include(x => x.Person)
+                    .Include(x => x.Person.Account)
+                    .FirstAsync(x => x.Person.Account.Id == acc.Id);
+                return prof.Id;
+            }
+            else
+            {
+                var prof = await _unitOfWork.CompanyRepository.Query
+                   .Include(x => x.Account)
+                   .FirstAsync(x => x.Account.Id == acc.Id);
+                return prof.Id;
+            }
+        }
+
+        private string GetProfileType(RoleType role)
+        {
+            switch (role)
+            {
+                case RoleType.Customer:
+                    return "user";
+                case RoleType.Vendor:
+                    return "vendor";
+                case RoleType.Company:
+                    return "company";
+                default: return "index";
+            }
         }
     }
 }
