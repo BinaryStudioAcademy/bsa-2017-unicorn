@@ -287,7 +287,7 @@ namespace Unicorn.Core.Services
                        .FirstAsync(x => x.Account.Id == acc.Id);
                     return prof.Id;
                 }
-            }
+            };
 
             string GetProfileType(RoleType role)
             {
@@ -301,7 +301,7 @@ namespace Unicorn.Core.Services
                         return "company";
                     default: return "index";
                 }
-            }
+            };
 
             if (res == null)
             {
