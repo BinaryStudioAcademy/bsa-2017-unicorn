@@ -58,12 +58,14 @@
   <ItemGroup>
     <Compile Include="Context\UnicornDbInitializer.cs" />
     <Compile Include="Entities\Account.cs" />
+    <Compile Include="Entities\Calendar.cs" />
     <Compile Include="Entities\ChatDialog.cs" />
     <Compile Include="Entities\ChatMessage.cs" />
     <Compile Include="Entities\ContactProvider.cs" />
     <Compile Include="Entities\Enum\BookStatus.cs" />
     <Compile Include="Entities\Enum\NotificationType.cs" />
     <Compile Include="Entities\Enum\OfferStatus.cs" />
+    <Compile Include="Entities\ExtraDay.cs" />
     <Compile Include="Entities\Notification.cs" />
     <Compile Include="Entities\Offer.cs" />
     <Compile Include="Entities\Rating.cs" />

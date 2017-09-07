@@ -12,6 +12,7 @@ import { NgMapAsyncApiLoader } from "@ngui/map/dist";
 import { TokenHelperService } from "../../services/helper/tokenhelper.service";
 import { VendorService } from "../../services/vendor.service";
 import { Contact } from "../../models/contact.model";
+import { CalendarService } from "../../services/calendar-service";
 
 
 @Component({
@@ -45,7 +46,8 @@ export class RegisterVendorComponent implements OnInit {
     public LocationService: LocationService,
     private tokenHelper: TokenHelperService,
     private apiLoader: NgMapAsyncApiLoader,
-    private vendorService: VendorService
+    private vendorService: VendorService,
+    private calendarService: CalendarService
   ) { }
 
   ngOnInit() {
@@ -113,6 +115,7 @@ export class RegisterVendorComponent implements OnInit {
         this.vendorService.postVendorContact(+this.tokenHelper.getClaimByName('profileid'),emailContact);
         this.vendorService.postVendorContact(+this.tokenHelper.getClaimByName('profileid'),phoneContact);
         this.authEventService.signIn();
+        this.calendarService.createCalendar(+this.tokenHelper.getClaimByName('accountid'));
         this.helperService.redirectAfterAuthentication();
       }).catch(err => this.loader = false);
     }

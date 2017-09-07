@@ -50,6 +50,7 @@
     <Compile Include="DTOs\Book\BookOrderDTO.cs" />
     <Compile Include="DTOs\Book\CustomerBookDTO.cs" />
     <Compile Include="DTOs\Book\VendorBookDTO.cs" />
+    <Compile Include="DTOs\CalendarDTO.cs" />
     <Compile Include="DTOs\CategoryDTO.cs" />
     <Compile Include="DTOs\Chat\ChatDialogDTO.cs" />
     <Compile Include="DTOs\Chat\ChatMessageDTO.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="DTOs\Email\EmailHost.cs" />
     <Compile Include="DTOs\Email\EmailMessage.cs" />
     <Compile Include="DTOs\Email\EmailTemplate.cs" />
+    <Compile Include="DTOs\ExtraDayDTO.cs" />
     <Compile Include="DTOs\FullPerformerDTO.cs" />
     <Compile Include="DTOs\History\HistoryDTO.cs" />
     <Compile Include="DTOs\History\VendorHistoryDTO.cs" />

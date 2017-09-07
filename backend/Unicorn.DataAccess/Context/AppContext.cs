@@ -8,11 +8,13 @@ namespace Unicorn.DataAccess.Context
     {
         public DbSet<Account> Accounts { get; set; }
         public DbSet<Book> Books { get; set; }
+        public DbSet<Calendar> Calendars { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Company> Companies { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<ChatDialog> ChatDialogs { get; set; }
         public DbSet<ChatMessage> ChatMessages { get; set; }
+        public DbSet<ExtraDay> ExtraDays { get; set; }
         public DbSet<History> Histories { get; set; }
         public DbSet<Location> Locations { get; set; }
         public DbSet<Permission> Permissions { get; set; }

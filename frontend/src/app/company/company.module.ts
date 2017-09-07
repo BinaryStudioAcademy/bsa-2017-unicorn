@@ -34,6 +34,7 @@ import { ChatModule } from "../chat/chat.module";
 import { PortfolioComponent } from './company-details/portfolio/portfolio.component';
 import { CompanyPortfolioComponent } from './company-edit/company-portfolio/company-portfolio.component';
 import { NguiMapModule } from "@ngui/map/dist";
+import { CalendarModule } from "../calendar/calendar.module";
 
 
 @NgModule({
@@ -50,6 +51,7 @@ import { NguiMapModule } from "@ngui/map/dist";
     ClickOutsideModule,
     SharedModule,
     ChatModule,
+    CalendarModule,
     NguiMapModule.forRoot({
       apiUrl: 'https://maps.google.com/maps/api/js?key=' + environment.googleMapsKey +
       '&libraries=visualization,places,drawing'

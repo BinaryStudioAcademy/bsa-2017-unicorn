@@ -13,11 +13,13 @@ namespace Unicorn.DataAccess.Repositories.UnitOfWork
 
         private IGenericRepository<Account> accountRepository;
         private IGenericRepository<Book> bookRepository;
+        private IGenericRepository<Calendar> calendarRepository;
         private IGenericRepository<Category> categoryRepository;
         private IGenericRepository<Company> companyRepository;
         private IGenericRepository<Customer> customerRepository;
         private IGenericRepository<ChatDialog> chatDialogRepository;
         private IGenericRepository<ChatMessage> chatMessageRepository;
+        private IGenericRepository<ExtraDay> extraDayRepository;
         private IGenericRepository<History> historyRepository;
         private IGenericRepository<Location> locationRepository;
         private IGenericRepository<Permission> permissionRepository;
@@ -57,6 +59,15 @@ namespace Unicorn.DataAccess.Repositories.UnitOfWork
             {
                 return bookRepository ??
                   (bookRepository = factory.CreateRepository<Book>(context));
+            }
+        }
+
+        public IGenericRepository<Calendar> CalendarRepository
+        {
+            get
+            {
+                return calendarRepository ??
+                       (calendarRepository = factory.CreateRepository<Calendar>(context));
             }
         }
 
@@ -102,6 +113,15 @@ namespace Unicorn.DataAccess.Repositories.UnitOfWork
             {
                 return chatMessageRepository ??
                   (chatMessageRepository = factory.CreateRepository<ChatMessage>(context));
+            }
+        }
+
+        public IGenericRepository<ExtraDay> ExtraDayRepository
+        {
+            get
+            {
+                return extraDayRepository ??
+                       (extraDayRepository = factory.CreateRepository<ExtraDay>(context));
             }
         }
 
