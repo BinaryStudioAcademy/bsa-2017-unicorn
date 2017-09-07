@@ -25,6 +25,8 @@ export class VendorEditPortfolioComponent implements OnInit {
   
   books: BookCard[];
 
+  isLoaded: boolean;
+
   constructor(
     private vendorService: VendorService,
     private dashboardService: DashboardService,
@@ -36,9 +38,13 @@ export class VendorEditPortfolioComponent implements OnInit {
   }
 
   loadData() {
-    this.dashboardService.getPortfolioBooks('vendor', this.vendorId).then(resp => {
-      this.books = resp.filter(b => b.Status == BookStatus.Confirmed);
-    });
+    this.isLoaded = false;
+    this.dashboardService.getPortfolioBooks('vendor', this.vendorId)
+      .then(resp => {
+        this.books = resp.filter(b => b.Status == BookStatus.Confirmed);
+        this.isLoaded = true;
+      })
+      .catch(err => this.isLoaded = true);;
   }
 
   showReview(id: number) {

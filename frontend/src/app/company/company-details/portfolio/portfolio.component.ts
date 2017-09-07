@@ -18,6 +18,8 @@ export class PortfolioComponent implements OnInit {
   books: BookCard[] = [];
   companyId: number;
 
+  isLoaded: boolean;
+
   constructor(
     private dashboardService: DashboardService,
     private route: ActivatedRoute,
@@ -30,11 +32,15 @@ export class PortfolioComponent implements OnInit {
   }
 
   loadData() {
-    this.dashboardService.getPortfolioBooks('company', this.companyId).then(resp => {
-      if(resp !== null){
-        this.books = resp.filter(b => b.IsHidden == false && b.Status == BookStatus.Confirmed);
-      }
-    });
+    this.isLoaded = false;
+    this.dashboardService.getPortfolioBooks('company', this.companyId)
+      .then(resp => {
+        if(resp !== null){
+          this.books = resp.filter(b => b.IsHidden == false && b.Status == BookStatus.Confirmed);
+        }
+        this.isLoaded = true
+      })
+      .catch(err => this.isLoaded = true);
   }
 
   showReview(id: number) {

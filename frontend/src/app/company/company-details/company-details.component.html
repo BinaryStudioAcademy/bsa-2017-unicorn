@@ -10,12 +10,12 @@
                 <div class="sixteen wide column container without-padd">
                     <sui-tabset>
                         <div class="ui pointing secondary menu">
-                            <a class="item" suiTabHeader="1">General information</a>
-                            <a class="item" suiTabHeader="2">Portfolio</a>
-                            <a class="item" suiTabHeader="3" [isActive]="tabActive">Reviews</a>
-                            <a class="item" suiTabHeader="4">Vendors</a>
-                            <a class="item" suiTabHeader="5">Contacts</a>
-                            <a class="item" suiTabHeader="6">Calendar</a>
+                            <a routerLink="/company/{{company.Id}}" [queryParams]="{tab: 'info'}" class="item" suiTabHeader="1">General information</a>
+                            <a routerLink="/company/{{company.Id}}" [queryParams]="{tab: 'portfolio'}" class="item" suiTabHeader="2">Portfolio</a>
+                            <a routerLink="/company/{{company.Id}}" [queryParams]="{tab: 'reviews'}" class="item" suiTabHeader="3" [isActive]="tabActive">Reviews</a>
+                            <a routerLink="/company/{{company.Id}}" [queryParams]="{tab: 'vendors'}" class="item" suiTabHeader="4">Vendors</a>
+                            <a routerLink="/company/{{company.Id}}" [queryParams]="{tab: 'contacts'}" class="item" suiTabHeader="5">Contacts</a>
+                            <a routerLink="/company/{{company.Id}}" [queryParams]="{tab: 'calendar'}" class="item" suiTabHeader="6">Calendar</a>
                         </div>
                         <div class="row">
                             <div class="ui equal width grid container">
