@@ -1,6 +1,6 @@
 <script src="https://rawgit.com/web-animations/web-animations-js/master/web-animations.min.js"></script>
 
-<div *ngIf="works !== undefined" class="ui container grid">
+<div *ngIf="works !== undefined && loader" class="ui container grid">
     <div class="row">
         <div class="column">
             <table class="ui selectable padded single line table">
@@ -101,7 +101,9 @@
         </div>
     </div>
 </div>
-
+<div *ngIf="works === undefined || !loader" class="ui active inverted dimmer" style="background-color: rgba(255,255,255,.85)">
+    <div class="ui text loader">Loading</div>
+</div>
 <ng-template class="modalImage" let-context let-modal="modal" #modalTemplate>
     <div class="content">
         <div class="contentContainer">

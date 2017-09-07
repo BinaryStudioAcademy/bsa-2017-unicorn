@@ -41,7 +41,7 @@ import { ContactService } from "../services/contact.service";
 import { NguiMapModule } from "@ngui/map/dist";
 import { ChatModule } from "../chat/chat.module";
 import { VendorEditMessagesComponent } from './vendor-edit/vendor-edit-messages/vendor-edit-messages.component';
-import { CalendarModule } from "../calendar/calendar.module";
+import { OwnCalendarModule } from "../calendar/calendar.module";
 
 
 @NgModule({
@@ -61,7 +61,7 @@ import { CalendarModule } from "../calendar/calendar.module";
     PipeModule,
     ChatModule,
     ClickOutsideModule,
-    CalendarModule,
+    OwnCalendarModule,
     NguiMapModule.forRoot({
       apiUrl: 'https://maps.google.com/maps/api/js?key=' + environment.googleMapsKey +
       '&libraries=visualization,places,drawing'

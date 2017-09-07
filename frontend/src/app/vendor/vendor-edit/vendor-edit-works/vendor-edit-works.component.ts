@@ -37,7 +37,7 @@ export class VendorEditWorksComponent implements OnInit {
   saveImgButton: boolean = false;
   workIconUrl: SafeResourceUrl;
   uploading: boolean = false;
-
+  loader:boolean = false;
   @ViewChild('modalDeleteTemplate')
   public modalDeleteTemplate: ModalTemplate<void, {}, void>;
 
@@ -109,6 +109,8 @@ export class VendorEditWorksComponent implements OnInit {
       // }
       this.isEditOpen = true;
     }
+    
+    this.loader = true;
   }
 
   editToggle(): void {

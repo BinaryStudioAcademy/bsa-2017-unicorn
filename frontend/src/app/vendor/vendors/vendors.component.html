@@ -1,4 +1,3 @@
-<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.grey-indigo.min.css" />
 <div class="ui grid left-padded" id="main">
     <div class="eight wide column">
         <div class="row" id="search-bar">
@@ -11,7 +10,7 @@
                     <input type="text" name="name" placeholder="NAME" [(ngModel)]="name">
                 </div>
                 <div class="six wide column search-btn-div">
-                    <a class="ui button book-btn" [ngClass]="{'loading': searchLoading}" (click)="search()">SEARCH</a>
+                    <a class="ui active button main" [ngClass]="{'loading': searchLoading}" (click)="search()">SEARCH</a>
                     <button class="ui button" (click)="reset()">RESET</button>
                 </div>
                 <sui-accordion class="fluid">

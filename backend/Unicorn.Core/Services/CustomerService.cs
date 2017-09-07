@@ -45,6 +45,7 @@ namespace Unicorn.Core.Services
             account.DateCreated = DateTime.Now;
             account.Email = customerDto.Email;
             account.Avatar = customerDto.Image;
+            account.DateCreated = DateTime.Now;
 
             socialAccount.Provider = customerDto.Provider;
             socialAccount.Uid = customerDto.Uid;
@@ -132,6 +133,7 @@ namespace Unicorn.Core.Services
                         Longitude = customer.Person.Account.Location.Longitude,
                         PostIndex = customer.Person.Account.Location.PostIndex
                     },
+                    DateCreated = customer.Person.Account.DateCreated,
                     Birthday = customer.Person.Birthday,
                     Phone = customer.Person.Phone,
                     Avatar = customer.Person.Account.Avatar,

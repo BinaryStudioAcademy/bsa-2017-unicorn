@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ChatComponent } from "./chat.component";
 import { FormsModule } from '@angular/forms'
@@ -10,12 +11,13 @@ import { MiniChatComponent } from './mini-chat/mini-chat.component';
   imports: [
     CommonModule,
     FormsModule,
-    MomentModule
+    MomentModule,
+    RouterModule
   ],
   declarations: [
     ChatComponent,
     MiniChatComponent
-  ],
+  ],  
   exports: [
     ChatComponent,
     MiniChatComponent

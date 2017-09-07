@@ -113,6 +113,8 @@ export class VendorProfileContactsComponent implements OnInit {
           ParticipantTwoId: this.accountId,
           ParticipantName: this.vendor.Name + " " + this.vendor.MiddleName,
           ParticipantAvatar: null,
+          ParticipantProfileId: this.vendorId,
+          ParticipantType: "vendor",
           Messages: null,
           LastMessageTime: null,
           IsReadedLastMessage: null
