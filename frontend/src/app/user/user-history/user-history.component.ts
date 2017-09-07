@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { NgModel } from '@angular/forms';
 import { User } from '../../models/user';
 
@@ -11,6 +11,11 @@ import { NotificationService } from "../../services/notifications/notification.s
 
 import { CustomerBook, BookStatus } from '../../models/book/book.model';
 import { ShortReview } from '../../models/short-review';
+import { MapModel } from "../../models/map.model";
+
+export interface IMapModal {
+  id: number;
+}
 
 @Component({
   selector: 'app-user-history',
@@ -21,8 +26,14 @@ export class UserHistoryComponent implements OnInit {
 
   @Input() user: User;
   
+  @ViewChild('mapModal')
+  public modalTemplate:ModalTemplate<IMapModal, void, void>
+
   books: CustomerBook[];
   
+  map: MapModel;   
+  currModal: SuiActiveModal<IMapModal, {}, void>;  
+
     constructor(
       private bookService: CustomerbookService,
       private modalService: SuiModalService,
@@ -75,4 +86,18 @@ export class UserHistoryComponent implements OnInit {
       this.modalService.open(new ReviewModal(book.Review));
     }
 
+    openMap(id:number)
+    {
+     this.map = {
+       center: {lat: this.books.filter(b => b.Id == id)[0].Location.Latitude, lng: this.books[0].Location.Longitude},
+       zoom: 18,    
+       title: this.books.find(b => b.Id === id).Work.Name,
+       label: '',
+       markerPos: {lat: this.books.find(b => b.Id === id).Location.Latitude, lng: this.books.find(b => b.Id === id).Location.Longitude}    
+     };  
+     const config = new TemplateModalConfig<IMapModal, void, void>(this.modalTemplate);
+     config.isInverted = true;
+     config.size = ModalSize.Tiny;
+     this.currModal = this.modalService.open(config);
+    }
 }
