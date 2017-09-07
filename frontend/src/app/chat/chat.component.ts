@@ -309,7 +309,7 @@ export class ChatComponent implements OnInit {
       ParticipantAvatar: partitipant.Avatar,
       Messages: null,
       LastMessageTime: null,
-      IsReadedLastMessage: null
+      IsReadedLastMessage: true
     };
 
     this.selectedId = this.dialog.Id;
