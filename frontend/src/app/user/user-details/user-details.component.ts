@@ -160,6 +160,7 @@ export class UserDetailsComponent implements OnInit {
   }
 
   public openModal() {
+    this.imageUploaded = false;
     this.activeModal = this.modalService.openModal(this.modalTemplate);
   }
 }
