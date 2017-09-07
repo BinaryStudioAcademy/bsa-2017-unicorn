@@ -117,9 +117,58 @@ namespace Unicorn.Core.Services
             };
         }
 
-        public Task<CalendarDTO> GetCalendarByAccountId(long accountId)
+        public async Task<CalendarDTO> GetCalendarByAccountId(long accountId)
         {
-            return null;
+            var account = await _unitOfWork.AccountRepository.GetByIdAsync(accountId);
+            CalendarDTO calendar;
+
+            switch (account.Role.Type)
+            {
+                case RoleType.Company:
+                    var company = _unitOfWork.CompanyRepository.Query.SingleOrDefault(x => x.Account.Id == accountId);
+                    calendar = new CalendarDTO
+                    {
+                        StartDate = company.Calendar.StartDate,
+                        EndDate = company.Calendar.EndDate,
+                        ExtraDayOffs = company.Calendar.ExtraDayOffs.Select(x => new ExtraDayDTO
+                        {
+                            CalendarId = company.Calendar.Id,
+                            Day = x.Day,
+                            DayOff = x.DayOff
+                        }).ToList(),
+                        ExtraWorkDays = company.Calendar.ExtraWorkDays.Select(x => new ExtraDayDTO
+                        {
+                            CalendarId = company.Calendar.Id,
+                            Day = x.Day,
+                            DayOff = x.DayOff
+                        }).ToList(),
+                        WorkOnWeekend = company.Calendar.WorkOnWeekend
+                    };
+                    return calendar;
+                case RoleType.Vendor:
+                    var vendor = _unitOfWork.VendorRepository.Query.SingleOrDefault(x => x.Person.Account.Id == accountId);
+                    calendar = new CalendarDTO
+                    {
+                        StartDate = vendor.Calendar.StartDate,
+                        EndDate = vendor.Calendar.EndDate,
+                        ExtraDayOffs = vendor.Calendar.ExtraDayOffs.Select(x => new ExtraDayDTO
+                        {
+                            CalendarId = vendor.Calendar.Id,
+                            Day = x.Day,
+                            DayOff = x.DayOff
+                        }).ToList(),
+                        ExtraWorkDays = vendor.Calendar.ExtraWorkDays.Select(x => new ExtraDayDTO
+                        {
+                            CalendarId = vendor.Calendar.Id,
+                            Day = x.Day,
+                            DayOff = x.DayOff
+                        }).ToList(),
+                        WorkOnWeekend = vendor.Calendar.WorkOnWeekend
+                    };
+                    return calendar;
+                default:
+                    return null;
+            }
         }
 
 

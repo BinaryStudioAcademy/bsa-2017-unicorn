@@ -34,20 +34,20 @@ namespace Unicorn.Controllers
             }
         }
 
-        //[HttpGet]
-        //[Route("account/{accountId}")]
-        //public async Task<HttpResponseMessage> GetCalendarByAccountId(long accountId)
-        //{
-        //    try
-        //    {
-        //        var result = await _calendarService.GetCalendarByAccountId(accountId);
-        //        return Request.CreateResponse(HttpStatusCode.OK, result);
-        //    }
-        //    catch
-        //    {
-        //        return Request.CreateResponse(HttpStatusCode.NotFound);
-        //    }
-        //}
+        [HttpGet]
+        [Route("calendar/account/{accountId}")]
+        public async Task<HttpResponseMessage> GetCalendarByAccountId(long accountId)
+        {
+            try
+            {
+                var result = await _calendarService.GetCalendarByAccountId(accountId);
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+            catch
+            {
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            }
+        }
 
         [HttpPost]
         [Route("calendar")]

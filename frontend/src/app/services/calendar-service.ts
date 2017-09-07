@@ -13,6 +13,9 @@ export class CalendarService {
   getCalendar(calendarId: number):Promise<CalendarModel>{
     return this.dataService.getRequest<CalendarModel>("calendar/" + calendarId);    
   }
+  getCalendarByAccount(accountId: number):Promise<CalendarModel>{
+    return this.dataService.getRequest<CalendarModel>("calendar/account/" + accountId);    
+  }
   createCalendar(accountId: number):Promise<CalendarModel>{
     return this.dataService.postRequest<CalendarModel>("calendar", accountId); 
   }

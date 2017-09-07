@@ -16,8 +16,8 @@ namespace Unicorn.DataAccess.Entities
 
         public bool WorkOnWeekend { get; set; }
 
-        public ICollection<ExtraDay> ExtraDayOffs { get; set; }
+        public virtual ICollection<ExtraDay> ExtraDayOffs { get; set; }
 
-        public ICollection<ExtraDay> ExtraWorkDays { get; set; }
+        public virtual ICollection<ExtraDay> ExtraWorkDays { get; set; }
     }
 }

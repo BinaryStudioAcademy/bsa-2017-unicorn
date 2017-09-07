@@ -37,7 +37,7 @@
                                             <company-contacts [name]="company.Name" [accountId]="company.AccountId" [isGuest]="isGuest"></company-contacts>
                                         </div>
                                         <div class="ui segment" suiTabContent="6">
-                                            <app-calendar></app-calendar>
+                                            <app-calendar [accountId]="company.AccountId"></app-calendar>
                                         </div>
                                     </div>
                                     <div *ngIf="isUser||isGuest" class="six wide column">

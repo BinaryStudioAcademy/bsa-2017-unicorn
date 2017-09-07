@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { TokenHelperService } from "../services/helper/tokenhelper.service";
+import { CalendarService } from "../services/calendar-service";
+import { CalendarModel } from "../models/calendar/calendar";
 
 @Component({
   selector: 'app-calendar',
@@ -6,10 +9,22 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./calendar.component.sass']
 })
 export class CalendarComponent implements OnInit {
+@Input()
+accountId: number;
 
-  constructor() { }
+calendar: CalendarModel;
+
+
+  constructor(
+    private tokenHelper: TokenHelperService,
+    private calendarService: CalendarService) { }
 
   ngOnInit() {
+    this.calendarService.getCalendarByAccount(this.accountId)
+    .then(res => {
+      this.calendar = res;
+      console.log(this.calendar);
+    });
   }
 
 }
