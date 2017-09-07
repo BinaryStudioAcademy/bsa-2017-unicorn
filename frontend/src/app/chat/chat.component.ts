@@ -307,6 +307,8 @@ export class ChatComponent implements OnInit {
       ParticipantTwoId: partitipant.AccountId,
       ParticipantName: partitipant.Name,
       ParticipantAvatar: partitipant.Avatar,
+      ParticipantProfileId: null,
+      ParticipantType: partitipant.Role,
       Messages: null,
       LastMessageTime: null,
       IsReadedLastMessage: true
