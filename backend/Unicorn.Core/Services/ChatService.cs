@@ -139,7 +139,7 @@ namespace Unicorn.Core.Services
                 Id = createdDialog.Id,
                 ParticipantOneId = createdDialog.Participant1.Id,
                 ParticipantTwoId = createdDialog.Participant2.Id,
-                ParticipantAvatar = createdDialog.Participant2.Avatar,
+                ParticipantAvatar = createdDialog.Participant2.CroppedAvatar ?? createdDialog.Participant2.Avatar,
                 LastMessageTime = DateTimeOffset.Now
             };
         }
@@ -184,12 +184,12 @@ namespace Unicorn.Core.Services
 
             if (dialog.Participant1.Id == ownerId)
             {
-                avatar = dialog.Participant2.Avatar;
+                avatar = dialog.Participant2.CroppedAvatar ?? dialog.Participant2.Avatar;
                 name = GetName(dialog.Participant2);
             }
             else
             {
-                avatar = dialog.Participant1.Avatar;
+                avatar = dialog.Participant1.CroppedAvatar ?? dialog.Participant1.Avatar;
                 name = GetName(dialog.Participant1);
             }
 
@@ -235,7 +235,7 @@ namespace Unicorn.Core.Services
                 .Select(GetName).ToList();
             var avatars = dialogs.SelectMany(x => new List<Account> { x.Participant1, x.Participant2 })
                 .Where(x => x.Id != accountId)
-                .Select(x => x.Avatar).ToList();
+                .Select(x => x.CroppedAvatar ?? x.Avatar).ToList();
             int i = 0;
 
             var result = dialogs.Select(x => new ChatDialogDTO()
@@ -274,14 +274,14 @@ namespace Unicorn.Core.Services
 
             if (res.Participant1.Id == participantOneId)
             {
-                avatar = res.Participant2.Avatar;
+                avatar = res.Participant2.CroppedAvatar ?? res.Participant2.Avatar;
                 ownerId = res.Participant1.Id;
                 profileType = GetProfileType(res.Participant2.Role.Type);
                 profileId = await GetProfileIdAsync(res.Participant2);
             }
             else
             {
-                avatar = res.Participant1.Avatar;
+                avatar = res.Participant1.CroppedAvatar ?? res.Participant1.Avatar;
                 ownerId = res.Participant2.Id;
                 profileType = GetProfileType(res.Participant1.Role.Type);
                 profileId = await GetProfileIdAsync(res.Participant1);

@@ -5,35 +5,34 @@
             <i class="search icon"></i>
         </div>
         <div class="users">
-        <div class="upper-user" (click)="onSelect(_dialog.Id)" *ngFor="let _dialog of filterDialogsByPartitipantName(searchString)" [ngClass]="{'active': _dialog.Id === selectedId}">
-            <div class="user" [ngClass]="{'active': _dialog.Id === selectedId}">
-                <img class="ui avatar image" src="{{_dialog.ParticipantAvatar}}">
-                <div class="dialog-inf">
-                    <div class="userName"> {{_dialog.ParticipantName}} </div>
-                    <div class="add-inf">
-                        <div class="lastMessageDate" *ngIf="_dialog.LastMessageTime !== null">
-                            {{_dialog.LastMessageTime|amTimeAgo}}
-                        </div>
-                        <div class="is-readed" *ngIf="!_dialog.IsReadedLastMessage">
+            <div class="upper-user" (click)="onSelect(_dialog.Id)" *ngFor="let _dialog of filterDialogsByPartitipantName(searchString)" [ngClass]="{'active': _dialog.Id === selectedId}">
+                <div class="user" [ngClass]="{'active': _dialog.Id === selectedId}">
+                    <img class="ui avatar image" src="{{_dialog.ParticipantAvatar}}">
+                    <div class="dialog-inf">
+                        <div class="userName"> {{_dialog.ParticipantName}} </div>
+                        <div class="add-inf">
+                            <div class="lastMessageDate" *ngIf="_dialog.LastMessageTime !== null">
+                                {{_dialog.LastMessageTime|amTimeAgo}}
+                            </div>
+                            <div class="is-readed" *ngIf="!_dialog.IsReadedLastMessage">
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <p *ngIf="searchResults.length > 0" class="ui horizontal divider small header">
-            <i class="plus icon"></i> Start a chat with
-        </p>
-        <div class="upper-user" (click)="createChat(partitipant)" *ngFor="let partitipant of searchResults">
-            <div class="user">
-                <img class="ui avatar image" src="{{partitipant.Avatar}}">
-                <div class="dialog-inf">
-                    <div class="userName"> {{partitipant.Name}} </div>
+            <p *ngIf="searchResults.length > 0" class="ui horizontal divider small header">
+                <i class="plus icon"></i> Start a chat with
+            </p>
+            <div class="upper-user" (click)="createChat(partitipant)" *ngFor="let partitipant of searchResults">
+                <div class="user">
+                    <img class="ui avatar image" src="{{partitipant.Avatar}}">
+                    <div class="dialog-inf">
+                        <div class="userName"> {{partitipant.Name}} </div>
+                    </div>
                 </div>
             </div>
         </div>
-        </div>
     </div>
-
     <div class="chat-block">
         <div class="under-chat-block" *ngIf="messages !== undefined && messages !== null && messages.length !== 0">
             <div class="messages" #messagesBlock>
