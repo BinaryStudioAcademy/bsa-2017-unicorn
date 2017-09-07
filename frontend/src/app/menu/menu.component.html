@@ -67,11 +67,20 @@
                                     </div>
                                 </div>
                             </div>
-                            <div *ngIf="newNotifications && (newNotifications === null || newNotifications.length === 0)" 
+                            <div 
+                            *ngIf="newNotifications && (newNotifications === null || newNotifications.length === 0)" 
                             class="notifications-placeholder">
                                 <div class="content">
                                     <h5>Nothing here</h5>
                                 </div>
+                            </div>
+                        </div>
+                        <div 
+                        *ngIf="newNotifications && newNotifications.length > 0" 
+                        (click)="archiveAllNotifications()"
+                        class="archive-all-btn">
+                            <div class="ui horizontal divider">
+                                <h5>Mark all as viewed</h5>
                             </div>
                         </div>
                     </ng-template>

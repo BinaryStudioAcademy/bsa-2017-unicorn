@@ -266,6 +266,16 @@ export class MenuComponent implements OnInit {
     this.accountService.updateNotification(+this.tokenHelper.getClaimByName("accountid"), notification);
   }
 
+  archiveAllNotifications() {
+    this.newNotifications.forEach(item => {
+      item.IsViewed = true;
+      this.archivedNotifications.push(item);
+      this.accountService.updateNotification(+this.tokenHelper.getClaimByName("accountid"), item);
+    });
+    this.newNotifications = [];
+    this.sortNotificationsByTime();
+  }
+
   toggleNotifications(): void {
     this.isArchivedNotificationsShown = !this.isArchivedNotificationsShown;
   }

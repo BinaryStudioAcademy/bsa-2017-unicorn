@@ -98,6 +98,7 @@ a
 .notification-list
     max-height: 25em;
     overflow: auto;
+    margin-bottom: 0;
 
 .ui.list /deep/ .item
     padding: 15px 0;
@@ -152,3 +153,15 @@ a
     height: 40px;
     color: #dededf;
     font-size: 15px;
+
+.archive-all-btn
+    &:hover
+        background: rgba(251, 226, 230, 0.33)!important;
+        color: black!important;
+        cursor: pointer;
+
+.archive-all-btn .ui.horizontal.divider
+    margin-bottom: 0;
+    margin-top: 0;
+    padding-top: 5px; 
+    padding-bottom: 5px; 
