@@ -172,6 +172,8 @@ export class SearchComponent implements OnInit {
 
   searchWorks() {
     this.works = [];
+    this.filterCtgs = [];
+    this.filterSubctgs = [];
     this.spinner = true;
     this.distance = this.slider;
     this.togglePanel = false;
