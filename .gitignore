@@ -297,3 +297,6 @@ paket-files/
 
 # Exclude Dependencies
 Dependencies/
+
+# Scripts downloaded by Nuget
+backend/Unicorn/Scripts/
