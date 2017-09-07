@@ -11,8 +11,8 @@
             <p>{{book.Description}}</p>
         </div>
         <div class="customer-info five wide column">
-            <p>{{book.Performer}}</p>
-            <p><i class="colored map pin icon"></i>{{book.Location.City}},&nbsp;{{book.Location.Adress}}</p>
+            <a routerLink="/{{book.PerformerType}}/{{book.PerformerId}}">{{book.Performer}}</a>
+            <p (click)="openMap(book.Id)" class="rev-link"><i class="colored map pin icon"></i>{{book.Location.City}},&nbsp;{{book.Location.Adress}}</p>
         </div>
         <div class="book-actions four wide column">
             <p>
@@ -22,3 +22,8 @@
         </div>
     </div>
 </div>
+<ng-template let-context let-modal="modal" #mapModal>
+    <div class="ui content">
+        <app-map [inputMap]="map" *ngIf="map"></app-map>
+    </div>
+</ng-template>

@@ -182,9 +182,16 @@ export class MenuComponent implements OnInit {
     this.router.navigateByUrl(this.profileUrl);
   }
 
-  onShowDetails() {
-    this.showAccountDetails = !this.showAccountDetails;
-    this.isNotificationsShow = false;
+  showDetails() {
+    if (!this.showAccountDetails)
+      setTimeout(() => {
+        this.showAccountDetails = true;
+      }, 50);
+  }
+
+  hideDetails() {
+    if (this.showAccountDetails)
+      this.showAccountDetails = false;
   }
 
   setProfileRoute(): void {
@@ -216,10 +223,19 @@ export class MenuComponent implements OnInit {
   }
 
   showNotifications() {
-    this.isNotificationsShow = !this.isNotificationsShow;
-    this.isArchivedNotificationsShown = false;
-    this.showAccountDetails = false;
-    this.newNotification = undefined;
+    if (!this.isNotificationsShow)
+      setTimeout(() => {
+        this.isNotificationsShow = true;
+        this.isArchivedNotificationsShown = false;
+        this.newNotification = undefined;
+      }, 50);
+  }
+
+  hideNotifications() {
+    if (this.isNotificationsShow) {
+      this.isNotificationsShow = false;
+      this.isArchivedNotificationsShown = false;
+    }
   }
 
   addNotification(notification: Notification): void {
@@ -248,6 +264,16 @@ export class MenuComponent implements OnInit {
     this.archivedNotifications.push(notification);
     this.sortNotificationsByTime();
     this.accountService.updateNotification(+this.tokenHelper.getClaimByName("accountid"), notification);
+  }
+
+  archiveAllNotifications() {
+    this.newNotifications.forEach(item => {
+      item.IsViewed = true;
+      this.archivedNotifications.push(item);
+      this.accountService.updateNotification(+this.tokenHelper.getClaimByName("accountid"), item);
+    });
+    this.newNotifications = [];
+    this.sortNotificationsByTime();
   }
 
   toggleNotifications(): void {
