@@ -141,6 +141,7 @@ export class VendorEditComponent implements OnInit {
   }
 
   public openModal() {
+    this.imageUploaded = false;
     this.activeModal = this.modalService.openModal(this.modalTemplate);
   }
 }
