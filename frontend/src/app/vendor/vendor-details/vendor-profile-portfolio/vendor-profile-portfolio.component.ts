@@ -24,6 +24,8 @@ export class VendorProfilePortfolioComponent implements OnInit, AfterContentInit
 
   books: BookCard[] = [];
 
+  isLoaded: boolean;
+
   constructor(
     private vendorService: VendorService,
     private dashboardService: DashboardService,
@@ -35,9 +37,12 @@ export class VendorProfilePortfolioComponent implements OnInit, AfterContentInit
   }
 
   loadData() {
+    this.isLoaded = false
     this.dashboardService.getPortfolioBooks('vendor', this.vendorId).then(resp => {
       this.books = resp.filter(b => b.IsHidden == false && b.Status == BookStatus.Confirmed);
-    });
+      this.isLoaded = true;
+    })
+    .catch(err => this.isLoaded = true)
   }
 
   showReview(id: number) {
