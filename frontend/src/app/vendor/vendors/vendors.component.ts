@@ -138,6 +138,7 @@ export class VendorsComponent implements OnInit {
     this.slider = 0;
     this.distance = 0;
     this.withReviews = false;
+    this.search();
   }
 
   initAdvancedFilters() {
