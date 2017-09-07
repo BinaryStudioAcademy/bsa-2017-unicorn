@@ -4,14 +4,14 @@
             <div class="sixteen wide column container">
                 <div class="user-header" id="user-header" [style.backgroundImage]="backgroundUrl">
 
-                <div class="ui small circular image" *ngIf="user!== undefined">
-                    <div class="avatarMain">
-                        <img id="user-avatar" src="{{getImage()}}" />
+                    <div class="ui small circular image" *ngIf="user!== undefined">
+                        <div class="avatarMain">
+                            <img id="user-avatar" src="{{getImage()}}" />
+                        </div>
                     </div>
-                </div>
-                <div class="user-title" *ngIf="user!== undefined">
-                    <h3>{{user.Name}} {{user.SurName}}</h3>
-                </div>
+                    <div class="user-title" *ngIf="user!== undefined">
+                        <h3>{{user.Name}} {{user.SurName}}</h3>
+                    </div>
 
                 </div>
             </div>
@@ -19,8 +19,8 @@
         <div class="sixteen wide column container">
             <sui-tabset id="tabs">
                 <div class="ui pointing secondary menu">
-                    <a routerLink="/user/{{user.Id}}" [queryParams]="{tab: 'info'}" class="item" suiTabHeader="1">Info</a>
-                    <a routerLink="/user/{{user.Id}}" [queryParams]="{tab: 'reviews'}" class="item" suiTabHeader="2">Reviews</a>
+                    <a routerLink="/user/{{user.Id}}" [queryParams]="{tab: 'info'}" class="item" suiTabHeader="1">INFO</a>
+                    <a routerLink="/user/{{user.Id}}" [queryParams]="{tab: 'reviews'}" class="item" suiTabHeader="2">REVIEWS</a>
                 </div>
                 <div class="row">
                     <div class="ui grid container">
