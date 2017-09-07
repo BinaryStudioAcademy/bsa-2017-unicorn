@@ -65,10 +65,10 @@
         <div class="sixteen wide column container">
             <sui-tabset>
                 <div class="ui pointing secondary menu">
-                    <a class="item" suiTabHeader="1">Profile</a>
-                    <a class="item" suiTabHeader="2" [isActive]="tasksTabActive">Tasks</a>
-                    <a class="item" suiTabHeader="3" [isActive]="messagesTabActive">Messages</a>
-                    <a class="item" suiTabHeader="4">History</a>
+                    <a routerLink="/user/{{user.Id}}/edit" [queryParams]="{tab: 'profile'}" class="item" suiTabHeader="1">Profile</a>
+                    <a routerLink="/user/{{user.Id}}/edit" [queryParams]="{tab: 'tasks'}" class="item" suiTabHeader="2" [isActive]="tasksTabActive">Tasks</a>
+                    <a routerLink="/user/{{user.Id}}/edit" [queryParams]="{tab: 'messages'}" class="item" suiTabHeader="3" [isActive]="messagesTabActive">Messages</a>
+                    <a routerLink="/user/{{user.Id}}/edit" [queryParams]="{tab: 'history'}" class="item" suiTabHeader="4">History</a>
                 </div>
                 <div class="row">
                     <div class="ui grid container">

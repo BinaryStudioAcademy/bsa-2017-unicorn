@@ -65,11 +65,11 @@
         <div class="sixteen wide column container">
             <sui-tabset *ngIf="vendor !== undefined">
                 <div class="ui pointing secondary menu">
-                    <a class="item" suiTabHeader="1">EDIT</a>
-                    <a class="item" suiTabHeader="2" [isActive]="worksTabActive">WORKS</a>
-                    <a class="item" suiTabHeader="3">PORTFOLIO</a>
-                    <a class="item" suiTabHeader="4" [isActive]="messagesTabActive">MESSAGES</a>
-                    <a class="item" suiTabHeader="5">CONTACTS</a>
+                    <a routerLink="/vendor/{{vendor.Id}}/edit" class="item" suiTabHeader="1">EDIT</a>
+                    <a routerLink="/vendor/{{vendor.Id}}/edit" [queryParams]="{tab: 'works'}" class="item" suiTabHeader="2" [isActive]="worksTabActive">WORKS</a>
+                    <a routerLink="/vendor/{{vendor.Id}}/edit" [queryParams]="{tab: 'portfolio'}" class="item" suiTabHeader="3">PORTFOLIO</a>
+                    <a routerLink="/vendor/{{vendor.Id}}/edit" [queryParams]="{tab: 'messages'}" class="item" suiTabHeader="4" [isActive]="messagesTabActive">MESSAGES</a>
+                    <a routerLink="/vendor/{{vendor.Id}}/edit" [queryParams]="{tab: 'contacts'}" class="item" suiTabHeader="5">CONTACTS</a>
                 </div>
                 <div class="row">
                     <div class="ui grid equal width container">
