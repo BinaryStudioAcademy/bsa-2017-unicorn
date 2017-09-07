@@ -1124,7 +1124,7 @@ namespace Unicorn.DataAccess.Context
             Category category6 = new Category()
             {
                 Id = 6,
-                Icon = "https://ieg.worldbankgroup.org/Data/styles/inner_page_style/public/Evaluation/images/financial-viability-electricity.jpg?itok=CvUNQtjh",
+                Icon = "https://www.cyberworx.in/images/services/web-developement.png",
                 IsDeleted = false,
                 Description = "Developing",
                 Name = "Developer Service",
