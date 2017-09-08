@@ -23,7 +23,7 @@ import { ReviewModal } from '../../..//review/review-modal/review-modal.componen
 export class VendorEditPortfolioComponent implements OnInit {
   @Input() private vendorId: number;
   
-  books: BookCard[];
+  books: BookCard[] = [];
 
   isLoaded: boolean;
 

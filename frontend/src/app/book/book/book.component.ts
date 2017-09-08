@@ -1,17 +1,22 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, ChangeDetectorRef } from '@angular/core';
 import { NgModel, NgForm } from '@angular/forms';
 
 import { SuiModule } from 'ng2-semantic-ui';
 import { BookOrderService } from '../../services/book-order.service';
+import { LocationService } from "../../services/location.service";
 import { UserService } from '../../services/user.service';
 import { TokenHelperService } from '../../services/helper/tokenhelper.service';
 import { BookOrder } from '../../models/book/book-order';
 import { LocationModel } from '../../models/location.model';
+import { NgMapAsyncApiLoader } from "@ngui/map/dist";
 
 @Component({
   selector: 'app-book',
   templateUrl: './book.component.html',
-  styleUrls: ['./book.component.sass']
+  styleUrls: ['./book.component.sass'],
+  providers: [
+    NgMapAsyncApiLoader
+  ]
 })
 export class BookComponent implements OnInit {
   book: BookOrder;
@@ -26,13 +31,31 @@ export class BookComponent implements OnInit {
 
   @ViewChild('bookForm') public bookForm: NgForm;
 
-  constructor(private bookOrderService: BookOrderService, private tokenHelper: TokenHelperService, private userService: UserService) { }
+  location: LocationModel;
+
+  constructor(
+    private bookOrderService: BookOrderService, 
+    private tokenHelper: TokenHelperService, 
+    private userService: UserService,
+    public LocationService: LocationService,
+    private apiLoader: NgMapAsyncApiLoader,
+    private ref: ChangeDetectorRef
+  ) { }
 
   ngOnInit() {
     this.formIsSended = false;
     this.onSending = true;
 
     this.defaultLocation = {
+      Id: 0,
+      City: "",
+      Adress: "",
+      PostIndex: "",
+      Latitude: 0,
+      Longitude: 0
+    }
+
+    this.location = {
       Id: 0,
       City: "",
       Adress: "",
@@ -53,6 +76,30 @@ export class BookComponent implements OnInit {
     }
 
     this.getUserData();
+  }
+
+  initLocation() {
+    this.apiLoader.load();
+    this.LocationService.getGoogle().then((g) => {
+      this.LocationService.getLocDetails(this.location.Latitude, this.location.Longitude).subscribe(
+        result => {
+          this.location.Adress=(result.address_components[1].short_name+','+result.address_components[0].short_name)
+          this.location.City=result.address_components[3].short_name;
+        }
+      );
+    });
+  }
+
+  placeChanged(event) {
+    
+    this.location.Latitude = event.geometry.location.lat();
+    this.location.Longitude = event.geometry.location.lng()
+    this.ref.detectChanges();
+    this.LocationService.getLocDetails(this.location.Latitude,this.location.Longitude)
+    .subscribe(
+     result => {    
+        this.location.Adress=(result.address_components[1].short_name+','+result.address_components[0].short_name)
+         this.location.City=result.address_components[3].short_name;});
   }
 
   onWorkChange() {
