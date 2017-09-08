@@ -34,12 +34,14 @@
                         <i class="dropdown icon"></i>{{work.Name}}
                     </div>
                     <div content>
-                        <div class="ui container flex-header">
-                            <div>
-                                <p>{{work.Description}}</p>
-                            </div>
-                            <div>
-                                <a class="ui tag label">{{work.Subcategory.Name}}</a>
+                        <div class="ui container grid">
+                            <div class="three column container row">
+                                <div class="left floated column" style="width: 60% !important;">
+                                    <p>{{work.Description}}</p>
+                                </div>
+                                <div class="right floated column">
+                                    <a class="ui tag label">{{work.Subcategory}}</a>
+                                </div>
                             </div>
                         </div>
                     </div>
