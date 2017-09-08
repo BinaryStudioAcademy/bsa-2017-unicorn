@@ -53,7 +53,7 @@
                 </div>
             </div>
             <div class="field">
-                <input places-auto-complete id="autocomplete" (initialized$)="initialized($event)" (place_changed)="placeChanged($event)" [types]="['geocode']" placeholder="LOCATION" value={{location.City}}/>
+                <input places-auto-complete id="autocomplete" (initialized)="initialized($event)" (place_changed)="placeChanged($event)" [types]="['geocode']" placeholder="LOCATION" value={{location.City}}/>
             </div>
             <div class="field">
                 <a [ngClass]="{'disabled': vendorForm.invalid, 'loading': loader}" 
