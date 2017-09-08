@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 
+@import "../node_modules/angular-calendar/dist/css/angular-calendar.css";
 @media only screen and (min-width: 1200px) {
     .ui.modal.small {
         position: fixed;

@@ -6,9 +6,17 @@ import {
   OnInit,
   Input
 } from '@angular/core';
-
+import {
+  startOfDay,
+  endOfDay,
+  subDays,
+  addDays,
+  endOfMonth,
+  isSameDay,
+  isSameMonth,
+  addHours
+} from 'date-fns';
 import { Subject } from 'rxjs/Subject';
-
 import {
   CalendarEvent,
   CalendarEventAction,
@@ -62,22 +70,54 @@ calendar: CalendarModel;
   view: string = 'month';
   
     viewDate: Date = new Date();
+    activeDayIsOpen: boolean = true;
   
     events: CalendarEvent[] = [
       {
-        title: 'Draggable event',
-        color: colors.yellow,
-        start: new Date(),
-        draggable: true
+        start: subDays(startOfDay(new Date()), 1),
+        end: addDays(new Date(), 1),
+        title: 'A 3 day event',
+        color: colors.red,        
       },
       {
-        title: 'A non draggable event',
-        color: colors.blue,
-        start: new Date()
+        start: startOfDay(new Date()),
+        title: 'An event with no end date',
+        color: colors.yellow,        
+      },
+      {
+        start: subDays(endOfMonth(new Date()), 3),
+        end: addDays(endOfMonth(new Date()), 3),
+        title: 'A long event that spans 2 months',
+        color: colors.blue
+      },
+      {
+        start: addHours(startOfDay(new Date()), 2),
+        end: new Date(),
+        title: 'A draggable and resizable event',
+        color: colors.yellow,        
+        resizable: {
+          beforeStart: true,
+          afterEnd: true
+        },
+        draggable: true
       }
     ];
   
     refresh: Subject<any> = new Subject();
+  
+    dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
+      if (isSameMonth(date, this.viewDate)) {
+        if (
+          (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
+          events.length === 0
+        ) {
+          this.activeDayIsOpen = false;
+        } else {
+          this.activeDayIsOpen = true;
+          this.viewDate = date;
+        }
+      }
+    }
   
     eventTimesChanged({
       event,
@@ -85,8 +125,7 @@ calendar: CalendarModel;
       newEnd
     }: CalendarEventTimesChangedEvent): void {
       event.start = newStart;
-      event.end = newEnd;
+      event.end = newEnd;      
       this.refresh.next();
     }
-
 }
