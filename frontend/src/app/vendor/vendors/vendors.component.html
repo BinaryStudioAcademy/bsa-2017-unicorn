@@ -2,19 +2,36 @@
     <div class="eight wide column">
         <div class="row" id="search-bar">
             <div class="ui grid">
-                <div class="five wide column ui input">
-                    <input places-auto-complete (initialized$)="initialized($event)" (place_changed)="placeChanged($event)" [types]="['geocode']"
-                        type="text" name="location" placeholder="LOCATION" [(ngModel)]="city">
+                <div class="equal width row">
+                    <div class="column">
+                        <div class="ui fluid input">
+                            <input type="text" name="name" placeholder="NAME" [(ngModel)]="name">
+                        </div>
+                    </div>
+                    <div class="six wide column search-btn-div">
+                        <a class="ui active button main" [ngClass]="{'loading': searchLoading}" (click)="search()">SEARCH</a>
+                        <button class="ui button" (click)="reset()">RESET</button>
+                    </div>
                 </div>
-                <div class="five wide column ui input">
-                    <input type="text" name="name" placeholder="NAME" [(ngModel)]="name">
-                </div>
-                <div class="six wide column search-btn-div">
-                    <a class="ui active button main" [ngClass]="{'loading': searchLoading}" (click)="search()">SEARCH</a>
-                    <button class="ui button" (click)="reset()">RESET</button>
+                <div class="row">
+                    <div class="column">
+                        <div class="ui form">
+                            <div class="inline fields">
+                                <div class="field">
+                                    <sui-radio-button name="vendorsOnly" value="vendor" [(ngModel)]="role">Only vendors</sui-radio-button>
+                                </div>
+                                <div class="field">
+                                    <sui-radio-button name="companiesOnly" value="company" [(ngModel)]="role">Only companies</sui-radio-button>
+                                </div>
+                                <div class="field">
+                                    <sui-radio-button name="all" value="all" [(ngModel)]="role">All</sui-radio-button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <sui-accordion class="fluid">
-                    <sui-accordion-panel [isOpen]="filtersIsOpen">
+                    <sui-accordion-panel [(isOpen)]="filtersIsOpen">
                         <div title>
                             <i class="filter icon"></i>
                             <label>Additional filters</label>
@@ -43,22 +60,18 @@
                                                     Only with reviews
                                                 </sui-checkbox>
                                             </div>
-                                            <div class="inline fields">
-                                                    <div class="field">
-                                                        <sui-radio-button name="vendorsOnly" value="vendor" [(ngModel)]="role">Only vendors</sui-radio-button>
-                                                    </div>
-                                                    <div class="field">
-                                                        <sui-radio-button name="companiesOnly" value="company" [(ngModel)]="role">Only companies</sui-radio-button>
-                                                    </div>
-                                                    <div class="field">
-                                                        <sui-radio-button name="all" value="all" [(ngModel)]="role">All</sui-radio-button>
-                                                    </div>
-                                                </div>
+                                            
                                         </div>
                                     </div>
                                     <div class="right floated column">
                                         <div class="row">
-                                            <div class="ui form">       
+                                            <div class="ui form">    
+                                                <div class="field">
+                                                    <div class="ui input">
+                                                        <input places-auto-complete (initialized$)="initialized($event)" (place_changed)="placeChanged($event)" [types]="['geocode']"
+                                                            type="text" name="location" placeholder="LOCATION" [(ngModel)]="city">
+                                                    </div>
+                                                </div>
                                                 <div class="field">
                                                     <label>Distance: {{distance}} km</label>
                                                 </div>
@@ -165,7 +178,7 @@
         <div *ngIf="searchLoading" class="ui active inverted dimmer" style="z-index: 0;">
             <div class="ui text loader">Loading</div>
         </div>
-        <div *ngIf="performers.length > pageSize" class="flex-centered" id="paging">
+        <div *ngIf="totalCount > pageSize" class="flex-centered" id="paging">
             <sui-pagination [collectionSize]="totalCount" [pageSize]="pageSize" [maxSize]="maxSize" [hasEllipses]="hasEllipses"
                 [(page)]="selectedPage" (pageChange)="search()">
             </sui-pagination>

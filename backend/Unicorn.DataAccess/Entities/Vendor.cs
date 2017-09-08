@@ -21,6 +21,8 @@ namespace Unicorn.DataAccess.Entities
 
         public virtual Person Person { get; set; }
 
+        public virtual Calendar Calendar { get; set; }
+
         public virtual ICollection<Work> Works { get; set; }
 
         public virtual ICollection<PortfolioItem> PortfolioItems { get; set; }

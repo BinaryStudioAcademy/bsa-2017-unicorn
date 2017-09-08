@@ -1,0 +1,41 @@
+@import "../../../global-style-variables.sass";
+
+.ui.basic.button
+    box-shadow: 0 0 0 1px $primary_color;   
+    color:  $primary_color;
+    background: none;
+    padding: 10px;    
+    width: 33%;
+    margin-right: 0px;
+    align-self: flex-end;
+    min-height: 2.8em;
+    border: 1px solid $primary_color; 
+
+.ui.basic.button:hover
+    background: rgba(0,0,0,.02)!important;
+
+.ui.buttons
+    width: 100%;
+
+.center-button
+    border-right: inherit!important;
+    border-left: inherit!important;
+
+.flex-row
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+.text-in-button
+    color: #ff647a;
+
+.week-month-buttons
+    flex-basis: 30%;
+
+.prev-next-buttons
+    flex-basis: 30%;
+
+.choose-date
+    flex-basis: 40%;
+    text-align: center;

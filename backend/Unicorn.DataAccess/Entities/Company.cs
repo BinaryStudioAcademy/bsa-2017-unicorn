@@ -23,6 +23,8 @@ namespace Unicorn.DataAccess.Entities
         public string DirectorContact { get; set; }
 
         public virtual Account Account { get; set; }
+
+        public virtual Calendar Calendar { get; set; }
        
         public virtual ICollection<Vendor> Vendors { get; set; }
 

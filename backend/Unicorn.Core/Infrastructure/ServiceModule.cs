@@ -19,6 +19,7 @@ namespace Unicorn.Core.Infrastructure
             Bind<IDBService>().To<DBService>();
             Bind<IMailService>().To<MailService>();
             Bind<IHistoryService>().To<HistoryService>();
+            Bind<ICalendarService>().To<CalendarService>();
             Bind<ICustomerService>().To<CustomerService>();
             Bind<IChatService>().To<ChatService>();
             Bind<IVendorService>().To<VendorService>();
