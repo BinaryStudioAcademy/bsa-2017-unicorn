@@ -102,7 +102,10 @@ export class VendorProfileContactsComponent implements OnInit {
     this.chatService.findDialog(this.ownerId, this.accountId).then(res => {
       if(res !== null){        
         this.dialog = res; 
-        this.dialog.ParticipantName = this.vendor.Name + " " + this.vendor.Surname;       
+        this.dialog.ParticipantName = this.vendor.Name + " ";
+        if (this.vendor.Surname) {
+          this.dialog.ParticipantName += this.vendor.Surname;
+        }       
         this.isLoaded = false;
         this.openChat = true;                      
       } 
@@ -111,7 +114,7 @@ export class VendorProfileContactsComponent implements OnInit {
           Id: null,
           ParticipantOneId: this.ownerId,
           ParticipantTwoId: this.accountId,
-          ParticipantName: this.vendor.Name + " " + this.vendor.MiddleName,
+          ParticipantName: this.vendor.Name + " " + (this.vendor.MiddleName ? this.vendor.MiddleName: ''),
           ParticipantAvatar: null,
           ParticipantProfileId: this.vendorId,
           ParticipantType: "vendor",

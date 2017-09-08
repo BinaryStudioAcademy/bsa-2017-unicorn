@@ -55,6 +55,8 @@ export class VendorsComponent implements OnInit {
   longitude: number;
   sort: string;
 
+  filtersIsOpen: boolean;
+
   categories: Category[];
   subcategories: Subcategory[];
 
@@ -98,7 +100,7 @@ export class VendorsComponent implements OnInit {
 
   search() {
     this.searchLoading = true;
-    
+    this.filtersIsOpen = false;
     let filteredCategories = this.selectedCategories || [];
 
     if (this.selectedSubcategories) {
@@ -138,6 +140,7 @@ export class VendorsComponent implements OnInit {
     this.slider = 0;
     this.distance = 0;
     this.withReviews = false;
+    this.search();
   }
 
   initAdvancedFilters() {

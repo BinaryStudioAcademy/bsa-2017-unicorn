@@ -49,7 +49,7 @@ export class MiniChatComponent implements OnInit {
       this.dialog = dial;      
       this.initializeDialog();     
     });
-    
+
     this.initializeDialog();     
     this.notificationService.listen<any>("RefreshMessages", res => {
       this.getMessage(res);

@@ -14,12 +14,13 @@
                     <button class="ui button" (click)="reset()">RESET</button>
                 </div>
                 <sui-accordion class="fluid">
-                    <sui-accordion-panel [isOpen]="filtersIsOpen">
+                    <sui-accordion-panel [(isOpen)]="filtersIsOpen">
                         <div title>
                             <i class="filter icon"></i>
                             <label>Additional filters</label>
                         </div>
                         <div content>
+                            <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.grey-indigo.min.css" />
                             <div class="ui grid container segment">
                                 <div class="equal width two column row">
                                     <div class="left floated column">

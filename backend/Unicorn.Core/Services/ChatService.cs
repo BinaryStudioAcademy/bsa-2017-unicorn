@@ -332,14 +332,14 @@ namespace Unicorn.Core.Services
             {
                 case RoleType.Customer:
                     var customer = _unitOfWork.CustomerRepository.Query.First(x => x.Person.Account.Id == acc.Id).Person;
-                    name = $"{customer.Name} {customer.Surname}";
+                    name = $"{customer.Name} {customer.Surname ?? ""}";
                     break;
                 case RoleType.Company:
                     name = _unitOfWork.CompanyRepository.Query.First(x => x.Account.Id == acc.Id).Name;
                     break;
                 case RoleType.Vendor:
                     var vendor = _unitOfWork.VendorRepository.Query.First(x => x.Person.Account.Id == acc.Id).Person;
-                    name = $"{vendor.Name} {vendor.Surname}";
+                    name = $"{vendor.Name} {vendor.Surname ?? ""}";
                     break;
             }
 

@@ -107,6 +107,7 @@ export class VendorEditWorksComponent implements OnInit {
       // if (!this.openedDetailedWindow){
       //   this.openedDetailedWindow = true;
       // }
+      
       this.isEditOpen = true;
     }
     
