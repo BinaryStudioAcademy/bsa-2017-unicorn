@@ -8,11 +8,13 @@ namespace Unicorn.DataAccess.Interfaces
     {
         IGenericRepository<Account> AccountRepository { get; }
         IGenericRepository<Book> BookRepository { get; }
+        IGenericRepository<Calendar> CalendarRepository { get; }
         IGenericRepository<Category> CategoryRepository { get; }
         IGenericRepository<Company> CompanyRepository { get; }
         IGenericRepository<Customer> CustomerRepository { get; }
         IGenericRepository<ChatDialog> ChatDialogRepository { get; }
         IGenericRepository<ChatMessage> ChatMessageRepository { get; }
+        IGenericRepository<ExtraDay> ExtraDayRepository { get; }
         IGenericRepository<History> HistoryRepository { get; }
         IGenericRepository<Location> LocationRepository { get; }
         IGenericRepository<Permission> PermissionRepository { get; }

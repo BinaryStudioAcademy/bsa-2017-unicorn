@@ -13,6 +13,7 @@ import { NgMapAsyncApiLoader } from "@ngui/map/dist";
 import { Contact } from "../../models/contact.model";
 import { TokenHelperService } from "../../services/helper/tokenhelper.service";
 import { CompanyService } from "../../services/company-services/company.service";
+import { CalendarService } from "../../services/calendar-service";
 
 @Component({
   selector: 'app-register-company',
@@ -40,7 +41,8 @@ export class RegisterCompanyComponent implements OnInit {
     public LocationService: LocationService,
     private apiLoader: NgMapAsyncApiLoader, 
     private tokenHelper: TokenHelperService,
-    private companyService: CompanyService) { }
+    private companyService: CompanyService,
+    private calendarService: CalendarService) { }
 
   ngOnInit() {
     this.apiLoader.load();
@@ -96,6 +98,7 @@ export class RegisterCompanyComponent implements OnInit {
         this.companyService.addCompanyContact(+this.tokenHelper.getClaimByName('profileid'),emailContact);
         this.companyService.addCompanyContact(+this.tokenHelper.getClaimByName('profileid'),phoneContact);
         this.authEventService.signIn();
+        this.calendarService.createCalendar(+this.tokenHelper.getClaimByName('accountid'));
         this.helperService.redirectAfterAuthentication();
       }).catch(err => this.loader = false);
     }

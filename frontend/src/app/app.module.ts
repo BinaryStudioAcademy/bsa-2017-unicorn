@@ -50,6 +50,7 @@ import { NotificationService } from "./services/notifications/notification.servi
 import { ChatModule } from "./chat/chat.module";
 import { ReviewModalComponent } from './review/review-modal/review-modal.component';
 import { ChatLogicService } from "./services/chat/chat-logic.service";
+import { CalendarService } from "./services/calendar-service";
 import { ClickOutsideModule } from "ng-click-outside/lib";
 
 export class CustomOptions extends ToastOptions {
@@ -106,6 +107,7 @@ export function getDefaultSignalRConfig(): SignalRConfiguration {
     AuthenticationEventService,
     ChatEventsService,
     MenuEventsService,
+    CalendarService,
     HelperService,
     TokenHelperService,
     AccountService,
