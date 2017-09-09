@@ -2,32 +2,22 @@
     <div class="eight wide column">
         <div class="row" id="search-bar">
             <div class="ui grid">
-                <div class="equal width row">
-                    <div class="column">
+                <div class="equal width stackable row">
+                    <div class="four wide column">
                         <div class="ui fluid input">
                             <input type="text" name="name" placeholder="NAME" [(ngModel)]="name">
+                        </div>
+                    </div>
+                    <div class=" centered column">
+                        <div class="label-box">
+                            <div (click)="role = 'vendor'" [ngClass]="{'selected': role ==='vendor'}" class="ui horizontal label">Only vendors</div>
+                            <div (click)="role = 'company'" [ngClass]="{'selected': role ==='company'}" class="ui horizontal label">Only companies</div>
+                            <div (click)="role = 'all'" [ngClass]="{'selected': role ==='all'}" class="ui selected horizontal label">All</div>
                         </div>
                     </div>
                     <div class="six wide column search-btn-div">
                         <a class="ui active button main" [ngClass]="{'loading': searchLoading}" (click)="search()">SEARCH</a>
                         <button class="ui button" (click)="reset()">RESET</button>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="column">
-                        <div class="ui form">
-                            <div class="inline fields">
-                                <div class="field">
-                                    <sui-radio-button name="vendorsOnly" value="vendor" [(ngModel)]="role">Only vendors</sui-radio-button>
-                                </div>
-                                <div class="field">
-                                    <sui-radio-button name="companiesOnly" value="company" [(ngModel)]="role">Only companies</sui-radio-button>
-                                </div>
-                                <div class="field">
-                                    <sui-radio-button name="all" value="all" [(ngModel)]="role">All</sui-radio-button>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <sui-accordion class="fluid">
@@ -60,7 +50,13 @@
                                                     Only with reviews
                                                 </sui-checkbox>
                                             </div>
-                                            
+                                            <div class="nine wide field">
+                                                    <div class="ui left icon input">
+                                                            <i class="calendar icon"></i>
+                                                            <input class="datepicker" placeholder="RIGHT NOW" suiDatepicker 
+                                                                    [pickerUseNativeOnMobile]="false">
+                                                        </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="right floated column">
