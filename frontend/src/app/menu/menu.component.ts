@@ -242,7 +242,7 @@ export class MenuComponent implements OnInit {
     notification.Time = new Date(notification.Time);
     this.newNotification = notification;
 
-    if (notification.Type = NotificationType.ChatNotification) {
+    if (notification.Type === NotificationType.ChatNotification) {
       var chatNotification = this.newNotifications.find(n => n.Type === NotificationType.ChatNotification);
       
       while (chatNotification !== undefined) {
@@ -282,7 +282,7 @@ export class MenuComponent implements OnInit {
 
   removeNotification(notification: Notification): void {
     this.notifications.splice(this.notifications.findIndex(n => n.Id === notification.Id), 1);
-    this.archivedNotifications.splice(this.notifications.findIndex(n => n.Id === notification.Id), 1);
+    this.archivedNotifications.splice(this.archivedNotifications.findIndex(n => n.Id === notification.Id), 1);
     this.accountService.removeNotification(+this.tokenHelper.getClaimByName("accountid"), notification);
   }
 
