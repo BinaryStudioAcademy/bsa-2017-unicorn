@@ -52,6 +52,8 @@ export class UserTasksComponent implements OnInit {
 
   books: CustomerBook[];
 
+  isLoaded: boolean;
+
   constructor(
     private bookService: CustomerbookService,
     private modalService: SuiModalService,
@@ -66,6 +68,7 @@ export class UserTasksComponent implements OnInit {
   }
 
   loadData() {
+    this.isLoaded = false;
     this.bookService.getCustomerBooks(this.user.Id)
     .then(resp => {
       this.books = resp.filter(b => b.Status != BookStatus.Confirmed)
@@ -76,7 +79,11 @@ export class UserTasksComponent implements OnInit {
           let s = new Date(b2.Date).getTime();
           return s - f;
         });
+      this.isLoaded = true;
       console.log(resp);
+    })
+    .catch(err => {
+      this.isLoaded = true;
     });
   }
 
