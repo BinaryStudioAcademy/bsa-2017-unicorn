@@ -1,5 +1,5 @@
 ﻿<div class="sixteen wide column" *ngIf="books !== undefined">
-    <div id="empty-header" *ngIf="books.length == 0">
+    <div id="empty-header" *ngIf="books ===null || books.length == 0">
         <span>There are no finished orders</span>
     </div>
     <div class="ui segment book-card grid" *ngFor="let book of books">
