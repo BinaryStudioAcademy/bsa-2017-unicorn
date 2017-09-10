@@ -298,7 +298,10 @@ namespace Unicorn.Core.Services
                 return companyReviews;
             }
 
-            return null;
+            return new CompanyReviews
+            {
+                Reviews = Enumerable.Empty<ReviewDTO>().ToList()
+            };
         }
 
         private int GetRatingByBookId(long id)

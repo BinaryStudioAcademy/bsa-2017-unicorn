@@ -17,6 +17,6 @@
 <div *ngIf="!isLoaded" class="ui active inverted dimmer" style="z-index: 0;">
     <div class="ui text loader">Loading</div>
 </div>
-<div *ngIf="books.length == 0">
-    <p align=center style="margin-top: 25px">There are no portfolio works</p>
+<div *ngIf="isLoaded && (books === null || books.length == 0)" class="ui center aligned header empty-header">
+    <span>There is nothing in portfolio</span>
 </div>
