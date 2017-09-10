@@ -234,18 +234,17 @@ export class VendorEditWorksComponent implements OnInit {
     return this.sanitizer.bypassSecurityTrustStyle(`url('${link}')`);
   }
 
-  fileChangeListener($event) {
-    var image: any = new Image();
-    this.file = $event.target.files[0];
+  fileChangeListener($event) {    
+    var image: any = new Image();     
+    this.file = $event.target.files[0];   
     var myReader: FileReader = new FileReader();
     var that = this;
     myReader.onloadend = function (loadEvent: any) {
       image.src = loadEvent.target.result;
-      that.cropper.setImage(image);
-
+      that.cropper.setImage(image);      
     };
     this.imageUploaded = true;
-    myReader.readAsDataURL(this.file);
+    myReader.readAsDataURL(this.file);  
   }
 
   fileSaveListener() {
@@ -258,7 +257,7 @@ export class VendorEditWorksComponent implements OnInit {
     }
     this.uploading = true;
     this.photoService.uploadToImgur(this.file)
-      .then(resp => {
+      .then(resp => {        
         this.uploading = false;
         this.selectedWork.Icon = this.data.image;
         this.imageUploaded = false;
