@@ -31,7 +31,7 @@ export class RegisterCompanyComponent implements OnInit {
   description: string;
   staff: number;
   email: string;
-  foundation: any;
+  foundation: Date;
 
   loader: boolean;
 
@@ -61,6 +61,8 @@ export class RegisterCompanyComponent implements OnInit {
   }
 
   aggregateInfo(): Company {
+    this.foundation.setDate(this.foundation.getDate() + 1);
+
     return {
       foundation: this.foundation,
       staff: this.staff,
