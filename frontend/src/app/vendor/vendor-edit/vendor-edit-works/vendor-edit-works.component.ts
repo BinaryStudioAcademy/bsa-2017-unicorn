@@ -133,6 +133,12 @@ export class VendorEditWorksComponent implements OnInit {
     this.subcategories = this.selectedCategory.Subcategories;
   }
 
+  isWorkValid(): boolean {
+    return this.selectedCategory 
+      && this.selectedSubcategory 
+      && this.selectedWork.Name !== ''
+  }
+
   createWork(): void {
     this.selectedWork.CategoryId = this.selectedCategory.Id;
     this.selectedWork.SubcategoryId = this.selectedSubcategory.Id;
