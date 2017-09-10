@@ -17,12 +17,15 @@ export class UserService {
 
   getUser(id: number): Promise<any> {
     return this.dataService.getFullRequest<User>("users/" + id)
-      .then(res => { return res });
+      .then(res => { return res }) 
+      .catch(err => location.href = 'index');
+    
   }
 
   getUserForOrder(id: number): Promise<any> {
     return this.dataService.getRequest<User>("users/" + id + "/order")
-      .then(res => { return res });
+      .then(res => { return res })
+      .catch(err => location.href = 'index');
   }
 
   // getUserOld(id: number): User {
@@ -59,15 +62,15 @@ export class UserService {
   updateUser(user: User): Promise<any> {
 
     return this.dataService.putFullRequest<User>('users/' + user.Id, user)
-      .catch(err => alert(err));
+    .catch(err => location.href = 'index');
   }
   getRating(id: number): Promise<any> {
     return this.dataService.getFullRequest<number>('users/'+id+'/rating')
-      .catch(err => alert(err));
+    .catch(err => location.href = 'index');
   }
   getReviews(id: number): Promise<any> {
     return this.dataService.getFullRequest<Review[]>('users/' + id + '/reviews')
-      .catch(err => alert(err));
+      .catch(err => location.href = 'index');
   }
 
 }
