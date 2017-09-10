@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, OnDestroy } from '@angular/core';
 import { NgModel } from '@angular/forms';
 import { User } from '../../models/user';
 
@@ -8,10 +8,13 @@ import { ReviewModal } from '../../review/review-modal/review-modal.component';
 import { CustomerbookService } from '../../services/customerbook.service';
 import { ReviewService } from '../../services/review.service';
 import { NotificationService } from "../../services/notifications/notification.service";
+import { TaskMessagingService } from '../../services/task-messaging.service';
 
 import { CustomerBook, BookStatus } from '../../models/book/book.model';
 import { ShortReview } from '../../models/short-review';
 import { MapModel } from "../../models/map.model";
+
+import { Subscription } from 'rxjs/Subscription';
 
 export interface IMapModal {
   id: number;
@@ -22,7 +25,7 @@ export interface IMapModal {
   templateUrl: './user-history.component.html',
   styleUrls: ['./user-history.component.sass']
 })
-export class UserHistoryComponent implements OnInit {
+export class UserHistoryComponent implements OnInit, OnDestroy {
 
   @Input() user: User;
   
@@ -31,6 +34,8 @@ export class UserHistoryComponent implements OnInit {
 
   books: CustomerBook[];
   
+  sub: Subscription;
+
   map: MapModel;   
   currModal: SuiActiveModal<IMapModal, {}, void>;  
 
@@ -38,12 +43,20 @@ export class UserHistoryComponent implements OnInit {
       private bookService: CustomerbookService,
       private modalService: SuiModalService,
       private reviewService: ReviewService,
-      private notificationService: NotificationService
+      private notificationService: NotificationService,
+      private taskMessaging: TaskMessagingService
     ) { }
   
     ngOnInit() {
       this.loadData();
       this.notificationService.listen<any>("RefreshOrders", () => this.loadData());
+      this.sub = this.taskMessaging.taskFinishedEvent.subscribe(() => {
+        this.loadData();
+      });
+    }
+
+    ngOnDestroy() {
+      this.sub.unsubscribe();
     }
   
     loadData() {

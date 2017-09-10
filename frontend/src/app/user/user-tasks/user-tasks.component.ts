@@ -7,6 +7,7 @@ import { ReviewModal } from '../../review/review-modal/review-modal.component';
 
 import { CustomerbookService } from '../../services/customerbook.service';
 import { ReviewService } from '../../services/review.service';
+import { TaskMessagingService } from '../../services/task-messaging.service';
 
 import { CustomerBook, BookStatus } from '../../models/book/book.model';
 import { ShortReview } from '../../models/short-review';
@@ -55,7 +56,8 @@ export class UserTasksComponent implements OnInit {
     private bookService: CustomerbookService,
     private modalService: SuiModalService,
     private reviewService: ReviewService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private taskMessaging: TaskMessagingService
   ) { }
 
   ngOnInit() {
@@ -145,7 +147,8 @@ export class UserTasksComponent implements OnInit {
     this.review.PerformerId = book.PerformerId;
     this.review.PerformerType = book.PerformerType;
     this.reviewService.saveReview(this.review).then(resp => {
-      this.books.splice(this.books.findIndex(b => b.Id === id), 1)
+      this.books.splice(this.books.findIndex(b => b.Id === id), 1);
+      this.taskMessaging.finishTask();
       this.loader = false;
       this.currModal.deny(undefined);
       this.clearData();

@@ -16,6 +16,7 @@ import { UserMessagesComponent } from './user-messages/user-messages.component';
 import { PhotoService, Ng2ImgurUploader } from '../services/photo.service';
 import { UserService } from '../services/user.service';
 import { DataService } from "../services/data.service";
+import { TaskMessagingService } from '../services/task-messaging.service';
 import { ReviewService } from '../services/review.service';
 import { CustomerbookService } from '../services/customerbook.service';
 import { environment } from "../../environments/environment";
@@ -64,7 +65,8 @@ import { ChatModule } from "../chat/chat.module";
         DataService,
         UserService,
         CustomerbookService,
-        ReviewService
+        ReviewService,
+        TaskMessagingService
     ]
 })
 export class UserModule { }
