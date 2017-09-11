@@ -9,6 +9,7 @@ import { CategoryService } from '../../services/category.service';
 
 import { SearchWork } from '../../models/search/search-work';
 import { SearchTag } from '../../models/search/search-tag';
+import { SearchMarker } from '../../models/search/search-marker';
 import { LocationModel } from '../../models/location.model';
 import { Category } from '../../models/category.model';
 import { Subcategory } from '../../models/subcategory.model';
@@ -56,15 +57,19 @@ export class SearchComponent implements OnInit {
   hasEllipses = true;
   selectedPage = 1;
   works: SearchWork[] = [];
+  pagedWorks: SearchWork[] = [];
   /* map */
   positions = [];
   markers = [];
+  selMarker: SearchMarker;
+  searchMarkers: SearchMarker[] = [];
   reviewsTab = 'reviews';
   center: google.maps.LatLng;
   autocomplete: google.maps.places.Autocomplete;
   address: any = {};
   place: any;
   selected: string = '';
+  selWork: string;
 
   constructor(
     private searchService: SearchService,
@@ -84,12 +89,16 @@ export class SearchComponent implements OnInit {
     this.works = [];
     this.spinner = true;
     this.getWorksByBaseFilters(this.category, this.subcategory, this.rawDate);
+    this.pagedWorks = this.getWorksPage();
+    this.searchMarkers = this.getMarkers();
   }
 
   getWorksByBaseFilters(category: string, subcategory: string, date: number) {
     this.searchService.getWorksByBaseFilters(category, subcategory, date)
     .then(works => {
       this.works = works;
+      this.pagedWorks = this.getWorksPage();
+      this.searchMarkers = this.getMarkers();
       this.spinner = false;
       this.loaded = true;
       this.mapRedirect();
@@ -134,7 +143,6 @@ export class SearchComponent implements OnInit {
 
   filterCategory() {
     this.filterCtgs = this.filter(this.categories, this.category);
-    console.log(this.filterCtgs);
   }
 
   filterSubcategory() {
@@ -219,6 +227,8 @@ export class SearchComponent implements OnInit {
     categories, subcategories, sort)
     .then(works => {
       this.works = works;
+      this.pagedWorks = this.getWorksPage();
+      this.searchMarkers = this.getMarkers();
       this.spinner = false;
       this.loaded = true;
       this.mapRedirect();
@@ -246,6 +256,25 @@ export class SearchComponent implements OnInit {
     this.reviewsChecked = false;
     this.selCategories = [];
     this.selSubcategories = [];
+  }
+
+  scrollToElement(id) {
+    const element = document.querySelector('#' + id);
+    element.scrollIntoView(false);
+  }
+
+  highlight(performer, id) {
+    if (this.selMarker && this.selMarker.works.filter(e => e.PerformerType === performer && e.Id === id).length > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  markerHandle(marker) {
+    this.selMarker = marker;
+    this.selected = marker.name;
+    this.scrollToElement(this.selMarker.works[0].PerformerType + this.selMarker.works[0].Id);
   }
 
   initAdvancedFilters() {
@@ -339,12 +368,39 @@ export class SearchComponent implements OnInit {
     this.ref.detectChanges();
   }
 
+  pageChanged(page) {
+    this.selectedPage = page;
+    this.pagedWorks = this.getWorksPage();
+    this.searchMarkers = this.getMarkers();
+  }
+
   getWorksPage(): SearchWork[] {
     return this.works.slice((this.selectedPage - 1) * Number(this.pageSize), this.selectedPage * Number(this.pageSize));
   }
 
-  getWorksPage2(): SearchWork[] {
-    return this.works.slice(0, 2);
+  getMarkers(): SearchMarker[] {
+    let exist = false;
+    let markers = [];
+    const works = this.works.slice((this.selectedPage - 1) * Number(this.pageSize), this.selectedPage * Number(this.pageSize));
+    for (let i = 0; i < works.length; i++) {
+      exist = false;
+      for (let j = 0; j < markers.length; j++) {
+        if (works[i].PerformerName === markers[j].name) {
+          markers[j].works.push(works[i]);
+          exist = true;
+        }
+      }
+      if (!exist) {
+        const marker = {
+          name: works[i].PerformerName,
+          latitude: works[i].Location.Latitude,
+          longitude: works[i].Location.Longitude,
+          works: [works[i]]
+        };
+        markers.push(marker);
+      }
+    }
+    return markers;
   }
 
   pageSizeChanged() {

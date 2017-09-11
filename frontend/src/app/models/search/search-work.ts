@@ -6,6 +6,7 @@ export interface SearchWork {
     Name: string;
     Avatar: string;
     PerformerType: string;
+    PerformerName: string;
     Link: string;
     Location: LocationModel;
     Description: string;
