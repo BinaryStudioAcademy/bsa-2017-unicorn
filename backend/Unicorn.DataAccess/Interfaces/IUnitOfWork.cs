@@ -13,6 +13,7 @@ namespace Unicorn.DataAccess.Interfaces
         IGenericRepository<Company> CompanyRepository { get; }
         IGenericRepository<Customer> CustomerRepository { get; }
         IGenericRepository<ChatDialog> ChatDialogRepository { get; }
+        IGenericRepository<ChatFile> ChatFileRepository { get; }
         IGenericRepository<ChatMessage> ChatMessageRepository { get; }
         IGenericRepository<ExtraDay> ExtraDayRepository { get; }
         IGenericRepository<History> HistoryRepository { get; }

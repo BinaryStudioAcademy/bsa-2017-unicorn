@@ -69,6 +69,7 @@
             <div class=" field " style="display: flex; ">
                 <textarea #textArea (keydown)="onChange($event) " (click)="readNotReadedMessages(dialog) " [ngStyle]="{ 'height.px': inputHeight} " class="prompt " type="text " placeholder="Type here... " [(ngModel)]="writtenMessage " style="display:inline ">                        
                 </textarea>
+                <input type="file" (change)="uploadFile()" multiple="true" #fileInput>
                 <div class="ui icon input ">
                     <i class="talk outline link icon " (click)="onWrite() "></i>
                 </div>

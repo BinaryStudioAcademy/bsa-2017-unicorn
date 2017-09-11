@@ -60,6 +60,7 @@
     <Compile Include="Entities\Account.cs" />
     <Compile Include="Entities\Calendar.cs" />
     <Compile Include="Entities\ChatDialog.cs" />
+    <Compile Include="Entities\ChatFile.cs" />
     <Compile Include="Entities\ChatMessage.cs" />
     <Compile Include="Entities\ContactProvider.cs" />
     <Compile Include="Entities\Enum\BookStatus.cs" />

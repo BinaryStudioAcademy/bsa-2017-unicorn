@@ -105,7 +105,8 @@ export class ChatLogicService {
           DialogId: this.selectedId,
           IsReaded: false, 
           OwnerId: this.ownerId,
-          Message: this.writtenMessage, 
+          Message: this.writtenMessage,
+          Files: null,
           Date: new Date(),
           isLoaded: true
         };

@@ -53,6 +53,7 @@
     <Compile Include="DTOs\CalendarDTO.cs" />
     <Compile Include="DTOs\CategoryDTO.cs" />
     <Compile Include="DTOs\Chat\ChatDialogDTO.cs" />
+    <Compile Include="DTOs\Chat\ChatFileDTO.cs" />
     <Compile Include="DTOs\Chat\ChatMessageDTO.cs" />
     <Compile Include="DTOs\CompanyDTO.cs" />
     <Compile Include="DTOs\CompanyPage\CompanyBook.cs" />

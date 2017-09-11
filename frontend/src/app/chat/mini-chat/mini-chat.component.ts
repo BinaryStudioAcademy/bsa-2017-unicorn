@@ -250,7 +250,8 @@ export class MiniChatComponent implements OnInit {
       DialogId: this.dialog.Id,
       IsReaded: false, 
       OwnerId: this.ownerId,
-      Message: this.writtenMessage, 
+      Message: this.writtenMessage,
+      Files: null,
       Date: new Date(),
       isLoaded: true
     };   
