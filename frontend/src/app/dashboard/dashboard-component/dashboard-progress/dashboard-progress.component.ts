@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy, ViewChild  } from '@angular/core';
+import { DatePipe } from '@angular/common';
 
 import { BookCard, BookStatus } from '../../../models/dashboard/book-card';
 
@@ -34,7 +35,9 @@ export class DashboardProgressComponent implements OnInit, OnDestroy {
     private dashMessaging: DashMessagingService,
     private notificationService: NotificationService,
     private toastr: ToastsManager,
-    private modalService: SuiModalService) { }
+    private modalService: SuiModalService,
+    private datePipe: DatePipe
+  ) { }
 
   ngOnInit() {
     this.loadData();
@@ -70,6 +73,16 @@ export class DashboardProgressComponent implements OnInit, OnDestroy {
       this.toastr.error('Cannot finish task');
     });
   }
+
+  getEndDate(book: BookCard): string {
+    let date = this.datePipe.transform(book.Date, 'dd/MM/yyyy');
+    let endDate = this.datePipe.transform(book.EndDate, 'dd/MM/yyyy');
+    if (date == endDate) {
+      return '';
+    }
+    return ` - ${endDate}`;
+  }
+
   openMap(id:number)
   { 
     this.map = {

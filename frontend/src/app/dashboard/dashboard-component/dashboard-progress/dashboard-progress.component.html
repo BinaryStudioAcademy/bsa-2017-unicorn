@@ -7,7 +7,7 @@
             <img class="ui tiny circular image" src="{{book.Work.Icon}}">
         </div>
         <div class="book-info five wide column">
-            <p>{{book.Work.Name}} <span align=right>{{book.Date | date: 'dd/MM/yyyy'}}</span></p>
+            <p>{{book.Work.Name}} <span align=right>{{book.Date | date: 'dd/MM/yyyy'}}{{getEndDate(book)}}</span></p>
             <p>{{book.Description}}</p>
         </div>
         <div class="customer-info five wide column">

@@ -66,6 +66,7 @@ export class BookComponent implements OnInit {
 
     this.book = {
       date: new Date(),
+      endDate: null,
       location: this.defaultLocation,
       description: "",
       workid: 0,
@@ -117,7 +118,16 @@ export class BookComponent implements OnInit {
     if (this.bookForm.invalid) {
       return;
     }
+    this.validateEndDate();
     this.order();
+  }
+
+  private validateEndDate() {
+    let date = this.book.date;
+    let endDate = this.book.endDate;
+    if (endDate === null || endDate === undefined || endDate.getTime() < date.getTime()) {
+      this.book.endDate = new Date(date); 
+    }
   }
 
   private updateLoader() {

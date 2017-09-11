@@ -11,6 +11,8 @@ namespace Unicorn.DataAccess.Entities
         public bool IsDeleted { get; set; }
         public DateTimeOffset Date { get; set; }
 
+        public DateTimeOffset EndDate { get; set; }
+
         public BookStatus Status { get; set; }
 
         public string Description { get; set; }

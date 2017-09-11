@@ -2,6 +2,7 @@ import { LocationModel } from '../location.model';
 
 export interface BookOrder {
     date: Date;
+    endDate: Date;
     description: string;
     customerid: number;
     location: LocationModel;
