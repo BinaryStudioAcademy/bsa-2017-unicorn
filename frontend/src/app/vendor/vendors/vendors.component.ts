@@ -168,7 +168,9 @@ export class VendorsComponent implements OnInit {
   placeChanged(event) {
     this.locationService.getLocDetails(event.geometry.location.lat(), event.geometry.location.lng())
       .subscribe(result => {
-        this.city = result.address_components[3].short_name;
+        this.city = result
+          .address_components[result.address_components.findIndex(x => x.types.length === 2 && x.types.includes("locality") && x.types.includes("political"))]
+          .short_name;
         this.longitude = event.geometry.location.lng();
         this.latitude = event.geometry.location.lat();
 
