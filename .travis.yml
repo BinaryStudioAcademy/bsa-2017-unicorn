@@ -11,7 +11,7 @@ before_script:
 - npm install -g @angular/cli
 - npm install
 script:
-- ng build --target=development --environment=prod
+- ng build --prod
 after_success:
   - cd dist
   - ncftpput -R -v -u $FTP_USER -p $FTP_PASSWORD 50.31.20.254 Unicorn/frontend ./
