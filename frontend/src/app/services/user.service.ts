@@ -7,18 +7,21 @@ import { Book } from '../models/book/book.model'
 import { Vendor } from '../models/vendor.model'
 import { environment } from "../../environments/environment";
 import { Review } from "../models/review.model";
-
+import { Router } from '@angular/router';
 @Injectable()
 export class UserService {
 
-  constructor(private dataService: DataService) {
+  constructor(private dataService: DataService,  private router: Router,) {
     dataService.setHeader('Content-Type', 'application/json');
   }
 
   getUser(id: number): Promise<any> {
     return this.dataService.getFullRequest<User>("users/" + id)
       .then(res => { return res }) 
-      .catch(err => location.href = 'index');
+      .catch(err => this.router.navigate([`not-found`], {
+        queryParams: {
+          message: `User №${id} wasn't found`,
+        }}));
     
   }
 
