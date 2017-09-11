@@ -5,6 +5,7 @@ import { LocationModel } from '../location.model';
 export class VendorBook {
 	Id: number;
     Date: Date;
+    EndDate: Date;
 	Status: BookStatus;
     Description: string;
 	Customer: string;

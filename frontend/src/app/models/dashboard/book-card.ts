@@ -5,6 +5,7 @@ import { Review } from '../review.model';
 export interface BookCard {
     Id: number;
     Date: Date;
+    EndDate: Date;
     Status: BookStatus;
     Description: string;
     Customer: string;

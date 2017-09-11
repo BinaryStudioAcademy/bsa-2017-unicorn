@@ -12,6 +12,8 @@ namespace Unicorn.Shared.DTOs.Book
 
         public DateTimeOffset Date { get; set; }
 
+        public DateTimeOffset EndDate { get; set; }
+
         public BookStatus Status { get; set; }
 
         public string Description { get; set; }

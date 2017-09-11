@@ -5,7 +5,8 @@ import { Review } from '../review.model';
 import { LocationModel } from '../location.model';
 
 export interface Book {
-	Date: Date;
+    Date: Date;
+    EndDate: Date;
 	Description: string;
 	Vendor: Vendor;
 	Company: CompanyShort;
@@ -17,6 +18,7 @@ export interface Book {
 export interface CustomerBook {
     Id: number;
     Date: Date;
+    EndDate: Date;
     Status: BookStatus;
     Description: string;
     Performer: string;
