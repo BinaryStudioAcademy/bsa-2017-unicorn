@@ -20,7 +20,7 @@ export class UserService {
       .then(res => { return res }) 
       .catch(err => this.router.navigate([`not-found`], {
         queryParams: {
-          message: `User №${id} wasn't found`,
+          message: `this user doesn’t exist. Try to find someone else.`,
         }}));
     
   }
