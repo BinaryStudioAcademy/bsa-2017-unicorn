@@ -42,9 +42,11 @@ constructor(private companyService: CompanyService,
   onCategorySelect(category: CompanyCategory): void {
     if(this.selectedCategory !== category){
       setTimeout(() => {
+        
         this.openedCategoryDetails = true;
         this.selectedCategory = category;
         this.categoryWorks = this.company.Works.filter(w => w.Subcategory.Category.Id === this.selectedCategory.Id);
+        //console.log(this.categoryWorks);
       }, 50); 
     }
     else{
@@ -59,6 +61,10 @@ constructor(private companyService: CompanyService,
       this.openedCategoryDetails = false;
       this.selectedCategory = undefined;
     }
+  }
+
+  getWorkIcon(work: CompanyWork): string {
+    return work.Icon === null ? work.Subcategory.Category.Icon : work.Icon;
   }
 
 }
