@@ -16,11 +16,13 @@ namespace Unicorn.Core.Services
     public class PopularService : IPopularService
     {
         private readonly IUnitOfWork _uow;
+        private readonly IUnitOfWorkFactory _uowFactory;
         private readonly IRatingService _ratingService;
 
-        public PopularService(IUnitOfWork uow, IRatingService ratingService)
+        public PopularService(IUnitOfWorkFactory uowFactory, IRatingService ratingService)
         {
-            _uow = uow;
+            _uowFactory = uowFactory;
+            _uow = _uowFactory.CreateUnitOfWork();
             _ratingService = ratingService;
         }
 
@@ -41,63 +43,123 @@ namespace Unicorn.Core.Services
             string subcategoriesString, double? latitude, double? longitude, double? distance, string sort
             )
         {
-            var reviews = await _uow.ReviewRepository.GetAllAsync();
+            var reviewsTask = _uow.ReviewRepository.GetAllAsync();
             var categories = !string.IsNullOrEmpty(categoriesString) ? categoriesString.Split(' ').Select(c => Int64.Parse(c)).ToList() : new List<long>();
             var subcategories = !string.IsNullOrEmpty(subcategoriesString) ? subcategoriesString.Split(' ').Select(c => Int64.Parse(c)).ToList() : new List<long>();
 
             IQueryable<Vendor> vendorsQuery = null;
             IQueryable<Company> companiesQuery = null;
 
-            if (role == "vendor" || role == "all")
+            var vendorsTask = Task.Run(() => 
             {
-                vendorsQuery = _uow.VendorRepository
+                IUnitOfWork uow;
+
+                lock(_uowFactory)
+                {
+                    uow = _uowFactory.CreateUnitOfWork();
+                }
+
+                if (role == "vendor" || role == "all")
+                {
+                    vendorsQuery = uow.VendorRepository
+                        .Query
+                        .Include(v => v.Works
+                            .Select(w => w.Subcategory.Category))
+                        .Include(v => v.Person)
+                        .Include(v => v.Person.Account)
+                        .Include(v => v.Person.Account.Location);
+                }
+
+                if (!string.IsNullOrEmpty(name))
+                {
+                    vendorsQuery = vendorsQuery?
+                        .Where(v => v.Person.Name.Contains(name));
+                }
+
+                var vendorsSubcategoryQuery = vendorsQuery.AsEnumerable();
+                var vendorsCategoryQuery = vendorsQuery.AsEnumerable();
+
+                var filterByCategoryTask = Task.Run(() =>
+                {
+                    foreach (var categoryId in categories)
+                    {
+                        vendorsCategoryQuery = vendorsCategoryQuery?
+                            .Where(v => v.Works.Any(w => w.Subcategory.Category.Id == categoryId));
+                    }
+                });
+
+                var filterBySubcategoryTask = Task.Run(() =>
+                {
+                    foreach (var subcategoryId in subcategories)
+                    {
+                        vendorsSubcategoryQuery = vendorsQuery?
+                            .Where(v => v.Works.Any(w => w.Subcategory.Id == subcategoryId));
+                    }
+                });
+
+                Task.WaitAll(filterBySubcategoryTask, filterByCategoryTask);
+
+                return vendorsQuery != null ? vendorsSubcategoryQuery.Intersect(vendorsCategoryQuery).ToList() : new List<Vendor>();
+            });
+
+            var companiesTask = Task.Run(() => 
+            {
+                IUnitOfWork uow;
+
+                lock (_uowFactory)
+                {
+                    uow = _uowFactory.CreateUnitOfWork();
+                }
+
+
+                if (role == "company" || role == "all")
+                {
+                    companiesQuery = uow.CompanyRepository
                     .Query
-                    .Include(v => v.Works
-                        .Select(w => w.Subcategory.Category))
-                    .Include(v => v.Person)
-                    .Include(v => v.Person.Account)
-                    .Include(v => v.Person.Account.Location);
-            }
-            if (role == "company" || role == "all")
-            {
-                companiesQuery = _uow.CompanyRepository
-                .Query
-                .Include(c => c.Works)
-                .Include(c => c.Account)
-                .Include(c => c.Account.Location);
-            }
-            if (!string.IsNullOrEmpty(name))
-            {
-                vendorsQuery = vendorsQuery?
-                    .Where(v => v.Person.Name.Contains(name));
-                companiesQuery = companiesQuery?
-                    .Where(c => c.Name.Contains(name));
-            }
+                    .Include(c => c.Works)
+                    .Include(c => c.Account)
+                    .Include(c => c.Account.Location);
+                }
+                if (!string.IsNullOrEmpty(name))
+                {
+                    companiesQuery = companiesQuery?
+                        .Where(c => c.Name.Contains(name));
+                }
 
-            var vendorsCategoryQuery = vendorsQuery;
-            var companiesCategoryQuery = companiesQuery;
+                var companiesCategoryQuery = companiesQuery;
+                var companiesSubcategoryQuery = companiesQuery;
 
-            foreach (var categoryId in categories)
-            {
-                vendorsCategoryQuery = vendorsCategoryQuery?
-                    .Where(v => v.Works.Any(w => w.Subcategory.Category.Id == categoryId));
-                companiesCategoryQuery = companiesCategoryQuery?
-                    .Where(c => c.Works.Any(w => w.Subcategory.Category.Id == categoryId));
-            }
+                var filterByCategoryTask = Task.Run(() =>
+                {
+                    foreach (var categoryId in categories)
+                    {
+                        companiesCategoryQuery = companiesCategoryQuery?
+                            .Where(c => c.Works.Any(w => w.Subcategory.Category.Id == categoryId));
+                    }
+                });
 
-            foreach (var subcategoryId in subcategories)
-            {
-                vendorsQuery = vendorsQuery?
-                    .Where(v => v.Works.Any(w => w.Subcategory.Id == subcategoryId));
-                companiesQuery = companiesQuery?
-                    .Where(c => c.Works.Any(w => w.Subcategory.Id == subcategoryId));
-            }
+                var filterBySubcategoryTask = Task.Run(() =>
+                {
+                    foreach (var subcategoryId in subcategories)
+                    {
+                        companiesSubcategoryQuery = companiesQuery?
+                            .Where(c => c.Works.Any(w => w.Subcategory.Id == subcategoryId));
+                    }
+                });
 
-            var vendorsList = vendorsQuery != null ? await vendorsQuery.Intersect(vendorsCategoryQuery).ToListAsync() : new List<Vendor>();
+                Task.WaitAll(filterBySubcategoryTask, filterByCategoryTask);
+
+                return companiesQuery != null ? companiesSubcategoryQuery.Intersect(companiesCategoryQuery).ToList() : new List<Company>();
+            });
+            
+            var reviews = await reviewsTask;
+
+            var vendorsList = await vendorsTask;
             var vendors = vendorsList
                 .Select(v => VendorToFullPerformer(v, reviews, longitude, latitude))
                 .ToList();
-            var companiesList = companiesQuery != null ? await companiesQuery.Intersect(companiesCategoryQuery).ToListAsync() : new List<Company>();
+
+            var companiesList = await companiesTask;
             var companies = companiesList
                 .Select(c => CompanyToFullPerformer(c, reviews, longitude, latitude))
                 .ToList();
