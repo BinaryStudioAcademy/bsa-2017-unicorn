@@ -186,8 +186,10 @@
         No results found
       </div>
       <div *ngIf="works" class="ui grid" id="works-grid">
-        <div class="three column row remove-padding-top">
-          <div class="column cell" *ngFor="let work of getWorksPage()">
+        <div class="three column row padding-width">
+          <div class="cell" *ngFor="let work of pagedWorks"
+                id="{{work.PerformerType}}{{work.Id}}" 
+                [ngClass]="{'cell-selected': highlight(work.PerformerType, work.Id)}">
             <a routerLink="/{{work.Link}}" [queryParams]="{work: work.Id}" class="ui medium image">
               <img class="ui fluid image" src="{{work.Avatar}}"/>
               <div class="row cell-info">
@@ -211,21 +213,22 @@
                         [pageSize]="pageSize"
                         [maxSize]="maxSize"
                         [hasEllipses]="hasEllipses"
-                        [(page)]="selectedPage">
+                        [(page)]="selectedPage"
+                        (pageChange)="pageChanged($event)">
         </sui-pagination>     
       </div>
   </div>
   <div class="six wide column">
     <div class="row">
         <div class="map-container">
-            <ngui-map (mapReady$)="onMapReady($event)" class="map" zoom="6" [center]="center" *ngIf="loaded">
-                <custom-marker *ngFor="let work of getWorksPage()" 
-                    [position]="[work.Location.Latitude, work.Location.Longitude]">
-                    <span class="map-marker" [ngClass]="{'active-marker': selected == work.PerformerName}">
-                        <a routerLink="/{{work.Link}}">{{work.PerformerName}}</a>
-                    </span>
-                </custom-marker>
-            </ngui-map>
+          <ngui-map (mapReady$)="onMapReady($event)" class="map" zoom="6" [center]="center" *ngIf="loaded">
+            <custom-marker *ngFor="let marker of searchMarkers" 
+              [position]="[marker.latitude, marker.longitude]">                    
+              <span class="map-marker" [ngClass]="{'active-marker': selected == marker.name}">
+                <a (click)="markerHandle(marker)">{{marker.name}}</a>                        
+              </span>
+            </custom-marker>
+          </ngui-map>
         </div>
     </div>
   </div>
