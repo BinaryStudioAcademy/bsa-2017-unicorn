@@ -6,6 +6,7 @@ import { NguiMapModule, Marker, NguiMap} from '@ngui/map';
 
 import { SearchService } from '../../services/search.service';
 import { CategoryService } from '../../services/category.service';
+import { LocationService } from "../../services/location.service";
 
 import { SearchWork } from '../../models/search/search-work';
 import { SearchTag } from '../../models/search/search-tag';
@@ -51,6 +52,7 @@ export class SearchComponent implements OnInit {
   selSubcategories: string[];
   sort: string;
   selSort: number;
+  city: string;
   /* pagination */
   pageSize = '20';
   maxSize = 3;
@@ -75,7 +77,8 @@ export class SearchComponent implements OnInit {
     private searchService: SearchService,
     private categoryService: CategoryService,
     private route: ActivatedRoute,
-    private ref: ChangeDetectorRef
+    private ref: ChangeDetectorRef,
+    private locationService: LocationService
   ) { }
 
   ngOnInit() {
@@ -190,7 +193,7 @@ export class SearchComponent implements OnInit {
     this.getWorksByAdvFilters(this.category, this.subcategory, this.rawDate,
            this.vendorName, this.ratingCmp, this.rating, this.reviewsChecked,
            this.latitude, this.longitude, this.distance,
-           this.selCategories, this.selSubcategories, this.selSort);
+           this.selCategories, this.selSubcategories, this.city, this.selSort);
   }
 
   convertRatingType(rating: string) {
@@ -220,11 +223,11 @@ export class SearchComponent implements OnInit {
   getWorksByAdvFilters(category: string, subcategory: string, date: number,
       vendor: string, ratingcompare: string, rating: number, reviews: boolean,
       latitude: number, longitude: number, distance: number,
-      categories: string[], subcategories: string[], sort: number) {
+      categories: string[], subcategories: string[], city: string, sort: number) {
 
     this.searchService.getWorksByAdvFilters(category, subcategory, date,
     vendor, ratingcompare, rating, reviews, latitude, longitude, distance,
-    categories, subcategories, sort)
+    categories, subcategories, city, sort)
     .then(works => {
       this.works = works;
       this.pagedWorks = this.getWorksPage();
@@ -256,6 +259,7 @@ export class SearchComponent implements OnInit {
     this.reviewsChecked = false;
     this.selCategories = [];
     this.selSubcategories = [];
+    this.city = '';
   }
 
   scrollToElement(id) {
@@ -414,11 +418,18 @@ export class SearchComponent implements OnInit {
     this.autocomplete = autocomplete;
   }
 
-  placeChanged(place: any) {
-    this.place = place;
-    this.latitude = this.place.geometry.location.lat();
-    this.longitude = this.place.geometry.location.lng();
-    this.ref.detectChanges();
+  placeChanged(event: any) {
+    this.locationService.getLocDetails(event.geometry.location.lat(), event.geometry.location.lng())
+      .subscribe(result => {
+        this.city = result
+          .address_components[result.address_components.findIndex(x => x.types.length === 2 && x.types.includes("locality") && x.types.includes("political"))]
+          .short_name;
+        this.longitude = event.geometry.location.lng();
+        this.latitude = event.geometry.location.lat();
+
+        this.searchWorks();
+        this.ref.detectChanges();
+      });
   }
 
 

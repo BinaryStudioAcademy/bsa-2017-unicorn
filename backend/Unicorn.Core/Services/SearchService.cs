@@ -25,9 +25,11 @@ namespace Unicorn.Core.Services
         public async Task<List<SearchWorkDTO>> GetWorksByFilters(  string category, string subcategory, int? date,
                                                                    string vendor, string ratingcompare, double? rating, bool? reviews,
                                                                    double? latitude, double? longitude, double? distance,
-                                                                   string[] categories, string[] subcategories,
+                                                                   string[] categories, string[] subcategories, string city,
                                                                    int? sort  )
         {
+
+
             var reviewsList = await _unitOfWork.ReviewRepository.GetAllAsync();
 
             var vendorsWorksList = await _unitOfWork.WorkRepository
@@ -42,7 +44,7 @@ namespace Unicorn.Core.Services
                 .ToListAsync();
 
             var vendorsWorks = CreateVendorsWorksAdv(vendorsWorksList, reviewsList, 
-                ratingcompare, rating, reviews, latitude, longitude, distance, categories, subcategories);
+                ratingcompare, rating, reviews, latitude, longitude, distance, categories, subcategories, city);
 
 
             var companiesWorksList = await _unitOfWork.WorkRepository
@@ -56,7 +58,7 @@ namespace Unicorn.Core.Services
                 .ToListAsync();
 
             var companiesWorks = CreateCompaniesWorksAdv(companiesWorksList, reviewsList,
-                ratingcompare, rating, reviews, latitude, longitude, distance, categories, subcategories);
+                ratingcompare, rating, reviews, latitude, longitude, distance, categories, subcategories, city);
 
             var searchWorks = vendorsWorks
                 .Concat(companiesWorks)
@@ -84,18 +86,16 @@ namespace Unicorn.Core.Services
             return searchWorksOrdered;
         }
 
-        private List<SearchWorkDTO> CreateVendorsWorksAdv( List<Work> works, IEnumerable<Review> reviewsList, 
+        private List<SearchWorkDTO> CreateVendorsWorksAdv(List<Work> works, IEnumerable<Review> reviewsList,
                                                         string ratingcompare, double? rating, bool? reviews,
                                                         double? latitude, double? longitude, double? distance,
-                                                        string[] categories, string[] subcategories )
+                                                        string[] categories, string[] subcategories, string city)
         {
-            return works
+            var worksQuery = works
                 .Where(w => string.IsNullOrEmpty(ratingcompare) || rating == null ||
                            (ratingcompare.Equals("ge") && (CalculateRating(w.Vendor.Person.Account.Id) >= rating)) ||
                            (ratingcompare.Equals("le") && (CalculateRating(w.Vendor.Person.Account.Id) <= rating)))
                 .Where(w => reviews == null || reviews == false || reviewsList.Count(r => r.ToAccountId == w.Vendor.Person.Account.Id) > 0)
-                .Where(w => distance == null || CalculateDistance(w.Vendor.Person.Account.Location.Latitude, w.Vendor.Person.Account.Location.Longitude, 
-                            latitude, longitude) <= distance)
                 .Where(w => categories == null || categories.Length < 1 || string.IsNullOrEmpty(categories[0]) || categories.Any(c => c.Equals(w.Subcategory.Category.Name)))
                 .Where(w => subcategories == null || subcategories.Length < 1 || string.IsNullOrEmpty(subcategories[0]) || subcategories.Any(c => c.Equals(w.Subcategory.Name)))
                 .Select(w => new SearchWorkDTO
@@ -119,21 +119,33 @@ namespace Unicorn.Core.Services
                     },
                     Distance = CalculateDistance(w.Vendor.Person.Account.Location.Latitude, w.Vendor.Person.Account.Location.Longitude,
                                                  latitude, longitude)
-                }).ToList();
+                });
+
+            if (distance == 0 || distance == null)
+            {
+                if (!string.IsNullOrEmpty(city))
+                    worksQuery = worksQuery?
+                        .Where(p => p.Location.City.Contains(city));
+            }
+            else
+            {
+                worksQuery = worksQuery?
+                    .Where(p => p.Distance <= distance);
+            }
+
+            return worksQuery.ToList();
         }
 
         private List<SearchWorkDTO> CreateCompaniesWorksAdv( List<Work> works, IEnumerable<Review> reviewsList,
                                                           string ratingcompare, double? rating, bool? reviews,
                                                           double? latitude, double? longitude, double? distance,
-                                                          string[] categories, string[] subcategories )
+                                                          string[] categories, string[] subcategories, string city)
         {
-            return works
+            var worksQuery = works
                 .Where(w => string.IsNullOrEmpty(ratingcompare) || rating == null ||
                             (ratingcompare.Equals("ge") && (CalculateRating(w.Company.Account.Id) >= rating)) ||
                             (ratingcompare.Equals("le") && (CalculateRating(w.Company.Account.Id) <= rating)))
                 .Where(w => reviews == null || reviews == false || reviewsList.Count(r => r.ToAccountId == w.Company.Account.Id) > 0)
-                .Where(w => distance == null || CalculateDistance(w.Company.Account.Location.Latitude, w.Company.Account.Location.Longitude,
-                            latitude, longitude) <= distance)
                 .Where(w => categories == null || categories.Length < 1 || string.IsNullOrEmpty(categories[0]) || categories.Any(c => c.Equals(w.Subcategory.Category.Name)))
                 .Where(w => subcategories == null || subcategories.Length < 1 || string.IsNullOrEmpty(subcategories[0]) || subcategories.Any(c => c.Equals(w.Subcategory.Name)))
                 .Select(w => new SearchWorkDTO
@@ -157,7 +169,21 @@ namespace Unicorn.Core.Services
                     },
                     Distance = CalculateDistance(w.Company.Account.Location.Latitude, w.Company.Account.Location.Longitude,
                                                  latitude, longitude)
-                }).ToList();
+                });
+
+            if (distance == 0 || distance == null)
+            {
+                if (!string.IsNullOrEmpty(city))
+                    worksQuery = worksQuery?
+                        .Where(p => p.Location.City.Contains(city));
+            }
+            else
+            {
+                worksQuery = worksQuery?
+                    .Where(p => p.Distance <= distance);
+            }
+
+            return worksQuery.ToList();
         }
 
         private double CalculateRating(long recieverId)
