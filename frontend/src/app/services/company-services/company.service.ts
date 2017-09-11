@@ -11,11 +11,12 @@ import { Contact } from "../../models/contact.model";
 import { Vendor } from "../../register/models/vendor";
 import { CompanyWork } from "../../models/company-page/company-work.model";
 import { CompanyBook } from "../../models/company-page/company-book.model";
+import { Router } from "@angular/router";
 
 @Injectable()
 export class CompanyService { 
   
-  constructor(private dataService: DataService) {
+  constructor(private dataService: DataService, private router: Router) {
     dataService.setHeader('Content-Type', 'application/json');
    }
 
@@ -26,7 +27,11 @@ export class CompanyService {
 
 
   getCompanyShort(id: number):Promise<any>{
-    return this.dataService.getRequest<CompanyShort>("company/short/" + id).catch(err => location.href = 'index');    
+    return this.dataService.getRequest<CompanyShort>("company/short/" + id)
+    .catch(err => this.router.navigate([`not-found`], {
+      queryParams: {
+        message: `this company doesn’t exist. Try to find someone else.`,
+      }}))
   }
   getCompanyDetails(id: number):Promise<any>{
     return this.dataService.getRequest<CompanyDetails>("company/details/" + id)

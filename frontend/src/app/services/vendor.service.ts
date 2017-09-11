@@ -11,12 +11,13 @@ import { Category } from "../models/category.model";
 import { VendorBook } from "../models/book/vendor-book.model";
 import { VendorHistory } from "../models/vendor-history.model";
 import { Work } from "../models/work.model";
+import { Router } from "@angular/router";
 
 @Injectable()
 export class VendorService {
   private apiController: string;
 
-  constructor(private dataService: DataService) 
+  constructor(private dataService: DataService, private router: Router) 
   { 
     dataService.setHeader('Content-Type', 'application/json');
     this.apiController = "vendors";
@@ -29,7 +30,10 @@ export class VendorService {
 
   getVendor(id: number) : Promise<any> {
     return this.dataService.getFullRequest<Vendor>(`${this.apiController}/${id}`)
-    .catch(err => location.href = 'index');
+    .catch(err => this.router.navigate([`not-found`], {
+      queryParams: {
+        message: `this vendor doesn’t exist. Try to find someone else.`,
+      }}))
   }
 
   getRating(id: number): Promise<any> {

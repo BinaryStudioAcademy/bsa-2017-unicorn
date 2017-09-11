@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 @Injectable()
 export class UserService {
 
-  constructor(private dataService: DataService,  private router: Router,) {
+  constructor(private dataService: DataService,  private router: Router) {
     dataService.setHeader('Content-Type', 'application/json');
   }
 
