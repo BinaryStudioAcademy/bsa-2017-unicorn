@@ -60,6 +60,8 @@ export class VendorsComponent implements OnInit {
   categories: Category[];
   subcategories: Subcategory[];
 
+  selPerformer: Performer;
+
   constructor(
     private performerService: PerformerService,
     private ref: ChangeDetectorRef,
@@ -175,6 +177,25 @@ export class VendorsComponent implements OnInit {
         this.search();
         this.ref.detectChanges();
       });
+  }
+
+  scrollToElement(id) {
+    const element = document.querySelector('#' + id);
+    element.scrollIntoView(false);
+  }
+
+  highlight(performer) {
+    if (this.selPerformer && this.selPerformer.PerformerType === performer.PerformerType && this.selPerformer.Id === performer.Id) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  markerHandle(per) {
+    this.selPerformer = per;
+    this.selected = per.Name;
+    this.scrollToElement(per.PerformerType + per.Id);
   }
 
 }
