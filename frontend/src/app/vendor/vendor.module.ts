@@ -11,7 +11,7 @@ import { VendorRoutingModule } from './vendor-routing.module';
 import { SignBlockModule } from '../sign-block/sign-block.module';
 import { BookModule } from '../book/book.module';
 import { MapModule } from '../map/map.module';
-import { SharedModule } from "../shared/shared.module";
+import { ImageCropperComponent, ImageCropperModule } from 'ng2-img-cropper/index';
 import { PipeModule } from "../pipe/pipe.module";
 
 import { VendorsComponent } from './vendors/vendors.component';
@@ -57,7 +57,7 @@ import { OwnCalendarModule } from "../calendar/calendar.module";
     MapModule,
     SignBlockModule,
     CommonModule,
-    SharedModule,
+    ImageCropperModule,
     PipeModule,
     ChatModule,
     ClickOutsideModule,
