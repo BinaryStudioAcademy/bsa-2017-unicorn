@@ -8,7 +8,7 @@
                         <th></th>
                         <th>Name</th>
                         <th>Experience</th>
-                         <th>Position</th>
+                        <th>Position</th>
                         <th>Rating</th>
                         <th class="">Offers status</th>
                         <th></th>
@@ -16,26 +16,26 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let offer of pendingVendors">
-                            <td><img class="ui avatar image vendor-icon" src="{{offer.Vendor.Avatar}}"></td>
-                            <td>{{offer.Vendor.FIO}}</td>
-                            <td>{{offer.Vendor.Experience}}</td>
-                            <td>{{offer.Vendor.Position}}</td>
-                            <td>
-                                <sui-rating class="star" [ngModel]="offer.Vendor.Rating" [isReadonly]="true"></sui-rating>
-                            </td>
-                            <td>
-                                <span>{{getOfferStatus(offer)}}</span>
-                                <span class="declined-lbl" (click)="showReason(offer.DeclinedMessage)" *ngIf="haveReason(offer)">Why?</span>
-                            </td>
-                            <td class="right aligned">
-                                <button (click)="deleteOffer(offer)" class="ui button icon">
+                        <td><img class="ui avatar image vendor-icon" src="{{offer.Vendor.Avatar}}"></td>
+                        <td>{{offer.Vendor.FIO}}</td>
+                        <td>{{offer.Vendor.Experience}}</td>
+                        <td>{{offer.Vendor.Position}}</td>
+                        <td>
+                            <sui-rating class="star" [ngModel]="offer.Vendor.Rating" [isReadonly]="true"></sui-rating>
+                        </td>
+                        <td>
+                            <span>{{getOfferStatus(offer)}}</span>
+                            <span class="declined-lbl" (click)="showReason(offer.DeclinedMessage)" *ngIf="haveReason(offer)">Why?</span>
+                        </td>
+                        <td class="right aligned">
+                            <button (click)="deleteOffer(offer)" class="ui button icon">
                                     <i class="remove icon"></i>
                                 </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <label>Vendors</label>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <label>Vendors</label>
             <table class="ui selectable padded single line table">
                 <thead>
                     <tr>
@@ -115,7 +115,7 @@
                                 <div>
                                     <a (click)="openMessageModal(vendor)" class="add-mess">
                                         <span *ngIf="!messages[vendor.Id]">Add message</span>
-                                        <span *ngIf="messages[vendor.Id]">Edit message</span> 
+                                        <span *ngIf="messages[vendor.Id]">Edit message</span>
                                     </a>
                                 </div>
                             </div>
@@ -137,7 +137,7 @@
     </div>
 </div>
 
-<div *ngIf="company === undefined" class="ui active inverted dimmer" style="background-color: rgba(255,255,255,.85)">
+<div *ngIf="company === undefined" class="ui active inverted dimmer" style="background-color: rgba(255,255,255,.85);z-index: 0;">
     <div class="ui text loader">Loading</div>
 </div>
 
@@ -165,26 +165,20 @@
 </ng-template>
 
 <ng-template let-context let-modal="modal" #messageModal>
-        <div class="ui content">
-            <form class="ui reply form" name="reviewForm" #messageForm="ngForm">
-                <div class="field">
-                    <label>Type some information for vendor</label>
-                    <textarea required 
-                        placeholder="ADDITIONAL MESSAGE" 
-                        name="reason" 
-                        [(ngModel)]="messages[context.id]" 
-                        #reasonText="ngModel"></textarea>
-                </div>
-                <div class="save-btn">
-                    <a (click)="saveMessage()" 
-                        [ngClass]="{'disabled': messageForm.invalid}" 
-                        class="ui basic button decline-confirm">
-                        <p *ngIf="!loader" style="color:#FF647A;">Save</p>
-                    </a>
-                </div>
-            </form>
-        </div>
-    </ng-template>
+    <div class="ui content">
+        <form class="ui reply form" name="reviewForm" #messageForm="ngForm">
+            <div class="field">
+                <label>Type some information for vendor</label>
+                <textarea required placeholder="ADDITIONAL MESSAGE" name="reason" [(ngModel)]="messages[context.id]" #reasonText="ngModel"></textarea>
+            </div>
+            <div class="save-btn">
+                <a (click)="saveMessage()" [ngClass]="{'disabled': messageForm.invalid}" class="ui basic button decline-confirm">
+                    <p *ngIf="!loader" style="color:#FF647A;">Save</p>
+                </a>
+            </div>
+        </form>
+    </div>
+</ng-template>
 
 <ng-template let-context let-modal="modal" #reasonModal>
     <div class="ui content">
