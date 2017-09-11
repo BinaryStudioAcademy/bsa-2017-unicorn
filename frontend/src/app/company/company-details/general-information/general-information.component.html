@@ -25,28 +25,6 @@
         </div>
         <div class="ui divider"></div>
         <div *ngIf="openedCategoryDetails" (clickOutside)="closeCategoryDetails($event)">
-            <!-- <div class="flex-header">
-                <h4 style="display: inline-block;">{{selectedCategory.Name}}</h4>
-            </div>
-            <sui-accordion class="styled fluid">
-                <sui-accordion-panel *ngFor="let work of categoryWorks">
-                    <div title class="ui container work-preview-title">
-                        <i class="dropdown icon"></i>{{work.Name}}
-                    </div>
-                    <div content>
-                        <div class="ui container grid">
-                            <div class="three column container row">
-                                <div class="left floated column" style="width: 60% !important;">
-                                    <p>{{work.Description}}</p>
-                                </div>
-                                <div class="right floated column">
-                                    <a class="ui tag label">{{work.Subcategory.Name}}</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </sui-accordion-panel>
-            </sui-accordion> -->
             <div *ngFor="let work of categoryWorks" class="works-wrapper">
                 <div class="ui container grid">
                     <div class="row">
