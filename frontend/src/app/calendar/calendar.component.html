@@ -1,10 +1,42 @@
-<mwl-utils-calendar-header [(view)]="view" [(viewDate)]="viewDate">
-</mwl-utils-calendar-header>
-<div [ngSwitch]="view">
-    <mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="events" [refresh]="refresh" [activeDayIsOpen]="activeDayIsOpen" (dayClicked)="dayClicked($event.day)" (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)">
-    </mwl-calendar-month-view>
-    <mwl-calendar-week-view *ngSwitchCase="'week'" [viewDate]="viewDate" [events]="events" [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)">
-    </mwl-calendar-week-view>
-    <mwl-calendar-day-view *ngSwitchCase="'day'" [viewDate]="viewDate" [events]="events" [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)">
-    </mwl-calendar-day-view>
+<div class="container">
+    <mwl-utils-calendar-header [(view)]="view" [(viewDate)]="viewDate">
+    </mwl-utils-calendar-header>
+    <div [ngSwitch]="view">
+        <mwl-calendar-month-view *ngSwitchCase="'month'" [weekendDays]="[0,6]" [cellTemplate]="customCellTemplate" [viewDate]="viewDate" [events]="events" [refresh]="refresh" (eventTimesChanged)="eventTimesChanged($event)">
+        </mwl-calendar-month-view>
+        <mwl-calendar-week-view *ngSwitchCase="'week'" [viewDate]="viewDate" [events]="events" [refresh]="refresh" (eventTimesChanged)="eventTimesChanged($event)">
+        </mwl-calendar-week-view>
+    </div>
 </div>
+
+<ng-template #customCellTemplate let-day="day" let-openDay="openDay" let-locale="locale" let-tooltipPlacement="tooltipPlacement" let-highlightDay="highlightDay" let-unhighlightDay="unhighlightDay" let-eventClicked="eventClicked" let-tooltipTemplate="tooltipTemplate"
+    let-tooltipAppendToBody="tooltipAppendToBody">
+    <div class="cal-cell-top" (click)="dayClicked($event, day)">
+        <span class="cal-day-number">{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span>
+    </div>
+    <div class="cal-events" *ngIf="day.events.length > 0">
+        <div class="cal-event" *ngFor="let event of day.events" [style.backgroundColor]="event.color.primary" [ngClass]="event?.cssClass" (mouseenter)="highlightDay.emit({event: event})" (mouseleave)="unhighlightDay.emit({event: event})" [mwlCalendarTooltip]="event.title | calendarEventTitle:'monthTooltip':event"
+            [tooltipPlacement]="tooltipPlacement" [tooltipEvent]="event" [tooltipTemplate]="tooltipTemplate" [tooltipAppendToBody]="tooltipAppendToBody">
+        </div>
+    </div>
+</ng-template>
+<ng-template [ngTemplateOutlet]="customTemplate || defaultTemplate" [ngTemplateOutletContext]="{         day: day,         openDay: openDay,         locale: locale,         tooltipPlacement: tooltipPlacement,         highlightDay: highlightDay,         unhighlightDay: unhighlightDay,         eventClicked: eventClicked,         tooltipTemplate: tooltipTemplate,         tooltipAppendToBody: tooltipAppendToBody      }">
+</ng-template>
+
+<ng-template let-context let-modal="modal" #modalTemplate>
+    <div class="modal-header">
+        <span>{{context.date | calendarDate:'dayViewTitle':locale}}</span>
+        <div class="ui form">
+            <div class="inline field">
+                <sui-checkbox class="toggle">Weekend</sui-checkbox>
+            </div>
+        </div>
+    </div>
+    <div class="modal-events" *ngFor="let modalEvent of context.events">
+        <div>
+        </div>
+    </div>
+    <div class="no-modal-events" *ngIf="!context.events || context.events.length === 0">
+        No events
+    </div>
+</ng-template>

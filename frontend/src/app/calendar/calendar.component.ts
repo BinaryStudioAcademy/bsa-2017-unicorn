@@ -20,11 +20,18 @@ import { Subject } from 'rxjs/Subject';
 import {
   CalendarEvent,
   CalendarEventAction,
-  CalendarEventTimesChangedEvent
+  CalendarEventTimesChangedEvent,
+  CalendarMonthViewDay
 } from 'angular-calendar';
 import { CalendarModel } from "../models/calendar/calendar";
 import { TokenHelperService } from "../services/helper/tokenhelper.service";
 import { CalendarService } from "../services/calendar-service";
+import { SuiModalService, ModalTemplate, TemplateModalConfig, ModalSize } from "ng2-semantic-ui";
+
+export interface IReviewContext {
+  date: Date,
+  events: CalendarEvent[]
+}
 
 const colors: any = {
   red: {
@@ -48,6 +55,8 @@ const colors: any = {
   styleUrls: ['./calendar.component.sass']
 })
 export class CalendarComponent implements OnInit {
+@ViewChild('modalTemplate')
+public modalTemplate:ModalTemplate<IReviewContext, void, void>
 
 @Input()
 accountId: number;
@@ -57,7 +66,8 @@ calendar: CalendarModel;
 
   constructor(
     private tokenHelper: TokenHelperService,
-    private calendarService: CalendarService) { }
+    private calendarService: CalendarService,
+    private modalService: SuiModalService,) { }
 
   ngOnInit() {
     // this.calendarService.getCalendarByAccount(this.accountId)
@@ -66,63 +76,65 @@ calendar: CalendarModel;
     //   console.log(this.calendar);
     // });
   }
+    
+  view: string = 'month';  
+  viewDate: Date = new Date();  
 
-  view: string = 'month';
-  
-    viewDate: Date = new Date();
-    activeDayIsOpen: boolean = true;
-  
-    events: CalendarEvent[] = [
-      {
-        start: subDays(startOfDay(new Date()), 1),
-        end: addDays(new Date(), 1),
-        title: 'A 3 day event',
-        color: colors.red,        
+  events: CalendarEvent[] = [
+    {
+      start: subDays(startOfDay(new Date()), 1),
+      end: addDays(new Date(), 1),
+      title: 'A 3 day event',
+      color: colors.blue,        
+    },
+    {
+      start: startOfDay(new Date()),
+      title: 'An event with no end date',
+      color: colors.blue,        
+    },
+    {
+      start: subDays(endOfMonth(new Date()), 3),
+      end: addDays(endOfMonth(new Date()), 3),
+      title: 'A long event that spans 2 months',
+      color: colors.blue
+    },
+    {
+      start: addHours(startOfDay(new Date()), 2),
+      end: new Date(),
+      title: 'A draggable and resizable event',
+      color: colors.blue,        
+      resizable: {
+        beforeStart: true,
+        afterEnd: true
       },
-      {
-        start: startOfDay(new Date()),
-        title: 'An event with no end date',
-        color: colors.yellow,        
-      },
-      {
-        start: subDays(endOfMonth(new Date()), 3),
-        end: addDays(endOfMonth(new Date()), 3),
-        title: 'A long event that spans 2 months',
-        color: colors.blue
-      },
-      {
-        start: addHours(startOfDay(new Date()), 2),
-        end: new Date(),
-        title: 'A draggable and resizable event',
-        color: colors.yellow,        
-        resizable: {
-          beforeStart: true,
-          afterEnd: true
-        },
-        draggable: true
-      }
-    ];
-  
-    refresh: Subject<any> = new Subject();
-  
-    dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
-      if (isSameMonth(date, this.viewDate)) {
-        if ((isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) || events.length === 0) {
-          this.activeDayIsOpen = false;
-        } else {
-          this.activeDayIsOpen = true;
-          this.viewDate = date;
-        }
-      }
+      draggable: true
     }
-  
-    eventTimesChanged({
-      event,
-      newStart,
-      newEnd
-    }: CalendarEventTimesChangedEvent): void {
-      event.start = newStart;
-      event.end = newEnd;      
-      this.refresh.next();
+  ];
+
+  refresh: Subject<any> = new Subject();
+
+  dayClicked(event: any, day: any): void {  
+    if (isSameMonth(day.date, this.viewDate)) {
+      this.openModal(day);
     }
+  }
+
+  eventTimesChanged({
+    event,
+    newStart,
+    newEnd
+  }: CalendarEventTimesChangedEvent): void {
+    event.start = newStart;
+    event.end = newEnd;      
+    this.refresh.next();
+  }
+
+
+  openModal(day: any) {
+    const config = new TemplateModalConfig<IReviewContext, void, void>(this.modalTemplate);
+    config.context = {date:day.date, events:day.events};
+    config.isInverted = true;
+    config.size = ModalSize.Tiny;
+    this.modalService.open(config);
+  }
 }

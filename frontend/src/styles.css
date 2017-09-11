@@ -9,3 +9,23 @@
         margin: 0 0 0 -235px;
     }
 }
+
+
+/* CALENDAR */
+
+.cal-month-view .cal-day-number {
+    font-size: 1.4em;
+}
+
+.cal-month-view .cal-day-cell.cal-today .cal-day-number {
+    font-size: 2em;
+}
+
+
+/* .cal-month-view .cal-day-cell.cal-weekend .cal-day-number {
+    font-weight: bold;
+} */
+
+.cal-cell.cal-day-cell.cal-weekend {
+    background: rgba(255, 232, 232, 0.45);
+}

@@ -1,31 +1,32 @@
 <div class="flex-row">
-    <div class="prev-next-buttons">
-        <div class="ui buttons">
-            <div class="ui basic button" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate" (viewDateChange)="viewDateChange.next(viewDate)">
-                <p class="text-in-button">Previous</p>
-            </div>
-            <div class="ui basic button center-button" mwlCalendarToday [(viewDate)]="viewDate" (viewDateChange)="viewDateChange.next(viewDate)">
-                <p class="text-in-button">Today</p>
-            </div>
-            <div class="ui basic button" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate" (viewDateChange)="viewDateChange.next(viewDate)">
-                <p class="text-in-button">Next</p>
-            </div>
-        </div>
-    </div>
-    <div class="choose-date">
-        <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):locale }}</h3>
-    </div>
     <div class="week-month-buttons">
         <div class="ui buttons">
             <div class="ui basic button" (click)="viewChange.emit('month')" [class.active]="view === 'month'">
                 <p class="text-in-button">Month</p>
             </div>
-            <div class="ui basic button center-button" (click)="viewChange.emit('week')" [class.active]="view === 'week'">
+            <div class="ui basic button" (click)="viewChange.emit('week')" [class.active]="view === 'week'">
                 <p class="text-in-button">Week</p>
             </div>
-            <div class="ui basic button" (click)="viewChange.emit('day')" [class.active]="view === 'day'">
-                <p class="text-in-button">Day</p>
+        </div>
+    </div>
+    <div class="prev-next-buttons">
+        <div mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate" (viewDateChange)="viewDateChange.next(viewDate)">
+            <p class="text-in-button arrows"><i class="chevron left icon"></i></p>
+        </div>
+        <div>
+            <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):locale }}</h3>
+            <div class="ui basic button today" mwlCalendarToday [(viewDate)]="viewDate" (viewDateChange)="viewDateChange.next(viewDate)">
+                <p class="text-in-button">Today</p>
             </div>
+        </div>
+        <div mwlCalendarNextView [view]="view" [(viewDate)]="viewDate" (viewDateChange)="viewDateChange.next(viewDate)">
+            <p class="text-in-button arrows"><i class="chevron right icon"></i></p>
+        </div>
+    </div>
+    <div class="calendar-settings">
+        <div class="ui basic button prev-next">
+            <i class="settings icon"></i>
+            <!-- <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):locale }}</h3> -->
         </div>
     </div>
 </div>

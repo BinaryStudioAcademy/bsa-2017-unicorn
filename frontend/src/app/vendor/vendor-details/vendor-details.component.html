@@ -25,7 +25,6 @@
                     <a routerLink="/vendor/{{vendor.Id}}" [queryParams]="{tab: 'portfolio'}" class="item" suiTabHeader="2">PORTFOLIO</a>
                     <a routerLink="/vendor/{{vendor.Id}}" [queryParams]="{tab: 'reviews'}" class="item" suiTabHeader="3" [isActive]="tabActive">REVIEWS</a>
                     <a routerLink="/vendor/{{vendor.Id}}" [queryParams]="{tab: 'contacts'}" class="item" suiTabHeader="4">CONTACTS</a>
-                    <a routerLink="/vendor/{{vendor.Id}}" [queryParams]="{tab: 'calendar'}" class="item" suiTabHeader="5">CALENDAR</a>
                 </div>
                 <div class="row">
                     <div class="ui equal width grid container">
@@ -47,11 +46,6 @@
                                 <div class="container column">
                                     <div class="ui segment" suiTabContent="4">
                                         <app-vendor-profile-contacts [vendorId]="vendor.Id" [accountId]="vendor.AccountId" [isGuest]="isGuest"></app-vendor-profile-contacts>
-                                    </div>
-                                </div>
-                                <div class="container column">
-                                    <div class="ui segment" suiTabContent="5">
-                                        <app-calendar [accountId]="vendor.AccountId"></app-calendar>
                                     </div>
                                 </div>
                             </div>
