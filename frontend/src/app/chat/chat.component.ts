@@ -329,7 +329,7 @@ export class ChatComponent implements OnInit {
   }
 
   uploadFile() {
-    let inputEl: HTMLInputElement = this.inputEl.nativeElement;
+    let inputEl: HTMLInputElement = this.inputEl.nativeElement;        
     let fileCount: number = inputEl.files.length;
     let formData = new FormData();
     if (fileCount > 0) {
@@ -342,6 +342,7 @@ export class ChatComponent implements OnInit {
         this.addMessage();        
       }).catch(err => console.log(err));
             
+      inputEl.value = null;
     }
   }
 }

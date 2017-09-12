@@ -44,6 +44,11 @@
                         <div class="concrete-message me">
                             {{message.Message}}
                         </div>
+                        <span *ngIf="message.Files">
+                            <span *ngFor="let file of message.Files">
+                                {{file.OriginalName}}
+                            </span>
+                        </span>
                     </div>
                     <div class="message" *ngIf="message.OwnerId !== ownerId">
                         <div class="date-him">
