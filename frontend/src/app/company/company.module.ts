@@ -1,8 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule } from '@angular/forms';
 import {SuiModule} from 'ng2-semantic-ui';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { BookModule } from '../book/book.module';
 import { SignBlockModule } from '../sign-block/sign-block.module';
 
@@ -35,6 +37,7 @@ import { PortfolioComponent } from './company-details/portfolio/portfolio.compon
 import { CompanyPortfolioComponent } from './company-edit/company-portfolio/company-portfolio.component';
 import { NguiMapModule } from "@ngui/map/dist";
 import { OwnCalendarModule } from "../calendar/calendar.module";
+import { CompanyChartsComponent } from './company-edit/company-charts/company-charts.component';
 
 
 @NgModule({
@@ -43,7 +46,9 @@ import { OwnCalendarModule } from "../calendar/calendar.module";
     CompanyRoutingModule,
     FormsModule,
     BrowserModule,
+    BrowserAnimationsModule,
     SuiModule,
+    NgxChartsModule,
     BookModule,
     SignBlockModule,
     MapModule,
@@ -72,7 +77,8 @@ import { OwnCalendarModule } from "../calendar/calendar.module";
     CompanyWorksComponent,
     CompanyContactsComponent,
     PortfolioComponent,
-    CompanyPortfolioComponent
+    CompanyPortfolioComponent,
+    CompanyChartsComponent
     
   ],
   providers: [

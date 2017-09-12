@@ -1,0 +1,42 @@
+<div id="charts-main">
+  <h4 align="center">Books accepted</h4>
+  <div class="chart-wrap">
+    <div class="chart-cl">
+      <ngx-charts-line-chart
+      [view]="view"
+      [scheme]="colorScheme"
+      [results]="multi"
+      [gradient]="gradient"
+      [xAxis]="showXAxis"
+      [yAxis]="showYAxis"
+      [legend]="showLegend"
+      [showXAxisLabel]="showXAxisLabel"
+      [showYAxisLabel]="showYAxisLabel"
+      [xAxisLabel]="xAxisLabel"
+      [yAxisLabel]="yAxisLabel"
+      [autoScale]="autoScale"
+      (select)="onSelect($event)">
+    </ngx-charts-line-chart>
+    </div>
+  </div>
+  <h4 align="center">Books decined</h4>
+  <div class="chart-wrap">
+    <div class="chart-cl">
+      <ngx-charts-line-chart
+      [view]="view"
+      [scheme]="colorScheme2"
+      [results]="declinedData"
+      [gradient]="gradient"
+      [xAxis]="showXAxis"
+      [yAxis]="showYAxis"
+      [legend]="showLegend"
+      [showXAxisLabel]="showXAxisLabel"
+      [showYAxisLabel]="showYAxisLabel"
+      [xAxisLabel]="xAxisLabel"
+      [yAxisLabel]="yAxisLabel2"
+      [autoScale]="autoScale"
+      (select)="onSelect($event)">
+      </ngx-charts-line-chart>
+    </div>
+  </div>
+</div>
