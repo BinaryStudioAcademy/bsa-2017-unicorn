@@ -141,6 +141,7 @@ namespace Unicorn.Controllers
 
             string root = HttpContext.Current.Server.MapPath("~/App_Data");
             var provider = new MultipartFormDataStreamProvider(root);
+            List<ChatFileDTO> uploadedFiles = new List<ChatFileDTO>();
 
             try
             {
@@ -150,12 +151,19 @@ namespace Unicorn.Controllers
                 // This illustrates how to get the file names.
                 foreach (MultipartFileData file in provider.FileData)
                 {
-                    var originalName = file.Headers.ContentDisposition.FileName.Replace("\"", string.Empty);
-                    var serverName = file.LocalFileName;
+                    string originalName = file.Headers.ContentDisposition.FileName.Replace("\"", string.Empty);
+                    string serverName = file.LocalFileName;
+
+                    uploadedFiles.Add(new ChatFileDTO
+                    {
+                        OriginalName = originalName,
+                        ServerPathName = serverName
+                    });
+
                 }
-                return Request.CreateResponse(HttpStatusCode.OK);
+                return Request.CreateResponse(HttpStatusCode.OK, uploadedFiles);
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e);
             }
