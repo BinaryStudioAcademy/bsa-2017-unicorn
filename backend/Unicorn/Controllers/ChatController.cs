@@ -148,11 +148,10 @@ namespace Unicorn.Controllers
                 // Read the form data.
                 await Request.Content.ReadAsMultipartAsync(provider);
 
-                // This illustrates how to get the file names.
                 foreach (MultipartFileData file in provider.FileData)
                 {
                     string originalName = file.Headers.ContentDisposition.FileName.Replace("\"", string.Empty);
-                    string serverName = file.LocalFileName;
+                    string serverName = file.LocalFileName.Substring(file.LocalFileName.Length - 45); // 45 - length of generated name
 
                     uploadedFiles.Add(new ChatFileDTO
                     {
@@ -167,6 +166,6 @@ namespace Unicorn.Controllers
             {
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e);
             }
-        }    
+        }
     }
 }

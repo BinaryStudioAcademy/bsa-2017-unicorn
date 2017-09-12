@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ChangeDetectorRef, ElementRef } from '@angular/core';
 import { DialogModel } from "../models/chat/dialog.model";
 import { MessageModel } from "../models/chat/message.model";
+import { ChatFile } from "../models/chat/chat-file";
 import { NgClass } from '@angular/common';
 import { ChatService } from "../services/chat/chat.service";
 import { TokenHelperService } from "../services/helper/tokenhelper.service";
@@ -9,7 +10,6 @@ import { Subscription } from "rxjs/Subscription";
 import { ChatEventsService } from "../services/events/chat-events.service";
 import { ProfileShortInfo } from "../models/profile-short-info.model";
 import { AccountService } from "../services/account.service";
-import { Http } from '@angular/http';
 
 
 @Component({
@@ -34,6 +34,7 @@ export class ChatComponent implements OnInit {
   containerHeight = 500;
   noMessages: boolean = true;
   needScroll: boolean = false;
+  files: ChatFile[];
 
   dialogCreate: Subscription;
   messageCreate: Subscription;
@@ -47,8 +48,7 @@ export class ChatComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private notificationService: NotificationService,
     private chatEventsService: ChatEventsService,
-    private accountService: AccountService,
-    private http: Http) { }
+    private accountService: AccountService) { }
 
   ngOnInit() {
     this.getDialogs().then(() => this.startScroll());
@@ -206,7 +206,7 @@ export class ChatComponent implements OnInit {
       else {
         this.writtenMessage = undefined;
       }
-    }
+    }    
     this.normalTeaxareaSize();
   }
 
@@ -229,7 +229,7 @@ export class ChatComponent implements OnInit {
         IsReaded: false,
         OwnerId: this.ownerId,
         Message: this.writtenMessage,
-        Files: null, // TODO - get files ???
+        Files: this.files,
         Date: new Date(),
         isLoaded: true
       };
@@ -237,6 +237,7 @@ export class ChatComponent implements OnInit {
       this.chatEventsService.messageCreateFromChatToMiniChat(message);
       this.startScroll();
       this.chatService.addMessage(message);
+      this.files = null;
     }
   }
 
@@ -335,16 +336,12 @@ export class ChatComponent implements OnInit {
       for (let i = 0; i < fileCount; i++) {
         formData.append('file[]', inputEl.files.item(i));
       }
-
-      /*
+      
       this.chatService.uploadFiles(formData).then(x => {
-        console.log(x);
+        this.files = x as ChatFile[];
+        this.addMessage();        
       }).catch(err => console.log(err));
-      */
-
-      this.http.post('http://localhost:52309/chat/upload', formData).subscribe(x=>{
-        console.log(x);
-      });
+            
     }
   }
 }

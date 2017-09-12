@@ -34,9 +34,8 @@ export class ChatService {
     return this.dataService.postRequest("chat/messages/update/"+ dialogId, ownerId);
   }
 
-  uploadFiles(formDataFiles: any): Promise<ChatFile[]> {
-    this.dataService.deleteHeader('Content-Type');    
-    return this.dataService.postFullRequest("chat/upload", formDataFiles);
+  uploadFiles(formDataFiles: any) {    
+    return this.dataService.postClearRequest('chat/upload', formDataFiles);    
   }
 
 }
