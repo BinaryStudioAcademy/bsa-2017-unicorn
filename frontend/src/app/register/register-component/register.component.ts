@@ -19,7 +19,6 @@ export class RegisterModal extends ComponentModalConfig<void> {
     super(RegisterComponent);
     this.size = "small";
     this.isInverted = true;
-    this.transition = 'scale';
   }
 }
 
