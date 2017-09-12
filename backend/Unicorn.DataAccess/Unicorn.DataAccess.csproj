@@ -65,11 +65,13 @@
     <Compile Include="Entities\Enum\BookStatus.cs" />
     <Compile Include="Entities\Enum\NotificationType.cs" />
     <Compile Include="Entities\Enum\OfferStatus.cs" />
+    <Compile Include="Entities\Enum\ReportType.cs" />
     <Compile Include="Entities\ExtraDay.cs" />
     <Compile Include="Entities\Notification.cs" />
     <Compile Include="Entities\Offer.cs" />
     <Compile Include="Entities\Rating.cs" />
     <Compile Include="Entities\Enum\RoleType.cs" />
+    <Compile Include="Entities\Report.cs" />
     <Compile Include="Entities\SocialAccount.cs" />
     <Compile Include="Entities\Book.cs" />
     <Compile Include="Entities\Contact.cs" />

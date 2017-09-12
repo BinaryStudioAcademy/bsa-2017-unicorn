@@ -36,6 +36,7 @@ namespace Unicorn.DataAccess.Repositories.UnitOfWork
         private IGenericRepository<Rating> ratingRepository;
         private IGenericRepository<Notification> notificationRepository;
         private IGenericRepository<Offer> offerRepository;
+        private IGenericRepository<Report> reportRepository;
 
         public UnitOfWork(AppContext context, IRepositoryFactory factory)
         {
@@ -266,6 +267,15 @@ namespace Unicorn.DataAccess.Repositories.UnitOfWork
             {
                 return offerRepository ??
                     (offerRepository = factory.CreateRepository<Offer>(context));
+            }
+        }
+
+        public IGenericRepository<Report> ReportRepository
+        {
+            get
+            {
+                return reportRepository ??
+                    (reportRepository = factory.CreateRepository<Report>(context));
             }
         }
 

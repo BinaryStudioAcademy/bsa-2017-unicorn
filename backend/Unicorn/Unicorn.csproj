@@ -232,6 +232,7 @@
     <Compile Include="Controllers\MembershipController.cs" />
     <Compile Include="Controllers\OfferController.cs" />
     <Compile Include="Controllers\PopularController.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\ReviewController.cs" />
