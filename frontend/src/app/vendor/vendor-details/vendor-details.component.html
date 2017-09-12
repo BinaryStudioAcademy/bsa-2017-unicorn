@@ -19,7 +19,7 @@
         </div>
 
         <div class="sixteen wide column container">
-            <sui-tabset *ngIf="vendor !== undefined">
+            <sui-tabset *ngIf="vendor !== undefined"> 
                 <div class="ui pointing secondary menu">
                     <a routerLink="/vendor/{{vendor.Id}}" [queryParams]="{tab: 'info'}" class="item" suiTabHeader="1">INFO</a>
                     <a routerLink="/vendor/{{vendor.Id}}" [queryParams]="{tab: 'portfolio'}" class="item" suiTabHeader="2">PORTFOLIO</a>

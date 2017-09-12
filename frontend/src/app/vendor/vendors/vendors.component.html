@@ -10,8 +10,8 @@
                     </div>
                     <div class=" centered column">
                         <div class="label-box">
-                            <div (click)="role = 'vendor'" [ngClass]="{'selected': role ==='vendor'}" class="ui horizontal label">Only vendors</div>
-                            <div (click)="role = 'company'" [ngClass]="{'selected': role ==='company'}" class="ui horizontal label">Only companies</div>
+                            <div (click)="role = 'vendor'" [ngClass]="{'selected': role ==='vendor'}" class="ui horizontal label">Vendors</div>
+                            <div (click)="role = 'company'" [ngClass]="{'selected': role ==='company'}" class="ui horizontal label">Companies</div>
                             <div (click)="role = 'all'" [ngClass]="{'selected': role ==='all'}" class="ui selected horizontal label">All</div>
                         </div>
                     </div>
@@ -143,7 +143,11 @@
                 </div>
             </div>
         </div>
-        <div class="ui segment ui grid" *ngFor="let performer of performers" (click)="selectPerformerLocation(performer.Name, performer.Location)">
+        <div id="{{performer.PerformerType}}{{performer.Id}}" 
+                class="ui segment ui grid" 
+                *ngFor="let performer of performers" 
+                (click)="selectPerformerLocation(performer.Name, performer.Location)"
+                [ngClass]="{'cell-selected': highlight(performer)}">
             <div class="row">
                 <div class="four wide column">
                     <img class="ui small fluid image" src="{{performer.Avatar}}">
@@ -170,7 +174,7 @@
         <div *ngIf="searchLoading" class="ui active inverted dimmer" style="z-index: 0;">
             <div class="ui text loader">Loading</div>
         </div>
-        <div *ngIf="totalCount > pageSize" class="flex-centered" id="paging">
+        <div *ngIf="totalCount > getPageSize()" class="flex-centered" id="paging">
             <sui-pagination [collectionSize]="totalCount" [pageSize]="pageSize" [maxSize]="maxSize" [hasEllipses]="hasEllipses" [(page)]="selectedPage" (pageChange)="search()">
             </sui-pagination>
         </div>
@@ -181,7 +185,7 @@
                 <ngui-map (mapReady$)="onMapReady($event)" class="map" zoom="6" [center]="center">
                     <custom-marker *ngFor="let per of performers" [position]="[per.Location.Latitude, per.Location.Longitude]">
                         <span class="map-marker" [ngClass]="{'active-marker': selected == per.Name}">
-                                <a routerLink="/{{per.Link}}">{{per.Name}}</a>
+                                <a (click)="markerHandle(per)">{{per.Name}}</a>
                             </span>
                     </custom-marker>
                 </ngui-map>

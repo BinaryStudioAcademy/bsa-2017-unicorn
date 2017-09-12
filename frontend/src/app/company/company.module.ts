@@ -28,7 +28,7 @@ import { CompanyVendorsComponent } from './company-edit/company-vendors/company-
 import { CompanyWorksComponent } from './company-edit/company-works/company-works.component';
 import { PipeModule } from "../pipe/pipe.module";
 import { ClickOutsideModule } from 'ng-click-outside';
-import { SharedModule } from "../shared/shared.module";
+import { ImageCropperComponent, ImageCropperModule } from 'ng2-img-cropper/index';
 import { CompanyContactsComponent } from './company-edit/company-contacts/company-contacts.component';
 import { ChatModule } from "../chat/chat.module";
 import { PortfolioComponent } from './company-details/portfolio/portfolio.component';
@@ -49,7 +49,7 @@ import { OwnCalendarModule } from "../calendar/calendar.module";
     MapModule,
     PipeModule,
     ClickOutsideModule,
-    SharedModule,
+    ImageCropperModule,
     ChatModule,
     OwnCalendarModule,
     NguiMapModule.forRoot({

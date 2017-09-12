@@ -25,28 +25,32 @@
         </div>
         <div class="ui divider"></div>
         <div *ngIf="openedCategoryDetails" (clickOutside)="closeCategoryDetails($event)">
-            <div class="flex-header">
-                <h4 style="display: inline-block;">{{selectedCategory.Name}}</h4>
-            </div>
-            <sui-accordion class="styled fluid">
-                <sui-accordion-panel *ngFor="let work of categoryWorks">
-                    <div title class="ui container work-preview-title">
-                        <i class="dropdown icon"></i>{{work.Name}}
-                    </div>
-                    <div content>
-                        <div class="ui container grid">
-                            <div class="three column container row">
-                                <div class="left floated column" style="width: 60% !important;">
-                                    <p>{{work.Description}}</p>
-                                </div>
-                                <div class="right floated column">
-                                    <a class="ui tag label">{{work.Subcategory.Name}}</a>
-                                </div>
+            <div *ngFor="let work of categoryWorks" class="works-wrapper">
+                <div class="ui container grid">
+                    <div class="row">
+                        <div class=" two wide column flex-container">
+                            <div class="work-column">
+                                <img class="ui circular image work-icon" src="{{getWorkIcon(work)}}">
+                            </div>
+                        </div>
+                        <div class="four wide column flex-container">
+                            <div class="work-column">
+                                <p class="work-name">{{work.Name}}</p>
+                            </div>
+                        </div>
+                        <div class="six wide column flex-container">
+                            <div class="work-column">
+                                <p class="work-desc">{{work.Description}}</p>
+                            </div>
+                        </div>
+                        <div class="four wide column flex-container">
+                            <div class="work-column left-marged">
+                                <a class="ui tag label">{{work.Subcategory.Name}}</a>      
                             </div>
                         </div>
                     </div>
-                </sui-accordion-panel>
-            </sui-accordion>
+                </div>
+            </div>
         </div>
     </div>
 </div>

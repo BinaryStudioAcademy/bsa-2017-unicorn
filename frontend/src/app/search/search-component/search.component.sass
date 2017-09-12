@@ -8,29 +8,6 @@
     padding-left: 45px !important;
     padding-right: 15px !important;
 
-// .suggestions
-//     position: relative;
-
-// .search-list
-//     position: absolute; 
-//     top: 3px; 
-//     border: 1px solid lightgray;
-//     min-width: 400px;
-//     max-height: 242px;
-//     background: white;
-//     z-index: 1;
-//     overflow: auto;
-
-// .search-item
-//     cursor: pointer;
-//     padding: 10px;
-//     color: black;
-
-// .search-category
-//     float: right; 
-//     font-style: italic; 
-//     color: lightgray;
-
 .calendar.icon
     margin-left: 10px !important;
 
@@ -69,6 +46,10 @@
 .padding-top
     padding-top: 22px !important;
 
+.padding-width
+    padding-left: 2% !important;
+    padding-right: 2% !important;
+
 .margin-left
     margin-left: 10px;
 
@@ -103,8 +84,15 @@ sui-multi-select
     padding-left: 0 !important;
     
 .cell
-    height: 378px;
-    margin-top: 20px !important;
+    width: 30%;
+    margin: 15px;
+
+.cell-selected
+    margin: 15px 15px !important;
+    padding: 15px !important;
+    border: 1px solid $primary-color;
+    border-radius: 7px;
+    background-color: #fef6f6;
 
 .cell-title
     font-size: 16px;
@@ -177,6 +165,9 @@ h3
     padding: 3px;
     border: 1px solid black;
     border-radius: 5px;
+
+.map-marker > a
+    cursor: pointer
 
 .active-marker
     border: 2px solid red;

@@ -90,6 +90,7 @@
     <Compile Include="Interfaces\IGenericRepository.cs" />
     <Compile Include="Interfaces\IRepositoryFactory.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
+    <Compile Include="Interfaces\IUnitOfWorkFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entities\Role.cs" />
     <Compile Include="Entities\Subcategory.cs" />

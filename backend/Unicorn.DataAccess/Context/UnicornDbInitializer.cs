@@ -431,8 +431,8 @@ namespace Unicorn.DataAccess.Context
             {
                 Id = 1,
                 Adress = "Instytutska 13",
-                Latitude = 50.446969,
-                Longitude = 30.531165,
+                Latitude = 50.447252,
+                Longitude = 30.532936,
                 IsDeleted = false,
                 City = "Kiev",
                 PostIndex = "61002"

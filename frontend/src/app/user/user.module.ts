@@ -23,7 +23,7 @@ import { environment } from "../../environments/environment";
 import { UserMainComponent } from './user-main/user-main.component';
 import { UserMainInfoComponent } from './user-main/user-main-info/user-main-info.component';
 import { UserMainReviewsComponent } from './user-main/user-main-reviews/user-main-reviews.component';
-import { SharedModule } from "../shared/shared.module";
+import { ImageCropperComponent, ImageCropperModule } from 'ng2-img-cropper/index';
 import {BrowserModule} from '@angular/platform-browser';
 import {ToastModule, ToastsManager, ToastOptions} from 'ng2-toastr/ng2-toastr';
 import { MapModule } from "../map/map.module";
@@ -44,7 +44,7 @@ import { ChatModule } from "../chat/chat.module";
         FormsModule,
         FormsModule,
         MapModule,
-        SharedModule,
+        ImageCropperModule,
         BrowserModule, 
         ChatModule,
         ToastModule.forRoot()

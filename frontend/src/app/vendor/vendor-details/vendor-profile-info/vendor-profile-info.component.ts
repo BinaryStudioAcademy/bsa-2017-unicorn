@@ -64,4 +64,8 @@ export class VendorProfileInfoComponent implements OnInit {
       this.selectedCategory = undefined;
     }
   }
+
+  getWorkIcon(work: Work): string {
+    return work.Icon;
+  }
 }

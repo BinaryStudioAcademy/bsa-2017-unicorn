@@ -11,6 +11,7 @@ namespace Unicorn.DataAccess.Infrastructure
     {
         public override void Load()
         {
+            Bind<IUnitOfWorkFactory>().ToFactory();
             Bind<IRepositoryFactory>().ToFactory();
             Bind<AppContext>().ToSelf();
             Bind(typeof(IGenericRepository<>)).To(typeof(GenericRepository<>));
