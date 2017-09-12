@@ -1,5 +1,8 @@
-<div *ngIf="isReviewsEmpty" class="no-reviews">
+<div *ngIf="isReviewsEmpty && isLoaded" class="ui center aligned empty-header header">
     There are no reviews
+</div>
+<div *ngIf="!isLoaded" class="ui active inverted dimmer" style="z-index: 0;">
+    <div class="ui text loader">Loading</div>
 </div>
 <div *ngIf="company !== undefined" class="ui vertically divided grid" id="main">
     <div *ngFor="let review of company.Reviews" class="row">

@@ -57,10 +57,17 @@ namespace Unicorn.Controllers
             string subcategoriesString = null, double? latitude = null, double? longitude = null, double? distance = null, string sort = "rating", int page = 1, int pagesize = 20
             )
         {
-            var performers = await _popularService.GetPerformersByFilterAsync(city, name, role, rating, ratingCondition, withReviews, categoriesString,
-                subcategoriesString, latitude, longitude, distance, sort);
+            try
+            {
+                var performers = await _popularService.GetPerformersByFilterAsync(city, name, role, rating, ratingCondition, withReviews, categoriesString,
+                    subcategoriesString, latitude, longitude, distance, sort);
 
-            return _popularService.GetPerformersPage(page, pagesize, performers);
+                return _popularService.GetPerformersPage(page, pagesize, performers);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
     }

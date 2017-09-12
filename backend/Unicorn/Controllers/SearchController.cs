@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Cors;
+
 using Unicorn.Core.Interfaces;
 using Unicorn.Shared.DTOs.Search;
 
@@ -23,13 +24,13 @@ namespace Unicorn.Controllers
         public async Task<List<SearchWorkDTO>> GetPerformersByFilters(  string category, string subcategory, int? date,
                                                                         string vendor, string ratingcompare, double? rating, bool? reviews,
                                                                         double? latitude, double? longitude, double? distance,
-                                                                        [FromUri] string[] categories, [FromUri] string[] subcategories,
+                                                                        [FromUri] string[] categories, [FromUri] string[] subcategories, string city,
                                                                         int? sort  )
         {
             return await _searchService.GetWorksByFilters(  category, subcategory, date,
                                                             vendor, ratingcompare, rating, reviews,
                                                             latitude, longitude, distance,
-                                                            categories, subcategories,
+                                                            categories, subcategories, city,
                                                             sort );
         }
 

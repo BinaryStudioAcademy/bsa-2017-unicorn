@@ -36,7 +36,7 @@ export class RegisterVendorComponent implements OnInit {
   mode: string;
 
   phone: string;
-  birthday;
+  birthday: Date;
 
   loader: boolean;
 
@@ -75,6 +75,8 @@ export class RegisterVendorComponent implements OnInit {
   }
 
   aggregateInfo(): Vendor {
+    this.birthday.setDate(this.birthday.getDate() + 1);
+
     return {
       birthday: this.birthday,
       phone: this.phone,
@@ -108,16 +110,18 @@ export class RegisterVendorComponent implements OnInit {
       phoneContact.ProviderId = 1;
       phoneContact.Type = "Phone";
       phoneContact.Value = regInfo.phone;
-      this.registerService.confirmVendor(regInfo).then(resp => {
-        this.loader = false;
-        this.modal.deny(null);
-        localStorage.setItem('token', resp.headers.get('token'));
-        this.vendorService.postVendorContact(+this.tokenHelper.getClaimByName('profileid'),emailContact);
-        this.vendorService.postVendorContact(+this.tokenHelper.getClaimByName('profileid'),phoneContact);
-        this.authEventService.signIn();
-        this.calendarService.createCalendar(+this.tokenHelper.getClaimByName('accountid'));
-        this.helperService.redirectAfterAuthentication();
-      }).catch(err => this.loader = false);
+      this.registerService.confirmVendor(regInfo)
+        .then(resp => {
+          this.loader = false;
+          this.modal.deny(null);
+          localStorage.setItem('token', resp.headers.get('token'));
+          this.vendorService.postVendorContact(+this.tokenHelper.getClaimByName('profileid'),emailContact);
+          this.vendorService.postVendorContact(+this.tokenHelper.getClaimByName('profileid'),phoneContact);
+          this.authEventService.signIn();
+          this.calendarService.createCalendar(+this.tokenHelper.getClaimByName('accountid'));
+          this.helperService.redirectAfterAuthentication();
+        })
+        .catch(err => this.loader = false);
     }
   }
 }

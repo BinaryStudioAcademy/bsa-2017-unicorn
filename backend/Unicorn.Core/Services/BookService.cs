@@ -44,6 +44,7 @@ namespace Unicorn.Core.Services
                 {
                     Id = book.Id,
                     Date = book.Date,
+                    EndDate = book.Date,
                     Status = book.Status,
                     Description = book.Description,
                     Work = new WorkDTO()
@@ -107,6 +108,7 @@ namespace Unicorn.Core.Services
             {
                 Id = book.Id,
                 Date = book.Date,
+                EndDate = book.EndDate,
                 Status = book.Status,
                 Description = book.Description,
                 Work = new WorkDTO()
@@ -194,6 +196,7 @@ namespace Unicorn.Core.Services
                 Customer = customer,
                 CustomerPhone = book.CustomerPhone,
                 Date = book.Date,
+                EndDate = book.EndDate,
                 Description = book.Description,
                 Location = location,
                 Status = BookStatus.Pending,
@@ -285,6 +288,7 @@ namespace Unicorn.Core.Services
                     CustomerId = b.Customer.Id,
                     CustomerPhone = b.CustomerPhone,
                     Date = b.Date,
+                    EndDate = b.EndDate,
                     Description = b.Description,
                     Rating = GetRatingByBookId(b.Id),
                     Review = _reviewService.GetByBookId(b.Id),
@@ -308,7 +312,7 @@ namespace Unicorn.Core.Services
                         CategoryId = b.Work.Subcategory.Category.Id,
                         Subcategory = b.Work.Subcategory.Name,
                         SubcategoryId = b.Work.Subcategory.Id,
-                        Icon = b.Work.Icon
+                        Icon = b.Work.Icon ?? b.Work.Subcategory.Category.Icon
                     }
                 }).ToList();
         }
@@ -343,6 +347,7 @@ namespace Unicorn.Core.Services
                 Performer = (b.Vendor == null ? b.Company.Name : b.Vendor.Person.Name + " " + b.Vendor.Person.Surname),
                 PerformerId = (b.Vendor == null ? b.Company.Id : b.Vendor.Id),
                 Date = b.Date,
+                EndDate = b.EndDate,
                 Description = b.Description,
                 Rating = GetRatingByBookId(b.Id),
                 Status = b.Status,

@@ -1,5 +1,6 @@
 export interface Book {
 	date: Date;
+	endDate: Date;
 	address: string;
 	contact: string;
 	description: string;

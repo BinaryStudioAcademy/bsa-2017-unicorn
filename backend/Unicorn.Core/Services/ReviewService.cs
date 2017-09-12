@@ -78,6 +78,13 @@ namespace Unicorn.Core.Services
 
         private ReviewDTO ReviewToDTO(Review review)
         {
+            var work = _unitOfWork.BookRepository
+                .Query
+                .Include(b => b.Work)
+                .Where(b => b.Id == review.BookId)
+                .Select(b => b.Work.Name)
+                .FirstOrDefault();
+                
             var reviewDto = new ReviewDTO()
             {
                 Id = review.Id,
@@ -89,7 +96,7 @@ namespace Unicorn.Core.Services
                 ToAccountId = review.ToAccountId,
                 Date = review.Date,
                 Grade = review.Grade,
-                WorkName = review.WorkName
+                WorkName = review.WorkName ?? work
             };
 
             switch (review.Sender.Role.Id)

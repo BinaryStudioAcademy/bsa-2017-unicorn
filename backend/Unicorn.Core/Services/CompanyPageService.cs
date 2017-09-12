@@ -286,7 +286,7 @@ namespace Unicorn.Core.Services
         private async Task<CompanyReviews> GetCompanyReviewsMethod(long id)
         {
             var company = await _unitOfWork.CompanyRepository.GetByIdAsync(id);
-            var reviews = await _reviewService.GetBySenderIdAsync(company.Account.Id);
+            var reviews = await _reviewService.GetByReceiverIdAsync(company.Account.Id);
 
             if (reviews.Any())
             {
@@ -298,7 +298,10 @@ namespace Unicorn.Core.Services
                 return companyReviews;
             }
 
-            return null;
+            return new CompanyReviews
+            {
+                Reviews = Enumerable.Empty<ReviewDTO>().ToList()
+            };
         }
 
         private int GetRatingByBookId(long id)

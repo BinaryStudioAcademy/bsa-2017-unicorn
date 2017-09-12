@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { DashboardComponent } from './dashboard-component/dashboard.component';
@@ -46,7 +46,8 @@ import { MapModule } from '../map/map.module';
     DataService,
     DashMessagingService,
     TokenHelperService,
-    OfferService
+    OfferService,
+    DatePipe
   ]
 })
 export class DashboardModule { }

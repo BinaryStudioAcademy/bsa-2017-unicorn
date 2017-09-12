@@ -12,6 +12,7 @@ import { CompanyReviews } from "../../../models/company-page/company-reviews.mod
 export class ReviewsComponent implements OnInit {
 company: CompanyReviews;
 isReviewsEmpty: boolean = true;
+isLoaded: boolean;
 constructor(private companyService: CompanyService,
   private route: ActivatedRoute) { }
 
@@ -19,6 +20,7 @@ constructor(private companyService: CompanyService,
     this.route.params
     .switchMap((params: Params) => this.companyService.getCompanyReviews(params['id']))
     .subscribe(res => {
+      this.isLoaded = true;
       if(res !== null){
         if(res.Reviews.length == 0){
           this.isReviewsEmpty = true;

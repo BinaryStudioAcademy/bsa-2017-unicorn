@@ -431,8 +431,8 @@ namespace Unicorn.DataAccess.Context
             {
                 Id = 1,
                 Adress = "Instytutska 13",
-                Latitude = 50.446969,
-                Longitude = 30.531165,
+                Latitude = 50.447252,
+                Longitude = 30.532936,
                 IsDeleted = false,
                 City = "Kiev",
                 PostIndex = "61002"
@@ -2163,48 +2163,8 @@ namespace Unicorn.DataAccess.Context
                 IsDeleted = false,
                 Date = DateTime.Now,
             };
-            Review review2 = new Review()
-            {
-                BookId = 1,
-                Description = "qwert",
-                Sender = account11,
-                To = "NameSurname",
-                ToAccountId = 1,
-                IsDeleted = false,
-                Date = DateTime.Now,
-            };
-            Review review3 = new Review()
-            {
-                BookId = 1,
-                Description = "qwert",
-                Sender = account11,
-                To = "NameSurname",
-                ToAccountId = 6,
-                IsDeleted = false,
-                Date = DateTime.Now,
-            };
-            Review review4 = new Review()
-            {
-                BookId = 1,
-                Description = "qwert",
-                Sender = account11,
-                To = "NameSurname",
-                ToAccountId = 6,
-                IsDeleted = false,
-                Date = DateTime.Now,
-            };
-            Review review5 = new Review()
-            {
-                BookId = 1,
-                Description = "qwert",
-                Sender = account11,
-                To = "NameSurname",
-                ToAccountId = 11,
-                IsDeleted = false,
-                Date = DateTime.Now,
-            };
 
-            context.Reviews.AddRange(new List<Review>() { review1, review2, review3, review4, review5 });
+            context.Reviews.AddRange(new List<Review>() { review1 });
 
 
             #endregion

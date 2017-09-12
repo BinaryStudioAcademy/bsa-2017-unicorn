@@ -25,7 +25,7 @@ export class RegisterUserComponent implements OnInit {
   mode: string;
   success = false;
   phone: string;
-  birthday;
+  birthday: Date;
   firstName: string;
   middleName: string;
   lastName: string;
@@ -67,6 +67,8 @@ export class RegisterUserComponent implements OnInit {
   }
 
   aggregateInfo(): Customer {
+    this.birthday.setDate(this.birthday.getDate() + 1);
+
     return {
       birthday: this.birthday,
       phone: this.phone,

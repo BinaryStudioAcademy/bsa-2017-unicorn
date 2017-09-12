@@ -3,6 +3,7 @@
         <div class="field">
             <label>Choose work</label>
             <sui-select 
+            required
             class="selection" 
             [(ngModel)]="selectedWork" 
             (selectedOptionChange)="onWorkChange()"
@@ -15,9 +16,27 @@
         <div class="field">
             <div class="ui left icon input">
                 <i class="calendar icon"></i>
-                <input required suiDatepicker [(ngModel)]="book.date" name="date" [pickerUseNativeOnMobile]="false" placeholder="DATE" #date="ngModel">
+                <input required 
+                    suiDatepicker 
+                    [(ngModel)]="book.date" 
+                    name="date" 
+                    [pickerUseNativeOnMobile]="false" 
+                    placeholder="DATE" [pickerMaxDate]="book.endDate" 
+                    #date="ngModel">
             </div>
             <div *ngIf="date.invalid && (date.dirty && date.touched)" class="valid-error">* Required</div>
+        </div>
+        <div class="field">
+            <div class="ui left icon input">
+                <i class="calendar icon"></i>
+                <input suiDatepicker 
+                    name="enddate" 
+                    [(ngModel)]="book.endDate" 
+                    [pickerUseNativeOnMobile]="false" 
+                    placeholder="END DATE(OPTIONAL)" 
+                    [pickerMinDate]="book.date" 
+                    #enddate="ngModel">
+            </div>
         </div>
         <div class="field">
             <input places-auto-complete 

@@ -16,13 +16,14 @@ import { UserMessagesComponent } from './user-messages/user-messages.component';
 import { PhotoService, Ng2ImgurUploader } from '../services/photo.service';
 import { UserService } from '../services/user.service';
 import { DataService } from "../services/data.service";
+import { TaskMessagingService } from '../services/task-messaging.service';
 import { ReviewService } from '../services/review.service';
 import { CustomerbookService } from '../services/customerbook.service';
 import { environment } from "../../environments/environment";
 import { UserMainComponent } from './user-main/user-main.component';
 import { UserMainInfoComponent } from './user-main/user-main-info/user-main-info.component';
 import { UserMainReviewsComponent } from './user-main/user-main-reviews/user-main-reviews.component';
-import { SharedModule } from "../shared/shared.module";
+import { ImageCropperComponent, ImageCropperModule } from 'ng2-img-cropper/index';
 import {BrowserModule} from '@angular/platform-browser';
 import {ToastModule, ToastsManager, ToastOptions} from 'ng2-toastr/ng2-toastr';
 import { MapModule } from "../map/map.module";
@@ -43,7 +44,7 @@ import { ChatModule } from "../chat/chat.module";
         FormsModule,
         FormsModule,
         MapModule,
-        SharedModule,
+        ImageCropperModule,
         BrowserModule, 
         ChatModule,
         ToastModule.forRoot()
@@ -64,7 +65,8 @@ import { ChatModule } from "../chat/chat.module";
         DataService,
         UserService,
         CustomerbookService,
-        ReviewService
+        ReviewService,
+        TaskMessagingService
     ]
 })
 export class UserModule { }

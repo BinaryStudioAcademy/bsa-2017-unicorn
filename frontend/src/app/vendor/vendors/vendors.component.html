@@ -10,8 +10,8 @@
                     </div>
                     <div class=" centered column">
                         <div class="label-box">
-                            <div (click)="role = 'vendor'" [ngClass]="{'selected': role ==='vendor'}" class="ui horizontal label">Only vendors</div>
-                            <div (click)="role = 'company'" [ngClass]="{'selected': role ==='company'}" class="ui horizontal label">Only companies</div>
+                            <div (click)="role = 'vendor'" [ngClass]="{'selected': role ==='vendor'}" class="ui horizontal label">Vendors</div>
+                            <div (click)="role = 'company'" [ngClass]="{'selected': role ==='company'}" class="ui horizontal label">Companies</div>
                             <div (click)="role = 'all'" [ngClass]="{'selected': role ==='all'}" class="ui selected horizontal label">All</div>
                         </div>
                     </div>
@@ -32,11 +32,16 @@
                                 <div class="equal width two column row">
                                     <div class="left floated column">
                                         <div class="ui form">
+                                            <div class="field">
+                                                <div class="ui left icon input">
+                                                    <i class="calendar icon"></i>
+                                                    <input class="datepicker" placeholder="RIGHT NOW" suiDatepicker [pickerUseNativeOnMobile]="false">
+                                                </div>
+                                            </div>
                                             <div class="inline stackable fields">
                                                 <div class="field">
-                                                    <label>Rating</label>
-                                                    <sui-select 
-                                                    [(ngModel)]="ratingCondition" placeholder="rating">
+                                                    <label style="font-weight:400;">Rating</label>
+                                                    <sui-select [(ngModel)]="ratingCondition" placeholder="rating">
                                                         <sui-select-option value="greater"></sui-select-option>
                                                         <sui-select-option value="lower"></sui-select-option>
                                                     </sui-select>
@@ -50,32 +55,25 @@
                                                     Only with reviews
                                                 </sui-checkbox>
                                             </div>
-                                            <div class="nine wide field">
-                                                    <div class="ui left icon input">
-                                                            <i class="calendar icon"></i>
-                                                            <input class="datepicker" placeholder="RIGHT NOW" suiDatepicker 
-                                                                    [pickerUseNativeOnMobile]="false">
-                                                        </div>
-                                            </div>
+
                                         </div>
                                     </div>
                                     <div class="right floated column">
                                         <div class="row">
-                                            <div class="ui form">    
+                                            <div class="ui form">
                                                 <div class="field">
                                                     <div class="ui input">
-                                                        <input places-auto-complete (initialized$)="initialized($event)" (place_changed)="placeChanged($event)" [types]="['geocode']"
-                                                            type="text" name="location" placeholder="LOCATION" [(ngModel)]="city">
+                                                        <input places-auto-complete (initialized$)="initialized($event)" (place_changed)="placeChanged($event)" [types]="['geocode']" type="text" name="location" placeholder="LOCATION" [(ngModel)]="city">
                                                     </div>
                                                 </div>
                                                 <div class="field">
-                                                    <label>Distance: {{distance}} km</label>
+                                                    <label style="font-weight:400;">Distance: {{distance}} km</label>
                                                 </div>
                                                 <div class="field">
                                                     <div class="slider-box">
                                                         <label>0</label>
                                                         <mdl-slider class="slider" min="0" max="100" [(ngModel)]="distance"></mdl-slider>
-                                                        <label>100+ km</label>
+                                                        <label>100+</label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -83,8 +81,7 @@
                                     </div>
                                 </div>
                                 <div class="container row categories-container">
-                                    <sui-multi-select [(ngModel)]="selectedCategories" [options]="categories" valueField="Id" labelField="Name" icon="list" placeholder="CATEGORIES"
-                                        (ngModelChange)="categoriesChanged()" #select>
+                                    <sui-multi-select [(ngModel)]="selectedCategories" [options]="categories" valueField="Id" labelField="Name" icon="list" placeholder="CATEGORIES" (ngModelChange)="categoriesChanged()" #select>
                                         <div class="ui icon search input">
                                             <i class="search icon"></i>
                                             <input suiSelectSearch type="text" placeholder="Search options...">
@@ -100,8 +97,7 @@
                                     </sui-multi-select>
                                 </div>
                                 <div class="container row categories-container">
-                                    <sui-multi-select [(ngModel)]="selectedSubcategories" [options]="subcategories" valueField="Id" labelField="Name" icon="list"
-                                        placeholder="SUBCATEGORIES" #select>
+                                    <sui-multi-select [(ngModel)]="selectedSubcategories" [options]="subcategories" valueField="Id" labelField="Name" icon="list" placeholder="SUBCATEGORIES" #select>
                                         <div class="ui icon search input">
                                             <i class="search icon"></i>
                                             <input suiSelectSearch type="text" placeholder="Search options...">
@@ -147,10 +143,14 @@
                 </div>
             </div>
         </div>
-        <div class="ui segment ui grid" *ngFor="let performer of performers" (click)="selectPerformerLocation(performer.Name, performer.Location)">
+        <div id="{{performer.PerformerType}}{{performer.Id}}" 
+                class="ui segment ui grid" 
+                *ngFor="let performer of performers" 
+                (click)="selectPerformerLocation(performer.Name, performer.Location)"
+                [ngClass]="{'cell-selected': highlight(performer)}">
             <div class="row">
-                <div class="four wide column">                    
-                        <img class="ui small fluid image" src="{{performer.Avatar}}">                   
+                <div class="four wide column">
+                    <img class="ui small fluid image" src="{{performer.Avatar}}">
                 </div>
                 <div class="eight wide column main-info">
                     <p><b>{{performer.Name}}</b><span class="per-type">&nbsp;{{performer.PerformerType}}</span>
@@ -170,13 +170,12 @@
                     <a routerLink="/{{performer.Link}}" class="ui active secondary button">Details</a>
                 </div>
             </div>
-        </div>  
+        </div>
         <div *ngIf="searchLoading" class="ui active inverted dimmer" style="z-index: 0;">
             <div class="ui text loader">Loading</div>
         </div>
         <div *ngIf="totalCount > pageSize" class="flex-centered" id="paging">
-            <sui-pagination [collectionSize]="totalCount" [pageSize]="pageSize" [maxSize]="maxSize" [hasEllipses]="hasEllipses"
-                [(page)]="selectedPage" (pageChange)="search()">
+            <sui-pagination [collectionSize]="totalCount" [pageSize]="pageSize" [maxSize]="maxSize" [hasEllipses]="hasEllipses" [(page)]="selectedPage" (pageChange)="search()">
             </sui-pagination>
         </div>
     </div>
@@ -186,8 +185,8 @@
                 <ngui-map (mapReady$)="onMapReady($event)" class="map" zoom="6" [center]="center">
                     <custom-marker *ngFor="let per of performers" [position]="[per.Location.Latitude, per.Location.Longitude]">
                         <span class="map-marker" [ngClass]="{'active-marker': selected == per.Name}">
-                            <a routerLink="/{{per.Link}}">{{per.Name}}</a>
-                        </span>
+                                <a (click)="markerHandle(per)">{{per.Name}}</a>
+                            </span>
                     </custom-marker>
                 </ngui-map>
             </div>

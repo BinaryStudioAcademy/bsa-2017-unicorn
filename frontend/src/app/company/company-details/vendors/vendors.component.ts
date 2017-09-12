@@ -11,6 +11,7 @@ import { ActivatedRoute, Params } from "@angular/router";
 export class VendorsComponent implements OnInit {
   company: CompanyVendors; 
   isVendorsEmpty: boolean; 
+  isLoaded: boolean;
 
 constructor(private companyService: CompanyService,
   private route: ActivatedRoute) { }
@@ -18,7 +19,8 @@ constructor(private companyService: CompanyService,
   ngOnInit() {
     this.route.params
     .switchMap((params: Params) => this.companyService.getCompanyVendors(params['id']))
-    .subscribe(res => {  
+    .subscribe(res => { 
+      this.isLoaded = true; 
       if(res.Vendors.length == 0){
         this.isVendorsEmpty = true;
       }
