@@ -9,11 +9,6 @@ import { IndexComponent } from './index-component/index.component';
       {
         path: "index",
         component: IndexComponent
-      },
-      {
-        path: '**',
-        redirectTo: '/index',
-        pathMatch: 'full'
       }
     ])
   ],
