@@ -40,20 +40,6 @@ namespace Unicorn.Core.Services
 
         public async Task<Report> CreateAsync(ReportDTO reportDto)
         {
-            //var customerId = reportDto.CustomerId == null ? 0 : (long)reportDto.CustomerId;
-            //var vendorId = reportDto.VendorId == null ? 0 : (long)reportDto.VendorId;
-            //var companyId = reportDto.CompanyId == null ? 0 : (long)reportDto.CompanyId;
-            //var report = new Report
-            //{
-            //    Id = reportDto.Id,
-            //    Date = DateTime.Now,
-            //    Type = reportDto.Type,
-            //    Message = reportDto.Message,
-            //    Customer = await _unitOfWork.CustomerRepository.GetByIdAsync(customerId),
-            //    Vendor = await _unitOfWork.VendorRepository.GetByIdAsync(vendorId),
-            //    Company = await _unitOfWork.CompanyRepository.GetByIdAsync(companyId)
-            //};
-
             var report = await CreateReportAsync(reportDto);
 
             _unitOfWork.ReportRepository.Create(report);
@@ -64,18 +50,6 @@ namespace Unicorn.Core.Services
 
         public async Task UpdateAsync(ReportDTO reportDto)
         {
-            //var customerId = reportDto.CustomerId == null ? 0 : (long)reportDto.CustomerId;
-            //var vendorId = reportDto.VendorId == null ? 0 : (long)reportDto.VendorId;
-            //var companyId = reportDto.CompanyId == null ? 0 : (long)reportDto.CompanyId;
-            //var report = await _unitOfWork.ReportRepository.GetByIdAsync(reportDto.Id);
-
-            //report.Date = reportDto.Date;
-            //report.Type = reportDto.Type;
-            //report.Message = reportDto.Message;
-            //report.Customer = await _unitOfWork.CustomerRepository.GetByIdAsync(customerId);
-            //report.Vendor = await _unitOfWork.VendorRepository.GetByIdAsync(vendorId);
-            //report.Company = await _unitOfWork.CompanyRepository.GetByIdAsync(companyId);
-
             var report = await CreateReportAsync(reportDto);
 
             _unitOfWork.ReportRepository.Update(report);
