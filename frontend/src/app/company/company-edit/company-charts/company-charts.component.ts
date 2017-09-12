@@ -158,6 +158,40 @@ export class CompanyChartsComponent implements OnInit {
 
   // line, area
   autoScale = false;
+
+
+
+
+  dataPie = [
+    {
+      "name": "Germany",
+      "value": 8940000
+    },
+    {
+      "name": "USA",
+      "value": 5000000
+    },
+    {
+      "name": "France",
+      "value": 7200000
+    }
+  ];
+  
+    viewPie: any[] = [400, 300];
+  
+    // options
+    showLegendPie = false;
+  
+    colorSchemePie = {
+      domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
+    };
+  
+    // pie
+    showLabels = true;
+    explodeSlices = false;
+    doughnut = false;
+
+    workOptions = ['Rating', 'Success works count', 'Declined works count'];
   
   constructor(
     private changeRef: ChangeDetectorRef

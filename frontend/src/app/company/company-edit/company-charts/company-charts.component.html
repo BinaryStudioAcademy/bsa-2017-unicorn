@@ -19,7 +19,7 @@
     </ngx-charts-line-chart>
     </div>
   </div>
-  <h4 align="center">Books decined</h4>
+  <h4 align="center">Books declined</h4>
   <div class="chart-wrap">
     <div class="chart-cl">
       <ngx-charts-line-chart
@@ -37,6 +37,33 @@
       [autoScale]="autoScale"
       (select)="onSelect($event)">
       </ngx-charts-line-chart>
+    </div>
+  </div>
+  <h4 align="center">Works</h4>
+  <div class="chart-work">
+    <div class="chart-cl">
+        <ngx-charts-pie-chart
+        [view]="viewPie"
+        [scheme]="colorSchemePie"
+        [results]="dataPie"
+        [legend]="showLegendPie"
+        [explodeSlices]="explodeSlices"
+        [labels]="showLabels"
+        [doughnut]="doughnut"
+        [gradient]="gradient"
+        (select)="onSelect($event)">
+      </ngx-charts-pie-chart>
+    </div>
+    <div class="work-form">
+      <span>Calculate by</span>
+      <div class="field">
+        <sui-select class="selection"
+          placeholder="CALCULATE BY">
+          <sui-select-option class="select-option" *ngFor="let option of workOptions" [value]="option">
+
+          </sui-select-option>
+        </sui-select>
+      </div>
     </div>
   </div>
 </div>

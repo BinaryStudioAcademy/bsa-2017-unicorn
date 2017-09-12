@@ -93,6 +93,7 @@
     <Compile Include="Infrastructure\SignalR\NotificationHub.cs" />
     <Compile Include="Infrastructure\SignalR\NotificationProxy.cs" />
     <Compile Include="Interfaces\IAccountService.cs" />
+    <Compile Include="Interfaces\IAnalyticsService.cs" />
     <Compile Include="Interfaces\IAuthService.cs" />
     <Compile Include="Interfaces\IAvatarService.cs" />
     <Compile Include="Interfaces\IBookService.cs" />
@@ -122,6 +123,7 @@
     <Compile Include="Interfaces\ISearchService.cs" />
     <Compile Include="Interfaces\IVendorService.cs" />
     <Compile Include="Interfaces\IWorkService.cs" />
+    <Compile Include="Services\AnalyticsService.cs" />
     <Compile Include="Services\CalendarService.cs" />
     <Compile Include="Services\ChatService.cs" />
     <Compile Include="Services\AccountService.cs" />
