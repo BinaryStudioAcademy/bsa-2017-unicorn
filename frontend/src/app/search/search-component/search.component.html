@@ -208,7 +208,7 @@
           </div>
         </div>        
       </div>
-      <div *ngIf="works.length > pageSize" class="flex-centered"> 
+      <div *ngIf="works.length > getPageSize()" class="flex-centered"> 
         <sui-pagination [collectionSize]="works.length"
                         [pageSize]="pageSize"
                         [maxSize]="maxSize"
