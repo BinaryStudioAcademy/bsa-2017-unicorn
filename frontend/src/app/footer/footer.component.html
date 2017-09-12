@@ -8,6 +8,18 @@
       <a href="https://www.facebook.com/BinaryStudioAcademy"><i class="facebook f icon"></i></a>
       <a href="https://vk.com/binary_academy"><i class="vk icon"></i></a>
     </div>
+    <button (click)="openModal()">Leave Feedback</button>
+    <ng-template class="modalImage" let-context let-modal="modal" #modalTemplate>
+      <div class="content">
+          <div class="contentContainer">
+              <div class="mainContent" align="center">
+                  <div class="title">
+                      <label>Select your photo</label>
+                  </div>                
+              </div>             
+          </div>
+      </div>
+    </ng-template>
   </div>
 </div>
 
