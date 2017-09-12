@@ -339,7 +339,7 @@ export class ChatComponent implements OnInit {
       
       this.chatService.uploadFiles(formData).then(x => {
         this.files = x as ChatFile[];
-        this.addMessage();        
+        this.addMessage();
       }).catch(err => console.log(err));
             
       inputEl.value = null;
