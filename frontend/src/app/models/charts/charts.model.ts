@@ -31,4 +31,7 @@ export interface Analytics {
     PopularWorks: PopularWorks;
     ConfirmedWorks: ConfirmedWorks;
     DeclinedWorks: DeclinedWorks;
+    VendorsByRating: DeclinedWorks;
+    VendorsByOrders: DeclinedWorks;
+    VendorsByFinished: DeclinedWorks;
 }

@@ -11,133 +11,6 @@ import { Analytics } from '../../../models/charts/charts.model';
   styleUrls: ['./company-charts.component.sass']
 })
 export class CompanyChartsComponent implements OnInit {
-
-  single = [
-    {
-      "name": "Germany",
-      "value": 8940000
-    },
-    {
-      "name": "USA",
-      "value": 5000000
-    },
-    {
-      "name": "France",
-      "value": 7200000
-    }
-  ];
-  
-  multi = [
-    {
-      "name": "books",
-      "series": [
-        {
-          "name": "March",
-          "value": 8
-        },
-        {
-          "name": "April",
-          "value": 6
-        },
-        {
-          "name": "May",
-          "value": 5
-        },
-        {
-          "name": "June",
-          "value": 11
-        },
-        {
-          "name": "July",
-          "value": 9
-        },
-        {
-          "name": "August",
-          "value": 7
-        },
-        {
-          "name": "September",
-          "value": 6
-        },
-        {
-          "name": "October",
-          "value": 3
-        },
-        {
-          "name": "November",
-          "value": 2
-        },
-        {
-          "name": "December",
-          "value": 6
-        },
-        {
-          "name": "Janary",
-          "value": 13
-        },
-        {
-          "name": "February",
-          "value": 11
-        }
-      ]
-    }
-  ];
-  
-  declinedData = [
-    {
-      "name": "declined",
-      "series": [
-        {
-          "name": "March",
-          "value": 0
-        },
-        {
-          "name": "April",
-          "value": 5
-        },
-        {
-          "name": "May",
-          "value": 7
-        },
-        {
-          "name": "June",
-          "value": 10
-        },
-        {
-          "name": "July",
-          "value": 8
-        },
-        {
-          "name": "August",
-          "value": 6
-        },
-        {
-          "name": "September",
-          "value": 5
-        },
-        {
-          "name": "October",
-          "value": 2
-        },
-        {
-          "name": "November",
-          "value": 1
-        },
-        {
-          "name": "December",
-          "value": 5
-        },
-        {
-          "name": "Janary",
-          "value": 12
-        },
-        {
-          "name": "February",
-          "value": 10
-        }
-      ]
-    }
-  ];
   
   view: any[] = [850, 300];
 
@@ -164,23 +37,6 @@ export class CompanyChartsComponent implements OnInit {
   // line, area
   autoScale = false;
 
-
-
-
-  dataPie = [
-    {
-      "name": "Germany",
-      "value": 8940000
-    },
-    {
-      "name": "USA",
-      "value": 5000000
-    },
-    {
-      "name": "France",
-      "value": 7200000
-    }
-  ];
   
     viewPie: any[] = [400, 300];
   
@@ -201,6 +57,10 @@ export class CompanyChartsComponent implements OnInit {
       domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
     };
   //----------------------------------
+  isCompanyPage: boolean = true;
+  pageSelected: string = 'Company analytics';
+
+  //Company page
   workOptions = [{
     id: 1,
     value: 'Popularity'
@@ -211,6 +71,7 @@ export class CompanyChartsComponent implements OnInit {
     id: 3,
     value: 'Declined works count'
   }];
+
   selectedType: string = this.workOptions[0].value;
   selectedTypeId: number = 1;
 
@@ -222,6 +83,31 @@ export class CompanyChartsComponent implements OnInit {
   popularWorks: any;
   confirmedWorks: any;
   declinedWorks: any;
+
+  workData: any;
+
+  //Vendors page
+
+  vendorRateOptions = [{
+    id: 1,
+    value: 'Rating'
+  }, {
+    id: 2,
+    value: 'Orders count'
+  }, {
+    id: 3,
+    value: 'Finished tasks'
+  }];
+  selectedVendorOpt: string = this.vendorRateOptions[0].value;
+  selectedVendorOptId: number = 1;
+
+  vendorRating: any;
+  vendorOrders: any;
+  vendorFinished: any;
+
+  vendorData: any;
+
+  
 
   constructor(
     private changeRef: ChangeDetectorRef,
@@ -242,16 +128,48 @@ export class CompanyChartsComponent implements OnInit {
       this.popularWorks = this.analytics.PopularWorks.Points;
       this.confirmedWorks = this.analytics.ConfirmedWorks.Points;
       this.declinedWorks = this.analytics.DeclinedWorks.Points;
+      this.workData = this.popularWorks;
+
+      this.vendorRating = this.analytics.VendorsByRating.Points;
+      this.vendorOrders = this.analytics.VendorsByOrders.Points;
+      this.vendorFinished = this.analytics.VendorsByFinished.Points;
+      this.vendorData = this.vendorRating;
+
       console.log(resp);
     });
   }
 
-  getBooksAccepted() {
-    return [this.analytics.BooksAccepted];
+  onTypeSelect() {
+    let id = this.workOptions.filter(o => o.value === this.selectedType)[0].id;
+    if (id === 1) {
+      this.workData = this.popularWorks;
+    } 
+    if (id === 2) {
+      this.workData = this.confirmedWorks;
+    } 
+    if (id === 3) {
+      this.workData = this.declinedWorks;
+    } 
   }
 
-  onTypeSelect() {
-    this.selectedTypeId = this.workOptions.filter(o => o.value === this.selectedType)[0].id;
+  onVendorOptionSelect() {
+    let id = this.vendorRateOptions.filter(o => o.value === this.selectedVendorOpt)[0].id;
+    if (id === 1) {
+      this.vendorData = this.vendorRating;
+    } 
+    if (id === 2) {
+      this.vendorData = this.vendorOrders;
+    } 
+    if (id === 3) {
+      this.vendorData = this.vendorFinished;
+    } 
+  }
+
+  formatYAxis(val) {
+    if (val % 1 !== 0) {
+      return '';
+    }
+    return Number(val);
   }
 
 }
