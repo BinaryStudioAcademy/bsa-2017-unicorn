@@ -11,6 +11,7 @@ using Unicorn.Core.Interfaces;
 using Unicorn.DataAccess.Entities;
 using Unicorn.Shared.DTOs;
 using Unicorn.Shared.DTOs.Book;
+using Unicorn.Shared.DTOs.Chart;
 using Unicorn.Shared.DTOs.Contact;
 using Unicorn.Shared.DTOs.Subcategory;
 using Unicorn.Shared.DTOs.Vendor;
@@ -30,7 +31,8 @@ namespace Unicorn.Controllers
             IWorkService workService,
             IContactService contactService,
             IRatingService ratingService,
-            INotificationProxy notificationProxy)
+            INotificationProxy notificationProxy,
+            IAnalyticsService analyticsService)
         {
             _vendorService = vendorService;
             _reviewService = reviewService;
@@ -41,6 +43,7 @@ namespace Unicorn.Controllers
             _contactService = contactService;
             _ratingService = ratingService;
             _notificationProxy = notificationProxy;
+            _analyticsService = analyticsService;
         }
 
         [HttpGet]
@@ -89,6 +92,14 @@ namespace Unicorn.Controllers
                 return Request.CreateResponse(HttpStatusCode.NotFound);
             else
                 return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+
+        [HttpGet]
+        [Route("{id}/charts")]
+        public async Task<AnalyticsDTO> GetVendorCharts(long id)
+        {
+            return await _analyticsService.GetVendorAnalytics(id);
         }
 
         [HttpGet]
@@ -281,5 +292,6 @@ namespace Unicorn.Controllers
         private IWorkService _workService;
         private IContactService _contactService;
         private INotificationProxy _notificationProxy;
+        private IAnalyticsService _analyticsService;
     }
 }

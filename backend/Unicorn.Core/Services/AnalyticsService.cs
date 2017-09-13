@@ -35,6 +35,8 @@ namespace Unicorn.Core.Services
             _unitOfWork = unitOfWork;
         }
 
+        //Company
+
         public async Task<AnalyticsDTO> GetCompanyAnalytics(long companyId)
         {
             var analytics = new AnalyticsDTO();
@@ -108,11 +110,6 @@ namespace Unicorn.Core.Services
             return analytics;
         }
 
-        public async Task<AnalyticsDTO> GetVendorAnalytics(long vendorId)
-        {
-            throw new NotImplementedException();
-        }
-
         private Tuple<int, int> GetMonthAndYear()
         {
             var month = (DateTime.Now.Month + 12) % 12 + 1;
@@ -129,6 +126,14 @@ namespace Unicorn.Core.Services
             return _unitOfWork.BookRepository
                 .Query
                 .Where(b => b.Company.Id == id && b.Status == status && b.Date.Month == month && b.Date.Year == year)
+                .Count();
+        }
+
+        private int GetVendorBooksCount(int month, int year, BookStatus status, long id)
+        {
+            return _unitOfWork.BookRepository
+                .Query
+                .Where(b => b.Vendor.Id == id && b.Status == status && b.Date.Month == month && b.Date.Year == year)
                 .Count();
         }
 
@@ -150,6 +155,16 @@ namespace Unicorn.Core.Services
             }).ToList();
         }
 
+        private async Task<List<ChartPointDTO>> GetVendorPopularWorks(long id)
+        {
+            var vendor = await _unitOfWork.VendorRepository.GetByIdAsync(id);
+            return vendor.Works.Select(w => new ChartPointDTO
+            {
+                Name = w.Name,
+                Value = Convert.ToInt32(w.Orders)
+            }).ToList();
+        }
+
         private async Task<List<ChartPointDTO>> GetCompanyConfirmedWorks(long id)
         {
             var company = await _unitOfWork.CompanyRepository.GetByIdAsync(id);
@@ -165,6 +180,21 @@ namespace Unicorn.Core.Services
             .ToList();
         }
 
+        private async Task<List<ChartPointDTO>> GetVendorConfirmedWorks(long id)
+        {
+            var vendor = await _unitOfWork.VendorRepository.GetByIdAsync(id);
+            return vendor.Works.Select(w => new ChartPointDTO
+            {
+                Name = w.Name,
+                Value = _unitOfWork.BookRepository
+                            .Query
+                            .Where(b => b.Status == BookStatus.Confirmed && b.Work.Id == w.Id && b.Vendor.Id == id)
+                            .Count()
+            })
+            .OrderBy(p => p.Value)
+            .ToList();
+        }
+
         private async Task<List<ChartPointDTO>> GetCompanyDeclinedWorks(long id)
         {
             var company = await _unitOfWork.CompanyRepository.GetByIdAsync(id);
@@ -174,6 +204,21 @@ namespace Unicorn.Core.Services
                 Value = _unitOfWork.BookRepository
                             .Query
                             .Where(b => b.Status == BookStatus.Declined && b.Work.Id == w.Id && b.Company.Id == id)
+                            .Count()
+            })
+            .OrderBy(p => p.Value)
+            .ToList();
+        }
+
+        private async Task<List<ChartPointDTO>> GetVendorDeclinedWorks(long id)
+        {
+            var vendor = await _unitOfWork.VendorRepository.GetByIdAsync(id);
+            return vendor.Works.Select(w => new ChartPointDTO
+            {
+                Name = w.Name,
+                Value = _unitOfWork.BookRepository
+                            .Query
+                            .Where(b => b.Status == BookStatus.Declined && b.Work.Id == w.Id && b.Vendor.Id == id)
                             .Count()
             })
             .OrderBy(p => p.Value)
@@ -237,6 +282,67 @@ namespace Unicorn.Core.Services
                 .Where(r => r.Reciever.Id == id)
                 .Average(r => r.Grade);
             return Convert.ToInt32(rating);
+        }
+
+
+        //Vendor
+
+        public async Task<AnalyticsDTO> GetVendorAnalytics(long vendorId)
+        {
+            var analytics = new AnalyticsDTO();
+            var accepted = new List<ChartPointDTO>();
+            var declined = new List<ChartPointDTO>();
+            var date = GetMonthAndYear();
+            var month = date.Item1;
+            var year = date.Item2;
+            for (int i = 0; i < 12; i++)
+            {
+                accepted.Add(new ChartPointDTO
+                {
+                    Name = Months[month],
+                    Value = GetVendorBooksCount(month, year, BookStatus.Accepted, vendorId)
+                        + GetVendorBooksCount(month, year, BookStatus.Confirmed, vendorId)
+                        + GetVendorBooksCount(month, year, BookStatus.Finished, vendorId)
+                });
+                declined.Add(new ChartPointDTO
+                {
+                    Name = Months[month],
+                    Value = GetVendorBooksCount(month, year, BookStatus.Declined, vendorId)
+                });
+                month++;
+                if (month > 12)
+                {
+                    year++;
+                    month -= 12;
+                }
+            }
+            analytics.BooksAccepted = new LineChartDTO
+            {
+                Name = "Accepted books",
+                Series = accepted
+            };
+            analytics.BooksDeclined = new LineChartDTO
+            {
+                Name = "Declined books",
+                Series = declined
+            };
+            var popularWorkPoints = await GetVendorPopularWorks(vendorId);
+            analytics.PopularWorks = new PieChartDTO
+            {
+                Points = popularWorkPoints
+            };
+            var confirmedWorks = await GetVendorConfirmedWorks(vendorId);
+            analytics.ConfirmedWorks = new PieChartDTO
+            {
+                Points = confirmedWorks
+            };
+            var decliendWorks = await GetVendorDeclinedWorks(vendorId);
+            analytics.DeclinedWorks = new PieChartDTO
+            {
+                Points = decliendWorks
+            };
+
+            return analytics;
         }
     }
 }
