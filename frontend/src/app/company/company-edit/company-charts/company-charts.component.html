@@ -70,18 +70,6 @@
     </div>
     <div class="chart-work">
       <div class="chart-cl">
-          <ngx-charts-pie-chart
-          [view]="viewPie"
-          [scheme]="colorSchemePie"
-          [results]="workData"
-          [legend]="showLegendPie"
-          [explodeSlices]="explodeSlices"
-          [labels]="showLabels"
-          [doughnut]="doughnut"
-          [gradient]="gradient">
-        </ngx-charts-pie-chart>
-      </div>
-      <div class="chart-cl">
         <ngx-charts-bar-vertical
           [view]="viewPie"
           [scheme]="colorSchemeBar"
@@ -96,6 +84,18 @@
           [xAxisLabel]="xAxisLabel"
           [yAxisLabel]="yAxisLabel">
         </ngx-charts-bar-vertical>
+      </div>
+      <div class="chart-cl">
+          <ngx-charts-pie-chart
+          [view]="viewPie"
+          [scheme]="colorSchemePie"
+          [results]="workData"
+          [legend]="showLegendPie"
+          [explodeSlices]="explodeSlices"
+          [labels]="showLabels"
+          [doughnut]="doughnut"
+          [gradient]="gradient">
+        </ngx-charts-pie-chart>
       </div>
     </div>
   </div>
@@ -118,18 +118,6 @@
       </div>
       <div class="chart-work">
         <div class="chart-cl">
-            <ngx-charts-pie-chart
-            [view]="viewPie"
-            [scheme]="colorSchemePie"
-            [results]="vendorData"
-            [legend]="showLegendPie"
-            [explodeSlices]="explodeSlices"
-            [labels]="showLabels"
-            [doughnut]="doughnut"
-            [gradient]="gradient">
-          </ngx-charts-pie-chart>
-        </div>
-        <div class="chart-cl">
           <ngx-charts-bar-vertical
             [yAxisTickFormatting]="formatYAxis"
             [view]="viewPie"
@@ -144,6 +132,18 @@
             [xAxisLabel]="xAxisLabel"
             [yAxisLabel]="yAxisLabel">
           </ngx-charts-bar-vertical>
+        </div>
+        <div class="chart-cl">
+            <ngx-charts-pie-chart
+            [view]="viewPie"
+            [scheme]="colorSchemePie"
+            [results]="vendorData"
+            [legend]="showLegendPie"
+            [explodeSlices]="explodeSlices"
+            [labels]="showLabels"
+            [doughnut]="doughnut"
+            [gradient]="gradient">
+          </ngx-charts-pie-chart>
         </div>
       </div>
   </div>

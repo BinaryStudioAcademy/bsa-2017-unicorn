@@ -166,10 +166,11 @@ export class CompanyChartsComponent implements OnInit {
   }
 
   formatYAxis(val) {
-    if (val % 1 !== 0) {
+    let v = val as number;
+    if (v % 1 !== 0) {
       return '';
     }
-    return Number(val);
+    return +v;
   }
 
 }
