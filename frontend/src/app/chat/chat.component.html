@@ -43,7 +43,7 @@
                         </div>
                         <div class="concrete-message me">
                             {{message.Message}}
-                            <hr *ngIf="message.Files.length > 0">
+                            <hr *ngIf="message.Files !== undefined && message.Files !== null && message.Files.length > 0">
                             <span *ngFor="let file of message.Files">
                                 <a href="http://www.colorado.edu/conflict/peace/download/peace.zip" download="test">{{file.OriginalName}}</a>
                             </span>
