@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Unicorn.Shared.DTOs.Admin
 {
-    public class BannedAccountsPage
+    public class AccountsPage
     {
         public int CurrentPage { get; set; }
         public int TotalCount { get; set; }
         public int PageSize { get; set; }
-        public List<BannedAccountDTO> Items { get; set; }
+        public List<AccountDTO> Items { get; set; }
     }
 }

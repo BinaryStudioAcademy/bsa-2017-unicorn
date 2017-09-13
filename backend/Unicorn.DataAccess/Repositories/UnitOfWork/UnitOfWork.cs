@@ -36,7 +36,6 @@ namespace Unicorn.DataAccess.Repositories.UnitOfWork
         private IGenericRepository<Rating> ratingRepository;
         private IGenericRepository<Notification> notificationRepository;
         private IGenericRepository<Offer> offerRepository;
-        private IGenericRepository<BannedAccount> bannedAccountRepository;
 
         public UnitOfWork(AppContext context, IRepositoryFactory factory)
         {
@@ -267,15 +266,6 @@ namespace Unicorn.DataAccess.Repositories.UnitOfWork
             {
                 return offerRepository ??
                     (offerRepository = factory.CreateRepository<Offer>(context));
-            }
-        }
-
-        public IGenericRepository<BannedAccount> BannedAccountRepository
-        {
-            get
-            {
-                return bannedAccountRepository ??
-                    (bannedAccountRepository = factory.CreateRepository<BannedAccount>(context));
             }
         }
 

@@ -2,15 +2,14 @@
 
 namespace Unicorn.Shared.DTOs.Admin
 {
-    public class BannedAccountDTO
+    public class AccountDTO
     {
         public long Id { get; set; }
-        public long AccountId { get; set; }
-
+        public string Avatar { get; set; }
+        public string Name { get; set; }
         public string Role { get; set; }
         public string Email { get; set; }
 
-        public DateTimeOffset StartTime { get; set; }
-        public DateTimeOffset EndTime { get; set; }
+        public bool IsBanned { get; set; }
     }
 }

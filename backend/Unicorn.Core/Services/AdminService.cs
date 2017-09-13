@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 using Unicorn.Core.Interfaces;
-using Unicorn.DataAccess.Entities;
 using Unicorn.DataAccess.Interfaces;
 using Unicorn.Shared.DTOs.Admin;
 
@@ -13,159 +13,216 @@ namespace Unicorn.Core.Services
 {
     public class AdminService : IAdminService
     {
-        public AdminService(IUnitOfWork unitOfWork)
+        public AdminService(IUnitOfWorkFactory unitOfWorkFactory)
         {
-            _unitOfWork = unitOfWork;
+            _uowFactory = unitOfWorkFactory;
         }
 
-        public async Task<BannedAccountDTO> BanAccountAsync(long id, DateTimeOffset endTime)
+        public async Task BanAccountAsync(long id)
         {
-            var entry = _unitOfWork.BannedAccountRepository.Query
-                .Where(a => !a.IsDeleted)
-                .Include(a => a.Account)
-                .Include(a => a.Account.Role)
-                .SingleOrDefault(a => a.Account.Id == id);
+            var uow = _uowFactory.CreateUnitOfWork();
 
-            var accountTask = _unitOfWork.AccountRepository.GetByIdAsync(id);
+            var account = await uow.AccountRepository.Query
+                .Include(a => a.Role)
+                .FirstOrDefaultAsync(a => a.Id == id);
 
-            if (entry != null)
+            account.IsBanned = true;
+
+            uow.AccountRepository.Update(account);
+            await uow.SaveAsync();
+        }
+
+        public async Task UnbanAccountAsync(long id)
+        {
+            var uow = _uowFactory.CreateUnitOfWork();
+
+            var account = await uow.AccountRepository.Query
+                .Include(a => a.Role)
+                .FirstOrDefaultAsync(a => a.Id == id);
+
+            account.IsBanned = false;
+
+            uow.AccountRepository.Update(account);
+            await uow.SaveAsync();
+        }
+
+        public async Task<AccountsPage> GetAccountsPageAsync(IEnumerable<AccountDTO> items, int page, int size)
+        {
+            return await Task.Run(() => new AccountsPage
             {
-                if (entry.EndTime <= DateTimeOffset.Now)
-                {
-                    _unitOfWork.BannedAccountRepository.Delete(entry.Id);
-
-                }
-                else
-                {
-                    return ToBannedAccountDTO(entry);
-                }
-            }
-
-            var account = await accountTask;
-            entry = new BannedAccount
-            {
-                Account = account,
-                StartTime = DateTimeOffset.Now,
-                EndTime = endTime,
-                IsDeleted = false
-            };
-
-            _unitOfWork.BannedAccountRepository.Create(entry);
-            await _unitOfWork.SaveAsync();
-
-            return ToBannedAccountDTO(entry);
-        }
-
-        public async Task<BannedAccountDTO> UpdateBanTime(long entryId, DateTimeOffset endTime)
-        {
-            var entry = await _unitOfWork.BannedAccountRepository.Query
-                .Where(a => !a.IsDeleted)
-                .Include(a => a.Account)
-                .Include(a => a.Account.Role)
-                .SingleOrDefaultAsync(a => a.Id == entryId);
-
-            entry.EndTime = endTime;
-
-            _unitOfWork.BannedAccountRepository.Update(entry);
-            await _unitOfWork.SaveAsync();
-
-            return ToBannedAccountDTO(entry);
-        }
-
-        public async Task LiftBanAsync(long entryId)
-        {
-            await Task.Run(() => _unitOfWork.BannedAccountRepository.Delete(entryId));
-        }
-
-        public async Task LiftBanByAccountAsync(long accountId)
-        {
-            var account = await _unitOfWork.AccountRepository.GetByIdAsync(accountId);
-            var entry = await _unitOfWork.BannedAccountRepository.Query
-                .Where(a => !a.IsDeleted)
-                .Include(a => a.Account)
-                .Include(a => a.Account.Role)
-                .SingleOrDefaultAsync(a => a.Account.Id == accountId);
-
-            if (entry != null)
-                _unitOfWork.BannedAccountRepository.Delete(entry.Id);
-        }
-
-        public async Task<List<BannedAccountDTO>> GetAllBannedAccountsAsync()
-        {
-            return await Task.Run(() => _unitOfWork.BannedAccountRepository.Query
-                .Where(a => !a.IsDeleted)
-                .Include(a => a.Account)
-                .Include(a => a.Account.Role)
-                .AsEnumerable()
-                .Select(a => ToBannedAccountDTO(a))
-                .ToList());
-        }
-
-        public async Task<BannedAccountsPage> GetBannedAccountsPageAsync(int page, int pageSize, IEnumerable<BannedAccountDTO> items)
-        {
-            return await Task.Run(() => new BannedAccountsPage
-            {
-                Items = items.Skip(pageSize * (page - 1))
-                    .Take(pageSize).ToList(),
+                Items = items.Skip(size * (page - 1))
+                    .Take(size).ToList(),
                 CurrentPage = page,
-                PageSize = pageSize,
+                PageSize = size,
                 TotalCount = items.Count()
             });
         }
 
-        public async Task<List<BannedAccountDTO>> SearchAccountsAsync(string template)
+        public async Task<IEnumerable<AccountDTO>> GetAllAsync()
         {
-            var persons = await _unitOfWork.PersonRepository.Query
-                .Include(p => p.Account)
-                .Where(p => p.Account.Email.Contains(template) || (p.Name + " " + p.Surname + " " + p.MiddleName).Contains(template))
-                .Select(p => new BannedAccountDTO
-                {
-                    AccountId = p.Account.Id,
-                    Email = p.Account.Email,
-                    Role = p.Account.Role.Name,
-                }).ToListAsync();
-            var companies = await _unitOfWork.CompanyRepository.Query
-                .Include(c => c.Account)
-                .Where(c => c.Account.Email.Contains(template) || c.Name.Contains(template))
-                .Select(c => new BannedAccountDTO
-                {
-                    AccountId = c.Account.Id,
-                    Email = c.Account.Email,
-                    Role = c.Account.Role.Name,
-                }).ToListAsync();
+            var personsTask = Task.Run(() => 
+            {
+                var uow = _uowFactory.CreateUnitOfWork();
+
+                return uow.PersonRepository.Query
+                    .Include(p => p.Account)
+                    .Include(p => p.Account.Role)
+                    .Where(p => p.Account.Role.Id != 5)
+                    .Select(p => new AccountDTO
+                    {
+                        Id = p.Account.Id,
+                        Avatar = p.Account.Avatar,
+                        Email = p.Account.Email,
+                        Role = p.Account.Role.Name,
+                        Name = p.Name + " " + p.Surname + " " + p.MiddleName,
+                        IsBanned = p.Account.IsBanned
+                    }).ToList();
+            });
+
+            var companiesTask = Task.Run(() =>
+            {
+                var uow = _uowFactory.CreateUnitOfWork();
+
+                return uow.CompanyRepository.Query
+                    .Include(c => c.Account)
+                    .Include(p => p.Account.Role)
+                    .Where(p => p.Account.Role.Id != 5)
+                    .Select(c => new AccountDTO
+                    {
+                        Id = c.Account.Id,
+                        Avatar = c.Account.Avatar,
+                        Email = c.Account.Email,
+                        Role = c.Account.Role.Name,
+                        Name = c.Name,
+                        IsBanned = c.Account.IsBanned
+                    }).ToList();
+            });
+            var companies = await companiesTask;
+            var persons = await personsTask;
+
+            return companies
+                .Union(persons)
+                .OrderBy(p => p.Name).ToList();
+        }
+
+        public async Task<IEnumerable<AccountDTO>> SearchAsync(string template, bool isBanned, string role)
+        {
+            var personsTask = Task.Run(() =>
+            {
+                var uow = _uowFactory.CreateUnitOfWork();
+
+                return uow.PersonRepository.Query
+                    .Include(p => p.Account)
+                    .Include(p => p.Account.Role)
+                    .Where(p => p.Account.Role.Id != 5)
+                    .Where(p => p.Account.IsBanned == isBanned)
+                    .Where(p => p.Account.Email.Contains(template) || (p.Name + " " + p.Surname + " " + p.MiddleName).Contains(template))
+                    .Select(p => new AccountDTO
+                    {
+                        Id = p.Account.Id,
+                        Avatar = p.Account.Avatar,
+                        Email = p.Account.Email,
+                        Role = p.Account.Role.Name,
+                        Name = p.Name + " " + p.Surname + " " + p.MiddleName,
+                        IsBanned = p.Account.IsBanned
+                    }).ToList();
+            });
+
+            var companiesTask = Task.Run(() =>
+            {
+                var uow = _uowFactory.CreateUnitOfWork();
+
+                return uow.CompanyRepository.Query
+                    .Include(c => c.Account)
+                    .Include(p => p.Account.Role)
+                    .Where(p => p.Account.Role.Id != 5)
+                    .Where(p => p.Account.IsBanned == isBanned)
+                    .Where(c => c.Account.Email.Contains(template) || c.Name.Contains(template))
+                    .Select(c => new AccountDTO
+                    {
+                        Id = c.Account.Id,
+                        Avatar = c.Account.Avatar,
+                        Email = c.Account.Email,
+                        Role = c.Account.Role.Name,
+                        Name = c.Name,
+                        IsBanned = c.Account.IsBanned
+                    }).ToList();
+            });
+
+            var companies = await companiesTask;
+            var persons = await personsTask;
 
             var accounts = companies
-                .Union(persons)
-                .ToList();
+                .Union(persons);
 
-            var banned = await Task.Run(() => _unitOfWork.BannedAccountRepository.Query
-                .Where(a => !a.IsDeleted)
-                .Include(a => a.Account)
-                .Include(a => a.Account.Role)
-                .AsEnumerable()
-                .Select(a => ToBannedAccountDTO(a))
-                .ToList());
+            if (!string.IsNullOrEmpty(role) && role != "all")
+            {
+                accounts = accounts
+                    .Where(a => a.Role.ToLower() == role.ToLower());
+            }
 
             return accounts
-                .Union(banned)
-                .GroupBy(a => a.AccountId)
-                .Select(g => g.First())
-                .ToList();
+                .OrderBy(p => p.Name).ToList();
         }
 
-        private BannedAccountDTO ToBannedAccountDTO(BannedAccount entry)
+        public async Task<IEnumerable<AccountDTO>> SearchAsync(string template, string role)
         {
-            return new BannedAccountDTO
+            var personsTask = Task.Run(() =>
             {
-                Id = entry.Id,
-                AccountId = entry.Account.Id,
-                Email = entry.Account.Email,
-                Role = entry.Account.Role.Name,
-                StartTime = entry.StartTime,
-                EndTime = entry.EndTime
-            };
+                var uow = _uowFactory.CreateUnitOfWork();
+
+                return uow.PersonRepository.Query
+                    .Include(p => p.Account)
+                    .Include(p => p.Account.Role)
+                    .Where(p => p.Account.Role.Id != 5)
+                    .Where(p => p.Account.Email.Contains(template) || (p.Name + " " + p.Surname + " " + p.MiddleName).Contains(template))
+                    .Select(p => new AccountDTO
+                    {
+                        Id = p.Account.Id,
+                        Avatar = p.Account.Avatar,
+                        Email = p.Account.Email,
+                        Role = p.Account.Role.Name,
+                        Name = p.Name + " " + p.Surname + " " + p.MiddleName,
+                        IsBanned = p.Account.IsBanned
+                    }).ToList();
+            });
+
+            var companiesTask = Task.Run(() =>
+            {
+                var uow = _uowFactory.CreateUnitOfWork();
+
+                return uow.CompanyRepository.Query
+                    .Include(c => c.Account)
+                    .Include(p => p.Account.Role)
+                    .Where(p => p.Account.Role.Id != 5)
+                    .Where(c => c.Account.Email.Contains(template) || c.Name.Contains(template))
+                    .Select(c => new AccountDTO
+                    {
+                        Id = c.Account.Id,
+                        Avatar = c.Account.Avatar,
+                        Email = c.Account.Email,
+                        Role = c.Account.Role.Name,
+                        Name = c.Name,
+                        IsBanned = c.Account.IsBanned
+                    }).ToList();
+            });
+
+            var companies = await companiesTask;
+            var persons = await personsTask;
+
+            var accounts = companies
+                .Union(persons);
+
+            if (!string.IsNullOrEmpty(role) && role != "all")
+            {
+                accounts = accounts
+                    .Where(a => a.Role.ToLower() == role.ToLower());
+            }
+
+            return accounts
+                .OrderBy(p => p.Name).ToList();
         }
 
-        private IUnitOfWork _unitOfWork;
+        private readonly IUnitOfWorkFactory _uowFactory;
     }
 }

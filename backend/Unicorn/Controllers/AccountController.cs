@@ -42,35 +42,32 @@ namespace Unicorn.Controllers
 
         [HttpPost]
         [Route("{id}/ban")]
-        public async Task<HttpResponseMessage> Ban(long id, [FromBody]DateTimeOffset endTime)
+        public async Task<HttpResponseMessage> Ban(long id)
         {
-            var result = await _adminService.BanAccountAsync(id, endTime);
-
-            if (result == null)
+            try
+            {
+                await _adminService.BanAccountAsync(id);
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch
+            {
                 return Request.CreateResponse(HttpStatusCode.NotFound);
-            else
-                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
         }
 
-        [HttpPut]
-        [Route("{id}/ban")]
-        public async Task<HttpResponseMessage> UpdateBan(long id, [FromBody]DateTimeOffset endTime)
-        {
-            var result = await _adminService.UpdateBanTime(id, endTime);
-
-            if (result == null)
-                return Request.CreateResponse(HttpStatusCode.NotFound);
-            else
-                return Request.CreateResponse(HttpStatusCode.OK, result);
-        }
-
-        [HttpDelete]
+        [HttpPost]
         [Route("{id}/unban")]
-        public async Task<HttpResponseMessage> Unban(long id, [FromBody]DateTimeOffset endTime)
+        public async Task<HttpResponseMessage> Unban(long id)
         {
-            await _adminService.LiftBanByAccountAsync(id);
-
-            return Request.CreateResponse(HttpStatusCode.NoContent);
+            try
+            {
+                await _adminService.UnbanAccountAsync(id);
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch
+            {
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            }
         }
 
         [HttpGet]
@@ -112,20 +109,29 @@ namespace Unicorn.Controllers
 
         [HttpGet]
         [Route("banned")]
-        public async Task<BannedAccountsPage> GetBannedAccounts(int page, int size)
+        public async Task<AccountsPage> GetBannedAccounts(int page, int size)
         {
-            var banlist = await _adminService.GetAllBannedAccountsAsync();
+            var banlist = await _adminService.GetAllAsync();
 
-            return await _adminService.GetBannedAccountsPageAsync(page, size, banlist);
+            return await _adminService.GetAccountsPageAsync(banlist, page, size);
         }
 
         [HttpGet]
         [Route("banned/search")]
-        public async Task<BannedAccountsPage> GetBannedAccounts(string template, int page, int size)
+        public async Task<AccountsPage> GetBannedAccounts(bool isBanned, string template = "", string role = "all", int page = 1, int size = 20)
         {
-            var banlist = await _adminService.SearchAccountsAsync(template);
+            var banlist = await _adminService.SearchAsync(template, isBanned, role);
 
-            return await _adminService.GetBannedAccountsPageAsync(page, size, banlist);
+            return await _adminService.GetAccountsPageAsync(banlist, page, size);
+        }
+
+        [HttpGet]
+        [Route("banned/search")]
+        public async Task<AccountsPage> GetBannedAccounts(string template = "", string role = "all", int page = 1, int size = 20)
+        {
+            var banlist = await _adminService.SearchAsync(template, role);
+
+            return await _adminService.GetAccountsPageAsync(banlist, page, size);
         }
 
         private readonly IAccountService _accountService;
