@@ -4,8 +4,8 @@ import { DataService } from "./data.service";
 
 import { ProfileShortInfo } from "../models/profile-short-info.model";
 import { Notification } from "../models/notification.model";
-import { BannedAccount } from "../models/admin/banned-account.model";
-import { BannedAccountsPage } from "../models/admin/banned-accounts-page.model";
+import { BanListPage } from "../models/admin/ban-list-page";
+import { AdminAccountViewModel } from "../models/admin/admin-account-view.model";
 
 @Injectable()
 export class AccountService {
@@ -41,26 +41,21 @@ export class AccountService {
 		return this.dataService.getRequest<ProfileShortInfo[]>(`${this.apiController}/search?template=${template}&count=${count}`);
 	}
 
-	banAccount(id: number, endTime: Date): Promise<any> {
-		return this.dataService.postFullRequest<BannedAccount>(`${this.apiController}/${id}/ban`, endTime)
+	banAccount(id: number): Promise<any> {
+		return this.dataService.postFullRequest<AdminAccountViewModel>(`${this.apiController}/${id}/ban`, null)
 			.catch(err => alert(err));
 	}
 
-	updateBan(accountId: number, endTime: Date): Promise<any> {
-		return this.dataService.putFullRequest<BannedAccount>(`${this.apiController}/${accountId}/ban`, endTime)
+	unbanAccount(id: number): Promise<any> {
+		return this.dataService.postFullRequest<AdminAccountViewModel>(`${this.apiController}/${id}/unban`, null)
 			.catch(err => alert(err));
 	}
 
-	unbanAccount(accountId: number): Promise<any> {
-		return this.dataService.deleteRequest<BannedAccount>(`${this.apiController}/${accountId}/unban`)
-			.catch(err => alert(err));
+	getBanListPage(page: number, size: number): Promise<BanListPage> {
+		return this.dataService.getRequest<BanListPage>(`${this.apiController}/banned?page=${page}&size=${size}`);
 	}
 
-	getBannedAccountsPage(page: number, size: number): Promise<BannedAccountsPage> {
-		return this.dataService.getRequest<BannedAccountsPage>(`${this.apiController}/banned?page=${page}&size=${size}`);
-	}
-
-	searchBannedByTemplate(template: string, page: number, size: number): Promise<ProfileShortInfo[]> {
-		return this.dataService.getRequest<ProfileShortInfo[]>(`${this.apiController}/banned/search?template=${template}&page=${page}&size=${size}`);
+	searchInBanListByTemplate(template: string, page: number, size: number): Promise<BanListPage> {
+		return this.dataService.getRequest<BanListPage>(`${this.apiController}/banned/search?template=${template}&page=${page}&size=${size}`);
 	}
 }
