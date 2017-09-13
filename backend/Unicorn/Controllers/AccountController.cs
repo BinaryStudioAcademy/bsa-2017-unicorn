@@ -9,6 +9,7 @@ using System.Web.Http.Cors;
 
 using Unicorn.Core.Interfaces;
 using Unicorn.Shared.DTOs;
+using Unicorn.Shared.DTOs.Admin;
 using Unicorn.Shared.DTOs.Notification;
 
 namespace Unicorn.Controllers
@@ -19,10 +20,12 @@ namespace Unicorn.Controllers
     {
         public AccountController(
             IAccountService accountService,
-            INotificationService notificationService)
+            INotificationService notificationService,
+            IAdminService adminService)
         {
             _accountService = accountService;
             _notificationService = notificationService;
+            _adminService = adminService;
         }
 
         [HttpGet]
@@ -35,6 +38,39 @@ namespace Unicorn.Controllers
                 return Request.CreateResponse(HttpStatusCode.NotFound);
             else
                 return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+        [HttpPost]
+        [Route("{id}/ban")]
+        public async Task<HttpResponseMessage> Ban(long id, [FromBody]DateTimeOffset endTime)
+        {
+            var result = await _adminService.BanAccountAsync(id, endTime);
+
+            if (result == null)
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            else
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+        [HttpPut]
+        [Route("{id}/ban")]
+        public async Task<HttpResponseMessage> UpdateBan(long id, [FromBody]DateTimeOffset endTime)
+        {
+            var result = await _adminService.UpdateBanTime(id, endTime);
+
+            if (result == null)
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            else
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+        [HttpDelete]
+        [Route("{id}/unban")]
+        public async Task<HttpResponseMessage> Unban(long id, [FromBody]DateTimeOffset endTime)
+        {
+            await _adminService.LiftBanByAccountAsync(id);
+
+            return Request.CreateResponse(HttpStatusCode.NoContent);
         }
 
         [HttpGet]
@@ -74,7 +110,26 @@ namespace Unicorn.Controllers
             return await _accountService.SearchByTemplate(template, count);
         }
 
-        private IAccountService _accountService;
-        private INotificationService _notificationService;
+        [HttpGet]
+        [Route("banned")]
+        public async Task<BannedAccountsPage> GetBannedAccounts(int page, int size)
+        {
+            var banlist = await _adminService.GetAllBannedAccountsAsync();
+
+            return await _adminService.GetBannedAccountsPageAsync(page, size, banlist);
+        }
+
+        [HttpGet]
+        [Route("banned/search")]
+        public async Task<BannedAccountsPage> GetBannedAccounts(string template, int page, int size)
+        {
+            var banlist = await _adminService.SearchAccountsAsync(template);
+
+            return await _adminService.GetBannedAccountsPageAsync(page, size, banlist);
+        }
+
+        private readonly IAccountService _accountService;
+        private readonly INotificationService _notificationService;
+        private readonly IAdminService _adminService;
     }
 }

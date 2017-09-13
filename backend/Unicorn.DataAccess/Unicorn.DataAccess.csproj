@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="Context\UnicornDbInitializer.cs" />
     <Compile Include="Entities\Account.cs" />
+    <Compile Include="Entities\BannedAccount.cs" />
     <Compile Include="Entities\Calendar.cs" />
     <Compile Include="Entities\ChatDialog.cs" />
     <Compile Include="Entities\ChatMessage.cs" />

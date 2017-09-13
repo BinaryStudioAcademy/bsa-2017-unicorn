@@ -31,6 +31,7 @@ namespace Unicorn.DataAccess.Context
         public DbSet<Rating> Ratings { get; set; }
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<Offer> Offers { get; set; }
+        public DbSet<BannedAccount> BannedAccounts { get; set; }
 
         public AppContext() : base("DefaultConnection")
         {
@@ -56,6 +57,14 @@ namespace Unicorn.DataAccess.Context
             modelBuilder.Entity<Notification>()
                .Property(n => n.Time)
                .HasColumnType("datetimeoffset");
+            modelBuilder.Entity<BannedAccount>()
+                .Property(a => a.StartTime)
+                .HasColumnType("datetimeoffset");
+            modelBuilder.Entity<BannedAccount>()
+                .Property(a => a.EndTime)
+                .HasColumnType("datetimeoffset");
+
+
 
         }
     }

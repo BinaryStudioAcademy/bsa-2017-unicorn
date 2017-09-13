@@ -93,6 +93,7 @@
     <Compile Include="Infrastructure\SignalR\NotificationHub.cs" />
     <Compile Include="Infrastructure\SignalR\NotificationProxy.cs" />
     <Compile Include="Interfaces\IAccountService.cs" />
+    <Compile Include="Interfaces\IAdminService.cs" />
     <Compile Include="Interfaces\IAuthService.cs" />
     <Compile Include="Interfaces\IAvatarService.cs" />
     <Compile Include="Interfaces\IBookService.cs" />
@@ -120,8 +121,10 @@
     <Compile Include="Interfaces\IPortfolioService.cs" />
     <Compile Include="Interfaces\IContactService.cs" />
     <Compile Include="Interfaces\ISearchService.cs" />
+    <Compile Include="Interfaces\ISubcategoryService.cs" />
     <Compile Include="Interfaces\IVendorService.cs" />
     <Compile Include="Interfaces\IWorkService.cs" />
+    <Compile Include="Services\AdminService.cs" />
     <Compile Include="Services\CalendarService.cs" />
     <Compile Include="Services\ChatService.cs" />
     <Compile Include="Services\AccountService.cs" />
@@ -146,6 +149,7 @@
     <Compile Include="Services\ReviewService.cs" />
     <Compile Include="Services\PortfolioService.cs" />
     <Compile Include="Services\SearchService.cs" />
+    <Compile Include="Services\SubcategoryService.cs" />
     <Compile Include="Services\VendorService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
