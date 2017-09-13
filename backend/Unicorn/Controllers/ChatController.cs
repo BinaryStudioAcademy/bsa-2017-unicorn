@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -9,7 +7,7 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using Unicorn.Core.Interfaces;
-using Unicorn.Filters;
+using Unicorn.Providers;
 using Unicorn.Shared.DTOs.Chat;
 
 namespace Unicorn.Controllers
@@ -139,8 +137,8 @@ namespace Unicorn.Controllers
                 throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
             }
 
-            string root = HttpContext.Current.Server.MapPath("~/App_Data");
-            var provider = new MultipartFormDataStreamProvider(root);
+            string root = HttpContext.Current.Server.MapPath("~/uploadedfiles");
+            var provider = new CustomMultipartFormDataStreamProvider(root);
             List<ChatFileDTO> uploadedFiles = new List<ChatFileDTO>();
 
             try
@@ -150,8 +148,8 @@ namespace Unicorn.Controllers
 
                 foreach (MultipartFileData file in provider.FileData)
                 {
-                    string originalName = file.Headers.ContentDisposition.FileName.Replace("\"", string.Empty);
-                    string serverName = file.LocalFileName.Substring(file.LocalFileName.Length - 45); // 45 - length of generated name
+                    string originalName = provider.GetOriginalName(file.Headers);
+                    string serverName = file.LocalFileName; //.Substring(file.LocalFileName.Length - 45); // 45 - length of generated name // TODO: Regex
 
                     uploadedFiles.Add(new ChatFileDTO
                     {

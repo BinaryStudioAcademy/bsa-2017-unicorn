@@ -5,7 +5,8 @@
             <i class="search icon"></i>
         </div>
         <div class="users">
-            <div class="upper-user" (click)="onSelect(_dialog.Id)" *ngFor="let _dialog of filterDialogsByPartitipantName(searchString)" [ngClass]="{'active': _dialog.Id === selectedId}">
+            <div class="upper-user" (click)="onSelect(_dialog.Id)" *ngFor="let _dialog of filterDialogsByPartitipantName(searchString)"
+                [ngClass]="{'active': _dialog.Id === selectedId}">
                 <div class="user" [ngClass]="{'active': _dialog.Id === selectedId}">
                     <img class="ui avatar image" src="{{_dialog.ParticipantAvatar}}">
                     <div class="dialog-inf">
@@ -43,11 +44,15 @@
                         </div>
                         <div class="concrete-message me">
                             {{message.Message}}
-                            <hr *ngIf="message.Files !== undefined && message.Files !== null && message.Files.length > 0">
-                            <span *ngFor="let file of message.Files">
-                                <a href="http://www.colorado.edu/conflict/peace/download/peace.zip" download="test">{{file.OriginalName}}</a>
+                            <div *ngIf="message.Files !== undefined && message.Files !== null && message.Files.length > 0">
+                                <span *ngFor="let file of message.Files" class="files">
+                                <a *ngIf="isImage(file.OriginalName);else fileLink" href="{{file.ServerPathName}}" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Image_upload_test.jpg"></a>
+                                <ng-template #fileLink>
+                                    <a href="random-name.zip" download="{{file.OriginalName}}"><i class="cloud download icon"></i>{{file.OriginalName}}</a>
+                                </ng-template>                                
                             </span>
-                        </div>                        
+                            </div>
+                        </div>
                     </div>
                     <div class="message" *ngIf="message.OwnerId !== ownerId">
                         <div class="date-him">
@@ -66,12 +71,14 @@
         <div *ngIf="messages === undefined || messages === null " class="chat-block-dimmer ui active inverted dimmer" style="z-index: 0;">
             <div class="ui text loader">Loading</div>
         </div>
-        <div *ngIf="noMessages && messages !== undefined && messages !== null && messages.length !== 0" class="chat-block-dimmer ui active inverted dimmer" style="z-index: 0;">
+        <div *ngIf="noMessages && messages !== undefined && messages !== null && messages.length !== 0" class="chat-block-dimmer ui active inverted dimmer"
+            style="z-index: 0;">
             <div class="ui text loader">Loading</div>
         </div>
         <div class="ui form" *ngIf="dialogs !== undefined && dialogs !== null  && messages !== undefined" [ngClass]="{'disabled-div':noMessages}">
             <div class=" field " style="display: flex; ">
-                <textarea #textArea (keydown)="onChange($event) " (click)="readNotReadedMessages(dialog) " [ngStyle]="{ 'height.px': inputHeight} " class="prompt " type="text " placeholder="Type here... " [(ngModel)]="writtenMessage " style="display:inline ">                        
+                <textarea #textArea (keydown)="onChange($event) " (click)="readNotReadedMessages(dialog) " [ngStyle]="{ 'height.px': inputHeight} "
+                    class="prompt " type="text " placeholder="Type here... " [(ngModel)]="writtenMessage " style="display:inline ">                        
                 </textarea>
                 <input type="file" (change)="uploadFile()" multiple="true" #fileInput>
                 <div class="ui icon input ">

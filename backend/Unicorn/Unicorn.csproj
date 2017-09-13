@@ -247,6 +247,7 @@
     </Compile>
     <Compile Include="Models\UserSocial.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Providers\CustomMultipartFormDataStreamProvider.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>

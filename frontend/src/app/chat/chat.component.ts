@@ -328,6 +328,13 @@ export class ChatComponent implements OnInit {
     this.searchResults = [];
   }
 
+  isImage(filename: string){
+    const imgExtensions = ["jpg", "jpeg", "bmp", "png", "ico"];
+    let extension = filename.split(".").pop();
+    
+    return imgExtensions.includes(extension);
+  }
+
   uploadFile() {
     let inputEl: HTMLInputElement = this.inputEl.nativeElement;        
     let fileCount: number = inputEl.files.length;
