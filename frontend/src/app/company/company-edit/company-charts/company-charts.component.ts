@@ -1,4 +1,9 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+
+import { ChartService } from '../../../services/charts/chart.service';
+
+import { Analytics } from '../../../models/charts/charts.model';
 
 @Component({
   selector: 'app-company-charts',
@@ -191,10 +196,37 @@ export class CompanyChartsComponent implements OnInit {
     explodeSlices = false;
     doughnut = false;
 
-    workOptions = ['Rating', 'Success works count', 'Declined works count'];
-  
+    
+    colorSchemeBar = {
+      domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
+    };
+  //----------------------------------
+  workOptions = [{
+    id: 1,
+    value: 'Popularity'
+  }, {
+    id: 2,
+    value: 'Success works count'
+  }, {
+    id: 3,
+    value: 'Declined works count'
+  }];
+  selectedType: string = this.workOptions[0].value;
+  selectedTypeId: number = 1;
+
+  analytics: Analytics;
+
+  booksAccepted: any;
+  booksDeclined: any;
+
+  popularWorks: any;
+  confirmedWorks: any;
+  declinedWorks: any;
+
   constructor(
-    private changeRef: ChangeDetectorRef
+    private changeRef: ChangeDetectorRef,
+    private chartService: ChartService,
+    private route: ActivatedRoute
   ) { 
   }
   
@@ -203,6 +235,23 @@ export class CompanyChartsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.chartService.getCompanyCharts(this.route.snapshot.params['id']).then(resp => {
+      this.analytics = resp;
+      this.booksAccepted = [this.analytics.BooksAccepted];
+      this.booksDeclined = [this.analytics.BooksDeclined];
+      this.popularWorks = this.analytics.PopularWorks.Points;
+      this.confirmedWorks = this.analytics.ConfirmedWorks.Points;
+      this.declinedWorks = this.analytics.DeclinedWorks.Points;
+      console.log(resp);
+    });
+  }
+
+  getBooksAccepted() {
+    return [this.analytics.BooksAccepted];
+  }
+
+  onTypeSelect() {
+    this.selectedTypeId = this.workOptions.filter(o => o.value === this.selectedType)[0].id;
   }
 
 }

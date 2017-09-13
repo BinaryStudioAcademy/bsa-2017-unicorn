@@ -1,11 +1,11 @@
-<div id="charts-main">
+<div id="charts-main" *ngIf="analytics">
   <h4 align="center">Books accepted</h4>
   <div class="chart-wrap">
     <div class="chart-cl">
       <ngx-charts-line-chart
       [view]="view"
       [scheme]="colorScheme"
-      [results]="multi"
+      [results]="booksAccepted"
       [gradient]="gradient"
       [xAxis]="showXAxis"
       [yAxis]="showYAxis"
@@ -25,7 +25,7 @@
       <ngx-charts-line-chart
       [view]="view"
       [scheme]="colorScheme2"
-      [results]="declinedData"
+      [results]="booksDeclined"
       [gradient]="gradient"
       [xAxis]="showXAxis"
       [yAxis]="showYAxis"
@@ -41,11 +41,11 @@
   </div>
   <h4 align="center">Works</h4>
   <div class="chart-work">
-    <div class="chart-cl">
+    <div class="chart-cl" *ngIf="selectedTypeId === 1">
         <ngx-charts-pie-chart
         [view]="viewPie"
         [scheme]="colorSchemePie"
-        [results]="dataPie"
+        [results]="popularWorks"
         [legend]="showLegendPie"
         [explodeSlices]="explodeSlices"
         [labels]="showLabels"
@@ -54,16 +54,55 @@
         (select)="onSelect($event)">
       </ngx-charts-pie-chart>
     </div>
+    <div class="chart-cl" *ngIf="selectedTypeId === 2">
+      <ngx-charts-bar-vertical
+        [view]="viewPie"
+        [scheme]="colorSchemeBar"
+        [results]="confirmedWorks"
+        [gradient]="gradient"
+        [xAxis]="showXAxis"
+        [yAxis]="showYAxis"
+        [legend]="showLegend"
+        [showXAxisLabel]="showXAxisLabel"
+        [showYAxisLabel]="showYAxisLabel"
+        [xAxisLabel]="xAxisLabel"
+        [yAxisLabel]="yAxisLabel"
+        (select)="onSelect($event)">
+      </ngx-charts-bar-vertical>
+    </div>
+    <div class="chart-cl" *ngIf="selectedTypeId === 3">
+      <ngx-charts-bar-vertical
+        [view]="viewPie"
+        [scheme]="colorSchemeBar"
+        [results]="declinedWorks"
+        [gradient]="gradient"
+        [xAxis]="showXAxis"
+        [yAxis]="showYAxis"
+        [legend]="showLegend"
+        [showXAxisLabel]="showXAxisLabel"
+        [showYAxisLabel]="showYAxisLabel"
+        [xAxisLabel]="xAxisLabel"
+        [yAxisLabel]="yAxisLabel"
+        (select)="onSelect($event)">
+      </ngx-charts-bar-vertical>
+    </div>
     <div class="work-form">
       <span>Calculate by</span>
       <div class="field">
         <sui-select class="selection"
-          placeholder="CALCULATE BY">
-          <sui-select-option class="select-option" *ngFor="let option of workOptions" [value]="option">
-
+          placeholder="CALCULATE BY"
+          name="chart-select"
+          (selectedOptionChange)="onTypeSelect()"
+          [(ngModel)]="selectedType">
+          <sui-select-option class="select-option" 
+            *ngFor="let option of workOptions" 
+            [value]="option.value">
           </sui-select-option>
         </sui-select>
       </div>
     </div>
   </div>
+</div>
+<div *ngIf="analytics === undefined" class="ui active inverted dimmer">
+    <div class="ui text loader">Loading</div>
 </div>
