@@ -11,7 +11,6 @@ import { ChatEventsService } from "../services/events/chat-events.service";
 import { ProfileShortInfo } from "../models/profile-short-info.model";
 import { AccountService } from "../services/account.service";
 
-
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
@@ -238,6 +237,10 @@ export class ChatComponent implements OnInit {
       this.startScroll();
       this.chatService.addMessage(message);
       this.files = null;
+
+      if(this.writtenMessage !== undefined) {
+        this.writtenMessage = undefined;
+      }
     }
   }
 

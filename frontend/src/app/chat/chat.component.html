@@ -48,7 +48,7 @@
                                 <span *ngFor="let file of message.Files" class="files">
                                 <a *ngIf="isImage(file.OriginalName);else fileLink" href="{{file.ServerPathName}}" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Image_upload_test.jpg"></a>
                                 <ng-template #fileLink>
-                                    <a href="random-name.zip" download="{{file.OriginalName}}"><i class="cloud download icon"></i>{{file.OriginalName}}</a>
+                                    <a href="{{file.ServerPathName}}" download="{{file.OriginalName}}"><i class="cloud download icon"></i>{{file.OriginalName}}</a>
                                 </ng-template>                                
                             </span>
                             </div>
@@ -60,6 +60,14 @@
                         </div>
                         <div class="concrete-message him">
                             {{message.Message}}
+                            <div *ngIf="message.Files !== undefined && message.Files !== null && message.Files.length > 0">
+                                <span *ngFor="let file of message.Files" class="files">
+                                <a *ngIf="isImage(file.OriginalName);else fileLink" href="{{file.ServerPathName}}" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Image_upload_test.jpg"></a>
+                                <ng-template #fileLink>
+                                    <a href="{{file.ServerPathName}}" download="{{file.OriginalName}}"><i class="cloud download icon"></i>{{file.OriginalName}}</a>
+                                </ng-template>                                
+                            </span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -80,10 +88,13 @@
                 <textarea #textArea (keydown)="onChange($event) " (click)="readNotReadedMessages(dialog) " [ngStyle]="{ 'height.px': inputHeight} "
                     class="prompt " type="text " placeholder="Type here... " [(ngModel)]="writtenMessage " style="display:inline ">                        
                 </textarea>
-                <input type="file" (change)="uploadFile()" multiple="true" #fileInput>
+                <input class="inputfile" type="file" name="file" id="file" (change)="uploadFile()" multiple="true" #fileInput>
+                <label class="ui icon input" for="file">
+                    <i class="attach outline link icon"></i>
+                </label>           
                 <div class="ui icon input ">
                     <i class="talk outline link icon " (click)="onWrite() "></i>
-                </div>
+                </div>                
             </div>
         </div>
     </div>

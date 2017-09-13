@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -149,7 +150,7 @@ namespace Unicorn.Controllers
                 foreach (MultipartFileData file in provider.FileData)
                 {
                     string originalName = provider.GetOriginalName(file.Headers);
-                    string serverName = file.LocalFileName; //.Substring(file.LocalFileName.Length - 45); // 45 - length of generated name // TODO: Regex
+                    string serverName = Path.GetFileName(file.LocalFileName);
 
                     uploadedFiles.Add(new ChatFileDTO
                     {
