@@ -6,6 +6,7 @@ using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Web.Mvc;
 using Unicorn.Core.Interfaces;
+using Unicorn.Shared.DTOs.Chart;
 using Unicorn.Shared.DTOs.Company;
 using Unicorn.Shared.DTOs.CompanyPage;
 using Unicorn.Shared.DTOs.Contact;
@@ -17,11 +18,13 @@ namespace Unicorn.Controllers
     {
         private readonly ICompanyPageService _companyService;
         private readonly IRatingService _ratingService;
+        private readonly IAnalyticsService _analytics;
 
-        public CompanyController(ICompanyPageService companyService, IRatingService ratingService)
+        public CompanyController(ICompanyPageService companyService, IRatingService ratingService, IAnalyticsService analytics)
         {
             _companyService = companyService;
             _ratingService = ratingService;
+            _analytics = analytics;
         }
 
         // GET: /company
@@ -211,5 +214,12 @@ namespace Unicorn.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
+
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("company/{id}/charts")]
+        public async Task<AnalyticsDTO> GetCompanyCharts(long id)
+        {
+            return await _analytics.GetCompanyAnalytics(id);
+        }
     }
 }
