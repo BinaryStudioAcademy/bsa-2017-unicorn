@@ -34,6 +34,7 @@ import { IndexModule } from './index/index.module';
 import { SearchModule } from './search/search.module';
 import { PipeModule } from "./pipe/pipe.module";
 import { MomentModule } from 'angular2-moment';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { SignalR, SignalRConnection, SignalRModule, SignalRConfiguration } from 'ng2-signalr';
 import { SuiModule } from 'ng2-semantic-ui';
@@ -102,6 +103,7 @@ export function getDefaultSignalRConfig(): SignalRConfiguration {
     MomentModule,
     PipeModule,
     ClickOutsideModule,
+    FormsModule,
     IndexModule // Must be the last module
   ],
   providers: [

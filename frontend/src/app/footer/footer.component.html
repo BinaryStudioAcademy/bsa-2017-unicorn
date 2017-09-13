@@ -8,15 +8,23 @@
       <a href="https://www.facebook.com/BinaryStudioAcademy"><i class="facebook f icon"></i></a>
       <a href="https://vk.com/binary_academy"><i class="vk icon"></i></a>
     </div>
-    <button (click)="openModal()">Leave Feedback</button>
-    <ng-template class="modalImage" let-context let-modal="modal" #modalTemplate>
-      <div class="content">
-          <div class="contentContainer">
-              <div class="mainContent" align="center">
-                  <div class="title">
-                      <label>Select your photo</label>
-                  </div>                
-              </div>             
+    <button class="ui button feedback-button" (click)="openModal()">Leave Feedback</button>
+
+    <ng-template let-context let-modal="modal" #modalTemplate>
+      <div class="header" align="center">Leave Feedback Here</div>
+      <div class="content" align="center">
+        <h4>We should know what you thought</h4>
+        <div class="ui form">
+            <div class="field">
+                <textarea type="text" placeholder="TYPE HERE..." [(ngModel)]="writtenMessage">                        
+                </textarea>
+            </div>
+            <div class="field">
+              <button class="ui active button main" (click)="sendMessage()">SEND FEEDBACK</button>   
+            </div> 
+            <div class="field">
+              <a (click)="modal.deny('denied')" style="cursor: pointer;">No Thanks!</a>       
+            </div>                
           </div>
       </div>
     </ng-template>
