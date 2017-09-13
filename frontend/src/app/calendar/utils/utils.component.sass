@@ -4,38 +4,76 @@
     box-shadow: 0 0 0 1px $primary_color;   
     color:  $primary_color;
     background: none;
-    padding: 10px;    
-    width: 33%;
+    padding: 10px;        
     margin-right: 0px;
     align-self: flex-end;
-    min-height: 2.8em;
+    height: 40px;
     border: 1px solid $primary_color; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
 .ui.basic.button:hover
     background: rgba(0,0,0,.02)!important;
 
 .ui.buttons
-    width: 100%;
+    width: 50%;
 
-.center-button
+.ui.buttons .button:first-child
     border-right: inherit!important;
-    border-left: inherit!important;
 
 .flex-row
+    position: relative;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    margin: 10px;
 
 .text-in-button
     color: #ff647a;
 
 .week-month-buttons
-    flex-basis: 30%;
+    flex-basis: 37.5%;
+    display: flex;
+    justify-content: flex-start;
 
 .prev-next-buttons
-    flex-basis: 30%;
-
-.choose-date
-    flex-basis: 40%;
+    flex-basis: 25%;
     text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+.prev-next
+    width: 40px;
+    border: inherit!important;
+    
+.arrows
+    cursor: pointer;  
+    color: black; 
+
+.calendar-settings
+    flex-basis: 37.5%;
+    display: flex;
+    justify-content: flex-end;
+
+.icon.settings
+    color: #ff647a;
+
+i.icon
+    margin: 0!important;
+    width: 100%;
+
+h3
+    margin: 0 10px;
+
+.today
+    position: absolute;
+    width: 40px;
+    height: 16px!important;
+    padding: 5px!important;
+    border: inherit!important;
+    bottom: -16px;
+    left: 48%;
+    font-size: 10px;

@@ -9,3 +9,27 @@
         margin: 0 0 0 -235px;
     }
 }
+
+
+/* CALENDAR */
+
+.cal-month-view .cal-day-number {
+    font-size: 1.4em;
+}
+
+.cal-month-view .cal-day-cell.cal-today .cal-day-number {
+    font-size: 2em;
+}
+
+.cal-cell.cal-day-cell.cal-weekend {
+    background: rgba(255, 232, 232, 0.45);
+}
+
+.cal-week-view .cal-header.cal-weekend {
+    background: rgba(255, 232, 232, 0.45);
+}
+
+.ui.toggle.checkbox .box:before,
+.ui.toggle.checkbox label:before {
+    background: rgb(217, 217, 217)!important;
+}

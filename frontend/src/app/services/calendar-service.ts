@@ -10,9 +10,6 @@ export class CalendarService {
     dataService.setHeader('Content-Type', 'application/json');
   }
 
-  getCalendar(calendarId: number):Promise<CalendarModel>{
-    return this.dataService.getRequest<CalendarModel>("calendar/" + calendarId);    
-  }
   getCalendarByAccount(accountId: number):Promise<CalendarModel>{
     return this.dataService.getRequest<CalendarModel>("calendar/account/" + accountId);    
   }

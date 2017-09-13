@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { CalendarEventsService } from "../../services/events/calendar-events.service";
 
 @Component({
   selector: 'mwl-utils-calendar-header',
@@ -15,4 +16,12 @@ export class UtilsComponent {
   @Output() viewChange: EventEmitter<string> = new EventEmitter();
 
   @Output() viewDateChange: EventEmitter<Date> = new EventEmitter();
+
+  constructor(private calendarEventsService: CalendarEventsService){
+    
+  }
+
+  onClick(){
+    this.calendarEventsService.clickedSettings();
+  }
 }

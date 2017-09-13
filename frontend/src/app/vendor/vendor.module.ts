@@ -46,6 +46,7 @@ import { ChatModule } from "../chat/chat.module";
 import { VendorEditMessagesComponent } from './vendor-edit/vendor-edit-messages/vendor-edit-messages.component';
 import { OwnCalendarModule } from "../calendar/calendar.module";
 import { VendorEditChartsComponent } from './vendor-edit/vendor-edit-charts/vendor-edit-charts.component';
+import { VendorEditCalendarComponent } from './vendor-edit/vendor-edit-calendar/vendor-edit-calendar.component';
 
 
 @NgModule({
@@ -88,7 +89,8 @@ import { VendorEditChartsComponent } from './vendor-edit/vendor-edit-charts/vend
     VendorEditWorksComponent,
     VendorEditContactsComponent,
     VendorEditMessagesComponent,
-    VendorEditChartsComponent
+    VendorEditChartsComponent,
+    VendorEditCalendarComponent
   ],
   providers: [
     DataService,

@@ -11,6 +11,7 @@ import { AuthenticationLoginService } from './services/auth/authenticationlogin.
 import { AuthenticationEventService } from './services/events/authenticationevent.service';
 import { ChatEventsService } from "./services/events/chat-events.service";
 import { MenuEventsService } from "./services/events/menu-events.service";
+import { CalendarEventsService } from "./services/events/calendar-events.service";
 
 import { HelperService } from './services/helper/helper.service';
 import { ModalService } from "./services/modal/modal.service";
@@ -109,6 +110,7 @@ export function getDefaultSignalRConfig(): SignalRConfiguration {
     AuthenticationEventService,
     ChatEventsService,
     MenuEventsService,
+    CalendarEventsService,
     CalendarService,
     HelperService,
     TokenHelperService,

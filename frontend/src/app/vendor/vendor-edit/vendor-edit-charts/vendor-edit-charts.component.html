@@ -4,6 +4,7 @@
       <div class="chart-wrap">
         <div class="chart-cl">
           <ngx-charts-line-chart
+          [yAxisTickFormatting]="formatYAxis"
           [view]="view"
           [scheme]="colorScheme"
           [results]="booksAccepted"
@@ -23,6 +24,7 @@
       <div class="chart-wrap">
         <div class="chart-cl">
           <ngx-charts-line-chart
+          [yAxisTickFormatting]="formatYAxis"
           [view]="view"
           [scheme]="colorScheme2"
           [results]="booksDeclined"
@@ -58,6 +60,7 @@
       <div class="chart-work">
         <div class="chart-cl">
           <ngx-charts-bar-vertical
+            [yAxisTickFormatting]="formatYAxis"
             [view]="viewPie"
             [scheme]="colorSchemePie"
             [results]="workData"
