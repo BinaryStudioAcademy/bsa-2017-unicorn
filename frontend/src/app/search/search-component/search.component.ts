@@ -382,6 +382,10 @@ export class SearchComponent implements OnInit {
     return this.works.slice((this.selectedPage - 1) * Number(this.pageSize), this.selectedPage * Number(this.pageSize));
   }
 
+  getPageSize() {
+    return Number(this.pageSize);
+  }
+
   getMarkers(): SearchMarker[] {
     let exist = false;
     let markers = [];

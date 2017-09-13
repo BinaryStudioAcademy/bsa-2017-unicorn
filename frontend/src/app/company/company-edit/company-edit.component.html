@@ -17,13 +17,14 @@
                 <div class="sixteen wide column container">
                     <sui-tabset>
                         <div class="ui pointing secondary menu">
-                            <a routerLink="/company/{{company.Id}}/edit" [queryParams]="{tab: 'info'}" class="item" suiTabHeader="1">General information</a>
+                            <a routerLink="/company/{{company.Id}}/edit" [queryParams]="{tab: 'info'}" class="item" suiTabHeader="1">Info</a>
                             <a routerLink="/company/{{company.Id}}/edit" [queryParams]="{tab: 'portfolio'}" class="item" suiTabHeader="2">Portfolio</a>
                             <a routerLink="/company/{{company.Id}}/edit" [queryParams]="{tab: 'vendors'}" class="item" suiTabHeader="3" [isActive]="vendorsTabActive">Vendors</a>
                             <a routerLink="/company/{{company.Id}}/edit" [queryParams]="{tab: 'works'}" class="item" suiTabHeader="4" [isActive]="worksTabActive">Works</a>
                             <a routerLink="/company/{{company.Id}}/edit" [queryParams]="{tab: 'messages'}" class="item" suiTabHeader="5" [isActive]="messagesTabActive">Messages</a>
                             <a routerLink="/company/{{company.Id}}/edit" [queryParams]="{tab: 'contacts'}" class="item" suiTabHeader="6">Contacts</a>
                             <a routerLink="/company/{{company.Id}}/edit" [queryParams]="{tab: 'calendar'}" class="item" suiTabHeader="7">Calendar</a>
+                            <a routerLink="/company/{{company.Id}}/edit" [queryParams]="{tab: 'charts'}" class="item" suiTabHeader="8">Analytics</a>
                         </div>
                         <div class="ui segment" suiTabContent="1">
                             <app-company-main-information></app-company-main-information>
@@ -45,6 +46,9 @@
                         </div>
                         <div class="ui segment" suiTabContent="7">
                             <app-company-calendar [accountId]="company.AccountId"></app-company-calendar>
+                        </div>
+                        <div class="ui segment" suiTabContent="8">
+                            <app-company-charts></app-company-charts>
                         </div>
                     </sui-tabset>
                 </div>

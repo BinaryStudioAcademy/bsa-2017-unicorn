@@ -93,7 +93,6 @@ export function getDefaultSignalRConfig(): SignalRConfiguration {
     CompanyModule,
     DashboardModule,
     DbModule,
-    NotFoundModule,
     RegisterModule,
     UserModule,
     VendorModule,
@@ -103,7 +102,8 @@ export function getDefaultSignalRConfig(): SignalRConfiguration {
     MomentModule,
     PipeModule,
     ClickOutsideModule,
-    IndexModule // Must be the last module
+    IndexModule,
+    NotFoundModule // Must be the last module
   ],
   providers: [
     AuthenticationLoginService,

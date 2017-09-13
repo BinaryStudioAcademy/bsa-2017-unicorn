@@ -100,6 +100,10 @@ export class VendorsComponent implements OnInit {
     return this.performers.slice((this.selectedPage - 1) * pageSize, this.selectedPage * pageSize);
   }
 
+  getPageSize() {
+    return Number(this.pageSize);
+  }
+
   search() {
     this.searchLoading = true;
     this.filtersIsOpen = false;
