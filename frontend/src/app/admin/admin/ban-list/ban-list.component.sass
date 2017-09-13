@@ -1,0 +1,43 @@
+@import "../../../../global-style-variables.sass"
+
+.account-list
+	justify-content: center;
+	margin-top: 15px;
+
+.account-list > .item
+	display: flex;
+	font-size: 13px;
+	color: #666666;
+	justify-content: space-around;
+	align-items: center;
+	margin: 10px;
+
+.account-list > .item > .account-name > h5
+	margin-bottom: 0;
+
+.account-list > .item > .account-email
+	color: #666;
+	font-size: 12px;
+
+.account-list > .item > .ban-actions > .ui.button
+	width: 7em;
+	text-align: center;
+	&.ban
+		background-color: $primary_color;
+		color: white;
+		&:hover
+			box-shadow: 0 0 0 1px $primary_color;
+			background-color: white;
+			color: $primary_color;
+	&.unban
+		box-shadow: 0 0 0 1px $primary_color;
+		background-color: white;
+		color: $primary_color;
+		&:hover
+			background-color: $primary_color;
+			color: white;
+
+.pagination
+	display: flex;
+	justify-content: center;
+	

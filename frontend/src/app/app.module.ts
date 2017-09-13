@@ -53,6 +53,7 @@ import { ChatLogicService } from "./services/chat/chat-logic.service";
 import { CalendarService } from "./services/calendar-service";
 import { ClickOutsideModule } from "ng-click-outside/lib";
 import { NotFoundModule} from './not-found/not-found.module'
+import { AdminModule } from "./admin/admin.module";
 
 export class CustomOptions extends ToastOptions {
   animate = 'fade';
@@ -102,6 +103,7 @@ export function getDefaultSignalRConfig(): SignalRConfiguration {
     MomentModule,
     PipeModule,
     ClickOutsideModule,
+    AdminModule,
     IndexModule // Must be the last module
   ],
   providers: [

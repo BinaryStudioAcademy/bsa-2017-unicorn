@@ -6,4 +6,3 @@ export class BannedAccountsPage {
 	TotalCount: number;
 	PageSize: number;
 } 
-}

@@ -92,12 +92,13 @@ namespace Unicorn.Core.Services
 
         public async Task<List<BannedAccountDTO>> GetAllBannedAccountsAsync()
         {
-            return await _unitOfWork.BannedAccountRepository.Query
+            return await Task.Run(() => _unitOfWork.BannedAccountRepository.Query
                 .Where(a => !a.IsDeleted)
                 .Include(a => a.Account)
                 .Include(a => a.Account.Role)
+                .AsEnumerable()
                 .Select(a => ToBannedAccountDTO(a))
-                .ToListAsync();
+                .ToList());
         }
 
         public async Task<BannedAccountsPage> GetBannedAccountsPageAsync(int page, int pageSize, IEnumerable<BannedAccountDTO> items)
@@ -137,12 +138,13 @@ namespace Unicorn.Core.Services
                 .Union(persons)
                 .ToList();
 
-            var banned = await _unitOfWork.BannedAccountRepository.Query
+            var banned = await Task.Run(() => _unitOfWork.BannedAccountRepository.Query
                 .Where(a => !a.IsDeleted)
                 .Include(a => a.Account)
                 .Include(a => a.Account.Role)
+                .AsEnumerable()
                 .Select(a => ToBannedAccountDTO(a))
-                .ToListAsync();
+                .ToList());
 
             return accounts
                 .Union(banned)
