@@ -42,6 +42,7 @@ import { NguiMapModule } from "@ngui/map/dist";
 import { ChatModule } from "../chat/chat.module";
 import { VendorEditMessagesComponent } from './vendor-edit/vendor-edit-messages/vendor-edit-messages.component';
 import { OwnCalendarModule } from "../calendar/calendar.module";
+import { VendorEditCalendarComponent } from './vendor-edit/vendor-edit-calendar/vendor-edit-calendar.component';
 
 
 @NgModule({
@@ -81,7 +82,8 @@ import { OwnCalendarModule } from "../calendar/calendar.module";
     VendorEditPortfolioComponent,
     VendorEditWorksComponent,
     VendorEditContactsComponent,
-    VendorEditMessagesComponent
+    VendorEditMessagesComponent,
+    VendorEditCalendarComponent
   ],
   providers: [
     DataService,

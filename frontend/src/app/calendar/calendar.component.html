@@ -1,42 +1,130 @@
-<div class="container">
-    <mwl-utils-calendar-header [(view)]="view" [(viewDate)]="viewDate">
-    </mwl-utils-calendar-header>
-    <div [ngSwitch]="view">
-        <mwl-calendar-month-view *ngSwitchCase="'month'" [weekendDays]="[0,6]" [cellTemplate]="customCellTemplate" [viewDate]="viewDate" [events]="events" [refresh]="refresh" (eventTimesChanged)="eventTimesChanged($event)">
-        </mwl-calendar-month-view>
-        <mwl-calendar-week-view *ngSwitchCase="'week'" [viewDate]="viewDate" [events]="events" [refresh]="refresh" (eventTimesChanged)="eventTimesChanged($event)">
-        </mwl-calendar-week-view>
-    </div>
-</div>
-
-<ng-template #customCellTemplate let-day="day" let-openDay="openDay" let-locale="locale" let-tooltipPlacement="tooltipPlacement" let-highlightDay="highlightDay" let-unhighlightDay="unhighlightDay" let-eventClicked="eventClicked" let-tooltipTemplate="tooltipTemplate"
-    let-tooltipAppendToBody="tooltipAppendToBody">
-    <div class="cal-cell-top" (click)="dayClicked($event, day)">
-        <span class="cal-day-number">{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span>
-    </div>
-    <div class="cal-events" *ngIf="day.events.length > 0">
-        <div class="cal-event" *ngFor="let event of day.events" [style.backgroundColor]="event.color.primary" [ngClass]="event?.cssClass" (mouseenter)="highlightDay.emit({event: event})" (mouseleave)="unhighlightDay.emit({event: event})" [mwlCalendarTooltip]="event.title | calendarEventTitle:'monthTooltip':event"
-            [tooltipPlacement]="tooltipPlacement" [tooltipEvent]="event" [tooltipTemplate]="tooltipTemplate" [tooltipAppendToBody]="tooltipAppendToBody">
+<div *ngIf="!isLoading">
+    <div class="container">
+        <mwl-utils-calendar-header [(view)]="view" [(viewDate)]="viewDate">
+        </mwl-utils-calendar-header>
+        <div [ngSwitch]="view">
+            <mwl-calendar-month-view *ngSwitchCase="'month'" (beforeViewRender)="beforeMonthViewRender($event)" [weekendDays]="weekendDays" [cellTemplate]="customCellTemplate" [viewDate]="viewDate" [events]="events" [refresh]="refresh" (eventTimesChanged)="eventTimesChanged($event)">
+            </mwl-calendar-month-view>
+            <mwl-calendar-week-view *ngSwitchCase="'week'" [viewDate]="viewDate" [events]="events" [refresh]="refresh" (eventTimesChanged)="eventTimesChanged($event)">
+            </mwl-calendar-week-view>
         </div>
     </div>
-</ng-template>
-<ng-template [ngTemplateOutlet]="customTemplate || defaultTemplate" [ngTemplateOutletContext]="{         day: day,         openDay: openDay,         locale: locale,         tooltipPlacement: tooltipPlacement,         highlightDay: highlightDay,         unhighlightDay: unhighlightDay,         eventClicked: eventClicked,         tooltipTemplate: tooltipTemplate,         tooltipAppendToBody: tooltipAppendToBody      }">
-</ng-template>
 
-<ng-template let-context let-modal="modal" #modalTemplate>
-    <div class="modal-header">
-        <span>{{context.date | calendarDate:'dayViewTitle':locale}}</span>
-        <div class="ui form">
-            <div class="inline field">
-                <sui-checkbox class="toggle">Weekend</sui-checkbox>
+    <ng-template #customCellTemplate let-day="day" let-openDay="openDay" let-locale="locale" let-tooltipPlacement="tooltipPlacement" let-highlightDay="highlightDay" let-unhighlightDay="unhighlightDay" let-eventClicked="eventClicked" let-tooltipTemplate="tooltipTemplate"
+        let-tooltipAppendToBody="tooltipAppendToBody">
+        <div class="cal-cell-top" (click)="dayClicked(day)">
+            <span class="cal-day-number">{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span>
+        </div>
+        <div class="cal-events-custom" *ngIf="day.events.length > 0">
+            <div class="cal-event-custom" *ngFor="let event of day.events" [style.backgroundColor]="event.color.primary" [ngClass]="event?.cssClass" (mouseenter)="highlightDay.emit({event: event})" (mouseleave)="unhighlightDay.emit({event: event})" [mwlCalendarTooltip]="event.title | calendarEventTitle:'monthTooltip':event"
+                [tooltipPlacement]="tooltipPlacement" [tooltipEvent]="event" [tooltipTemplate]="tooltipTemplate" [tooltipAppendToBody]="tooltipAppendToBody">
+                {{event.title}}
             </div>
         </div>
-    </div>
-    <div class="modal-events" *ngFor="let modalEvent of context.events">
-        <div>
+    </ng-template>
+    <ng-template [ngTemplateOutlet]="customTemplate || defaultTemplate" [ngTemplateOutletContext]="{         day: day,         openDay: openDay,         locale: locale,         tooltipPlacement: tooltipPlacement,         highlightDay: highlightDay,         unhighlightDay: unhighlightDay,         eventClicked: eventClicked,         tooltipTemplate: tooltipTemplate,         tooltipAppendToBody: tooltipAppendToBody      }">
+    </ng-template>
+
+    <ng-template let-context let-modal="modal" #dayModalTemplate>
+        <div class="modal-header">
+            <span>{{context.date | calendarDate:'dayViewTitle':locale}}</span>
+            <div class="ui form">
+                <div class="inline field">
+                    <sui-checkbox class="toggle" [(ngModel)]="context.day.isWeekend">Weekend</sui-checkbox>
+                </div>
+            </div>
         </div>
-    </div>
-    <div class="no-modal-events" *ngIf="!context.events || context.events.length === 0">
-        No events
-    </div>
-</ng-template>
+        <div class="ui divider">
+        </div>
+        <div class="events-title" *ngIf="context.events && context.events.length !== 0">
+            Daily tasks
+        </div>
+        <div class="modal-events events-headers" *ngIf="context.events && context.events.length !== 0">
+            <div>
+                <span>Icon</span>
+            </div>
+            <div class="event title">
+                <span>Title</span>
+            </div>
+            <div class="event start-date">
+                <span>Start date</span>
+            </div>
+            <div class="event end-date">
+                <span>End date</span>
+            </div>
+            <div class="event description">
+                <span>Description</span>
+            </div>
+            <div class="event customer">
+                <span>Customer</span>
+            </div>
+            <div class="event status">
+                <span>Status</span>
+            </div>
+        </div>
+        <div class="modal-events" *ngFor="let modalEvent of context.events">
+            <div>
+                <img class="ui avatar image event-icon" src={{modalEvent.meta.workIcon}}>
+            </div>
+            <div class="event title">
+                <span>{{modalEvent.title}}</span>
+            </div>
+            <div class="event start-date">
+                <span>{{modalEvent.start | date:'mediumDate'}}</span>
+            </div>
+            <div class="event end-date">
+                <span> {{modalEvent.end | date:'mediumDate'}}</span>
+            </div>
+            <div class="event description">
+                <span> {{modalEvent.meta.description}}</span>
+            </div>
+            <div class="event customer">
+                <span>{{modalEvent.meta.customer}}</span>
+            </div>
+            <div class="event status">
+                <span>{{modalEvent.meta.status}}</span>
+            </div>
+        </div>
+        <div class="no-modal-events" *ngIf="!context.events || context.events.length === 0">
+            No events
+        </div>
+        <div class="ui basic button" (click)="closeDayModal(context.day)" [ngClass]="{'loading':isSavingWeekend}">
+            <p *ngIf="!isSavingWeekend">OK</p>
+        </div>
+    </ng-template>
+    <ng-template let-context let-modal="modal" #settingsModalTemplate>
+        <div class="modal-header">
+            <span>Set your work time</span>
+        </div>
+        <div class="ui divider">
+        </div>
+        <div class="ui form settings">
+            <div class="inline field">
+                <label>Start date</label>
+                <div class="ui left icon input">
+                    <i class="calendar icon"></i>
+                    <input suiDatepicker [(ngModel)]="context.startDate" name="start-date" pickerMode="date" placeholder="START DATE">
+                </div>
+            </div>
+            <div class="inline field">
+                <label>End date</label>
+                <div class="ui left icon input">
+                    <i class="calendar icon"></i>
+                    <input suiDatepicker [(ngModel)]="context.endDate" name="end-date" pickerMode="date" placeholder="END DATE (OPTIONAL)">
+                </div>
+            </div>
+            <div class="inline field settings-checkbox">
+                <sui-checkbox class="toggle" [(ngModel)]="context.workOnWeekend">Work on weekend</sui-checkbox>
+            </div>
+            <div class="inline field settings-checkbox">
+                <sui-checkbox class="toggle" [(ngModel)]="context.severalTasksPerDay">Several tasks per day</sui-checkbox>
+            </div>
+        </div>
+        <div class="ui basic button" (click)="closeSettingsModal(context)" [ngClass]="{'loading':isChangedWorktime}">
+            <p *ngIf="!isChangedWorktime">Save</p>
+        </div>
+    </ng-template>
+</div>
+<div *ngIf="isLoading" class="ui active inverted dimmer" style="background-color: rgba(255,255,255,.85); z-index: 0;">
+    <div class="ui text loader">Loading</div>
+</div>

@@ -7,7 +7,7 @@ namespace Unicorn.Shared.DTOs
     {
         public long Id { get; set; }
 
-        public DateTime Day { get; set; }
+        public DateTimeOffset Day { get; set; }
 
         public bool DayOff { get; set; }
 

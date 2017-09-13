@@ -20,21 +20,6 @@ namespace Unicorn.Controllers
         }
 
         [HttpGet]
-        [Route("calendar/{calendarId}")]
-        public async Task<HttpResponseMessage> GetCalendarById(long calendarId)
-        {
-            try
-            {
-                var result = await _calendarService.GetCalendarById(calendarId);
-                return Request.CreateResponse(HttpStatusCode.OK, result);
-            }
-            catch
-            {
-                return Request.CreateResponse(HttpStatusCode.NotFound);
-            }
-        }
-
-        [HttpGet]
         [Route("calendar/account/{accountId}")]
         public async Task<HttpResponseMessage> GetCalendarByAccountId(long accountId)
         {

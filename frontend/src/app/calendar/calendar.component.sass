@@ -1,11 +1,17 @@
 @import "../../global-style-variables.sass";
 
-h3
-  margin: 0 0 10px;
-
-pre
-  background-color: #f5f5f5;
-  padding: 15px;
+.ui.basic.button
+    box-shadow: 0 0 0 1px $primary_color;   
+    color:  $primary_color!important;
+    background: none!important;
+    padding: 10px;        
+    margin: 20px auto;    
+    align-self: flex-end;
+    height: 30px;
+    width: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
 .container
   min-height: 705px;
@@ -22,5 +28,95 @@ pre
   text-align: right;
   position: absolute;
   top: 40px;
-  right: 15px;  
+  right: 15px; 
 
+.modal-header
+  display: flex;
+  justify-content: space-between;
+  margin: 10px;
+  font-size: 20px;
+
+.modal-header .ui.form
+  font-size: 16px;
+
+.events-title
+  font-size: 20px;  
+  margin: 20px 10px;  
+
+.events-headers
+  font-weight: bold;
+
+.event
+  display: flex;
+  margin-left: 5px; 
+  margin-right: 5px; 
+  align-items: center;
+  justify-content: center;
+
+
+.modal-events
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 10px;
+  font-size: 14px;
+  .event.icon
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+    flex-basis: 5%;
+  .event.title
+    flex-basis: 15%;
+  .event.start-date
+    flex-basis: 20%;
+  .event.end-date
+    flex-basis: 20%;
+  .event.description
+    flex-basis: 20%;
+  .event.customer
+    flex-basis: 10%;
+  .event.status
+    flex-basis: 10%;
+
+.no-modal-events
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  margin: 20px 0;
+  color: gray;
+
+.ui.form.settings
+  margin: 10px;  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  .inline.field
+    display: flex;
+    width: 55%;
+    align-items: center;
+    label
+      flex-basis: 25%;
+    .ui.left.icon.input
+      flex-basis: 75%;
+
+.cal-events-custom
+  display: flex;  
+  margin: 2px;
+  flex-direction: column;
+  justify-content: flex-end;    
+
+.cal-event-custom
+  font-size: 9px;
+  border-radius: 5px;  
+  margin: 1px;
+  padding: 0 4px;
+  color: white;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+
+.inline.field.settings-checkbox
+  display: flex;
+  justify-content: flex-start;
+  padding: 0 45px;
