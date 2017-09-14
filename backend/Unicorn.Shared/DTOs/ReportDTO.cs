@@ -11,8 +11,7 @@ namespace Unicorn.Shared.DTOs
         public ReportType Type { get; set; }
         public string Message { get; set; }
         public string Email { get; set; }
-        public long? CustomerId { get; set; }
-        public long? VendorId { get; set; }
-        public long? CompanyId { get; set; }
+        public long? ProfileId { get; set; }
+        public string ProfileType { get; set; }
     }
 }

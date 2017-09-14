@@ -58,9 +58,8 @@ export class FooterComponent implements OnInit {
         Type: ReportType.feedback,
         Message: this.message,
         Email: this.email,
-        CustomerId: null,
-        VendorId: null,
-        CompanyId: null,
+        ProfileId: null,
+        ProfileType: null
       };
 
       this.reportService.createReport(report).then(resp => {
