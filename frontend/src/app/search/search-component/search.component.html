@@ -1,62 +1,71 @@
 <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.grey-indigo.min.css" />
-<div class="ui grid remove-margin-top-bottom">
-  <div class="ten wide column settings-container">
+<div class="ui grid remove-margin-top-bottom" id="main">
+  <div class="sixteen wide column settings-container">
       <div id="search-panel" class="row remove-padding-top">
           <div class="ui grid">
-              <div class="six wide column remove-padding-bottom">
+              <div class="six wide column remove-padding-bottom header-label">
                 <label>What to do</label>
               </div>
-              <div class="ten wide column remove-padding-bottom">
-                <label>When to do it</label>                  
+              <div class="ten wide column remove-padding-bottom header-label">
+                <label style="margin-left: 14px">When to do it</label>                  
               </div>
-              <div class="three wide column ui input">                  
-                <input id="ctg" type="text" 
-                      [(ngModel)]="category" 
-                      (click)="filterCategory()"
-                      (keyup)="filterCategory()" 
-                      (keyup.Enter)="searchWorks()" 
-                      placeholder="CATEGORY">
-                <div class="suggestions" (clickOutside)="onClickedOutside($event)">
-                  <div *ngIf="filterCtgs.length > 0" class="search-list">
-                    <div *ngFor="let item of filterCtgs" (click)="selectCategory(item)" class="search-list-item">
-                      <label innerHTML="{{item.Value}}"></label>
-                      <div class="search-category">
-                        <img src="{{item.Icon}}" class="search-list-img"/>
-                        {{item.Group}}
+              <div class="stackable row">
+                <div class="ten wide column">
+                    <div class="ui grid">
+                      <div class="five wide column ui input">
+                        <input id="ctg" type="text" 
+                          [(ngModel)]="category" 
+                          (click)="filterCategory()" 
+                          (keyup)="filterCategory()" 
+                          (keyup.Enter)="searchWorks()" 
+                          placeholder="CATEGORY">
+                        <div class="suggestions" (clickOutside)="onClickedOutside($event)">
+                          <div *ngIf="filterCtgs.length > 0" class="search-list">
+                            <div *ngFor="let item of filterCtgs" (click)="selectCategory(item)" class="search-list-item">
+                              <label innerHTML="{{item.Value}}"></label>
+                              <div class="search-category">
+                                <img src="{{item.Icon}}" class="search-list-img"/>
+                                {{item.Group}}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="five wide column ui input">
+                        <input id="subctg" type="text" 
+                          [(ngModel)]="subcategory"
+                          (click)="filterSubcategory()" 
+                          (keyup)="filterSubcategory()" 
+                          (keyup.Enter)="searchWorks()" 
+                          placeholder="SUBCATEGORY">
+                        <div class="suggestions" (clickOutside)="onClickedOutside($event)">
+                          <div *ngIf="filterSubctgs.length > 0" class="search-list">
+                            <div *ngFor="let item of filterSubctgs" (click)="selectSubcategory(item)" class="search-list-item">
+                              <label innerHTML="{{item.Value}}"></label>
+                              <label class="search-category">{{item.Group}}</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="six wide column ui left icon input">
+                        
+                          <i class="calendar icon"></i>
+                          <input class="datepicker" placeholder="RIGHT NOW" suiDatepicker 
+                                      [(ngModel)]="date" 
+                                      [pickerMode]="mode" 
+                                      [pickerFirstDayOfWeek]="firstDayOfWeek" 
+                                      [pickerUseNativeOnMobile]="false"
+                                      (keyup.Enter)="searchWorks()">
+                        
                       </div>
                     </div>
-                  </div>
+                </div>
+                <div class="six wide column search-btn-div">
+                  <button class="ui active button main" (click)="searchWorks()">SEARCH</button>   
+                  <button class="ui button button-right" (click)="reset()">RESET</button>                
                 </div>
               </div>
-              <div class="three wide column  ui input">
-                <input id="subctg" type="text" 
-                      [(ngModel)]="subcategory"
-                      (click)="filterSubcategory()"  
-                      (keyup)="filterSubcategory()" 
-                      (keyup.Enter)="searchWorks()" 
-                      placeholder="SUBCATEGORY">
-                <div class="suggestions" (clickOutside)="onClickedOutside($event)">
-                  <div *ngIf="filterSubctgs.length > 0" class="search-list">
-                    <div *ngFor="let item of filterSubctgs" (click)="selectSubcategory(item)" class="search-list-item">
-                      <label innerHTML="{{item.Value}}"></label>
-                      <label class="search-category">{{item.Group}}</label>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="four wide column ui left icon input">
-                  <i class="calendar icon"></i>
-                  <input class="datepicker" placeholder="RIGHT NOW" suiDatepicker 
-                          [(ngModel)]="date" 
-                          [pickerMode]="mode" 
-                          [pickerFirstDayOfWeek]="firstDayOfWeek" 
-                          [pickerUseNativeOnMobile]="false"
-                          (keyup.Enter)="searchWorks()">
-              </div>
-              <div class="six wide column search-btn-div">
-                <button class="ui active button main" (click)="searchWorks()">SEARCH</button>   
-                <button class="ui button button-right" (click)="reset()">RESET</button>                
-              </div>
+              
               <div class="sixteen wide column remove-padding-top">
                 <sui-accordion class="fluid">
                   <sui-accordion-panel [(isOpen)]="togglePanel">
@@ -65,98 +74,111 @@
                       <label [ngClass]="{'active-filters': isAnyFilterSelected()}">Advanced filters</label>
                     </div>
                     <div content>
-                      <div class="ui grid container segment">
-                        <div class="eight wide column remove-padding-bottom">  
-                            <div class="ui icon input full-width">                        
-                              <input type="text" placeholder="VENDOR NAME" [(ngModel)]="vendorName">
+                      <div class="ui grid container segment full-width">
+                        <div class="row">
+                          <div class="add-filter-container">
+                            <div class="add-filter-container-column">
+                              <div class="ui form">
+                                <div class="field">
+                                  <div class="ui icon input full-width">                        
+                                    <input type="text" placeholder="VENDOR NAME" [(ngModel)]="vendorName">
+                                  </div>
+                                </div>
+                                <div class="inline fields">
+                                  <div class="field">
+                                    <label>Rating</label>
+                                    <sui-select class="inline" [(ngModel)]="ratingCompare" placeholder="rating">
+                                      <sui-select-option value="greater"></sui-select-option>
+                                      <sui-select-option value="lower"></sui-select-option>
+                                    </sui-select>
+                                  </div> 
+                                  <div class="field">
+                                    <sui-rating class="star" [(ngModel)]="rating"></sui-rating> 
+                                  </div>                         
+                                </div>
+                                <div class="field">
+                                  <sui-checkbox [(ngModel)]="reviewsChecked">
+                                    Only with reviews
+                                  </sui-checkbox>     
+                                </div>
+                              </div>
                             </div>
-                        </div>
-                        <div class="eight wide column remove-padding-bottom">  
-                          <div class="ui icon input full-width">                        
-                            <input places-auto-complete
-                            (initialized$)="initialized($event)"
-                            (place_changed)="placeChanged($event)"
-                            [types]="['geocode']" 
-                            placeholder="LOCATION"
-                            />
+                            <div class="add-filter-container-column">
+                                <div class="ui form">
+                                  <div class="field">
+                                    <div class="ui icon input full-width">                        
+                                      <input places-auto-complete
+                                        (initialized$)="initialized($event)"
+                                        (place_changed)="placeChanged($event)"
+                                        [types]="['geocode']" 
+                                        placeholder="LOCATION"/>
+                                    </div>
+                                  </div>
+                                  <div class="field">
+                                    <label>Distance: {{showSlider()}} km</label> 
+                                  </div>
+                                  <div class="field">
+                                    <div class="distance-container">
+                                      <label>0</label> 
+                                      <mdl-slider class="slider" min="0" max="100" [(ngModel)]="slider"></mdl-slider>
+                                      <label>100+</label>
+                                    </div>
+                                  </div>
+                                </div>
+                            </div>
                           </div>
+                          <div class="sixteen wide column remove-padding-bottom categories-container">
+                              <sui-multi-select [(ngModel)]="selCategories"
+                                                [options]="categories"                                            
+                                                icon="list"
+                                                placeholder="CATEGORIES"
+                                                (ngModelChange)="categoriesChanged()"
+                                                #select>
+                                <div class="ui icon search input">
+                                    <i class="search icon"></i>
+                                    <input suiSelectSearch type="text" placeholder="Search options...">
+                                </div>
+                                <div class="divider"></div>
+                                <div class="header">
+                                    <i class="list icon"></i>
+                                    Categories
+                                </div>
+                                <div class="scrolling menu">                                
+                                    <sui-select-option *ngFor="let category of categories" [value]="category.Name">                                   
+                                    </sui-select-option>
+                                </div>
+                              </sui-multi-select>
+                            </div>    
+                            <div class="sixteen wide column remove-padding-top-bottom categories-container">
+                              <sui-multi-select [(ngModel)]="selSubcategories"
+                                                [options]="subcategories"                                            
+                                                icon="list"
+                                                placeholder="SUBCATEGORIES"
+                                                (ngModelChange)="subcategoriesChanged()"
+                                                #select>
+                                <div class="ui icon search input">
+                                    <i class="search icon"></i>
+                                    <input suiSelectSearch type="text" placeholder="Search options...">
+                                </div>
+                                <div class="divider"></div>
+                                <div class="header">
+                                    <i class="list icon"></i>
+                                    Subcategories
+                                </div>
+                                <div class="scrolling menu">
+                                    <sui-select-option *ngFor="let subcategory of subcategories" [value]="subcategory.Name"></sui-select-option>
+                                </div>
+                              </sui-multi-select>
+                            </div>
                         </div>
-                        <div class="eight wide column remove-padding-bottom padding-top">
-                          <div class="rating-container">
-                            <div class="rating-box">
-                              <label>Rating</label>
-                              <sui-select class="inline" [(ngModel)]="ratingCompare" placeholder="rating">
-                                <sui-select-option value="greater"></sui-select-option>
-                                <sui-select-option value="lower"></sui-select-option>
-                              </sui-select>
-                            </div>
-                            <sui-rating class="star" [(ngModel)]="rating"></sui-rating>                       
-                          </div>                             
-                        </div>  
-                        <div class="eight wide column remove-padding-bottom padding-top">  
-                          <label>Distance: {{showSlider()}} km</label>  
-                        </div> 
-                        <div class="eight wide column remove-padding-bottom padding-top">  
-                          <sui-checkbox [(ngModel)]="reviewsChecked">
-                            Only with reviews
-                          </sui-checkbox>                        
-                        </div>  
-                        <div class="eight wide column remove-padding-bottom padding-top"> 
-                          <div class="distance-container">
-                          <label>0</label> 
-                          <mdl-slider class="slider" min="0" max="100" [(ngModel)]="slider"></mdl-slider>
-                          <label>100+</label>
-                          </div>
-                        </div>
-                        <div class="sixteen wide column remove-padding-bottom">
-                          <sui-multi-select [(ngModel)]="selCategories"
-                                            [options]="categories"                                            
-                                            icon="list"
-                                            placeholder="CATEGORIES"
-                                            (ngModelChange)="categoriesChanged()"
-                                            #select>
-                            <div class="ui icon search input">
-                                <i class="search icon"></i>
-                                <input suiSelectSearch type="text" placeholder="Search options...">
-                            </div>
-                            <div class="divider"></div>
-                            <div class="header">
-                                <i class="list icon"></i>
-                                Categories
-                            </div>
-                            <div class="scrolling menu">                                
-                                <sui-select-option *ngFor="let category of categories" [value]="category.Name">                                   
-                                </sui-select-option>
-                            </div>
-                          </sui-multi-select>
-                        </div>    
-                        <div class="sixteen wide column remove-padding-top-bottom">
-                          <sui-multi-select [(ngModel)]="selSubcategories"
-                                            [options]="subcategories"                                            
-                                            icon="list"
-                                            placeholder="SUBCATEGORIES"
-                                            (ngModelChange)="subcategoriesChanged()"
-                                            #select>
-                            <div class="ui icon search input">
-                                <i class="search icon"></i>
-                                <input suiSelectSearch type="text" placeholder="Search options...">
-                            </div>
-                            <div class="divider"></div>
-                            <div class="header">
-                                <i class="list icon"></i>
-                                Subcategories
-                            </div>
-                            <div class="scrolling menu">
-                                <sui-select-option *ngFor="let subcategory of subcategories" [value]="subcategory.Name"></sui-select-option>
-                            </div>
-                          </sui-multi-select>
-                        </div>                        
+
                       </div>
                     </div>
                   </sui-accordion-panel> 
                 </sui-accordion>     
               </div>
-              <div class="twelve wide column remove-padding-top">
+              <div class="post-filters-div">
+              <div class="remove-padding-top">
                 <h5 class="ui header">                  
                   <div class="content">
                     <i class="sort content descending icon"></i>
@@ -169,7 +191,7 @@
                   </div>
                 </h5>
               </div>
-              <div class="four wide column remove-padding-top">
+              <div class="remove-padding-top">
                 <h5 class="ui header">                  
                   <div class="content align-right">
                     <i class="block layout icon"></i>
@@ -181,6 +203,7 @@
                     </sui-select>
                   </div>
                 </h5>              
+              </div>
               </div>
           </div>
         <div class="ui fluid divider"></div>
@@ -222,8 +245,8 @@
         </sui-pagination>     
       </div>
   </div>
-  <div class="six wide column">
-    <div class="row">
+  <div class="">
+    <div class="">
         <div class="map-container">
           <ngui-map (mapReady$)="onMapReady($event)" class="map" zoom="6" [center]="center" *ngIf="loaded">
             <custom-marker *ngFor="let marker of searchMarkers" 
