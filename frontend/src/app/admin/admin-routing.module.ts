@@ -5,6 +5,7 @@ import { AuthGuard } from '../guards/auth.guard';
 import { AdminComponent } from "./admin/admin.component";
 import { BanListComponent } from "./admin/ban-list/ban-list.component";
 import { CategoriesComponent } from "./admin/categories/categories.component";
+import { FeedbackComponent } from "./admin/feedback/feedback.component";
 
 @NgModule({
   imports: [
@@ -20,6 +21,10 @@ import { CategoriesComponent } from "./admin/categories/categories.component";
           {
             path: 'categories',
             component: CategoriesComponent,
+          },
+          {
+            path: 'feedback',
+            component: FeedbackComponent,
           }
         ]
       }

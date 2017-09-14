@@ -7,6 +7,7 @@
             <div class="ui pointing secondary menu">
                 <a routerLink="/admin/ban-list" [queryParams]="{tab: 'ban-list'}" class="item" suiTabHeader="1">BAN LIST</a>
                 <a routerLink="/admin/categories" [queryParams]="{tab: 'categories'}" class="item" suiTabHeader="2">CATEGORIES</a>
+                <a routerLink="/admin/feedback" [queryParams]="{tab: 'feedback'}" class="item" suiTabHeader="3">FEEDBACK</a>
             </div>
             <div class="row">
                 <div class="ui equal width grid container">
@@ -18,6 +19,11 @@
                             <div class="container column">
                                 <div class="ui segment" suiTabContent="2">
                                     <app-categories></app-categories>
+                                </div>
+                            </div>
+                            <div class="container column">
+                                <div class="ui segment" suiTabContent="3">
+                                    <app-feedback></app-feedback>
                                 </div>
                             </div>
                         </div>

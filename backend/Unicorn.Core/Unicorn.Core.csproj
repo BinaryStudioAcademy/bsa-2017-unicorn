@@ -126,11 +126,8 @@
     <Compile Include="Interfaces\ISubcategoryService.cs" />
     <Compile Include="Interfaces\IVendorService.cs" />
     <Compile Include="Interfaces\IWorkService.cs" />
-<<<<<<< HEAD
     <Compile Include="Services\AdminService.cs" />
-=======
     <Compile Include="Services\AnalyticsService.cs" />
->>>>>>> develop
     <Compile Include="Services\CalendarService.cs" />
     <Compile Include="Services\ChatService.cs" />
     <Compile Include="Services\AccountService.cs" />

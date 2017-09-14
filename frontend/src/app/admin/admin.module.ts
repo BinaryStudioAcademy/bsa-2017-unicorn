@@ -8,6 +8,8 @@ import { CategoriesComponent } from './admin/categories/categories.component';
 import { AdminRoutingModule } from "./admin-routing.module";
 import { SuiModule } from "ng2-semantic-ui/dist";
 import { AccountService } from "../services/account.service";
+import { FeedbackComponent } from './admin/feedback/feedback.component';
+import { ReportService } from "../services/report.service";
 
 @NgModule({
   imports: [
@@ -19,10 +21,11 @@ import { AccountService } from "../services/account.service";
   declarations: [
     AdminComponent,
     BanListComponent, 
-    CategoriesComponent
+    CategoriesComponent, FeedbackComponent
   ],
   providers: [
-    AccountService
+    AccountService,
+    ReportService
   ]
 })
 export class AdminModule { }
