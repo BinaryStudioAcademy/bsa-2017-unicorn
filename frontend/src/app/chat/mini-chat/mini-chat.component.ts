@@ -264,9 +264,12 @@ export class MiniChatComponent implements OnInit {
     }     
     this.dialog.Messages.push(message);    
     this.messages = this.dialog.Messages; 
-    this.chatEventsService.messageCreateFromMiniChatToChat(message); 
     this.startScroll();             
-    this.chatService.addMessage(message);
+    this.chatService.addMessage(message).then(res=>{
+      this.chatService.getDialog(this.dialog.Id)
+      .then(res=> this.chatEventsService.messageCreateFromMiniChatToChat(res.Messages[res.Messages.length-1]))
+      
+    })
     this.files = null;    
 
     if(this.writtenMessage !== undefined) {
