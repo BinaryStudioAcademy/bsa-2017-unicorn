@@ -33,3 +33,12 @@
 .ui.toggle.checkbox label:before {
     background: rgb(217, 217, 217)!important;
 }
+
+@media only screen and (max-width: 600px) {
+    #search-bar div.menu.transition {
+        bottom: 100%!important;
+        top: unset!important;
+    }
+    
+}
+

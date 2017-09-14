@@ -5,7 +5,6 @@ export interface Report {
     Type: ReportType;
     Message: string;
     Email: string;
-    CustomerId: number;
-    VendorId: number;
-    CompanyId: number;
+    ProfileId: number;
+    ProfileType: string;
 }

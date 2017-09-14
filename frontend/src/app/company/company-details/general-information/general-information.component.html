@@ -4,6 +4,7 @@
             <div class="sub header">{{company.City}}
                 <sui-rating class="star" [ngModel]="rating" [isReadonly]="true"></sui-rating>
                 Reviews: {{company.ReviewsCount}}</div>
+                <a class="report-link" (click)="openModal()">Report this company?</a>
         </h2>
         <div class="center">
             <b>CEO:</b> <span>{{company.Director}}</span>
@@ -52,8 +53,36 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> 
 </div>
 <div *ngIf="company === undefined" class="ui active inverted dimmer" style="z-index: 0;">
     <div class="ui text loader">Loading</div>
 </div>
+
+<ng-template let-context let-modal="modal" #modalTemplate>
+    <div class="header" align="center">Report this company</div>
+    <div class="content" align="center">
+      <div class="ui form">
+        <form name="reportForm" #reportForm="ngForm">
+          <div class="field">
+              <b>Do you have any complaints?</b>                
+          </div>
+          <div class="field">
+              <textarea required type="text" name="msg" placeholder="TYPE HERE..." [(ngModel)]="message" #msg="ngModel"></textarea>
+              <div *ngIf="msg.invalid && (msg.dirty)" class="valid-error">* Required</div>
+          </div>
+          <div class="field">
+              <input pattern="\S+@\S+\.\S+" type="text" name="mail" placeholder="EMAIL" [(ngModel)]="email" #mail="ngModel">
+              <div *ngIf="mail.invalid && (mail.dirty)">
+                  <div *ngIf="mail.errors.pattern" class="valid-error">* Invalid mail</div>
+              </div>
+          </div>
+          <div class="field">
+            <button [ngClass]="{'disabled': reportForm.invalid, 'loading': loader}" 
+                    class="ui active button main" 
+                    (click)="sendMessage(reportForm)">SEND</button>   
+          </div>               
+        </form>
+      </div>
+    </div>
+  </ng-template>

@@ -22,11 +22,7 @@ namespace Unicorn.Core.Services
 
         public async Task<IEnumerable<ReportDTO>> GetAllAsync()
         {
-            var reports = await _unitOfWork.ReportRepository.Query
-                    .Include(r => r.Customer)
-                    .Include(r => r.Vendor)
-                    .Include(r => r.Company)
-                    .ToListAsync();
+            var reports = await _unitOfWork.ReportRepository.Query.ToListAsync();
 
             return reports.Select(r => ReportToDTO(r));
         }
@@ -40,7 +36,7 @@ namespace Unicorn.Core.Services
 
         public async Task<Report> CreateAsync(ReportDTO reportDto)
         {
-            var report = await CreateReportAsync(reportDto);
+            var report = CreateReport(reportDto);
 
             _unitOfWork.ReportRepository.Create(report);
             await _unitOfWork.SaveAsync();
@@ -50,7 +46,7 @@ namespace Unicorn.Core.Services
 
         public async Task UpdateAsync(ReportDTO reportDto)
         {
-            var report = await CreateReportAsync(reportDto);
+            var report = CreateReport(reportDto);
 
             _unitOfWork.ReportRepository.Update(report);
             await _unitOfWork.SaveAsync();
@@ -66,10 +62,6 @@ namespace Unicorn.Core.Services
 
         private ReportDTO ReportToDTO(Report report)
         {
-            var customerId = report.Customer?.Id;
-            var vendorId = report.Vendor?.Id;
-            var companyId = report.Company?.Id;
-
             return new ReportDTO()
             {
                 Id = report.Id,
@@ -77,30 +69,23 @@ namespace Unicorn.Core.Services
                 Type = report.Type,
                 Message = report.Message,
                 Email = report.Email,
-                CustomerId = customerId,
-                VendorId = vendorId,
-                CompanyId = companyId
+                ProfileId = report.ProfileId,
+                ProfileType = report.ProfileType,
             };            
         }
 
-        private async Task<Report> CreateReportAsync(ReportDTO reportDto)
+        private Report CreateReport(ReportDTO reportDto)
         {
-            var customerId = reportDto.CustomerId == null ? 0 : (long)reportDto.CustomerId;
-            var vendorId = reportDto.VendorId == null ? 0 : (long)reportDto.VendorId;
-            var companyId = reportDto.CompanyId == null ? 0 : (long)reportDto.CompanyId;
-            var report = new Report
+            return new Report
             {
                 Id = reportDto.Id,
                 Date = DateTime.Now,
                 Type = reportDto.Type,
                 Message = reportDto.Message,
                 Email = reportDto.Email,
-                Customer = await _unitOfWork.CustomerRepository.GetByIdAsync(customerId),
-                Vendor = await _unitOfWork.VendorRepository.GetByIdAsync(vendorId),
-                Company = await _unitOfWork.CompanyRepository.GetByIdAsync(companyId)
+                ProfileId = reportDto.ProfileId,
+                ProfileType = reportDto.ProfileType
             };
-
-            return report;
         }
     }
 }
