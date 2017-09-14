@@ -326,6 +326,7 @@ namespace Unicorn.Core.Services
                         Id = f.Id,
                         OriginalName = f.OriginalName,
                         ServerPathName = f.ServerPathName
+
                     }).ToList()
                 }).ToList()
             };
