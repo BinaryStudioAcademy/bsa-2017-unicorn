@@ -13,19 +13,28 @@
     <ng-template let-context let-modal="modal" #modalTemplate>
       <div class="header" align="center">Leave Feedback Here</div>
       <div class="content" align="center">
-        <h4>We should know what you thought</h4>
         <div class="ui form">
+          <form name="reportForm" #reportForm="ngForm">
             <div class="field">
-                <textarea type="text" placeholder="TYPE HERE..." [(ngModel)]="writtenMessage">                        
-                </textarea>
+                <b>We should know what you thought</b>                
             </div>
             <div class="field">
-              <button class="ui active button main" (click)="sendMessage()">SEND FEEDBACK</button>   
-            </div> 
+                <textarea required type="text" name="msg" placeholder="TYPE HERE..." [(ngModel)]="message" #msg="ngModel"></textarea>
+                <div *ngIf="msg.invalid && (msg.dirty)" class="valid-error">* Required</div>
+            </div>
             <div class="field">
-              <a (click)="modal.deny('denied')" style="cursor: pointer;">No Thanks!</a>       
-            </div>                
-          </div>
+                <input pattern="\S+@\S+\.\S+" type="text" name="mail" placeholder="EMAIL" [(ngModel)]="email" #mail="ngModel">
+                <div *ngIf="mail.invalid && (mail.dirty)">
+                    <div *ngIf="mail.errors.pattern" class="valid-error">* Invalid mail</div>
+                </div>
+            </div>
+            <div class="field">
+              <button [ngClass]="{'disabled': reportForm.invalid, 'loading': loader}" 
+                      class="ui active button main" 
+                      (click)="sendMessage(reportForm)">SEND</button>   
+            </div>               
+          </form>
+        </div>
       </div>
     </ng-template>
   </div>

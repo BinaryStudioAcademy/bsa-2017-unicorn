@@ -10,6 +10,7 @@ namespace Unicorn.Shared.DTOs
         public DateTime Date { get; set; }
         public ReportType Type { get; set; }
         public string Message { get; set; }
+        public string Email { get; set; }
         public long? CustomerId { get; set; }
         public long? VendorId { get; set; }
         public long? CompanyId { get; set; }

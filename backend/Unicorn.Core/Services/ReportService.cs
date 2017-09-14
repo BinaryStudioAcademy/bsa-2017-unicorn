@@ -76,6 +76,7 @@ namespace Unicorn.Core.Services
                 Date = report.Date,
                 Type = report.Type,
                 Message = report.Message,
+                Email = report.Email,
                 CustomerId = customerId,
                 VendorId = vendorId,
                 CompanyId = companyId
@@ -93,6 +94,7 @@ namespace Unicorn.Core.Services
                 Date = DateTime.Now,
                 Type = reportDto.Type,
                 Message = reportDto.Message,
+                Email = reportDto.Email,
                 Customer = await _unitOfWork.CustomerRepository.GetByIdAsync(customerId),
                 Vendor = await _unitOfWork.VendorRepository.GetByIdAsync(vendorId),
                 Company = await _unitOfWork.CompanyRepository.GetByIdAsync(companyId)

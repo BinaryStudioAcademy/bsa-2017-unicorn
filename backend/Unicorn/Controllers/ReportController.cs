@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using Unicorn.Core.Interfaces;
+using Unicorn.DataAccess.Entities.Enum;
 using Unicorn.Shared.DTOs;
 
 namespace Unicorn.Controllers
@@ -53,9 +54,21 @@ namespace Unicorn.Controllers
 
         [HttpPost]
         [Route("report")]
-        public async Task SendReportAsync(ReportDTO report)
-        {
-            await _reportService.CreateAsync(report);
+        public async Task<HttpResponseMessage> SendReportAsync(ReportDTO report)
+        {            
+            try
+            {
+                if (string.IsNullOrEmpty(report.Message) || (report.Type != ReportType.Feedback && report.Type != ReportType.Complaint))
+                {
+                    throw new ArgumentException();
+                }
+                await _reportService.CreateAsync(report);
+            }
+            catch
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+            }            
+            return Request.CreateResponse(HttpStatusCode.OK);
         }
 
         [HttpPut]

@@ -17,6 +17,8 @@ namespace Unicorn.DataAccess.Entities
 
         public string Message { get; set; }
 
+        public string Email { get; set; }
+
         public virtual Customer Customer { get; set; }
 
         public virtual Vendor Vendor { get; set; }
