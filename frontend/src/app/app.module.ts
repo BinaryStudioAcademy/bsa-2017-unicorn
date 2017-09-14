@@ -53,7 +53,8 @@ import { ReviewModalComponent } from './review/review-modal/review-modal.compone
 import { ChatLogicService } from "./services/chat/chat-logic.service";
 import { CalendarService } from "./services/calendar-service";
 import { ClickOutsideModule } from "ng-click-outside/lib";
-import { NotFoundModule} from './not-found/not-found.module'
+import { UnreadChatMessagesService } from "./services/unread-chat-messages.service";
+import { NotFoundModule} from './not-found/not-found.module';
 
 export class CustomOptions extends ToastOptions {
   animate = 'fade';
@@ -116,6 +117,7 @@ export function getDefaultSignalRConfig(): SignalRConfiguration {
     TokenHelperService,
     AccountService,
     NotificationService,
+    UnreadChatMessagesService,
     ChatLogicService,
    { provide: ToastOptions, useClass: CustomOptions}
   ],

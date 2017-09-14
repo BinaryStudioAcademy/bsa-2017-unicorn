@@ -69,6 +69,21 @@ namespace Unicorn.Controllers
         }
 
         [HttpGet]
+        [Route("unreadmessages/{id}")]
+        public HttpResponseMessage GetCountUnreadMessages(int id)
+        {
+            try
+            {
+                var result = _chatService.GetCountUnreadMessages(id);
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+            catch
+            {
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            }
+        }
+
+        [HttpGet]
         [Route("dialog/find/{participantOneId}/{participantTwoId}")]
         public async Task<HttpResponseMessage> FindDialog(int participantOneId, int participantTwoId)
         {
