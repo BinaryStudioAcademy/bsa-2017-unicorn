@@ -88,8 +88,8 @@
                 <textarea #textArea (keydown)="onChange($event) " (click)="readNotReadedMessages(dialog) " [ngStyle]="{ 'height.px': inputHeight} "
                     class="prompt " type="text " placeholder="Type here... " [(ngModel)]="writtenMessage " style="display:inline ">                        
                 </textarea>
-                <input class="inputfile" type="file" name="file" id="file" (change)="uploadFile()" multiple="true" #fileInput>
-                <label class="ui icon input" for="file">
+                <input class="inputfile" type="file" name="attachfile" id="attachfile" (change)="uploadFile()" multiple="true" #fileInput>
+                <label class="ui icon input" for="attachfile">
                     <i class="attach outline link icon"></i>
                 </label>           
                 <div class="ui icon input ">
