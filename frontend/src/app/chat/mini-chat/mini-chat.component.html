@@ -23,7 +23,7 @@
                         <div class="concrete-message me">
                             {{message.Message}}
                             <div *ngIf="message.Files !== undefined && message.Files !== null && message.Files.length > 0">
-                                <span *ngFor="let file of message.Files" class="files">
+                                <span *ngFor="let file of message.Files" class="files my">
                                 <a *ngIf="isImage(file.OriginalName);else fileLink" href="api/uploadedfiles/{{file.ServerPathName}}" target="_blank"><img src="api/uploadedfiles/{{file.ServerPathName}}"></a>
                                 <ng-template #fileLink>
                                     <a href="api/uploadedfiles/{{file.ServerPathName}}" download="{{file.OriginalName}}"><i class="cloud download icon"></i>{{file.OriginalName}}</a>
@@ -39,7 +39,7 @@
                         <div class="concrete-message him">
                             {{message.Message}}
                             <div *ngIf="message.Files !== undefined && message.Files !== null && message.Files.length > 0">
-                                <span *ngFor="let file of message.Files" class="files">
+                                <span *ngFor="let file of message.Files" class="files him">
                                 <a *ngIf="isImage(file.OriginalName);else fileLink" href="api/uploadedfiles/{{file.ServerPathName}}" target="_blank"><img src="api/uploadedfiles/{{file.ServerPathName}}"></a>
                                 <ng-template #fileLink>
                                     <a href="api/uploadedfiles/{{file.ServerPathName}}" download="{{file.OriginalName}}"><i class="cloud download icon"></i>{{file.OriginalName}}</a>
