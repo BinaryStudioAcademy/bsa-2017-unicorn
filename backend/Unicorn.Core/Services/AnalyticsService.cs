@@ -30,11 +30,12 @@ namespace Unicorn.Core.Services
             { 12, "December"},
         };
 
-
         public AnalyticsService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
+
+        //Company
 
         public async Task<AnalyticsDTO> GetCompanyAnalytics(long companyId)
         {
@@ -90,13 +91,23 @@ namespace Unicorn.Core.Services
             {
                 Points = decliendWorks
             };
+            var companyVendorsRating = await GetCompanyVendorsByRating(companyId);
+            analytics.VendorsByRating = new PieChartDTO
+            {
+                Points = companyVendorsRating
+            };
+            var companyVendorsBooks = await GetCompanyVendorsByOrders(companyId);
+            analytics.VendorsByOrders = new PieChartDTO
+            {
+                Points = companyVendorsBooks
+            };
+            var companyVendorsFinished = await GetCompanyVendorsByFinished(companyId);
+            analytics.VendorsByFinished = new PieChartDTO
+            {
+                Points = companyVendorsFinished
+            };
 
             return analytics;
-        }
-
-        public async Task<AnalyticsDTO> GetVendorAnalytics(long vendorId)
-        {
-            throw new NotImplementedException();
         }
 
         private Tuple<int, int> GetMonthAndYear()
@@ -118,6 +129,14 @@ namespace Unicorn.Core.Services
                 .Count();
         }
 
+        private int GetVendorBooksCount(int month, int year, BookStatus status, long id)
+        {
+            return _unitOfWork.BookRepository
+                .Query
+                .Where(b => b.Vendor.Id == id && b.Status == status && b.Date.Month == month && b.Date.Year == year)
+                .Count();
+        }
+
         private int GetVendorsBooksCount(int month, int year, BookStatus status, long id)
         {
             return _unitOfWork.BookRepository
@@ -136,6 +155,16 @@ namespace Unicorn.Core.Services
             }).ToList();
         }
 
+        private async Task<List<ChartPointDTO>> GetVendorPopularWorks(long id)
+        {
+            var vendor = await _unitOfWork.VendorRepository.GetByIdAsync(id);
+            return vendor.Works.Select(w => new ChartPointDTO
+            {
+                Name = w.Name,
+                Value = Convert.ToInt32(w.Orders)
+            }).ToList();
+        }
+
         private async Task<List<ChartPointDTO>> GetCompanyConfirmedWorks(long id)
         {
             var company = await _unitOfWork.CompanyRepository.GetByIdAsync(id);
@@ -144,7 +173,22 @@ namespace Unicorn.Core.Services
                 Name = w.Name,
                 Value = _unitOfWork.BookRepository
                             .Query
-                            .Where(b => b.Status == BookStatus.Confirmed && b.Work.Id == w.Id)
+                            .Where(b => b.Status == BookStatus.Confirmed && b.Work.Id == w.Id && b.Company.Id == id)
+                            .Count()
+            })
+            .OrderBy(p => p.Value)
+            .ToList();
+        }
+
+        private async Task<List<ChartPointDTO>> GetVendorConfirmedWorks(long id)
+        {
+            var vendor = await _unitOfWork.VendorRepository.GetByIdAsync(id);
+            return vendor.Works.Select(w => new ChartPointDTO
+            {
+                Name = w.Name,
+                Value = _unitOfWork.BookRepository
+                            .Query
+                            .Where(b => b.Status == BookStatus.Confirmed && b.Work.Id == w.Id && b.Vendor.Id == id)
                             .Count()
             })
             .OrderBy(p => p.Value)
@@ -159,11 +203,146 @@ namespace Unicorn.Core.Services
                 Name = w.Name,
                 Value = _unitOfWork.BookRepository
                             .Query
-                            .Where(b => b.Status == BookStatus.Declined && b.Work.Id == w.Id)
+                            .Where(b => b.Status == BookStatus.Declined && b.Work.Id == w.Id && b.Company.Id == id)
                             .Count()
             })
             .OrderBy(p => p.Value)
             .ToList();
+        }
+
+        private async Task<List<ChartPointDTO>> GetVendorDeclinedWorks(long id)
+        {
+            var vendor = await _unitOfWork.VendorRepository.GetByIdAsync(id);
+            return vendor.Works.Select(w => new ChartPointDTO
+            {
+                Name = w.Name,
+                Value = _unitOfWork.BookRepository
+                            .Query
+                            .Where(b => b.Status == BookStatus.Declined && b.Work.Id == w.Id && b.Vendor.Id == id)
+                            .Count()
+            })
+            .OrderBy(p => p.Value)
+            .ToList();
+        }
+
+        private async Task<List<ChartPointDTO>> GetCompanyVendorsByRating(long id)
+        {
+            var company = await _unitOfWork.CompanyRepository.GetByIdAsync(id);
+            return company.Vendors.Select(v => new ChartPointDTO
+            {
+                Name = v.Person.Name,
+                Value = GetVendorRating(v.Person.Account.Id)
+            })
+            .OrderBy(p => p.Value)
+            .ToList();
+        }
+
+        private async Task<List<ChartPointDTO>> GetCompanyVendorsByOrders(long id)
+        {
+            var company = await _unitOfWork.CompanyRepository.GetByIdAsync(id);
+            return company.Vendors.Select(v => new ChartPointDTO
+            {
+                Name = v.Person.Name,
+                Value = GetVendorBooksCount(v.Id)
+            })
+            .OrderBy(p => p.Value)
+            .ToList();
+        }
+
+        private async Task<List<ChartPointDTO>> GetCompanyVendorsByFinished(long id)
+        {
+            var company = await _unitOfWork.CompanyRepository.GetByIdAsync(id);
+            return company.Vendors.Select(v => new ChartPointDTO
+            {
+                Name = v.Person.Name,
+                Value = GetVendorBooksCount(v.Id, BookStatus.Confirmed)
+            })
+            .OrderBy(p => p.Value)
+            .ToList();
+        }
+
+        private int GetVendorBooksCount(long id, BookStatus status)
+        {
+            return _unitOfWork.BookRepository
+                .Query
+                .Count(b => b.Vendor.Id == id && b.Status == status);
+        }
+
+        private int GetVendorBooksCount(long id)
+        {
+            return _unitOfWork.BookRepository
+                .Query
+                .Count(b => b.Vendor.Id == id);
+        }
+
+        private int GetVendorRating(long id)
+        {
+            var rating = _unitOfWork.RatingRepository
+                .Query
+                .Where(r => r.Reciever.Id == id)
+                .Average(r => r.Grade);
+            return Convert.ToInt32(rating);
+        }
+
+
+        //Vendor
+
+        public async Task<AnalyticsDTO> GetVendorAnalytics(long vendorId)
+        {
+            var analytics = new AnalyticsDTO();
+            var accepted = new List<ChartPointDTO>();
+            var declined = new List<ChartPointDTO>();
+            var date = GetMonthAndYear();
+            var month = date.Item1;
+            var year = date.Item2;
+            for (int i = 0; i < 12; i++)
+            {
+                accepted.Add(new ChartPointDTO
+                {
+                    Name = Months[month],
+                    Value = GetVendorBooksCount(month, year, BookStatus.Accepted, vendorId)
+                        + GetVendorBooksCount(month, year, BookStatus.Confirmed, vendorId)
+                        + GetVendorBooksCount(month, year, BookStatus.Finished, vendorId)
+                });
+                declined.Add(new ChartPointDTO
+                {
+                    Name = Months[month],
+                    Value = GetVendorBooksCount(month, year, BookStatus.Declined, vendorId)
+                });
+                month++;
+                if (month > 12)
+                {
+                    year++;
+                    month -= 12;
+                }
+            }
+            analytics.BooksAccepted = new LineChartDTO
+            {
+                Name = "Accepted books",
+                Series = accepted
+            };
+            analytics.BooksDeclined = new LineChartDTO
+            {
+                Name = "Declined books",
+                Series = declined
+            };
+            var popularWorkPoints = await GetVendorPopularWorks(vendorId);
+            analytics.PopularWorks = new PieChartDTO
+            {
+                Points = popularWorkPoints
+            };
+            var confirmedWorks = await GetVendorConfirmedWorks(vendorId);
+            analytics.ConfirmedWorks = new PieChartDTO
+            {
+                Points = confirmedWorks
+            };
+            var decliendWorks = await GetVendorDeclinedWorks(vendorId);
+            analytics.DeclinedWorks = new PieChartDTO
+            {
+                Points = decliendWorks
+            };
+
+            return analytics;
         }
     }
 }

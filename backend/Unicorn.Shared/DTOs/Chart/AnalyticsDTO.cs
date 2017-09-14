@@ -17,5 +17,11 @@ namespace Unicorn.Shared.DTOs.Chart
         public PieChartDTO ConfirmedWorks { get; set; }
 
         public PieChartDTO DeclinedWorks { get; set; }
+
+        public PieChartDTO VendorsByRating { get; set; }
+
+        public PieChartDTO VendorsByOrders { get; set; }
+
+        public PieChartDTO VendorsByFinished { get; set; }
     }
 }

@@ -397,7 +397,7 @@ namespace Unicorn.Core.Services
                 Position = x.Position,
                 FIO = x.Person?.Name ?? "Name" + " " + x.Person?.MiddleName,
                 Reviews = reviews.Count(p => p.ToAccountId == company.Account.Id),
-                Rating = CalculateAverageRating(x.Id)
+                Rating = CalculateAverageRating(x.Person.Account.Id)
             }).ToList();
         }
         private double CalculateAverageRating(long receiverId)

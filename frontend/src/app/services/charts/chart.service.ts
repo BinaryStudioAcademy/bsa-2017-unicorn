@@ -13,4 +13,8 @@ export class ChartService {
     return this.dataService.getRequest(`company/${id}/charts`);
   }
 
+  getVendorCharts(id: number): Promise<Analytics> {
+    return this.dataService.getRequest(`vendors/${id}/charts`);
+  }
+
 }

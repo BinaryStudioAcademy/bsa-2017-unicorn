@@ -38,6 +38,7 @@ import { PortfolioComponent } from './company-details/portfolio/portfolio.compon
 import { CompanyPortfolioComponent } from './company-edit/company-portfolio/company-portfolio.component';
 import { NguiMapModule } from "@ngui/map/dist";
 import { OwnCalendarModule } from "../calendar/calendar.module";
+import { CompanyCalendarComponent } from './company-edit/company-calendar/company-calendar.component';
 import { CompanyChartsComponent } from './company-edit/company-charts/company-charts.component';
 
 
@@ -79,6 +80,7 @@ import { CompanyChartsComponent } from './company-edit/company-charts/company-ch
     CompanyContactsComponent,
     PortfolioComponent,
     CompanyPortfolioComponent,
+    CompanyCalendarComponent,
     CompanyChartsComponent
     
   ],

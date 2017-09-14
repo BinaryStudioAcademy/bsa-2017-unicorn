@@ -10,11 +10,13 @@ namespace Unicorn.DataAccess.Entities
 
         public bool IsDeleted { get; set; }
 
-        public DateTime StartDate { get; set; }
+        public DateTimeOffset StartDate { get; set; }
 
-        public DateTime? EndDate { get; set; }
+        public DateTimeOffset? EndDate { get; set; }
 
         public bool WorkOnWeekend { get; set; }
+
+        public bool SeveralTaskPerDay { get; set; }
 
         public virtual ICollection<ExtraDay> ExtraDayOffs { get; set; }
 
