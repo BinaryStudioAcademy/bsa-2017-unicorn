@@ -488,3 +488,4 @@ export class SearchComponent implements OnInit {
     this.firstDayOfWeek = '1';    /* start calendar from first day of week */
   }
 }
+
