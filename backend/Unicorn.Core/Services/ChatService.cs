@@ -273,7 +273,7 @@ namespace Unicorn.Core.Services
             var res = await _unitOfWork.ChatDialogRepository.Query
                 .Include(x => x.Participant1)
                 .Include(x => x.Participant2)
-                .Include(x => x.Messages)
+                .Include(x => x.Messages)                
                 .FirstOrDefaultAsync(
                     x => (x.Participant1.Id == participantOneId && x.Participant2.Id == participantTwoId) ||
                          (x.Participant1.Id == participantTwoId && x.Participant2.Id == participantOneId));
@@ -317,7 +317,13 @@ namespace Unicorn.Core.Services
                     Date = x.Date,
                     IsReaded = x.IsReaded,
                     Message = x.Message,
-                    OwnerId = x.Owner.Id
+                    OwnerId = x.Owner.Id,
+                    Files = x.Files.Select(f => new ChatFileDTO
+                    {
+                        Id = f.Id,
+                        OriginalName = f.OriginalName,
+                        ServerPathName = f.ServerPathName
+                    }).ToList()
                 }).ToList()
             };
 

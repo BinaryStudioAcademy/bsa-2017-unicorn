@@ -1,5 +1,6 @@
-import { Component, OnInit, Input, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ChangeDetectorRef, ElementRef } from '@angular/core';
 import { MessageModel } from "../../models/chat/message.model";
+import { ChatFile } from "../../models/chat/chat-file";
 import { ChatService } from "../../services/chat/chat.service";
 import { TokenHelperService } from "../../services/helper/tokenhelper.service";
 import { DialogModel } from "../../models/chat/dialog.model";
@@ -21,6 +22,7 @@ export class MiniChatComponent implements OnInit {
   
   @ViewChild('textArea')
     private textarea: any;
+  @ViewChild('fileInput') inputEl: ElementRef;
 
   ownerId: number;  
   messages: MessageModel[];  
@@ -31,6 +33,7 @@ export class MiniChatComponent implements OnInit {
   openedDialogs: DialogModel[] = [];
   selectedId: number;
   collapsedChat:boolean = false;
+  files: ChatFile[];
 
   initChat: Subscription;
   messageCreate: Subscription;
@@ -251,7 +254,7 @@ export class MiniChatComponent implements OnInit {
       IsReaded: false, 
       OwnerId: this.ownerId,
       Message: this.writtenMessage,
-      Files: null,
+      Files: this.files,
       Date: new Date(),
       isLoaded: true
     };   
@@ -263,6 +266,11 @@ export class MiniChatComponent implements OnInit {
     this.chatEventsService.messageCreateFromMiniChatToChat(message); 
     this.startScroll();             
     this.chatService.addMessage(message);
+    this.files = null;    
+
+    if(this.writtenMessage !== undefined) {
+      this.writtenMessage = undefined;
+    }
   }
 
   //read messages were readed
@@ -323,6 +331,31 @@ export class MiniChatComponent implements OnInit {
   collapseChat(){
     this.collapsedChat = true;
     this.selectedId = undefined;
+  }
+
+  isImage(filename: string){
+    const imgExtensions = ["jpg", "jpeg", "bmp", "png", "ico"];
+    let extension = filename.split(".").pop();
+    
+    return imgExtensions.includes(extension);
+  }
+
+  uploadFile() {
+    let inputEl: HTMLInputElement = this.inputEl.nativeElement;        
+    let fileCount: number = inputEl.files.length;
+    let formData = new FormData();
+    if (fileCount > 0) {
+      for (let i = 0; i < fileCount; i++) {
+        formData.append('file[]', inputEl.files.item(i));
+      }
+      
+      this.chatService.uploadFiles(formData).then(x => {
+        this.files = x as ChatFile[];
+        this.addMessage();
+      }).catch(err => console.log(err));
+            
+      inputEl.value = null;
+    }
   }
 
 }
