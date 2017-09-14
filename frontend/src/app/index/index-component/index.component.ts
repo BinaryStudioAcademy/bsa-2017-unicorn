@@ -84,7 +84,7 @@ export class IndexComponent implements OnInit {
     return role === 'vendor' || role === 'company';
   }
 
-  filter(arr, search) {
+  filter(arr, search = '') {
     const result = [];
     if (search !== '' && arr) {
       for (let i = 0; i < arr.length; i++) {
@@ -112,6 +112,19 @@ export class IndexComponent implements OnInit {
               return result;
             }
           }
+        }
+      }
+    } else {
+      for (let i = 0; i < arr.length; i++) {
+        const tagObj = {
+          Name: arr[i].Name,
+          Value: arr[i].Name,
+          Group: '',
+          Icon: arr[i].Icon
+        };
+        result.push(tagObj);
+        if (result.length > 30) {
+          return result;
         }
       }
     }
@@ -153,8 +166,18 @@ export class IndexComponent implements OnInit {
   }
 
   onClickedOutside(e: Event) {
-    this.filterCtgs = [];
-    this.filterSubctgs = [];
+    switch (e.srcElement.id) {
+      case 'ctg':
+        this.filterSubctgs = [];
+        break;
+      case 'subctg':
+        this.filterCtgs = [];
+        break;
+      default:
+        this.filterCtgs = [];
+        this.filterSubctgs = [];
+        break;
+    }
   }
 
 }

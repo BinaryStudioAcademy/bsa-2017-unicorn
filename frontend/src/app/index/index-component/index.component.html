@@ -12,8 +12,9 @@
                 <div class="search-item">
                     <p>{{labelSearch}}</p>
                     <div class="ui input fill-horizontal">
-                        <input class="search-input" type="text" placeholder="{{placeholderCategory}}" 
+                        <input id="ctg" class="search-input" type="text" placeholder="{{placeholderCategory}}" 
                             [(ngModel)]="searchCategory"
+                            (click)="filterCategory()"
                             (keyup)="filterCategory()"
                             (keyup.Enter)="searchPerformer()">                        
                     </div>
@@ -31,8 +32,9 @@
                 </div>
                 <div class="search-item">
                     <div class="ui input fill-horizontal">
-                        <input class="search-input" type="text" placeholder="{{placeholderSubcategory}}" 
+                        <input id="subctg" class="search-input" type="text" placeholder="{{placeholderSubcategory}}" 
                             [(ngModel)]="searchSubcategory"
+                            (click)="filterSubcategory()"
                             (keyup)="filterSubcategory()"
                             (keyup.Enter)="searchPerformer()">                        
                     </div>

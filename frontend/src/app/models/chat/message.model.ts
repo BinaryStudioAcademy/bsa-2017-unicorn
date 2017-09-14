@@ -1,6 +1,7 @@
 import { ChatFile } from "./chat-file";
 
 export interface MessageModel{
+    MessageId: number;
     DialogId: number;
     IsReaded: boolean;
     OwnerId: number;    

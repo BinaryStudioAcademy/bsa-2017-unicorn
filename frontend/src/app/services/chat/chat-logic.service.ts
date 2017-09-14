@@ -102,6 +102,7 @@ export class ChatLogicService {
 
       addMessage(){
         let message = {
+          MessageId: null,
           DialogId: this.selectedId,
           IsReaded: false, 
           OwnerId: this.ownerId,
