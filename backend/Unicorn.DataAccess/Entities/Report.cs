@@ -19,10 +19,9 @@ namespace Unicorn.DataAccess.Entities
 
         public string Email { get; set; }
 
-        public virtual Customer Customer { get; set; }
+        public long? ProfileId { get; set; }
 
-        public virtual Vendor Vendor { get; set; }
+        public string ProfileType { get; set; }
 
-        public virtual Company Company { get; set; }
     }
 }
