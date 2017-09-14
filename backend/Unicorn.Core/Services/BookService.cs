@@ -157,6 +157,9 @@ namespace Unicorn.Core.Services
             Customer customer = await _unitOfWork.CustomerRepository.GetByIdAsync(book.CustomerId);
             Location location = null;
 
+            work.Orders = work.Orders + 1;
+            _unitOfWork.WorkRepository.Update(work);
+
             if (book.Location.Id == -1)
             {
                 location = new Location()
