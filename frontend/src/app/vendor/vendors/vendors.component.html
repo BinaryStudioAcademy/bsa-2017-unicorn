@@ -11,17 +11,17 @@
                     <div class="eleven wide column">
                         <div class="ui grid">
                             <div class="row">
-                                    <div class="eight wide column">
-                                            <div class="label-box">
-                                                <div (click)="role = 'vendor'" [ngClass]="{'selected': role ==='vendor'}" class="ui horizontal label">Vendors</div>
-                                                <div (click)="role = 'company'" [ngClass]="{'selected': role ==='company'}" class="ui horizontal label">Companies</div>
-                                                <div (click)="role = 'all'" [ngClass]="{'selected': role ==='all'}" class="ui selected horizontal label">All</div>
-                                            </div>
-                                        </div>
-                                        <div class="eight wide column search-btn-div">
-                                            <a class="ui active button main" [ngClass]="{'loading': searchLoading}" (click)="search()">SEARCH</a>
-                                            <button class="ui button" (click)="reset()">RESET</button>
-                                        </div>
+                                <div class="eight wide column">
+                                    <div class="label-box">
+                                        <div (click)="role = 'vendor'" [ngClass]="{'selected': role ==='vendor'}" class="ui horizontal label">Vendors</div>
+                                        <div (click)="role = 'company'" [ngClass]="{'selected': role ==='company'}" class="ui horizontal label">Companies</div>
+                                        <div (click)="role = 'all'" [ngClass]="{'selected': role ==='all'}" class="ui selected horizontal label">All</div>
+                                    </div>
+                                </div>
+                                <div class="eight wide column search-btn-div">
+                                    <a class="ui active button main" [ngClass]="{'loading': searchLoading}" (click)="search()">SEARCH</a>
+                                    <button class="ui button" (click)="reset()">RESET</button>
+                                </div>
                             </div>
                         </div>
                     </div>
