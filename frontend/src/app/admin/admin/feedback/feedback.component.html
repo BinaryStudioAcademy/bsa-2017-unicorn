@@ -1,7 +1,7 @@
 <div *ngIf="reports !== undefined" class="container">
     <div *ngIf="reports.length > 0; else reportsIsEmpty" class="ui vertically divided grid" id="main">
         <div *ngFor="let report of reports" class="row">
-            <div class="sixteen wide column">
+            <div *ngIf="report.Type === 1" class="sixteen wide column">
                 <div class="row">
                     <div class="ui grid">
                         <div class="row">
@@ -19,6 +19,25 @@
                     </div>
                 </div>
             </div>
+            <div *ngIf="report.Type === 2" class="sixteen wide column">
+                    <div class="row">
+                        <div class="ui grid">
+                            <div class="row">
+                                <div class="four wide column">
+                                    <p class="from"><a>{{report.Email}}</a></p>
+                                    <span class="date">{{report.Date|date:fullDate}}</span>
+                                </div>
+                                <div class="ten wide column">
+                                    <h5>The user with profile <a routerLink="/{{report.ProfileType}}/{{report.ProfileId}}">{{report.ProfileType}}/{{report.ProfileId}}</a> received a complaint with message</h5>
+                                    <p class="review-text">{{report.Message}}</p>
+                                </div>
+                                <div class="two wide column">
+                                    <a (click)="remove(report)" class="ui button remove">Remove</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
         </div>
     </div>
     <ng-template #reportsIsEmpty>

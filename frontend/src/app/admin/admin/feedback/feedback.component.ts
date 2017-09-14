@@ -38,6 +38,7 @@ export class FeedbackComponent implements OnInit {
       .then(() => {
         this.reports.splice(this.reports.findIndex(r => r.Id === report.Id), 1);
         this.pendingReports.splice(this.pendingReports.findIndex(r => r.Id === report.Id), 1);
+        var type = report.Type
       })
       .catch(err => this.pendingReports.splice(this.pendingReports.findIndex(r => r.Id === report.Id), 1));
   }
