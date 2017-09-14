@@ -21,6 +21,8 @@ namespace Unicorn.DataAccess.Entities
 
         public long? ProfileId { get; set; }
 
+        public string ProfileName { get; set; }
+
         public string ProfileType { get; set; }
 
     }

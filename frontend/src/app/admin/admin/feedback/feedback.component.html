@@ -28,7 +28,7 @@
                                     <span class="date">{{report.Date|date:fullDate}}</span>
                                 </div>
                                 <div class="ten wide column">
-                                    <h5>The user with profile <a routerLink="/{{report.ProfileType}}/{{report.ProfileId}}">{{report.ProfileType}}/{{report.ProfileId}}</a> received a complaint with message</h5>
+                                    <h5>The {{report.ProfileType}} with profile <a routerLink="/{{report.ProfileType}}/{{report.ProfileId}}">{{report.ProfileName}}</a> received a complaint with message</h5>
                                     <p class="review-text">{{report.Message}}</p>
                                 </div>
                                 <div class="two wide column">

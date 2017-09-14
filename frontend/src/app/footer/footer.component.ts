@@ -59,6 +59,7 @@ export class FooterComponent implements OnInit {
         Message: this.message,
         Email: this.email,
         ProfileId: null,
+        ProfileName: null,
         ProfileType: null
       };
 

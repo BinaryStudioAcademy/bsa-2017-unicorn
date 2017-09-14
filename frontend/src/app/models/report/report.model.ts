@@ -1,4 +1,5 @@
 import { ReportType } from './reportType.model';
+
 export interface Report {
     Id: number;
     Date: Date;
@@ -6,5 +7,6 @@ export interface Report {
     Message: string;
     Email: string;
     ProfileId: number;
+    ProfileName: string;
     ProfileType: string;
 }

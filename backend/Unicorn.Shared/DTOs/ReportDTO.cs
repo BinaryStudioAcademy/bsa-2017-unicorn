@@ -1,6 +1,5 @@
 ﻿using System;
 using Unicorn.DataAccess.Entities.Enum;
-using Unicorn.Shared.DTOs.Vendor;
 
 namespace Unicorn.Shared.DTOs
 {
@@ -12,6 +11,7 @@ namespace Unicorn.Shared.DTOs
         public string Message { get; set; }
         public string Email { get; set; }
         public long? ProfileId { get; set; }
+        public string ProfileName { get; set; }
         public string ProfileType { get; set; }
     }
 }

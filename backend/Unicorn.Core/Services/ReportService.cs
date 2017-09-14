@@ -70,6 +70,7 @@ namespace Unicorn.Core.Services
                 Message = report.Message,
                 Email = report.Email,
                 ProfileId = report.ProfileId,
+                ProfileName = report.ProfileName,                
                 ProfileType = report.ProfileType,
             };            
         }
@@ -84,6 +85,7 @@ namespace Unicorn.Core.Services
                 Message = reportDto.Message,
                 Email = reportDto.Email,
                 ProfileId = reportDto.ProfileId,
+                ProfileName = reportDto.ProfileName,
                 ProfileType = reportDto.ProfileType
             };
         }

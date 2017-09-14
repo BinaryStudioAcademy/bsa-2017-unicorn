@@ -116,6 +116,7 @@ export class VendorProfileInfoComponent implements OnInit {
         Message: this.message,
         Email: this.email,
         ProfileId: this.vendor.Id,
+        ProfileName: `${this.vendor.Name} ${this.vendor.Surname}`,
         ProfileType: 'vendor'
       };
 

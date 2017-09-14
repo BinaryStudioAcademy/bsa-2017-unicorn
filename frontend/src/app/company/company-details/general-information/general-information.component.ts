@@ -114,6 +114,7 @@ constructor(
         Message: this.message,
         Email: this.email,
         ProfileId: this.company.Id,
+        ProfileName: this.company.Name,
         ProfileType: 'company'
       };
 

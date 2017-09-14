@@ -126,6 +126,7 @@ export class UserMainInfoComponent implements OnInit {
         Message: this.message,
         Email: this.email,
         ProfileId: this.user.Id,
+        ProfileName: `${this.user.Name} ${this.user.SurName}`,
         ProfileType: 'customer'
       };
 
