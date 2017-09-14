@@ -61,8 +61,9 @@ export class VendorEditChartsComponent implements OnInit {
     //----------------------------------
     isCompanyPage: boolean = true;
     pageSelected: string = 'Company analytics';
+
+    enabled: boolean = false;
   
-    //Company page
     workOptions = [{
       id: 1,
       value: 'Popularity'

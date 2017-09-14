@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser'
 
+import { VendorEditChartsComponent } from './vendor-edit-charts/vendor-edit-charts.component';
+
 import {SuiModule} from 'ng2-semantic-ui';
 
 import { SuiModalService, TemplateModalConfig
@@ -31,6 +33,9 @@ export class VendorEditComponent implements OnInit {
 
   @ViewChild('cropper', undefined)
   cropper: ImageCropperComponent;
+
+  @ViewChild(VendorEditChartsComponent)
+  charts: VendorEditChartsComponent;
 
   vendor: Vendor;
 
@@ -143,5 +148,9 @@ export class VendorEditComponent implements OnInit {
   public openModal() {
     this.imageUploaded = false;
     this.activeModal = this.modalService.openModal(this.modalTemplate);
+  }
+
+  activateCharts() {
+    this.charts.enabled = true;
   }
 }

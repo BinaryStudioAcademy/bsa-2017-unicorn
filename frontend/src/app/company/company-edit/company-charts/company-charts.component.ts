@@ -60,6 +60,8 @@ export class CompanyChartsComponent implements OnInit {
   isCompanyPage: boolean = true;
   pageSelected: string = 'Company analytics';
 
+  enabled: boolean = false;
+
   //Company page
   workOptions = [{
     id: 1,
@@ -121,6 +123,7 @@ export class CompanyChartsComponent implements OnInit {
   }
 
   ngOnInit() {
+    //this.enabled = true;
     this.chartService.getCompanyCharts(this.route.snapshot.params['id']).then(resp => {
       this.analytics = resp;
       this.booksAccepted = [this.analytics.BooksAccepted];

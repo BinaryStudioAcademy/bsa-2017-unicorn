@@ -279,9 +279,9 @@ namespace Unicorn.Core.Services
         {
             var rating = _unitOfWork.RatingRepository
                 .Query
-                .Where(r => r.Reciever.Id == id)
-                .Average(r => r.Grade);
-            return Convert.ToInt32(rating);
+                .Where(r => r.Reciever.Id == id);
+
+            return rating.Any() ? Convert.ToInt32(rating.Average(r => r.Grade)) : 0;
         }
 
 

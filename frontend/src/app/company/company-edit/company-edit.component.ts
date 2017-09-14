@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { PhotoService } from '../../services/photo.service';
 import { Params, ActivatedRoute } from "@angular/router";
 import { CompanyShort } from "../../models/company-page/company-short.model";
 import { CompanyService } from "../../services/company-services/company.service";
 import { MenuEventsService } from "../../services/events/menu-events.service";
+
+import { CompanyChartsComponent } from './company-charts/company-charts.component';
 
 @Component({
   selector: 'app-company-edit',
@@ -11,6 +13,10 @@ import { MenuEventsService } from "../../services/events/menu-events.service";
   styleUrls: ['./company-edit.component.sass']
 })
 export class CompanyEditComponent implements OnInit {
+
+  @ViewChild(CompanyChartsComponent)
+  charts: CompanyChartsComponent;
+
   menuEventsService: MenuEventsService;
   isDimmed: boolean = false;
   company: CompanyShort;  
@@ -54,5 +60,9 @@ export class CompanyEditComponent implements OnInit {
         console.log(err);
         this.uploading = false;
         });
+  }
+
+  activateCharts() {
+    this.charts.enabled = true;
   }
 }
