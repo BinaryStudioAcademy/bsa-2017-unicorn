@@ -190,7 +190,15 @@ export class SearchComponent implements OnInit {
     this.togglePanel = false;
     this.ratingCmp = this.convertRatingType(this.ratingCompare);
     this.selSort = this.convertSortType(this.sort);
-    this.getWorksByAdvFilters(this.category, this.subcategory, this.rawDate,
+
+    let date;
+    if(this.date){
+      date = this.date.getTime();
+    }
+    else{
+      date = -1;
+    }
+    this.getWorksByAdvFilters(this.category, this.subcategory, date,
            this.vendorName, this.ratingCmp, this.rating, this.reviewsChecked,
            this.latitude, this.longitude, this.distance,
            this.selCategories, this.selSubcategories, this.city, this.selSort);

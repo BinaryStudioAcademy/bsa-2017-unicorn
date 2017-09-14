@@ -5,7 +5,7 @@
         <div [ngSwitch]="view">
             <mwl-calendar-month-view *ngSwitchCase="'month'" (beforeViewRender)="beforeMonthViewRender($event)" [weekendDays]="weekendDays" [cellTemplate]="customCellTemplate" [viewDate]="viewDate" [events]="events" [refresh]="refresh" (eventTimesChanged)="eventTimesChanged($event)">
             </mwl-calendar-month-view>
-            <mwl-calendar-week-view *ngSwitchCase="'week'" [viewDate]="viewDate" [events]="events" [refresh]="refresh" (eventTimesChanged)="eventTimesChanged($event)">
+            <mwl-calendar-week-view *ngSwitchCase="'week'" (beforeViewRender)="beforeWeekViewRender($event)" (dayHeaderClicked)="weekDayClicked($event.day)" [weekendDays]="weekendDays" [viewDate]="viewDate" [events]="events" [refresh]="refresh" (eventTimesChanged)="eventTimesChanged($event)">
             </mwl-calendar-week-view>
         </div>
     </div>

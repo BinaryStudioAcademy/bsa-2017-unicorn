@@ -35,7 +35,7 @@
                                             <div class="field">
                                                 <div class="ui left icon input">
                                                     <i class="calendar icon"></i>
-                                                    <input class="datepicker" placeholder="RIGHT NOW" suiDatepicker [pickerUseNativeOnMobile]="false">
+                                                    <input class="datepicker" placeholder="RIGHT NOW" suiDatepicker [(ngModel)]="date" [pickerMode]="mode" [pickerFirstDayOfWeek]="firstDayOfWeek" [pickerUseNativeOnMobile]="false">
                                                 </div>
                                             </div>
                                             <div class="inline stackable fields">
@@ -143,11 +143,7 @@
                 </div>
             </div>
         </div>
-        <div id="{{performer.PerformerType}}{{performer.Id}}" 
-                class="ui segment ui grid" 
-                *ngFor="let performer of performers" 
-                (click)="selectPerformerLocation(performer.Name, performer.Location)"
-                [ngClass]="{'cell-selected': highlight(performer)}">
+        <div id="{{performer.PerformerType}}{{performer.Id}}" class="ui segment ui grid" *ngFor="let performer of performers" (click)="selectPerformerLocation(performer.Name, performer.Location)" [ngClass]="{'cell-selected': highlight(performer)}">
             <div class="row">
                 <div class="four wide column">
                     <img class="ui small fluid image" src="{{performer.Avatar}}">
@@ -170,6 +166,9 @@
                     <a routerLink="/{{performer.Link}}" class="ui active secondary button">Details</a>
                 </div>
             </div>
+        </div>
+        <div *ngIf="!searchLoading && performers.length === 0" class="ui center aligned segment">
+            No results found
         </div>
         <div *ngIf="searchLoading" class="ui active inverted dimmer" style="z-index: 0;">
             <div class="ui text loader">Loading</div>

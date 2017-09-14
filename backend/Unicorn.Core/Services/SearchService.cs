@@ -22,13 +22,83 @@ namespace Unicorn.Core.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<List<SearchWorkDTO>> GetWorksByFilters(  string category, string subcategory, int? date,
+        private DateTimeOffset ConvertUtcToDateTime(string dt)
+        {
+            if (dt != null)
+            {
+                dt = dt.Replace(" ", "");
+                if (dt != "-1")
+                {
+                    DateTimeOffset dateTime;
+                    dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
+                    dateTime = dateTime.AddMilliseconds(Double.Parse(dt)).ToLocalTime();
+                    return dateTime;
+                }
+                return DateTimeOffset.Now;
+            }
+            return DateTimeOffset.Now;
+        }
+
+        private bool IsVendorWorkingOnThisDate(long id, DateTimeOffset date)
+        {          
+            return _unitOfWork.BookRepository.Query.FirstOrDefault(x => date >= x.Date && date <= x.EndDate && id == x.Vendor.Id) != null ? true : false;
+        }
+
+        private bool IsCompanyWorkingOnThisDate(long id, DateTimeOffset date)
+        {
+            return _unitOfWork.BookRepository.Query.FirstOrDefault(x => date >= x.Date && date <= x.EndDate && id == x.Company.Id) != null ? true : false;
+        }
+
+        private bool SynchronizeWorkDateWithVendorsWorkDays(Calendar calendar, DateTimeOffset date, bool isWorkingOnThisDate)
+        {
+            if (calendar.StartDate <= date && (calendar.EndDate == null || date <= calendar.EndDate))
+            {
+                if (calendar.ExtraWorkDays.FirstOrDefault(x => x.Day == date) != null)
+                {
+                    return true;
+                }
+                if (calendar.ExtraDayOffs.FirstOrDefault(x => x.Day == date) == null)
+                {
+                    if (calendar.SeveralTaskPerDay)
+                    {
+                        if (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday)
+                        {
+                            if (calendar.WorkOnWeekend)
+                            {
+                                return true;
+                            }
+                            return false;                            
+                        }
+                        return true;                       
+                    }
+                    else
+                    {
+                        if (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday)
+                        {
+                            if (calendar.WorkOnWeekend && !isWorkingOnThisDate)
+                            {
+                                return true;
+                            }
+                            return false;
+                        }
+                        if (!isWorkingOnThisDate)
+                        {
+                            return true;
+                        }
+                        return false;
+                    }
+                }
+            }
+            return false;  
+        }
+
+        public async Task<List<SearchWorkDTO>> GetWorksByFilters(  string category, string subcategory, string date,
                                                                    string vendor, string ratingcompare, double? rating, bool? reviews,
                                                                    double? latitude, double? longitude, double? distance,
                                                                    string[] categories, string[] subcategories, string city,
                                                                    int? sort  )
         {
-
+            var dateOfWork = ConvertUtcToDateTime(date);
 
             var reviewsList = await _unitOfWork.ReviewRepository.GetAllAsync();
 
@@ -43,7 +113,9 @@ namespace Unicorn.Core.Services
                 .Include(w => w.Vendor.Person.Account.Location)
                 .ToListAsync();
 
-            var vendorsWorks = CreateVendorsWorksAdv(vendorsWorksList, reviewsList, 
+            var vendorsWorksSyncWithDate = vendorsWorksList.Where(x => SynchronizeWorkDateWithVendorsWorkDays(x.Vendor.Calendar, dateOfWork, IsVendorWorkingOnThisDate(x.Vendor.Id, dateOfWork))).ToList();
+
+            var vendorsWorks = CreateVendorsWorksAdv(vendorsWorksSyncWithDate, reviewsList, 
                 ratingcompare, rating, reviews, latitude, longitude, distance, categories, subcategories, city);
 
 
@@ -57,7 +129,9 @@ namespace Unicorn.Core.Services
                 .Include(w => w.Company.Account.Location)
                 .ToListAsync();
 
-            var companiesWorks = CreateCompaniesWorksAdv(companiesWorksList, reviewsList,
+            var companiesWorksSyncWithDate = companiesWorksList.Where(x => SynchronizeWorkDateWithVendorsWorkDays(x.Company.Calendar, dateOfWork, IsCompanyWorkingOnThisDate(x.Company.Id, dateOfWork))).ToList();
+
+            var companiesWorks = CreateCompaniesWorksAdv(companiesWorksSyncWithDate, reviewsList,
                 ratingcompare, rating, reviews, latitude, longitude, distance, categories, subcategories, city);
 
             var searchWorks = vendorsWorks
@@ -236,8 +310,10 @@ namespace Unicorn.Core.Services
             return searchWorks;
         }
 
-        public async Task<List<SearchWorkDTO>> GetWorksByBaseFilters(string category, string subcategory, int? date)
+        public async Task<List<SearchWorkDTO>> GetWorksByBaseFilters(string category, string subcategory, string date)
         {
+            var dateOfWork = ConvertUtcToDateTime(date);
+
             var reviewsList = await _unitOfWork.ReviewRepository.GetAllAsync();
 
             var vendorsWorksList = await _unitOfWork.WorkRepository
@@ -250,18 +326,22 @@ namespace Unicorn.Core.Services
                 .Include(w => w.Vendor.Person.Account.Location)
                 .ToListAsync();
 
-            var vendorsWorks = CreateVendorsWorks(vendorsWorksList, reviewsList);
+            var vendorsWorksSyncWithDate = vendorsWorksList.Where(x => SynchronizeWorkDateWithVendorsWorkDays(x.Vendor.Calendar, dateOfWork, IsVendorWorkingOnThisDate(x.Vendor.Id, dateOfWork))).ToList();
+
+            var vendorsWorks = CreateVendorsWorks(vendorsWorksSyncWithDate, reviewsList);
 
             var companiesWorksList = await _unitOfWork.WorkRepository
                 .Query
                 .Where(w => w.Company != null)
-            .Where(x => string.IsNullOrEmpty(category) || (x.Subcategory.Category.Name.Contains(category) || x.Subcategory.Category.Tags.Contains(category)))
-            .Where(x => string.IsNullOrEmpty(subcategory) || (x.Subcategory.Name.Contains(subcategory) || x.Subcategory.Tags.Contains(subcategory)))
-            .Include(w => w.Company.Account)
-            .Include(w => w.Company.Account.Location)
-            .ToListAsync();
+                .Where(x => string.IsNullOrEmpty(category) || (x.Subcategory.Category.Name.Contains(category) || x.Subcategory.Category.Tags.Contains(category)))
+                .Where(x => string.IsNullOrEmpty(subcategory) || (x.Subcategory.Name.Contains(subcategory) || x.Subcategory.Tags.Contains(subcategory)))
+                .Include(w => w.Company.Account)
+                .Include(w => w.Company.Account.Location)
+                .ToListAsync();
 
-            var companiesWorks = CreateCompaniesWorks(companiesWorksList, reviewsList);
+            var companiesWorksSyncWithDate = companiesWorksList.Where(x => SynchronizeWorkDateWithVendorsWorkDays(x.Company.Calendar, dateOfWork, IsCompanyWorkingOnThisDate(x.Company.Id, dateOfWork))).ToList();
+
+            var companiesWorks = CreateCompaniesWorks(companiesWorksSyncWithDate, reviewsList);
 
             var searchWorks = vendorsWorks
                 .Concat(companiesWorks)

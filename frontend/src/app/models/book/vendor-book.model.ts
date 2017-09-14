@@ -13,4 +13,5 @@ export class VendorBook {
 	CustomerId: number;
     Work: Work;
     Location: LocationModel;
+    MoreTasksPerDay: boolean;
 }
