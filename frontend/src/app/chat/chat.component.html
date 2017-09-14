@@ -46,9 +46,9 @@
                             {{message.Message}}
                             <div *ngIf="message.Files !== undefined && message.Files !== null && message.Files.length > 0">
                                 <span *ngFor="let file of message.Files" class="files">
-                                <a *ngIf="isImage(file.OriginalName);else fileLink" href="{{file.ServerPathName}}" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Image_upload_test.jpg"></a>
+                                <a *ngIf="isImage(file.OriginalName);else fileLink" href="api/uploadedfiles/{{file.ServerPathName}}" target="_blank"><img src="api/uploadedfiles/{{file.ServerPathName}}"></a>
                                 <ng-template #fileLink>
-                                    <a href="{{file.ServerPathName}}" download="{{file.OriginalName}}"><i class="cloud download icon"></i>{{file.OriginalName}}</a>
+                                    <a href="api/uploadedfiles/{{file.ServerPathName}}" download="{{file.OriginalName}}"><i class="cloud download icon"></i>{{file.OriginalName}}</a>
                                 </ng-template>                                
                             </span>
                             </div>
@@ -62,9 +62,9 @@
                             {{message.Message}}
                             <div *ngIf="message.Files !== undefined && message.Files !== null && message.Files.length > 0">
                                 <span *ngFor="let file of message.Files" class="files">
-                                <a *ngIf="isImage(file.OriginalName);else fileLink" href="{{file.ServerPathName}}" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Image_upload_test.jpg"></a>
+                                <a *ngIf="isImage(file.OriginalName);else fileLink" href="api/uploadedfiles/{{file.ServerPathName}}" target="_blank"><img src="api/uploadedfiles/{{file.ServerPathName}}"></a>
                                 <ng-template #fileLink>
-                                    <a href="{{file.ServerPathName}}" download="{{file.OriginalName}}"><i class="cloud download icon"></i>{{file.OriginalName}}</a>
+                                    <a href="api/uploadedfiles/{{file.ServerPathName}}" download="{{file.OriginalName}}"><i class="cloud download icon"></i>{{file.OriginalName}}</a>
                                 </ng-template>                                
                             </span>
                             </div>
