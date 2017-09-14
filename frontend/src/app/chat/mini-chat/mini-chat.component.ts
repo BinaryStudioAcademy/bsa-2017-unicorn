@@ -38,7 +38,7 @@ export class MiniChatComponent implements OnInit {
   initChat: Subscription;
   messageCreate: Subscription;
   messageRead: Subscription;
-
+  messageDelete: Subscription;
 
   constructor(private chatService: ChatService,
     private tokenHelper: TokenHelperService,
@@ -72,7 +72,17 @@ export class MiniChatComponent implements OnInit {
         }
       }
     });
-
+    this.messageDelete = this.chatEventsService.deleteMessageFromChatToMiniChatEvent$.subscribe(mes=>{
+      {
+        this.chatService.getDialog(mes.DialogId).then(res => this.openedDialogs
+          .find(x => x.Id === mes.DialogId).Messages = res.Messages);
+        if(this.dialog.Id === mes.DialogId)
+        {
+         this.chatService.getDialog(mes.DialogId).then(res => this.messages = res.Messages)
+          this.startScroll();   
+        }
+      }
+    });
     this.messageRead = this.chatEventsService.readMessageFromChatToMiniChatEvent$.subscribe(dialogId => { 
       if(this.dialog.Id === dialogId){
         this.readNotReadedMessages(this.dialog);
