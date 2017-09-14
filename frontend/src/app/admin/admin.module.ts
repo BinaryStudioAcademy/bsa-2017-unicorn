@@ -10,6 +10,7 @@ import { SuiModule } from "ng2-semantic-ui/dist";
 import { AccountService } from "../services/account.service";
 import { FeedbackComponent } from './admin/feedback/feedback.component';
 import { ReportService } from "../services/report.service";
+import { CategoryService } from "../services/category.service";
 
 @NgModule({
   imports: [
@@ -25,7 +26,8 @@ import { ReportService } from "../services/report.service";
   ],
   providers: [
     AccountService,
-    ReportService
+    ReportService,
+    CategoryService
   ]
 })
 export class AdminModule { }

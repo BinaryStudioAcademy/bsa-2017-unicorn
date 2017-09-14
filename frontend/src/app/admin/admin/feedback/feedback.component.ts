@@ -36,9 +36,9 @@ export class FeedbackComponent implements OnInit {
     this.pendingReports.push(report);
     this.reportService.deleteOffer(report.Id)
       .then(() => {
-        this.reports.splice(this.reports.findIndex(r => r.Id === report.Id));
-        this.pendingReports.splice(this.pendingReports.findIndex(r => r.Id === report.Id));
+        this.reports.splice(this.reports.findIndex(r => r.Id === report.Id), 1);
+        this.pendingReports.splice(this.pendingReports.findIndex(r => r.Id === report.Id), 1);
       })
-      .catch(err => this.pendingReports.splice(this.pendingReports.findIndex(r => r.Id === report.Id)));
+      .catch(err => this.pendingReports.splice(this.pendingReports.findIndex(r => r.Id === report.Id), 1));
   }
 }

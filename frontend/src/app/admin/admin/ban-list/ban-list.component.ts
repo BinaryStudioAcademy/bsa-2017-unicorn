@@ -42,16 +42,6 @@ export class BanListComponent implements OnInit {
         this.isLoaded = true;
       })
       .catch(err => this.isLoaded = true);
-    // this.accountService.getBanListPage(this.page, this.pageSize)
-    //   .then(p => {
-    //     this.page = p.CurrentPage;
-    //     this.pageSize = p.PageSize;
-    //     this.totalCount = p.TotalCount;
-    //     this.accounts = p.Items;
-
-    //     this.isLoaded = true;
-    //   })
-    //   .catch(err => this.isLoaded = true);
   }
 
   isAccountPending(account: AdminAccountViewModel): boolean {
@@ -64,9 +54,9 @@ export class BanListComponent implements OnInit {
     this.accountService.banAccount(account.Id)
       .then(() => {
         account.IsBanned = true;
-        this.pendingAccounts.splice(this.pendingAccounts.findIndex(a => a.Id === account.Id));
+        this.pendingAccounts.splice(this.pendingAccounts.findIndex(a => a.Id === account.Id), 1);
       })
-      .catch(err => this.pendingAccounts.splice(this.pendingAccounts.findIndex(a => a.Id === account.Id)));
+      .catch(err => this.pendingAccounts.splice(this.pendingAccounts.findIndex(a => a.Id === account.Id), 1));
   }
 
   unbanAccount(account: AdminAccountViewModel): void {
@@ -75,9 +65,9 @@ export class BanListComponent implements OnInit {
     this.accountService.unbanAccount(account.Id)
       .then(() => {
         account.IsBanned = false;
-        this.pendingAccounts.splice(this.pendingAccounts.findIndex(a => a.Id === account.Id));
+        this.pendingAccounts.splice(this.pendingAccounts.findIndex(a => a.Id === account.Id), 1);
       })
-      .catch(err => this.pendingAccounts.splice(this.pendingAccounts.findIndex(a => a.Id === account.Id)));
+      .catch(err => this.pendingAccounts.splice(this.pendingAccounts.findIndex(a => a.Id === account.Id), 1));
   }
 
 }
