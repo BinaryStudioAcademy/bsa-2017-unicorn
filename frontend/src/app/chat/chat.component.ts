@@ -10,7 +10,10 @@ import { Subscription } from "rxjs/Subscription";
 import { ChatEventsService } from "../services/events/chat-events.service";
 import { ProfileShortInfo } from "../models/profile-short-info.model";
 import { AccountService } from "../services/account.service";
-
+import { ModalTemplate, SuiActiveModal, TemplateModalConfig, ModalSize, SuiModalService } from "ng2-semantic-ui";
+export interface IDelete {
+  id: number;
+}
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
@@ -22,7 +25,9 @@ export class ChatComponent implements OnInit {
   @ViewChild('textArea')
   @ViewChild('fileInput') inputEl: ElementRef;
   private textarea: any;
-
+  @ViewChild('modal')
+  public deleteTemplate:ModalTemplate<IDelete, void, void>
+  currModal: SuiActiveModal<IDelete, {}, void>;
   ownerId: number;
   dialogs: DialogModel[];
   dialog: DialogModel;
@@ -41,13 +46,15 @@ export class ChatComponent implements OnInit {
 
   searchString: string;
   searchResults: ProfileShortInfo[];
-
+  messageToDelete;
+  dialogToDelete;
   constructor(private chatService: ChatService,
     private tokenHelper: TokenHelperService,
     private cdr: ChangeDetectorRef,
     private notificationService: NotificationService,
     private chatEventsService: ChatEventsService,
-    private accountService: AccountService) { }
+    private accountService: AccountService,
+    private modalService: SuiModalService) { }
 
   ngOnInit() {
     this.getDialogs().then(() => this.startScroll());
@@ -92,7 +99,38 @@ export class ChatComponent implements OnInit {
       this.scrollMessages();
     }
   }
+  deleteMessage()
+  {
+   this.chatService.deleteMessage(this.messageToDelete.MessageId).then(res=>this.getDialog());
+   this.currModal.deny(undefined);
+   this.startScroll();
+   
+  }
+  deleteDialog()
+  {
+    this.chatService.deleteDialog(this.dialogToDelete.Id).then(res=>this.getDialogs());
+    this.currModal.deny(undefined);
+    
+  }
+  deleteDialogModal(dialog: DialogModel)
+  {
+    this.dialogToDelete = dialog;
+    this.messageToDelete = undefined;
+    const config = new TemplateModalConfig<IDelete, void, void>(this.deleteTemplate);
+    config.isInverted = true;
+    config.size = ModalSize.Tiny;
+    this.currModal = this.modalService.open(config);
+  }
 
+  deleteMessageModal(message: MessageModel)
+  {
+    this.dialogToDelete = undefined;
+    this.messageToDelete = message;
+    const config = new TemplateModalConfig<IDelete, void, void>(this.deleteTemplate);
+    config.isInverted = true;
+    config.size = ModalSize.Tiny;
+    this.currModal = this.modalService.open(config);
+  }
   getDialogs() {
     this.ownerId = +this.tokenHelper.getClaimByName('accountid');
     return this.chatService.getDialogs(this.ownerId).then(res => {
@@ -157,10 +195,11 @@ export class ChatComponent implements OnInit {
   }
 
   getDialog() {
-    this.messages = undefined;
+    //this.messages = undefined;
     return this.chatService.getDialog(this.selectedId).then(res => {
       this.dialog = res;
       this.messages = this.dialog.Messages;
+      this.startScroll();
     });
   }
 
@@ -224,6 +263,7 @@ export class ChatComponent implements OnInit {
         });
     } else {
       let message = {
+        MessageId: null,
         DialogId: this.selectedId,
         IsReaded: false,
         OwnerId: this.ownerId,
@@ -235,7 +275,12 @@ export class ChatComponent implements OnInit {
       this.messages.push(message);
       this.chatEventsService.messageCreateFromChatToMiniChat(message);
       this.startScroll();
-      this.chatService.addMessage(message);
+      this.chatService.addMessage(message).then(x=>{
+            this.chatService.getDialog(this.selectedId).then(res => {
+            this.dialog = res;
+            this.messages = this.dialog.Messages;                
+          });   
+        });
       this.files = null;
 
       if(this.writtenMessage !== undefined) {

@@ -250,6 +250,7 @@ export class MiniChatComponent implements OnInit {
   //send message
   addMessage(){     
     let message = {
+      MessageId: null,
       DialogId: this.dialog.Id,
       IsReaded: false, 
       OwnerId: this.ownerId,
