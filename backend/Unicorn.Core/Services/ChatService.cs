@@ -71,7 +71,12 @@ namespace Unicorn.Core.Services
                 Date = DateTime.Now,
                 Dialog = dialog,
                 Owner = owner,
-                Message = msg.Message
+                Message = msg.Message,
+                Files = msg.Files?.Select(x => new ChatFile
+                {
+                    OriginalName = x.OriginalName,
+                    ServerPathName = x.ServerPathName
+                }).ToList()
             };
 
             _unitOfWork.ChatMessageRepository.Create(cmsg);
@@ -163,7 +168,13 @@ namespace Unicorn.Core.Services
                     Date = x.Date,
                     IsReaded = x.IsReaded,
                     Message = x.Message,
-                    OwnerId = x.Owner.Id
+                    OwnerId = x.Owner.Id,
+                    Files = x.Files.Select(f => new ChatFileDTO
+                    {
+                        Id = f.Id,
+                        OriginalName = f.OriginalName,
+                        ServerPathName = f.ServerPathName
+                    }).ToList()
                 }).ToList()
             };
 
@@ -207,13 +218,18 @@ namespace Unicorn.Core.Services
                     Date = x.Date,
                     IsReaded = x.IsReaded,
                     Message = x.Message,
-                    OwnerId = x.Owner.Id
+                    OwnerId = x.Owner.Id,
+                    Files = x.Files.Select(f => new ChatFileDTO
+                    {
+                        Id = f.Id,
+                        OriginalName = f.OriginalName,
+                        ServerPathName = f.ServerPathName
+                    }).ToList()
                 }).ToList()
             };
 
             return dl;
         }
-
 
 
         public async Task<IEnumerable<ChatDialogDTO>> GetAllDialogs(long accountId)
@@ -257,7 +273,7 @@ namespace Unicorn.Core.Services
             var res = await _unitOfWork.ChatDialogRepository.Query
                 .Include(x => x.Participant1)
                 .Include(x => x.Participant2)
-                .Include(x => x.Messages)
+                .Include(x => x.Messages)                
                 .FirstOrDefaultAsync(
                     x => (x.Participant1.Id == participantOneId && x.Participant2.Id == participantTwoId) ||
                          (x.Participant1.Id == participantTwoId && x.Participant2.Id == participantOneId));
@@ -301,7 +317,13 @@ namespace Unicorn.Core.Services
                     Date = x.Date,
                     IsReaded = x.IsReaded,
                     Message = x.Message,
-                    OwnerId = x.Owner.Id
+                    OwnerId = x.Owner.Id,
+                    Files = x.Files.Select(f => new ChatFileDTO
+                    {
+                        Id = f.Id,
+                        OriginalName = f.OriginalName,
+                        ServerPathName = f.ServerPathName
+                    }).ToList()
                 }).ToList()
             };
 

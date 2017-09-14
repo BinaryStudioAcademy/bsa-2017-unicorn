@@ -59,56 +59,63 @@ export class DataService {
 
   getFullRequest<T>(url: string): Promise<T> {
     return this.http
-      .get<T>(this.buildUrl(url), {observe: 'response'})
+      .get<T>(this.buildUrl(url), { observe: 'response' })
+      .toPromise()
+      .catch(this.handleError);
+  }
+
+  postClearRequest<T>(url: string, payload: Object): Promise<T> {
+    return this.http
+      .post<T>(this.buildUrl(url), payload)
       .toPromise()
       .catch(this.handleError);
   }
 
   postRequest<T>(url: string, payload: Object): Promise<T> {
     return this.http
-      .post<T>(this.buildUrl(url), this.prepareData(payload), {headers: this.getHeaders()})
+      .post<T>(this.buildUrl(url), this.prepareData(payload), { headers: this.getHeaders() })
       .toPromise()
       .catch(this.handleError);
   }
 
   postFullRequest<T>(url: string, payload: Object): Promise<T> {
     return this.http
-      .post<T>(this.buildUrl(url), this.prepareData(payload), {headers: this.getHeaders(), observe: 'response'})
+      .post<T>(this.buildUrl(url), this.prepareData(payload), { headers: this.getHeaders(), observe: 'response' })
       .toPromise()
       .catch(this.handleError);
   }
 
-  putRequest<T>(url: string, payload: Object): Promise<T> {    
+  putRequest<T>(url: string, payload: Object): Promise<T> {
     return this.http
-      .put<T>(this.buildUrl(url), this.prepareData(payload), {headers: this.getHeaders()})
+      .put<T>(this.buildUrl(url), this.prepareData(payload), { headers: this.getHeaders() })
       .toPromise()
       .catch(this.handleError);
   }
 
   putFullRequest<T>(url: string, payload: Object): Promise<T> {
     return this.http
-      .put<T>(this.buildUrl(url), this.prepareData(payload), {headers: this.getHeaders(), observe: 'response'})
+      .put<T>(this.buildUrl(url), this.prepareData(payload), { headers: this.getHeaders(), observe: 'response' })
       .toPromise()
       .catch(this.handleError);
   }
 
   deleteRequest<T>(url: string): Promise<T> {
     return this.http
-      .delete<T>(this.buildUrl(url), {headers: this.getHeaders()})
+      .delete<T>(this.buildUrl(url), { headers: this.getHeaders() })
       .toPromise()
       .catch(this.handleError);
   }
 
   deleteFullRequest<T>(url: string, payload: Object): Promise<T> {
     return this.http
-      .delete<T>(this.buildUrl(url), {headers: this.getHeaders(), observe: 'response'})
+      .delete<T>(this.buildUrl(url), { headers: this.getHeaders(), observe: 'response' })
       .toPromise()
       .catch(this.handleError);
   }
 
   patchRequest<T>(url: string, payload: Object): Promise<T> {
     return this.http
-      .patch<T>(this.buildUrl(url), this.prepareData(payload), {headers: this.getHeaders()})
+      .patch<T>(this.buildUrl(url), this.prepareData(payload), { headers: this.getHeaders() })
       .toPromise()
       .catch(this.handleError);
   }
