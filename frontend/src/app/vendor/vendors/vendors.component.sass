@@ -44,7 +44,7 @@
 .map-container 
     position: fixed
     right: 10px
-    top: calc(20px + #{$header-height})
+    top: calc(15px + #{$header-height})
     width: 48% 
     height: calc(100vh - 40px - #{$header-height} - #{$footer-height} - #{$separator-height} - #{$separator-margin})    
     background-color: gray
@@ -160,4 +160,49 @@ h5
     border: 1px solid $primary-color;
     border-radius: 7px;
     background-color: #fef6f6;
+
+
+// responsive
+
+.ui.grid.container.segment.full-width
+    width: 99% !important
+    margin-left: 0 !important
+
+.post-filters-div
+    width: 100%
+    display: flex
+    justify-content: space-between
+
+.add-filter-container
+    width: 100%
+    display: flex
+
+.add-filter-container-column
+    width: 100%
+    padding-left: 2.5%
+    padding-right: 2.5%
+
+#main
+    width: 52%
+
+@media only screen and (max-width: 600px)
+    .add-filter-container
+        flex-wrap: wrap
+
+    .add-filter-container-column
+        padding-top: 15px
+
+@media only screen and (max-width: 1000px)
+    .map-container
+        display: none
+
+    #main
+        width: 100%
+
+@media only screen and (max-width: 1300px) and (min-width: 1001px)
+    .map-container
+        width: 34%
+
+    #main
+        width: 66%
         

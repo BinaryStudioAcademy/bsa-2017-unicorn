@@ -57,6 +57,7 @@
     <Compile Include="DTOs\Chart\LineChartDTO.cs" />
     <Compile Include="DTOs\Chart\PieChartDTO.cs" />
     <Compile Include="DTOs\Chat\ChatDialogDTO.cs" />
+    <Compile Include="DTOs\Chat\ChatFileDTO.cs" />
     <Compile Include="DTOs\Chat\ChatMessageDTO.cs" />
     <Compile Include="DTOs\CompanyDTO.cs" />
     <Compile Include="DTOs\CompanyPage\CompanyBook.cs" />
@@ -96,6 +97,7 @@
     <Compile Include="DTOs\Register\CompanyRegisterDTO.cs" />
     <Compile Include="DTOs\Register\CustomerRegisterDTO.cs" />
     <Compile Include="DTOs\Register\VendorRegisterDTO.cs" />
+    <Compile Include="DTOs\ReportDTO.cs" />
     <Compile Include="DTOs\Review\ReviewDTO.cs" />
     <Compile Include="DTOs\Review\ReviewSenderDTO.cs" />
     <Compile Include="DTOs\Review\ShortReviewDTO.cs" />
