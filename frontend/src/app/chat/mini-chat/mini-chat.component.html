@@ -22,6 +22,14 @@
                         </div>
                         <div class="concrete-message me">
                             {{message.Message}}
+                            <div *ngIf="message.Files !== undefined && message.Files !== null && message.Files.length > 0">
+                                <span *ngFor="let file of message.Files" class="files my">
+                                <a *ngIf="isImage(file.OriginalName);else fileLink" href="api/uploadedfiles/{{file.ServerPathName}}" target="_blank"><img src="api/uploadedfiles/{{file.ServerPathName}}"></a>
+                                <ng-template #fileLink>
+                                    <a href="api/uploadedfiles/{{file.ServerPathName}}" download="{{file.OriginalName}}"><i class="cloud download icon"></i>{{file.OriginalName}}</a>
+                                </ng-template>
+                            </span>
+                            </div>
                         </div>
                     </div>
                     <div class="message" *ngIf="message.OwnerId !== ownerId">
@@ -30,6 +38,14 @@
                         </div>
                         <div class="concrete-message him">
                             {{message.Message}}
+                            <div *ngIf="message.Files !== undefined && message.Files !== null && message.Files.length > 0">
+                                <span *ngFor="let file of message.Files" class="files him">
+                                <a *ngIf="isImage(file.OriginalName);else fileLink" href="api/uploadedfiles/{{file.ServerPathName}}" target="_blank"><img src="api/uploadedfiles/{{file.ServerPathName}}"></a>
+                                <ng-template #fileLink>
+                                    <a href="api/uploadedfiles/{{file.ServerPathName}}" download="{{file.OriginalName}}"><i class="cloud download icon"></i>{{file.OriginalName}}</a>
+                                </ng-template>                                
+                            </span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -40,8 +56,13 @@
         </div>
         <div class="ui form" *ngIf="dialog !== undefined && messages !== undefined" [ngClass]="{'disabled-div':noMessages}">
             <div class="field" style="display: flex;">
-                <textarea #textArea (keydown)="onChange($event)" (click)="readNotReadedMessages(dialog)" [ngStyle]="{'height.px': inputHeight}" class="prompt" type="text" placeholder="Type here..." [(ngModel)]="writtenMessage" style="display:inline">                        
+                <textarea #textArea (keydown)="onChange($event)" (click)="readNotReadedMessages(dialog)" [ngStyle]="{'height.px': inputHeight}"
+                    class="prompt" type="text" placeholder="Type here..." [(ngModel)]="writtenMessage" style="display:inline">                        
                         </textarea>
+                <input class="inputfile" type="file" name="attachfile" id="attachfile" (change)="uploadFile()" multiple="true" #fileInput>
+                <label class="ui icon input" for="attachfile">
+                            <i class="attach outline link icon"></i>
+                        </label>
                 <div class="ui icon input">
                     <i class="talk outline link icon" (click)="onWrite()"></i>
                 </div>

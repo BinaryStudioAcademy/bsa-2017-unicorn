@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Unicorn.Shared.DTOs.Chat
 {
@@ -9,5 +10,6 @@ namespace Unicorn.Shared.DTOs.Chat
         public DateTimeOffset Date { get; set; }
         public string Message { get; set; }
         public long OwnerId { get; set; }
+        public ICollection<ChatFileDTO> Files;
     }
 }

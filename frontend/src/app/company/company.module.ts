@@ -1,8 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule } from '@angular/forms';
 import {SuiModule} from 'ng2-semantic-ui';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { BookModule } from '../book/book.module';
 import { SignBlockModule } from '../sign-block/sign-block.module';
 
@@ -19,6 +21,7 @@ import { CompanyEditComponent } from './company-edit/company-edit.component';
 import { DataService } from "../services/data.service";
 import { PhotoService } from '../services/photo.service';
 import { OfferService } from '../services/offer.service';
+import { ChartService } from '../services/charts/chart.service';
 import { MapModule } from "../map/map.module";
 import { CompanyMainInformationComponent } from './company-edit/company-main-information/company-main-information.component';
 import { CompanyMessagesComponent } from './company-edit/company-messages/company-messages.component';
@@ -35,6 +38,8 @@ import { PortfolioComponent } from './company-details/portfolio/portfolio.compon
 import { CompanyPortfolioComponent } from './company-edit/company-portfolio/company-portfolio.component';
 import { NguiMapModule } from "@ngui/map/dist";
 import { OwnCalendarModule } from "../calendar/calendar.module";
+import { CompanyCalendarComponent } from './company-edit/company-calendar/company-calendar.component';
+import { CompanyChartsComponent } from './company-edit/company-charts/company-charts.component';
 
 
 @NgModule({
@@ -43,7 +48,9 @@ import { OwnCalendarModule } from "../calendar/calendar.module";
     CompanyRoutingModule,
     FormsModule,
     BrowserModule,
+    BrowserAnimationsModule,
     SuiModule,
+    NgxChartsModule,
     BookModule,
     SignBlockModule,
     MapModule,
@@ -72,14 +79,17 @@ import { OwnCalendarModule } from "../calendar/calendar.module";
     CompanyWorksComponent,
     CompanyContactsComponent,
     PortfolioComponent,
-    CompanyPortfolioComponent
+    CompanyPortfolioComponent,
+    CompanyCalendarComponent,
+    CompanyChartsComponent
     
   ],
   providers: [
     DataService,
     PhotoService,
     CompanyService,
-    OfferService
+    OfferService,
+    ChartService
   ]
 })
 export class CompanyModule { }

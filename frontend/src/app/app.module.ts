@@ -11,6 +11,7 @@ import { AuthenticationLoginService } from './services/auth/authenticationlogin.
 import { AuthenticationEventService } from './services/events/authenticationevent.service';
 import { ChatEventsService } from "./services/events/chat-events.service";
 import { MenuEventsService } from "./services/events/menu-events.service";
+import { CalendarEventsService } from "./services/events/calendar-events.service";
 
 import { HelperService } from './services/helper/helper.service';
 import { ModalService } from "./services/modal/modal.service";
@@ -34,6 +35,7 @@ import { IndexModule } from './index/index.module';
 import { SearchModule } from './search/search.module';
 import { PipeModule } from "./pipe/pipe.module";
 import { MomentModule } from 'angular2-moment';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { SignalR, SignalRConnection, SignalRModule, SignalRConfiguration } from 'ng2-signalr';
 import { SuiModule } from 'ng2-semantic-ui';
@@ -93,7 +95,6 @@ export function getDefaultSignalRConfig(): SignalRConfiguration {
     CompanyModule,
     DashboardModule,
     DbModule,
-    NotFoundModule,
     RegisterModule,
     UserModule,
     VendorModule,
@@ -104,13 +105,16 @@ export function getDefaultSignalRConfig(): SignalRConfiguration {
     PipeModule,
     ClickOutsideModule,
     AdminModule,
-    IndexModule // Must be the last module
+    FormsModule,
+    IndexModule,
+    NotFoundModule // Must be the last module
   ],
   providers: [
     AuthenticationLoginService,
     AuthenticationEventService,
     ChatEventsService,
     MenuEventsService,
+    CalendarEventsService,
     CalendarService,
     HelperService,
     TokenHelperService,

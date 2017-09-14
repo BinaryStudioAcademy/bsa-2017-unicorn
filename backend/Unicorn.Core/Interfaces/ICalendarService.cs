@@ -7,7 +7,6 @@ namespace Unicorn.Core.Interfaces
     {
         Task<CalendarDTO> CreateCalendar(long accountId);
         Task SaveCalendar(CalendarDTO calendar);
-        Task<CalendarDTO> GetCalendarById(long calendarId);
         Task<CalendarDTO> GetCalendarByAccountId(long accountId);
     }
 }

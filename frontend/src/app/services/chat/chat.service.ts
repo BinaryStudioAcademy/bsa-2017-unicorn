@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { DataService } from "../data.service";
 import { DialogModel } from "../../models/chat/dialog.model";
 import { MessageModel } from "../../models/chat/message.model";
+import { ChatFile } from "../../models/chat/chat-file";
 
 @Injectable()
 export class ChatService {
@@ -26,12 +27,15 @@ export class ChatService {
     return this.dataService.getRequest("chat/dialog/find/" + participantOneId + "/" + participantTwoId);  
   }
 
-
   addMessage(message: MessageModel):Promise<MessageModel>{
     return this.dataService.postRequest("chat/send", message);
   }
   updateMessages(dialogId: number, ownerId: number):Promise<MessageModel>{
     return this.dataService.postRequest("chat/messages/update/"+ dialogId, ownerId);
+  }
+
+  uploadFiles(formDataFiles: any) {    
+    return this.dataService.postClearRequest('chat/upload', formDataFiles);    
   }
 
 }

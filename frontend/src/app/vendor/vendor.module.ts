@@ -1,8 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { SuiModule } from 'ng2-semantic-ui';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { MdlModule } from '@angular-mdl/core';
 import { environment } from '../../environments/environment';
 import { ClickOutsideModule } from 'ng-click-outside';
@@ -27,6 +29,7 @@ import { VendorEditInfoComponent } from './vendor-edit/vendor-edit-info/vendor-e
 import { VendorEditOrdersComponent } from './vendor-edit/vendor-edit-orders/vendor-edit-orders.component';
 
 import { PhotoService } from '../services/photo.service';
+import { ChartService } from '../services/charts/chart.service';
 import { VendorService } from '../services/vendor.service';
 import { ReviewService } from '../services/review.service';
 import { DataService } from "../services/data.service";
@@ -42,6 +45,8 @@ import { NguiMapModule } from "@ngui/map/dist";
 import { ChatModule } from "../chat/chat.module";
 import { VendorEditMessagesComponent } from './vendor-edit/vendor-edit-messages/vendor-edit-messages.component';
 import { OwnCalendarModule } from "../calendar/calendar.module";
+import { VendorEditChartsComponent } from './vendor-edit/vendor-edit-charts/vendor-edit-charts.component';
+import { VendorEditCalendarComponent } from './vendor-edit/vendor-edit-calendar/vendor-edit-calendar.component';
 
 
 @NgModule({
@@ -52,6 +57,8 @@ import { OwnCalendarModule } from "../calendar/calendar.module";
     }),
     VendorRoutingModule,
     FormsModule,
+    BrowserAnimationsModule,
+    NgxChartsModule,
     SuiModule,
     BookModule,
     MapModule,
@@ -81,10 +88,13 @@ import { OwnCalendarModule } from "../calendar/calendar.module";
     VendorEditPortfolioComponent,
     VendorEditWorksComponent,
     VendorEditContactsComponent,
-    VendorEditMessagesComponent
+    VendorEditMessagesComponent,
+    VendorEditChartsComponent,
+    VendorEditCalendarComponent
   ],
   providers: [
     DataService,
+    ChartService,
     VendorService,
     LocationService,
     ReviewService,

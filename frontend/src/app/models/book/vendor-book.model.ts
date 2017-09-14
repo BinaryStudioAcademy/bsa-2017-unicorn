@@ -8,7 +8,8 @@ export class VendorBook {
     EndDate: Date;
 	Status: BookStatus;
     Description: string;
-	Customer: string;
+    Customer: string;
+    CustomerPhone: string;
 	CustomerId: number;
     Work: Work;
     Location: LocationModel;

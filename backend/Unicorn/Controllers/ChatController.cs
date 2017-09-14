@@ -1,9 +1,14 @@
-﻿using System.Net;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using Unicorn.Core.Interfaces;
+using Unicorn.Providers;
 using Unicorn.Shared.DTOs.Chat;
 
 namespace Unicorn.Controllers
@@ -120,6 +125,45 @@ namespace Unicorn.Controllers
             catch
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
+        }
+
+        [HttpPost]
+        [Route("upload")]
+        public async Task<HttpResponseMessage> UploadFileAsync()
+        {
+            // Check if the request contains multipart/form-data.
+            if (!Request.Content.IsMimeMultipartContent())
+            {
+                throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
+            }
+
+            string root = HttpContext.Current.Server.MapPath("~/uploadedfiles");
+            var provider = new CustomMultipartFormDataStreamProvider(root);
+            List<ChatFileDTO> uploadedFiles = new List<ChatFileDTO>();
+
+            try
+            {
+                // Read the form data.
+                await Request.Content.ReadAsMultipartAsync(provider);
+
+                foreach (MultipartFileData file in provider.FileData)
+                {
+                    string originalName = provider.GetOriginalName(file.Headers);
+                    string serverName = Path.GetFileName(file.LocalFileName);
+
+                    uploadedFiles.Add(new ChatFileDTO
+                    {
+                        OriginalName = originalName,
+                        ServerPathName = serverName
+                    });
+
+                }
+                return Request.CreateResponse(HttpStatusCode.OK, uploadedFiles);
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e);
             }
         }
     }

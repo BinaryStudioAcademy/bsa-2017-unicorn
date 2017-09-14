@@ -1,0 +1,153 @@
+<div id="charts-main" *ngIf="analytics && enabled">
+  <div class="right-align">
+    <sui-select class="selection"
+      name="page" 
+      [(ngModel)]="pageSelected">
+      <sui-select-option class="select-option" 
+        value="Company analytics" (click)="isCompanyPage = true"></sui-select-option>
+      <sui-select-option class="select-option" 
+        value="Vendors analytics" (click)="isCompanyPage = false"></sui-select-option>
+    </sui-select>
+  </div>
+  <div class="ui divider" *ngIf="!isCompanyPage"></div>
+  <div id="company-page" *ngIf="isCompanyPage">
+    <h4 align="center">Books accepted</h4>
+    <div class="chart-wrap">
+      <div class="chart-cl">
+        <ngx-charts-line-chart
+        [yAxisTickFormatting]="formatYAxis"
+        [view]="view"
+        [scheme]="colorScheme"
+        [results]="booksAccepted"
+        [gradient]="gradient"
+        [xAxis]="showXAxis"
+        [yAxis]="showYAxis"
+        [legend]="showLegend"
+        [showXAxisLabel]="showXAxisLabel"
+        [showYAxisLabel]="showYAxisLabel"
+        [xAxisLabel]="xAxisLabel"
+        [yAxisLabel]="yAxisLabel"
+        [autoScale]="autoScale">
+      </ngx-charts-line-chart>
+      </div>
+    </div>
+    <h4 align="center">Books declined</h4>
+    <div class="chart-wrap">
+      <div class="chart-cl">
+        <ngx-charts-line-chart
+        [yAxisTickFormatting]="formatYAxis"
+        [view]="view"
+        [scheme]="colorScheme2"
+        [results]="booksDeclined"
+        [gradient]="gradient"
+        [xAxis]="showXAxis"
+        [yAxis]="showYAxis"
+        [legend]="showLegend"
+        [showXAxisLabel]="showXAxisLabel"
+        [showYAxisLabel]="showYAxisLabel"
+        [xAxisLabel]="xAxisLabel"
+        [yAxisLabel]="yAxisLabel2"
+        [autoScale]="autoScale">
+        </ngx-charts-line-chart>
+      </div>
+    </div>
+    <h4 align="center">Works</h4>
+    <div class="work-form">
+      <div>
+        <div class="field right-align">
+          <sui-select class="selection"
+            placeholder="CALCULATE BY"
+            name="chart-select"
+            (selectedOptionChange)="onTypeSelect()"
+            [(ngModel)]="selectedType">
+            <sui-select-option class="select-option" 
+              *ngFor="let option of workOptions" 
+              [value]="option.value">
+            </sui-select-option>
+          </sui-select>
+        </div>
+      </div>
+    </div>
+    <div class="chart-work">
+      <div class="chart-cl">
+        <ngx-charts-bar-vertical
+          [view]="viewPie"
+          [scheme]="colorSchemeBar"
+          [results]="workData"
+          [gradient]="gradient"
+          [xAxis]="showXAxis"
+          [yAxis]="showYAxis"
+          [legend]="showLegend"
+          [yAxisTickFormatting]="formatYAxis"
+          [showXAxisLabel]="showXAxisLabel"
+          [showYAxisLabel]="showYAxisLabel"
+          [xAxisLabel]="xAxisLabel"
+          [yAxisLabel]="yAxisLabel">
+        </ngx-charts-bar-vertical>
+      </div>
+      <div class="chart-cl">
+          <ngx-charts-pie-chart
+          [view]="viewPie"
+          [scheme]="colorSchemePie"
+          [results]="workData"
+          [legend]="showLegendPie"
+          [explodeSlices]="explodeSlices"
+          [labels]="showLabels"
+          [doughnut]="doughnut"
+          [gradient]="gradient">
+        </ngx-charts-pie-chart>
+      </div>
+    </div>
+  </div>
+  <div id="vedor-page" *ngIf="!isCompanyPage">
+      <div class="work-form">
+        <div>
+          <div class="field right-align">
+            <sui-select class="selection"
+              placeholder="CALCULATE BY"
+              name="chart-select"
+              (selectedOptionChange)="onVendorOptionSelect()"
+              [(ngModel)]="selectedVendorOpt">
+              <sui-select-option class="select-option" 
+                *ngFor="let option of vendorRateOptions" 
+                [value]="option.value">
+              </sui-select-option>
+            </sui-select>
+          </div>
+        </div>
+      </div>
+      <div class="chart-work">
+        <div class="chart-cl">
+          <ngx-charts-bar-vertical
+            [yAxisTickFormatting]="formatYAxis"
+            [view]="viewPie"
+            [scheme]="colorSchemeBar"
+            [results]="vendorData"
+            [gradient]="gradient"
+            [xAxis]="showXAxis"
+            [yAxis]="showYAxis"
+            [legend]="showLegend"
+            [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel"
+            [xAxisLabel]="xAxisLabel"
+            [yAxisLabel]="yAxisLabel">
+          </ngx-charts-bar-vertical>
+        </div>
+        <div class="chart-cl">
+            <ngx-charts-pie-chart
+            [view]="viewPie"
+            [scheme]="colorSchemePie"
+            [results]="vendorData"
+            [legend]="showLegendPie"
+            [explodeSlices]="explodeSlices"
+            [labels]="showLabels"
+            [doughnut]="doughnut"
+            [gradient]="gradient">
+          </ngx-charts-pie-chart>
+        </div>
+      </div>
+  </div>
+</div>
+<div *ngIf="analytics === undefined" class="ui active inverted dimmer">
+    <div class="ui text loader">Loading</div>
+</div>

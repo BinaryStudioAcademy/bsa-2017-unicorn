@@ -174,7 +174,7 @@
         <div *ngIf="searchLoading" class="ui active inverted dimmer" style="z-index: 0;">
             <div class="ui text loader">Loading</div>
         </div>
-        <div *ngIf="totalCount > pageSize" class="flex-centered" id="paging">
+        <div *ngIf="totalCount > getPageSize()" class="flex-centered" id="paging">
             <sui-pagination [collectionSize]="totalCount" [pageSize]="pageSize" [maxSize]="maxSize" [hasEllipses]="hasEllipses" [(page)]="selectedPage" (pageChange)="search()">
             </sui-pagination>
         </div>

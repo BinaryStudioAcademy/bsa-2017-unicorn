@@ -43,11 +43,11 @@ export class ModalService {
     myReader.readAsDataURL(file);
   }
 
-  public openModal(modalTemplate: ModalTemplate<void, {}, void>): SuiActiveModal<void, {}, void> {
+  public openModal(modalTemplate: ModalTemplate<void, {}, void>, size = ModalSize.Normal): SuiActiveModal<void, {}, void> {
     const config = new TemplateModalConfig<void, {}, void>(modalTemplate);
     //config.closeResult = "closed!";
 
-    config.size = ModalSize.Normal;
+    config.size = size;
     config.isInverted = true;
     //config.mustScroll = true;
     let that = this;

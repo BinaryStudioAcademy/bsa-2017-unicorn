@@ -18,6 +18,7 @@ namespace Unicorn.DataAccess.Repositories.UnitOfWork
         private IGenericRepository<Company> companyRepository;
         private IGenericRepository<Customer> customerRepository;
         private IGenericRepository<ChatDialog> chatDialogRepository;
+        private IGenericRepository<ChatFile> chatFileRepository;
         private IGenericRepository<ChatMessage> chatMessageRepository;
         private IGenericRepository<ExtraDay> extraDayRepository;
         private IGenericRepository<History> historyRepository;
@@ -36,6 +37,7 @@ namespace Unicorn.DataAccess.Repositories.UnitOfWork
         private IGenericRepository<Rating> ratingRepository;
         private IGenericRepository<Notification> notificationRepository;
         private IGenericRepository<Offer> offerRepository;
+        private IGenericRepository<Report> reportRepository;
 
         public UnitOfWork(AppContext context, IRepositoryFactory factory)
         {
@@ -104,6 +106,15 @@ namespace Unicorn.DataAccess.Repositories.UnitOfWork
             {
                 return chatDialogRepository ??
                   (chatDialogRepository = factory.CreateRepository<ChatDialog>(context));
+            }
+        }
+
+        public IGenericRepository<ChatFile> ChatFileRepository
+        {
+            get
+            {
+                return chatFileRepository ??
+                  (chatFileRepository = factory.CreateRepository<ChatFile>(context));
             }
         }
 
@@ -266,6 +277,15 @@ namespace Unicorn.DataAccess.Repositories.UnitOfWork
             {
                 return offerRepository ??
                     (offerRepository = factory.CreateRepository<Offer>(context));
+            }
+        }
+
+        public IGenericRepository<Report> ReportRepository
+        {
+            get
+            {
+                return reportRepository ??
+                    (reportRepository = factory.CreateRepository<Report>(context));
             }
         }
 

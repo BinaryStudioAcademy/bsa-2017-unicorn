@@ -9,7 +9,7 @@ namespace Unicorn.DataAccess.Entities
 
         public bool IsDeleted { get; set; }
 
-        public DateTime Day { get; set; }
+        public DateTimeOffset Day { get; set; }
 
         public bool DayOff { get; set; }
 

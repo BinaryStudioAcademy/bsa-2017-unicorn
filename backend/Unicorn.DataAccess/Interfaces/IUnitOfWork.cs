@@ -13,6 +13,7 @@ namespace Unicorn.DataAccess.Interfaces
         IGenericRepository<Company> CompanyRepository { get; }
         IGenericRepository<Customer> CustomerRepository { get; }
         IGenericRepository<ChatDialog> ChatDialogRepository { get; }
+        IGenericRepository<ChatFile> ChatFileRepository { get; }
         IGenericRepository<ChatMessage> ChatMessageRepository { get; }
         IGenericRepository<ExtraDay> ExtraDayRepository { get; }
         IGenericRepository<History> HistoryRepository { get; }
@@ -31,6 +32,7 @@ namespace Unicorn.DataAccess.Interfaces
         IGenericRepository<Rating> RatingRepository { get; }
         IGenericRepository<Notification> NotificationRepository { get; }
         IGenericRepository<Offer> OfferRepository { get; }
+        IGenericRepository<Report> ReportRepository { get; }
         Task SaveAsync();
     }
 }

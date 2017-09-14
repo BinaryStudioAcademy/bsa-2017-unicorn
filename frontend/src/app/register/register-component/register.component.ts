@@ -17,7 +17,7 @@ import { LocationModel } from "../../models/location.model";
 export class RegisterModal extends ComponentModalConfig<void> {
   constructor() {
     super(RegisterComponent);
-    this.size = ModalSize.Small;
+    this.size = "small";
     this.isInverted = true;
   }
 }

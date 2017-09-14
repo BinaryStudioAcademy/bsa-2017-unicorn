@@ -1,128 +1,209 @@
-import {
-  Component,
-  ChangeDetectionStrategy,
-  ViewChild,
-  TemplateRef,
-  OnInit,
-  Input
-} from '@angular/core';
-import {
-  startOfDay,
-  endOfDay,
-  subDays,
-  addDays,
-  endOfMonth,
-  isSameDay,
-  isSameMonth,
-  addHours
-} from 'date-fns';
+import { Component, ViewChild, TemplateRef, OnInit, Input } from '@angular/core';
+import { startOfDay, endOfDay, subDays, addDays, endOfMonth, isSameDay, isSameMonth, addHours } from 'date-fns';
 import { Subject } from 'rxjs/Subject';
-import {
-  CalendarEvent,
-  CalendarEventAction,
-  CalendarEventTimesChangedEvent
-} from 'angular-calendar';
+import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarMonthViewDay } from 'angular-calendar';
 import { CalendarModel } from "../models/calendar/calendar";
 import { TokenHelperService } from "../services/helper/tokenhelper.service";
 import { CalendarService } from "../services/calendar-service";
+import { SuiModalService, ModalTemplate, TemplateModalConfig, ModalSize, SuiActiveModal } from "ng2-semantic-ui";
+import { VendorBook } from "../models/book/vendor-book.model";
+import { BookStatus } from "../models/book/book.model";
+import { CalendarEventsService } from "../services/events/calendar-events.service";
+import { Subscription } from "rxjs/Subscription";
 
-const colors: any = {
-  red: {
-    primary: '#ad2121',
-    secondary: '#FAE3E3'
-  },
+export interface IDayContext {
+  date: Date,
+  events: CalendarEvent[],
+  day: any
+}
+
+export interface ISettingsContext {
+  startDate: Date,
+  endDate: Date,
+  workOnWeekend: boolean,
+  severalTasksPerDay: boolean
+}
+
+const colors: any = { 
   blue: {
     primary: '#1e90ff',
     secondary: '#D1E8FF'
-  },
-  yellow: {
-    primary: '#e3bc08',
-    secondary: '#FDF1BA'
   }
 };
 
 @Component({
   selector: 'app-calendar',
-  templateUrl: './calendar.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  templateUrl: './calendar.component.html',  
   styleUrls: ['./calendar.component.sass']
 })
 export class CalendarComponent implements OnInit {
+  @ViewChild('dayModalTemplate')
+  public dayModalTemplate:ModalTemplate<IDayContext, void, void>
 
-@Input()
-accountId: number;
+  @ViewChild('settingsModalTemplate')
+  public settingsModalTemplate:ModalTemplate<ISettingsContext, void, void>
 
-calendar: CalendarModel;
+  private activeModal: SuiActiveModal<IDayContext, {}, void>;
 
+  @Input()
+  accountId: number;
+
+  calendarModel: CalendarModel;  
+  events: CalendarEvent[] = [];
+  isLoading: boolean = true;
+  wasWeekend: boolean;
+  isSavingWeekend: boolean = false;
+  isChangedWorktime: boolean = false;
+  weekendDays: number[] = [];
+  settingsClicked: Subscription;
+
+  view: string = 'month';  
+  viewDate: Date = new Date();    
+
+  //refresh: Subject<any> = new Subject();
 
   constructor(
     private tokenHelper: TokenHelperService,
-    private calendarService: CalendarService) { }
+    private calendarService: CalendarService,
+    private modalService: SuiModalService,
+    private calendarEventsService: CalendarEventsService) { }
 
-  ngOnInit() {
-    // this.calendarService.getCalendarByAccount(this.accountId)
-    // .then(res => {
-    //   this.calendar = res;
-    //   console.log(this.calendar);
-    // });
+  ngOnInit() {   
+    this.settingsClicked = this.calendarEventsService.settingsClickEvent$.subscribe(() => {
+      this.openSettingsModal();
+    })
+    
+
+    this.calendarService.getCalendarByAccount(this.accountId)
+    .then(res => {
+      this.calendarModel = res;
+      if(this.calendarModel.WorkOnWeekend){
+        this.weekendDays = [];
+      }
+      else{
+        this.weekendDays = [0,6];
+      }      
+      if(this.calendarModel.Events){
+        this.calendarModel.Events.forEach(event => {
+          this.events.push({
+            start: new Date(event.Date),
+            title: event.Work.Name,
+            end: new Date(event.EndDate),        
+            color: colors.blue,
+            meta: {
+              status: BookStatus[event.Status],
+              description: event.Description,
+              customer: event.Customer,
+              customerPhone: event.CustomerPhone,
+              workIcon: event.Work.Icon
+            }
+          });            
+        });
+      }
+      this.isLoading = false; 
+    });
+  }
+  
+  dayClicked(day: any): void { 
+    console.log(day);
+    if (isSameMonth(day.date, this.viewDate)) {      
+      this.openDayModal(day);
+      console.log(this.calendarModel.Events[0].Status);
+    }
   }
 
-  view: string = 'month';
-  
-    viewDate: Date = new Date();
-    activeDayIsOpen: boolean = true;
-  
-    events: CalendarEvent[] = [
-      {
-        start: subDays(startOfDay(new Date()), 1),
-        end: addDays(new Date(), 1),
-        title: 'A 3 day event',
-        color: colors.red,        
-      },
-      {
-        start: startOfDay(new Date()),
-        title: 'An event with no end date',
-        color: colors.yellow,        
-      },
-      {
-        start: subDays(endOfMonth(new Date()), 3),
-        end: addDays(endOfMonth(new Date()), 3),
-        title: 'A long event that spans 2 months',
-        color: colors.blue
-      },
-      {
-        start: addHours(startOfDay(new Date()), 2),
-        end: new Date(),
-        title: 'A draggable and resizable event',
-        color: colors.yellow,        
-        resizable: {
-          beforeStart: true,
-          afterEnd: true
-        },
-        draggable: true
-      }
-    ];
-  
-    refresh: Subject<any> = new Subject();
-  
-    dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
-      if (isSameMonth(date, this.viewDate)) {
-        if ((isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) || events.length === 0) {
-          this.activeDayIsOpen = false;
-        } else {
-          this.activeDayIsOpen = true;
-          this.viewDate = date;
-        }
-      }
+  openDayModal(day: any) {
+    this.wasWeekend = day.isWeekend;
+    const config = new TemplateModalConfig<IDayContext, void, void>(this.dayModalTemplate);
+    config.context = {date:day.date, events:day.events, day: day};
+    config.isInverted = true;
+    config.size = ModalSize.Normal;
+    this.activeModal = this.modalService.open(config);
+  }
+
+  openSettingsModal(){
+    const config = new TemplateModalConfig<ISettingsContext, void, void>(this.settingsModalTemplate);
+    config.context = {
+      startDate:this.calendarModel.StartDate,
+      endDate:this.calendarModel.EndDate,
+      workOnWeekend: this.calendarModel.WorkOnWeekend,
+      severalTasksPerDay: this.calendarModel.SeveralTasksPerDay
+    };
+    config.isInverted = true;
+    config.size = ModalSize.Tiny;
+    this.activeModal = this.modalService.open(config);
+  }
+
+  closeSettingsModal(context: any){
+    this.isChangedWorktime = true;
+    this.calendarModel.StartDate = context.startDate;
+    this.calendarModel.EndDate = context.endDate;
+    this.calendarModel.WorkOnWeekend = context.workOnWeekend;
+    
+    if(context.workOnWeekend){
+      this.calendarModel.ExtraWorkDays = [];
+      this.calendarModel.ExtraDayOffs = this.calendarModel.ExtraDayOffs.filter(x => new Date(x.Day).getDay() !== 6 && new Date(x.Day).getDay() !== 0);
+      this.weekendDays = [];
     }
-  
-    eventTimesChanged({
-      event,
-      newStart,
-      newEnd
-    }: CalendarEventTimesChangedEvent): void {
-      event.start = newStart;
-      event.end = newEnd;      
-      this.refresh.next();
+    else{
+      this.weekendDays = [0,6];
     }
+    this.calendarService.saveCalendar(this.calendarModel).then(() => {
+      this.isChangedWorktime = false;
+      this.activeModal.deny(null);        
+    }); 
+  }
+
+  closeDayModal(day: any){    
+    if(day.isWeekend !== this.wasWeekend){
+      this.isSavingWeekend = true;      
+      if(day.isWeekend && (day.date.getDay() !== 6 && day.date.getDay() !== 0) ||
+        ((day.date.getDay() === 6 || day.date.getDay() === 0) && this.calendarModel.WorkOnWeekend)){
+        this.calendarModel.ExtraDayOffs.push({
+          Id: null,
+          CalendarId: this.calendarModel.Id,
+          Day: day.date,
+          DayOff: true
+        });
+      }      
+      else if(!day.isWeekend && (day.date.getDay() === 6 || day.date.getDay() === 0) && !this.calendarModel.WorkOnWeekend){        
+        this.calendarModel.ExtraWorkDays.push({
+          Id: null,
+          CalendarId: this.calendarModel.Id,
+          Day: day.date,
+          DayOff: false
+        });        
+      }
+      else if(!day.isWeekend && (day.date.getDay() === 6 || day.date.getDay() === 0) && this.calendarModel.WorkOnWeekend){   
+        this.calendarModel.ExtraDayOffs = this.calendarModel.ExtraDayOffs.filter(x => new Date(x.Day).toLocaleDateString() !== day.date.toLocaleDateString());
+      }
+      else if(day.isWeekend && (day.date.getDay() === 6 || day.date.getDay() === 0) && !this.calendarModel.WorkOnWeekend){
+        this.calendarModel.ExtraWorkDays = this.calendarModel.ExtraWorkDays.filter(x => new Date(x.Day).toLocaleDateString() !== day.date.toLocaleDateString());
+      }
+      else if(!day.isWeekend && (day.date.getDay() !== 6 && day.date.getDay() !== 0)){
+        this.calendarModel.ExtraDayOffs = this.calendarModel.ExtraDayOffs.filter(x => new Date(x.Day).toLocaleDateString() !== day.date.toLocaleDateString());
+      }      
+      this.calendarService.saveCalendar(this.calendarModel).then(() => {
+        this.isSavingWeekend = false;
+        this.activeModal.deny(null);        
+      }); 
+    }
+    else{
+      this.activeModal.deny(null);    
+    }    
+    this.wasWeekend = undefined;   
+  }
+
+  beforeMonthViewRender({ body }: { body: CalendarMonthViewDay[] }): void {    
+    body.forEach(day => {          
+      if(this.calendarModel.ExtraWorkDays.find(x => new Date(x.Day).toLocaleDateString() == day.date.toLocaleDateString())){
+        day.isWeekend = false;
+      }
+      else if(this.calendarModel.ExtraDayOffs.find(x => new Date(x.Day).toLocaleDateString() == day.date.toLocaleDateString())){
+        day.isWeekend = true;
+      }  
+    });
+  }
+
+
 }
