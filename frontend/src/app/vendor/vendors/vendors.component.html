@@ -1,23 +1,29 @@
 <div class="ui grid left-padded" id="main">
-    <div class="eight wide column">
+    <div class="sixteen wide column">
         <div class="row" id="search-bar">
             <div class="ui grid">
                 <div class="equal width stackable row">
-                    <div class="four wide column">
+                    <div class="five wide column">
                         <div class="ui fluid input">
                             <input type="text" name="name" placeholder="NAME" [(ngModel)]="name">
                         </div>
                     </div>
-                    <div class=" centered column">
-                        <div class="label-box">
-                            <div (click)="role = 'vendor'" [ngClass]="{'selected': role ==='vendor'}" class="ui horizontal label">Vendors</div>
-                            <div (click)="role = 'company'" [ngClass]="{'selected': role ==='company'}" class="ui horizontal label">Companies</div>
-                            <div (click)="role = 'all'" [ngClass]="{'selected': role ==='all'}" class="ui selected horizontal label">All</div>
+                    <div class="eleven wide column">
+                        <div class="ui grid">
+                            <div class="row">
+                                    <div class="eight wide column">
+                                            <div class="label-box">
+                                                <div (click)="role = 'vendor'" [ngClass]="{'selected': role ==='vendor'}" class="ui horizontal label">Vendors</div>
+                                                <div (click)="role = 'company'" [ngClass]="{'selected': role ==='company'}" class="ui horizontal label">Companies</div>
+                                                <div (click)="role = 'all'" [ngClass]="{'selected': role ==='all'}" class="ui selected horizontal label">All</div>
+                                            </div>
+                                        </div>
+                                        <div class="eight wide column search-btn-div">
+                                            <a class="ui active button main" [ngClass]="{'loading': searchLoading}" (click)="search()">SEARCH</a>
+                                            <button class="ui button" (click)="reset()">RESET</button>
+                                        </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="six wide column search-btn-div">
-                        <a class="ui active button main" [ngClass]="{'loading': searchLoading}" (click)="search()">SEARCH</a>
-                        <button class="ui button" (click)="reset()">RESET</button>
                     </div>
                 </div>
                 <sui-accordion class="fluid">
@@ -28,9 +34,10 @@
                         </div>
                         <div content>
                             <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.grey-indigo.min.css" />
-                            <div class="ui grid container segment">
-                                <div class="equal width two column row">
-                                    <div class="left floated column">
+                            <div class="ui grid container segment full-width">
+                                <div class="row">
+                                    <div class="add-filter-container">
+                                    <div class="add-filter-container-column">
                                         <div class="ui form">
                                             <div class="field">
                                                 <div class="ui left icon input">
@@ -38,7 +45,7 @@
                                                     <input class="datepicker" placeholder="RIGHT NOW" suiDatepicker [pickerUseNativeOnMobile]="false">
                                                 </div>
                                             </div>
-                                            <div class="inline stackable fields">
+                                            <div class="inline fields">
                                                 <div class="field">
                                                     <label style="font-weight:400;">Rating</label>
                                                     <sui-select [(ngModel)]="ratingCondition" placeholder="rating">
@@ -46,7 +53,7 @@
                                                         <sui-select-option value="lower"></sui-select-option>
                                                     </sui-select>
                                                 </div>
-                                                <div class="four wide field">
+                                                <div class="field">
                                                     <sui-rating class="star" [(ngModel)]="rating"></sui-rating>
                                                 </div>
                                             </div>
@@ -58,7 +65,7 @@
 
                                         </div>
                                     </div>
-                                    <div class="right floated column">
+                                    <div class="add-filter-container-column">
                                         <div class="row">
                                             <div class="ui form">
                                                 <div class="field">
@@ -78,6 +85,7 @@
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
                                     </div>
                                 </div>
                                 <div class="container row categories-container">
@@ -115,8 +123,8 @@
                         </div>
                     </sui-accordion-panel>
                 </sui-accordion>
-                <div class="container row">
-                    <div class="left floated three wide column remove-padding-top">
+                <div class="post-filters-div">
+                    <div class="remove-padding-top">
                         <h5 class="ui header">
                             <div class="content">
                                 <i class="sort content descending icon"></i> Sort by
@@ -128,7 +136,7 @@
                             </div>
                         </h5>
                     </div>
-                    <div class="right floated three wide column remove-padding-top">
+                    <div class="remove-padding-top">
                         <h5 class="ui header content align-right">
                             <div class="content align-right">
                                 <i class="block layout icon"></i> Page size:
