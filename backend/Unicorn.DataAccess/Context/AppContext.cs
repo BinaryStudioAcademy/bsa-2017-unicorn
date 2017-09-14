@@ -13,6 +13,7 @@ namespace Unicorn.DataAccess.Context
         public DbSet<Company> Companies { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<ChatDialog> ChatDialogs { get; set; }
+        public DbSet<ChatFile> ChatFiles { get; set; }
         public DbSet<ChatMessage> ChatMessages { get; set; }
         public DbSet<ExtraDay> ExtraDays { get; set; }
         public DbSet<History> Histories { get; set; }

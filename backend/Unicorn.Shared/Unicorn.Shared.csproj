@@ -57,6 +57,7 @@
     <Compile Include="DTOs\Chart\LineChartDTO.cs" />
     <Compile Include="DTOs\Chart\PieChartDTO.cs" />
     <Compile Include="DTOs\Chat\ChatDialogDTO.cs" />
+    <Compile Include="DTOs\Chat\ChatFileDTO.cs" />
     <Compile Include="DTOs\Chat\ChatMessageDTO.cs" />
     <Compile Include="DTOs\CompanyDTO.cs" />
     <Compile Include="DTOs\CompanyPage\CompanyBook.cs" />
