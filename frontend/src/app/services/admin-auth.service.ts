@@ -1,16 +1,15 @@
 import { Injectable } from '@angular/core';
 
 import { DataService } from '../services/data.service';
-import { BookOrder } from '../models/book/book-order';
 
 @Injectable()
-export class BookOrderService {
+export class AdminAuthService {
 
   constructor(private dataService: DataService) {
     this.dataService.setHeader('Content-Type', 'application/json');
   }
 
-  public createOrder(book: BookOrder) {
-    return this.dataService.postRequest('book/order', book);
+  public signIn(login: string, pass: string): Promise<any> {
+    return this.dataService.getFullRequest(`admin/auth?login=${login}&password=${pass}`);
   }
 }

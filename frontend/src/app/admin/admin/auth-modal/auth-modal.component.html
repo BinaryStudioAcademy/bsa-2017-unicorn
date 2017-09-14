@@ -1,0 +1,19 @@
+<div class="header">
+  <p><span class="admin-title">UNICORN</span>admin</p>
+</div>
+<div class="content">
+    <div *ngIf="!isValid" class="ui red segment">Data not valid</div>
+    <form class="ui form">
+        <div class="field">
+          <label>Login</label>
+          <input type="text" name="login" [(ngModel)]="login">
+        </div>
+        <div class="field">
+          <label>Passworf</label>
+          <input type="text" name="password" [(ngModel)]="password">
+        </div>
+      </form>
+</div>
+<div class="actions">
+    <button class="ui green button" (click)="signIn()" autofocus>SignIn</button>
+</div>

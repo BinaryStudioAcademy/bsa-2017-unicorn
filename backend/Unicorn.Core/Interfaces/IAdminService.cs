@@ -18,5 +18,7 @@ namespace Unicorn.Core.Interfaces
 
         Task BanAccountAsync(long id);
         Task UnbanAccountAsync(long id);
+
+        bool ValidateLogin(string login, string pass);
     }
 }

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Unicorn.Core.Interfaces;
 using Unicorn.DataAccess.Interfaces;
 using Unicorn.Shared.DTOs.Admin;
+using Unicorn.Core.Infrastructure;
 
 namespace Unicorn.Core.Services
 {
@@ -221,6 +222,13 @@ namespace Unicorn.Core.Services
 
             return accounts
                 .OrderBy(p => p.Name).ToList();
+        }
+
+        public bool ValidateLogin(string login, string pass)
+        {
+            AdminAuthConfig adminAuthConfig = AdminAuthConfig.Config;
+
+            return login == adminAuthConfig.Login && pass == adminAuthConfig.Password;
         }
 
         private readonly IUnitOfWorkFactory _uowFactory;

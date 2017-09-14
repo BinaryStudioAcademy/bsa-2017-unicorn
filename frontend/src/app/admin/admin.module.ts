@@ -11,6 +11,8 @@ import { AccountService } from "../services/account.service";
 import { FeedbackComponent } from './admin/feedback/feedback.component';
 import { ReportService } from "../services/report.service";
 import { CategoryService } from "../services/category.service";
+import { AuthModalComponent } from './admin/auth-modal/auth-modal.component';
+import { AdminAuthService } from "../services/admin-auth.service";
 
 @NgModule({
   imports: [
@@ -22,12 +24,18 @@ import { CategoryService } from "../services/category.service";
   declarations: [
     AdminComponent,
     BanListComponent, 
-    CategoriesComponent, FeedbackComponent
+    CategoriesComponent, 
+    FeedbackComponent, 
+    AuthModalComponent
   ],
   providers: [
     AccountService,
     ReportService,
-    CategoryService
+    CategoryService,
+    AdminAuthService
+  ],
+  entryComponents: [
+    AuthModalComponent
   ]
 })
 export class AdminModule { }

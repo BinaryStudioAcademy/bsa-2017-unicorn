@@ -124,22 +124,26 @@ export class CategoriesComponent implements OnInit {
   }
 
   clearEditingCategory(): void {
-    this.editingCategory.Id = null;
-    this.editingCategory.Description = "";
-    this.editingCategory.Icon = "http://www.freeiconspng.com/uploads/pictures-icon-11.gif",
-    this.editingCategory.Name = "";
-    this.editingCategory.Tags = "";
-    this.editingCategory.Subcategories = []
+    this.editingCategory = {
+      Id: null,
+      Description: "",
+      Icon: "http://www.freeiconspng.com/uploads/pictures-icon-11.gif",
+      Name: "",
+      Tags: "",
+      Subcategories: []
+    };
   }
 
   clearEditingSubcategory(): void {
-    this.editingSubcategory.Description = "";
-    this.editingSubcategory.Icon = "http://www.freeiconspng.com/uploads/pictures-icon-11.gif",
-    this.editingSubcategory.Name = "";
-    this.editingSubcategory.Tags = "";
-    this.editingSubcategory.Category = "";
-    this.editingSubcategory.CategoryId = null;
-    this.editingSubcategory.Id = null;
+    this.editingSubcategory = {
+      Id: null,
+      Description: "",
+      Icon: "http://www.freeiconspng.com/uploads/pictures-icon-11.gif",
+      Name: "",
+      Tags: "",
+      Category: "",
+      CategoryId: null
+    };
   }
 
   isCategoryOnPending(category: Category): boolean {
