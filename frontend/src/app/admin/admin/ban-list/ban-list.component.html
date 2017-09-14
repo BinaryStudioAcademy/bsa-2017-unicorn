@@ -4,7 +4,7 @@
   <div class="row">
     <div class="eleven wide column">
       <div class="ui fluid left icon input">
-        <input type="text" placeholder="Search...">
+        <input type="text" placeholder="Search..." [(ngModel)]="searchTemplate" (ngModelChange)="load()">
         <i class="circular search link icon"></i>
       </div>
     </div>
@@ -12,10 +12,10 @@
         <p style="font-size: 16px;">Page size: </p>
     </div>
     <div class="three wide column">
-      <sui-select [(ngModel)]="pageSize" class="fluid selection">
-        <sui-select-option value=20></sui-select-option>
-        <sui-select-option value=40></sui-select-option>
-        <sui-select-option value=60></sui-select-option>
+      <sui-select [(ngModel)]="pageSize" class="fluid selection" (ngModelChange)="load()">
+        <sui-select-option [value]=20></sui-select-option>
+        <sui-select-option [value]=40></sui-select-option>
+        <sui-select-option [value]=60></sui-select-option>
       </sui-select>
     </div>
   </div>

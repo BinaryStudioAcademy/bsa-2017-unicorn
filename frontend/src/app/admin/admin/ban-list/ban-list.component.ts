@@ -19,6 +19,8 @@ export class BanListComponent implements OnInit {
 
   isLoaded: boolean;
 
+  searchTemplate: string = "";
+
   constructor(private accountService: AccountService) { }
 
   ngOnInit() {
@@ -30,7 +32,7 @@ export class BanListComponent implements OnInit {
     this.isLoaded = false;
     this.pendingAccounts = [];
 
-    this.accountService.getBanListPage(this.page, this.pageSize)
+    this.accountService.searchInBanListByTemplate(this.searchTemplate, this.page, this.pageSize)
       .then(p => {
         this.page = p.CurrentPage;
         this.pageSize = p.PageSize;
@@ -40,6 +42,16 @@ export class BanListComponent implements OnInit {
         this.isLoaded = true;
       })
       .catch(err => this.isLoaded = true);
+    // this.accountService.getBanListPage(this.page, this.pageSize)
+    //   .then(p => {
+    //     this.page = p.CurrentPage;
+    //     this.pageSize = p.PageSize;
+    //     this.totalCount = p.TotalCount;
+    //     this.accounts = p.Items;
+
+    //     this.isLoaded = true;
+    //   })
+    //   .catch(err => this.isLoaded = true);
   }
 
   isAccountPending(account: AdminAccountViewModel): boolean {

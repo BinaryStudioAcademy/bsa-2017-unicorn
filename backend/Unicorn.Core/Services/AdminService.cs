@@ -175,7 +175,7 @@ namespace Unicorn.Core.Services
                     .Include(p => p.Account)
                     .Include(p => p.Account.Role)
                     .Where(p => p.Account.Role.Id != 5)
-                    .Where(p => p.Account.Email.Contains(template) || (p.Name + " " + p.Surname + " " + p.MiddleName).Contains(template))
+                    .Where(p => string.IsNullOrEmpty(template) || p.Account.Email.Contains(template) || (p.Name + " " + p.Surname + " " + p.MiddleName).Contains(template))
                     .Select(p => new AccountDTO
                     {
                         Id = p.Account.Id,
@@ -193,9 +193,9 @@ namespace Unicorn.Core.Services
 
                 return uow.CompanyRepository.Query
                     .Include(c => c.Account)
-                    .Include(p => p.Account.Role)
-                    .Where(p => p.Account.Role.Id != 5)
-                    .Where(c => c.Account.Email.Contains(template) || c.Name.Contains(template))
+                    .Include(c => c.Account.Role)
+                    .Where(c => c.Account.Role.Id != 5)
+                    .Where(c => string.IsNullOrEmpty(template) || c.Account.Email.Contains(template) || c.Name.Contains(template))
                     .Select(c => new AccountDTO
                     {
                         Id = c.Account.Id,
