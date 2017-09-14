@@ -78,8 +78,12 @@ export class MenuComponent implements OnInit {
           }
         });
       this.notificationService.connect(+this.tokenHelper.getClaimByName("accountid"))
-        .then(() => this.notificationService
-          .listen<Notification>("OnNotificationRecieved", notification => this.addNotification(notification)));
+        .then(() => {
+          this.notificationService
+            .listen<Notification>("OnNotificationRecieved", notification => this.addNotification(notification));
+          this.notificationService
+            .listen<Notification>("SignOut", notification => this.signOut());
+        });
       this.accountService.getNotifications(+this.tokenHelper.getClaimByName("accountid"))
         .then(resp => {
           this.notifications = (resp.body as Notification[]);

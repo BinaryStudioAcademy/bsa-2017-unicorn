@@ -14,9 +14,10 @@ namespace Unicorn.Core.Services
 {
     public class AdminService : IAdminService
     {
-        public AdminService(IUnitOfWorkFactory unitOfWorkFactory)
+        public AdminService(IUnitOfWorkFactory unitOfWorkFactory, INotificationProxy notificationProxy)
         {
             _uowFactory = unitOfWorkFactory;
+            _notificationProxy = notificationProxy;
         }
 
         public async Task BanAccountAsync(long id)
@@ -31,6 +32,8 @@ namespace Unicorn.Core.Services
 
             uow.AccountRepository.Update(account);
             await uow.SaveAsync();
+
+            await _notificationProxy.KickAccount(id);
         }
 
         public async Task UnbanAccountAsync(long id)
@@ -232,5 +235,6 @@ namespace Unicorn.Core.Services
         }
 
         private readonly IUnitOfWorkFactory _uowFactory;
+        private readonly INotificationProxy _notificationProxy;
     }
 }

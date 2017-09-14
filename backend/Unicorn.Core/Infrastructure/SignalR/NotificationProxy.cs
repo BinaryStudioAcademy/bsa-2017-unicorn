@@ -27,6 +27,11 @@ namespace Unicorn.Core.Infrastructure.SignalR
             await _context.Clients.Group($"accountId={accountId}").RefreshOrders();
         }
 
+        public async Task KickAccount(long accountId)
+        {
+            await _context.Clients.Group($"accountId={accountId}").SignOut();
+        }
+
         public async Task RefreshMessagesForAccount<T>(long accountId, T payload)
         {
             await _context.Clients.Group($"accountId={accountId}").RefreshMessages(payload);
