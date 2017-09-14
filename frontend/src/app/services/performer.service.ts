@@ -19,7 +19,7 @@ export class PerformerService {
   getPerformersByFilters(
     city: string, name: string, role: string, rating: number, ratingCondition: string,
     withReviews: boolean, categories: number[], subcategories: number[], page: number, pageSize: number,
-    latitude: number, longitude: number, distance: number, sort: string
+    latitude: number, longitude: number, distance: number, sort: string, date: string
   ): Promise<PerformersPage> {
     let uriParams: string[] = [];
 
@@ -63,6 +63,9 @@ export class PerformerService {
 
     if (sort && sort !== '')
       uriParams.push(`sort=${sort}`);
+
+    if (date && date !== '')
+      uriParams.push(`date=${date}`);
     
     return this.dataService.getRequest(`popular/search?${uriParams.join('&')}`);
   }

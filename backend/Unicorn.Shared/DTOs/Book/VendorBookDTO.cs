@@ -34,6 +34,8 @@ namespace Unicorn.Shared.DTOs.Book
 
         public bool IsHidden { get; set; }
 
+        public bool MoreTasksPerDay { get; set; }
+
         public ReviewDTO Review { get; set; }
 
         public WorkDTO Work { get; set; }

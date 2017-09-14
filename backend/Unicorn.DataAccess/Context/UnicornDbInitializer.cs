@@ -1685,6 +1685,192 @@ namespace Unicorn.DataAccess.Context
 
             #endregion
 
+            #region Calendars
+
+            Calendar calendar1 = new Calendar
+            {
+                Id = 1,
+                IsDeleted = false,
+                StartDate = DateTime.Today,
+                EndDate = null,
+                ExtraDayOffs = new List<ExtraDay>(),
+                ExtraWorkDays = new List<ExtraDay>(),
+                WorkOnWeekend = false,
+                SeveralTaskPerDay = true
+            };
+
+            Calendar calendar2 = new Calendar
+            {
+                Id = 2,
+                IsDeleted = false,
+                StartDate = DateTime.Today,
+                EndDate = null,
+                ExtraDayOffs = new List<ExtraDay>(),
+                ExtraWorkDays = new List<ExtraDay>(),
+                WorkOnWeekend = false,
+                SeveralTaskPerDay = true
+            };
+
+            Calendar calendar3 = new Calendar
+            {
+                Id = 3,
+                IsDeleted = false,
+                StartDate = DateTime.Today,
+                EndDate = null,
+                ExtraDayOffs = new List<ExtraDay>(),
+                ExtraWorkDays = new List<ExtraDay>(),
+                WorkOnWeekend = false,
+                SeveralTaskPerDay = true
+            };
+
+            Calendar calendar4 = new Calendar
+            {
+                Id = 4,
+                IsDeleted = false,
+                StartDate = DateTime.Today,
+                EndDate = null,
+                ExtraDayOffs = new List<ExtraDay>(),
+                ExtraWorkDays = new List<ExtraDay>(),
+                WorkOnWeekend = false,
+                SeveralTaskPerDay = true
+            };
+
+            Calendar calendar5 = new Calendar
+            {
+                Id = 5,
+                IsDeleted = false,
+                StartDate = DateTime.Today,
+                EndDate = null,
+                ExtraDayOffs = new List<ExtraDay>(),
+                ExtraWorkDays = new List<ExtraDay>(),
+                WorkOnWeekend = false,
+                SeveralTaskPerDay = true
+            };
+
+            Calendar calendar6 = new Calendar
+            {
+                Id = 6,
+                IsDeleted = false,
+                StartDate = DateTime.Today,
+                EndDate = null,
+                ExtraDayOffs = new List<ExtraDay>(),
+                ExtraWorkDays = new List<ExtraDay>(),
+                WorkOnWeekend = false,
+                SeveralTaskPerDay = true
+            };
+
+            Calendar calendar7 = new Calendar
+            {
+                Id = 7,
+                IsDeleted = false,
+                StartDate = DateTime.Today,
+                EndDate = null,
+                ExtraDayOffs = new List<ExtraDay>(),
+                ExtraWorkDays = new List<ExtraDay>(),
+                WorkOnWeekend = false,
+                SeveralTaskPerDay = true
+            };
+
+            Calendar calendar8 = new Calendar
+            {
+                Id = 8,
+                IsDeleted = false,
+                StartDate = DateTime.Today,
+                EndDate = null,
+                ExtraDayOffs = new List<ExtraDay>(),
+                ExtraWorkDays = new List<ExtraDay>(),
+                WorkOnWeekend = false,
+                SeveralTaskPerDay = true
+            };
+
+            Calendar calendar9 = new Calendar
+            {
+                Id = 9,
+                IsDeleted = false,
+                StartDate = DateTime.Today,
+                EndDate = null,
+                ExtraDayOffs = new List<ExtraDay>(),
+                ExtraWorkDays = new List<ExtraDay>(),
+                WorkOnWeekend = false,
+                SeveralTaskPerDay = true
+            };
+
+            Calendar calendar10 = new Calendar
+            {
+                Id = 10,
+                IsDeleted = false,
+                StartDate = DateTime.Today,
+                EndDate = null,
+                ExtraDayOffs = new List<ExtraDay>(),
+                ExtraWorkDays = new List<ExtraDay>(),
+                WorkOnWeekend = false,
+                SeveralTaskPerDay = true
+            };
+
+            Calendar calendar11 = new Calendar
+            {
+                Id = 11,
+                IsDeleted = false,
+                StartDate = DateTime.Today,
+                EndDate = null,
+                ExtraDayOffs = new List<ExtraDay>(),
+                ExtraWorkDays = new List<ExtraDay>(),
+                WorkOnWeekend = false,
+                SeveralTaskPerDay = true
+            };
+
+            Calendar calendar12 = new Calendar
+            {
+                Id = 12,
+                IsDeleted = false,
+                StartDate = DateTime.Today,
+                EndDate = null,
+                ExtraDayOffs = new List<ExtraDay>(),
+                ExtraWorkDays = new List<ExtraDay>(),
+                WorkOnWeekend = false,
+                SeveralTaskPerDay = true
+            };
+
+            Calendar calendar13 = new Calendar
+            {
+                Id = 13,
+                IsDeleted = false,
+                StartDate = DateTime.Today,
+                EndDate = null,
+                ExtraDayOffs = new List<ExtraDay>(),
+                ExtraWorkDays = new List<ExtraDay>(),
+                WorkOnWeekend = false,
+                SeveralTaskPerDay = true
+            };
+
+            Calendar calendar14 = new Calendar
+            {
+                Id = 14,
+                IsDeleted = false,
+                StartDate = DateTime.Today,
+                EndDate = null,
+                ExtraDayOffs = new List<ExtraDay>(),
+                ExtraWorkDays = new List<ExtraDay>(),
+                WorkOnWeekend = false,
+                SeveralTaskPerDay = true
+            };
+
+            Calendar calendar15 = new Calendar
+            {
+                Id = 15,
+                IsDeleted = false,
+                StartDate = DateTime.Today,
+                EndDate = null,
+                ExtraDayOffs = new List<ExtraDay>(),
+                ExtraWorkDays = new List<ExtraDay>(),
+                WorkOnWeekend = false,
+                SeveralTaskPerDay = true
+            };
+
+            context.Calendars.AddRange(new List<Calendar>() { calendar1, calendar2, calendar3, calendar4, calendar5, calendar6, calendar7, calendar8, calendar9, calendar10, calendar11, calendar12, calendar13, calendar14, calendar15 });
+
+            #endregion
+
             #region Vendors            
 
             Vendor vendor1 = new Vendor()
@@ -1696,6 +1882,7 @@ namespace Unicorn.DataAccess.Context
                 Works = new List<Work>() { work1, work2, work3 },
                 ExWork = "Dishwasher",
                 Person = person1,
+                Calendar = calendar1,
                 WorkLetter = "My name is Randy Patterson, and I’m currently looking for a job in youth services. I have 10 years of experience working with youth agencies. I have a bachelor’s degree in outdoor education. I raise money, train leaders, and organize units. I have raised over $100,000 each of the last six years. I consider myself a good public speaker, and I have a good sense of humor.",
             };
 
@@ -1708,6 +1895,7 @@ namespace Unicorn.DataAccess.Context
                 Works = new List<Work>() { work2, work22 },
                 ExWork = "Photographer",
                 Person = person2,
+                Calendar = calendar2,
                 WorkLetter = "My job is to build your website so that it is functional and user-friendly but at the same time attractive. Moreover, I add personal touch to your product and make sure that is eye-catching and easy to use. My aim is to bring across your message and identity in the most creative way."
             };
 
@@ -1720,6 +1908,7 @@ namespace Unicorn.DataAccess.Context
                 Works = new List<Work>() { work3, work21 },
                 ExWork = "Vet",
                 Person = person3,
+                Calendar = calendar3,
                 WorkLetter = "I'm Jordan Vitanov, digital artist and designer, working in web development and print media. If you have a project that needs some creative injection then that’s where I come in!"
             };
 
@@ -1732,6 +1921,7 @@ namespace Unicorn.DataAccess.Context
                 Works = new List<Work>() { work4, work20 },
                 ExWork = "Painter",
                 Person = person4,
+                Calendar = calendar4,
                 WorkLetter = "Lia Griffith is an internationally renowned DIY designer. She built a large and loyal following within a year of blogging and teaching. We worked with Lia Griffith to craft a new site to match the creative energy and vision of her brand."
             };
 
@@ -1744,6 +1934,7 @@ namespace Unicorn.DataAccess.Context
                 Works = new List<Work>() { work5, work19 },
                 ExWork = "lory driver",
                 Person = person5,
+                Calendar = calendar5,
                 WorkLetter = "At first I intended to be an animator and went to design school fully motivated to become just that. One thing led to another and 2 years went by and I was a (almost) fully fledged freelance web designer without ever planning to become one"
             };
 
@@ -1756,6 +1947,7 @@ namespace Unicorn.DataAccess.Context
                 Works = new List<Work>() { work6, work18, work17 },
                 ExWork = "Middle dev",
                 Person = person6,
+                Calendar = calendar6,
                 WorkLetter = "I have sucessfully been a freelance web designer now for a while and it has given me even more love for this work. I have worked with ad agencies, web developers, diaper makers, pension funds, furniture makers, businiess women & men, friends & family."
             };
 
@@ -1768,6 +1960,7 @@ namespace Unicorn.DataAccess.Context
                 Works = new List<Work>() { work6, work5},
                 ExWork = "Cook",
                 Person = person7,
+                Calendar = calendar7,
                 WorkLetter = "I have coded websites with great respect to standards, because it makes life easier for everybody. My site even used to validate, honestly!"
             };
 
@@ -1788,6 +1981,7 @@ namespace Unicorn.DataAccess.Context
                 Director = "Alex Moren",
                 Staff = 2,
                 IsDeleted = false,
+                Calendar = calendar8,
                 Vendors = new List<Vendor>() { vendor1, vendor2 },
                 Works = new List<Work> { work1, work2, work22},
 
@@ -1803,6 +1997,7 @@ namespace Unicorn.DataAccess.Context
                 Director = "John Snow",
                 Staff = 2,
                 IsDeleted = false,
+                Calendar = calendar9,
                 Vendors = new List<Vendor>() { vendor4, vendor5},
                 Works = new List<Work> { work3, work4, work20 }
             };
@@ -1817,6 +2012,7 @@ namespace Unicorn.DataAccess.Context
                 Director = "Jaime Lannister",
                 Staff = 1,
                 IsDeleted = false,
+                Calendar = calendar10,
                 Vendors = new List<Vendor>() { vendor6 },
                 Works = new List<Work> { work5, work6 }
             };
@@ -1831,6 +2027,7 @@ namespace Unicorn.DataAccess.Context
                 Director = "Sergey Grin",
                 Staff = 1,
                 IsDeleted = false,
+                Calendar = calendar11,
                 Vendors = new List<Vendor>(),
                 Works = new List<Work> { work7 }
             };
@@ -1845,6 +2042,7 @@ namespace Unicorn.DataAccess.Context
                 Director = "Rob Morris",
                 Staff = 1,
                 IsDeleted = false,
+                Calendar = calendar12,
                 Vendors = new List<Vendor>(),
                 Works = new List<Work> { work8, work12 }
             };
@@ -1859,6 +2057,7 @@ namespace Unicorn.DataAccess.Context
                 Director = "Alok Ohrie",
                 Staff = 1,
                 IsDeleted = false,
+                Calendar = calendar13,
                 Vendors = new List<Vendor>(),
                 Works = new List<Work> { work9, work13 }
             };
@@ -1873,6 +2072,7 @@ namespace Unicorn.DataAccess.Context
                 Director = "Don Thompson",
                 Staff = 1,
                 IsDeleted = false,
+                Calendar = calendar14,
                 Vendors = new List<Vendor>(),
                 Works = new List<Work> { work10, work14 }
             };
@@ -1887,6 +2087,7 @@ namespace Unicorn.DataAccess.Context
                 Director = "Sergey Kovalenko",
                 Staff = 1,
                 IsDeleted = false,
+                Calendar = calendar15,
                 Vendors = new List<Vendor>(),
                 Works = new List<Work> { work11, work16, work15 }
             };
