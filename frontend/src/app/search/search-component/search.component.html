@@ -10,10 +10,12 @@
                 <label>When to do it</label>                  
               </div>
               <div class="three wide column ui input">                  
-                <input type="text" [(ngModel)]="category" 
-                                   (keyup)="filterCategory()" 
-                                   (keyup.Enter)="searchWorks()" 
-                                   placeholder="CATEGORY">
+                <input id="ctg" type="text" 
+                      [(ngModel)]="category" 
+                      (click)="filterCategory()"
+                      (keyup)="filterCategory()" 
+                      (keyup.Enter)="searchWorks()" 
+                      placeholder="CATEGORY">
                 <div class="suggestions" (clickOutside)="onClickedOutside($event)">
                   <div *ngIf="filterCtgs.length > 0" class="search-list">
                     <div *ngFor="let item of filterCtgs" (click)="selectCategory(item)" class="search-list-item">
@@ -27,10 +29,12 @@
                 </div>
               </div>
               <div class="three wide column  ui input">
-                <input type="text" [(ngModel)]="subcategory" 
-                                   (keyup)="filterSubcategory()" 
-                                   (keyup.Enter)="searchWorks()" 
-                                   placeholder="SUBCATEGORY">
+                <input id="subctg" type="text" 
+                      [(ngModel)]="subcategory"
+                      (click)="filterSubcategory()"  
+                      (keyup)="filterSubcategory()" 
+                      (keyup.Enter)="searchWorks()" 
+                      placeholder="SUBCATEGORY">
                 <div class="suggestions" (clickOutside)="onClickedOutside($event)">
                   <div *ngIf="filterSubctgs.length > 0" class="search-list">
                     <div *ngFor="let item of filterSubctgs" (click)="selectSubcategory(item)" class="search-list-item">
