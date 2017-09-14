@@ -32,6 +32,7 @@ namespace Unicorn.DataAccess.Interfaces
         IGenericRepository<Rating> RatingRepository { get; }
         IGenericRepository<Notification> NotificationRepository { get; }
         IGenericRepository<Offer> OfferRepository { get; }
+        IGenericRepository<Report> ReportRepository { get; }
         Task SaveAsync();
     }
 }
