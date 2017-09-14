@@ -97,6 +97,7 @@
     <Compile Include="DTOs\Register\CompanyRegisterDTO.cs" />
     <Compile Include="DTOs\Register\CustomerRegisterDTO.cs" />
     <Compile Include="DTOs\Register\VendorRegisterDTO.cs" />
+    <Compile Include="DTOs\ReportDTO.cs" />
     <Compile Include="DTOs\Review\ReviewDTO.cs" />
     <Compile Include="DTOs\Review\ReviewSenderDTO.cs" />
     <Compile Include="DTOs\Review\ShortReviewDTO.cs" />

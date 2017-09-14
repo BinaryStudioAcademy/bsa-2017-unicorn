@@ -32,6 +32,7 @@ namespace Unicorn.DataAccess.Context
         public DbSet<Rating> Ratings { get; set; }
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<Offer> Offers { get; set; }
+        public DbSet<Report> Reports { get; set; }
 
         public AppContext() : base("DefaultConnection")
         {

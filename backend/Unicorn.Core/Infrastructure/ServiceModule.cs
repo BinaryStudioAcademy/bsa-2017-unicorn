@@ -42,6 +42,7 @@ namespace Unicorn.Core.Infrastructure
             Bind<ISearchService>().To<SearchService>();
             Bind<IOfferService>().To<OfferService>();
             Bind<IAnalyticsService>().To<AnalyticsService>();
+            Bind<IReportService>().To<ReportService>();
         }
     }
 }
