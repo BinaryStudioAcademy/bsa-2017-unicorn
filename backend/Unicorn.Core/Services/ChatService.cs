@@ -341,7 +341,27 @@ namespace Unicorn.Core.Services
 
         public async Task RemoveMessage(long messageId)
         {
+
+            var mes = await _unitOfWork.ChatMessageRepository.GetByIdAsync(messageId);
+            var notification = new NotificationDTO()
+            {
+                Title = $"Some messages were deleted",
+                Description = $"Some messages were deleted",
+                SourceItemId = messageId,
+                Time = DateTime.Now,
+                Type = NotificationType.ChatNotification
+            };
             _unitOfWork.ChatMessageRepository.Delete(messageId);
+            long receiverId;
+            if (mes.Dialog.Participant1.Id != mes.Owner.Id)
+            {
+                receiverId = mes.Dialog.Participant1.Id;
+            }
+            else
+            {
+                receiverId = mes.Dialog.Participant2.Id;
+            };
+            await _notificationService.CreateDelAsync(receiverId, mes.Dialog.Id);
             await _unitOfWork.SaveAsync();
         }
 

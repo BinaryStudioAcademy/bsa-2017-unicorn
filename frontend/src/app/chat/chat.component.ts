@@ -62,9 +62,13 @@ export class ChatComponent implements OnInit {
       this.getMessage(res);
     });
     this.notificationService.listen<any>("ReadNotReadedMessages", () => {
-      this.messagesWereReaded();
+     this.messagesWereReaded();
     });
 
+    this.notificationService.listen<any>("DeleteMessage", () => {
+      this.getDialog();
+     });
+     
     this.dialogCreate = this.chatEventsService.createDialogFromMiniChatToChatEvent$.subscribe(dialog => {
       this.dialogs.push(this.checkLastMessage(dialog, dialog.Messages[dialog.Messages.length - 1].OwnerId));
     })
