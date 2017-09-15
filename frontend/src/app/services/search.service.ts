@@ -14,7 +14,6 @@ export class SearchService {
     if (category === undefined) { category = ''; }
     if (subcategory === undefined) { subcategory = ''; }
     d = date;    
-
     const queryParams = `search?category=${category}&subcategory=${subcategory}&date=${d}`;
     return this.dataService.getRequest<SearchWork[]>(queryParams);
   }
