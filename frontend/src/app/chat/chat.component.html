@@ -107,10 +107,10 @@
 <ng-template let-context let-modal="modal" #modal>
     <div class="ui content">
         <div *ngIf="dialogToDelete!==ungefined">
-            <h4 align="center"> You're going to delete dialog with {{dialogToDelete.ParticipantName}}</h4>
+            <h4 align="center"> You're going to hide dialog with {{dialogToDelete.ParticipantName}}</h4>
             <div align="center">
                 <button class="ui button" (click)="deleteDialog()">
-                       <h5>Delete</h5>
+                       <h5>Hide</h5>
                     </button>
                 <button class="ui basic button add" (click)="currModal.deny(undefined)"><h5>Cancel</h5></button>
             </div>
