@@ -39,13 +39,13 @@ export class VendorEditChartsComponent implements OnInit {
     autoScale = false;
   
     
-      viewPie: any[] = [400, 300];
+      viewPie: any[] = [405, 300];
     
       // options
       showLegendPie = false;
     
       colorSchemePie = {
-        domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
+        domain: ['#008ae6', '#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
       };
     
       // pie
@@ -55,7 +55,7 @@ export class VendorEditChartsComponent implements OnInit {
   
       
       colorSchemeBar = {
-        domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
+        domain: ['#008ae6', '#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
       };
       
     //----------------------------------
@@ -125,6 +125,14 @@ export class VendorEditChartsComponent implements OnInit {
       return '';
     }
     return Number(val);
+  }
+
+  formatXAxis(val) {
+    let str = val as string;
+    if (str.length > 11) {
+      return str.substr(0, 10).trim() + '...';
+    }
+    return str;
   }
 
 }

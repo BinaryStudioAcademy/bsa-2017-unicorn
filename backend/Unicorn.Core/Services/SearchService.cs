@@ -179,7 +179,7 @@ namespace Unicorn.Core.Services
                 .Select(w => new SearchWorkDTO
                 {
                     Id = w.Id,
-                    Avatar = w.Icon,
+                    Avatar = string.IsNullOrEmpty(w.Icon) ? w.Subcategory.Category.Icon : w.Icon,
                     Name = w.Name,
                     Rating = CalculateRating(w.Vendor.Person.Account.Id),
                     ReviewsCount = reviewsList.Count(r => r.ToAccountId == w.Vendor.Person.Account.Id),
@@ -229,7 +229,7 @@ namespace Unicorn.Core.Services
                 .Select(w => new SearchWorkDTO
                 {
                     Id = w.Id,
-                    Avatar = w.Icon,
+                    Avatar = string.IsNullOrEmpty(w.Icon) ? w.Subcategory.Category.Icon : w.Icon,
                     Name = w.Name,
                     Rating = CalculateRating(w.Company.Account.Id),
                     ReviewsCount = reviewsList.Count(r => r.ToAccountId == w.Company.Account.Id),
@@ -362,7 +362,7 @@ namespace Unicorn.Core.Services
                 .Select(w => new SearchWorkDTO
                 {
                     Id = w.Id,
-                    Avatar = w.Icon,
+                    Avatar = string.IsNullOrEmpty(w.Icon) ? w.Subcategory.Category.Icon : w.Icon,
                     Name = w.Name,
                     Rating = CalculateRating(w.Vendor.Person.Account.Id),
                     ReviewsCount = reviews.Count(r => r.ToAccountId == w.Vendor.Person.Account.Id),
@@ -387,7 +387,7 @@ namespace Unicorn.Core.Services
                 .Select(w => new SearchWorkDTO
                 {
                     Id = w.Id,
-                    Avatar = w.Icon,
+                    Avatar = string.IsNullOrEmpty(w.Icon) ? w.Subcategory.Category.Icon : w.Icon,
                     Name = w.Name,
                     Rating = CalculateRating(w.Company.Account.Id),
                     ReviewsCount = reviews.Count(r => r.ToAccountId == w.Company.Account.Id),
