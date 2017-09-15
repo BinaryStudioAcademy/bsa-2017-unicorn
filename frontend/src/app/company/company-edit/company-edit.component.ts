@@ -5,6 +5,10 @@ import { CompanyShort } from "../../models/company-page/company-short.model";
 import { CompanyService } from "../../services/company-services/company.service";
 import { MenuEventsService } from "../../services/events/menu-events.service";
 
+import { Subscription } from "rxjs/Subscription";
+import { UnreadDialogsService } from "../../services/chat/unread-dialogs.service";
+import { ChatEventsService } from "../../services/events/chat-events.service";
+
 import { CompanyChartsComponent } from './company-charts/company-charts.component';
 
 @Component({
@@ -25,15 +29,23 @@ export class CompanyEditComponent implements OnInit {
   messagesTabActive: boolean;
   vendorsTabActive: boolean;
   worksTabActive: boolean;
+
+  unreadDialogCount: number;
+  messageReadFromChat: Subscription;
+  messageReadFromMiniChat: Subscription;
   
   constructor(private companyService: CompanyService,
     private route: ActivatedRoute,
+    private unreadDialogs: UnreadDialogsService,
+    private chatEventsService: ChatEventsService,
     private photoService: PhotoService) { }
 
   ngOnInit() {
     this.route.params
     .switchMap((params: Params) => this.companyService.getCompanyShort(params['id'])).subscribe(res => {
       this.company = res;
+
+      this.unreadDialogs.getUnreadDialogsCount(this.company.AccountId).then(x=> this.unreadDialogCount = x).catch(err=>console.log(err));
     }); 
     if (this.route.snapshot.queryParams['tab'] === 'messages') {
       this.messagesTabActive = true;
@@ -43,8 +55,16 @@ export class CompanyEditComponent implements OnInit {
     }   
     if (this.route.snapshot.queryParams['tab'] === 'works') {
       this.worksTabActive = true;
-    }  
+    }
+
+    this.messageReadFromChat = this.chatEventsService.readMessageFromMiniChatToChatEvent$.subscribe(x=> {--this.unreadDialogCount});
+    this.messageReadFromMiniChat = this.chatEventsService.readMessageFromChatToMiniChatEvent$.subscribe(x => --this.unreadDialogCount);
   }
+
+  ngOnDestroy(){
+    this.messageReadFromChat.unsubscribe();
+    this.messageReadFromMiniChat.unsubscribe(); 
+   }
 
   bannerListener($event) {
     let file: File = $event.target.files[0];

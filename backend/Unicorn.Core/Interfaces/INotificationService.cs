@@ -18,5 +18,6 @@ namespace Unicorn.Core.Interfaces
         Task UpdateAsync(NotificationDTO notificationDto);
         Task CreateAsync<T>(long receiverId, NotificationDTO notification, T payload);
         Task CreateAsync(long accountId, long dialogId);
+        Task CreateDelAsync(long accountId, long dialogId);
     }
 }

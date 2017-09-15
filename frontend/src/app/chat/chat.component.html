@@ -17,7 +17,7 @@
                             <div class="lastMessageDate" *ngIf="_dialog.LastMessageTime !== null">
                                 {{_dialog.LastMessageTime|amTimeAgo}}
                             </div>
-                            <div class="is-readed" *ngIf="!_dialog.IsReadedLastMessage">
+                            <div class="unread-msg" *ngIf="!_dialog.IsReadedLastMessage">
                             </div>
                         </div>
                     </div>
@@ -60,8 +60,7 @@
                     </div>
                     <div class="message" *ngIf="message.OwnerId !== ownerId">
                         <div class="date-him">
-                            <i *ngIf="message.MessageId!=null" class="remove icon" (click)="deleteMessageModal(message)"></i>
-                            <i *ngIf="message.MessageId===null" class="wait icon"></i> {{message.Date|amTimeAgo}}
+                            {{message.Date|amTimeAgo}}
                         </div>
                         <div class="concrete-message him">
                             {{message.Message}}
@@ -108,10 +107,10 @@
 <ng-template let-context let-modal="modal" #modal>
     <div class="ui content">
         <div *ngIf="dialogToDelete!==ungefined">
-            <h4 align="center"> You're going to delete dialog with {{dialogToDelete.ParticipantName}}</h4>
+            <h4 align="center"> You're going to hide dialog with {{dialogToDelete.ParticipantName}}</h4>
             <div align="center">
                 <button class="ui button" (click)="deleteDialog()">
-                       <h5>Delete</h5>
+                       <h5>Hide</h5>
                     </button>
                 <button class="ui basic button add" (click)="currModal.deny(undefined)"><h5>Cancel</h5></button>
             </div>

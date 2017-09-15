@@ -41,6 +41,11 @@ namespace Unicorn.Core.Infrastructure.SignalR
         {
             await _context.Clients.Group($"accountId={accountId}").ReadNotReadedMessages(dialogId);
         }
+        public async Task DeleteMessage(long accountId, long dialogId)
+        {
+            await _context.Clients.Group($"accountId={accountId}").DeleteMessage(dialogId);
+        }
+
 
         private IHubContext _context;
     }

@@ -67,7 +67,9 @@
                 <div class="ui pointing secondary menu">
                     <a routerLink="/user/{{user.Id}}/edit" [queryParams]="{tab: 'profile'}" class="item" suiTabHeader="1">EDIT</a>
                     <a routerLink="/user/{{user.Id}}/edit" [queryParams]="{tab: 'tasks'}" class="item" suiTabHeader="2" [isActive]="tasksTabActive">TASKS</a>
-                    <a routerLink="/user/{{user.Id}}/edit" [queryParams]="{tab: 'messages'}" class="item" suiTabHeader="3" [isActive]="messagesTabActive">MESSAGES</a>
+                    <a routerLink="/user/{{user.Id}}/edit" [queryParams]="{tab: 'messages'}" class="item" suiTabHeader="3" [isActive]="messagesTabActive">MESSAGES
+                        <label *ngIf="unreadDialogCount > 0" class="unread-msg"></label>
+                    </a>
                     <a routerLink="/user/{{user.Id}}/edit" [queryParams]="{tab: 'history'}" class="item" suiTabHeader="4">HISTORY</a>
                 </div>
                 <div class="row">

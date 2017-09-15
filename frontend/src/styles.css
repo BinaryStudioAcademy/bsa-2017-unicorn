@@ -10,6 +10,14 @@
     }
 }
 
+.unread-msg {
+    width: 10px;
+    height: 10px;
+    margin: 5px 10px;    
+    background: #5bb0ff;
+    border-radius: 10px;  
+}
+
 
 /* CALENDAR */
 
