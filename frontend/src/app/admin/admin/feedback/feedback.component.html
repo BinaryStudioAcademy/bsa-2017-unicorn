@@ -1,7 +1,7 @@
 <div *ngIf="reports !== undefined" class="container">
     <div *ngIf="reports.length > 0; else reportsIsEmpty" class="ui vertically divided grid" id="main">
         <div *ngFor="let report of reports" class="row">
-            <div *ngIf="report.Type === 1" class="sixteen wide column">
+            <div class="sixteen wide column">
                 <div class="row">
                     <div class="ui grid">
                         <div class="row">
@@ -10,34 +10,21 @@
                                 <span class="date">{{report.Date|date:fullDate}}</span>
                             </div>
                             <div class="ten wide column">
-                                <p class="review-text">{{report.Message}}</p>
+                                <h5 *ngIf="report.Type === 1">Feedback message</h5>
+                                <h5 *ngIf="report.Type === 2">The {{report.ProfileType}} with profile <a routerLink="/{{report.ProfileType}}/{{report.ProfileId}}">{{report.ProfileName}}</a> received a complaint with message</h5>
+                                <div (click)="openReportInModal(report)" class="review-text">
+                                    <div>
+                                        <p>{{report.Message}}</p>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="two wide column">
+                            <div class="two wide middle aligned column">
                                 <a (click)="remove(report)" class="ui button remove">Remove</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div *ngIf="report.Type === 2" class="sixteen wide column">
-                    <div class="row">
-                        <div class="ui grid">
-                            <div class="row">
-                                <div class="four wide column">
-                                    <p class="from"><a>{{report.Email}}</a></p>
-                                    <span class="date">{{report.Date|date:fullDate}}</span>
-                                </div>
-                                <div class="ten wide column">
-                                    <h5>The {{report.ProfileType}} with profile <a routerLink="/{{report.ProfileType}}/{{report.ProfileId}}">{{report.ProfileName}}</a> received a complaint with message</h5>
-                                    <p class="review-text">{{report.Message}}</p>
-                                </div>
-                                <div class="two wide column">
-                                    <a (click)="remove(report)" class="ui button remove">Remove</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
         </div>
     </div>
     <ng-template #reportsIsEmpty>
@@ -47,3 +34,15 @@
 <div *ngIf="reports === undefined" class="ui active inverted dimmer" style="z-index: 0;">
     <div class="ui text loader">Loading</div>
 </div>
+
+<ng-template let-context let-modal="modal" #modalTemplate>
+    <div class="content">
+            <div *ngIf="context.report.Type === 1" class="ui large header">Feedback message</div>
+            <div *ngIf="context.report.Type === 2" class="ui large header">
+            The {{context.report.ProfileType}} with profile 
+            <a routerLink="/{{context.report.ProfileType}}/{{context.report.ProfileId}}">{{context.report.ProfileName}}</a> 
+            received a complaint with message
+            </div>
+        <p>{{ context.report.Message }}</p>
+    </div>
+</ng-template>
