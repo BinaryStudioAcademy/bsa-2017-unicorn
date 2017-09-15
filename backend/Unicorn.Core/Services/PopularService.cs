@@ -49,6 +49,7 @@ namespace Unicorn.Core.Services
                     DateTimeOffset dateTime;
                     dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
                     dateTime = dateTime.AddMilliseconds(Double.Parse(dt)).ToLocalTime();
+                    dateTime = dateTime.UtcDateTime;
                     return dateTime;
                 }
                 return DateTimeOffset.Now;
