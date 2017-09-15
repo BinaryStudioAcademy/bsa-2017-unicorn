@@ -60,8 +60,7 @@
                     </div>
                     <div class="message" *ngIf="message.OwnerId !== ownerId">
                         <div class="date-him">
-                            <i *ngIf="message.MessageId!=null" class="remove icon" (click)="deleteMessageModal(message)"></i>
-                            <i *ngIf="message.MessageId===null" class="wait icon"></i> {{message.Date|amTimeAgo}}
+                            {{message.Date|amTimeAgo}}
                         </div>
                         <div class="concrete-message him">
                             {{message.Message}}

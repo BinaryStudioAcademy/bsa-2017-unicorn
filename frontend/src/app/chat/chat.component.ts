@@ -101,8 +101,9 @@ export class ChatComponent implements OnInit {
   }
   deleteMessage()
   {
-   this.chatService.deleteMessage(this.messageToDelete.MessageId).then(res=>this.getDialog());
-   this.chatEventsService.messageDeleteFromChatToMiniChat(this.messageToDelete);
+   this.chatService.deleteMessage(this.messageToDelete.MessageId).then(res=>{this.getDialog();
+    this.chatEventsService.messageDeleteFromChatToMiniChat(this.messageToDelete);});
+   
    this.currModal.deny(undefined);
    this.startScroll();
    
