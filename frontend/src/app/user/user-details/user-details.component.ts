@@ -13,6 +13,8 @@ import { UserService } from "../../services/user.service";
 import { ModalService } from "../../services/modal/modal.service";
 import { PhotoService, Ng2ImgurUploader } from '../../services/photo.service';
 import { ImageCropperComponent, CropperSettings } from 'ng2-img-cropper';
+import { Subscription } from "rxjs/Subscription";
+import { UnreadDialogsService } from "../../services/chat/unread-dialogs.service";
 
 import {
   SuiModalService, TemplateModalConfig
@@ -20,6 +22,7 @@ import {
 } from 'ng2-semantic-ui';
 import { ToastsManager, Toast } from 'ng2-toastr';
 import { MenuEventsService } from "../../services/events/menu-events.service";
+import { ChatEventsService } from "../../services/events/chat-events.service";
 
 @Component({
   selector: 'app-user-details',
@@ -56,6 +59,10 @@ export class UserDetailsComponent implements OnInit {
   tasksTabActive: boolean;
   messagesTabActive: boolean;
 
+  unreadDialogCount: number;
+  messageReadFromChat: Subscription;
+  messageReadFromMiniChat: Subscription;
+
   constructor(
     private route: ActivatedRoute,
     private userService: UserService,
@@ -65,6 +72,8 @@ export class UserDetailsComponent implements OnInit {
     private modalService: ModalService,    
     private tokenHelper: TokenHelperService,
     public toastr: ToastsManager,
+    private unreadDialogs: UnreadDialogsService,
+    private chatEventsService: ChatEventsService,
     private menuEventsService: MenuEventsService) { 
       this.cropperSettings = modalService.cropperSettings;
       this.data = {};
@@ -78,12 +87,22 @@ export class UserDetailsComponent implements OnInit {
         this.user = resp.body as User;
         this.user.Birthday = new Date(this.user.Birthday);
         this.backgroundUrl = this.buildSafeUrl(this.user.Background != null ? this.user.Background : "https://www.beautycolorcode.com/d8d8d8.png");
+
+        this.unreadDialogs.getUnreadDialogsCount(this.user.AccountId).then(x=> this.unreadDialogCount = x).catch(err=>console.log(err));
       });
 
     switch (this.route.snapshot.queryParams['tab']) {
       case 'tasks': this.tasksTabActive = true; break;
       case 'messages': this.messagesTabActive = true; break;
     }
+
+    this.messageReadFromChat = this.chatEventsService.readMessageFromMiniChatToChatEvent$.subscribe(x=> {--this.unreadDialogCount});
+    this.messageReadFromMiniChat = this.chatEventsService.readMessageFromChatToMiniChatEvent$.subscribe(x => --this.unreadDialogCount);
+  }
+
+  ngOnDestroy(){
+   this.messageReadFromChat.unsubscribe();
+   this.messageReadFromMiniChat.unsubscribe(); 
   }
 
   buildSafeUrl(link: string): SafeResourceUrl {
