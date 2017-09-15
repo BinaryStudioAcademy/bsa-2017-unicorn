@@ -55,7 +55,6 @@ import { ChatLogicService } from "./services/chat/chat-logic.service";
 import { CalendarService } from "./services/calendar-service";
 import { ClickOutsideModule } from "ng-click-outside/lib";
 
-import { UnreadChatMessagesService } from "./services/unread-chat-messages.service";
 import { NotFoundModule} from './not-found/not-found.module';
 import { AdminModule } from "./admin/admin.module";
 
@@ -122,7 +121,6 @@ export function getDefaultSignalRConfig(): SignalRConfiguration {
     TokenHelperService,
     AccountService,
     NotificationService,
-    UnreadChatMessagesService,
     ChatLogicService,
    { provide: ToastOptions, useClass: CustomOptions}
   ],

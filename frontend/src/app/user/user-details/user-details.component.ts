@@ -11,7 +11,6 @@ import { User } from '../../models/user';
 import { TokenHelperService } from '../../services/helper/tokenhelper.service';
 import { UserService } from "../../services/user.service";
 import { ModalService } from "../../services/modal/modal.service";
-import { UnreadChatMessagesService } from "../../services/unread-chat-messages.service";
 import { PhotoService, Ng2ImgurUploader } from '../../services/photo.service';
 import { ImageCropperComponent, CropperSettings } from 'ng2-img-cropper';
 
@@ -56,7 +55,6 @@ export class UserDetailsComponent implements OnInit {
 
   tasksTabActive: boolean;
   messagesTabActive: boolean;
-  countUnreadMessages: number;
 
   constructor(
     private route: ActivatedRoute,
@@ -67,8 +65,7 @@ export class UserDetailsComponent implements OnInit {
     private modalService: ModalService,    
     private tokenHelper: TokenHelperService,
     public toastr: ToastsManager,
-    private menuEventsService: MenuEventsService,
-    private unreadMessages: UnreadChatMessagesService) { 
+    private menuEventsService: MenuEventsService) { 
       this.cropperSettings = modalService.cropperSettings;
       this.data = {};
       this.imageUploaded = false;
@@ -81,14 +78,12 @@ export class UserDetailsComponent implements OnInit {
         this.user = resp.body as User;
         this.user.Birthday = new Date(this.user.Birthday);
         this.backgroundUrl = this.buildSafeUrl(this.user.Background != null ? this.user.Background : "https://www.beautycolorcode.com/d8d8d8.png");
-
-        this.unreadMessages.getCountUnreadMessages(this.user.AccountId).then(x=> this.countUnreadMessages = x);
       });
 
     switch (this.route.snapshot.queryParams['tab']) {
       case 'tasks': this.tasksTabActive = true; break;
       case 'messages': this.messagesTabActive = true; break;
-    }    
+    }
   }
 
   buildSafeUrl(link: string): SafeResourceUrl {

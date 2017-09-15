@@ -270,22 +270,12 @@ namespace Unicorn.Core.Services
             return result;
         }
 
-        public int GetCountUnreadMessages(long accountId)
-        {
-            return _unitOfWork.ChatDialogRepository.Query
-              .Include(x => x.Participant1)
-              .Include(x => x.Participant2)
-              .Include(x => x.Messages)
-             .Where(x => x.Participant1.Id == accountId || x.Participant2.Id == accountId)
-             .SelectMany(x => x.Messages).Count(x => x.Owner.Id != accountId && !x.IsReaded);
-        }
-
         public async Task<ChatDialogDTO> FindDialog(long participantOneId, long participantTwoId)
         {
             var res = await _unitOfWork.ChatDialogRepository.Query
                 .Include(x => x.Participant1)
                 .Include(x => x.Participant2)
-                .Include(x => x.Messages)
+                .Include(x => x.Messages)                
                 .FirstOrDefaultAsync(
                     x => (x.Participant1.Id == participantOneId && x.Participant2.Id == participantTwoId) ||
                          (x.Participant1.Id == participantTwoId && x.Participant2.Id == participantOneId));
