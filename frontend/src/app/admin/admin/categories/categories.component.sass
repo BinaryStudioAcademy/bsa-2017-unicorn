@@ -1,0 +1,84 @@
+@import "../../../../global-style-variables.sass"
+
+// .ui.button.new
+// 	width: 14.6em;
+// 	margin-left: -0.6em;
+// 	text-align: center;
+// 	background-color: $primary_color;
+// 	color: white;
+// 	&:hover
+// 		box-shadow: 0 0 0 1px $primary_color;
+// 		background-color: white;
+// 		color: $primary_color;
+
+.ui.button.new
+	width: 14.6em;
+	margin-left: -0.6em;
+	text-align: center;
+	background-color: white;
+	color: $primary_color;
+	box-shadow: 0 0 0 1px $primary_color;
+	&:hover
+		background-color: $primary_color;
+		color: white;
+
+
+.category-title
+	display: flex;
+	justify-content: space-between;
+	border-bottom: 1px solid #d8d8d8;
+	padding: 5px 25px 10px 25px;
+
+.category-icon > img
+	width: 50px;
+	height: 50px;
+	object-fit: cover;
+
+.category-name
+	width: 30%;
+	display: flex;
+	flex-direction: column;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+
+.category-actions
+	display: flex;
+	align-items: center;
+
+.category-actions > .ui.button
+	width: 7em;
+	text-align: center;
+	&.edit
+		background-color: $primary_color;
+		color: white;
+		&:hover
+			box-shadow: 0 0 0 1px $primary_color;
+			background-color: white;
+			color: $primary_color;
+	&.remove
+		box-shadow: 0 0 0 1px $primary_color;
+		background-color: white;
+		color: $primary_color;
+		&:hover
+			background-color: $primary_color;
+			color: white;
+
+.subcategory-list
+	border-bottom: 1px solid #d8d8d8;
+	padding-bottom: 15px;
+
+.subcategory-list > .item
+	display: flex;
+	justify-content: flex-end;
+
+.ui.right.floated.segment
+	align-items: center;
+
+.ui.right.floated.segment > h5
+	margin: 0;
+
+.subcategory-list > .item > .ui.right.floated.segment
+	width: 80%;
+	display: flex;
+	justify-content: space-between;

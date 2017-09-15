@@ -1,3 +1,57 @@
-<p>
-  categories works!
-</p>
+<script src="https://rawgit.com/web-animations/web-animations-js/master/web-animations.min.js"></script>
+
+<div class="ui fluid grid">
+  <div class="row">
+    <div class="twelve wide column">
+      <div class="ui fluid left icon input">
+        <input type="text" placeholder="Search..." [(ngModel)]="searchTemplate" (ngModelChange)="load()">
+        <i class="circular search link icon"></i>
+      </div>
+    </div>
+    <div class="four wide center aligned column">
+      <a class="ui button new">New category</a>
+    </div>
+  </div>
+</div>
+
+<sui-accordion [closeOthers]="false">
+  <sui-accordion-panel *ngFor="let category of categories">
+    <div title>
+      <div class="category-title">
+        <div class="category-icon">
+          <img class="ui circular image" src="{{category.Icon}}">
+        </div>
+        <div class="category-name">
+          <h5>{{category.Name}}</h5>
+          <p>{{category.Description}}</p>
+        </div>
+        <div class="category-actions">
+          <a class="ui button edit">Edit</a>
+          <a class="ui button remove">Remove</a>
+        </div>
+      </div>
+    </div>
+    <div content>
+      <div class="ui items subcategory-list">
+        <div *ngFor="let subcategory of category.Subcategories" class="item">
+          <div class="ui right floated segment">
+            <div class="category-name">
+              <h5>{{subcategory.Name}}</h5>
+              <p>{{subcategory.Description}}</p>
+            </div>
+            <div class="category-actions">
+              <a class="ui button edit">Edit</a>
+              <a class="ui button remove">Remove</a>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+            <div class="ui right floated segment">
+              <h5>Create new subcategory of {{category.Name}}</h5>
+              <a class="ui button new">New subcategory</a>
+            </div>
+          </div>
+      </div>
+    </div>
+  </sui-accordion-panel>
+</sui-accordion>
