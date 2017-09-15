@@ -180,13 +180,16 @@ a
 .ui.icon.input
     flex-basis: 15%;
 
-.talk.outline.link.icon
+.outline.link.icon
     background: rgb(176, 213, 247);
     font-size: 1.2em;
     font-weight: 700;
     color: black;   
-    width: 100%; 
-    border-radius: 0;
+    width: 100%!important; 
+    border-radius: 0!important;
+    position: inherit!important;
+    border: 1px solid rgba(34, 36, 38, 0.15);
+
 
 .grey-background
     background: rgba(176, 213, 247, 0.5)!important;
@@ -248,10 +251,8 @@ textarea
 .without-left-border
     border-left: inherit;
 
-.inputfile    
-	overflow: hidden;
-	position: absolute;
-	z-index: -1;
+.inputfile   
+    display: none;
 
 .ui.form input
     height: 1px;
@@ -267,3 +268,6 @@ textarea
 
 .files.him>a
     color: black
+
+.ui.form .field>label
+    margin-bottom: 0!important;

@@ -1,7 +1,7 @@
 <div class="container" [ngStyle]="{'height.px': containerHeight}" *ngIf="dialogs !== undefined">
     <div class="side-bar">
         <div class="ui fluid icon input dialog-search">
-            <input type="text" [(ngModel)]="searchString" (ngModelChange)="searchNewPartitipants()" placeholder="Search...">
+            <input type="text" [(ngModel)]="searchString" style="border-radius: 0!important;" (ngModelChange)="searchNewPartitipants()" placeholder="Search...">
             <i class="search icon"></i>
         </div>
         <div class="users">
@@ -61,7 +61,7 @@
                     <div class="message" *ngIf="message.OwnerId !== ownerId">
                         <div class="date-him">
                             <i *ngIf="message.MessageId!=null" class="remove icon" (click)="deleteMessageModal(message)"></i>
-                            <i *ngIf="message.MessageId===null" class="wait icon"></i> {{message.Date|amTimeAgo}} {{message.Date|amTimeAgo}}
+                            <i *ngIf="message.MessageId===null" class="wait icon"></i> {{message.Date|amTimeAgo}}
                         </div>
                         <div class="concrete-message him">
                             {{message.Message}}
@@ -88,7 +88,7 @@
             <div class="ui text loader">Loading</div>
         </div>
         <div class="ui form" *ngIf="dialogs !== undefined && dialogs !== null  && messages !== undefined" [ngClass]="{'disabled-div':noMessages}">
-            <div class=" field " style="display: flex; ">
+            <div class=" field " style="display: flex; align-items: flex-end;">
                 <textarea #textArea (keydown)="onChange($event) " (click)="readNotReadedMessages(dialog) " [ngStyle]="{ 'height.px': inputHeight} " class="prompt " type="text " placeholder="Type here... " [(ngModel)]="writtenMessage " style="display:inline ">                        
                 </textarea>
                 <input class="inputfile" type="file" name="attachfile" id="attachfile" (change)="uploadFile()" multiple="true" #fileInput>

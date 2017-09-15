@@ -234,10 +234,9 @@ textarea
     height: 1px;
     width: 1px;
 
-.inputfile
-	overflow: hidden;
-	position: absolute;
-	z-index: -1;
+.inputfile	
+    display: none;
+
 .ui.basic.button
 	box-shadow: 0 0 0 1px $tab-color!important;
 	color:  $tab-color;
@@ -270,3 +269,12 @@ textarea
 .remove.icon:hover
    color: black;
    cursor: pointer;
+
+.ui.form .field>label
+    margin-bottom: 0!important;
+
+.ui.icon.input>i.icon
+    position: inherit!important;
+    border-radius: 0!important;
+
+.ui.form[_ngcontent-c17]   input[_ngcontent-c17]

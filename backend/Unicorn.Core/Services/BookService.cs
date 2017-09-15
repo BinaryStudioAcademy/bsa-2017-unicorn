@@ -493,6 +493,7 @@ namespace Unicorn.Core.Services
                                 && book.Status != BookStatus.Pending
                                 && book.Status != BookStatus.Declined
                                 && book.Status != BookStatus.Finished
+                                && book.Status != BookStatus.Confirmed
                                 && ((_book.Date >= book.Date
                                 && _book.Date <= book.EndDate)
                                 || (_book.EndDate <= book.EndDate
@@ -525,6 +526,7 @@ namespace Unicorn.Core.Services
                             && book.Status != BookStatus.Pending
                             && book.Status != BookStatus.Declined
                             && book.Status != BookStatus.Finished
+                            && book.Status != BookStatus.Confirmed
                             && ((_book.Date >= book.Date
                             && _book.Date <= book.EndDate)
                             || (_book.EndDate <= book.EndDate

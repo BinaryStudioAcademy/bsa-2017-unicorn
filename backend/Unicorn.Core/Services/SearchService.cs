@@ -41,12 +41,16 @@ namespace Unicorn.Core.Services
 
         private bool IsVendorWorkingOnThisDate(long id, DateTimeOffset date)
         {          
-            return _unitOfWork.BookRepository.Query.FirstOrDefault(x => date >= x.Date && date <= x.EndDate && id == x.Vendor.Id) != null ? true : false;
+            return _unitOfWork.BookRepository.Query.FirstOrDefault(x => date >= x.Date && date <= x.EndDate 
+            && x.Status != DataAccess.Entities.Enum.BookStatus.Finished && x.Status != DataAccess.Entities.Enum.BookStatus.Declined
+            && x.Status != DataAccess.Entities.Enum.BookStatus.Confirmed && id == x.Vendor.Id) != null ? true : false;
         }
 
         private bool IsCompanyWorkingOnThisDate(long id, DateTimeOffset date)
         {
-            return _unitOfWork.BookRepository.Query.FirstOrDefault(x => date >= x.Date && date <= x.EndDate && id == x.Company.Id) != null ? true : false;
+            return _unitOfWork.BookRepository.Query.FirstOrDefault(x => date >= x.Date && date <= x.EndDate
+            && x.Status != DataAccess.Entities.Enum.BookStatus.Finished && x.Status != DataAccess.Entities.Enum.BookStatus.Declined
+            && x.Status != DataAccess.Entities.Enum.BookStatus.Confirmed && id == x.Company.Id) != null ? true : false;
         }
 
         private bool SynchronizeWorkDateWithVendorsWorkDays(Calendar calendar, DateTimeOffset date, bool isWorkingOnThisDate)
