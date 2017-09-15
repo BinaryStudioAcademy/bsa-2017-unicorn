@@ -195,5 +195,20 @@ namespace Unicorn.Controllers
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e);
             }
         }
+
+        [HttpGet]
+        [Route("unread/{id}")]
+        public async Task<HttpResponseMessage> UnreadDialogsCount(long id)
+        {
+            try
+            {
+                int count = await _chatService.GetUnreadDialogsCount(id);
+                return Request.CreateResponse(HttpStatusCode.OK, count);
+            }
+            catch
+            {
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            }
+        }
     }
 }

@@ -89,6 +89,11 @@ namespace Unicorn.Core.Services
             await _proxy.ReadNotReadedMessages(accountId, dialogId);
         }
 
+        public async Task CreateDelAsync(long accountId, long dialogId)
+        {
+            await _proxy.DeleteMessage(accountId, dialogId);
+        }
+
         public async Task<IEnumerable<NotificationDTO>> GetAllAsync()
         {
             var notifications = await _unitOfWork.NotificationRepository.GetAllAsync();

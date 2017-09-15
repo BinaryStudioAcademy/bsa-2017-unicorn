@@ -152,7 +152,9 @@ namespace Unicorn.Core.Services
             {
                 Name = w.Name,
                 Value = Convert.ToInt32(w.Orders)
-            }).ToList();
+            })
+            .OrderBy(w => w.Value)
+            .ToList();
         }
 
         private async Task<List<ChartPointDTO>> GetVendorPopularWorks(long id)
@@ -162,7 +164,9 @@ namespace Unicorn.Core.Services
             {
                 Name = w.Name,
                 Value = Convert.ToInt32(w.Orders)
-            }).ToList();
+            })
+            .OrderBy(w => w.Value)
+            .ToList();
         }
 
         private async Task<List<ChartPointDTO>> GetCompanyConfirmedWorks(long id)
