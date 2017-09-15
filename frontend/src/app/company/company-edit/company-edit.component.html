@@ -22,7 +22,7 @@
                             <a routerLink="/company/{{company.Id}}/edit" [queryParams]="{tab: 'vendors'}" class="item" suiTabHeader="3" [isActive]="vendorsTabActive">Vendors</a>
                             <a routerLink="/company/{{company.Id}}/edit" [queryParams]="{tab: 'works'}" class="item" suiTabHeader="4" [isActive]="worksTabActive">Works</a>
                             <a routerLink="/company/{{company.Id}}/edit" [queryParams]="{tab: 'messages'}" class="item" suiTabHeader="5" [isActive]="messagesTabActive">Messages
-                                <label *ngIf="unreadDialogCount > 0" class="ui blue empty circular label"></label>
+                                <label *ngIf="unreadDialogCount > 0" class="unread-msg"></label>
                             </a>
                             <a routerLink="/company/{{company.Id}}/edit" [queryParams]="{tab: 'contacts'}" class="item" suiTabHeader="6">Contacts</a>
                             <a routerLink="/company/{{company.Id}}/edit" [queryParams]="{tab: 'calendar'}" class="item" suiTabHeader="7">Calendar</a>

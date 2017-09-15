@@ -17,7 +17,7 @@
                             <div class="lastMessageDate" *ngIf="_dialog.LastMessageTime !== null">
                                 {{_dialog.LastMessageTime|amTimeAgo}}
                             </div>
-                            <div class="is-readed" *ngIf="!_dialog.IsReadedLastMessage">
+                            <div class="unread-msg" *ngIf="!_dialog.IsReadedLastMessage">
                             </div>
                         </div>
                     </div>
