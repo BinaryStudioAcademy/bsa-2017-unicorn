@@ -2,7 +2,7 @@
     <div id="admin-header">
         <p><span class="admin-title">UNICORN</span>admin</p>
     </div>
-    <div class="sixteen wide column container">
+    <div *ngIf="isLoggedIn" class="sixteen wide column container">
         <sui-tabset>
             <div class="ui pointing secondary menu">
                 <a routerLink="/admin/ban-list" [queryParams]="{tab: 'ban-list'}" class="item" suiTabHeader="1">BAN LIST</a>
