@@ -162,9 +162,10 @@ namespace Unicorn.Core.Services
                 Id = dialogId,
                 ParticipantOneId = dialog.Participant1.Id,
                 ParticipantTwoId = dialog.Participant2.Id,
-                Messages = dialog.Messages.Select(x => new ChatMessageDTO
+                Messages = dialog.Messages.Where(x => !x.IsDeleted).Select(x => new ChatMessageDTO
                 {
                     DialogId = x.Dialog.Id,
+                    MessageId = x.Id,
                     Date = x.Date,
                     IsReaded = x.IsReaded,
                     Message = x.Message,
@@ -214,6 +215,7 @@ namespace Unicorn.Core.Services
                 IsReadedLastMessage = false,
                 Messages = dialog.Messages.Select(x => new ChatMessageDTO
                 {
+                    MessageId = x.Id,
                     DialogId = x.Dialog.Id,
                     Date = x.Date,
                     IsReaded = x.IsReaded,
@@ -321,8 +323,9 @@ namespace Unicorn.Core.Services
                 ParticipantType = profileType,
                 ParticipantProfileId = profileId,
                 IsReadedLastMessage = res.Messages?.Where(y => y.Owner.Id != ownerId).LastOrDefault()?.IsReaded ?? true,
-                Messages = res.Messages.Select(x => new ChatMessageDTO
+                Messages = res.Messages.Where(x => !x.IsDeleted).Select(x => new ChatMessageDTO
                 {
+                    MessageId = x.Id,
                     DialogId = x.Dialog.Id,
                     Date = x.Date,
                     IsReaded = x.IsReaded,
@@ -333,6 +336,7 @@ namespace Unicorn.Core.Services
                         Id = f.Id,
                         OriginalName = f.OriginalName,
                         ServerPathName = f.ServerPathName
+
                     }).ToList()
                 }).ToList()
             };

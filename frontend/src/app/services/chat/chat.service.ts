@@ -26,7 +26,12 @@ export class ChatService {
   findDialog(participantOneId: number, participantTwoId: number):Promise<DialogModel>{
     return this.dataService.getRequest("chat/dialog/find/" + participantOneId + "/" + participantTwoId);  
   }
-
+  deleteDialog(dialogId: number):Promise<any>{
+    return this.dataService.deleteRequest("chat/dialogs/" + dialogId);  
+  }
+  deleteMessage(messageId: number):Promise<any>{
+    return this.dataService.deleteRequest("chat/messages/" + messageId);  
+  }
   addMessage(message: MessageModel):Promise<MessageModel>{
     return this.dataService.postRequest("chat/send", message);
   }

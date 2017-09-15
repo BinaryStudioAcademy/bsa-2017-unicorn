@@ -5,8 +5,10 @@
             <i class="search icon"></i>
         </div>
         <div class="users">
-            <div class="upper-user" (click)="onSelect(_dialog.Id)" *ngFor="let _dialog of filterDialogsByPartitipantName(searchString)"
-                [ngClass]="{'active': _dialog.Id === selectedId}">
+            <div class="upper-user" (click)="onSelect(_dialog.Id)" *ngFor="let _dialog of filterDialogsByPartitipantName(searchString)" [ngClass]="{'active': _dialog.Id === selectedId}">
+                <div class="remove-block">
+                    <i class="remove icon" (click)="deleteDialogModal(_dialog)"></i>
+                </div>
                 <div class="user" [ngClass]="{'active': _dialog.Id === selectedId}">
                     <img class="ui avatar image" src="{{_dialog.ParticipantAvatar}}">
                     <div class="dialog-inf">
@@ -41,6 +43,8 @@
                     <div class="message" *ngIf="message.OwnerId === ownerId" [ngClass]="{'loading':message.isLoaded}">
                         <div class="date-me">
                             {{message.Date|amTimeAgo}}
+                            <i *ngIf="message.MessageId!=null" class="remove icon" (click)="deleteMessageModal(message)"></i>
+                            <i *ngIf="message.MessageId==null" class="wait icon"></i>
                         </div>
                         <div class="concrete-message me">
                             {{message.Message}}
@@ -56,7 +60,8 @@
                     </div>
                     <div class="message" *ngIf="message.OwnerId !== ownerId">
                         <div class="date-him">
-                            {{message.Date|amTimeAgo}}
+                            <i *ngIf="message.MessageId!=null" class="remove icon" (click)="deleteMessageModal(message)"></i>
+                            <i *ngIf="message.MessageId===null" class="wait icon"></i> {{message.Date|amTimeAgo}} {{message.Date|amTimeAgo}}
                         </div>
                         <div class="concrete-message him">
                             {{message.Message}}
@@ -79,22 +84,20 @@
         <div *ngIf="messages === undefined || messages === null " class="chat-block-dimmer ui active inverted dimmer" style="z-index: 0;">
             <div class="ui text loader">Loading</div>
         </div>
-        <div *ngIf="noMessages && messages !== undefined && messages !== null && messages.length !== 0" class="chat-block-dimmer ui active inverted dimmer"
-            style="z-index: 0;">
+        <div *ngIf="noMessages && messages !== undefined && messages !== null && messages.length !== 0" class="chat-block-dimmer ui active inverted dimmer" style="z-index: 0;">
             <div class="ui text loader">Loading</div>
         </div>
         <div class="ui form" *ngIf="dialogs !== undefined && dialogs !== null  && messages !== undefined" [ngClass]="{'disabled-div':noMessages}">
             <div class=" field " style="display: flex; ">
-                <textarea #textArea (keydown)="onChange($event) " (click)="readNotReadedMessages(dialog) " [ngStyle]="{ 'height.px': inputHeight} "
-                    class="prompt " type="text " placeholder="Type here... " [(ngModel)]="writtenMessage " style="display:inline ">                        
+                <textarea #textArea (keydown)="onChange($event) " (click)="readNotReadedMessages(dialog) " [ngStyle]="{ 'height.px': inputHeight} " class="prompt " type="text " placeholder="Type here... " [(ngModel)]="writtenMessage " style="display:inline ">                        
                 </textarea>
                 <input class="inputfile" type="file" name="attachfile" id="attachfile" (change)="uploadFile()" multiple="true" #fileInput>
                 <label class="ui icon input" for="attachfile">
                     <i class="attach outline link icon"></i>
-                </label>           
+                </label>
                 <div class="ui icon input ">
                     <i class="talk outline link icon " (click)="onWrite() "></i>
-                </div>                
+                </div>
             </div>
         </div>
     </div>
@@ -102,3 +105,25 @@
 <div *ngIf="dialogs===undefined" class="ui active inverted dimmer normal-weighted" style="z-index: 0; ">
     <div class="ui text loader ">Loading</div>
 </div>
+<ng-template let-context let-modal="modal" #modal>
+    <div class="ui content">
+        <div *ngIf="dialogToDelete!==ungefined">
+            <h4 align="center"> You're going to delete dialog with {{dialogToDelete.ParticipantName}}</h4>
+            <div align="center">
+                <button class="ui button" (click)="deleteDialog()">
+                       <h5>Delete</h5>
+                    </button>
+                <button class="ui basic button add" (click)="currModal.deny(undefined)"><h5>Cancel</h5></button>
+            </div>
+        </div>
+        <div *ngIf="messageToDelete!==ungefined">
+            <h4 align="center"> You're going to delete message {{messageToDelete.Message}}</h4>
+            <div align="center">
+                <button class="ui button" (click)="deleteMessage()">
+                           <h5>Delete</h5>
+                        </button>
+                <button class="ui basic button add" (click)="currModal.deny(undefined)"><h5>Cancel</h5></button>
+            </div>
+        </div>
+    </div>
+</ng-template>

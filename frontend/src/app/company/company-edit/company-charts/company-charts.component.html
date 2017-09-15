@@ -1,4 +1,4 @@
-<div id="charts-main" *ngIf="analytics">
+<div id="charts-main" *ngIf="analytics && enabled">
   <div class="right-align">
     <sui-select class="selection"
       name="page" 
@@ -9,7 +9,7 @@
         value="Vendors analytics" (click)="isCompanyPage = false"></sui-select-option>
     </sui-select>
   </div>
-  <div class="ui divider"></div>
+  <div class="ui divider" *ngIf="!isCompanyPage"></div>
   <div id="company-page" *ngIf="isCompanyPage">
     <h4 align="center">Books accepted</h4>
     <div class="chart-wrap">

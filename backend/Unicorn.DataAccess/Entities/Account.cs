@@ -28,5 +28,7 @@ namespace Unicorn.DataAccess.Entities
         public virtual ICollection<SocialAccount> SocialAccounts { get; set; }        
 
         public virtual ICollection<Contact> Contacts { get; set; }
+
+        public bool IsBanned { get; set; }
     }
 }

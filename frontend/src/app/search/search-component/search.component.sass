@@ -63,7 +63,7 @@
     float: right;
 
 .full-width
-    width: 100%;
+    width: 100%!important;
 
 .rating-container
     display: flex;
@@ -84,8 +84,8 @@ sui-multi-select
     padding-left: 0 !important;
     
 .cell
-    width: 30%;
-    margin: 15px;
+    width: 29%;
+    margin: 2%;
 
 .cell-selected
     margin: 15px 15px !important;
@@ -107,7 +107,7 @@ sui-multi-select
     width: 100%
 
 .ui.fluid.image
-    height: 260px;
+    height: 230px;
     border: 1px solid #E5E5E5;
     object-fit: cover;
 
@@ -178,3 +178,69 @@ h3
     font-size: 13px;
     cursor: pointer;
     color: gray;
+
+.categories-container
+    padding-left: 2.5%!important;
+    padding-top: 0!important;
+    padding-bottom: 0!important;
+
+
+//responsive
+.flex-inputs
+    width: 100%!important
+    flex-direction: row!important
+    flex-wrap: nowrap!important
+
+.ui.grid.container.segment.full-width
+    width: 99% !important
+    margin-left: 0 !important
+    margin-right: 0 !important
+
+.post-filters-div
+    width: 100%
+    display: flex
+    justify-content: space-between
+
+.add-filter-container
+    margin-bottom: 10px
+    width: 100%
+    display: flex
+
+.add-filter-container-column
+    width: 100%
+    padding-left: 2.5%
+    padding-right: 2.5%
+
+#main
+    width: 65%
+
+@media only screen and (max-width: 600px)
+    .add-filter-container
+        flex-wrap: wrap
+
+    .add-filter-container-column
+        padding-top: 15px
+
+@media only screen and (max-width: 1100px)
+    .map-container
+        display: none
+
+    #main
+        width: 100%
+
+    .header-label
+        display: none !important
+
+@media only screen and (max-width: 1300px) and (min-width: 1101px)
+    .map-container
+        width: 34%
+
+    #main
+        width: 66%
+
+@media only screen and (max-width: 750px)
+    .cell
+        width: 45%
+    
+    .ui.fluid.image
+        height: 260px

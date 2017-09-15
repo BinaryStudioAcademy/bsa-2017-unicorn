@@ -10,6 +10,7 @@ import { VendorBook } from "../models/book/vendor-book.model";
 import { BookStatus } from "../models/book/book.model";
 import { CalendarEventsService } from "../services/events/calendar-events.service";
 import { Subscription } from "rxjs/Subscription";
+import { WeekDay } from "calendar-utils/dist/calendar-utils";
 
 export interface IDayContext {
   date: Date,
@@ -85,37 +86,42 @@ export class CalendarComponent implements OnInit {
       }      
       if(this.calendarModel.Events){
         this.calendarModel.Events.forEach(event => {
+          if(event.Status !== BookStatus.Declined && event.Status !== BookStatus.Finished){
           this.events.push({
-            start: new Date(event.Date),
-            title: event.Work.Name,
-            end: new Date(event.EndDate),        
-            color: colors.blue,
-            meta: {
-              status: BookStatus[event.Status],
-              description: event.Description,
-              customer: event.Customer,
-              customerPhone: event.CustomerPhone,
-              workIcon: event.Work.Icon
-            }
-          });            
+              start: new Date(event.Date),
+              title: event.Work.Name,
+              end: new Date(event.EndDate),        
+              color: colors.blue,
+              meta: {
+                status: BookStatus[event.Status],
+                description: event.Description,
+                customer: event.Customer,
+                customerPhone: event.CustomerPhone,
+                workIcon: event.Work.Icon
+              }
+            });     
+          }       
         });
       }
       this.isLoading = false; 
     });
   }
   
-  dayClicked(day: any): void { 
-    console.log(day);
+  dayClicked(day: any): void {     
     if (isSameMonth(day.date, this.viewDate)) {      
-      this.openDayModal(day);
-      console.log(this.calendarModel.Events[0].Status);
+      this.openDayModal(day, day.events);      
     }
   }
 
-  openDayModal(day: any) {
+  weekDayClicked(day: any){    
+    let events = this.events.filter(x => x.start.toLocaleDateString() === day.date.toLocaleDateString());
+    this.openDayModal(day, events);
+  }
+
+  openDayModal(day: any, events: CalendarEvent[]) {
     this.wasWeekend = day.isWeekend;
     const config = new TemplateModalConfig<IDayContext, void, void>(this.dayModalTemplate);
-    config.context = {date:day.date, events:day.events, day: day};
+    config.context = {date:day.date, events:events, day: day};
     config.isInverted = true;
     config.size = ModalSize.Normal;
     this.activeModal = this.modalService.open(config);
@@ -139,6 +145,7 @@ export class CalendarComponent implements OnInit {
     this.calendarModel.StartDate = context.startDate;
     this.calendarModel.EndDate = context.endDate;
     this.calendarModel.WorkOnWeekend = context.workOnWeekend;
+    this.calendarModel.SeveralTasksPerDay = context.severalTasksPerDay;
     
     if(context.workOnWeekend){
       this.calendarModel.ExtraWorkDays = [];
@@ -154,11 +161,11 @@ export class CalendarComponent implements OnInit {
     }); 
   }
 
-  closeDayModal(day: any){    
+  closeDayModal(day: any){       
     if(day.isWeekend !== this.wasWeekend){
       this.isSavingWeekend = true;      
-      if(day.isWeekend && (day.date.getDay() !== 6 && day.date.getDay() !== 0) ||
-        ((day.date.getDay() === 6 || day.date.getDay() === 0) && this.calendarModel.WorkOnWeekend)){
+      if(day.isWeekend && ((day.date.getDay() !== 6 && day.date.getDay() !== 0) ||
+        ((day.date.getDay() === 6 || day.date.getDay() === 0) && this.calendarModel.WorkOnWeekend))){
         this.calendarModel.ExtraDayOffs.push({
           Id: null,
           CalendarId: this.calendarModel.Id,
@@ -194,8 +201,16 @@ export class CalendarComponent implements OnInit {
     this.wasWeekend = undefined;   
   }
 
-  beforeMonthViewRender({ body }: { body: CalendarMonthViewDay[] }): void {    
-    body.forEach(day => {          
+  beforeMonthViewRender({ body }: { body: CalendarMonthViewDay[] }): void {       
+    this.render(body);
+  }
+
+  beforeWeekViewRender({ header }: { header: WeekDay[] }): void { 
+    this.render(header);
+  }
+
+  render(mas: any[]){
+    mas.forEach(day => {          
       if(this.calendarModel.ExtraWorkDays.find(x => new Date(x.Day).toLocaleDateString() == day.date.toLocaleDateString())){
         day.isWeekend = false;
       }

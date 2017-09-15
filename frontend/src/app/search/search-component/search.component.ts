@@ -109,7 +109,7 @@ export class SearchComponent implements OnInit {
     }).catch(err => this.spinner = false);
   }
 
-  filter(arr, search) {
+  filter(arr, search = '') {
     const result = [];
     if (search !== '' && arr) {
       for (let i = 0; i < arr.length; i++) {
@@ -139,6 +139,19 @@ export class SearchComponent implements OnInit {
           }
         }
       }
+    } else {
+      for (let i = 0; i < arr.length; i++) {
+        const tagObj = {
+          Name: arr[i].Name,
+          Value: arr[i].Name,
+          Group: '',
+          Icon: arr[i].Icon
+        };
+        result.push(tagObj);
+        if (result.length > 30) {
+          return result;
+        }
+      }
     }
     return result;
   }
@@ -146,6 +159,7 @@ export class SearchComponent implements OnInit {
 
   filterCategory() {
     this.filterCtgs = this.filter(this.categories, this.category);
+    console.log(this.filterCtgs);
   }
 
   filterSubcategory() {
@@ -177,8 +191,18 @@ export class SearchComponent implements OnInit {
   }
 
   onClickedOutside(e: Event) {
-    this.filterCtgs = [];
-    this.filterSubctgs = [];
+    switch (e.srcElement.id) {
+      case 'ctg':
+        this.filterSubctgs = [];
+        break;
+      case 'subctg':
+        this.filterCtgs = [];
+        break;
+      default:
+        this.filterCtgs = [];
+        this.filterSubctgs = [];
+        break;
+    }
   }
 
   searchWorks() {
@@ -190,7 +214,15 @@ export class SearchComponent implements OnInit {
     this.togglePanel = false;
     this.ratingCmp = this.convertRatingType(this.ratingCompare);
     this.selSort = this.convertSortType(this.sort);
-    this.getWorksByAdvFilters(this.category, this.subcategory, this.rawDate,
+
+    let date;
+    if(this.date){
+      date = this.date.getTime();
+    }
+    else{
+      date = -1;
+    }
+    this.getWorksByAdvFilters(this.category, this.subcategory, date,
            this.vendorName, this.ratingCmp, this.rating, this.reviewsChecked,
            this.latitude, this.longitude, this.distance,
            this.selCategories, this.selSubcategories, this.city, this.selSort);
@@ -456,3 +488,4 @@ export class SearchComponent implements OnInit {
     this.firstDayOfWeek = '1';    /* start calendar from first day of week */
   }
 }
+

@@ -4,6 +4,8 @@ import { DataService } from "./data.service";
 
 import { ProfileShortInfo } from "../models/profile-short-info.model";
 import { Notification } from "../models/notification.model";
+import { BanListPage } from "../models/admin/ban-list-page";
+import { AdminAccountViewModel } from "../models/admin/admin-account-view.model";
 
 @Injectable()
 export class AccountService {
@@ -37,5 +39,23 @@ export class AccountService {
 
 	searchByTemplate(template: string, count: number): Promise<ProfileShortInfo[]> {
 		return this.dataService.getRequest<ProfileShortInfo[]>(`${this.apiController}/search?template=${template}&count=${count}`);
+	}
+
+	banAccount(id: number): Promise<any> {
+		return this.dataService.postFullRequest<AdminAccountViewModel>(`${this.apiController}/${id}/ban`, null)
+			.catch(err => alert(err));
+	}
+
+	unbanAccount(id: number): Promise<any> {
+		return this.dataService.postFullRequest<AdminAccountViewModel>(`${this.apiController}/${id}/unban`, null)
+			.catch(err => alert(err));
+	}
+
+	getBanListPage(page: number, size: number): Promise<BanListPage> {
+		return this.dataService.getRequest<BanListPage>(`${this.apiController}/banned?page=${page}&size=${size}`);
+	}
+
+	searchInBanListByTemplate(template: string, page: number, size: number): Promise<BanListPage> {
+		return this.dataService.getRequest<BanListPage>(`${this.apiController}/banned/search?template=${template}&page=${page}&size=${size}`);
 	}
 }

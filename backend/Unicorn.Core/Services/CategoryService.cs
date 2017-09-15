@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Unicorn.Core.Interfaces;
+using Unicorn.DataAccess.Entities;
 using Unicorn.DataAccess.Interfaces;
 using Unicorn.Shared.DTOs;
 using Unicorn.Shared.DTOs.Subcategory;
@@ -30,22 +31,64 @@ namespace Unicorn.Core.Services
                     Description = c.Description,
                     Tags = c.Tags,
                     Icon = c.Icon,
-                    Subcategories = c.Subcategories.Select(s => new SubcategoryShortDTO()
-                    {
-                        Id = s.Id,
-                        Name = s.Name,
-                        Category = c.Name,
-                        CategoryId = c.Id,
-                        Description = s.Description,
-                        Tags = s.Tags,
-                        Icon = s.Icon
-                    }).ToList()
+                    Subcategories = c.Subcategories
+                        .Where(s => !s.IsDeleted)    
+                        .Select(s => new SubcategoryShortDTO()
+                        {
+                            Id = s.Id,
+                            Name = s.Name,
+                            Category = c.Name,
+                            CategoryId = c.Id,
+                            Description = s.Description,
+                            Tags = s.Tags,
+                            Icon = s.Icon
+                        }).ToList()
                 }).ToListAsync();
         }
 
         public Task<CategoryDTO> GetByIdAsync(long id)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<CategoryDTO> CreateAsync(CategoryDTO categoryDTO)
+        {
+            var category = new Category
+            {
+                Description = categoryDTO.Description,
+                Icon = categoryDTO.Icon,
+                IsDeleted = false,
+                Name = categoryDTO.Name,
+                Subcategories = new List<Subcategory>(),
+                Tags = ""
+            };
+
+            _unitOfWork.CategoryRepository.Create(category);
+            await _unitOfWork.SaveAsync();
+
+            categoryDTO.Id = category.Id;
+
+            return categoryDTO;
+        }
+
+        public async Task RemoveAsync(long id)
+        {
+            await Task.Run(() => _unitOfWork.CategoryRepository.Delete(id));
+        }
+
+        public async Task<CategoryDTO> UpdateAsync(CategoryDTO categoryDTO)
+        {
+            var category = await _unitOfWork.CategoryRepository.GetByIdAsync(categoryDTO.Id);
+
+            category.Description = categoryDTO.Description;
+            category.Icon = categoryDTO.Icon;
+            category.Name = categoryDTO.Name;
+            category.Tags = categoryDTO.Tags;
+
+            _unitOfWork.CategoryRepository.Update(category);
+            await _unitOfWork.SaveAsync();
+
+            return categoryDTO;
         }
 
         private readonly IUnitOfWork _unitOfWork;

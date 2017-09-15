@@ -1,0 +1,51 @@
+<script src="https://rawgit.com/web-animations/web-animations-js/master/web-animations.min.js"></script>
+
+<div class="ui fluid grid">
+  <div class="row">
+    <div class="eleven wide column">
+      <div class="ui fluid left icon input">
+        <input type="text" placeholder="Search..." [(ngModel)]="searchTemplate" (ngModelChange)="load()">
+        <i class="circular search link icon"></i>
+      </div>
+    </div>
+    <div class="two wide right aligned middle aligned column">
+        <p style="font-size: 16px;">Page size: </p>
+    </div>
+    <div class="three wide column">
+      <sui-select [(ngModel)]="pageSize" class="fluid selection" (ngModelChange)="load()">
+        <sui-select-option [value]=20></sui-select-option>
+        <sui-select-option [value]=40></sui-select-option>
+        <sui-select-option [value]=60></sui-select-option>
+      </sui-select>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="accounts !== undefined" class="account-list">
+  <div *ngFor="let account of accounts" class="item">
+    <div class="account-avatar">
+      <img class="ui tiny circular image" src="{{account.Avatar}}">
+    </div>
+    <div class="account-name">
+      <h5>{{account.Name}}</h5>
+      <p>{{account.Role}}</p>
+    </div>
+    <div class="account-email">
+      <p>{{account.Email}}</p>
+    </div>
+    <div class="ban-actions">
+      <a *ngIf="!account.IsBanned" (click)="banAccount(account)" [ngClass]="{'disabled': isAccountPending(account)}" class="ui button ban">Ban</a>
+      <a *ngIf="account.IsBanned" (click)="unbanAccount(account)" [ngClass]="{'disabled': isAccountPending(account)}" class="ui button unban">Unban</a>
+    </div>
+  </div>
+  <div class="ui divider"></div>
+</div>
+
+<div *ngIf="!isLoaded" class="ui active inverted dimmer" style="z-index: 0;">
+    <div class="ui text loader">Loading</div>
+</div>
+
+<div *ngIf="totalCount > pageSize" class="pagination">
+  <sui-pagination [collectionSize]="totalCount" [pageSize]="pageSize" [maxSize]="3" [hasEllipses]="true" [(page)]="page" (pageChange)="load()">
+  </sui-pagination>
+</div>

@@ -17,10 +17,12 @@ export class ChatEventsService {
   private _onMessageReadFromMiniChatToChat = new Subject<number>();
   private _onMessageReadFromChatToMiniChat = new Subject<number>();
 
+  private _onMessageDeleteFromChatToMiniChat = new Subject<MessageModel>();
+
   openChatEvent$ = this._onChatOpen.asObservable();  
   closeChatEvent$ = this._onChatClose.asObservable();  
   initChatEvent$ = this._onChatInit.asObservable();
-
+  
   createDialogFromMiniChatToChatEvent$ = this._onDialogCreateFromMiniChatToChat.asObservable();
 
   createMessageFromChatToMiniChatEvent$ = this._onMessageCreateFromChatToMiniChat.asObservable();
@@ -28,6 +30,8 @@ export class ChatEventsService {
 
   readMessageFromChatToMiniChatEvent$ = this._onMessageReadFromChatToMiniChat.asObservable();
   readMessageFromMiniChatToChatEvent$ = this._onMessageReadFromMiniChatToChat.asObservable();
+
+  deleteMessageFromChatToMiniChatEvent$ = this._onMessageDeleteFromChatToMiniChat.asObservable();
 
   openChat(dialog: DialogModel) {
     this._onChatOpen.next(dialog);
@@ -47,6 +51,11 @@ export class ChatEventsService {
 
   messageCreateFromMiniChatToChat(mes: MessageModel){
     this._onMessageCreateFromMiniChatToChat.next(mes);
+  }
+
+  messageDeleteFromChatToMiniChat(mes: MessageModel)
+  {
+    this._onMessageDeleteFromChatToMiniChat.next(mes);
   }
 
   messageCreateFromChatToMiniChat(mes: MessageModel){

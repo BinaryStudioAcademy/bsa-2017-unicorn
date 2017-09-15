@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { NgModel } from '@angular/forms';
 
 import { SuiModule } from 'ng2-semantic-ui';
@@ -11,10 +11,24 @@ import { Work } from "../../../models/work.model";
 import { VendorService } from "../../../services/vendor.service";
 import { Subcategory } from "../../../models/subcategory.model";
 import { Review } from "../../../models/review.model";
+
+import { SuiModalService, TemplateModalConfig
+  , ModalTemplate, ModalSize, SuiActiveModal } from 'ng2-semantic-ui';
+import { ModalService } from '../../../services/modal/modal.service';
+import { ReportService } from '../../../services/report.service';
+import { AccountService } from '../../../services/account.service';
+import { TokenHelperService } from '../../../services/helper/tokenhelper.service';
+import { ToastsManager, Toast } from 'ng2-toastr';
+
+import { Report } from '../../../models/report/report.model';
+import { ReportType } from '../../../models/report/reportType.model';
+import { ProfileShortInfo } from '../../../models/profile-short-info.model';
+
 @Component({
   selector: 'app-vendor-profile-info',
   templateUrl: './vendor-profile-info.component.html',
-  styleUrls: ['./vendor-profile-info.component.sass']
+  styleUrls: ['./vendor-profile-info.component.sass'],
+  providers: [ModalService, ReportService]
 })
 export class VendorProfileInfoComponent implements OnInit {
   @Input() vendor: Vendor;
@@ -29,7 +43,24 @@ export class VendorProfileInfoComponent implements OnInit {
   selectedCategory: Category;
   openedCategoryDetails: boolean = false;
 
-  constructor(private vendorService: VendorService) { }
+  @ViewChild('modalTemplate')
+  public modalTemplate: ModalTemplate<void, {}, void>;
+  private activeModal: SuiActiveModal<void, {}, void>;
+
+  isLogged: boolean;
+  message: string;
+  email: string;
+  profileInfo: ProfileShortInfo;
+  loader: boolean;
+
+  constructor(
+    private vendorService: VendorService,
+    private modalService: ModalService,
+    private reportService: ReportService,
+    private accountService: AccountService,
+    private tokenHelper: TokenHelperService,
+    private toastr: ToastsManager
+  ) { }
 
   ngOnInit() {
     this.vendorService.getRating(this.vendor.Id)
@@ -67,5 +98,51 @@ export class VendorProfileInfoComponent implements OnInit {
 
   getWorkIcon(work: Work): string {
     return work.Icon;
+  }
+
+  openModal() {
+    this.getAccount();
+    this.message = undefined;
+    this.activeModal = this.modalService.openModal(this.modalTemplate, ModalSize.Mini);
+  }
+
+  sendMessage(formData) {
+    if (formData.valid) {
+      this.loader = true;
+      const report: Report = {
+        Id: 1,
+        Date: new Date(),
+        Type: ReportType.complaint,
+        Message: this.message,
+        Email: this.email,
+        ProfileId: this.vendor.Id,
+        ProfileName: `${this.vendor.Name} ${this.vendor.Surname}`,
+        ProfileType: 'vendor'
+      };
+
+      this.reportService.createReport(report).then(resp => {
+        this.loader = false;
+        this.toastr.success('Thank you for your report!');
+        this.activeModal.approve('approved');
+      }).catch(err => {
+        this.loader = false;
+        this.toastr.error('Ooops! Try again');
+      });
+    }
+  }
+
+  getAccount() {
+    this.isLogged = this.tokenHelper.isTokenValid() && this.tokenHelper.isTokenNotExpired();
+    if (this.isLogged) {
+      this.accountService.getShortInfo(+this.tokenHelper.getClaimByName('accountid'))
+      .then(resp => {
+        if (resp !== undefined) {
+          this.profileInfo = resp.body as ProfileShortInfo;
+          this.email = this.profileInfo.Email;
+        }
+      });
+    } else {
+      this.email = undefined;
+    }
   }
 }

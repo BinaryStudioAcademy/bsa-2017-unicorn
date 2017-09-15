@@ -77,6 +77,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Device" />
     <Reference Include="System.IdentityModel.Tokens.Jwt, Version=5.1.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -90,9 +91,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Infrastructure\AdminAuthConfig.cs" />
     <Compile Include="Infrastructure\SignalR\NotificationHub.cs" />
     <Compile Include="Infrastructure\SignalR\NotificationProxy.cs" />
     <Compile Include="Interfaces\IAccountService.cs" />
+    <Compile Include="Interfaces\IAdminService.cs" />
     <Compile Include="Interfaces\IAnalyticsService.cs" />
     <Compile Include="Interfaces\IAuthService.cs" />
     <Compile Include="Interfaces\IAvatarService.cs" />
@@ -116,13 +119,16 @@
     <Compile Include="Interfaces\IPersonService.cs" />
     <Compile Include="Interfaces\IPopularService.cs" />
     <Compile Include="Interfaces\IRatingService.cs" />
+    <Compile Include="Interfaces\IReportService.cs" />
     <Compile Include="Interfaces\IRoleService.cs" />
     <Compile Include="Interfaces\IReviewService.cs" />
     <Compile Include="Interfaces\IPortfolioService.cs" />
     <Compile Include="Interfaces\IContactService.cs" />
     <Compile Include="Interfaces\ISearchService.cs" />
+    <Compile Include="Interfaces\ISubcategoryService.cs" />
     <Compile Include="Interfaces\IVendorService.cs" />
     <Compile Include="Interfaces\IWorkService.cs" />
+    <Compile Include="Services\AdminService.cs" />
     <Compile Include="Services\AnalyticsService.cs" />
     <Compile Include="Services\CalendarService.cs" />
     <Compile Include="Services\ChatService.cs" />
@@ -144,10 +150,12 @@
     <Compile Include="Services\PersonService.cs" />
     <Compile Include="Services\PopularService.cs" />
     <Compile Include="Services\RatingService.cs" />
+    <Compile Include="Services\ReportService.cs" />
     <Compile Include="Services\RoleService.cs" />
     <Compile Include="Services\ReviewService.cs" />
     <Compile Include="Services\PortfolioService.cs" />
     <Compile Include="Services\SearchService.cs" />
+    <Compile Include="Services\SubcategoryService.cs" />
     <Compile Include="Services\VendorService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">

@@ -46,6 +46,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DTOs\AccountDTO.cs" />
+    <Compile Include="DTOs\Admin\AccountDTO.cs" />
+    <Compile Include="DTOs\Admin\AccountsPage.cs" />
     <Compile Include="DTOs\Book\BookDTO.cs" />
     <Compile Include="DTOs\Book\BookOrderDTO.cs" />
     <Compile Include="DTOs\Book\CustomerBookDTO.cs" />
@@ -97,6 +99,7 @@
     <Compile Include="DTOs\Register\CompanyRegisterDTO.cs" />
     <Compile Include="DTOs\Register\CustomerRegisterDTO.cs" />
     <Compile Include="DTOs\Register\VendorRegisterDTO.cs" />
+    <Compile Include="DTOs\ReportDTO.cs" />
     <Compile Include="DTOs\Review\ReviewDTO.cs" />
     <Compile Include="DTOs\Review\ReviewSenderDTO.cs" />
     <Compile Include="DTOs\Review\ShortReviewDTO.cs" />

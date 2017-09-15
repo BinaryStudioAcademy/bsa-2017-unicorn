@@ -150,8 +150,6 @@ namespace Unicorn.Core.Services
             return companies
                 .Union(persons)
                 .OrderBy(p => p.Name).ToList();
-
-
         }
 
         private readonly IUnitOfWork _unitOfWork;

@@ -142,6 +142,35 @@ namespace Unicorn.Controllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
         }
+        [HttpDelete]
+        [Route("dialogs/{id}")]
+        public async Task<HttpResponseMessage> DeleteDialog(int id)
+        {
+            try
+            {
+                await _chatService.RemoveDialog(id);
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch
+            {
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            }
+        }
+
+        [HttpDelete]
+        [Route("messages/{id}")]
+        public async Task<HttpResponseMessage> DeleteMessage(long id)
+        {
+            try
+            {
+                await _chatService.RemoveMessage(id);
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch
+            {
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            }
+        }
 
         [HttpPost]
         [Route("upload")]

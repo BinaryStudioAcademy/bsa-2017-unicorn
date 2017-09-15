@@ -32,6 +32,7 @@ namespace Unicorn.Core.Infrastructure
             Bind<IPortfolioService>().To<PortfolioService>();
             Bind<IReviewService>().To<ReviewService>();
             Bind<ICategoryService>().To<CategoryService>();
+            Bind<ISubcategoryService>().To<SubcategoryService>();
             Bind<ICompanyPageService>().To<CompanyPageService>();
             Bind<IContactService>().To<ContactService>();
             Bind<IPopularService>().To<PopularService>();
@@ -41,7 +42,9 @@ namespace Unicorn.Core.Infrastructure
             Bind<INotificationService>().To<NotificationService>();
             Bind<ISearchService>().To<SearchService>();
             Bind<IOfferService>().To<OfferService>();
+            Bind<IAdminService>().To<AdminService>();
             Bind<IAnalyticsService>().To<AnalyticsService>();
+            Bind<IReportService>().To<ReportService>();
         }
     }
 }

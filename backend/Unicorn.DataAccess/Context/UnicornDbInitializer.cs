@@ -639,7 +639,8 @@ namespace Unicorn.DataAccess.Context
                 IsDeleted = false,
                 Role = role3,
                 Location = location1,
-                Contacts = new List<Contact> { contact1, contact2, contact3, contact4, contact5, contact6, contact7}
+                Contacts = new List<Contact> { contact1, contact2, contact3, contact4, contact5, contact6, contact7},
+                IsBanned = false
             };
 
             Account account2 = new Account()
@@ -652,7 +653,8 @@ namespace Unicorn.DataAccess.Context
                 IsDeleted = false,
                 Role = role3,
                 Location = location2,
-                Contacts = new List<Contact> { contact8, contact9, contact10, contact11, contact12, contact13, contact14 }
+                Contacts = new List<Contact> { contact8, contact9, contact10, contact11, contact12, contact13, contact14 },
+                IsBanned = false
             };
 
             Account account3 = new Account()
@@ -665,7 +667,8 @@ namespace Unicorn.DataAccess.Context
                 IsDeleted = false,
                 Role = role3,
                 Location = location3,
-                Contacts = new List<Contact> { contact15, contact16, contact17, contact18, contact19, contact20, contact21 }
+                Contacts = new List<Contact> { contact15, contact16, contact17, contact18, contact19, contact20, contact21 },
+                IsBanned = false
 
             };
 
@@ -679,7 +682,8 @@ namespace Unicorn.DataAccess.Context
                 IsDeleted = false,
                 Role = role3,
                 Location = location4,
-                Contacts = new List<Contact> { contact22, contact23, contact24, contact25, contact26, contact27, contact28 }
+                Contacts = new List<Contact> { contact22, contact23, contact24, contact25, contact26, contact27, contact28 },
+                IsBanned = false
             };
 
             Account account5 = new Account()
@@ -692,7 +696,8 @@ namespace Unicorn.DataAccess.Context
                 IsDeleted = false,
                 Role = role3,
                 Location = location5,
-                Contacts = new List<Contact> { contact29, contact30, contact31, contact32, contact33, contact34, contact35 }
+                Contacts = new List<Contact> { contact29, contact30, contact31, contact32, contact33, contact34, contact35 },
+                IsBanned = false
             };
 
             Account account6 = new Account()
@@ -705,7 +710,8 @@ namespace Unicorn.DataAccess.Context
                 IsDeleted = false,
                 Role = role3,
                 Location = location6,
-                Contacts = new List<Contact> { contact36, contact37, contact38, contact39, contact40, contact41, contact42 }
+                Contacts = new List<Contact> { contact36, contact37, contact38, contact39, contact40, contact41, contact42 },
+                IsBanned = false
             };
 
             Account account7 = new Account()
@@ -718,7 +724,8 @@ namespace Unicorn.DataAccess.Context
                 IsDeleted = false,
                 Role = role3,
                 Location = location7,
-                Contacts = new List<Contact> { contact43, contact44, contact45, contact46, contact47, contact48, contact49 }
+                Contacts = new List<Contact> { contact43, contact44, contact45, contact46, contact47, contact48, contact49 },
+                IsBanned = false
             };
 
             Account account8 = new Account()
@@ -731,7 +738,8 @@ namespace Unicorn.DataAccess.Context
                 IsDeleted = false,
                 Role = role4,
                 Location = location8,
-                Contacts = new List<Contact> { contact50, contact51, contact52, contact53, contact54, contact55, contact56 }
+                Contacts = new List<Contact> { contact50, contact51, contact52, contact53, contact54, contact55, contact56 },
+                IsBanned = false
             };
 
             Account account9 = new Account()
@@ -744,7 +752,8 @@ namespace Unicorn.DataAccess.Context
                 IsDeleted = false,
                 Role = role4,
                 Location = location9,
-                Contacts = new List<Contact> { contact57, contact58, contact59, contact60, contact61, contact62, contact63 }
+                Contacts = new List<Contact> { contact57, contact58, contact59, contact60, contact61, contact62, contact63 },
+                IsBanned = false
             };
 
             Account account10 = new Account()
@@ -757,7 +766,8 @@ namespace Unicorn.DataAccess.Context
                 IsDeleted = false,
                 Role = role4,
                 Location = location10,
-                Contacts = new List<Contact> { contact64, contact65, contact66, contact67, contact68, contact69, contact70 }
+                Contacts = new List<Contact> { contact64, contact65, contact66, contact67, contact68, contact69, contact70 },
+                IsBanned = false
             };
 
             Account account11 = new Account()
@@ -770,7 +780,8 @@ namespace Unicorn.DataAccess.Context
                 IsDeleted = false,
                 Role = role2,
                 Location = location11,
-                Contacts = new List<Contact> { contact71, contact72, contact73, contact74, contact75, contact76, contact77 }
+                Contacts = new List<Contact> { contact71, contact72, contact73, contact74, contact75, contact76, contact77 },
+                IsBanned = false
             };
 
             Account account12 = new Account()
@@ -783,7 +794,8 @@ namespace Unicorn.DataAccess.Context
                 IsDeleted = false,
                 Role = role2,
                 Location = location12,
-                Contacts = new List<Contact> { contact78, contact79, contact80, contact81, contact82, contact83, contact84 }
+                Contacts = new List<Contact> { contact78, contact79, contact80, contact81, contact82, contact83, contact84 },
+                IsBanned = false
             };
 
             Account account13 = new Account()
@@ -796,7 +808,8 @@ namespace Unicorn.DataAccess.Context
                 IsDeleted = false,
                 Role = role2,
                 Location = location13,
-                Contacts = new List<Contact> { contact85, contact86, contact87, contact88, contact89, contact90, contact91 }
+                Contacts = new List<Contact> { contact85, contact86, contact87, contact88, contact89, contact90, contact91 },
+                IsBanned = false
             };
             
             Account account14 = new Account()
@@ -809,7 +822,8 @@ namespace Unicorn.DataAccess.Context
                 IsDeleted = false,
                 Role = role4,
                 Location = location14,
-                Contacts = new List<Contact> { contact92, contact93, contact94, contact95, contact96, contact97, contact98 }
+                Contacts = new List<Contact> { contact92, contact93, contact94, contact95, contact96, contact97, contact98 },
+                IsBanned = false
             };
 
             Account account15 = new Account()
@@ -822,7 +836,8 @@ namespace Unicorn.DataAccess.Context
                 IsDeleted = false,
                 Role = role4,
                 Location = location15,
-                Contacts = new List<Contact> { contact99, contact100, contact101, contact102, contact103, contact104, contact105 }
+                Contacts = new List<Contact> { contact99, contact100, contact101, contact102, contact103, contact104, contact105 },
+                IsBanned = false
             };
 
             Account account16 = new Account()
@@ -835,7 +850,8 @@ namespace Unicorn.DataAccess.Context
                 IsDeleted = false,
                 Role = role4,
                 Location = location16,
-                Contacts = new List<Contact> { contact106, contact107, contact108, contact109, contact110, contact111, contact112 }
+                Contacts = new List<Contact> { contact106, contact107, contact108, contact109, contact110, contact111, contact112 },
+                IsBanned = false
             };
 
             Account account17 = new Account()
@@ -848,7 +864,8 @@ namespace Unicorn.DataAccess.Context
                 IsDeleted = false,
                 Role = role4,
                 Location = location17,
-                Contacts = new List<Contact> { contact113, contact114, contact115, contact116, contact117, contact118, contact119 }
+                Contacts = new List<Contact> { contact113, contact114, contact115, contact116, contact117, contact118, contact119 },
+                IsBanned = false
             };
 
             Account account18 = new Account()
@@ -861,7 +878,8 @@ namespace Unicorn.DataAccess.Context
                 IsDeleted = false,
                 Role = role4,
                 Location = location18,
-                Contacts = new List<Contact> { contact120, contact121, contact122, contact123, contact124, contact125, contact126 }
+                Contacts = new List<Contact> { contact120, contact121, contact122, contact123, contact124, contact125, contact126 },
+                IsBanned = false
             };
 
             context.Accounts.AddRange(new List<Account>()
@@ -1685,6 +1703,192 @@ namespace Unicorn.DataAccess.Context
 
             #endregion
 
+            #region Calendars
+
+            Calendar calendar1 = new Calendar
+            {
+                Id = 1,
+                IsDeleted = false,
+                StartDate = DateTime.Today,
+                EndDate = null,
+                ExtraDayOffs = new List<ExtraDay>(),
+                ExtraWorkDays = new List<ExtraDay>(),
+                WorkOnWeekend = false,
+                SeveralTaskPerDay = true
+            };
+
+            Calendar calendar2 = new Calendar
+            {
+                Id = 2,
+                IsDeleted = false,
+                StartDate = DateTime.Today,
+                EndDate = null,
+                ExtraDayOffs = new List<ExtraDay>(),
+                ExtraWorkDays = new List<ExtraDay>(),
+                WorkOnWeekend = false,
+                SeveralTaskPerDay = true
+            };
+
+            Calendar calendar3 = new Calendar
+            {
+                Id = 3,
+                IsDeleted = false,
+                StartDate = DateTime.Today,
+                EndDate = null,
+                ExtraDayOffs = new List<ExtraDay>(),
+                ExtraWorkDays = new List<ExtraDay>(),
+                WorkOnWeekend = false,
+                SeveralTaskPerDay = true
+            };
+
+            Calendar calendar4 = new Calendar
+            {
+                Id = 4,
+                IsDeleted = false,
+                StartDate = DateTime.Today,
+                EndDate = null,
+                ExtraDayOffs = new List<ExtraDay>(),
+                ExtraWorkDays = new List<ExtraDay>(),
+                WorkOnWeekend = false,
+                SeveralTaskPerDay = true
+            };
+
+            Calendar calendar5 = new Calendar
+            {
+                Id = 5,
+                IsDeleted = false,
+                StartDate = DateTime.Today,
+                EndDate = null,
+                ExtraDayOffs = new List<ExtraDay>(),
+                ExtraWorkDays = new List<ExtraDay>(),
+                WorkOnWeekend = false,
+                SeveralTaskPerDay = true
+            };
+
+            Calendar calendar6 = new Calendar
+            {
+                Id = 6,
+                IsDeleted = false,
+                StartDate = DateTime.Today,
+                EndDate = null,
+                ExtraDayOffs = new List<ExtraDay>(),
+                ExtraWorkDays = new List<ExtraDay>(),
+                WorkOnWeekend = false,
+                SeveralTaskPerDay = true
+            };
+
+            Calendar calendar7 = new Calendar
+            {
+                Id = 7,
+                IsDeleted = false,
+                StartDate = DateTime.Today,
+                EndDate = null,
+                ExtraDayOffs = new List<ExtraDay>(),
+                ExtraWorkDays = new List<ExtraDay>(),
+                WorkOnWeekend = false,
+                SeveralTaskPerDay = true
+            };
+
+            Calendar calendar8 = new Calendar
+            {
+                Id = 8,
+                IsDeleted = false,
+                StartDate = DateTime.Today,
+                EndDate = null,
+                ExtraDayOffs = new List<ExtraDay>(),
+                ExtraWorkDays = new List<ExtraDay>(),
+                WorkOnWeekend = false,
+                SeveralTaskPerDay = true
+            };
+
+            Calendar calendar9 = new Calendar
+            {
+                Id = 9,
+                IsDeleted = false,
+                StartDate = DateTime.Today,
+                EndDate = null,
+                ExtraDayOffs = new List<ExtraDay>(),
+                ExtraWorkDays = new List<ExtraDay>(),
+                WorkOnWeekend = false,
+                SeveralTaskPerDay = true
+            };
+
+            Calendar calendar10 = new Calendar
+            {
+                Id = 10,
+                IsDeleted = false,
+                StartDate = DateTime.Today,
+                EndDate = null,
+                ExtraDayOffs = new List<ExtraDay>(),
+                ExtraWorkDays = new List<ExtraDay>(),
+                WorkOnWeekend = false,
+                SeveralTaskPerDay = true
+            };
+
+            Calendar calendar11 = new Calendar
+            {
+                Id = 11,
+                IsDeleted = false,
+                StartDate = DateTime.Today,
+                EndDate = null,
+                ExtraDayOffs = new List<ExtraDay>(),
+                ExtraWorkDays = new List<ExtraDay>(),
+                WorkOnWeekend = false,
+                SeveralTaskPerDay = true
+            };
+
+            Calendar calendar12 = new Calendar
+            {
+                Id = 12,
+                IsDeleted = false,
+                StartDate = DateTime.Today,
+                EndDate = null,
+                ExtraDayOffs = new List<ExtraDay>(),
+                ExtraWorkDays = new List<ExtraDay>(),
+                WorkOnWeekend = false,
+                SeveralTaskPerDay = true
+            };
+
+            Calendar calendar13 = new Calendar
+            {
+                Id = 13,
+                IsDeleted = false,
+                StartDate = DateTime.Today,
+                EndDate = null,
+                ExtraDayOffs = new List<ExtraDay>(),
+                ExtraWorkDays = new List<ExtraDay>(),
+                WorkOnWeekend = false,
+                SeveralTaskPerDay = true
+            };
+
+            Calendar calendar14 = new Calendar
+            {
+                Id = 14,
+                IsDeleted = false,
+                StartDate = DateTime.Today,
+                EndDate = null,
+                ExtraDayOffs = new List<ExtraDay>(),
+                ExtraWorkDays = new List<ExtraDay>(),
+                WorkOnWeekend = false,
+                SeveralTaskPerDay = true
+            };
+
+            Calendar calendar15 = new Calendar
+            {
+                Id = 15,
+                IsDeleted = false,
+                StartDate = DateTime.Today,
+                EndDate = null,
+                ExtraDayOffs = new List<ExtraDay>(),
+                ExtraWorkDays = new List<ExtraDay>(),
+                WorkOnWeekend = false,
+                SeveralTaskPerDay = true
+            };
+
+            context.Calendars.AddRange(new List<Calendar>() { calendar1, calendar2, calendar3, calendar4, calendar5, calendar6, calendar7, calendar8, calendar9, calendar10, calendar11, calendar12, calendar13, calendar14, calendar15 });
+
+            #endregion
+
             #region Vendors            
 
             Vendor vendor1 = new Vendor()
@@ -1696,6 +1900,7 @@ namespace Unicorn.DataAccess.Context
                 Works = new List<Work>() { work1, work2, work3 },
                 ExWork = "Dishwasher",
                 Person = person1,
+                Calendar = calendar1,
                 WorkLetter = "My name is Randy Patterson, and I’m currently looking for a job in youth services. I have 10 years of experience working with youth agencies. I have a bachelor’s degree in outdoor education. I raise money, train leaders, and organize units. I have raised over $100,000 each of the last six years. I consider myself a good public speaker, and I have a good sense of humor.",
             };
 
@@ -1708,6 +1913,7 @@ namespace Unicorn.DataAccess.Context
                 Works = new List<Work>() { work2, work22 },
                 ExWork = "Photographer",
                 Person = person2,
+                Calendar = calendar2,
                 WorkLetter = "My job is to build your website so that it is functional and user-friendly but at the same time attractive. Moreover, I add personal touch to your product and make sure that is eye-catching and easy to use. My aim is to bring across your message and identity in the most creative way."
             };
 
@@ -1720,6 +1926,7 @@ namespace Unicorn.DataAccess.Context
                 Works = new List<Work>() { work3, work21 },
                 ExWork = "Vet",
                 Person = person3,
+                Calendar = calendar3,
                 WorkLetter = "I'm Jordan Vitanov, digital artist and designer, working in web development and print media. If you have a project that needs some creative injection then that’s where I come in!"
             };
 
@@ -1732,6 +1939,7 @@ namespace Unicorn.DataAccess.Context
                 Works = new List<Work>() { work4, work20 },
                 ExWork = "Painter",
                 Person = person4,
+                Calendar = calendar4,
                 WorkLetter = "Lia Griffith is an internationally renowned DIY designer. She built a large and loyal following within a year of blogging and teaching. We worked with Lia Griffith to craft a new site to match the creative energy and vision of her brand."
             };
 
@@ -1744,6 +1952,7 @@ namespace Unicorn.DataAccess.Context
                 Works = new List<Work>() { work5, work19 },
                 ExWork = "lory driver",
                 Person = person5,
+                Calendar = calendar5,
                 WorkLetter = "At first I intended to be an animator and went to design school fully motivated to become just that. One thing led to another and 2 years went by and I was a (almost) fully fledged freelance web designer without ever planning to become one"
             };
 
@@ -1756,6 +1965,7 @@ namespace Unicorn.DataAccess.Context
                 Works = new List<Work>() { work6, work18, work17 },
                 ExWork = "Middle dev",
                 Person = person6,
+                Calendar = calendar6,
                 WorkLetter = "I have sucessfully been a freelance web designer now for a while and it has given me even more love for this work. I have worked with ad agencies, web developers, diaper makers, pension funds, furniture makers, businiess women & men, friends & family."
             };
 
@@ -1768,6 +1978,7 @@ namespace Unicorn.DataAccess.Context
                 Works = new List<Work>() { work6, work5},
                 ExWork = "Cook",
                 Person = person7,
+                Calendar = calendar7,
                 WorkLetter = "I have coded websites with great respect to standards, because it makes life easier for everybody. My site even used to validate, honestly!"
             };
 
@@ -1788,6 +1999,7 @@ namespace Unicorn.DataAccess.Context
                 Director = "Alex Moren",
                 Staff = 2,
                 IsDeleted = false,
+                Calendar = calendar8,
                 Vendors = new List<Vendor>() { vendor1, vendor2 },
                 Works = new List<Work> { work1, work2, work22},
 
@@ -1803,6 +2015,7 @@ namespace Unicorn.DataAccess.Context
                 Director = "John Snow",
                 Staff = 2,
                 IsDeleted = false,
+                Calendar = calendar9,
                 Vendors = new List<Vendor>() { vendor4, vendor5},
                 Works = new List<Work> { work3, work4, work20 }
             };
@@ -1817,6 +2030,7 @@ namespace Unicorn.DataAccess.Context
                 Director = "Jaime Lannister",
                 Staff = 1,
                 IsDeleted = false,
+                Calendar = calendar10,
                 Vendors = new List<Vendor>() { vendor6 },
                 Works = new List<Work> { work5, work6 }
             };
@@ -1831,6 +2045,7 @@ namespace Unicorn.DataAccess.Context
                 Director = "Sergey Grin",
                 Staff = 1,
                 IsDeleted = false,
+                Calendar = calendar11,
                 Vendors = new List<Vendor>(),
                 Works = new List<Work> { work7 }
             };
@@ -1845,6 +2060,7 @@ namespace Unicorn.DataAccess.Context
                 Director = "Rob Morris",
                 Staff = 1,
                 IsDeleted = false,
+                Calendar = calendar12,
                 Vendors = new List<Vendor>(),
                 Works = new List<Work> { work8, work12 }
             };
@@ -1859,6 +2075,7 @@ namespace Unicorn.DataAccess.Context
                 Director = "Alok Ohrie",
                 Staff = 1,
                 IsDeleted = false,
+                Calendar = calendar13,
                 Vendors = new List<Vendor>(),
                 Works = new List<Work> { work9, work13 }
             };
@@ -1873,6 +2090,7 @@ namespace Unicorn.DataAccess.Context
                 Director = "Don Thompson",
                 Staff = 1,
                 IsDeleted = false,
+                Calendar = calendar14,
                 Vendors = new List<Vendor>(),
                 Works = new List<Work> { work10, work14 }
             };
@@ -1887,6 +2105,7 @@ namespace Unicorn.DataAccess.Context
                 Director = "Sergey Kovalenko",
                 Staff = 1,
                 IsDeleted = false,
+                Calendar = calendar15,
                 Vendors = new List<Vendor>(),
                 Works = new List<Work> { work11, work16, work15 }
             };

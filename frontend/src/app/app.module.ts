@@ -35,6 +35,7 @@ import { IndexModule } from './index/index.module';
 import { SearchModule } from './search/search.module';
 import { PipeModule } from "./pipe/pipe.module";
 import { MomentModule } from 'angular2-moment';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { SignalR, SignalRConnection, SignalRModule, SignalRConfiguration } from 'ng2-signalr';
 import { SuiModule } from 'ng2-semantic-ui';
@@ -53,8 +54,10 @@ import { ReviewModalComponent } from './review/review-modal/review-modal.compone
 import { ChatLogicService } from "./services/chat/chat-logic.service";
 import { CalendarService } from "./services/calendar-service";
 import { ClickOutsideModule } from "ng-click-outside/lib";
+
 import { UnreadChatMessagesService } from "./services/unread-chat-messages.service";
 import { NotFoundModule} from './not-found/not-found.module';
+import { AdminModule } from "./admin/admin.module";
 
 export class CustomOptions extends ToastOptions {
   animate = 'fade';
@@ -103,6 +106,8 @@ export function getDefaultSignalRConfig(): SignalRConfiguration {
     MomentModule,
     PipeModule,
     ClickOutsideModule,
+    AdminModule,
+    FormsModule,
     IndexModule,
     NotFoundModule // Must be the last module
   ],

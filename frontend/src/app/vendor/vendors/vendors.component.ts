@@ -30,6 +30,8 @@ export class VendorsComponent implements OnInit {
   tabSuffix = '?tab=reviews';
   performers: Performer[] = [];
   reviewsTab = 'reviews';
+  date: Date;
+  mode = 'date';
 
   /* city */
   city: string;
@@ -116,10 +118,18 @@ export class VendorsComponent implements OnInit {
             this.categories.find(c => c.Id === ctgId).Subcategories
               .find(s => s.Id === sctgId) === undefined));
         }
+
+    let date;
+    if(this.date){
+      date = this.date.getTime();
+    }
+    else{
+      date = -1;
+    }
     return this.performerService
       .getPerformersByFilters(
         this.city, this.name, this.role, this.rating, this.ratingCondition, this.withReviews, filteredCategories, this.selectedSubcategories, 
-        this.selectedPage, Number(this.pageSize), this.latitude, this.longitude, this.distance, this.sort
+        this.selectedPage, Number(this.pageSize), this.latitude, this.longitude, this.distance, this.sort, date
       )
       .then(resp => {
         this.performers = resp.Items;
