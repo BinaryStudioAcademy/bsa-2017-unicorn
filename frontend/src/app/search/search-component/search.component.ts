@@ -91,12 +91,12 @@ export class SearchComponent implements OnInit {
   loadWorks() {
     this.works = [];
     this.spinner = true;
-    this.getWorksByBaseFilters(this.category, this.subcategory, this.rawDate);
+    this.getWorksByBaseFilters(this.category, this.subcategory, new Date().toLocaleString());
     this.pagedWorks = this.getWorksPage();
     this.searchMarkers = this.getMarkers();
   }
 
-  getWorksByBaseFilters(category: string, subcategory: string, date: number) {
+  getWorksByBaseFilters(category: string, subcategory: string, date: string) {
     this.searchService.getWorksByBaseFilters(category, subcategory, date)
     .then(works => {
       this.works = works;
@@ -217,10 +217,10 @@ export class SearchComponent implements OnInit {
 
     let date;
     if(this.date){
-      date = this.date.getTime();
+      date = this.date.toLocaleString();
     }
     else{
-      date = -1;
+      date = new Date().toLocaleString();
     }
     this.getWorksByAdvFilters(this.category, this.subcategory, date,
            this.vendorName, this.ratingCmp, this.rating, this.reviewsChecked,
@@ -252,7 +252,7 @@ export class SearchComponent implements OnInit {
     }
   }
 
-  getWorksByAdvFilters(category: string, subcategory: string, date: number,
+  getWorksByAdvFilters(category: string, subcategory: string, date: string,
       vendor: string, ratingcompare: string, rating: number, reviews: boolean,
       latitude: number, longitude: number, distance: number,
       categories: string[], subcategories: string[], city: string, sort: number) {

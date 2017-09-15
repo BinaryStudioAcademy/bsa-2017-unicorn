@@ -121,10 +121,10 @@ export class VendorsComponent implements OnInit {
 
     let date;
     if(this.date){
-      date = this.date.getTime();
+      date = this.date.toLocaleString();
     }
     else{
-      date = -1;
+      date = new Date().toLocaleString();
     }
     return this.performerService
       .getPerformersByFilters(

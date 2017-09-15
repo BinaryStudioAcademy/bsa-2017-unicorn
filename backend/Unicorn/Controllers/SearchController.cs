@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Cors;
@@ -27,7 +29,8 @@ namespace Unicorn.Controllers
                                                                         [FromUri] string[] categories, [FromUri] string[] subcategories, string city,
                                                                         int? sort  )
         {
-            return await _searchService.GetWorksByFilters(  category, subcategory, date,
+            var _date = Convert.ToDateTime(date);
+            return await _searchService.GetWorksByFilters(  category, subcategory, _date,
                                                             vendor, ratingcompare, rating, reviews,
                                                             latitude, longitude, distance,
                                                             categories, subcategories, city,
@@ -38,7 +41,8 @@ namespace Unicorn.Controllers
         [Route("search")]
         public async Task<List<SearchWorkDTO>> GetPerformersByBaseFilters(string category, string subcategory, string date)
         {
-            return await _searchService.GetWorksByBaseFilters(category, subcategory, date);
+            var _date = Convert.ToDateTime(date);
+            return await _searchService.GetWorksByBaseFilters(category, subcategory, _date);
         }
 
         [HttpGet]

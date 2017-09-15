@@ -22,23 +22,23 @@ namespace Unicorn.Core.Services
             _unitOfWork = unitOfWork;
         }
 
-        private DateTimeOffset ConvertUtcToDateTime(string dt)
-        {
-            if (dt != null)
-            {
-                dt = dt.Replace(" ", "");
-                if (dt != "-1")
-                {
-                    DateTimeOffset dateTime;
-                    dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
-                    dateTime = dateTime.AddMilliseconds(Double.Parse(dt)).ToLocalTime();
-                    dateTime = dateTime.UtcDateTime;
-                    return dateTime;
-                }
-                return DateTimeOffset.Now;
-            }
-            return DateTimeOffset.Now;
-        }
+        //private DateTimeOffset ConvertUtcToDateTime(string dt)
+        //{
+        //    if (dt != null)
+        //    {
+        //        dt = dt.Replace(" ", "");
+        //        if (dt != "-1")
+        //        {
+        //            DateTimeOffset dateTime;
+        //            dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
+        //            dateTime = dateTime.AddMilliseconds(Double.Parse(dt)).ToLocalTime();
+        //            dateTime = dateTime.UtcDateTime;
+        //            return dateTime;
+        //        }
+        //        return DateTimeOffset.UtcNow;
+        //    }
+        //    return DateTimeOffset.UtcNow;
+        //}
 
         private bool IsVendorWorkingOnThisDate(long id, DateTimeOffset date)
         {          
@@ -97,13 +97,13 @@ namespace Unicorn.Core.Services
             return false;  
         }
 
-        public async Task<List<SearchWorkDTO>> GetWorksByFilters(  string category, string subcategory, string date,
+        public async Task<List<SearchWorkDTO>> GetWorksByFilters(  string category, string subcategory, DateTimeOffset date,
                                                                    string vendor, string ratingcompare, double? rating, bool? reviews,
                                                                    double? latitude, double? longitude, double? distance,
                                                                    string[] categories, string[] subcategories, string city,
                                                                    int? sort  )
         {
-            var dateOfWork = ConvertUtcToDateTime(date);
+            //var dateOfWork = ConvertUtcToDateTime(date);
 
             var reviewsList = await _unitOfWork.ReviewRepository.GetAllAsync();
 
@@ -118,7 +118,7 @@ namespace Unicorn.Core.Services
                 .Include(w => w.Vendor.Person.Account.Location)
                 .ToListAsync();
 
-            var vendorsWorksSyncWithDate = vendorsWorksList.Where(x => SynchronizeWorkDateWithVendorsWorkDays(x.Vendor.Calendar, dateOfWork, IsVendorWorkingOnThisDate(x.Vendor.Id, dateOfWork))).ToList();
+            var vendorsWorksSyncWithDate = vendorsWorksList.Where(x => SynchronizeWorkDateWithVendorsWorkDays(x.Vendor.Calendar, date, IsVendorWorkingOnThisDate(x.Vendor.Id, date))).ToList();
 
             var vendorsWorks = CreateVendorsWorksAdv(vendorsWorksSyncWithDate, reviewsList, 
                 ratingcompare, rating, reviews, latitude, longitude, distance, categories, subcategories, city);
@@ -134,7 +134,7 @@ namespace Unicorn.Core.Services
                 .Include(w => w.Company.Account.Location)
                 .ToListAsync();
 
-            var companiesWorksSyncWithDate = companiesWorksList.Where(x => SynchronizeWorkDateWithVendorsWorkDays(x.Company.Calendar, dateOfWork, IsCompanyWorkingOnThisDate(x.Company.Id, dateOfWork))).ToList();
+            var companiesWorksSyncWithDate = companiesWorksList.Where(x => SynchronizeWorkDateWithVendorsWorkDays(x.Company.Calendar, date, IsCompanyWorkingOnThisDate(x.Company.Id, date))).ToList();
 
             var companiesWorks = CreateCompaniesWorksAdv(companiesWorksSyncWithDate, reviewsList,
                 ratingcompare, rating, reviews, latitude, longitude, distance, categories, subcategories, city);
@@ -315,9 +315,9 @@ namespace Unicorn.Core.Services
             return searchWorks;
         }
 
-        public async Task<List<SearchWorkDTO>> GetWorksByBaseFilters(string category, string subcategory, string date)
+        public async Task<List<SearchWorkDTO>> GetWorksByBaseFilters(string category, string subcategory, DateTimeOffset date)
         {
-            var dateOfWork = ConvertUtcToDateTime(date);
+            //var dateOfWork = ConvertUtcToDateTime(date);
 
             var reviewsList = await _unitOfWork.ReviewRepository.GetAllAsync();
 
@@ -331,7 +331,7 @@ namespace Unicorn.Core.Services
                 .Include(w => w.Vendor.Person.Account.Location)
                 .ToListAsync();
 
-            var vendorsWorksSyncWithDate = vendorsWorksList.Where(x => SynchronizeWorkDateWithVendorsWorkDays(x.Vendor.Calendar, dateOfWork, IsVendorWorkingOnThisDate(x.Vendor.Id, dateOfWork))).ToList();
+            var vendorsWorksSyncWithDate = vendorsWorksList.Where(x => SynchronizeWorkDateWithVendorsWorkDays(x.Vendor.Calendar, date, IsVendorWorkingOnThisDate(x.Vendor.Id, date))).ToList();
 
             var vendorsWorks = CreateVendorsWorks(vendorsWorksSyncWithDate, reviewsList);
 
@@ -344,7 +344,7 @@ namespace Unicorn.Core.Services
                 .Include(w => w.Company.Account.Location)
                 .ToListAsync();
 
-            var companiesWorksSyncWithDate = companiesWorksList.Where(x => SynchronizeWorkDateWithVendorsWorkDays(x.Company.Calendar, dateOfWork, IsCompanyWorkingOnThisDate(x.Company.Id, dateOfWork))).ToList();
+            var companiesWorksSyncWithDate = companiesWorksList.Where(x => SynchronizeWorkDateWithVendorsWorkDays(x.Company.Calendar, date, IsCompanyWorkingOnThisDate(x.Company.Id, date))).ToList();
 
             var companiesWorks = CreateCompaniesWorks(companiesWorksSyncWithDate, reviewsList);
 

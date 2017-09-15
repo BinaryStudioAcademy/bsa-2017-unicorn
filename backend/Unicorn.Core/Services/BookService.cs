@@ -474,30 +474,26 @@ namespace Unicorn.Core.Services
 
         private async Task<IEnumerable<VendorBookDTO>> GetOrdersByStatus(string role, long id, BookStatus status)
         {
-            var books = await GetOrdersAsync(role, id);            
+            var booksDTO = await GetOrdersAsync(role, id);            
 
-            List<Book> _books = new List<Book>();
+            List<Book> _booksEntity = new List<Book>();
 
-            if(role == "vendor")
+            void CheckBooks(List<Book> _books, ref IEnumerable<VendorBookDTO> books)
             {
-                var vendor = await _unitOfWork.VendorRepository.GetByIdAsync(id);
-                if (!vendor.Calendar.SeveralTaskPerDay)
+                foreach (Book _book in _books)
                 {
-                    _books = _unitOfWork.BookRepository.Query.Where(x => x.Vendor.Id == id).ToList();
-                    foreach (Book _book in _books)
+                    foreach (Book book in _books)
                     {
-                        foreach (Book book in _books)
-                        {
-                            if (book.Id != _book.Id
-                                && _book.Status == BookStatus.Pending
-                                && book.Status != BookStatus.Pending
-                                && book.Status != BookStatus.Declined
-                                && book.Status != BookStatus.Finished
-                                && book.Status != BookStatus.Confirmed
-                                && ((_book.Date >= book.Date
-                                && _book.Date <= book.EndDate)
-                                || (_book.EndDate <= book.EndDate
-                                && _book.EndDate >= book.Date)))
+                        if (book.Id != _book.Id)
+                            if ((_book.Status == BookStatus.Pending && book.Status != BookStatus.Pending
+                            && book.Status != BookStatus.Declined && book.Status != BookStatus.Finished
+                            && book.Status != BookStatus.Confirmed
+                            && ((_book.Date >= book.Date && _book.Date <= book.EndDate)
+                            || (_book.EndDate <= book.EndDate && _book.EndDate >= book.Date)))
+                            || _book.Status == BookStatus.Pending 
+                            && (book.Status == BookStatus.Accepted || book.Status == BookStatus.InProgress)
+                            && (book.Date >= _book.Date && book.Date <= _book.EndDate)
+                            || (book.EndDate <= _book.EndDate && book.EndDate >= _book.Date))
                             {
                                 foreach (var b in books)
                                 {
@@ -507,8 +503,18 @@ namespace Unicorn.Core.Services
                                     }
                                 }
                             }
-                        }
                     }
+                }
+            }
+
+
+            if(role == "vendor")
+            {
+                var vendor = await _unitOfWork.VendorRepository.GetByIdAsync(id);
+                if (!vendor.Calendar.SeveralTaskPerDay)
+                {
+                    _booksEntity = _unitOfWork.BookRepository.Query.Where(x => x.Vendor.Id == id).ToList();
+                    CheckBooks(_booksEntity, ref booksDTO);
                 }
             }
             else if(role == "company")
@@ -516,43 +522,16 @@ namespace Unicorn.Core.Services
                 var company = await _unitOfWork.CompanyRepository.GetByIdAsync(id);
                 if (!company.Calendar.SeveralTaskPerDay)
                 {
-                    _books = _unitOfWork.BookRepository.Query.Where(x => x.Company.Id == id).ToList();
-                    foreach (Book _book in _books)
-                    {
-                        foreach(Book book in _books)
-                        {
-                            if (book.Id != _book.Id
-                            && _book.Status == BookStatus.Pending
-                            && book.Status != BookStatus.Pending
-                            && book.Status != BookStatus.Declined
-                            && book.Status != BookStatus.Finished
-                            && book.Status != BookStatus.Confirmed
-                            && ((_book.Date >= book.Date
-                            && _book.Date <= book.EndDate)
-                            || (_book.EndDate <= book.EndDate
-                            && _book.EndDate >= book.Date)))
-                            {
-                                foreach (var b in books)
-                                {
-                                    if (b.Id == _book.Id)
-                                    {
-                                        b.MoreTasksPerDay = true;
-                                    }
-                                }
-                            }
-                        }                       
-                    }
+                    _booksEntity = _unitOfWork.BookRepository.Query.Where(x => x.Company.Id == id).ToList();
+                    CheckBooks(_booksEntity, ref booksDTO);
                 }
+            }          
 
-            }  
-            
-            
-
-            if (books == null)
+            if (booksDTO == null)
             {
                 return Enumerable.Empty<VendorBookDTO>();
             }
-            return books.Where(b => b.Status == status);
+            return booksDTO.Where(b => b.Status == status);
         }
 
         public async Task DeleteBook(long id)

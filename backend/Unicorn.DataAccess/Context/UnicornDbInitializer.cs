@@ -1709,7 +1709,7 @@ namespace Unicorn.DataAccess.Context
             {
                 Id = 1,
                 IsDeleted = false,
-                StartDate = DateTimeOffset.UtcNow,
+                StartDate = DateTime.Today,
                 EndDate = null,
                 ExtraDayOffs = new List<ExtraDay>(),
                 ExtraWorkDays = new List<ExtraDay>(),
@@ -1721,7 +1721,7 @@ namespace Unicorn.DataAccess.Context
             {
                 Id = 2,
                 IsDeleted = false,
-                StartDate = DateTimeOffset.UtcNow,
+                StartDate = DateTime.Today,
                 EndDate = null,
                 ExtraDayOffs = new List<ExtraDay>(),
                 ExtraWorkDays = new List<ExtraDay>(),
@@ -1733,7 +1733,7 @@ namespace Unicorn.DataAccess.Context
             {
                 Id = 3,
                 IsDeleted = false,
-                StartDate = DateTimeOffset.UtcNow,
+                StartDate = DateTime.Today,
                 EndDate = null,
                 ExtraDayOffs = new List<ExtraDay>(),
                 ExtraWorkDays = new List<ExtraDay>(),
@@ -1745,7 +1745,7 @@ namespace Unicorn.DataAccess.Context
             {
                 Id = 4,
                 IsDeleted = false,
-                StartDate = DateTimeOffset.UtcNow,
+                StartDate = DateTime.Today,
                 EndDate = null,
                 ExtraDayOffs = new List<ExtraDay>(),
                 ExtraWorkDays = new List<ExtraDay>(),
@@ -1757,7 +1757,7 @@ namespace Unicorn.DataAccess.Context
             {
                 Id = 5,
                 IsDeleted = false,
-                StartDate = DateTimeOffset.UtcNow,
+                StartDate = DateTime.Today,
                 EndDate = null,
                 ExtraDayOffs = new List<ExtraDay>(),
                 ExtraWorkDays = new List<ExtraDay>(),
@@ -1769,7 +1769,7 @@ namespace Unicorn.DataAccess.Context
             {
                 Id = 6,
                 IsDeleted = false,
-                StartDate = DateTimeOffset.UtcNow,
+                StartDate = DateTime.Today,
                 EndDate = null,
                 ExtraDayOffs = new List<ExtraDay>(),
                 ExtraWorkDays = new List<ExtraDay>(),
@@ -1781,7 +1781,7 @@ namespace Unicorn.DataAccess.Context
             {
                 Id = 7,
                 IsDeleted = false,
-                StartDate = DateTimeOffset.UtcNow,
+                StartDate = DateTime.Today,
                 EndDate = null,
                 ExtraDayOffs = new List<ExtraDay>(),
                 ExtraWorkDays = new List<ExtraDay>(),
@@ -1793,7 +1793,7 @@ namespace Unicorn.DataAccess.Context
             {
                 Id = 8,
                 IsDeleted = false,
-                StartDate = DateTimeOffset.UtcNow,
+                StartDate = DateTime.Today,
                 EndDate = null,
                 ExtraDayOffs = new List<ExtraDay>(),
                 ExtraWorkDays = new List<ExtraDay>(),
@@ -1805,7 +1805,7 @@ namespace Unicorn.DataAccess.Context
             {
                 Id = 9,
                 IsDeleted = false,
-                StartDate = DateTimeOffset.UtcNow,
+                StartDate = DateTime.Today,
                 EndDate = null,
                 ExtraDayOffs = new List<ExtraDay>(),
                 ExtraWorkDays = new List<ExtraDay>(),
@@ -1817,7 +1817,7 @@ namespace Unicorn.DataAccess.Context
             {
                 Id = 10,
                 IsDeleted = false,
-                StartDate = DateTimeOffset.UtcNow,
+                StartDate = DateTime.Today,
                 EndDate = null,
                 ExtraDayOffs = new List<ExtraDay>(),
                 ExtraWorkDays = new List<ExtraDay>(),
@@ -1829,7 +1829,7 @@ namespace Unicorn.DataAccess.Context
             {
                 Id = 11,
                 IsDeleted = false,
-                StartDate = DateTimeOffset.UtcNow,
+                StartDate = DateTime.Today,
                 EndDate = null,
                 ExtraDayOffs = new List<ExtraDay>(),
                 ExtraWorkDays = new List<ExtraDay>(),
@@ -1841,7 +1841,7 @@ namespace Unicorn.DataAccess.Context
             {
                 Id = 12,
                 IsDeleted = false,
-                StartDate = DateTimeOffset.UtcNow,
+                StartDate = DateTime.Today,
                 EndDate = null,
                 ExtraDayOffs = new List<ExtraDay>(),
                 ExtraWorkDays = new List<ExtraDay>(),
@@ -1853,7 +1853,7 @@ namespace Unicorn.DataAccess.Context
             {
                 Id = 13,
                 IsDeleted = false,
-                StartDate = DateTimeOffset.UtcNow,
+                StartDate = DateTime.Today,
                 EndDate = null,
                 ExtraDayOffs = new List<ExtraDay>(),
                 ExtraWorkDays = new List<ExtraDay>(),
@@ -1865,7 +1865,7 @@ namespace Unicorn.DataAccess.Context
             {
                 Id = 14,
                 IsDeleted = false,
-                StartDate = DateTimeOffset.UtcNow,
+                StartDate = DateTime.Today,
                 EndDate = null,
                 ExtraDayOffs = new List<ExtraDay>(),
                 ExtraWorkDays = new List<ExtraDay>(),
@@ -1877,7 +1877,7 @@ namespace Unicorn.DataAccess.Context
             {
                 Id = 15,
                 IsDeleted = false,
-                StartDate = DateTimeOffset.UtcNow,
+                StartDate = DateTime.Today,
                 EndDate = null,
                 ExtraDayOffs = new List<ExtraDay>(),
                 ExtraWorkDays = new List<ExtraDay>(),

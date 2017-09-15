@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -59,8 +60,9 @@ namespace Unicorn.Controllers
         {
             try
             {
+                var _date = Convert.ToDateTime(date);
                 var performers = await _popularService.GetPerformersByFilterAsync(city, name, role, rating, ratingCondition, withReviews, categoriesString,
-                    subcategoriesString, latitude, longitude, distance, sort, date);
+                    subcategoriesString, latitude, longitude, distance, sort, _date);
 
                 return _popularService.GetPerformersPage(page, pagesize, performers);
             }

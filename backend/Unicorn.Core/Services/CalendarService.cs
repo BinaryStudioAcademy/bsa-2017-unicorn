@@ -24,7 +24,7 @@ namespace Unicorn.Core.Services
         {
             return new Calendar
             {
-                StartDate = DateTimeOffset.UtcNow,
+                StartDate = DateTime.Today,
                 EndDate = null,
                 ExtraDayOffs = new List<ExtraDay>(),
                 ExtraWorkDays = new List<ExtraDay>(),

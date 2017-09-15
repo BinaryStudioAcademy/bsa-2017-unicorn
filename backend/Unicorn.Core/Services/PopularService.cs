@@ -39,23 +39,23 @@ namespace Unicorn.Core.Services
         }
 
 
-        private DateTimeOffset ConvertUtcToDateTime(string dt)
-        {
-            if (dt != null)
-            {
-                dt = dt.Replace(" ", "");
-                if (dt != "-1")
-                {
-                    DateTimeOffset dateTime;
-                    dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
-                    dateTime = dateTime.AddMilliseconds(Double.Parse(dt)).ToLocalTime();
-                    dateTime = dateTime.UtcDateTime;
-                    return dateTime;
-                }
-                return DateTimeOffset.Now;
-            }
-            return DateTimeOffset.Now;
-        }
+        //private DateTimeOffset ConvertUtcToDateTime(string dt)
+        //{
+        //    if (dt != null)
+        //    {
+        //        dt = dt.Replace(" ", "");
+        //        if (dt != "-1")
+        //        {
+        //            DateTimeOffset dateTime;
+        //            dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
+        //            dateTime = dateTime.AddMilliseconds(Double.Parse(dt)).ToLocalTime();
+        //            dateTime = dateTime.UtcDateTime;
+        //            return dateTime;
+        //        }
+        //        return DateTimeOffset.UtcNow;
+        //    }
+        //    return DateTimeOffset.UtcNow;
+        //}
 
         private bool IsVendorWorkingOnThisDate(long id, DateTimeOffset date)
         {
@@ -118,10 +118,10 @@ namespace Unicorn.Core.Services
 
         public async Task<List<FullPerformerDTO>> GetPerformersByFilterAsync(
             string city, string name, string role, double? rating, string ratingCondition, bool withReviews, string categoriesString,
-            string subcategoriesString, double? latitude, double? longitude, double? distance, string sort, string date
+            string subcategoriesString, double? latitude, double? longitude, double? distance, string sort, DateTimeOffset date
             )
         {
-            var dateOfWork = ConvertUtcToDateTime(date);
+            //var dateOfWork = ConvertUtcToDateTime(date);
 
             var reviewsTask = _uow.ReviewRepository.GetAllAsync();
             var categories = !string.IsNullOrEmpty(categoriesString) ? categoriesString.Split(' ').Select(c => Int64.Parse(c)).ToList() : new List<long>();
@@ -236,7 +236,7 @@ namespace Unicorn.Core.Services
 
             var vendorsList = await vendorsTask;
 
-            var vendorsWorksSyncWithDate = vendorsList.Where(x => SynchronizeWorkDateWithVendorsWorkDays(x.Calendar, dateOfWork, IsVendorWorkingOnThisDate(x.Id, dateOfWork))).ToList();
+            var vendorsWorksSyncWithDate = vendorsList.Where(x => SynchronizeWorkDateWithVendorsWorkDays(x.Calendar, date, IsVendorWorkingOnThisDate(x.Id, date))).ToList();
 
             var vendors = vendorsWorksSyncWithDate
                 .Select(v => VendorToFullPerformer(v, reviews, longitude, latitude))
@@ -244,7 +244,7 @@ namespace Unicorn.Core.Services
 
             var companiesList = await companiesTask;
 
-            var companiesWorksSyncWithDate = companiesList.Where(x => SynchronizeWorkDateWithVendorsWorkDays(x.Calendar, dateOfWork, IsCompanyWorkingOnThisDate(x.Id, dateOfWork))).ToList();
+            var companiesWorksSyncWithDate = companiesList.Where(x => SynchronizeWorkDateWithVendorsWorkDays(x.Calendar, date, IsCompanyWorkingOnThisDate(x.Id, date))).ToList();
 
             var companies = companiesWorksSyncWithDate
                 .Select(c => CompanyToFullPerformer(c, reviews, longitude, latitude))
