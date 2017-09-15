@@ -23,14 +23,13 @@ namespace Unicorn.Controllers
 
         [HttpGet]
         [Route("search")]
-        public async Task<List<SearchWorkDTO>> GetPerformersByFilters(  string category, string subcategory, string date,
+        public async Task<List<SearchWorkDTO>> GetPerformersByFilters(  string category, string subcategory, DateTime date,
                                                                         string vendor, string ratingcompare, double? rating, bool? reviews,
                                                                         double? latitude, double? longitude, double? distance,
                                                                         [FromUri] string[] categories, [FromUri] string[] subcategories, string city,
                                                                         int? sort  )
         {
-            var _date = DateTime.ParseExact(date, "dd/MM/yyyy", null);
-            return await _searchService.GetWorksByFilters(  category, subcategory, _date,
+            return await _searchService.GetWorksByFilters(  category, subcategory, date,
                                                             vendor, ratingcompare, rating, reviews,
                                                             latitude, longitude, distance,
                                                             categories, subcategories, city,
@@ -39,10 +38,9 @@ namespace Unicorn.Controllers
 
         [HttpGet]
         [Route("search")]
-        public async Task<List<SearchWorkDTO>> GetPerformersByBaseFilters(string category, string subcategory, string date)
+        public async Task<List<SearchWorkDTO>> GetPerformersByBaseFilters(string category, string subcategory, DateTime date)
         {
-            var _date = DateTime.ParseExact(date, "dd/MM/yyyy", null);
-            return await _searchService.GetWorksByBaseFilters(category, subcategory, _date);
+            return await _searchService.GetWorksByBaseFilters(category, subcategory, date);
         }
 
         [HttpGet]
