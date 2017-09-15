@@ -472,40 +472,41 @@ namespace Unicorn.Core.Services
             return books.Where(b => b.Status == BookStatus.Finished || b.Status == BookStatus.Confirmed);
         }
 
+
+        private void CheckBooks(List<Book> _books, ref IEnumerable<VendorBookDTO> books)
+        {
+            foreach (Book _book in _books)
+            {
+                foreach (Book book in _books)
+                {
+                    if (book.Id != _book.Id)
+                        if ((_book.Status == BookStatus.Pending && book.Status != BookStatus.Pending
+                        && book.Status != BookStatus.Declined && book.Status != BookStatus.Finished
+                        && book.Status != BookStatus.Confirmed
+                        && ((_book.Date >= book.Date && _book.Date <= book.EndDate)
+                        || (_book.EndDate <= book.EndDate && _book.EndDate >= book.Date)))
+                        || _book.Status == BookStatus.Pending
+                        && (book.Status == BookStatus.Accepted || book.Status == BookStatus.InProgress)
+                        && (book.Date >= _book.Date && book.Date <= _book.EndDate)
+                        || (book.EndDate <= _book.EndDate && book.EndDate >= _book.Date))
+                        {
+                            foreach (var b in books)
+                            {
+                                if (b.Id == _book.Id)
+                                {
+                                    b.MoreTasksPerDay = true;
+                                }
+                            }
+                        }
+                }
+            }
+        }
+
         private async Task<IEnumerable<VendorBookDTO>> GetOrdersByStatus(string role, long id, BookStatus status)
         {
             var booksDTO = await GetOrdersAsync(role, id);            
 
             List<Book> _booksEntity = new List<Book>();
-
-            void CheckBooks(List<Book> _books, ref IEnumerable<VendorBookDTO> books)
-            {
-                foreach (Book _book in _books)
-                {
-                    foreach (Book book in _books)
-                    {
-                        if (book.Id != _book.Id)
-                            if ((_book.Status == BookStatus.Pending && book.Status != BookStatus.Pending
-                            && book.Status != BookStatus.Declined && book.Status != BookStatus.Finished
-                            && book.Status != BookStatus.Confirmed
-                            && ((_book.Date >= book.Date && _book.Date <= book.EndDate)
-                            || (_book.EndDate <= book.EndDate && _book.EndDate >= book.Date)))
-                            || _book.Status == BookStatus.Pending 
-                            && (book.Status == BookStatus.Accepted || book.Status == BookStatus.InProgress)
-                            && (book.Date >= _book.Date && book.Date <= _book.EndDate)
-                            || (book.EndDate <= _book.EndDate && book.EndDate >= _book.Date))
-                            {
-                                foreach (var b in books)
-                                {
-                                    if (b.Id == _book.Id)
-                                    {
-                                        b.MoreTasksPerDay = true;
-                                    }
-                                }
-                            }
-                    }
-                }
-            }
 
 
             if(role == "vendor")
