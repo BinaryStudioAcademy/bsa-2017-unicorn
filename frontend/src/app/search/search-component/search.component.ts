@@ -91,7 +91,7 @@ export class SearchComponent implements OnInit {
   loadWorks() {
     this.works = [];
     this.spinner = true;
-    this.getWorksByBaseFilters(this.category, this.subcategory, new Date().toLocaleString());
+    this.getWorksByBaseFilters(this.category, this.subcategory, new Date().toLocaleDateString());
     this.pagedWorks = this.getWorksPage();
     this.searchMarkers = this.getMarkers();
   }
@@ -217,10 +217,10 @@ export class SearchComponent implements OnInit {
 
     let date;
     if(this.date){
-      date = this.date.toLocaleString();
+      date = this.date.toLocaleDateString();
     }
     else{
-      date = new Date().toLocaleString();
+      date = new Date().toLocaleDateString();
     }
     this.getWorksByAdvFilters(this.category, this.subcategory, date,
            this.vendorName, this.ratingCmp, this.rating, this.reviewsChecked,
