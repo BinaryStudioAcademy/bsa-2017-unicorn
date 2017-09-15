@@ -60,7 +60,7 @@ namespace Unicorn.Controllers
         {
             try
             {
-                var _date = Convert.ToDateTime(date);
+                var _date = DateTime.ParseExact(date, "dd/MM/yyyy", null);
                 var performers = await _popularService.GetPerformersByFilterAsync(city, name, role, rating, ratingCondition, withReviews, categoriesString,
                     subcategoriesString, latitude, longitude, distance, sort, _date);
 

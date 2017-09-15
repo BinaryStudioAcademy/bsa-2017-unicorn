@@ -29,7 +29,7 @@ namespace Unicorn.Controllers
                                                                         [FromUri] string[] categories, [FromUri] string[] subcategories, string city,
                                                                         int? sort  )
         {
-            var _date = Convert.ToDateTime(date);
+            var _date = DateTime.ParseExact(date, "dd/MM/yyyy", null);
             return await _searchService.GetWorksByFilters(  category, subcategory, _date,
                                                             vendor, ratingcompare, rating, reviews,
                                                             latitude, longitude, distance,
@@ -41,7 +41,7 @@ namespace Unicorn.Controllers
         [Route("search")]
         public async Task<List<SearchWorkDTO>> GetPerformersByBaseFilters(string category, string subcategory, string date)
         {
-            var _date = Convert.ToDateTime(date);
+            var _date = DateTime.ParseExact(date, "dd/MM/yyyy", null);
             return await _searchService.GetWorksByBaseFilters(category, subcategory, _date);
         }
 

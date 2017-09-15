@@ -92,6 +92,7 @@ export class SearchComponent implements OnInit {
     this.works = [];
     this.spinner = true;
     this.getWorksByBaseFilters(this.category, this.subcategory, new Date().toLocaleDateString());
+    console.log(new Date().toLocaleDateString());
     this.pagedWorks = this.getWorksPage();
     this.searchMarkers = this.getMarkers();
   }
