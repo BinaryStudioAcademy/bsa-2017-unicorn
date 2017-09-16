@@ -1,0 +1,89 @@
+<div class="sixteen wide column" *ngIf="books !== undefined">
+  <div class="ui segment" *ngIf="books.length == 0">
+      <span id="empty-header">There are no tasks in pending</span>
+  </div>
+  <div class="ui segment book-card grid" *ngFor="let book of books">
+      <div class="row">
+        <div class="book-img two wide column">
+            <img class="ui tiny circular image" src="{{book.Work.Icon}}">
+        </div>
+        <div class="book-info five wide column">
+            <p>{{book.Work.Name}} <span align=right>{{book.Date | date: 'dd/MM/yyyy'}}{{getEndDate(book)}}</span></p>
+            <p>{{book.Description}}</p>
+        </div>
+        <div class="customer-info five wide column">
+            <p><a routerLink="/user/{{book.CustomerId}}">{{book.Customer}}</a></p>
+            <p><i class="colored call icon"></i>{{book.CustomerPhone}}</p>
+            <p (click)="openMap(book.Id)" class="mapInfo"><i class="colored map pin icon"></i>{{book.Location.City}},&nbsp;{{book.Location.Adress}}</p>
+        </div>
+        <div class="book-actions four wide column">
+            <a (click)="accept(book.Id)" class="ui button accept-btn" [ngClass]="{'loading': aloads[book.Id], 'disabled': aloads[book.Id] || dloads[book.Id]}">Accept</a>
+            <a (click)="decline(book.Id)" class="ui button basic decline-btn" [ngClass]="{'loading': dloads[book.Id], 'disabled': aloads[book.Id] || dloads[book.Id]}">Decline</a>
+            <div class="book-warning" *ngIf="book.MoreTasksPerDay">WARNING! This task might make one of your work days with more than one task. Check your calendar.</div>
+        </div>
+      </div>
+      <div class="ui divider"></div>
+      <div class="row">
+        <div class="vendor-assign-div sixteen wide column">
+          <div class="ui three column grid">
+              <div class="column">
+                <div class="task-header">
+                  <span>TASKS</span>
+                  <i class="ui icon green add"></i>
+                </div>
+                <div class="task-list">
+                  <div class="task-item">
+                    <div>
+                      <img class="ui mini circular image task-item-image" src="{{book.Work.Icon}}">
+                    </div>
+                    <div>
+                      <span class="task-item-span">Task name</span>
+                    </div>
+                    <div>
+                      <span class="task-item-span">Task status</span>
+                    </div>
+                  </div>
+                  <div class="task-item">
+                    <div>
+                      <img class="ui mini circular image task-item-image" src="{{book.Work.Icon}}">
+                    </div>
+                    <div>
+                      <span class="task-item-span">Task name</span>
+                    </div>
+                    <div>
+                      <span class="task-item-span">Task status</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="column">
+                col2
+              </div>
+              <div class="column">
+                col3
+              </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+<ng-template let-context let-modal="modal" #declineModal>
+  <div class="ui content">
+      <form class="ui reply form" name="reviewForm" #declineForm="ngForm">
+          <div class="field">
+              <textarea required placeholder="TYPE THE REASON" name="reason" [(ngModel)]="reason" #reasonText="ngModel"></textarea>
+          </div>
+          <div class="save-btn">
+              <a (click)="declineConfirm(context.id)" [ngClass]="{'loading': loader, 'disabled': declineForm.invalid || loader}" class="ui basic button decline-confirm">
+                  <p *ngIf="!loader" style="color:#FF647A;">Save</p>
+              </a>
+          </div>
+      </form>
+  </div>
+</ng-template>
+<ng-template let-context let-modal="modal" #mapModal>
+  <div class="ui content">
+      <app-map [inputMap]="map" *ngIf="map"></app-map>
+  </div>
+</ng-template>
+<div class="ui active centered inline loader" *ngIf="books === undefined"></div>

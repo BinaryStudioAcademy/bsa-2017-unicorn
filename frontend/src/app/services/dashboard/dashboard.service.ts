@@ -8,32 +8,29 @@ import { BookCard } from '../../models/dashboard/book-card';
 @Injectable()
 export class DashboardService {
 
-  role: string;
-  id: string;
-
   constructor(
     private dataService: DataService,
     private tokenhelper: TokenHelperService) {
-    this.initValues();
   }
 
-  initValues() {
-    this.role = this.tokenhelper.getRoleName();
-    this.id = this.tokenhelper.getClaimByName('profileid');
-    console.log('role ', this.role);
-    console.log('id ', this.id);
+  getRole(): string {
+    return this.tokenhelper.getRoleName();
+  }
+
+  getId(): string {
+    return this.tokenhelper.getClaimByName('profileid');
   }
 
   getPendingBooks(): Promise<BookCard[]> {
-    return this.dataService.getRequest<BookCard[]>(`book/${this.role}/${this.id}/pending`);
+    return this.dataService.getRequest<BookCard[]>(`book/${this.getRole()}/${this.getId()}/pending`);
   }
 
   getAcceptedBooks(): Promise<BookCard[]> {
-    return this.dataService.getRequest<BookCard[]>(`book/${this.role}/${this.id}/accepted`);
+    return this.dataService.getRequest<BookCard[]>(`book/${this.getRole()}/${this.getId()}/accepted`);
   }
 
   getFinishedBooks(): Promise<BookCard[]> {
-    return this.dataService.getRequest<BookCard[]>(`book/${this.role}/${this.id}/finished`);
+    return this.dataService.getRequest<BookCard[]>(`book/${this.getRole()}/${this.getId()}/finished`);
   }
 
   getPortfolioBooks(role: string, id: number): Promise<BookCard[]> {
