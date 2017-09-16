@@ -17,36 +17,36 @@ export class CategoryService {
 
   getAll(): Promise<any> {
 	  return this.dataService.getFullRequest<Category[]>(this.apiController)
-		  .catch(err => alert(err));
+		  .catch(err => console.log(err));
   }
 
   createCategory(category: Category): Promise<any> {
     return this.dataService.postFullRequest<Category>(`${this.apiController}`, category)
-      .catch(err => alert(err));
+      .catch(err => console.log(err));
   }
 
   updateCategory(category: Category): Promise<any> {
     return this.dataService.putFullRequest(`${this.apiController}/${category.Id}`, category)
-      .catch(err => alert(err));
+      .catch(err => console.log(err));
   }
 
   removeCategory(id: number): Promise<any> {
     return this.dataService.deleteRequest(`${this.apiController}/${id}`)
-      .catch(err => alert(err));
+      .catch(err => console.log(err));
   }
 
   createSubcategory(categoryId: number, subcategory: Subcategory): Promise<any> {
     return this.dataService.postFullRequest<Category>(`${this.apiController}/${categoryId}/subcategories`, subcategory)
-      .catch(err => alert(err));
+      .catch(err => console.log(err));
   }
 
   updateSubcategory(categoryId: number, subcategory: Subcategory): Promise<any> {
     return this.dataService.putFullRequest(`${this.apiController}/${categoryId}/subcategories/${subcategory.Id}`, subcategory)
-      .catch(err => alert(err));
+      .catch(err => console.log(err));
   }
 
   removeSubcategory(categoryId: number, id: number): Promise<any> {
     return this.dataService.deleteRequest(`${this.apiController}/${categoryId}/subcategories/${id}`)
-      .catch(err => alert(err));
+      .catch(err => console.log(err));
   }
 }

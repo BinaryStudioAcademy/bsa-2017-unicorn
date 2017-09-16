@@ -58,8 +58,7 @@ export class SearchService {
     const queryParams = `search?category=${category}&subcategory=${subcategory}&date=${d}
     &vendor=${vendor}&ratingcompare=${ratingcompare}&rating=${rt}&reviews=${rv}
     &latitude=${lat}&longitude=${long}&distance=${dist}
-    ${ctg}${subctg}&city=${city}&sort=${srt}`;
-    console.log(queryParams);
+    ${ctg}${subctg}&city=${city}&sort=${srt}`;    
     return this.dataService.getRequest<SearchWork[]>(queryParams);
   }
 }

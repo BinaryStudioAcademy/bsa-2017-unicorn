@@ -71,11 +71,7 @@ export class CalendarComponent implements OnInit {
     private zone: NgZone,) { }
 
   ngOnInit() {   
-    this.settingsClicked = this.calendarEventsService.settingsClickEvent$.subscribe(() => {
-      if(this.activeModal){
-        this.zone.run(() => this.activeModal.deny(null));   
-        this.activeModal = undefined;
-      }
+    this.settingsClicked = this.calendarEventsService.settingsClickEvent$.subscribe(() => {      
       this.openSettingsModal();
     })
     
@@ -129,11 +125,7 @@ export class CalendarComponent implements OnInit {
     config.context = {date:day.date, events:events, day: day};
     config.isInverted = true;
     config.size = ModalSize.Normal;
-    this.activeModal = this.modalService.open(config)
-    .onDeny(() => {
-      this.zone.run(() => this.activeModal.deny(null));
-      this.activeModal = undefined;
-     });
+    this.activeModal = this.modalService.open(config);    
   }
 
   openSettingsModal(){
@@ -146,17 +138,15 @@ export class CalendarComponent implements OnInit {
     };
     config.isInverted = true;
     config.size = ModalSize.Tiny;
-    this.activeModal = this.modalService.open(config)
-    .onDeny(() => {
-      this.zone.run(() => this.activeModal.deny(null));
-      this.activeModal = undefined;
-     });
+    this.activeModal = this.modalService.open(config);    
   }
 
   closeSettingsModal(context: any){
+    let _startDate = new Date(context.startDate);
+    let _endDate = new Date(context.endDate);
     this.isChangedWorktime = true;
-    this.calendarModel.StartDate = context.startDate;
-    this.calendarModel.EndDate = context.endDate;
+    this.calendarModel.StartDate = this.checkTheDate(_startDate);
+    this.calendarModel.EndDate = this.checkTheDate(_endDate);
     this.calendarModel.WorkOnWeekend = context.workOnWeekend;
     this.calendarModel.SeveralTasksPerDay = context.severalTasksPerDay;
     
@@ -170,28 +160,29 @@ export class CalendarComponent implements OnInit {
     }
     this.calendarService.saveCalendar(this.calendarModel).then(() => {
       this.isChangedWorktime = false;
-      this.zone.run(() => this.activeModal.deny(null));    
-      this.activeModal = undefined;    
+      this.activeModal.deny(null);          
     }); 
   }
 
-  closeDayModal(day: any){       
+  closeDayModal(day: any){     
     if(day.isWeekend !== this.wasWeekend){
       this.isSavingWeekend = true;      
       if(day.isWeekend && ((day.date.getDay() !== 6 && day.date.getDay() !== 0) ||
         ((day.date.getDay() === 6 || day.date.getDay() === 0) && this.calendarModel.WorkOnWeekend))){
+        let _date = new Date(day.date);
         this.calendarModel.ExtraDayOffs.push({
           Id: null,
           CalendarId: this.calendarModel.Id,
-          Day: day.date,
+          Day: this.checkTheDate(_date),
           DayOff: true
         });
       }      
       else if(!day.isWeekend && (day.date.getDay() === 6 || day.date.getDay() === 0) && !this.calendarModel.WorkOnWeekend){        
+        let _date = new Date(day.date);
         this.calendarModel.ExtraWorkDays.push({
           Id: null,
           CalendarId: this.calendarModel.Id,
-          Day: day.date,
+          Day: this.checkTheDate(_date),
           DayOff: false
         });        
       }
@@ -206,13 +197,12 @@ export class CalendarComponent implements OnInit {
       }      
       this.calendarService.saveCalendar(this.calendarModel).then(() => {
         this.isSavingWeekend = false;
-        this.zone.run(() => this.activeModal.deny(null));    
+        this.activeModal.deny(null);    
       }); 
     }
     else{
-      this.zone.run(() => this.activeModal.deny(null));        
-    }    
-    this.activeModal = undefined;    
+      this.activeModal.deny(null);        
+    }        
     this.wasWeekend = undefined;   
   }
 
@@ -226,14 +216,17 @@ export class CalendarComponent implements OnInit {
 
   render(mas: any[]){
     mas.forEach(day => {          
-      if(this.calendarModel.ExtraWorkDays.find(x => new Date(x.Day).toLocaleDateString() == day.date.toLocaleDateString())){
+      if(this.calendarModel.ExtraWorkDays.find(x => new Date(x.Day).getUTCDate() == day.date.getUTCDate())){
         day.isWeekend = false;
       }
-      else if(this.calendarModel.ExtraDayOffs.find(x => new Date(x.Day).toLocaleDateString() == day.date.toLocaleDateString())){
+      else if(this.calendarModel.ExtraDayOffs.find(x => new Date(x.Day).getUTCDate() == day.date.getUTCDate())){
         day.isWeekend = true;
       }  
     });
   }
 
+  checkTheDate(date: Date):Date{     
+      return new Date(date.setHours(date.getHours() - date.getTimezoneOffset() / 60));    
+  }
 
 }

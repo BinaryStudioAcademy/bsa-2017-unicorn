@@ -91,10 +91,8 @@ export class SearchComponent implements OnInit {
   loadWorks() {
     this.works = [];
     this.spinner = true;
-    this.getWorksByBaseFilters(this.category, this.subcategory, new Date().toJSON());
-    console.log(new Date().toUTCString() 
-    + "--- " + new Date().toJSON()
-    + "--- " + new Date().toDateString());
+    let date = this.checkTheDate(new Date());
+    this.getWorksByBaseFilters(this.category, this.subcategory, date);    
     this.pagedWorks = this.getWorksPage();
     this.searchMarkers = this.getMarkers();
   }
@@ -217,19 +215,25 @@ export class SearchComponent implements OnInit {
     this.distance = this.slider;
     this.togglePanel = false;
     this.ratingCmp = this.convertRatingType(this.ratingCompare);
-    this.selSort = this.convertSortType(this.sort);
+    this.selSort = this.convertSortType(this.sort);   
 
     let date;
-    if(this.date){
-      date = this.date.toJSON();
+    let _date = new Date(this.date);    
+    if(this.date){      
+       date = this.checkTheDate(_date);
     }
-    else{
-      date = new Date().toJSON();
-    }
+    else{ 
+      date = this.checkTheDate(new Date());
+    }    
     this.getWorksByAdvFilters(this.category, this.subcategory, date,
            this.vendorName, this.ratingCmp, this.rating, this.reviewsChecked,
            this.latitude, this.longitude, this.distance,
            this.selCategories, this.selSubcategories, this.city, this.selSort);
+  }
+
+
+  checkTheDate(date: Date):string{        
+    return new Date(date.setHours(date.getHours() - date.getTimezoneOffset() / 60)).toJSON();    
   }
 
   convertRatingType(rating: string) {

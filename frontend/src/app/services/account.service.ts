@@ -19,22 +19,22 @@ export class AccountService {
 
   	getShortInfo(id: number): Promise<any> {
 		return this.dataService.getFullRequest<ProfileShortInfo>(`${this.apiController}/${id}`)
-			.catch(err => alert(err));
+			.catch(err => console.log(err));
 	}
 	  
 	getNotifications(id: number): Promise<any> {
 		return this.dataService.getFullRequest<Notification[]>(`${this.apiController}/${id}/notifications`)
-			.catch(err => alert(err));
+			.catch(err => console.log(err));
 	}
 
 	updateNotification(accountId: number, notification: Notification): Promise<any> {
 		return this.dataService.putFullRequest<Notification[]>(`${this.apiController}/${accountId}/notifications/${notification.Id}`, notification)
-			.catch(err => alert(err));
+			.catch(err => console.log(err));
 	}
 
 	removeNotification(accountId: number, notification: Notification): Promise<any> {
 		return this.dataService.deleteFullRequest<Notification[]>(`${this.apiController}/${accountId}/notifications/${notification.Id}`, notification)
-			.catch(err => alert(err));
+			.catch(err => console.log(err));
 	}
 
 	searchByTemplate(template: string, count: number): Promise<ProfileShortInfo[]> {
@@ -43,12 +43,12 @@ export class AccountService {
 
 	banAccount(id: number): Promise<any> {
 		return this.dataService.postFullRequest<AdminAccountViewModel>(`${this.apiController}/${id}/ban`, null)
-			.catch(err => alert(err));
+			.catch(err => console.log(err));
 	}
 
 	unbanAccount(id: number): Promise<any> {
 		return this.dataService.postFullRequest<AdminAccountViewModel>(`${this.apiController}/${id}/unban`, null)
-			.catch(err => alert(err));
+			.catch(err => console.log(err));
 	}
 
 	getBanListPage(page: number, size: number): Promise<BanListPage> {

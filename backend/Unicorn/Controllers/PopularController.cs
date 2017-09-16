@@ -60,6 +60,7 @@ namespace Unicorn.Controllers
         {
             try
             {
+                var _date = date.ToUniversalTime();
                 var performers = await _popularService.GetPerformersByFilterAsync(city, name, role, rating, ratingCondition, withReviews, categoriesString,
                     subcategoriesString, latitude, longitude, distance, sort, date);
 
