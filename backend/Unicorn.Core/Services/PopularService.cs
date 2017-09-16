@@ -59,27 +59,53 @@ namespace Unicorn.Core.Services
 
         private bool IsVendorWorkingOnThisDate(long id, DateTimeOffset date)
         {
-            return _uow.BookRepository.Query.FirstOrDefault(x => date >= x.Date && date <= x.EndDate
-            && x.Status != DataAccess.Entities.Enum.BookStatus.Finished && x.Status != DataAccess.Entities.Enum.BookStatus.Declined
-            && x.Status != DataAccess.Entities.Enum.BookStatus.Confirmed && id == x.Vendor.Id) != null ? true : false;
+            var books = _uow.BookRepository.Query.Where(x => x.Vendor.Id == id &&
+            x.Status != DataAccess.Entities.Enum.BookStatus.Finished && x.Status != DataAccess.Entities.Enum.BookStatus.Declined
+                && x.Status != DataAccess.Entities.Enum.BookStatus.Confirmed);
+
+            foreach (var book in books)
+            {
+                var bookDate = book.Date.ToUniversalTime();
+                var bookEndDate = book.EndDate.ToUniversalTime();
+                if (date >= bookDate && date <= bookEndDate)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         private bool IsCompanyWorkingOnThisDate(long id, DateTimeOffset date)
         {
-            return _uow.BookRepository.Query.FirstOrDefault(x => date >= x.Date && date <= x.EndDate
-            && x.Status != DataAccess.Entities.Enum.BookStatus.Finished && x.Status != DataAccess.Entities.Enum.BookStatus.Declined
-            && x.Status != DataAccess.Entities.Enum.BookStatus.Confirmed && id == x.Company.Id) != null ? true : false;
+            var books = _uow.BookRepository.Query.Where(x => x.Company.Id == id &&
+            x.Status != DataAccess.Entities.Enum.BookStatus.Finished && x.Status != DataAccess.Entities.Enum.BookStatus.Declined
+                && x.Status != DataAccess.Entities.Enum.BookStatus.Confirmed);
+
+            foreach (var book in books)
+            {
+                var bookDate = book.Date.ToUniversalTime();
+                var bookEndDate = book.EndDate.ToUniversalTime();
+                if (date >= bookDate && date <= bookEndDate)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         private bool SynchronizeWorkDateWithVendorsWorkDays(Calendar calendar, DateTimeOffset date, bool isWorkingOnThisDate)
         {
-            if (calendar.StartDate <= date && (calendar.EndDate == null || date <= calendar.EndDate))
+            var calendarStartDate = calendar.StartDate.ToUniversalTime();
+            var calendarEndDate = calendar.EndDate != null ?
+                calendar.EndDate.GetValueOrDefault() : calendar.EndDate;
+
+            if (calendarStartDate <= date && (calendarEndDate == null || date <= calendarEndDate))
             {
-                if (calendar.ExtraWorkDays.FirstOrDefault(x => x.Day == date) != null)
+                if (calendar.ExtraWorkDays.FirstOrDefault(x => x.Day.Date.ToUniversalTime() == date.Date.ToUniversalTime()) != null)
                 {
                     return true;
                 }
-                if (calendar.ExtraDayOffs.FirstOrDefault(x => x.Day == date) == null)
+                if (calendar.ExtraDayOffs.FirstOrDefault(x => x.Day.Date.ToUniversalTime() == date.Date.ToUniversalTime()) == null)
                 {
                     if (calendar.SeveralTaskPerDay)
                     {
@@ -115,13 +141,12 @@ namespace Unicorn.Core.Services
         }
 
 
-
         public async Task<List<FullPerformerDTO>> GetPerformersByFilterAsync(
             string city, string name, string role, double? rating, string ratingCondition, bool withReviews, string categoriesString,
             string subcategoriesString, double? latitude, double? longitude, double? distance, string sort, DateTimeOffset date
             )
         {
-            //var dateOfWork = ConvertUtcToDateTime(date);
+            date = date.ToUniversalTime();
 
             var reviewsTask = _uow.ReviewRepository.GetAllAsync();
             var categories = !string.IsNullOrEmpty(categoriesString) ? categoriesString.Split(' ').Select(c => Int64.Parse(c)).ToList() : new List<long>();

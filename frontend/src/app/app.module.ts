@@ -58,6 +58,7 @@ import { ClickOutsideModule } from "ng-click-outside/lib";
 
 import { NotFoundModule} from './not-found/not-found.module';
 import { AdminModule } from "./admin/admin.module";
+import { DashboardEventsService } from "./services/events/dashboard-events.service";
 
 export class CustomOptions extends ToastOptions {
   animate = 'fade';
@@ -117,6 +118,7 @@ export function getDefaultSignalRConfig(): SignalRConfiguration {
     ChatEventsService,
     MenuEventsService,
     CalendarEventsService,
+    DashboardEventsService,
     CalendarService,
     HelperService,
     TokenHelperService,

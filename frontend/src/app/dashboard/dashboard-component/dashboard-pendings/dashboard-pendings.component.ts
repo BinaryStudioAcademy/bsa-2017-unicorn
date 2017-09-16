@@ -12,6 +12,8 @@ import {SuiModalService, TemplateModalConfig, ModalTemplate, ModalSize, SuiActiv
 import {ToastsManager, Toast} from 'ng2-toastr';
 import {ToastOptions} from 'ng2-toastr';
 import { MapModel } from "../../../models/map.model";
+import { DashboardEventsService } from "../../../services/events/dashboard-events.service";
+import { Subscription } from "rxjs/Subscription";
 
 export interface IDeclineConfirm {
   id: number;
@@ -33,6 +35,7 @@ export class DashboardPendingsComponent implements OnInit {
   currModal: SuiActiveModal<IDeclineConfirm, {}, void>;
 
   books: BookCard[];
+  changeStatusToFinished: Subscription;
 
   aloads: {[bookId: number]: boolean} = {};
   dloads: {[bookId: number]: boolean} = {};
@@ -46,20 +49,23 @@ export class DashboardPendingsComponent implements OnInit {
     private notificationService: NotificationService,
     private toastr: ToastsManager,
     private modalService: SuiModalService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private dashboardEventsService: DashboardEventsService
   ) { }
 
   ngOnInit() {
     this.loadData();
     this.notificationService.listen<any>("RefreshOrders", () => this.loadData());
-    
+    this.changeStatusToFinished = this.dashboardEventsService.changeStatusToFinishedEvent$.subscribe(() => {
+      this.books = undefined;
+      this.loadData();
+    })
   }
 
   loadData() {
     this.dashboardService.getPendingBooks().then(resp => {
       this.books = resp;
-      console.log(this.books);
-      
+      console.log(this.books);      
     });
   }
 
@@ -69,10 +75,12 @@ export class DashboardPendingsComponent implements OnInit {
     this.aloads[book.Id] = true;
     this.dashboardService.update(book)
     .then(resp => {
-      this.books.splice(this.books.findIndex(b => b.Id === id), 1);
-      this.dashMessaging.changePending();      
-      this.aloads[book.Id] = false;
-      this.toastr.success('Accepted task');
+      this.dashboardService.getPendingBooks().then(resp => {
+        this.books = resp;
+        this.dashMessaging.changePending();      
+        this.aloads[book.Id] = false;
+        this.toastr.success('Accepted task');
+      });
     })
     .catch(err => {
       this.aloads[book.Id] = false;      

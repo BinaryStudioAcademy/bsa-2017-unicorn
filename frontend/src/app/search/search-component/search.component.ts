@@ -100,8 +100,9 @@ export class SearchComponent implements OnInit {
   }
 
   getWorksByBaseFilters(category: string, subcategory: string, date: string) {
+    this.works = [];
     this.searchService.getWorksByBaseFilters(category, subcategory, date)
-    .then(works => {
+    .then(works => {      
       this.works = works;
       this.pagedWorks = this.getWorksPage();
       this.searchMarkers = this.getMarkers();
@@ -259,11 +260,11 @@ export class SearchComponent implements OnInit {
       vendor: string, ratingcompare: string, rating: number, reviews: boolean,
       latitude: number, longitude: number, distance: number,
       categories: string[], subcategories: string[], city: string, sort: number) {
-
+        this.works = [];
     this.searchService.getWorksByAdvFilters(category, subcategory, date,
     vendor, ratingcompare, rating, reviews, latitude, longitude, distance,
     categories, subcategories, city, sort)
-    .then(works => {
+    .then(works => {      
       this.works = works;
       this.pagedWorks = this.getWorksPage();
       this.searchMarkers = this.getMarkers();

@@ -485,10 +485,10 @@ namespace Unicorn.Core.Services
                         && book.Status != BookStatus.Confirmed
                         && ((_book.Date >= book.Date && _book.Date <= book.EndDate)
                         || (_book.EndDate <= book.EndDate && _book.EndDate >= book.Date)))
-                        || _book.Status == BookStatus.Pending
+                        || (_book.Status == BookStatus.Pending
                         && (book.Status == BookStatus.Accepted || book.Status == BookStatus.InProgress)
-                        && (book.Date >= _book.Date && book.Date <= _book.EndDate)
-                        || (book.EndDate <= _book.EndDate && book.EndDate >= _book.Date))
+                        && ((book.Date >= _book.Date && book.Date <= _book.EndDate)
+                        || (book.EndDate <= _book.EndDate && book.EndDate >= _book.Date))))
                         {
                             foreach (var b in books)
                             {
@@ -501,6 +501,7 @@ namespace Unicorn.Core.Services
                 }
             }
         }
+
 
         private async Task<IEnumerable<VendorBookDTO>> GetOrdersByStatus(string role, long id, BookStatus status)
         {

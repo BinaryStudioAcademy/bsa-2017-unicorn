@@ -13,6 +13,7 @@ import {SuiModalService, TemplateModalConfig, ModalTemplate, ModalSize, SuiActiv
 
 import { Subscription } from 'rxjs/Subscription';
 import { MapModel } from "../../../models/map.model";
+import { DashboardEventsService } from "../../../services/events/dashboard-events.service";
 export interface IDeclineConfirm {
   id: number;
 }
@@ -36,7 +37,8 @@ export class DashboardProgressComponent implements OnInit, OnDestroy {
     private notificationService: NotificationService,
     private toastr: ToastsManager,
     private modalService: SuiModalService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private dashboardEventsService: DashboardEventsService
   ) { }
 
   ngOnInit() {
@@ -63,6 +65,7 @@ export class DashboardProgressComponent implements OnInit, OnDestroy {
     book.Status = BookStatus.Finished;
     this.loads[book.Id] = true;
     this.dashboardService.update(book).then(resp => {
+      this.dashboardEventsService.changeStatusToFinished();
       this.books.splice(this.books.findIndex(b => b.Id === id), 1);
       this.loads[book.Id] = false;
       this.dashMessaging.changeProgress();
