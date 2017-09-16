@@ -38,13 +38,13 @@ export class CompanyChartsComponent implements OnInit {
   autoScale = false;
 
   
-    viewPie: any[] = [400, 300];
+    viewPie: any[] = [370, 300];
   
     // options
     showLegendPie = false;
   
     colorSchemePie = {
-      domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
+      domain: ['#5AA454', '#008ae6', '#AAAAAA', '#A10A28', '#C7B42C']
     };
   
     // pie
@@ -54,7 +54,7 @@ export class CompanyChartsComponent implements OnInit {
 
     
     colorSchemeBar = {
-      domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
+      domain: ['#5AA454', '#008ae6', '#AAAAAA', '#A10A28', '#C7B42C']
     };
   //----------------------------------
   isCompanyPage: boolean = true;
@@ -174,6 +174,14 @@ export class CompanyChartsComponent implements OnInit {
       return '';
     }
     return +v;
+  }
+
+  formatXAxis(val) {
+    let str = val as string;
+    if (str.length > 11) {
+      return str.substr(0, 10).trim() + '...';
+    }
+    return str;
   }
 
 }

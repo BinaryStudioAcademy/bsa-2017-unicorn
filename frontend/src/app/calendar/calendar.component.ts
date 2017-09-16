@@ -1,4 +1,4 @@
-import { Component, ViewChild, TemplateRef, OnInit, Input } from '@angular/core';
+import { Component, ViewChild, TemplateRef, OnInit, Input, NgZone } from '@angular/core';
 import { startOfDay, endOfDay, subDays, addDays, endOfMonth, isSameDay, isSameMonth, addHours } from 'date-fns';
 import { Subject } from 'rxjs/Subject';
 import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarMonthViewDay } from 'angular-calendar';
@@ -67,10 +67,15 @@ export class CalendarComponent implements OnInit {
     private tokenHelper: TokenHelperService,
     private calendarService: CalendarService,
     private modalService: SuiModalService,
-    private calendarEventsService: CalendarEventsService) { }
+    private calendarEventsService: CalendarEventsService,
+    private zone: NgZone,) { }
 
   ngOnInit() {   
     this.settingsClicked = this.calendarEventsService.settingsClickEvent$.subscribe(() => {
+      if(this.activeModal){
+        this.zone.run(() => this.activeModal.deny(null));   
+        this.activeModal = undefined;
+      }
       this.openSettingsModal();
     })
     
@@ -124,7 +129,11 @@ export class CalendarComponent implements OnInit {
     config.context = {date:day.date, events:events, day: day};
     config.isInverted = true;
     config.size = ModalSize.Normal;
-    this.activeModal = this.modalService.open(config);
+    this.activeModal = this.modalService.open(config)
+    .onDeny(() => {
+      this.zone.run(() => this.activeModal.deny(null));
+      this.activeModal = undefined;
+     });
   }
 
   openSettingsModal(){
@@ -137,7 +146,11 @@ export class CalendarComponent implements OnInit {
     };
     config.isInverted = true;
     config.size = ModalSize.Tiny;
-    this.activeModal = this.modalService.open(config);
+    this.activeModal = this.modalService.open(config)
+    .onDeny(() => {
+      this.zone.run(() => this.activeModal.deny(null));
+      this.activeModal = undefined;
+     });
   }
 
   closeSettingsModal(context: any){
@@ -157,7 +170,8 @@ export class CalendarComponent implements OnInit {
     }
     this.calendarService.saveCalendar(this.calendarModel).then(() => {
       this.isChangedWorktime = false;
-      this.activeModal.deny(null);        
+      this.zone.run(() => this.activeModal.deny(null));    
+      this.activeModal = undefined;    
     }); 
   }
 
@@ -192,12 +206,13 @@ export class CalendarComponent implements OnInit {
       }      
       this.calendarService.saveCalendar(this.calendarModel).then(() => {
         this.isSavingWeekend = false;
-        this.activeModal.deny(null);        
+        this.zone.run(() => this.activeModal.deny(null));    
       }); 
     }
     else{
-      this.activeModal.deny(null);    
+      this.zone.run(() => this.activeModal.deny(null));        
     }    
+    this.activeModal = undefined;    
     this.wasWeekend = undefined;   
   }
 

@@ -15,5 +15,6 @@ namespace Unicorn.Core.Interfaces
         Task RefreshMessagesForAccount<T>(long accountId, T payload);
         Task ReadNotReadedMessages(long accountId, long dialogId);
         Task KickAccount(long accountId);
+        Task DeleteMessage(long accountId, long dialogId);
     }
 }

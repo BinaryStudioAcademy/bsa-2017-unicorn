@@ -71,6 +71,7 @@
     <div class="chart-work">
       <div class="chart-cl">
         <ngx-charts-bar-vertical
+          [xAxisTickFormatting]="formatXAxis"
           [view]="viewPie"
           [scheme]="colorSchemeBar"
           [results]="workData"
@@ -119,6 +120,7 @@
       <div class="chart-work">
         <div class="chart-cl">
           <ngx-charts-bar-vertical
+            [xAxisTickFormatting]="formatXAxis"
             [yAxisTickFormatting]="formatYAxis"
             [view]="viewPie"
             [scheme]="colorSchemeBar"

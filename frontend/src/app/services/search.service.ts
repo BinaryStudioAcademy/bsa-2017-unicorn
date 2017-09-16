@@ -9,21 +9,16 @@ export class SearchService {
 
   constructor(private dataService: DataService) { }
 
-  getWorksByBaseFilters(category: string, subcategory: string, date: number): Promise<SearchWork[]> {
+  getWorksByBaseFilters(category: string, subcategory: string, date: string): Promise<SearchWork[]> {
     let d: string;
     if (category === undefined) { category = ''; }
     if (subcategory === undefined) { subcategory = ''; }
-    if (date === undefined) {
-      d = '';
-    } else {
-      d = date.toString();
-    }
-
+    d = date;    
     const queryParams = `search?category=${category}&subcategory=${subcategory}&date=${d}`;
     return this.dataService.getRequest<SearchWork[]>(queryParams);
   }
 
-  getWorksByAdvFilters(category: string, subcategory: string, date: number,
+  getWorksByAdvFilters(category: string, subcategory: string, date: string,
   vendor: string, ratingcompare: string, rating: number, reviews: boolean,
   latitude: number, longitude: number, distance: number,
   categories: string[], subcategories: string[], city: string, sort: number): Promise<SearchWork[]> {
@@ -36,7 +31,7 @@ export class SearchService {
 
     if (category === undefined) { category = ''; }
     if (subcategory === undefined) { subcategory = ''; }
-    if (date === undefined) { d = ''; } else { d = date.toString(); }
+    d = date;
     if (vendor === undefined) { vendor = ''; }
     if (ratingcompare === undefined) { ratingcompare = ''; }
     if (rating === undefined) { rt = ''; } else { rt = rating.toString(); }

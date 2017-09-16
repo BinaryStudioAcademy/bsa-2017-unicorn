@@ -12,6 +12,7 @@ import { AuthenticationEventService } from './services/events/authenticationeven
 import { ChatEventsService } from "./services/events/chat-events.service";
 import { MenuEventsService } from "./services/events/menu-events.service";
 import { CalendarEventsService } from "./services/events/calendar-events.service";
+import { UnreadDialogsService } from "./services/chat/unread-dialogs.service";
 
 import { HelperService } from './services/helper/helper.service';
 import { ModalService } from "./services/modal/modal.service";
@@ -54,8 +55,10 @@ import { ReviewModalComponent } from './review/review-modal/review-modal.compone
 import { ChatLogicService } from "./services/chat/chat-logic.service";
 import { CalendarService } from "./services/calendar-service";
 import { ClickOutsideModule } from "ng-click-outside/lib";
-import { NotFoundModule} from './not-found/not-found.module'
+
+import { NotFoundModule} from './not-found/not-found.module';
 import { AdminModule } from "./admin/admin.module";
+import { DashboardEventsService } from "./services/events/dashboard-events.service";
 
 export class CustomOptions extends ToastOptions {
   animate = 'fade';
@@ -115,11 +118,13 @@ export function getDefaultSignalRConfig(): SignalRConfiguration {
     ChatEventsService,
     MenuEventsService,
     CalendarEventsService,
+    DashboardEventsService,
     CalendarService,
     HelperService,
     TokenHelperService,
     AccountService,
     NotificationService,
+    UnreadDialogsService,
     ChatLogicService,
    { provide: ToastOptions, useClass: CustomOptions}
   ],

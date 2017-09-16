@@ -39,46 +39,73 @@ namespace Unicorn.Core.Services
         }
 
 
-        private DateTimeOffset ConvertUtcToDateTime(string dt)
-        {
-            if (dt != null)
-            {
-                dt = dt.Replace(" ", "");
-                if (dt != "-1")
-                {
-                    DateTimeOffset dateTime;
-                    dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
-                    dateTime = dateTime.AddMilliseconds(Double.Parse(dt)).ToLocalTime();
-                    return dateTime;
-                }
-                return DateTimeOffset.Now;
-            }
-            return DateTimeOffset.Now;
-        }
+        //private DateTimeOffset ConvertUtcToDateTime(string dt)
+        //{
+        //    if (dt != null)
+        //    {
+        //        dt = dt.Replace(" ", "");
+        //        if (dt != "-1")
+        //        {
+        //            DateTimeOffset dateTime;
+        //            dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
+        //            dateTime = dateTime.AddMilliseconds(Double.Parse(dt)).ToLocalTime();
+        //            dateTime = dateTime.UtcDateTime;
+        //            return dateTime;
+        //        }
+        //        return DateTimeOffset.UtcNow;
+        //    }
+        //    return DateTimeOffset.UtcNow;
+        //}
 
         private bool IsVendorWorkingOnThisDate(long id, DateTimeOffset date)
         {
-            return _uow.BookRepository.Query.FirstOrDefault(x => date >= x.Date && date <= x.EndDate
-            && x.Status != DataAccess.Entities.Enum.BookStatus.Finished && x.Status != DataAccess.Entities.Enum.BookStatus.Declined
-            && x.Status != DataAccess.Entities.Enum.BookStatus.Confirmed && id == x.Vendor.Id) != null ? true : false;
+            var books = _uow.BookRepository.Query.Where(x => x.Vendor.Id == id &&
+            x.Status != DataAccess.Entities.Enum.BookStatus.Finished && x.Status != DataAccess.Entities.Enum.BookStatus.Declined
+                && x.Status != DataAccess.Entities.Enum.BookStatus.Confirmed);
+
+            foreach (var book in books)
+            {
+                var bookDate = book.Date.ToUniversalTime();
+                var bookEndDate = book.EndDate.ToUniversalTime();
+                if (date >= bookDate && date <= bookEndDate)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         private bool IsCompanyWorkingOnThisDate(long id, DateTimeOffset date)
         {
-            return _uow.BookRepository.Query.FirstOrDefault(x => date >= x.Date && date <= x.EndDate
-            && x.Status != DataAccess.Entities.Enum.BookStatus.Finished && x.Status != DataAccess.Entities.Enum.BookStatus.Declined
-            && x.Status != DataAccess.Entities.Enum.BookStatus.Confirmed && id == x.Company.Id) != null ? true : false;
+            var books = _uow.BookRepository.Query.Where(x => x.Company.Id == id &&
+            x.Status != DataAccess.Entities.Enum.BookStatus.Finished && x.Status != DataAccess.Entities.Enum.BookStatus.Declined
+                && x.Status != DataAccess.Entities.Enum.BookStatus.Confirmed);
+
+            foreach (var book in books)
+            {
+                var bookDate = book.Date.ToUniversalTime();
+                var bookEndDate = book.EndDate.ToUniversalTime();
+                if (date >= bookDate && date <= bookEndDate)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         private bool SynchronizeWorkDateWithVendorsWorkDays(Calendar calendar, DateTimeOffset date, bool isWorkingOnThisDate)
         {
-            if (calendar.StartDate <= date && (calendar.EndDate == null || date <= calendar.EndDate))
+            var calendarStartDate = calendar.StartDate.ToUniversalTime();
+            var calendarEndDate = calendar.EndDate != null ?
+                calendar.EndDate.GetValueOrDefault() : calendar.EndDate;
+
+            if (calendarStartDate <= date && (calendarEndDate == null || date <= calendarEndDate))
             {
-                if (calendar.ExtraWorkDays.FirstOrDefault(x => x.Day == date) != null)
+                if (calendar.ExtraWorkDays.FirstOrDefault(x => x.Day.Date.ToUniversalTime() == date.Date.ToUniversalTime()) != null)
                 {
                     return true;
                 }
-                if (calendar.ExtraDayOffs.FirstOrDefault(x => x.Day == date) == null)
+                if (calendar.ExtraDayOffs.FirstOrDefault(x => x.Day.Date.ToUniversalTime() == date.Date.ToUniversalTime()) == null)
                 {
                     if (calendar.SeveralTaskPerDay)
                     {
@@ -114,13 +141,12 @@ namespace Unicorn.Core.Services
         }
 
 
-
         public async Task<List<FullPerformerDTO>> GetPerformersByFilterAsync(
             string city, string name, string role, double? rating, string ratingCondition, bool withReviews, string categoriesString,
-            string subcategoriesString, double? latitude, double? longitude, double? distance, string sort, string date
+            string subcategoriesString, double? latitude, double? longitude, double? distance, string sort, DateTimeOffset date
             )
         {
-            var dateOfWork = ConvertUtcToDateTime(date);
+            date = date.ToUniversalTime();
 
             var reviewsTask = _uow.ReviewRepository.GetAllAsync();
             var categories = !string.IsNullOrEmpty(categoriesString) ? categoriesString.Split(' ').Select(c => Int64.Parse(c)).ToList() : new List<long>();
@@ -235,7 +261,7 @@ namespace Unicorn.Core.Services
 
             var vendorsList = await vendorsTask;
 
-            var vendorsWorksSyncWithDate = vendorsList.Where(x => SynchronizeWorkDateWithVendorsWorkDays(x.Calendar, dateOfWork, IsVendorWorkingOnThisDate(x.Id, dateOfWork))).ToList();
+            var vendorsWorksSyncWithDate = vendorsList.Where(x => SynchronizeWorkDateWithVendorsWorkDays(x.Calendar, date, IsVendorWorkingOnThisDate(x.Id, date))).ToList();
 
             var vendors = vendorsWorksSyncWithDate
                 .Select(v => VendorToFullPerformer(v, reviews, longitude, latitude))
@@ -243,7 +269,7 @@ namespace Unicorn.Core.Services
 
             var companiesList = await companiesTask;
 
-            var companiesWorksSyncWithDate = companiesList.Where(x => SynchronizeWorkDateWithVendorsWorkDays(x.Calendar, dateOfWork, IsCompanyWorkingOnThisDate(x.Id, dateOfWork))).ToList();
+            var companiesWorksSyncWithDate = companiesList.Where(x => SynchronizeWorkDateWithVendorsWorkDays(x.Calendar, date, IsCompanyWorkingOnThisDate(x.Id, date))).ToList();
 
             var companies = companiesWorksSyncWithDate
                 .Select(c => CompanyToFullPerformer(c, reviews, longitude, latitude))

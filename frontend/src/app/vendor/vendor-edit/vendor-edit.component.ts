@@ -19,6 +19,9 @@ import { VendorService } from "../../services/vendor.service";
 import { PhotoService } from '../../services/photo.service';
 import { ModalService } from "../../services/modal/modal.service";
 import { MenuEventsService } from "../../services/events/menu-events.service";
+import { Subscription } from "rxjs/Subscription";
+import { UnreadDialogsService } from "../../services/chat/unread-dialogs.service";
+import { ChatEventsService } from "../../services/events/chat-events.service";
 
 @Component({
   selector: 'app-vendor-edit',
@@ -51,12 +54,18 @@ export class VendorEditComponent implements OnInit {
   messagesTabActive: boolean;
   worksTabActive: boolean;
 
+  unreadDialogCount: number;
+  messageReadFromChat: Subscription;
+  messageReadFromMiniChat: Subscription;
+
   constructor(
     private route: ActivatedRoute,
     private vendorService: VendorService,
     private photoService: PhotoService,
     private modalService: ModalService,
     private sanitizer: DomSanitizer,
+    private unreadDialogs: UnreadDialogsService,
+    private chatEventsService: ChatEventsService,
     private menuEventsService: MenuEventsService
   ) {
     this.cropperSettings = modalService.cropperSettings;
@@ -72,14 +81,24 @@ export class VendorEditComponent implements OnInit {
         this.vendor = resp.body as Vendor;
         this.vendor.Birthday = new Date(this.vendor.Birthday);
         this.backgroundUrl = this.buildSafeUrl(this.vendor.Background != null ? this.vendor.Background : "https://www.beautycolorcode.com/d8d8d8.png");
+
+        this.unreadDialogs.getUnreadDialogsCount(this.vendor.AccountId).then(x=> this.unreadDialogCount = x).catch(err=>console.log(err));
       });
       if (this.route.snapshot.queryParams['tab'] === 'messages') {
         this.messagesTabActive = true;
       }
       if (this.route.snapshot.queryParams['tab'] === 'works') {
         this.worksTabActive = true;
-      } 
+      }
+
+      this.messageReadFromChat = this.chatEventsService.readMessageFromMiniChatToChatEvent$.subscribe(x=> {--this.unreadDialogCount});
+      this.messageReadFromMiniChat = this.chatEventsService.readMessageFromChatToMiniChatEvent$.subscribe(x => --this.unreadDialogCount);
   }
+
+  ngOnDestroy(){
+    this.messageReadFromChat.unsubscribe();
+    this.messageReadFromMiniChat.unsubscribe(); 
+   }
 
   buildSafeUrl(link: string): SafeResourceUrl {
     return this.sanitizer.bypassSecurityTrustStyle(`url('${link}')`);

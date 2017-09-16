@@ -91,14 +91,18 @@ export class SearchComponent implements OnInit {
   loadWorks() {
     this.works = [];
     this.spinner = true;
-    this.getWorksByBaseFilters(this.category, this.subcategory, this.rawDate);
+    this.getWorksByBaseFilters(this.category, this.subcategory, new Date().toJSON());
+    console.log(new Date().toUTCString() 
+    + "--- " + new Date().toJSON()
+    + "--- " + new Date().toDateString());
     this.pagedWorks = this.getWorksPage();
     this.searchMarkers = this.getMarkers();
   }
 
-  getWorksByBaseFilters(category: string, subcategory: string, date: number) {
+  getWorksByBaseFilters(category: string, subcategory: string, date: string) {
+    this.works = [];
     this.searchService.getWorksByBaseFilters(category, subcategory, date)
-    .then(works => {
+    .then(works => {      
       this.works = works;
       this.pagedWorks = this.getWorksPage();
       this.searchMarkers = this.getMarkers();
@@ -217,10 +221,10 @@ export class SearchComponent implements OnInit {
 
     let date;
     if(this.date){
-      date = this.date.getTime();
+      date = this.date.toJSON();
     }
     else{
-      date = -1;
+      date = new Date().toJSON();
     }
     this.getWorksByAdvFilters(this.category, this.subcategory, date,
            this.vendorName, this.ratingCmp, this.rating, this.reviewsChecked,
@@ -252,15 +256,15 @@ export class SearchComponent implements OnInit {
     }
   }
 
-  getWorksByAdvFilters(category: string, subcategory: string, date: number,
+  getWorksByAdvFilters(category: string, subcategory: string, date: string,
       vendor: string, ratingcompare: string, rating: number, reviews: boolean,
       latitude: number, longitude: number, distance: number,
       categories: string[], subcategories: string[], city: string, sort: number) {
-
+        this.works = [];
     this.searchService.getWorksByAdvFilters(category, subcategory, date,
     vendor, ratingcompare, rating, reviews, latitude, longitude, distance,
     categories, subcategories, city, sort)
-    .then(works => {
+    .then(works => {      
       this.works = works;
       this.pagedWorks = this.getWorksPage();
       this.searchMarkers = this.getMarkers();
