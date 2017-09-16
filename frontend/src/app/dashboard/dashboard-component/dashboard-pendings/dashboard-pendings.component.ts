@@ -64,8 +64,7 @@ export class DashboardPendingsComponent implements OnInit {
 
   loadData() {
     this.dashboardService.getPendingBooks().then(resp => {
-      this.books = resp;
-      console.log(this.books);      
+      this.books = resp;           
     });
   }
 
