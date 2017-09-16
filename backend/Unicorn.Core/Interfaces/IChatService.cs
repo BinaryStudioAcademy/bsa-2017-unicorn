@@ -13,7 +13,7 @@ namespace Unicorn.Core.Interfaces
         Task<ChatDialogDTO> GetDialog(long dialogId, long ownerId);
         Task<IEnumerable<ChatDialogDTO>> GetAllDialogs(long accountId);
         Task<ChatDialogDTO> FindDialog(long participantOneId, long participantTwoId);
-        Task RemoveDialog(long dialogId);
+        Task RemoveDialog(long dialogId, long userId);
         Task RemoveMessage(long messageId);
         Task Update(ChatMessageDTO msg);
     }

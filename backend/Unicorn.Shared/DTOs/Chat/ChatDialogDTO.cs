@@ -12,6 +12,8 @@ namespace Unicorn.Shared.DTOs.Chat
         public string ParticipantAvatar { get; set; }
         public string ParticipantType { get; set; }
         public long ParticipantProfileId { get; set; }
+        public bool Participant1_Hided { get; set; }
+        public bool Participant2_Hided { get; set; }
         public virtual ICollection<ChatMessageDTO> Messages { get; set; }
         public DateTimeOffset? LastMessageTime { get; set; }
         public bool? IsReadedLastMessage { get; set; }

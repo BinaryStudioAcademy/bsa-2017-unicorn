@@ -128,12 +128,12 @@ namespace Unicorn.Controllers
             }
         }
         [HttpDelete]
-        [Route("dialogs/{id}")]
-        public async Task<HttpResponseMessage> DeleteDialog(int id)
+        [Route("dialog/hide/{dialogId}/{ownerId}")]
+        public async Task<HttpResponseMessage> DeleteDialog(long dialogId, long ownerId)
         {
             try
             {
-                await _chatService.RemoveDialog(id);
+                await _chatService.RemoveDialog(dialogId,ownerId);
                 return Request.CreateResponse(HttpStatusCode.OK);
             }
             catch
