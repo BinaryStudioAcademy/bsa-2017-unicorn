@@ -114,7 +114,7 @@ export class ChatComponent implements OnInit {
   }
   deleteDialog()
   {
-  //  this.chatService.deleteDialog(this.dialogToDelete.Id).then(res=>this.getDialogs());
+    this.chatService.deleteDialog(this.dialogToDelete.Id, +this.tokenHelper.getClaimByName('accountid')).then(res=>this.getDialogs());
     this.currModal.deny(undefined);
     
   }
