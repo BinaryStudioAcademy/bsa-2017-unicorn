@@ -80,8 +80,8 @@ namespace Unicorn.Core.Services
             };
 
             _unitOfWork.ChatMessageRepository.Create(cmsg);
-            if ((dialog.Participant1_Hided && owner.Id == dialog.Participant1.Id) || (dialog.Participant2_Hided && owner.Id == dialog.Participant2.Id))
-                await RemoveDialog(dialog.Id, owner.Id);
+            dialog.Participant1_Hided = false;
+            dialog.Participant2_Hided = false;
             await _unitOfWork.SaveAsync();
 
 

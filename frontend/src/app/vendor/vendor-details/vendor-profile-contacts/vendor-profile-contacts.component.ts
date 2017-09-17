@@ -121,8 +121,8 @@ export class VendorProfileContactsComponent implements OnInit {
           Messages: null,
           LastMessageTime: null,
           IsReadedLastMessage: null,
-          ParticipantOneHided: false,
-          ParticipantTwoHided: false
+          Participant1_Hided: false,
+          Participant2_Hided: false
         };    
         this.openChat = true;
         this.isLoaded = false;

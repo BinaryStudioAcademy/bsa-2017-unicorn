@@ -271,7 +271,7 @@ export class MiniChatComponent implements OnInit {
     };   
     if(!this.dialog.Messages){
       this.dialog.Messages = [];
-    }     
+    }
     this.dialog.Messages.push(message);    
     this.messages = this.dialog.Messages; 
     this.startScroll();             

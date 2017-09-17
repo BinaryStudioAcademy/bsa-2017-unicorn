@@ -4,8 +4,8 @@ export interface DialogModel {
     Id: number;
     ParticipantOneId: number;    
     ParticipantTwoId: number;
-    ParticipantOneHided: boolean;    
-    ParticipantTwoHided: boolean;
+    Participant1_Hided: boolean;    
+    Participant2_Hided: boolean;
     ParticipantName: string;    
     ParticipantAvatar: string;
     ParticipantType: string;
