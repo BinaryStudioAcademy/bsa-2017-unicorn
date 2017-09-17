@@ -19,6 +19,7 @@ namespace Unicorn.Controllers
             _adminService = adminService;
         }
 
+
         [HttpGet]
         [Route("auth")]
         public async Task<HttpResponseMessage> ValidateLogin(string login, string password)
