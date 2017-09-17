@@ -73,16 +73,17 @@ export class ChatComponent implements OnInit {
       this.dialogs.push(this.checkLastMessage(dialog, dialog.Messages[dialog.Messages.length - 1].OwnerId));
     })
     this.messageCreate = this.chatEventsService.createMessageFromMiniChatToChatEvent$.subscribe(mes => {
-      var dial = this.dialogs.find(x => x.Id === mes.DialogId);
-      
-    if(this.isHided(dial))
-      {  
-         dial.Participant1_Hided = false;
-         dial.Participant2_Hided = false;
-      }
-
+  
       if (this.dialogs.find(x => x.Id === mes.DialogId)) {
         if (this.dialog.Id === mes.DialogId) {
+          var dial = this.dialogs.find(x => x.Id === mes.DialogId);
+          
+        if(this.isHided(dial))
+          {  
+             dial.Participant1_Hided = false;
+             dial.Participant2_Hided = false;
+             this.getDialog();
+          } else
           this.messages.push(mes);
           this.startScroll();
         }
