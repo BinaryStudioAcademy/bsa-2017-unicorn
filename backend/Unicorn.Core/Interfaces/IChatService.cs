@@ -14,7 +14,7 @@ namespace Unicorn.Core.Interfaces
         Task<int> GetUnreadDialogsCount(long ownerId);
         Task<IEnumerable<ChatDialogDTO>> GetAllDialogs(long accountId);
         Task<ChatDialogDTO> FindDialog(long participantOneId, long participantTwoId);
-        Task RemoveDialog(long dialogId);
+        Task RemoveDialog(long dialogId, long userId);
         Task RemoveMessage(long messageId);
         Task Update(ChatMessageDTO msg);
     }

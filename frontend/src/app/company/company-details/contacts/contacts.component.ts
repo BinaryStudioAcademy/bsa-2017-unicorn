@@ -120,7 +120,9 @@ export class ContactsComponent implements OnInit {
           ParticipantProfileId: this.companyId,
           LastMessageTime: null,
           IsReadedLastMessage: null,
-          Messages: null
+          Messages: null,
+          Participant1_Hided: false,
+          Participant2_Hided: false
         };
         this.isLoaded = false;
       }

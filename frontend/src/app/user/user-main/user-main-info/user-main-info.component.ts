@@ -101,7 +101,9 @@ export class UserMainInfoComponent implements OnInit {
           ParticipantProfileId: this.user.Id,
           Messages: null,
           LastMessageTime: null,
-          IsReadedLastMessage: null
+          IsReadedLastMessage: null,
+          Participant1_Hided: false,
+          Participant2_Hided: false
         };    
         this.openChat = true;
         this.isLoaded = false;

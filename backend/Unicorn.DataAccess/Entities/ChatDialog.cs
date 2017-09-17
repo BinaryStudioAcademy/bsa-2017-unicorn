@@ -9,6 +9,8 @@ namespace Unicorn.DataAccess.Entities
         public bool IsDeleted { get; set; }
         public virtual Account Participant1 { get; set; }
         public virtual Account Participant2 { get; set; }
+        public bool Participant1_Hided { get; set; }
+        public bool Participant2_Hided { get; set; }
         public virtual ICollection<ChatMessage> Messages { get; set; }
     }
 }
