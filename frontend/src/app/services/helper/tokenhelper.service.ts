@@ -27,6 +27,11 @@ export class TokenHelperService {
     return token != null && !this.jwtHeper.isTokenExpired(token);
   }
 
+  public isAdminAccount(): boolean {
+    const roleName = this.getRoleName();
+    return this.isTokenValid() && this.isTokenNotExpired() && roleName === 'admin';
+  }
+
   public getAllClaims(): object {
     const token = localStorage.getItem('token');
     let claims;
