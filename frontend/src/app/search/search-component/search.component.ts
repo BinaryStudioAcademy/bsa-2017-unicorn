@@ -91,7 +91,7 @@ export class SearchComponent implements OnInit {
   loadWorks() {
     this.works = [];
     this.spinner = true;
-    let date = this.checkTheDate(new Date());
+    let date = this.checkTheDate(new Date(1, 1, 1, 1, 1, 1, 1));
     this.getWorksByBaseFilters(this.category, this.subcategory, date);    
     this.pagedWorks = this.getWorksPage();
     this.searchMarkers = this.getMarkers();
@@ -223,8 +223,8 @@ export class SearchComponent implements OnInit {
        date = this.checkTheDate(_date);
     }
     else{ 
-      date = this.checkTheDate(new Date());
-    }    
+      date = this.checkTheDate(new Date(1, 1, 1, 1, 1, 1, 1));
+    }  
     this.getWorksByAdvFilters(this.category, this.subcategory, date,
            this.vendorName, this.ratingCmp, this.rating, this.reviewsChecked,
            this.latitude, this.longitude, this.distance,

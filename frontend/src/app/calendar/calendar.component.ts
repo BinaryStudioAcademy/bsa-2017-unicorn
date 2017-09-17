@@ -77,7 +77,7 @@ export class CalendarComponent implements OnInit {
     
 
     this.calendarService.getCalendarByAccount(this.accountId)
-    .then(res => {
+    .then(res => {   
       this.calendarModel = res;
       if(this.calendarModel.WorkOnWeekend){
         this.weekendDays = [];
@@ -215,11 +215,12 @@ export class CalendarComponent implements OnInit {
   }
 
   render(mas: any[]){
+    debugger;
     mas.forEach(day => {          
-      if(this.calendarModel.ExtraWorkDays.find(x => new Date(x.Day).getUTCDate() == day.date.getUTCDate())){
+      if(this.calendarModel.ExtraWorkDays.find(x => new Date(x.Day).toLocaleDateString() == day.date.toLocaleDateString())){
         day.isWeekend = false;
       }
-      else if(this.calendarModel.ExtraDayOffs.find(x => new Date(x.Day).getUTCDate() == day.date.getUTCDate())){
+      else if(this.calendarModel.ExtraDayOffs.find(x => new Date(x.Day).toLocaleDateString() == day.date.toLocaleDateString())){
         day.isWeekend = true;
       }  
     });
