@@ -25,7 +25,8 @@ export class IndexComponent implements OnInit {
   searchDate: Date;
   mode: string;
   firstDayOfWeek: string;
-  categories: {}[];
+  // categories: {}[];
+  categories: Category[];
   subcategories: string[];
   filterCtgs: SearchTag[] = [];
   filterSubctgs: SearchTag[] = [];
@@ -134,11 +135,16 @@ export class IndexComponent implements OnInit {
 
   filterCategory() {
     this.filterCtgs = this.filter(this.categories, this.searchCategory);
-    console.log(this.filterCtgs);
   }
 
   filterSubcategory() {
-    this.filterSubctgs = this.filter(getAllSubcategories(this.categories), this.searchSubcategory);
+    let subcategories = [];
+    if (this.searchCategory) {
+      subcategories = this.categories.find(c => c.Name === this.searchCategory).Subcategories;
+    } else {
+      subcategories = getAllSubcategories(this.categories);
+    }
+    this.filterSubctgs = this.filter(subcategories, this.searchSubcategory);
 
     function getAllSubcategories(categories) {
       let result = [];
@@ -154,6 +160,7 @@ export class IndexComponent implements OnInit {
   selectCategory(item) {
     this.searchCategory = this.capitalizeFirstLetter(item.Name);
     this.filterCtgs = [];
+    this.searchSubcategory = undefined;
   }
 
   selectSubcategory(item) {

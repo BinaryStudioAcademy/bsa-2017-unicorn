@@ -158,14 +158,18 @@ export class SearchComponent implements OnInit {
     return result;
   }
 
-
   filterCategory() {
     this.filterCtgs = this.filter(this.categories, this.category);
-    console.log(this.filterCtgs);
   }
 
   filterSubcategory() {
-    this.filterSubctgs = this.filter(getAllSubcategories(this.categories), this.subcategory);
+    let subcategories = [];
+    if (this.category) {
+      subcategories = this.categories.find(c => c.Name === this.category).Subcategories;
+    } else {
+      subcategories = getAllSubcategories(this.categories);
+    }
+    this.filterSubctgs = this.filter(subcategories, this.subcategory);
 
     function getAllSubcategories(categories) {
       let result = [];
@@ -181,6 +185,7 @@ export class SearchComponent implements OnInit {
   selectCategory(item) {
     this.category = this.capitalizeFirstLetter(item.Name);
     this.filterCtgs = [];
+    this.subcategory = undefined;
   }
 
   selectSubcategory(item) {
