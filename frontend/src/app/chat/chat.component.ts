@@ -378,10 +378,18 @@ export class ChatComponent implements OnInit {
     this.accountService.searchByTemplate(this.searchString, 20)
       .then(resp => this.searchResults = resp.filter(x =>
         this.dialogs.find(d =>
-          d.ParticipantOneId === x.AccountId || d.ParticipantTwoId === x.AccountId) === undefined));
+          d.ParticipantOneId === x.AccountId || d.ParticipantTwoId === x.AccountId) === undefined ||
+        this.isHided(
+          this.dialogs.find(d =>
+            d.ParticipantOneId === x.AccountId || d.ParticipantTwoId === x.AccountId)
+        )));
   }
 
   createChat(partitipant: ProfileShortInfo) {
+   var dial = this.dialogs.find(d =>
+    d.ParticipantOneId === partitipant.AccountId || d.ParticipantTwoId === partitipant.AccountId);
+   if(dial  === undefined)
+{
     while (this.dialogs.find(x => !x.Id || x.Id === null) !== undefined) {
       this.dialogs.splice(this.dialogs.findIndex(x => !x.Id || x.Id === null), 1);
     }
@@ -407,7 +415,19 @@ export class ChatComponent implements OnInit {
     this.noMessages = false;
     this.searchString = '';
     this.searchResults = [];
-  }
+  } else
+ { 
+   this.dialog = dial;
+   this.selectedId = dial.Id;
+   if(this.dialog.ParticipantOneId==this.ownerId)
+    this.dialog.Participant1_Hided = false; else
+    this.dialog.Participant2_Hided = false;
+   this.getDialog();
+   this.chatService.deleteDialog(dial.Id,this.ownerId);
+   this.searchString = '';
+   this.searchResults = [];
+ }
+}
 
   isImage(filename: string){
     const imgExtensions = ["jpg", "jpeg", "bmp", "png", "ico"];
