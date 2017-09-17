@@ -80,6 +80,8 @@ namespace Unicorn.Core.Services
             };
 
             _unitOfWork.ChatMessageRepository.Create(cmsg);
+            if ((dialog.Participant1_Hided && owner.Id == dialog.Participant1.Id) || (dialog.Participant2_Hided && owner.Id == dialog.Participant2.Id))
+                await RemoveDialog(dialog.Id, owner.Id);
             await _unitOfWork.SaveAsync();
 
 
@@ -351,8 +353,8 @@ namespace Unicorn.Core.Services
         {
             var dialog = await _unitOfWork.ChatDialogRepository.GetByIdAsync(dialogId);
             if (dialog.Participant1.Id == userId)
-                dialog.Participant1_Hided = true;
-            else dialog.Participant2_Hided = true;
+                dialog.Participant1_Hided = !dialog.Participant1_Hided;
+            else dialog.Participant2_Hided = !dialog.Participant2_Hided;
             await _unitOfWork.SaveAsync();
         }
 
