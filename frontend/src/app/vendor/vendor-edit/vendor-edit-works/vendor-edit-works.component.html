@@ -72,7 +72,6 @@
                 </div>
                 <div class="field">
                     <ng-template let-option #optionSubcategoryTemplate>
-                        <!-- <img class="ui avatar image category-icon" src="{{option.Icon}}"> -->
                         {{option.Name}}
                     </ng-template>
                     <label>Select a subcategory</label>
@@ -86,7 +85,7 @@
                     <div class="ui segment" (mouseenter)="isDimmed = !isDimmed" (mouseleave)="isDimmed = !isDimmed">
                         <img *ngIf="selectedWork.Icon !== '' && selectedWork.Icon !== null" class="ui circular image work-icon" src="{{selectedWork.Icon}}">
                         <img *ngIf="selectedWork.Icon === '' || selectedWork.Icon === null " class="ui circular image work-icon" src="https://semantic-ui.com/images/wireframe/square-image.png">
-                        <sui-dimmer [(isDimmed)]="isDimmed" [isClickable]="false" (click)="openModal()">
+                        <sui-dimmer [(isDimmed)]="isDimmed" [isClickable]="false" (click)="selectIcon()">
                             <h4 class="ui inverted header">Upload</h4>
                         </sui-dimmer>
                     </div>

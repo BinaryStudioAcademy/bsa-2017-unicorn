@@ -22,6 +22,7 @@ import { MenuEventsService } from "../../services/events/menu-events.service";
 import { Subscription } from "rxjs/Subscription";
 import { UnreadDialogsService } from "../../services/chat/unread-dialogs.service";
 import { ChatEventsService } from "../../services/events/chat-events.service";
+import { ImageCropperModal } from '../../image-cropper-modal/image-cropper-modal.component';
 
 @Component({
   selector: 'app-vendor-edit',
@@ -30,13 +31,6 @@ import { ChatEventsService } from "../../services/events/chat-events.service";
   providers: [ModalService]
 })
 export class VendorEditComponent implements OnInit {
-  @ViewChild('modalTemplate')
-  public modalTemplate: ModalTemplate<void, {}, void>;
-  private activeModal: SuiActiveModal<void, {}, void>;
-
-  @ViewChild('cropper', undefined)
-  cropper: ImageCropperComponent;
-
   @ViewChild(VendorEditChartsComponent)
   charts: VendorEditChartsComponent;
 
@@ -44,12 +38,6 @@ export class VendorEditComponent implements OnInit {
 
   uploading: boolean;
   backgroundUrl: SafeResourceUrl;
-
-  file: File;
-  data: any;
-  imageUploaded: boolean;
-  cropperSettings: CropperSettings;
-  dataLoaded: boolean;
 
   messagesTabActive: boolean;
   worksTabActive: boolean;
@@ -62,19 +50,15 @@ export class VendorEditComponent implements OnInit {
     private route: ActivatedRoute,
     private vendorService: VendorService,
     private photoService: PhotoService,
-    private modalService: ModalService,
+    private modalService: SuiModalService,
     private sanitizer: DomSanitizer,
     private unreadDialogs: UnreadDialogsService,
     private chatEventsService: ChatEventsService,
     private menuEventsService: MenuEventsService
   ) {
-    this.cropperSettings = modalService.cropperSettings;
-    this.data = {};
-    this.imageUploaded = false;
   }
 
   ngOnInit() {
-    this.dataLoaded = true;
     this.route.params
       .switchMap((params: Params) => this.vendorService.getVendor(params['id']))
       .subscribe(resp => {
@@ -119,54 +103,15 @@ export class VendorEditComponent implements OnInit {
     });
   }
 
-  fileChangeListener($event) {    
-    var image: any = new Image();
-    this.file = $event.target.files[0];
-    var myReader: FileReader = new FileReader();
-    var that = this;
-    myReader.onloadend = function (loadEvent: any) {
-      image.src = loadEvent.target.result;
-      that.cropper.setImage(image);
-
-    };
-    this.imageUploaded = true;
-    myReader.readAsDataURL(this.file);
-  }
-
-  fileSaveListener() {
-    //debugger;
-    if (!this.data) {
-      console.log("file not upload");
-      return;
-    }
-    if (!this.file) {
-      console.log('file null');
-      return;
-    }
-    this.dataLoaded = false;
-    let mass = [];
-    mass.push(this.photoService.uploadToImgur(this.file)
-              .then(res => {
-                  this.photoService.saveAvatar(res);
-                  return res;
-                }));
-    mass.push(this.photoService.uploadToImgur(this.data.image.split('base64,')[1])
-              .then(res => this.photoService.saveCroppedAvatar(res)));
-    Promise.all(mass).then(values => {
-      this.vendor.CroppedAvatar = this.data.image;
-      this.menuEventsService.croppedAvatar(this.data.image);  
-      this.menuEventsService.changedAvatar(values[0]); 
-      this.dataLoaded = true;
-      this.imageUploaded = false;
-      this.activeModal.deny(null);
-    }).catch(err => console.log(err));
-    //console.log(this.data);
-    //console.log(this.data.image);
-  }
-
-  public openModal() {
-    this.imageUploaded = false;
-    this.activeModal = this.modalService.openModal(this.modalTemplate);
+  selectAvatar(): void {
+    this.modalService.open(new ImageCropperModal())
+      .onApprove(result => {
+        this.photoService.saveAvatar(result as string)
+          .then(resp => this.vendor.Avatar = resp);
+        this.photoService.saveCroppedAvatar(result as string)
+          .then(resp => this.vendor.CroppedAvatar = resp);
+        this.menuEventsService.croppedAvatar(result as string);
+      });
   }
 
   activateCharts() {

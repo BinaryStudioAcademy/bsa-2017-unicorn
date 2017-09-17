@@ -85,7 +85,8 @@ export class ImageCropperModalComponent implements OnInit {
   onImageSave(): void {
     if (this.file && this.data) {
       this.isFileUploading = true;
-      this.photoService.uploadToImgur(this.file)
+      var cropped = this.data.image.split('base64,')[1];
+      this.photoService.uploadToImgur(cropped)
         .then(resp => {
           this.isFileUploading = false;
           this.modal.approve(resp);
