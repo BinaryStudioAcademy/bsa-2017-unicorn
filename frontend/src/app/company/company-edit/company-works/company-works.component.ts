@@ -6,7 +6,6 @@ import { CompanyWorks } from "../../../models/company-page/company-works.model";
 import { CompanyCategory } from "../../../models/company-page/company-category.model";
 import { CompanyWork } from "../../../models/company-page/company-work.model";
 
-import { ModalService } from "../../../services/modal/modal.service";
 import { PhotoService, Ng2ImgurUploader } from "../../../services/photo.service";
 
 import { ImageCropperComponent, CropperSettings } from "ng2-img-cropper";
@@ -22,8 +21,8 @@ import { ImageCropperModal } from '../../../image-cropper-modal/image-cropper-mo
   styleUrls: ['./company-works.component.sass'],
   providers: [
     PhotoService,
-    Ng2ImgurUploader,
-    ModalService]
+    Ng2ImgurUploader
+  ]
 })
 
 export class CompanyWorksComponent implements OnInit {

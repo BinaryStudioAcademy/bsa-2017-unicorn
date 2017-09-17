@@ -17,7 +17,6 @@ import { Vendor } from '../../models/vendor.model';
 
 import { VendorService } from "../../services/vendor.service";
 import { PhotoService } from '../../services/photo.service';
-import { ModalService } from "../../services/modal/modal.service";
 import { MenuEventsService } from "../../services/events/menu-events.service";
 import { Subscription } from "rxjs/Subscription";
 import { UnreadDialogsService } from "../../services/chat/unread-dialogs.service";
@@ -27,8 +26,7 @@ import { ImageCropperModal } from '../../image-cropper-modal/image-cropper-modal
 @Component({
   selector: 'app-vendor-edit',
   templateUrl: './vendor-edit.component.html',
-  styleUrls: ['./vendor-edit.component.sass'],
-  providers: [ModalService]
+  styleUrls: ['./vendor-edit.component.sass']
 })
 export class VendorEditComponent implements OnInit {
   @ViewChild(VendorEditChartsComponent)

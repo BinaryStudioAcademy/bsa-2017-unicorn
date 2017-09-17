@@ -8,7 +8,6 @@ import { ToastsManager, Toast } from 'ng2-toastr';
 import { ToastOptions } from 'ng2-toastr';
 
 import { VendorService } from "../../../services/vendor.service";
-import { ModalService } from "../../../services/modal/modal.service";
 import { CategoryService } from "../../../services/category.service";
 import { PhotoService, Ng2ImgurUploader } from "../../../services/photo.service";
 
@@ -24,8 +23,8 @@ import { ConfirmModal } from '../../../confirm-modal/confirm-modal.component';
   styleUrls: ['./vendor-edit-works.component.sass'],
   providers: [
     PhotoService,
-    Ng2ImgurUploader,
-    ModalService]
+    Ng2ImgurUploader
+  ]
 })
 export class VendorEditWorksComponent implements OnInit {
   enabled: boolean = false;
@@ -52,7 +51,6 @@ export class VendorEditWorksComponent implements OnInit {
     private categoryService: CategoryService,
     private photoService: PhotoService,
     private sanitizer: DomSanitizer,
-    private suiModalService: SuiModalService,
     private modalService: SuiModalService,
     private toastr: ToastsManager,
     private route: ActivatedRoute
