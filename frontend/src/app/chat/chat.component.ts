@@ -72,8 +72,15 @@ export class ChatComponent implements OnInit {
     this.dialogCreate = this.chatEventsService.createDialogFromMiniChatToChatEvent$.subscribe(dialog => {
       this.dialogs.push(this.checkLastMessage(dialog, dialog.Messages[dialog.Messages.length - 1].OwnerId));
     })
-
     this.messageCreate = this.chatEventsService.createMessageFromMiniChatToChatEvent$.subscribe(mes => {
+      var dial = this.dialogs.find(x => x.Id === mes.DialogId);
+      
+    if(this.isHided(dial))
+      {  
+         dial.Participant1_Hided = false;
+         dial.Participant2_Hided = false;
+      }
+
       if (this.dialogs.find(x => x.Id === mes.DialogId)) {
         if (this.dialog.Id === mes.DialogId) {
           this.messages.push(mes);
@@ -114,7 +121,7 @@ export class ChatComponent implements OnInit {
   }
   deleteDialog()
   {
-  //  this.chatService.deleteDialog(this.dialogToDelete.Id).then(res=>this.getDialogs());
+    this.chatService.deleteDialog(this.dialogToDelete.Id, +this.tokenHelper.getClaimByName('accountid')).then(res=>this.getDialogs());
     this.currModal.deny(undefined);
     
   }
@@ -143,8 +150,13 @@ export class ChatComponent implements OnInit {
       if (res !== undefined) {
         this.dialogs = res;
         if (this.dialogs !== null && this.dialogs.length !== 0) {
-          this.selectedId = this.dialogs[0].Id;
+          var i = 0;
+          while(i<this.dialogs.length && this.isHided(this.dialogs[i]))
+            i++;
+          if(i<this.dialogs.length)
+         { this.selectedId = this.dialogs[i].Id;
           return this.getDialog();
+         } else this.messages=[]; 
         }
         else {
           this.messages = [];
@@ -152,6 +164,13 @@ export class ChatComponent implements OnInit {
         }
       }
     });
+  }
+  
+  isHided(_dialog: DialogModel):boolean
+  {
+     if(_dialog.Participant1_Hided && _dialog.ParticipantOneId==this.ownerId) return true; else
+     if(_dialog.Participant2_Hided && _dialog.ParticipantTwoId==this.ownerId) return true; else
+     return false;
   }
 
   //get message, if anybody sent one to us
@@ -163,6 +182,11 @@ export class ChatComponent implements OnInit {
     }
     else {
       let dialog = this.dialogs.find(x => x.Id === mes.DialogId);
+      if(this.isHided(dialog))
+     {  
+        dialog.Participant1_Hided = false;
+        dialog.Participant2_Hided = false;
+     }
       if (dialog && this.selectedId === dialog.Id) {
         this.messages.push(mes);
         this.checkLastMessage(this.dialogs.find(x => x.Id === dialog.Id), mes.OwnerId);
@@ -371,7 +395,9 @@ export class ChatComponent implements OnInit {
       ParticipantType: partitipant.Role,
       Messages: null,
       LastMessageTime: null,
-      IsReadedLastMessage: true
+      IsReadedLastMessage: true,
+      Participant1_Hided: false,
+      Participant2_Hided: false
     };
 
     this.selectedId = this.dialog.Id;

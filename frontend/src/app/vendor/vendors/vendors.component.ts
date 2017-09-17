@@ -120,12 +120,13 @@ export class VendorsComponent implements OnInit {
         }
 
     let date;
-    if(this.date){
-      date = this.date.toJSON();
+    let _date = new Date(this.date);    
+    if(this.date){      
+      date = this.checkTheDate(_date);
     }
-    else{
-      date = new Date().toJSON();
-    }
+    else{ 
+      date = this.checkTheDate(new Date(1, 1, 1, 1, 1, 1, 1));
+    }    
     return this.performerService
       .getPerformersByFilters(
         this.city, this.name, this.role, this.rating, this.ratingCondition, this.withReviews, filteredCategories, this.selectedSubcategories, 
@@ -142,6 +143,10 @@ export class VendorsComponent implements OnInit {
         this.ref.detectChanges();
       })
       .catch(err => this.searchLoading = false);
+  }
+
+  checkTheDate(date: Date):string{ 
+    return new Date(date.setHours(date.getHours() - date.getTimezoneOffset() / 60)).toJSON();    
   }
 
   reset() {

@@ -3,6 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import {SuiModal, ComponentModalConfig, ModalSize} from "ng2-semantic-ui"
 import { AdminAuthService } from "../../../services/admin-auth.service";
 
+import { AuthenticationLoginService } from '../../../services/auth/authenticationlogin.service';
+import { AuthenticationEventService } from '../../../services/events/authenticationevent.service';
+
 interface IAuthModalContext {
 }
 
@@ -11,7 +14,7 @@ export class AuthModal extends ComponentModalConfig<IAuthModalContext, void, voi
       super(AuthModalComponent, { });
 
       this.isClosable = false;
-      this.transitionDuration = 200;
+      this.isInverted = true;
       this.size = size;
   }
 }
@@ -30,12 +33,18 @@ export class AuthModalComponent {
 
   constructor(
     public modal:SuiModal<IAuthModalContext, void, void>,
+    private authLoginService: AuthenticationLoginService,
+    private authEventService: AuthenticationEventService,
     private adminAuthService: AdminAuthService
   ) {}
 
     signIn(): void {
       this.adminAuthService.signIn(this.login, this.password)
-        .then(() => this.modal.approve(undefined))
+        .then((response) => {
+          this.authLoginService.saveJwt(response.headers.get('token'));
+          this.authEventService.signIn();
+          this.modal.approve(undefined);
+        })
         .catch(() => this.isValid = false);
     }
 }

@@ -14,10 +14,11 @@ namespace Unicorn.Core.Services
 {
     public class AdminService : IAdminService
     {
-        public AdminService(IUnitOfWorkFactory unitOfWorkFactory, INotificationProxy notificationProxy)
+        public AdminService(IUnitOfWorkFactory unitOfWorkFactory, INotificationProxy notificationProxy, IAuthService authService)
         {
             _uowFactory = unitOfWorkFactory;
             _notificationProxy = notificationProxy;
+            _authService = authService;
         }
 
         public async Task BanAccountAsync(long id)
@@ -64,7 +65,7 @@ namespace Unicorn.Core.Services
 
         public async Task<IEnumerable<AccountDTO>> GetAllAsync()
         {
-            var personsTask = Task.Run(() => 
+            var personsTask = Task.Run(() =>
             {
                 var uow = _uowFactory.CreateUnitOfWork();
 
@@ -227,14 +228,19 @@ namespace Unicorn.Core.Services
                 .OrderBy(p => p.Name).ToList();
         }
 
-        public bool ValidateLogin(string login, string pass)
+        public async Task<string> ValidateLogin(string login, string pass)
         {
             AdminAuthConfig adminAuthConfig = AdminAuthConfig.Config;
+            if (login == adminAuthConfig.Login && pass == adminAuthConfig.Password)
+            {
+                return await _authService.GenerateJwtTokenAsync(null, Properties.Settings.Default.PrivateKey); // Token for admin
+            }
 
-            return login == adminAuthConfig.Login && pass == adminAuthConfig.Password;
+            return null;
         }
 
         private readonly IUnitOfWorkFactory _uowFactory;
         private readonly INotificationProxy _notificationProxy;
+        private readonly IAuthService _authService;
     }
 }

@@ -103,7 +103,7 @@
                 <label>Start date</label>
                 <div class="ui left icon input">
                     <i class="calendar icon"></i>
-                    <input suiDatepicker [(ngModel)]="context.startDate" name="start-date" pickerMode="date" placeholder="START DATE">
+                    <input class="datepicker" suiDatepicker [(ngModel)]="context.startDate" name="start-date" pickerMode="date" [pickerUseNativeOnMobile]="false" placeholder="START DATE">
                 </div>
             </div>
             <div class="inline field">

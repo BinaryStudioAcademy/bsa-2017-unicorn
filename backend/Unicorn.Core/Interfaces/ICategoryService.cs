@@ -13,5 +13,6 @@ namespace Unicorn.Core.Interfaces
         Task<CategoryDTO> CreateAsync(CategoryDTO categoryDTO);
         Task RemoveAsync(long id);
         Task<CategoryDTO> UpdateAsync(CategoryDTO categoryDTO);
+        Task<List<CategoryDTO>> SearchByNameAsync(string template);
     }
 }

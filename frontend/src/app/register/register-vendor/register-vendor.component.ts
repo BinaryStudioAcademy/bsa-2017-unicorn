@@ -118,10 +118,14 @@ export class RegisterVendorComponent implements OnInit {
           this.vendorService.postVendorContact(+this.tokenHelper.getClaimByName('profileid'),emailContact);
           this.vendorService.postVendorContact(+this.tokenHelper.getClaimByName('profileid'),phoneContact);
           this.authEventService.signIn();
-          this.calendarService.createCalendar(+this.tokenHelper.getClaimByName('accountid'));
+          this.calendarService.createCalendar(+this.tokenHelper.getClaimByName('accountid'), this.checkTheDate(new Date()));
           this.helperService.redirectAfterAuthentication();
         })
         .catch(err => this.loader = false);
     }
+  }
+
+  checkTheDate(date: Date):string{    
+      return new Date(date.setHours(date.getHours() - date.getTimezoneOffset() / 60)).toJSON();    
   }
 }

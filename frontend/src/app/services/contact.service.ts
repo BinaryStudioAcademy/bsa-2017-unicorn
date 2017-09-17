@@ -16,6 +16,6 @@ export class ContactService {
 
   	getAllProviders(): Promise<any> {
 		return this.dataService.getFullRequest<ContactProvider>(`${this.apiController}/providers`)
-			.catch(err => alert(err));
+			.catch(err => console.log(err));
   	}
 }

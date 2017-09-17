@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -35,12 +36,12 @@ namespace Unicorn.Controllers
         }
 
         [HttpPost]
-        [Route("calendar")]
-        public async Task<HttpResponseMessage> CreateCalendar([FromBody]long accountId)
+        [Route("calendar/{date}")]
+        public async Task<HttpResponseMessage> CreateCalendar([FromBody]long accountId, DateTime date)
         {
             try
             {
-                var result = await _calendarService.CreateCalendar(accountId);
+                var result = await _calendarService.CreateCalendar(accountId, date);
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }
             catch

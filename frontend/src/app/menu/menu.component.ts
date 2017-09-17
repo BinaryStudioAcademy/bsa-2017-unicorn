@@ -66,7 +66,7 @@ export class MenuComponent implements OnInit {
 
   ngOnInit() {
     this.roleRouter = new RoleRouter();
-    if (this.isLogged) {
+    if (this.isLogged) {      
       this.accountService.getShortInfo(+this.tokenHelper.getClaimByName("accountid"))
         .then(resp => {
           if(resp !== undefined){
@@ -204,6 +204,7 @@ export class MenuComponent implements OnInit {
 
     switch (roleId) {
       case 2:
+      case 5:
         this.profileUrl = `/user/${profileId}/edit`;
         break;
       case 3:

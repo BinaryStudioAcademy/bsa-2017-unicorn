@@ -1,0 +1,29 @@
+<div class="header">
+    <p>Select your image</p>
+</div>
+<div class="content">
+  <div class="ui grid">
+    <div class="equal width row">
+      <div class="column">
+        <div>
+          <img-cropper #cropper [image]="data" [settings]="cropperSettings"></img-cropper>
+        </div>
+        <input #fileInput (change)="fileChangeListener($event)" accept="image/*" type="file" name="file" style="display: none;">
+      </div>
+      <div class="column">
+        <div class="preview">
+          <div class="result rounded">
+            <div class="title">
+              <h3 class="ui header">Preview</h3>
+            </div>
+            <img class="ui small circular image" [src]="data.image" [width]="cropperSettings.croppedWidth" [height]="cropperSettings.croppedHeight">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="actions">
+  <a (click)="uploadFile()" class="ui button upload">Upload</a>
+  <a (click)="onImageSave()" [ngClass]="{'disabled': !file || isFileUploading, 'loading': isFileUploading}" class="ui button save">Save</a>
+</div>

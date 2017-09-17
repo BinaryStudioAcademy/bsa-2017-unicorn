@@ -1,7 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+
+import {SuiModalService, TemplateModalConfig, ModalTemplate} from 'ng2-semantic-ui';
+
 import { ReportService } from "../../../services/report.service";
-import { Report } from "../../../models/report/report.model";
 import { AccountService } from "../../../services/account.service";
+
+import { Report } from "../../../models/report/report.model";
+
+export interface IContext {
+  report: Report;
+}
 
 @Component({
   selector: 'app-feedback',
@@ -10,7 +18,14 @@ import { AccountService } from "../../../services/account.service";
 })
 export class FeedbackComponent implements OnInit {
 
-  constructor(private reportService: ReportService, private accountService: AccountService) { }
+  @ViewChild('modalTemplate')
+  public modalTemplate:ModalTemplate<IContext, string, string>
+  
+  constructor(
+    private reportService: ReportService, 
+    private accountService: AccountService,
+    public modalService:SuiModalService
+  ) { }
 
   reports: Report[];
   pendingReports: Report[];
@@ -30,6 +45,14 @@ export class FeedbackComponent implements OnInit {
         this.isLoaded = true;
       })
       .catch(err => this.isLoaded = true);
+  }
+
+  openReportInModal(report: Report): void {
+    const config = new TemplateModalConfig<IContext, string, string>(this.modalTemplate);
+    config.context = { report: report };
+    
+    this.modalService
+      .open(config)
   }
 
   remove(report: Report): void {

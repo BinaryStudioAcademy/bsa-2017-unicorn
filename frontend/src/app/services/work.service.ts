@@ -16,6 +16,6 @@ export class WorkService {
 
   getAll() : Promise<any> {
 	return this.dataService.getFullRequest<Work[]>(this.apiController)
-		.catch(err => alert(err));
+		.catch(err => console.log(err));
   }
 }

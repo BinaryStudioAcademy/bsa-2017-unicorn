@@ -80,6 +80,8 @@ namespace Unicorn.Core.Services
             };
 
             _unitOfWork.ChatMessageRepository.Create(cmsg);
+            dialog.Participant1_Hided = false;
+            dialog.Participant2_Hided = false;
             await _unitOfWork.SaveAsync();
 
 
@@ -144,6 +146,8 @@ namespace Unicorn.Core.Services
                 Id = createdDialog.Id,
                 ParticipantOneId = createdDialog.Participant1.Id,
                 ParticipantTwoId = createdDialog.Participant2.Id,
+                Participant1_Hided = dialog.Participant1_Hided,
+                Participant2_Hided = dialog.Participant2_Hided,
                 ParticipantAvatar = createdDialog.Participant2.CroppedAvatar ?? createdDialog.Participant2.Avatar,
                 LastMessageTime = DateTimeOffset.Now
             };
@@ -162,6 +166,8 @@ namespace Unicorn.Core.Services
                 Id = dialogId,
                 ParticipantOneId = dialog.Participant1.Id,
                 ParticipantTwoId = dialog.Participant2.Id,
+                Participant1_Hided = dialog.Participant1_Hided,
+                Participant2_Hided = dialog.Participant2_Hided,
                 Messages = dialog.Messages.Where(x => !x.IsDeleted).Select(x => new ChatMessageDTO
                 {
                     DialogId = x.Dialog.Id,
@@ -210,6 +216,10 @@ namespace Unicorn.Core.Services
                 Id = dialogId,
                 ParticipantOneId = dialog.Participant1.Id,
                 ParticipantTwoId = dialog.Participant2.Id,
+
+                Participant1_Hided = dialog.Participant1_Hided,
+                Participant2_Hided = dialog.Participant2_Hided,
+
                 ParticipantName = name,
                 ParticipantAvatar = avatar,
                 IsReadedLastMessage = false,
@@ -261,6 +271,10 @@ namespace Unicorn.Core.Services
                 Id = x.Id,
                 ParticipantOneId = x.Participant1.Id,
                 ParticipantTwoId = x.Participant2.Id,
+
+                Participant1_Hided = x.Participant1_Hided,
+                Participant2_Hided = x.Participant2_Hided,
+
                 ParticipantName = names[i],
                 ParticipantAvatar = avatars[i++],
                 IsReadedLastMessage = x.Messages?.Where(y => y.Owner.Id != accountId).LastOrDefault()?.IsReaded ?? true,
@@ -321,6 +335,8 @@ namespace Unicorn.Core.Services
                 Id = res.Id,
                 ParticipantOneId = res.Participant1.Id,
                 ParticipantTwoId = res.Participant2.Id,
+                Participant1_Hided = false,
+                Participant2_Hided = false,
                 ParticipantAvatar = avatar,
                 ParticipantType = profileType,
                 ParticipantProfileId = profileId,
@@ -345,9 +361,12 @@ namespace Unicorn.Core.Services
 
         }
 
-        public async Task RemoveDialog(long dialogId)
+        public async Task RemoveDialog(long dialogId, long userId)
         {
-            _unitOfWork.ChatDialogRepository.Delete(dialogId);
+            var dialog = await _unitOfWork.ChatDialogRepository.GetByIdAsync(dialogId);
+            if (dialog.Participant1.Id == userId)
+                dialog.Participant1_Hided = !dialog.Participant1_Hided;
+            else dialog.Participant2_Hided = !dialog.Participant2_Hided;
             await _unitOfWork.SaveAsync();
         }
 

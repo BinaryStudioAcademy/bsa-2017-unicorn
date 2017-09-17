@@ -20,11 +20,11 @@ namespace Unicorn.Core.Services
             _unitOfWork = unitOfWork;
         }
 
-        private Calendar CreateClndr()
+        private Calendar CreateClndr(DateTime date)
         {
             return new Calendar
             {
-                StartDate = DateTime.Today,
+                StartDate = date,
                 EndDate = null,
                 ExtraDayOffs = new List<ExtraDay>(),
                 ExtraWorkDays = new List<ExtraDay>(),
@@ -62,10 +62,10 @@ namespace Unicorn.Core.Services
             };
         }
 
-        public async Task<CalendarDTO> CreateCalendar(long accountId)
+        public async Task<CalendarDTO> CreateCalendar(long accountId, DateTime date)
         {
             var account = await _unitOfWork.AccountRepository.GetByIdAsync(accountId);
-            var calendar = CreateClndr();
+            var calendar = CreateClndr(date);
             _unitOfWork.CalendarRepository.Create(calendar);
             await _unitOfWork.SaveAsync();
 

@@ -13,8 +13,8 @@ export class CalendarService {
   getCalendarByAccount(accountId: number):Promise<CalendarModel>{
     return this.dataService.getRequest<CalendarModel>("calendar/account/" + accountId);    
   }
-  createCalendar(accountId: number):Promise<CalendarModel>{
-    return this.dataService.postRequest<CalendarModel>("calendar", accountId); 
+  createCalendar(accountId: number, date: string):Promise<CalendarModel>{
+    return this.dataService.postRequest<CalendarModel>("calendar/"+ date, accountId); 
   }
   saveCalendar(calendar: CalendarModel):Promise<CalendarModel>{
     return this.dataService.postRequest<CalendarModel>("calendar/save", calendar); 
