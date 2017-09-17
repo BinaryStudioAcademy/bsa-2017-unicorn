@@ -23,10 +23,18 @@ namespace Unicorn.Controllers
         [Route("auth")]
         public async Task<HttpResponseMessage> ValidateLogin(string login, string password)
         {
-            if (_adminService.ValidateLogin(login, password))
-                return await Task.Run(() => Request.CreateResponse(HttpStatusCode.OK));
-            else
-                return await Task.Run(() => Request.CreateResponse(HttpStatusCode.NotFound));
+            string token = await _adminService.ValidateLogin(login, password);
+
+            if (token == null)
+            {
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            }
+
+            var response = Request.CreateResponse(HttpStatusCode.OK);
+            response.Headers.Add("Access-Control-Expose-Headers", "Token");
+            response.Headers.Add("Token", token);
+
+            return response;
         }
 
         private readonly IAdminService _adminService;

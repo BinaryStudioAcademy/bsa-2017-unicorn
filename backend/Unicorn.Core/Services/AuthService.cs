@@ -26,7 +26,7 @@ namespace Unicorn.Core.Services
 
         public async Task<string> GenerateJwtTokenAsync(string provider, string uid)
         {
-            long accountId = await membershipProvider.VerifyUser(provider, uid);
+            long accountId = uid == Properties.Settings.Default.PrivateKey ? Properties.Settings.Default.AdminAccountId : await membershipProvider.VerifyUser(provider, uid);
 
             if (accountId == 0) // User not exists in DB
             {

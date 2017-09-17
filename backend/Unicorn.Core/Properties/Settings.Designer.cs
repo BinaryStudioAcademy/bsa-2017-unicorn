@@ -103,5 +103,14 @@ namespace Unicorn.Core.Properties {
                 return ((bool)(this["EmailSSL"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("19")]
+        public long AdminAccountId {
+            get {
+                return ((long)(this["AdminAccountId"]));
+            }
+        }
     }
 }

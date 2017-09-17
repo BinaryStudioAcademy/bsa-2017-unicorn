@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthModal } from "./auth-modal/auth-modal.component";
 import { SuiModalService } from "ng2-semantic-ui/dist";
+import { TokenHelperService } from "../../services/helper/tokenhelper.service";
 
 @Component({
   selector: 'app-admin',
@@ -9,11 +10,13 @@ import { SuiModalService } from "ng2-semantic-ui/dist";
 })
 export class AdminComponent implements OnInit {
 
-  constructor(private modalService: SuiModalService) { }
+  constructor(private modalService: SuiModalService, private tokenHelper: TokenHelperService) { }
 
   ngOnInit() {
-    this.modalService
-      .open(new AuthModal("tiny"));
+    if (!this.tokenHelper.isAdminAccount()) {
+      this.modalService
+        .open(new AuthModal("tiny"));
+    }
   }
 
 }
