@@ -882,10 +882,23 @@ namespace Unicorn.DataAccess.Context
                 IsBanned = false
             };
 
+            Account account19 = new Account()
+            {
+                Id = 19,
+                Email = "admin@Aadmin.com",
+                EmailConfirmed = true,
+                DateCreated = new DateTime(2017, 08, 11, 12, 00, 00),
+                Avatar = "http://clooud.co/uploads/avatars/default-avatar.png",
+                IsDeleted = false,
+                Role = role5,
+                Location = location18,
+                IsBanned = false
+            };
+
             context.Accounts.AddRange(new List<Account>()
             {
                 account1, account2, account3, account4, account5, account6, account7, account8, account9, account10,
-                account11, account12, account13, account14, account15, account16, account17, account18,
+                account11, account12, account13, account14, account15, account16, account17, account18, account19
             });
 
 
@@ -1676,6 +1689,19 @@ namespace Unicorn.DataAccess.Context
             {
                 Id = 10,
                 Account = account13,
+                Name = "Abc",
+                MiddleName = "Test",
+                Surname = "Test",
+                Birthday = new DateTime(1992, 1, 20),
+                Gender = "male",
+                IsDeleted = false,
+                Phone = "+380951234444"
+            };
+
+            Person person11 = new Person()
+            {
+                Id = 11,
+                Account = account19,
                 Name = "Admin",
                 MiddleName = "Admin",
                 Surname = "Admin",
@@ -1685,7 +1711,7 @@ namespace Unicorn.DataAccess.Context
                 Phone = "+380954444444"
             };
 
-            context.Persons.AddRange(new List<Person>() { person1, person2, person3, person4, person5, person6, person7, person8, person9, person10 });
+            context.Persons.AddRange(new List<Person>() { person1, person2, person3, person4, person5, person6, person7, person8, person9, person10, person11 });
 
             #endregion
             
@@ -2141,7 +2167,14 @@ namespace Unicorn.DataAccess.Context
                 Person = person10
             };
 
-            context.Customers.AddRange(new List<Customer>() { customer1, customer2, customer3 });
+            Customer customer4 = new Customer()
+            {
+                Id = 4,
+                IsDeleted = false,
+                Person = person11
+            };
+
+            context.Customers.AddRange(new List<Customer>() { customer1, customer2, customer3, customer4 });
 
 
             #endregion
