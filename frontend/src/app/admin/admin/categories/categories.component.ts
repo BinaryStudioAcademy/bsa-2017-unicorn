@@ -1,7 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, NgZone } from '@angular/core';
+
+import {SuiModalService, TemplateModalConfig, ModalTemplate} from 'ng2-semantic-ui';
+
 import { CategoryService } from "../../../services/category.service";
+
 import { Category } from "../../../models/category.model";
 import { Subcategory } from "../../../models/subcategory.model";
+import { ImageCropperModal } from '../../../image-cropper-modal/image-cropper-modal.component';
+import { ConfirmModal } from '../../../confirm-modal/confirm-modal.component';
+
+export interface ICategoryModalContext {
+  category: Category;
+}
 
 @Component({
   selector: 'app-categories',
@@ -9,27 +19,39 @@ import { Subcategory } from "../../../models/subcategory.model";
   styleUrls: ['./categories.component.sass']
 })
 export class CategoriesComponent implements OnInit {
-
-  constructor(private categoryService: CategoryService) { }
+  @ViewChild('modalTemplate')
+  
+  public modalTemplate: ModalTemplate<void, string, string>
+  
+  constructor(
+    private categoryService: CategoryService,
+    public modalService: SuiModalService,
+    private zone: NgZone
+  ) { }
 
   categories: Category[];
 
-  editingCategory: Category;
-  editingSubcategory: Subcategory;
+  selectedCategory: Category;
+  selectedSubcategory: Subcategory;
+  isNewCategoryEditOpen: boolean;
+  isNewSubcategoryEditOpen: boolean;
 
   isLoaded: boolean;
   pendingCategories: Category[];
   pendingSubcategories: Subcategory[];
 
+  searchTemplate: string;
+
   ngOnInit() {
+    this.searchTemplate = "";
     this.load();
   }
 
   load(): void {
     this.isLoaded = false;
 
-    this.clearEditingCategory();
-    this.clearEditingSubcategory();
+    this.clearSelectedCategory();
+    this.clearSelectedSubcategory();
 
     this.pendingCategories = [];
     this.pendingSubcategories = [];
@@ -42,15 +64,29 @@ export class CategoriesComponent implements OnInit {
       .catch(err => this.isLoaded = true);
   }
 
+  search(): void {
+    this.categoryService.search(this.searchTemplate)
+      .then(resp => {
+        this.clearSelectedCategory();
+        this.clearSelectedSubcategory();
+    
+        this.pendingCategories = [];
+        this.pendingSubcategories = [];
+
+        this.categories = resp;
+      });
+  }
+
   saveCategory(): void {
-    if (this.editingCategory.Id !== null) {
-      this.categoryService.updateCategory(this.editingCategory);
+    if (this.selectedCategory.Id !== null) {
+      this.categoryService.updateCategory(this.selectedCategory);
     }
     else
     {
-      let category = this.editingCategory;
+      let category = this.selectedCategory;
       category.Id = -1;
-      this.clearEditingCategory()
+      category.Tags = `${category.Name},${category.Tags}`;
+      this.clearSelectedCategory()
 
       this.pendingCategories.push(category);
       this.categories.push(category);
@@ -65,17 +101,23 @@ export class CategoriesComponent implements OnInit {
           this.pendingCategories.splice(this.pendingCategories.findIndex(c => c === category), 1);
         });
     }
+    this.isNewCategoryEditOpen = false;
+    this.zone.run(() => {this.isNewCategoryEditOpen = false});
+
+    this.clearSelectedCategory();
+    this.clearSelectedSubcategory();
   }
 
   saveSubcategory(): void {
-    if (this.editingSubcategory.Id !== null) {
-      this.categoryService.updateSubcategory(this.editingSubcategory.CategoryId, this.editingSubcategory);
+    if (this.selectedSubcategory.Id !== null) {
+      this.categoryService.updateSubcategory(this.selectedSubcategory.CategoryId, this.selectedSubcategory);
     }
     else
     {
-      let subcategory = this.editingSubcategory;
+      let subcategory = this.selectedSubcategory;
       subcategory.Id = -1;
-      this.clearEditingSubcategory()
+      subcategory.Tags = `${subcategory.Name},${subcategory.Tags}`;
+      this.clearSelectedSubcategory()
 
       this.pendingSubcategories.push(subcategory);
       this.categories
@@ -95,36 +137,101 @@ export class CategoriesComponent implements OnInit {
           this.pendingSubcategories.splice(this.pendingSubcategories.findIndex(s => s === subcategory), 1);
         });
     }
+
+    this.isNewSubcategoryEditOpen = false;
+    this.zone.run(() => {this.isNewSubcategoryEditOpen = false});
+
+    this.clearSelectedCategory();
+    this.clearSelectedSubcategory();
   }
 
   removeCategory(category: Category): void {
-    this.pendingCategories.push(category);
+    this.modalService.open(new ConfirmModal("Delete category", `Delete category ${category.Name}?`, "Delete"))
+      .onApprove(() => {
+        this.pendingCategories.push(category);
 
-    this.categoryService.removeCategory(category.Id)
-      .then(() => {
-        this.categories.splice(this.categories.findIndex(c => c === category), 1);
-        this.pendingCategories.splice(this.pendingCategories.findIndex(c => c === category), 1);
-      })
-      .catch(err => this.pendingCategories.splice(this.pendingCategories.findIndex(c => c === category), 1));
+        this.categoryService.removeCategory(category.Id)
+          .then(() => {
+            this.categories.splice(this.categories.findIndex(c => c === category), 1);
+            this.pendingCategories.splice(this.pendingCategories.findIndex(c => c === category), 1);
+          })
+          .catch(err => this.pendingCategories.splice(this.pendingCategories.findIndex(c => c === category), 1));
+
+        this.isNewCategoryEditOpen = false;
+        this.zone.run(() => { this.isNewCategoryEditOpen = false });
+
+        this.clearSelectedCategory();
+        this.clearSelectedSubcategory();
+      });
   }
 
   removeSubcategory(subcategory: Subcategory): void {
-    this.pendingSubcategories.push(subcategory);
+    this.modalService.open(new ConfirmModal("Delete subcategory", `Delete subcategory ${subcategory.Name} from ${subcategory.Category}?`, "Delete"))
+      .onApprove(() => {
+        this.pendingSubcategories.push(subcategory);
 
-    let category = this.categories
-      .find(c => c.Id === subcategory.CategoryId);
-    
-    this.categoryService.removeSubcategory(subcategory.CategoryId, subcategory.Id)
-      .then(() => {
-        category.Subcategories
-          .splice(category.Subcategories.findIndex(s => s === subcategory), 1);
-        this.pendingSubcategories.splice(this.pendingSubcategories.findIndex(s => s === subcategory), 1);
-      })
-      .catch(err => this.pendingSubcategories.splice(this.pendingSubcategories.findIndex(s => s === subcategory), 1));
+        let category = this.categories
+          .find(c => c.Id === subcategory.CategoryId);
+
+        this.categoryService.removeSubcategory(subcategory.CategoryId, subcategory.Id)
+          .then(() => {
+            category.Subcategories
+              .splice(category.Subcategories.findIndex(s => s === subcategory), 1);
+            this.pendingSubcategories.splice(this.pendingSubcategories.findIndex(s => s === subcategory), 1);
+          })
+          .catch(err => this.pendingSubcategories.splice(this.pendingSubcategories.findIndex(s => s === subcategory), 1));
+
+        this.isNewSubcategoryEditOpen = false;
+        this.zone.run(() => { this.isNewSubcategoryEditOpen = false });
+
+        this.clearSelectedCategory();
+        this.clearSelectedSubcategory();
+      });
   }
 
-  clearEditingCategory(): void {
-    this.editingCategory = {
+  editCategory(category: Category): void {
+    this.clearSelectedCategory();
+    this.clearSelectedSubcategory();
+
+    if (category) {
+      this.isNewCategoryEditOpen = false; 
+      this.selectedCategory = category;
+    }
+    else {
+      this.isNewCategoryEditOpen = !this.isNewCategoryEditOpen;
+    } 
+  }
+
+  editSubcategory(category: Category, subcategory: Subcategory): void {
+    this.clearSelectedSubcategory();
+    this.clearSelectedCategory();
+
+    if (subcategory) {
+      this.selectedSubcategory = subcategory;
+      this.isNewSubcategoryEditOpen = false;
+      this.zone.run(() => {this.isNewSubcategoryEditOpen = false});
+    }
+    else {
+      this.selectedSubcategory.Category = category.Name;
+      this.selectedSubcategory.CategoryId = category.Id;
+      setTimeout(() => {
+        this.isNewSubcategoryEditOpen = true;
+        this.zone.run(() => { this.isNewSubcategoryEditOpen = true })
+      });
+    }
+  }
+
+  selectImage(): void {
+    this.modalService.open(new ImageCropperModal())
+      .onApprove(result => this.selectedCategory.Icon = result as string);
+  }
+
+  stopPropagation(event: Event) {
+    event.stopPropagation();
+  }
+
+  clearSelectedCategory(): void {
+    this.selectedCategory = {
       Id: null,
       Description: "",
       Icon: "http://www.freeiconspng.com/uploads/pictures-icon-11.gif",
@@ -134,8 +241,8 @@ export class CategoriesComponent implements OnInit {
     };
   }
 
-  clearEditingSubcategory(): void {
-    this.editingSubcategory = {
+  clearSelectedSubcategory(): void {
+    this.selectedSubcategory = {
       Id: null,
       Description: "",
       Icon: "http://www.freeiconspng.com/uploads/pictures-icon-11.gif",
@@ -154,4 +261,16 @@ export class CategoriesComponent implements OnInit {
     return this.pendingSubcategories.includes(subcategory);
   }
 
+  isCategoryValid(): boolean {
+    return this.selectedCategory.Name !== "";
+  }
+  
+  isSubcategoryValid(): boolean {
+    return this.selectedSubcategory.Name !== "" && this.selectedSubcategory.CategoryId !== null;
+  }
+
+  closeNewSubcategoryEdit(): void {
+    if (this.isNewSubcategoryEditOpen)
+      this.isNewSubcategoryEditOpen = false;
+  }
 }

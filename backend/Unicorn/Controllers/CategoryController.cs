@@ -148,6 +148,13 @@ namespace Unicorn.Controllers
             return Request.CreateResponse(HttpStatusCode.NoContent);
         }
 
+        [HttpGet]
+        [Route("search")]
+        public async Task<List<CategoryDTO>> SearchByName(string template)
+        {
+            return await _categoryService.SearchByNameAsync(template);
+        }
+
         private readonly ICategoryService _categoryService;
         private readonly ISubcategoryService _subcategoryService;
     }

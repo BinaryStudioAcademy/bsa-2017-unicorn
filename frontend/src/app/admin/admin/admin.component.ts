@@ -8,12 +8,16 @@ import { SuiModalService } from "ng2-semantic-ui/dist";
   styleUrls: ['./admin.component.sass']
 })
 export class AdminComponent implements OnInit {
-
-  constructor(private modalService: SuiModalService) { }
+  isLoggedIn: boolean;
+  
+  constructor(private modalService: SuiModalService) {
+    this.modalService
+      .open(new AuthModal("tiny"))
+      .onApprove(() => this.isLoggedIn = true);
+   }
 
   ngOnInit() {
-    this.modalService
-      .open(new AuthModal("tiny"));
+    
   }
 
 }

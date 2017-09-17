@@ -11,7 +11,7 @@ export class AuthModal extends ComponentModalConfig<IAuthModalContext, void, voi
       super(AuthModalComponent, { });
 
       this.isClosable = false;
-      this.transitionDuration = 200;
+      this.isInverted = true;
       this.size = size;
   }
 }
@@ -29,7 +29,7 @@ export class AuthModalComponent {
   isValid: boolean = true;
 
   constructor(
-    public modal:SuiModal<IAuthModalContext, void, void>,
+    public modal: SuiModal<IAuthModalContext, void, void>,
     private adminAuthService: AdminAuthService
   ) {}
 

@@ -22,6 +22,15 @@
     color: gray
 
 .review-text
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+
+.review-text p
+    &:hover
+        cursor: pointer;
 
 .task
     color: #4d4d4d
