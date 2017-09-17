@@ -20,28 +20,14 @@ namespace Unicorn.Core.Services
         public SearchService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-        }
-
-        //private DateTimeOffset ConvertUtcToDateTime(string dt)
-        //{
-        //    if (dt != null)
-        //    {
-        //        dt = dt.Replace(" ", "");
-        //        if (dt != "-1")
-        //        {
-        //            DateTimeOffset dateTime;
-        //            dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
-        //            dateTime = dateTime.AddMilliseconds(Double.Parse(dt)).ToLocalTime();
-        //            dateTime = dateTime.UtcDateTime;
-        //            return dateTime;
-        //        }
-        //        return DateTimeOffset.UtcNow;
-        //    }
-        //    return DateTimeOffset.UtcNow;
-        //}
+        }       
 
         private bool IsVendorWorkingOnThisDate(long id, DateTimeOffset date)
         {
+            if (date.Date == new DateTime(1901, 2, 1))
+            {
+                return false;
+            }
             date = date.ToUniversalTime();
             var books = _unitOfWork.BookRepository.Query.Where(x => x.Vendor.Id == id &&
             x.Status != DataAccess.Entities.Enum.BookStatus.Finished && x.Status != DataAccess.Entities.Enum.BookStatus.Declined
@@ -61,6 +47,10 @@ namespace Unicorn.Core.Services
 
         private bool IsCompanyWorkingOnThisDate(long id, DateTimeOffset date)
         {
+            if (date.Date == new DateTime(1901, 2, 1))
+            {
+                return false;
+            }
             date = date.ToUniversalTime();
             var books = _unitOfWork.BookRepository.Query.Where(x => x.Company.Id == id &&
             x.Status != DataAccess.Entities.Enum.BookStatus.Finished && x.Status != DataAccess.Entities.Enum.BookStatus.Declined
@@ -79,7 +69,11 @@ namespace Unicorn.Core.Services
         }
 
         private bool SynchronizeWorkDateWithVendorsWorkDays(Calendar calendar, DateTimeOffset date, bool isWorkingOnThisDate)
-        {            
+        {       
+            if(date.Date == new DateTime(1901, 2, 1))
+            {
+                return true;
+            }
             var calendarStartDate = calendar.StartDate.ToUniversalTime().Date;
             var calendarEndDate = calendar.EndDate != null ? 
                 calendar.EndDate.GetValueOrDefault().Date : calendar.EndDate;

@@ -122,10 +122,10 @@ export class VendorsComponent implements OnInit {
     let date;
     let _date = new Date(this.date);    
     if(this.date){      
-        date = this.checkTheDate(_date);
+      date = this.checkTheDate(_date);
     }
     else{ 
-      date = this.checkTheDate(new Date());
+      date = this.checkTheDate(new Date(1, 1, 1, 1, 1, 1, 1));
     }    
     return this.performerService
       .getPerformersByFilters(

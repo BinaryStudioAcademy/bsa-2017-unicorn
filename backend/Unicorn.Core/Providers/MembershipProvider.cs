@@ -30,6 +30,7 @@ namespace Unicorn.Core.Providers
             switch (account.Role.Type)
             {
                 case RoleType.Customer:
+                case RoleType.Admin:
                     profileId = _unitOfWork.CustomerRepository.Query.First(x => x.Person.Account.Id == account.Id).Id;
                     break;
                 case RoleType.Company:
