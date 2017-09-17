@@ -92,6 +92,33 @@ namespace Unicorn.Core.Services
             return categoryDTO;
         }
 
+        public async Task<List<CategoryDTO>> SearchByNameAsync(string template)
+        {
+            return await _unitOfWork.CategoryRepository.Query
+                .Include(c => c.Subcategories)
+                .Where(c => c.Name.ToLower().Contains(template.ToLower()))
+                .Select(c => new CategoryDTO()
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    Description = c.Description,
+                    Tags = c.Tags,
+                    Icon = c.Icon,
+                    Subcategories = c.Subcategories
+                        .Where(s => !s.IsDeleted)
+                        .Select(s => new SubcategoryShortDTO()
+                        {
+                            Id = s.Id,
+                            Name = s.Name,
+                            Category = c.Name,
+                            CategoryId = c.Id,
+                            Description = s.Description,
+                            Tags = s.Tags,
+                            Icon = s.Icon
+                        }).ToList()
+                }).ToListAsync();
+        }
+
         private readonly IUnitOfWork _unitOfWork;
     }
 }

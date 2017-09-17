@@ -20,6 +20,10 @@ export class CategoryService {
 		  .catch(err => alert(err));
   }
 
+  search(template: string): Promise<Category[]> {
+	  return this.dataService.getRequest<Category[]>(`${this.apiController}/search?template=${template}`);
+  }
+
   createCategory(category: Category): Promise<any> {
     return this.dataService.postFullRequest<Category>(`${this.apiController}`, category)
       .catch(err => alert(err));

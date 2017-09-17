@@ -1,0 +1,10 @@
+<div class="header">
+    <p>{{modal.context.title}}</p>
+</div>
+<div class="content">
+  <p>{{modal.context.question}}</p>
+</div>
+<div class="actions">
+  <a (click)="modal.approve()" class="ui button">{{modal.context.action}}</a>
+  <a (click)="modal.deny()"class="ui button">Cancel</a>
+</div>
