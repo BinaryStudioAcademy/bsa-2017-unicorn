@@ -15,7 +15,6 @@ import { CalendarEventsService } from "./services/events/calendar-events.service
 import { UnreadDialogsService } from "./services/chat/unread-dialogs.service";
 
 import { HelperService } from './services/helper/helper.service';
-import { ModalService } from "./services/modal/modal.service";
 
 // Routing
 import { AppRoutingModule } from './app-routing/app-routing.module';
@@ -62,6 +61,7 @@ import { DashboardEventsService } from "./services/events/dashboard-events.servi
 import { ImageCropperModalComponent } from './image-cropper-modal/image-cropper-modal.component';
 import { ImageCropperComponent, ImageCropperModule } from 'ng2-img-cropper';
 import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
+import { FeedbackModalComponent } from './feedback-modal/feedback-modal.component';
 
 export class CustomOptions extends ToastOptions {
   animate = 'fade';
@@ -86,7 +86,8 @@ export function getDefaultSignalRConfig(): SignalRConfiguration {
     FooterComponent,
     ReviewModalComponent,
     ImageCropperModalComponent,
-    ConfirmModalComponent
+    ConfirmModalComponent,
+    FeedbackModalComponent
   ],
   imports: [
     SuiModule,
@@ -139,7 +140,8 @@ export function getDefaultSignalRConfig(): SignalRConfiguration {
     ReviewModalComponent,
     ImageCropperComponent,
     ImageCropperModalComponent,
-    ConfirmModalComponent
+    ConfirmModalComponent,
+    FeedbackModalComponent
   ],
   bootstrap: [AppComponent]
 })

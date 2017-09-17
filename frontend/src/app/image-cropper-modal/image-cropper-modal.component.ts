@@ -4,7 +4,6 @@ import { SuiModal, ComponentModalConfig, ModalSize, ModalTemplate } from "ng2-se
 import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
 import { CropperSettings, ImageCropperComponent } from 'ng2-img-cropper';
 import { PhotoService, Ng2ImgurUploader } from '../services/photo.service';
-import { ModalService } from '../services/modal/modal.service';
 
 interface ICropperModalContext {
   image: string;
@@ -26,8 +25,8 @@ export class ImageCropperModal extends ComponentModalConfig<ICropperModalContext
   styleUrls: ['./image-cropper-modal.component.sass'],
   providers: [
     PhotoService,
-    Ng2ImgurUploader,
-    ModalService]
+    Ng2ImgurUploader
+  ]
 })
 export class ImageCropperModalComponent implements OnInit {
   public modalTemplate: ModalTemplate<ICropperModalContext, string, void>;
@@ -85,7 +84,8 @@ export class ImageCropperModalComponent implements OnInit {
   onImageSave(): void {
     if (this.file && this.data) {
       this.isFileUploading = true;
-      this.photoService.uploadToImgur(this.file)
+      var cropped = this.data.image.split('base64,')[1];
+      this.photoService.uploadToImgur(cropped)
         .then(resp => {
           this.isFileUploading = false;
           this.modal.approve(resp);

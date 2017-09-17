@@ -5,7 +5,7 @@ import {SuiModal, ComponentModalConfig, ModalSize} from "ng2-semantic-ui";
 import { Review } from '../../models/review.model';
 
 export interface IReviewModalContext {
-  review: Review
+  review: Review,
 }
 
 export class ReviewModal extends ComponentModalConfig<IReviewModalContext, void, void> {
