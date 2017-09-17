@@ -6,6 +6,7 @@ import { CategoryService } from "../../../services/category.service";
 
 import { Category } from "../../../models/category.model";
 import { Subcategory } from "../../../models/subcategory.model";
+import { ImageCropperModal } from '../../../image-cropper-modal/image-cropper-modal.component';
 
 export interface ICategoryModalContext {
   category: Category;
@@ -82,6 +83,11 @@ export class CategoriesComponent implements OnInit {
           this.pendingCategories.splice(this.pendingCategories.findIndex(c => c === category), 1);
         });
     }
+    this.isNewCategoryEditOpen = false;
+    this.zone.run(() => {this.isNewCategoryEditOpen = false});
+
+    this.clearSelectedCategory();
+    this.clearSelectedSubcategory();
   }
 
   saveSubcategory(): void {
@@ -112,6 +118,12 @@ export class CategoriesComponent implements OnInit {
           this.pendingSubcategories.splice(this.pendingSubcategories.findIndex(s => s === subcategory), 1);
         });
     }
+
+    this.isNewSubcategoryEditOpen = false;
+    this.zone.run(() => {this.isNewSubcategoryEditOpen = false});
+
+    this.clearSelectedCategory();
+    this.clearSelectedSubcategory();
   }
 
   removeCategory(category: Category): void {
@@ -123,6 +135,12 @@ export class CategoriesComponent implements OnInit {
         this.pendingCategories.splice(this.pendingCategories.findIndex(c => c === category), 1);
       })
       .catch(err => this.pendingCategories.splice(this.pendingCategories.findIndex(c => c === category), 1));
+    
+    this.isNewCategoryEditOpen = false;
+    this.zone.run(() => {this.isNewCategoryEditOpen = false});
+    
+    this.clearSelectedCategory();
+    this.clearSelectedSubcategory();
   }
 
   removeSubcategory(subcategory: Subcategory): void {
@@ -138,6 +156,12 @@ export class CategoriesComponent implements OnInit {
         this.pendingSubcategories.splice(this.pendingSubcategories.findIndex(s => s === subcategory), 1);
       })
       .catch(err => this.pendingSubcategories.splice(this.pendingSubcategories.findIndex(s => s === subcategory), 1));
+    
+    this.isNewSubcategoryEditOpen = false;
+    this.zone.run(() => {this.isNewSubcategoryEditOpen = false});
+    
+    this.clearSelectedCategory();
+    this.clearSelectedSubcategory();
   }
 
   editCategory(category: Category): void {
@@ -150,7 +174,7 @@ export class CategoriesComponent implements OnInit {
     }
     else {
       this.isNewCategoryEditOpen = !this.isNewCategoryEditOpen;
-    }
+    } 
   }
 
   editSubcategory(category: Category, subcategory: Subcategory): void {
@@ -165,9 +189,16 @@ export class CategoriesComponent implements OnInit {
     else {
       this.selectedSubcategory.Category = category.Name;
       this.selectedSubcategory.CategoryId = category.Id;
-      this.isNewSubcategoryEditOpen = true;
-      this.zone.run(() => {this.isNewSubcategoryEditOpen = true});
+      setTimeout(() => {
+        this.isNewSubcategoryEditOpen = true;
+        this.zone.run(() => { this.isNewSubcategoryEditOpen = true })
+      });
     }
+  }
+
+  selectImage(): void {
+    this.modalService.open(new ImageCropperModal())
+      .onApprove(result => this.selectedCategory.Icon = result as string);
   }
 
   stopPropagation(event: Event) {
@@ -204,5 +235,17 @@ export class CategoriesComponent implements OnInit {
   isSubcategoryOnPending(subcategory: Subcategory): boolean {
     return this.pendingSubcategories.includes(subcategory);
   }
+
+  isCategoryValid(): boolean {
+    return this.selectedCategory.Name !== "";
+  }
   
+  isSubcategoryValid(): boolean {
+    return this.selectedSubcategory.Name !== "" && this.selectedSubcategory.CategoryId !== null;
+  }
+
+  closeNewSubcategoryEdit(): void {
+    if (this.isNewSubcategoryEditOpen)
+      this.isNewSubcategoryEditOpen = false;
+  }
 }

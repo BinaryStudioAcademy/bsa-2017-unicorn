@@ -59,6 +59,8 @@ import { ClickOutsideModule } from "ng-click-outside/lib";
 import { NotFoundModule} from './not-found/not-found.module';
 import { AdminModule } from "./admin/admin.module";
 import { DashboardEventsService } from "./services/events/dashboard-events.service";
+import { ImageCropperModalComponent } from './image-cropper-modal/image-cropper-modal.component';
+import { ImageCropperComponent, ImageCropperModule } from 'ng2-img-cropper';
 
 export class CustomOptions extends ToastOptions {
   animate = 'fade';
@@ -81,7 +83,8 @@ export function getDefaultSignalRConfig(): SignalRConfiguration {
     ShellComponent,
     MenuComponent,
     FooterComponent,
-    ReviewModalComponent
+    ReviewModalComponent,
+    ImageCropperModalComponent
   ],
   imports: [
     SuiModule,
@@ -107,6 +110,7 @@ export function getDefaultSignalRConfig(): SignalRConfiguration {
     MomentModule,
     PipeModule,
     ClickOutsideModule,
+    ImageCropperModule,
     AdminModule,
     FormsModule,
     IndexModule,
@@ -130,7 +134,9 @@ export function getDefaultSignalRConfig(): SignalRConfiguration {
   ],
   entryComponents: [
     RegisterComponent,
-    ReviewModalComponent
+    ReviewModalComponent,
+    ImageCropperComponent,
+    ImageCropperModalComponent
   ],
   bootstrap: [AppComponent]
 })

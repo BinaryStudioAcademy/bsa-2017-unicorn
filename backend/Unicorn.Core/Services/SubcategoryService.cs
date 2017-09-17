@@ -81,7 +81,8 @@ namespace Unicorn.Core.Services
 
         public async Task RemoveAsync(long id)
         {
-            await Task.Run(() => _unitOfWork.SubcategoryRepository.Delete(id));
+            _unitOfWork.SubcategoryRepository.Delete(id);
+            await _unitOfWork.SaveAsync();
         }
 
         public async Task<SubcategoryShortDTO> UpdateAsync(SubcategoryShortDTO subcategoryDTO)
