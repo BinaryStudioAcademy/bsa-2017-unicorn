@@ -113,45 +113,47 @@ export class SearchComponent implements OnInit {
 
   filter(arr, search = '') {
     const result = [];
-    if (search !== '' && arr) {
-      for (let i = 0; i < arr.length; i++) {
-        const tags = arr[i].Tags.split(',');
-        for (let j = 0; j < tags.length; j++) {
-          const tag = tags[j].toLowerCase();
-          let input = search.toLowerCase();
-          if (tag.indexOf(input) > -1) {
-            let start = tag.substring(0, tag.indexOf(input));
-            const end = tag.substring(tag.indexOf(input) + input.length);
-            if (start.length > 0) {
-              start = this.capitalizeFirstLetter(start);
-            } else {
-              input = this.capitalizeFirstLetter(input);
-            }
-            const html = start + '<b>' + input + '</b>' + end;
-            const tagObj = {
-              Name: tags[j],
-              Value: html,
-              Group: arr[i].Name,
-              Icon: arr[i].Icon
-            };
-            result.push(tagObj);
-            if (result.length > 30) {
-              return result;
+    if (arr) {
+      if (search !== '') {
+        for (let i = 0; i < arr.length; i++) {
+          const tags = arr[i].Tags.split(',');
+          for (let j = 0; j < tags.length; j++) {
+            const tag = tags[j].toLowerCase();
+            let input = search.toLowerCase();
+            if (tag.indexOf(input) > -1) {
+              let start = tag.substring(0, tag.indexOf(input));
+              const end = tag.substring(tag.indexOf(input) + input.length);
+              if (start.length > 0) {
+                start = this.capitalizeFirstLetter(start);
+              } else {
+                input = this.capitalizeFirstLetter(input);
+              }
+              const html = start + '<b>' + input + '</b>' + end;
+              const tagObj = {
+                Name: tags[j],
+                Value: html,
+                Group: arr[i].Name,
+                Icon: arr[i].Icon
+              };
+              result.push(tagObj);
+              if (result.length > 30) {
+                return result;
+              }
             }
           }
         }
-      }
-    } else {
-      for (let i = 0; i < arr.length; i++) {
-        const tagObj = {
-          Name: arr[i].Name,
-          Value: arr[i].Name,
-          Group: '',
-          Icon: arr[i].Icon
-        };
-        result.push(tagObj);
-        if (result.length > 30) {
-          return result;
+      } else {
+        for (let i = 0; i < arr.length; i++) {
+          const tagObj = {
+            Name: arr[i].Name,
+            Value: arr[i].Name,
+            Group: '',
+            Icon: arr[i].Icon
+          };
+          result.push(tagObj);
+          if (result.length > 30) {
+            return result;
+          }
         }
       }
     }
