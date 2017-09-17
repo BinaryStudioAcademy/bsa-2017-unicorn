@@ -71,7 +71,10 @@ export class DashboardCompanyPendingsComponent implements OnInit {
       this.books = resp;           
     });
     this.dashboardService.getCompanyVendorsWithWorks().then(resp => {
-      this.vendors = resp;
+      resp.forEach(x => {
+        this.vendors.push(x);
+        this.availableVendors.push(x);
+      });
       console.log(this.vendors);
     });
   }
@@ -151,6 +154,7 @@ export class DashboardCompanyPendingsComponent implements OnInit {
   tasks: ShortTask[] = [];
 
   vendors: Vendor[] = [];
+  availableVendors: Vendor[] = [];
   selectedVendor: Vendor;
 
   works: Work[] = [];
@@ -195,6 +199,7 @@ export class DashboardCompanyPendingsComponent implements OnInit {
   saveTask(bookId: number) {
     this.currentTask.WorkId = this.selectedWork.Id;
     this.currentTask.VendorId = this.selectedVendor.Id;
+    this.availableVendors.splice(this.availableVendors.findIndex(v => v.Id === this.selectedVendor.Id), 1);
     this.tasks.push(this.currentTask);
     this.taskFormOpened = false;
   }
@@ -206,6 +211,13 @@ export class DashboardCompanyPendingsComponent implements OnInit {
     }).catch(err => {
       this.toastr.error("Problems");
     });
+  }
+
+  getVendorIcon(task: ShortTask): string {
+    debugger;
+    let ven = this.vendors.filter(v => v.Id === task.VendorId)
+    let ve = ven[0];
+    return ve.Avatar;
   }
 
 }

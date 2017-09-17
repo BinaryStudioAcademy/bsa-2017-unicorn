@@ -22,16 +22,32 @@
             <div class="book-warning" *ngIf="book.MoreTasksPerDay">WARNING! This task might make one of your work days with more than one task. Check your calendar.</div>
         </div>
       </div>
-      <div class="ui divider" *ngIf="taskFormOpen[book.Id]"></div>
-      <div class="row" *ngIf="taskFormOpen[book.Id]">
+      <div class="ui divider no-bottom-margin" *ngIf="taskFormOpen[book.Id]"></div>
+      <div class="row no-padd-top no-padd-bottom" *ngIf="taskFormOpen[book.Id]">
         <div class="vendor-assign-div sixteen wide column">
           <div class="ui two column grid">
               <div class="column">
                 <div class="task-header">
-                  <span>TASKS</span>
-                  <i class="ui icon green add add-icon" (click)="newTask(book.Id)"></i>
+                  <span><h5>TASKS <i class="ui icon green add add-icon" (click)="newTask(book.Id)"></i></h5></span>
+                  
                 </div>
-                <div class="task-list">
+                <table class="ui selectable padded single line table">
+                  <!-- <thead>
+                    <tr>
+                      <th></th>
+                      <th>Description</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead> -->
+                  <tbody>
+                    <tr *ngFor="let task of tasks">
+                      <td><img class="ui mini circular image task-item-image" src="{{getVendorIcon(task)}}"></td>
+                      <td>{{task.Description}}</td>
+                      <td>{{task.Status}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <!-- <div class="task-list">
                   <div class="task-item" *ngFor="let task of tasks">
                     <div>
                       <img class="ui mini circular image task-item-image" src="{{book.Work.Icon}}">
@@ -43,11 +59,11 @@
                       <span class="task-item-span">{{task.Status}}</span>
                     </div>
                   </div>
-                </div>
+                </div> -->
               </div>
               <div class="column">
                 <div class="form-header">
-                  <span>TASK DESCRIPTION</span>
+                  <span><h5>TASK DESCRIPTION</h5></span>
                 </div>
                 <div class="task-form" *ngIf="taskFormOpened">
                   <form class="ui form" #form="ngForm">
@@ -66,7 +82,7 @@
                           (selectedOptionChange)="changeVendor()"
                           [(ngModel)]="selectedVendor"
                           name="vendorSelect">
-                          <sui-select-option class="select-option" *ngFor="let vendor of vendors" [value]="vendor">
+                          <sui-select-option class="select-option" *ngFor="let vendor of availableVendors" [value]="vendor">
                           </sui-select-option>
                         </sui-select>
                       </div>
@@ -81,7 +97,7 @@
                         </sui-select>
                       </div>
                     </div>
-                    <button class="ui button" [ngClass]="{'disabled': form.invalid}" (click)="saveTask()">SAVE</button>
+                    <a class="ui button accept-btn" [ngClass]="{'disabled': form.invalid}" (click)="saveTask()">SAVE</a>
                   </form>
                 </div>
               </div>
@@ -89,8 +105,12 @@
         </div>
       </div>
       <div class="ui divider" *ngIf="taskFormOpen[book.Id]"></div>
-      <div class="field" *ngIf="taskFormOpen[book.Id]">
-        <button class="ui button" (click)="asignVendors()">ASSIGN VENDORS</button>
+      <div class="row">
+        <div class="right aligned column">
+          <div class="field" *ngIf="taskFormOpen[book.Id]">
+            <a class="ui button accept-btn" [ngClass]="{'disabled': tasks.length === 0}" (click)="asignVendors()">ASSIGN VENDORS</a>
+          </div>
+        </div>
       </div>
   </div>
 </div>

@@ -274,7 +274,7 @@ namespace Unicorn.Core.Services
                 case "company":
                     {
                         query = query
-                            .Where(b => b.Company != null)
+                            .Where(b => b.Company != null && !b.IsCompanyTask)
                             .Where(b => b.Company.Id == id);
                         break;
                     }
@@ -332,7 +332,7 @@ namespace Unicorn.Core.Services
                 .Include(b => b.Work.Subcategory)
                 .Include(b => b.Work.Subcategory.Category)
                 .Include(b => b.Location)
-                .Where(b => b.Customer.Id == id)
+                .Where(b => b.Customer.Id == id && !b.IsCompanyTask)
                 .ToListAsync();
 
             var customerBooks = books
@@ -393,6 +393,7 @@ namespace Unicorn.Core.Services
             }
 
             _unitOfWork.BookRepository.Update(book);
+            await CheckBooks(book);
             await _unitOfWork.SaveAsync();
 
             if (isStatusChanged)
@@ -576,6 +577,22 @@ namespace Unicorn.Core.Services
             _unitOfWork.BookRepository.Create(companyBook);
 
             await _unitOfWork.SaveAsync();
+        }
+
+        private async Task CheckBooks(Book book)
+        {
+            if (!book.IsCompanyTask)
+            {
+                return;
+            }
+            var taskBooks = _unitOfWork.BookRepository.Query.Where(b => b.ParentBookId == book.Id).ToList();
+            if (!taskBooks.Any(b => b.Status != book.Status))
+            {
+                var parentBook = await _unitOfWork.BookRepository.GetByIdAsync(book.ParentBookId);
+                parentBook.Status = book.Status;
+                _unitOfWork.BookRepository.Update(parentBook);
+                await _unitOfWork.SaveAsync();
+            }
         }
     }
 }
