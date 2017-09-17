@@ -1,3 +1,5 @@
+import { Work } from '../work.model';
+
 export interface Vendor{
     Id: number;
     Avatar: string;
@@ -7,4 +9,5 @@ export interface Vendor{
     FIO: string;
     Reviews: number;
     Rating: number;
+    Works: Work[];
 }

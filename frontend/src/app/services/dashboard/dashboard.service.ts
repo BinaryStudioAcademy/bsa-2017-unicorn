@@ -3,7 +3,9 @@ import { Injectable } from '@angular/core';
 import { DataService } from '../data.service';
 import { TokenHelperService } from '../helper/tokenhelper.service';
 
+import { ShortTask } from '../../models/dashboard/company-task';
 import { BookCard } from '../../models/dashboard/book-card';
+import { Vendor } from '../../models/company-page/vendor';
 
 @Injectable()
 export class DashboardService {
@@ -41,4 +43,13 @@ export class DashboardService {
     return this.dataService.putRequest('book', book);
   }
 
+  //vendor assign
+
+  getCompanyVendorsWithWorks(): Promise<Vendor[]> {
+    return this.dataService.getRequest(`company/${this.getId()}/dashboard/vendors`);
+  }
+
+  createTasks(tasks: ShortTask[]): Promise<any> {
+    return this.dataService.postRequest(`book/company/${this.getId()}/tasks`, tasks);
+  }
 }

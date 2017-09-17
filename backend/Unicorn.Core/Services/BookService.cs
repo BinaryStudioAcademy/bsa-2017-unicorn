@@ -315,7 +315,7 @@ namespace Unicorn.Core.Services
                         CategoryId = b.Work.Subcategory.Category.Id,
                         Subcategory = b.Work.Subcategory.Name,
                         SubcategoryId = b.Work.Subcategory.Id,
-                        Icon = b.Work.Icon ?? b.Work.Subcategory.Category.Icon
+                        Icon = string.IsNullOrEmpty(b.Work.Icon) ? b.Work.Subcategory.Category.Icon : b.Work.Icon
                     }
                 }).ToList();
         }
@@ -374,7 +374,7 @@ namespace Unicorn.Core.Services
                     CategoryId = b.Work.Subcategory.Category.Id,
                     Subcategory = b.Work.Subcategory.Name,
                     SubcategoryId = b.Work.Subcategory.Id,
-                    Icon = b.Work.Icon
+                    Icon = string.IsNullOrEmpty(b.Work.Icon) ? b.Work.Subcategory.Category.Icon : b.Work.Icon 
                 }
             };
         }
@@ -541,6 +541,40 @@ namespace Unicorn.Core.Services
             var book = await _unitOfWork.BookRepository.GetByIdAsync(id);
             book.IsDeleted = true;
             _unitOfWork.BookRepository.Update(book);
+            await _unitOfWork.SaveAsync();
+        }
+
+        public async Task CreateTasks(List<ShortTaskDTO> tasks, long companyId)
+        {
+            foreach (var task in tasks)
+            {
+                await CreateTask(task, companyId);
+            }
+        }
+
+        private async Task CreateTask(ShortTaskDTO task, long companyId)
+        {
+            var vendor = await _unitOfWork.VendorRepository.GetByIdAsync(task.VendorId);
+            var company = await _unitOfWork.CompanyRepository.GetByIdAsync(companyId);
+            var book = await _unitOfWork.BookRepository.GetByIdAsync(task.BookId);
+            var work = await _unitOfWork.WorkRepository.GetByIdAsync(task.WorkId);
+
+            var companyBook = new Book();
+            companyBook.Date = book.Date;
+            companyBook.EndDate = book.EndDate;
+            companyBook.Description = task.Description;
+            companyBook.Status = BookStatus.Pending;
+            companyBook.IsCompanyTask = true;
+            companyBook.Vendor = vendor;
+            companyBook.Location = book.Location;
+            companyBook.Customer = book.Customer;
+            companyBook.CustomerPhone = book.CustomerPhone;
+            companyBook.ParentBookId = book.Id;
+            companyBook.Work = work;
+            companyBook.Company = company;
+
+            _unitOfWork.BookRepository.Create(companyBook);
+
             await _unitOfWork.SaveAsync();
         }
     }

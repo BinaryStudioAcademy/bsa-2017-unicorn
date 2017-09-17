@@ -138,5 +138,12 @@ namespace Unicorn.Controllers
 
             return Request.CreateResponse(HttpStatusCode.OK);
         }
+
+        [HttpPost]
+        [Route("book/company/{id}/tasks")]
+        public async Task CreateTasks(List<ShortTaskDTO> tasks, long id)
+        {
+            await _bookService.CreateTasks(tasks, id);
+        }
     }
 }
