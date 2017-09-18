@@ -83,8 +83,7 @@ namespace Unicorn.Core.Services
             dialog.Participant1_Hided = false;
             dialog.Participant2_Hided = false;
             await _unitOfWork.SaveAsync();
-
-
+      
             var notification = new NotificationDTO()
             {
                 Title = $"New message from {participant}",

@@ -54,6 +54,12 @@
   justify-content: center;
 
 
+.avatar:hover
+  cursor: auto!important;
+
+.avatar:hover:after
+  opacity: 0!important;
+
 .modal-events
   display: flex;
   justify-content: space-between;
@@ -63,7 +69,7 @@
     width: 30px;
     height: 30px;
     object-fit: cover;
-    flex-basis: 5%;
+    flex-basis: 5%;    
   .event.title
     flex-basis: 15%;
   .event.start-date

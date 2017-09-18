@@ -36,12 +36,12 @@ namespace Unicorn.Controllers
         }
 
         [HttpPost]
-        [Route("calendar/{date}")]
-        public async Task<HttpResponseMessage> CreateCalendar([FromBody]long accountId, DateTime date)
+        [Route("calendar/{accountId}")]
+        public async Task<HttpResponseMessage> CreateCalendar([FromBody]CalendarDTO calendar, long accountId)
         {
             try
             {
-                var result = await _calendarService.CreateCalendar(accountId, date);
+                var result = await _calendarService.CreateCalendar(accountId, calendar);
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }
             catch

@@ -9,7 +9,6 @@ import 'rxjs/add/operator/switchMap';
 
 import { Vendor } from '../../models/vendor.model';
 import { VendorService } from '../../services/vendor.service';
-import { ModalService } from '../../services/modal/modal.service';
 import { TokenHelperService } from '../../services/helper/tokenhelper.service';
 
 import { ImageCropperComponent, CropperSettings } from 'ng2-img-cropper';
@@ -24,8 +23,8 @@ import { Work } from "../../models/work.model";
   styleUrls: ['./vendor-details.component.sass'],
   providers: [
     PhotoService,
-    Ng2ImgurUploader,
-    ModalService]
+    Ng2ImgurUploader
+  ]
 })
 export class VendorDetailsComponent implements OnInit {
 
@@ -62,14 +61,10 @@ export class VendorDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private authEventService: AuthenticationEventService,
     private vendorService: VendorService,
-    private modalService: ModalService,
     private photoService: PhotoService,
     private sanitizer: DomSanitizer,
     private tokenHelperService: TokenHelperService) {
     this.getCurrentRole();
-    this.cropperSettings = modalService.cropperSettings;
-    this.data = {};
-    this.imageUploaded = false;
 
     this.routePath = this.route.root.snapshot.firstChild.url[0].path;
     this.routeid = +this.route.snapshot.paramMap.get('id');

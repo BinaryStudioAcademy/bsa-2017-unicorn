@@ -38,7 +38,6 @@ export class VendorsComponent implements OnInit {
   name: string;
 
   center: google.maps.LatLng;
-
   autocomplete: google.maps.places.Autocomplete;
   address: any = {};
 
@@ -63,7 +62,6 @@ export class VendorsComponent implements OnInit {
   subcategories: Subcategory[];
 
   selPerformer: Performer;
-
   constructor(
     private performerService: PerformerService,
     private ref: ChangeDetectorRef,
@@ -125,7 +123,7 @@ export class VendorsComponent implements OnInit {
       date = this.checkTheDate(_date);
     }
     else{ 
-      date = this.checkTheDate(new Date(1, 1, 1, 1, 1, 1, 1));
+      date = null;
     }    
     return this.performerService
       .getPerformersByFilters(

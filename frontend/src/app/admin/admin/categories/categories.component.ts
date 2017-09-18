@@ -19,10 +19,6 @@ export interface ICategoryModalContext {
   styleUrls: ['./categories.component.sass']
 })
 export class CategoriesComponent implements OnInit {
-  @ViewChild('modalTemplate')
-  
-  public modalTemplate: ModalTemplate<void, string, string>
-  
   constructor(
     private categoryService: CategoryService,
     public modalService: SuiModalService,

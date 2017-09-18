@@ -8,13 +8,14 @@ import { ToastsManager, Toast } from 'ng2-toastr';
 import { ToastOptions } from 'ng2-toastr';
 
 import { VendorService } from "../../../services/vendor.service";
-import { ModalService } from "../../../services/modal/modal.service";
 import { CategoryService } from "../../../services/category.service";
 import { PhotoService, Ng2ImgurUploader } from "../../../services/photo.service";
 
 import { Work } from "../../../models/work.model";
 import { Category } from "../../../models/category.model";
 import { Subcategory } from "../../../models/subcategory.model";
+import { ImageCropperModal } from '../../../image-cropper-modal/image-cropper-modal.component';
+import { ConfirmModal } from '../../../confirm-modal/confirm-modal.component';
 
 @Component({
   selector: 'app-vendor-edit-works',
@@ -22,30 +23,16 @@ import { Subcategory } from "../../../models/subcategory.model";
   styleUrls: ['./vendor-edit-works.component.sass'],
   providers: [
     PhotoService,
-    Ng2ImgurUploader,
-    ModalService]
+    Ng2ImgurUploader
+  ]
 })
 export class VendorEditWorksComponent implements OnInit {
-  @ViewChild('modalTemplate')
-  public modalTemplate: ModalTemplate<void, {}, void>;
-  private activeModal: SuiActiveModal<void, {}, void>;
-
-  @ViewChild('cropper', undefined)
-  cropper: ImageCropperComponent;
   enabled: boolean = false;
   enableTheme: boolean = false;
   saveImgButton: boolean = false;
   workIconUrl: SafeResourceUrl;
   uploading: boolean = false;
   loader:boolean = false;
-  @ViewChild('modalDeleteTemplate')
-  public modalDeleteTemplate: ModalTemplate<void, {}, void>;
-
-  modalSize: string;
-  cropperSettings: CropperSettings;
-  data: any;
-  file: File;
-  imageUploaded: boolean;
 
   @Input() vendorId;
 
@@ -64,15 +51,10 @@ export class VendorEditWorksComponent implements OnInit {
     private categoryService: CategoryService,
     private photoService: PhotoService,
     private sanitizer: DomSanitizer,
-    private suiModalService: SuiModalService,
-    private modalService: ModalService,
+    private modalService: SuiModalService,
     private toastr: ToastsManager,
     private route: ActivatedRoute
-  ) {
-    this.cropperSettings = modalService.cropperSettings;
-    this.data = {};
-    this.imageUploaded = false;
-  }
+  ) { }
 
   ngOnInit() {
     this.isEditOpen = false;
@@ -91,23 +73,11 @@ export class VendorEditWorksComponent implements OnInit {
     let subcategory = +this.route.snapshot.queryParams['subcategory'];
     let name = this.route.snapshot.queryParams['name'];
     if (category && subcategory && name) {
-
-      // this.work = {
-      //   Id: null,
-      //   Description: null,
-      //   Name: name,
-      //   Subcategory: null,
-      //   Icon: null
-      // };
       this.selectedWork.Name = name;
       this.selectedCategory = this.categories.filter(c => c.Id === category)[0];
       this.onCategorySelect();
       this.selectedSubcategory = this.subcategories.filter(s => s.Id === subcategory)[0];
-      // this.setSubcategory(subcategory);
-      // if (!this.openedDetailedWindow){
-      //   this.openedDetailedWindow = true;
-      // }
-      
+
       this.isEditOpen = true;
     }
     
@@ -175,22 +145,9 @@ export class VendorEditWorksComponent implements OnInit {
   }
 
   removeWork(work: Work): void {
-
-    const config = new TemplateModalConfig<void, {}, void>(this.modalDeleteTemplate);
-    
-    config.size = ModalSize.Small;
-    config.isInverted = true;
-    
-    let that = this;
-
-    this.activeModal = this.suiModalService
-      .open(config)
-      .onApprove(result => { 
-        if(this.activeModal !== undefined){ 
-          this.activeModal.deny(null);  
-        } 
-    
-        if (this.selectedWork.Id === work.Id){
+    this.modalService.open(new ConfirmModal("Delete work", `Delete work ${work.Name}?`, "Delete"))
+      .onApprove(() => {
+        if (this.selectedWork.Id === work.Id) {
           this.isEditOpen = false;
           this.clearSelectedWork();
         }
@@ -207,8 +164,7 @@ export class VendorEditWorksComponent implements OnInit {
             this.pendingWorks.splice(this.pendingWorks.findIndex(w => w === work), 1);
             this.toastr.error('Sorry, something went wrong', 'Error!');
           });
-       })
-      .onDeny(result => {  /* deny callback */   });
+      });
   }
 
   isWorkPending(work: Work): boolean {
@@ -234,42 +190,8 @@ export class VendorEditWorksComponent implements OnInit {
     return this.sanitizer.bypassSecurityTrustStyle(`url('${link}')`);
   }
 
-  fileChangeListener($event) {    
-    var image: any = new Image();     
-    this.file = $event.target.files[0];   
-    var myReader: FileReader = new FileReader();
-    var that = this;
-    myReader.onloadend = function (loadEvent: any) {
-      image.src = loadEvent.target.result;
-      that.cropper.setImage(image);      
-    };
-    this.imageUploaded = true;
-    myReader.readAsDataURL(this.file);  
+  selectIcon(): void {
+    this.modalService.open(new ImageCropperModal())
+      .onApprove(result => this.selectedWork.Icon = result as string);
   }
-
-  fileSaveListener() {
-    if (!this.data) {
-      console.log("file can't be loaded");
-      return;
-    }
-    if(!this.file){
-      return;
-    }
-    this.uploading = true;
-    this.photoService.uploadToImgur(this.file)
-      .then(resp => {        
-        this.uploading = false;
-        this.selectedWork.Icon = this.data.image;
-        this.imageUploaded = false;
-        this.activeModal.deny(null);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }
-
-  public openModal() {
-    this.activeModal = this.modalService.openModal(this.modalTemplate);
-  }
-
 }

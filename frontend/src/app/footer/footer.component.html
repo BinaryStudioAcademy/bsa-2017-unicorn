@@ -8,35 +8,7 @@
       <a href="https://www.facebook.com/BinaryStudioAcademy"><i class="facebook f icon"></i></a>
       <a href="https://vk.com/binary_academy"><i class="vk icon"></i></a>
     </div>
-    <button class="ui button feedback-button" (click)="openModal()">Leave Feedback</button>
-
-    <ng-template let-context let-modal="modal" #modalTemplate>
-      <div class="header" align="center">Leave Feedback Here</div>
-      <div class="content" align="center">
-        <div class="ui form">
-          <form name="reportForm" #reportForm="ngForm">
-            <div class="field">
-                <b>We should know what you thought</b>                
-            </div>
-            <div class="field">
-                <textarea required type="text" name="msg" placeholder="TYPE HERE..." [(ngModel)]="message" #msg="ngModel"></textarea>
-                <div *ngIf="msg.invalid && (msg.dirty)" class="valid-error">* Required</div>
-            </div>
-            <div class="field">
-                <input pattern="\S+@\S+\.\S+" type="text" name="mail" placeholder="EMAIL" [(ngModel)]="email" #mail="ngModel">
-                <div *ngIf="mail.invalid && (mail.dirty)">
-                    <div *ngIf="mail.errors.pattern" class="valid-error">* Invalid mail</div>
-                </div>
-            </div>
-            <div class="field">
-              <button [ngClass]="{'disabled': reportForm.invalid, 'loading': loader}" 
-                      class="ui active button main" 
-                      (click)="sendMessage(reportForm)">SEND</button>   
-            </div>               
-          </form>
-        </div>
-      </div>
-    </ng-template>
+    <button class="ui button feedback-button" (click)="openFeedbackModal()">Leave Feedback</button>
   </div>
 </div>
 

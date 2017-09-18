@@ -64,7 +64,9 @@ export class PerformerService {
     if (sort && sort !== '')
       uriParams.push(`sort=${sort}`);
 
-    if (date)
+    if(!date){
+      date = '';
+    }    
       uriParams.push(`date=${date}`);
     
     return this.dataService.getRequest(`popular/search?${uriParams.join('&')}`);

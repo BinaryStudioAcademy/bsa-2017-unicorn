@@ -10,7 +10,6 @@ import { User } from '../../models/user';
 
 import { TokenHelperService } from '../../services/helper/tokenhelper.service';
 import { UserService } from "../../services/user.service";
-import { ModalService } from "../../services/modal/modal.service";
 import { PhotoService, Ng2ImgurUploader } from '../../services/photo.service';
 import { ImageCropperComponent, CropperSettings } from 'ng2-img-cropper';
 import { Subscription } from "rxjs/Subscription";
@@ -23,6 +22,7 @@ import {
 import { ToastsManager, Toast } from 'ng2-toastr';
 import { MenuEventsService } from "../../services/events/menu-events.service";
 import { ChatEventsService } from "../../services/events/chat-events.service";
+import { ImageCropperModal } from '../../image-cropper-modal/image-cropper-modal.component';
 
 @Component({
   selector: 'app-user-details',
@@ -30,8 +30,8 @@ import { ChatEventsService } from "../../services/events/chat-events.service";
   styleUrls: ['./user-details.component.sass'],
   providers: [
     PhotoService,
-    Ng2ImgurUploader,
-    ModalService]
+    Ng2ImgurUploader
+  ]
 })
 export class UserDetailsComponent implements OnInit {
 
@@ -68,17 +68,13 @@ export class UserDetailsComponent implements OnInit {
     private userService: UserService,
     private photoService: PhotoService,
     private sanitizer: DomSanitizer,
-    private suiModalService: SuiModalService,
-    private modalService: ModalService,    
+    private modalService: SuiModalService,    
     private tokenHelper: TokenHelperService,
     public toastr: ToastsManager,
     private unreadDialogs: UnreadDialogsService,
     private chatEventsService: ChatEventsService,
-    private menuEventsService: MenuEventsService) { 
-      this.cropperSettings = modalService.cropperSettings;
-      this.data = {};
-      this.imageUploaded = false;
-  }
+    private menuEventsService: MenuEventsService) { }
+
   ngOnInit() {
     this.dataLoaded = true;
     this.route.params
@@ -130,56 +126,14 @@ export class UserDetailsComponent implements OnInit {
 
   }
 
-
-  fileChangeListener($event) {
-    var image: any = new Image();
-    this.file = $event.target.files[0];
-    var myReader: FileReader = new FileReader();
-    var that = this;
-    myReader.onloadend = function (loadEvent: any) {
-      image.src = loadEvent.target.result;
-      that.cropper.setImage(image);
-
-    };
-    this.imageUploaded = true;
-    myReader.readAsDataURL(this.file);
-  }
-
-  fileSaveListener() {
-    if (!this.data) {
-      console.log("file not upload");
-      this.toastr.error('You have to pick photo', 'Error!');
-      return;
-    }
-    if (!this.file) {
-      return;
-    }
-    this.dataLoaded = false;
-    let mass = [];
-    mass.push(this.photoService.uploadToImgur(this.file)
-    .then(res => {
-        this.photoService.saveAvatar(res);
-        return res;
-      }));
-    mass.push(this.photoService.uploadToImgur(this.data.image.split('base64,')[1])
-        .then(res => this.photoService.saveCroppedAvatar(res)));
-    Promise.all(mass).then(values => {
-      this.user.CroppedAvatar = this.data.image;
-      this.menuEventsService.croppedAvatar(this.data.image);  
-      this.menuEventsService.changedAvatar(values[0]);
-      this.dataLoaded = true;
-      this.imageUploaded = false;
-      this.toastr.success('Your avatar was updated', 'Success!');
-      this.activeModal.deny(null);
-    }).catch(err => {
-      console.log(err);
-      this.toastr.error('Sorry, something went wrong', 'Error!');
-      this.activeModal.deny(null);
-    });
-  }
-
-  public openModal() {
-    this.imageUploaded = false;
-    this.activeModal = this.modalService.openModal(this.modalTemplate);
+  selectAvatar(): void {
+    this.modalService.open(new ImageCropperModal())
+      .onApprove(result => {
+        this.photoService.saveAvatar(result as string)
+          .then(resp => this.user.Avatar = resp);
+        this.photoService.saveCroppedAvatar(result as string)
+          .then(resp => this.user.CroppedAvatar = resp);
+        this.menuEventsService.croppedAvatar(result as string);
+      });
   }
 }

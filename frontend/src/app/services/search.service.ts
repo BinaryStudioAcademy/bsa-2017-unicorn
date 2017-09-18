@@ -10,11 +10,10 @@ export class SearchService {
   constructor(private dataService: DataService) { }
 
   getWorksByBaseFilters(category: string, subcategory: string, date: string): Promise<SearchWork[]> {
-    let d: string;
     if (category === undefined) { category = ''; }
     if (subcategory === undefined) { subcategory = ''; }
-    d = date;    
-    const queryParams = `search?category=${category}&subcategory=${subcategory}&date=${d}`;
+    if(!date) {date = '';} 
+    const queryParams = `search?category=${category}&subcategory=${subcategory}&date=${date}`;
     return this.dataService.getRequest<SearchWork[]>(queryParams);
   }
 
@@ -27,11 +26,10 @@ export class SearchService {
     let lat: string; let long: string; let dist: string;
     let ctg: string; let subctg: string; let srt: string;
 
-    let cityString: string;
-
+    let cityString: string;    
     if (category === undefined) { category = ''; }
     if (subcategory === undefined) { subcategory = ''; }
-    d = date;
+    if (!date) { date = ''; } 
     if (vendor === undefined) { vendor = ''; }
     if (ratingcompare === undefined) { ratingcompare = ''; }
     if (rating === undefined) { rt = ''; } else { rt = rating.toString(); }
@@ -55,7 +53,7 @@ export class SearchService {
       subcategories.forEach(s => subctg += `&subcategories=${s}`);
     }
 
-    const queryParams = `search?category=${category}&subcategory=${subcategory}&date=${d}
+    const queryParams = `search?category=${category}&subcategory=${subcategory}&date=${date}
     &vendor=${vendor}&ratingcompare=${ratingcompare}&rating=${rt}&reviews=${rv}
     &latitude=${lat}&longitude=${long}&distance=${dist}
     ${ctg}${subctg}&city=${city}&sort=${srt}`;    

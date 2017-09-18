@@ -18,9 +18,9 @@ namespace Unicorn.Core.Services
         public CalendarService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-        }
+        }     
 
-        private Calendar CreateClndr(DateTime date)
+        private Calendar CreateClndr(DateTimeOffset date)
         {
             return new Calendar
             {
@@ -62,10 +62,10 @@ namespace Unicorn.Core.Services
             };
         }
 
-        public async Task<CalendarDTO> CreateCalendar(long accountId, DateTime date)
-        {
+        public async Task<CalendarDTO> CreateCalendar(long accountId, CalendarDTO _calendar)
+        {       
             var account = await _unitOfWork.AccountRepository.GetByIdAsync(accountId);
-            var calendar = CreateClndr(date);
+            var calendar = CreateClndr(_calendar.StartDate);
             _unitOfWork.CalendarRepository.Create(calendar);
             await _unitOfWork.SaveAsync();
 

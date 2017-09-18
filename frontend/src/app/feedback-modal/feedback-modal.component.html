@@ -1,0 +1,32 @@
+<div class="header" align="center">{{modal.context.title}}</div>
+<div class="content" align="center">
+  <div class="ui form">
+    <form name="reportForm" #reportForm="ngForm">
+      <div class="field">
+        <div *ngIf="modal.context.feedbackType === 1 then feedbackContent; else reportContent"></div>
+        <ng-template #reportContent>
+          <b>Do you have any complaints?</b>
+        </ng-template>
+        <ng-template #feedbackContent>
+          <b>We should know what you thought</b>
+        </ng-template>
+          
+      </div>
+      <div class="field">
+          <textarea required type="text" name="msg" placeholder="TYPE HERE..." [(ngModel)]="report.Message" #msg="ngModel"></textarea>
+          <div *ngIf="msg.invalid && (msg.dirty)" class="valid-error">* Required</div>
+      </div>
+      <div class="field">
+          <input pattern="\S+@\S+\.\S+" type="text" name="mail" placeholder="EMAIL" [(ngModel)]="report.Email" #mail="ngModel">
+          <div *ngIf="mail.invalid && (mail.dirty)">
+              <div *ngIf="mail.errors.pattern" class="valid-error">* Invalid mail</div>
+          </div>
+      </div>
+      <div class="field">
+        <button [ngClass]="{'disabled': reportForm.invalid, 'loading': loading}" 
+                class="ui active button main" 
+                (click)="sendMessage(reportForm)">SEND</button>
+      </div>               
+    </form>
+  </div>
+</div>

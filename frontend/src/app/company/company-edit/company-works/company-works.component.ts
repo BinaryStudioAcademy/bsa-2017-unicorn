@@ -6,13 +6,14 @@ import { CompanyWorks } from "../../../models/company-page/company-works.model";
 import { CompanyCategory } from "../../../models/company-page/company-category.model";
 import { CompanyWork } from "../../../models/company-page/company-work.model";
 
-import { ModalService } from "../../../services/modal/modal.service";
 import { PhotoService, Ng2ImgurUploader } from "../../../services/photo.service";
 
 import { ImageCropperComponent, CropperSettings } from "ng2-img-cropper";
 import {ToastsManager, Toast} from 'ng2-toastr';
 import { SafeResourceUrl, DomSanitizer } from "@angular/platform-browser";
 import { SuiModalService, TemplateModalConfig, ModalTemplate, ModalSize, SuiActiveModal } from 'ng2-semantic-ui';
+import { ConfirmModal } from '../../../confirm-modal/confirm-modal.component';
+import { ImageCropperModal } from '../../../image-cropper-modal/image-cropper-modal.component';
 
 @Component({
   selector: 'app-company-works',
@@ -20,33 +21,12 @@ import { SuiModalService, TemplateModalConfig, ModalTemplate, ModalSize, SuiActi
   styleUrls: ['./company-works.component.sass'],
   providers: [
     PhotoService,
-    Ng2ImgurUploader,
-    ModalService]
+    Ng2ImgurUploader
+  ]
 })
 
 export class CompanyWorksComponent implements OnInit {
-  @ViewChild('modalTemplate')
-  public modalTemplate: ModalTemplate<void, {}, void>;
-
-  @ViewChild('modalDeleteTemplate')
-  public modalDeleteTemplate: ModalTemplate<void, {}, void>;
-
-  private activeModal: SuiActiveModal<void, {}, void>;
-
-  @ViewChild('cropper', undefined)
-  cropper: ImageCropperComponent;
-  enabled: boolean = false;
-  enableTheme: boolean = false;
-  saveImgButton: boolean = false;
   workIconUrl: SafeResourceUrl;
-  uploading: boolean;
-
-  modalSize: string;
-  cropperSettings: CropperSettings;
-  data: any;
-  file: File;
-  imageUploaded: boolean;
-
 
   company: CompanyWorks;
   companyId: number;
@@ -63,14 +43,9 @@ export class CompanyWorksComponent implements OnInit {
     private zone: NgZone,
     private photoService: PhotoService,
     private sanitizer: DomSanitizer,
-    private suiModalService: SuiModalService,
-    private modalService: ModalService,
+    private modalService: SuiModalService,
     private toastr: ToastsManager
-  ) {
-      this.cropperSettings = modalService.cropperSettings;
-      this.data = {};
-      this.imageUploaded = false; 
-     }
+  ) { }
 
   ngOnInit() {
     //this.initializeThisCompany(); 
@@ -159,22 +134,23 @@ export class CompanyWorksComponent implements OnInit {
     this.openedDetailedWindow = false;
   }
 
-  deleteWork() {
-    if(this.activeModal !== undefined){ 
-      this.activeModal.deny(null);  
-    } 
-    let companyId = this.company.Id;
-    this.company = undefined;
-    if (this.openedDetailedWindow){
-      this.openedDetailedWindow = false;
-    }
+  deleteWork(work: CompanyWork) {
+    this.modalService.open(new ConfirmModal("Delete work", `Delete work ${this.work.Name}?`, "Delete"))
+      .onApprove(() => {
+        this.work = work;
+        let companyId = this.company.Id;
+        this.company = undefined;
+        if (this.openedDetailedWindow) {
+          this.openedDetailedWindow = false;
+        }
 
-    this.companyService.deleteCompanyWork(companyId, this.work.Id)
-      .then(() => {
-        this.initializeThisCompany();  
-        this.work = null;   
-        this.toastr.success('Work was deleted');     
-      }).catch(err => this.toastr.error('Something goes wrong', 'Error!'));
+        this.companyService.deleteCompanyWork(companyId, this.work.Id)
+          .then(() => {
+            this.initializeThisCompany();
+            this.work = null;
+            this.toastr.success('Work was deleted');
+          }).catch(err => this.toastr.error('Something goes wrong', 'Error!'));
+      });
   }
 
   saveWorkChanges() {
@@ -221,61 +197,8 @@ export class CompanyWorksComponent implements OnInit {
     return this.sanitizer.bypassSecurityTrustStyle(`url('${link}')`);
   }
 
-  fileChangeListener($event) {    
-    var image: any = new Image();     
-    this.file = $event.target.files[0];   
-    var myReader: FileReader = new FileReader();
-    var that = this;
-    myReader.onloadend = function (loadEvent: any) {
-      image.src = loadEvent.target.result;
-      that.cropper.setImage(image);      
-    };
-    this.imageUploaded = true;
-    myReader.readAsDataURL(this.file);  
-  }
-
-  fileSaveListener() {
-    if (!this.data) {
-      console.log("file can't be loaded");
-      return;
-    }
-    if(!this.file){
-      return;
-    }
-    this.uploading = true;
-    this.photoService.uploadToImgur(this.file)
-      .then(resp => {        
-        this.uploading = false;
-        this.work.Icon = this.data.image;
-        this.imageUploaded = false;
-        this.activeModal.deny(null);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }
-
-  openDeleteModal(work: CompanyWork){
-    this.work = work;
-    this.activeModal = this.openDelModal(this.modalDeleteTemplate);
-  }
-
-  public openModal() {
-    this.activeModal = this.modalService.openModal(this.modalTemplate);
-  }
-
-  public openDelModal(modalTemplate: ModalTemplate<void, {}, void>): SuiActiveModal<void, {}, void> {
-    const config = new TemplateModalConfig<void, {}, void>(modalTemplate);
-    //config.closeResult = "closed!";
-
-    config.size = ModalSize.Mini;
-    config.isInverted = true;
-    //config.mustScroll = true;
-    let that = this;
-
-    return this.suiModalService
-      .open(config)
-      .onApprove(result => { /* approve callback */ })
-      .onDeny(result => {  /* deny callback */   });
+  selectIcon(): void {
+    this.modalService.open(new ImageCropperModal())
+      .onApprove(result => this.work.Icon = result as string);
   }
 }

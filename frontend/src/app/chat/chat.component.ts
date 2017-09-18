@@ -73,16 +73,17 @@ export class ChatComponent implements OnInit {
       this.dialogs.push(this.checkLastMessage(dialog, dialog.Messages[dialog.Messages.length - 1].OwnerId));
     })
     this.messageCreate = this.chatEventsService.createMessageFromMiniChatToChatEvent$.subscribe(mes => {
-      var dial = this.dialogs.find(x => x.Id === mes.DialogId);
-      
-    if(this.isHided(dial))
-      {  
-         dial.Participant1_Hided = false;
-         dial.Participant2_Hided = false;
-      }
-
+  
       if (this.dialogs.find(x => x.Id === mes.DialogId)) {
         if (this.dialog.Id === mes.DialogId) {
+          var dial = this.dialogs.find(x => x.Id === mes.DialogId);
+          
+        if(this.isHided(dial))
+          {  
+             dial.Participant1_Hided = false;
+             dial.Participant2_Hided = false;
+             this.getDialog();
+          } else
           this.messages.push(mes);
           this.startScroll();
         }
@@ -182,20 +183,32 @@ export class ChatComponent implements OnInit {
     }
     else {
       let dialog = this.dialogs.find(x => x.Id === mes.DialogId);
-      if(this.isHided(dialog))
-     {  
-        dialog.Participant1_Hided = false;
-        dialog.Participant2_Hided = false;
-     }
+    
       if (dialog && this.selectedId === dialog.Id) {
+        if(this.isHided(dialog))
+        { 
+           dialog.Participant1_Hided = false;
+           dialog.Participant2_Hided = false;
+           this.getDialog();
+        } else
         this.messages.push(mes);
         this.checkLastMessage(this.dialogs.find(x => x.Id === dialog.Id), mes.OwnerId);
         this.startScroll();
       }
       else if (dialog && this.selectedId !== dialog.Id && this.ownerId !== mes.OwnerId) {
+        if(this.isHided(dialog))
+        {  
+           dialog.Participant1_Hided = false;
+           dialog.Participant2_Hided = false;
+        }
         this.checkLastMessage(this.dialogs.find(x => x.Id === dialog.Id), mes.OwnerId);
       }
       else if (!dialog) {
+        if(this.isHided(dialog))
+        {  
+           dialog.Participant1_Hided = false;
+           dialog.Participant2_Hided = false;
+        }
         this.chatService.getDialogByOwner(mes.DialogId, this.ownerId).then(res => {
           this.dialogs.push(res);
         });
@@ -377,10 +390,18 @@ export class ChatComponent implements OnInit {
     this.accountService.searchByTemplate(this.searchString, 20)
       .then(resp => this.searchResults = resp.filter(x =>
         this.dialogs.find(d =>
-          d.ParticipantOneId === x.AccountId || d.ParticipantTwoId === x.AccountId) === undefined));
+          d.ParticipantOneId === x.AccountId || d.ParticipantTwoId === x.AccountId) === undefined ||
+        this.isHided(
+          this.dialogs.find(d =>
+            d.ParticipantOneId === x.AccountId || d.ParticipantTwoId === x.AccountId)
+        )));
   }
 
   createChat(partitipant: ProfileShortInfo) {
+   var dial = this.dialogs.find(d =>
+    d.ParticipantOneId === partitipant.AccountId || d.ParticipantTwoId === partitipant.AccountId);
+   if(dial  === undefined)
+{
     while (this.dialogs.find(x => !x.Id || x.Id === null) !== undefined) {
       this.dialogs.splice(this.dialogs.findIndex(x => !x.Id || x.Id === null), 1);
     }
@@ -406,7 +427,19 @@ export class ChatComponent implements OnInit {
     this.noMessages = false;
     this.searchString = '';
     this.searchResults = [];
-  }
+  } else
+ { 
+   this.dialog = dial;
+   this.selectedId = dial.Id;
+   if(this.dialog.ParticipantOneId==this.ownerId)
+    this.dialog.Participant1_Hided = false; else
+    this.dialog.Participant2_Hided = false;
+   this.getDialog();
+   this.chatService.deleteDialog(dial.Id,this.ownerId);
+   this.searchString = '';
+   this.searchResults = [];
+ }
+}
 
   isImage(filename: string){
     const imgExtensions = ["jpg", "jpeg", "bmp", "png", "ico"];

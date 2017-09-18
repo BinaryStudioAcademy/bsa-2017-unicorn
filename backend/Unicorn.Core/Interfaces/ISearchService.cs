@@ -9,9 +9,9 @@ namespace Unicorn.Core.Interfaces
     {
         Task<List<SearchWorkDTO>> GetAllWorks();
 
-        Task<List<SearchWorkDTO>> GetWorksByBaseFilters(string category, string subcategory, DateTimeOffset date);
+        Task<List<SearchWorkDTO>> GetWorksByBaseFilters(string category, string subcategory, string date);
 
-        Task<List<SearchWorkDTO>> GetWorksByFilters(  string category, string subcategory, DateTimeOffset date,
+        Task<List<SearchWorkDTO>> GetWorksByFilters(  string category, string subcategory, string date,
                                                       string vendor, string ratingcompare, double? rating, bool? reviews,
                                                       double? latitude, double? longitude, double? distance,
                                                       string[] categories, string[] subcategories, string city,

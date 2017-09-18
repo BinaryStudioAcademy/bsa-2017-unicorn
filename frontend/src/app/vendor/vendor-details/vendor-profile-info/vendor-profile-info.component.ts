@@ -14,7 +14,6 @@ import { Review } from "../../../models/review.model";
 
 import { SuiModalService, TemplateModalConfig
   , ModalTemplate, ModalSize, SuiActiveModal } from 'ng2-semantic-ui';
-import { ModalService } from '../../../services/modal/modal.service';
 import { ReportService } from '../../../services/report.service';
 import { AccountService } from '../../../services/account.service';
 import { TokenHelperService } from '../../../services/helper/tokenhelper.service';
@@ -23,12 +22,13 @@ import { ToastsManager, Toast } from 'ng2-toastr';
 import { Report } from '../../../models/report/report.model';
 import { ReportType } from '../../../models/report/reportType.model';
 import { ProfileShortInfo } from '../../../models/profile-short-info.model';
+import { FeedbackModal } from '../../../feedback-modal/feedback-modal.component';
 
 @Component({
   selector: 'app-vendor-profile-info',
   templateUrl: './vendor-profile-info.component.html',
   styleUrls: ['./vendor-profile-info.component.sass'],
-  providers: [ModalService, ReportService]
+  providers: [ReportService]
 })
 export class VendorProfileInfoComponent implements OnInit {
   @Input() vendor: Vendor;
@@ -43,22 +43,9 @@ export class VendorProfileInfoComponent implements OnInit {
   selectedCategory: Category;
   openedCategoryDetails: boolean = false;
 
-  @ViewChild('modalTemplate')
-  public modalTemplate: ModalTemplate<void, {}, void>;
-  private activeModal: SuiActiveModal<void, {}, void>;
-
-  isLogged: boolean;
-  message: string;
-  email: string;
-  profileInfo: ProfileShortInfo;
-  loader: boolean;
-
   constructor(
     private vendorService: VendorService,
-    private modalService: ModalService,
-    private reportService: ReportService,
-    private accountService: AccountService,
-    private tokenHelper: TokenHelperService,
+    private modalService: SuiModalService,
     private toastr: ToastsManager
   ) { }
 
@@ -100,49 +87,8 @@ export class VendorProfileInfoComponent implements OnInit {
     return work.Icon;
   }
 
-  openModal() {
-    this.getAccount();
-    this.message = undefined;
-    this.activeModal = this.modalService.openModal(this.modalTemplate, ModalSize.Mini);
+  openReportModal(): void {
+    this.modalService.open(new FeedbackModal("Report this vendor", ReportType.complaint, this.vendor.Id, `${this.vendor.Name} ${this.vendor.Surname}`, "vendor"));
   }
 
-  sendMessage(formData) {
-    if (formData.valid) {
-      this.loader = true;
-      const report: Report = {
-        Id: 1,
-        Date: new Date(),
-        Type: ReportType.complaint,
-        Message: this.message,
-        Email: this.email,
-        ProfileId: this.vendor.Id,
-        ProfileName: `${this.vendor.Name} ${this.vendor.Surname}`,
-        ProfileType: 'vendor'
-      };
-
-      this.reportService.createReport(report).then(resp => {
-        this.loader = false;
-        this.toastr.success('Thank you for your report!');
-        this.activeModal.approve('approved');
-      }).catch(err => {
-        this.loader = false;
-        this.toastr.error('Ooops! Try again');
-      });
-    }
-  }
-
-  getAccount() {
-    this.isLogged = this.tokenHelper.isTokenValid() && this.tokenHelper.isTokenNotExpired();
-    if (this.isLogged) {
-      this.accountService.getShortInfo(+this.tokenHelper.getClaimByName('accountid'))
-      .then(resp => {
-        if (resp !== undefined) {
-          this.profileInfo = resp.body as ProfileShortInfo;
-          this.email = this.profileInfo.Email;
-        }
-      });
-    } else {
-      this.email = undefined;
-    }
-  }
 }

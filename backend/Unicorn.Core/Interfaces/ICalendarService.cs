@@ -6,7 +6,7 @@ namespace Unicorn.Core.Interfaces
 {
     public interface ICalendarService
     {
-        Task<CalendarDTO> CreateCalendar(long accountId, DateTime date);
+        Task<CalendarDTO> CreateCalendar(long accountId, CalendarDTO date);
         Task SaveCalendar(CalendarDTO calendar);
         Task<CalendarDTO> GetCalendarByAccountId(long accountId);
     }
