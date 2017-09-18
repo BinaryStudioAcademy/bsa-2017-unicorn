@@ -136,4 +136,8 @@ export class DashboardPendingsComponent implements OnInit {
   config.size = ModalSize.Tiny;
   this.currModal = this.modalService.open(config);
  }
+
+ ngOnDestroy() {
+  this.changeStatusToFinished.unsubscribe();  
+}
 }

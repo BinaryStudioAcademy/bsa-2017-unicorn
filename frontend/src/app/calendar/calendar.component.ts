@@ -241,4 +241,8 @@ export class CalendarComponent implements OnInit {
       return new Date(date.setHours(date.getHours() - date.getTimezoneOffset() / 60));    
   }
 
+  ngOnDestroy() {
+    this.settingsClicked.unsubscribe();
+  }
+
 }

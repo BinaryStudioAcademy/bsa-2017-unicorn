@@ -1,5 +1,5 @@
 <div class="ui grid left-padded" id="main">
-    <div class="sixteen wide column">
+    <div class="sixteen wide column head-column">
         <div class="row" id="search-bar">
             <div class="ui grid">
                 <div class="equal width stackable row">
@@ -37,55 +37,55 @@
                             <div class="ui grid container segment full-width">
                                 <div class="row">
                                     <div class="add-filter-container">
-                                    <div class="add-filter-container-column">
-                                        <div class="ui form">
-                                            <div class="field">
-                                                <div class="ui left icon input">
-                                                    <i class="calendar icon"></i>
-                                                    <input class="datepicker" placeholder="RIGHT NOW" suiDatepicker [(ngModel)]="date" [pickerMode]="mode" [pickerFirstDayOfWeek]="firstDayOfWeek" [pickerUseNativeOnMobile]="false">
-                                                </div>
-                                            </div>
-                                            <div class="inline fields">
-                                                <div class="field">
-                                                    <label style="font-weight:400;">Rating</label>
-                                                    <sui-select [(ngModel)]="ratingCondition" placeholder="rating">
-                                                        <sui-select-option value="greater"></sui-select-option>
-                                                        <sui-select-option value="lower"></sui-select-option>
-                                                    </sui-select>
-                                                </div>
-                                                <div class="field">
-                                                    <sui-rating class="star" [(ngModel)]="rating"></sui-rating>
-                                                </div>
-                                            </div>
-                                            <div class="field">
-                                                <sui-checkbox [(ngModel)]="withReviews">
-                                                    Only with reviews
-                                                </sui-checkbox>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    <div class="add-filter-container-column">
-                                        <div class="row">
+                                        <div class="add-filter-container-column">
                                             <div class="ui form">
                                                 <div class="field">
-                                                    <div class="ui input">
-                                                        <input places-auto-complete (initialized$)="initialized($event)" (place_changed)="placeChanged($event)" [types]="['geocode']" type="text" name="location" placeholder="LOCATION" [(ngModel)]="city">
+                                                    <div class="ui left icon input">
+                                                        <i class="calendar icon"></i>
+                                                        <input class="datepicker" placeholder="RIGHT NOW" suiDatepicker [(ngModel)]="date" [pickerMode]="mode" [pickerFirstDayOfWeek]="firstDayOfWeek" [pickerUseNativeOnMobile]="false">
+                                                    </div>
+                                                </div>
+                                                <div class="inline fields">
+                                                    <div class="field">
+                                                        <label style="font-weight:400;">Rating</label>
+                                                        <sui-select [(ngModel)]="ratingCondition" placeholder="rating">
+                                                            <sui-select-option value="greater"></sui-select-option>
+                                                            <sui-select-option value="lower"></sui-select-option>
+                                                        </sui-select>
+                                                    </div>
+                                                    <div class="field">
+                                                        <sui-rating class="star" [(ngModel)]="rating"></sui-rating>
                                                     </div>
                                                 </div>
                                                 <div class="field">
-                                                    <label style="font-weight:400;">Distance: {{distance}} km</label>
+                                                    <sui-checkbox [(ngModel)]="withReviews">
+                                                        Only with reviews
+                                                    </sui-checkbox>
                                                 </div>
-                                                <div class="field">
-                                                    <div class="slider-box">
-                                                        <label>0</label>
-                                                        <mdl-slider class="slider" min="0" max="100" [(ngModel)]="distance"></mdl-slider>
-                                                        <label>100+</label>
+
+                                            </div>
+                                        </div>
+                                        <div class="add-filter-container-column">
+                                            <div class="row">
+                                                <div class="ui form">
+                                                    <div class="field">
+                                                        <div class="ui input">
+                                                            <input places-auto-complete (initialized$)="initialized($event)" (place_changed)="placeChanged($event)" [types]="['geocode']" type="text" name="location" placeholder="LOCATION" [(ngModel)]="city">
+                                                        </div>
+                                                    </div>
+                                                    <div class="field">
+                                                        <label style="font-weight:400;">Distance: {{distance}} km</label>
+                                                    </div>
+                                                    <div class="field">
+                                                        <div class="slider-box">
+                                                            <label>0</label>
+                                                            <mdl-slider class="slider" min="0" max="100" [(ngModel)]="distance"></mdl-slider>
+                                                            <label>100+</label>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
                                     </div>
                                 </div>
                                 <div class="container row categories-container">
