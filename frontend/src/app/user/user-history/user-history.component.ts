@@ -12,6 +12,7 @@ import { TaskMessagingService } from '../../services/task-messaging.service';
 
 import { CustomerBook, BookStatus } from '../../models/book/book.model';
 import { ShortReview } from '../../models/short-review';
+
 import { MapModel } from "../../models/map.model";
 
 import { Subscription } from 'rxjs/Subscription';
