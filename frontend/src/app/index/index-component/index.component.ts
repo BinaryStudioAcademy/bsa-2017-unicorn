@@ -105,7 +105,8 @@ export class IndexComponent implements OnInit {
               const html = start + '<b>' + input + '</b>' + end;
               const tagObj = {
                 Name: tags[j],
-                Value: html,
+                Html: html,
+                Value: arr[i].Name,
                 Group: arr[i].Name,
                 Icon: arr[i].Icon
               };
@@ -120,6 +121,7 @@ export class IndexComponent implements OnInit {
         for (let i = 0; i < arr.length; i++) {
           const tagObj = {
             Name: arr[i].Name,
+            Html: arr[i].Name,
             Value: arr[i].Name,
             Group: '',
             Icon: arr[i].Icon
@@ -142,11 +144,18 @@ export class IndexComponent implements OnInit {
   filterSubcategory() {
     let subcategories = [];
     if (this.searchCategory) {
-      subcategories = this.categories.find(c => c.Name === this.searchCategory).Subcategories;
+      const category = this.categories.find(c => c.Name === this.searchCategory);
+      if (category) {
+        subcategories = category.Subcategories;
+      } else {
+        return;
+      }
     } else {
       subcategories = getAllSubcategories(this.categories);
     }
-    this.filterSubctgs = this.filter(subcategories, this.searchSubcategory);
+    if (subcategories) {
+      this.filterSubctgs = this.filter(subcategories, this.searchSubcategory);
+    }
 
     function getAllSubcategories(categories) {
       let result = [];
@@ -160,13 +169,13 @@ export class IndexComponent implements OnInit {
   }
 
   selectCategory(item) {
-    this.searchCategory = this.capitalizeFirstLetter(item.Name);
+    this.searchCategory = this.capitalizeFirstLetter(item.Value);
     this.filterCtgs = [];
     this.searchSubcategory = undefined;
   }
 
   selectSubcategory(item) {
-    this.searchSubcategory = this.capitalizeFirstLetter(item.Name);
+    this.searchSubcategory = this.capitalizeFirstLetter(item.Value);
     this.filterSubctgs = [];
   }
 
