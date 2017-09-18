@@ -472,6 +472,7 @@ export class SearchComponent implements OnInit {
     if ((this.works.length - (this.selectedPage - 1) * Number(this.pageSize)) <= 0) {
       this.selectedPage = 1;
     }
+    this.pageChanged(this.selectedPage);
   }
 
   initialized(autocomplete: any) {
