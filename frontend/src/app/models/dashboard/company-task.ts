@@ -24,7 +24,6 @@ export interface ShortTask {
     Id: number;
     BookId: number;
     Description: string;
-    Status: TaskStatus;
     WorkId: number;
     DeclinedReason: string;
     VendorId: number;

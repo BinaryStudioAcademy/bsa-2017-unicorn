@@ -5,6 +5,7 @@ import { TokenHelperService } from '../helper/tokenhelper.service';
 
 import { ShortTask } from '../../models/dashboard/company-task';
 import { BookCard } from '../../models/dashboard/book-card';
+import { CompanyTask } from '../../models/book/book.model';
 import { Vendor } from '../../models/company-page/vendor';
 
 @Injectable()
@@ -51,5 +52,9 @@ export class DashboardService {
 
   createTasks(tasks: ShortTask[]): Promise<any> {
     return this.dataService.postRequest(`book/company/${this.getId()}/tasks`, tasks);
+  }
+
+  getCompanyTasks(): Promise<CompanyTask[]> {
+    return this.dataService.getRequest(`book/company/${this.getId()}/tasks`);
   }
 }

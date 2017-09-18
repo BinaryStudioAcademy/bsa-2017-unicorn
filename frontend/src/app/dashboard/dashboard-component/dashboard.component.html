@@ -20,7 +20,8 @@
                                     <app-dashboard-company-pendings *ngIf="isCompany"></app-dashboard-company-pendings>
                                 </div>
                                 <div class="ui " suiTabContent="2">
-                                    <app-dashboard-progress></app-dashboard-progress>
+                                    <app-dashboard-progress *ngIf="isVendor"></app-dashboard-progress>
+                                    <app-dashboard-company-progress *ngIf="isCompany"></app-dashboard-company-progress>
                                 </div>
                                 <div class="ui " suiTabContent="3">
                                     <app-dashboard-finished></app-dashboard-finished>

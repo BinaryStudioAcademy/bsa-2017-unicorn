@@ -1,55 +1,43 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { DatePipe } from '@angular/common'; 
+import { Component, OnInit, OnDestroy, ViewChild  } from '@angular/core';
+import { DatePipe } from '@angular/common';
 
 import { BookCard, BookStatus } from '../../../models/dashboard/book-card';
-import { CompanyTask, ShortTask, TaskStatus } from '../../../models/dashboard/company-task';
+import { CompanyTask } from '../../../models/book/book.model';
+import { ShortTask } from '../../../models/dashboard/company-task';
 import { Vendor } from '../../../models/company-page/vendor';
 import { Work } from '../../../models/work.model';
 
-import { DashMessagingService } from '../../../services/dashboard/dash-messaging.service';
 import { DashboardService } from '../../../services/dashboard/dashboard.service';
+import { DashMessagingService } from '../../../services/dashboard/dash-messaging.service';
 import { NotificationService } from "../../../services/notifications/notification.service";
-
-import {SuiModalService, TemplateModalConfig, ModalTemplate, ModalSize, SuiActiveModal} from 'ng2-semantic-ui';
 
 import {ToastsManager, Toast} from 'ng2-toastr';
 import {ToastOptions} from 'ng2-toastr';
+import {SuiModalService, TemplateModalConfig, ModalTemplate, ModalSize, SuiActiveModal} from 'ng2-semantic-ui';
+
+import { Subscription } from 'rxjs/Subscription';
 import { MapModel } from "../../../models/map.model";
 import { DashboardEventsService } from "../../../services/events/dashboard-events.service";
-import { Subscription } from "rxjs/Subscription";
-
 export interface IDeclineConfirm {
   id: number;
 }
 
 @Component({
-  selector: 'app-dashboard-company-pendings',
-  templateUrl: './dashboard-company-pendings.component.html',
-  styleUrls: ['./dashboard-company-pendings.component.sass']
+  selector: 'app-dashboard-company-progress',
+  templateUrl: './dashboard-company-progress.component.html',
+  styleUrls: ['./dashboard-company-progress.component.sass']
 })
-export class DashboardCompanyPendingsComponent implements OnInit {
+export class DashboardCompanyProgressComponent implements OnInit, OnDestroy {
 
   @ViewChild('mapModal')
   public modalTemplate:ModalTemplate<IDeclineConfirm, void, void>
-
-  @ViewChild('declineModal')
-  public declineTemplate:ModalTemplate<IDeclineConfirm, void, void>
-
-  @ViewChild('assignModal')
-  public assignTemplate:ModalTemplate<IDeclineConfirm, void, void>
-  assignModal: SuiActiveModal<IDeclineConfirm, void, void>;
-
   currModal: SuiActiveModal<IDeclineConfirm, {}, void>;
-
   books: BookCard[];
-  changeStatusToFinished: Subscription;
+  loads: {[bookId: number]: boolean} = {};
+  sub: Subscription;
+  map: MapModel;
 
-  aloads: {[bookId: number]: boolean} = {};
-  dloads: {[bookId: number]: boolean} = {};
-
-  reason: string;
-  loader: boolean;
-  map: MapModel; 
+  tasks: CompanyTask[];
 
   constructor(
     private dashboardService: DashboardService,
@@ -63,72 +51,50 @@ export class DashboardCompanyPendingsComponent implements OnInit {
 
   ngOnInit() {
     this.loadData();
-    this.notificationService.listen<any>("RefreshOrders", () => this.loadData());
-    this.changeStatusToFinished = this.dashboardEventsService.changeStatusToFinishedEvent$.subscribe(() => {
-      this.books = undefined;
+    this.sub = this.dashMessaging.pendingEvent$.subscribe(() => {
       this.loadData();
-    })
+    });
+    this.notificationService.listen<any>("RefreshOrders", () => this.loadData());
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 
   loadData() {
-    this.dashboardService.getPendingBooks().then(resp => {
-      this.books = resp;           
-    });
     this.dashboardService.getCompanyVendorsWithWorks().then(resp => {
       resp.forEach(x => {
         this.vendors.push(x);
         this.availableVendors.push(x);
       });
-      console.log(this.vendors);
+    });
+    this.dashboardService.getCompanyTasks().then(resp => {
+      this.tasks = resp;
+      console.log('ra', this.tasks);
+      return this.dashboardService.getAcceptedBooks();
+    }).then(resp => {
+      this.books = resp;
+      console.log(this.books);
     });
   }
 
-  accept(id: number) {
-    // this.taskFormOpen[id] = true;
-    // this.someFormOpened = true;
-    //this.openAssignModal(id);
-    let book: BookCard = this.books.filter(b => b.Id == id)[0];
-    book.Status = BookStatus.Accepted;
-    this.aloads[book.Id] = true;
-    this.dashboardService.update(book)
-    .then(resp => {
-      this.dashboardService.getPendingBooks().then(resp => {
-        this.books = resp;
-        this.dashMessaging.changePending();      
-        this.aloads[book.Id] = false;
-        this.toastr.success('Accepted task');
-      });
-    })
-    .catch(err => {
-      this.aloads[book.Id] = false;      
-      this.toastr.error('Ops. Cannot accept task');
-    });
-  }
-
-  decline(id: number) {
-    this.reason = '';
-    const config = new TemplateModalConfig<IDeclineConfirm, void, void>(this.declineTemplate);
-    config.context = {id: id};
-    config.isInverted = true;
-    config.size = ModalSize.Tiny;
-    this.currModal = this.modalService.open(config);
-  }
-
-  declineConfirm(id: number) {
-    let book: BookCard = this.books.filter(b => b.Id == id)[0];
-    book.Status = BookStatus.Declined;
-    book.DeclinedReason = this.reason;
-    this.loader = true;
-    this.dashboardService.update(book).then(resp => {
-      this.books.splice(this.books.findIndex(b => b.Id === id), 1);
-      this.loader = false;
-      this.currModal.deny(undefined);
-      this.toastr.success('Declined task');
-    }).catch(err => {
-      this.loader = false;
-      this.currModal.deny(undefined);
-      this.toastr.error('Ops. Cannot decline task');
-    });
+  createTasks(id: number) {
+    this.taskFormOpen[id] = true;
+    this.someFormOpened = true;
+    // let book: BookCard = this.books.filter(b => b.Id == id)[0];
+    // book.Status = BookStatus.Finished;
+    // this.loads[book.Id] = true;
+    // this.dashboardService.update(book).then(resp => {
+    //   this.dashboardEventsService.changeStatusToFinished();
+    //   this.books.splice(this.books.findIndex(b => b.Id === id), 1);
+    //   this.loads[book.Id] = false;
+    //   this.dashMessaging.changeProgress();
+    //   this.toastr.success('Finished task');
+    // })
+    // .catch(err => {
+    //   this.loads[book.Id] = false;      
+    //   this.toastr.error('Cannot finish task');
+    // });
   }
 
   getEndDate(book: BookCard): string {
@@ -141,7 +107,7 @@ export class DashboardCompanyPendingsComponent implements OnInit {
   }
 
   openMap(id:number)
-  {
+  { 
     this.map = {
       center: {lat: this.books.filter(b => b.Id == id)[0].Location.Latitude, lng: this.books[0].Location.Longitude},
       zoom: 18,    
@@ -149,17 +115,27 @@ export class DashboardCompanyPendingsComponent implements OnInit {
       label: this.books.filter(b => b.Id == id)[0].Customer,
       markerPos: {lat: this.books.filter(b => b.Id == id)[0].Location.Latitude, lng: this.books.filter(b => b.Id == id)[0].Location.Longitude}    
     };  
-    const config = new TemplateModalConfig<IDeclineConfirm, void, void>(this.modalTemplate);
-    config.isInverted = true;
-    config.size = ModalSize.Tiny;
-    this.currModal = this.modalService.open(config);
+   const config = new TemplateModalConfig<IDeclineConfirm, void, void>(this.modalTemplate);
+   config.isInverted = true;
+   config.size = ModalSize.Tiny;
+   this.currModal = this.modalService.open(config);
   }
+
+  calcAllTasks(id: number): number {
+    return this.tasks.filter(t => t.ParentBookId === id).length;
+  }
+
+  calcFinishedTasks(id: number): number {
+    return this.tasks.filter(t => t.ParentBookId === id && t.Status === BookStatus.Finished).length;
+  }
+
+  
 
   //vendor assign
   assignLoader: boolean;
   editMode: boolean;
 
-  tasks: ShortTask[] = [];
+  shortTasks: ShortTask[] = [];
 
   vendors: Vendor[] = [];
   availableVendors: Vendor[] = [];
@@ -210,7 +186,7 @@ export class DashboardCompanyPendingsComponent implements OnInit {
     if (this.editMode) {
     } else {
       this.availableVendors.splice(this.availableVendors.findIndex(v => v.Id === this.selectedVendor.Id), 1);
-      this.tasks.push(this.currentTask);
+      this.shortTasks.push(this.currentTask);
     }
     this.taskFormOpened = false;
     this.editMode = false;
@@ -219,7 +195,7 @@ export class DashboardCompanyPendingsComponent implements OnInit {
   asignVendors(id: number) {
     console.log(this.tasks);
     this.assignLoader = true;
-    this.dashboardService.createTasks(this.tasks).then(resp => {
+    this.dashboardService.createTasks(this.shortTasks).then(resp => {
       this.toastr.success("Tasks created");
       this.assignLoader = false;
       this.assignedBooks[id] = true;
@@ -237,14 +213,6 @@ export class DashboardCompanyPendingsComponent implements OnInit {
     let ven = this.vendors.filter(v => v.Id === task.VendorId)
     let ve = ven[0];
     return ve.Avatar;
-  }
-
-  openAssignModal(id: number) {
-    const config = new TemplateModalConfig<IDeclineConfirm, void, void>(this.assignTemplate);
-    config.context = {id: id};
-    config.isInverted = true;
-    config.size = ModalSize.Normal;
-    this.currModal = this.modalService.open(config);
   }
 
   editTask(task: ShortTask) {

@@ -585,14 +585,29 @@ namespace Unicorn.Core.Services
             {
                 return;
             }
-            var taskBooks = _unitOfWork.BookRepository.Query.Where(b => b.ParentBookId == book.Id).ToList();
-            if (!taskBooks.Any(b => b.Status != book.Status))
+            var taskBooks = _unitOfWork.BookRepository.Query.Where(b => b.ParentBookId == book.ParentBookId).ToList();
+            if (taskBooks.Count(b => b.Status != book.Status) == 0)
             {
                 var parentBook = await _unitOfWork.BookRepository.GetByIdAsync(book.ParentBookId);
                 parentBook.Status = book.Status;
                 _unitOfWork.BookRepository.Update(parentBook);
                 await _unitOfWork.SaveAsync();
             }
+        }
+
+        public async Task<List<BookDTO>> GetCompanyTasks(long companyId)
+        {
+            var tasks = await _unitOfWork.BookRepository
+                .Query
+                .Where(b => b.IsCompanyTask && b.Company.Id == companyId)
+                .ToListAsync();
+            return tasks.Select(b => new BookDTO
+            {
+                Id = b.Id,
+                ParentBookId = b.ParentBookId,
+                Status = b.Status,
+                IsCompanyTask = b.IsCompanyTask
+            }).ToList();
         }
     }
 }
