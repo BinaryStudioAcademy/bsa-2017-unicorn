@@ -2,7 +2,7 @@
     <div id="empty-header" *ngIf="books ===null || books.length == 0">
         <span>There are no finished orders</span>
     </div>
-    <div class="ui segment book-card grid" *ngFor="let book of books">
+    <div class="ui segment book-card stackable ui grid" *ngFor="let book of books">
         <div class="book-img two wide column">
             <img class="ui tiny circular image" src="{{book.Work.Icon}}">
         </div>

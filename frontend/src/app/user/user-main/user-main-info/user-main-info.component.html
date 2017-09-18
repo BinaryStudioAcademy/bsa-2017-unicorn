@@ -3,9 +3,9 @@
         <div class="ui form" style="padding-right: 80px; padding-left: 50px;">
             <div class="field">
                 <h5 class="gray_font">On Unicorn since {{user.DateCreated | date:'mediumDate'}}</h5>
-                <sui-rating [(ngModel)]="rating" [isReadonly]="true"></sui-rating>
-                <a class="review-link">&#160;Reviews({{reviewsCount}})</a>
-                <div style="margin: 10px 0 0 5px" >
+                <!-- <sui-rating [(ngModel)]="rating" [isReadonly]="true"></sui-rating>
+                <a class="review-link">&#160;Reviews({{reviewsCount}})</a> -->
+                <div style="margin: 10px 0 0 5px">
                     <a class="report-link" (click)="openReportModal()">Report this customer?</a>
                 </div>
                 <h4 style="margin-top:15px;">Name</h4>
