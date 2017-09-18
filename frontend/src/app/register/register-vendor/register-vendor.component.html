@@ -18,8 +18,9 @@
             <div class="field">
                 <div class="ui left icon input">
                     <i class="calendar icon"></i>
-                    <input suiDatepicker placeholder="BIRTHDAY" name="date" [(ngModel)]="birthday" [pickerMode]="mode">
+                    <input suiDatepicker required placeholder="BIRTHDAY" type="date" #date="ngModel" name="date" [(ngModel)]="birthday" [pickerMode]="mode">
                 </div>
+                <div *ngIf="date.invalid && (date.touched)" class="valid-error">* Required</div>
             </div>
 
             <div class="field">
