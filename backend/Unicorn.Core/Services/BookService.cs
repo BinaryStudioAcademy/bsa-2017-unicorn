@@ -514,7 +514,7 @@ namespace Unicorn.Core.Services
             if(role == "vendor")
             {
                 var vendor = await _unitOfWork.VendorRepository.GetByIdAsync(id);
-                if (!vendor.Calendar.SeveralTaskPerDay)
+                if (vendor != null && vendor.Calendar != null && !vendor.Calendar.SeveralTaskPerDay)
                 {
                     _booksEntity = _unitOfWork.BookRepository.Query.Where(x => x.Vendor.Id == id).ToList();
                     CheckBooks(_booksEntity, ref booksDTO);
@@ -523,7 +523,7 @@ namespace Unicorn.Core.Services
             else if(role == "company")
             {
                 var company = await _unitOfWork.CompanyRepository.GetByIdAsync(id);
-                if (!company.Calendar.SeveralTaskPerDay)
+                if (company != null && company.Calendar != null && !company.Calendar.SeveralTaskPerDay)
                 {
                     _booksEntity = _unitOfWork.BookRepository.Query.Where(x => x.Company.Id == id).ToList();
                     CheckBooks(_booksEntity, ref booksDTO);
