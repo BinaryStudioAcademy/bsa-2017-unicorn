@@ -125,7 +125,7 @@ export class VendorsComponent implements OnInit {
       date = this.checkTheDate(_date);
     }
     else{ 
-      date = null;
+      date = "null";
     }    
     return this.performerService
       .getPerformersByFilters(
