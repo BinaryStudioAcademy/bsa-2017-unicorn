@@ -104,6 +104,11 @@ export class VendorsComponent implements OnInit {
     return Number(this.pageSize);
   }
 
+  pageSizeChanged() {
+    this.selectedPage = 1;
+    this.search();
+  }
+
   search() {
     this.searchLoading = true;
     this.filtersIsOpen = false;
@@ -132,9 +137,11 @@ export class VendorsComponent implements OnInit {
       )
       .then(resp => {
         this.performers = resp.Items;
+        // this.performers = this.performers.concat(resp.Items); // for debugging should be deleted
         this.selectedPage = resp.CurrentPage;
         this.pageSize = resp.PageSize.toString();
         this.totalCount = resp.TotalCount;
+
 
         this.searchLoading = false;
         this.mapRedirect();
