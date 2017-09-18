@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, NgZone } from '@angular/core';
+import { Component, OnInit, ViewChild, NgZone, ChangeDetectorRef } from '@angular/core';
 
 import {SuiModalService, TemplateModalConfig, ModalTemplate} from 'ng2-semantic-ui';
 
@@ -19,10 +19,12 @@ export interface ICategoryModalContext {
   styleUrls: ['./categories.component.sass']
 })
 export class CategoriesComponent implements OnInit {
+  
   constructor(
     private categoryService: CategoryService,
     public modalService: SuiModalService,
-    private zone: NgZone
+    private zone: NgZone,
+    private changeDetector: ChangeDetectorRef
   ) { }
 
   categories: Category[];
@@ -36,9 +38,12 @@ export class CategoriesComponent implements OnInit {
   pendingCategories: Category[];
   pendingSubcategories: Subcategory[];
 
+  openedCategoryPanels: boolean[];
+  
   searchTemplate: string;
 
   ngOnInit() {
+    this.openedCategoryPanels = [];
     this.searchTemplate = "";
     this.load();
   }
@@ -61,16 +66,21 @@ export class CategoriesComponent implements OnInit {
   }
 
   search(): void {
-    this.categoryService.search(this.searchTemplate)
-      .then(resp => {
-        this.clearSelectedCategory();
-        this.clearSelectedSubcategory();
-    
-        this.pendingCategories = [];
-        this.pendingSubcategories = [];
+    if (this.searchTemplate === "") {
+      this.load();
+    }
+    else {
+      this.categoryService.search(this.searchTemplate)
+        .then(resp => {
+          this.clearSelectedCategory();
+          this.clearSelectedSubcategory();
 
-        this.categories = resp;
-      });
+          this.pendingCategories = [];
+          this.pendingSubcategories = [];
+
+          this.categories = resp;
+        });
+    }
   }
 
   saveCategory(): void {
@@ -85,7 +95,7 @@ export class CategoriesComponent implements OnInit {
       this.clearSelectedCategory()
 
       this.pendingCategories.push(category);
-      this.categories.push(category);
+      this.categories.unshift(category);
 
       this.categoryService.createCategory(category)
         .then(resp => {          
@@ -144,8 +154,9 @@ export class CategoriesComponent implements OnInit {
   removeCategory(category: Category): void {
     this.modalService.open(new ConfirmModal("Delete category", `Delete category ${category.Name}?`, "Delete"))
       .onApprove(() => {
+        this.openedCategoryPanels = [];
         this.pendingCategories.push(category);
-
+        
         this.categoryService.removeCategory(category.Id)
           .then(() => {
             this.categories.splice(this.categories.findIndex(c => c === category), 1);
@@ -189,11 +200,14 @@ export class CategoriesComponent implements OnInit {
     this.clearSelectedCategory();
     this.clearSelectedSubcategory();
 
+    this.openedCategoryPanels = [];
+
     if (category) {
       this.isNewCategoryEditOpen = false; 
       this.selectedCategory = category;
     }
     else {
+      this.selectedCategory.Id = null;
       this.isNewCategoryEditOpen = !this.isNewCategoryEditOpen;
     } 
   }
@@ -228,7 +242,7 @@ export class CategoriesComponent implements OnInit {
 
   clearSelectedCategory(): void {
     this.selectedCategory = {
-      Id: null,
+      Id: undefined,
       Description: "",
       Icon: "http://www.freeiconspng.com/uploads/pictures-icon-11.gif",
       Name: "",
@@ -268,5 +282,10 @@ export class CategoriesComponent implements OnInit {
   closeNewSubcategoryEdit(): void {
     if (this.isNewSubcategoryEditOpen)
       this.isNewSubcategoryEditOpen = false;
+  }
+
+  onCategoryPanelOpen() {
+    this.clearSelectedCategory();
+    this.clearSelectedSubcategory();
   }
 }

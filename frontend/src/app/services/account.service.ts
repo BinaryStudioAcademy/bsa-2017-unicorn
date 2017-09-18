@@ -55,7 +55,22 @@ export class AccountService {
 		return this.dataService.getRequest<BanListPage>(`${this.apiController}/banned?page=${page}&size=${size}`);
 	}
 
-	searchInBanListByTemplate(template: string, page: number, size: number): Promise<BanListPage> {
-		return this.dataService.getRequest<BanListPage>(`${this.apiController}/banned/search?template=${template}&page=${page}&size=${size}`);
+	searchInBanListByTemplate(template: string, isBanned: boolean, page: number, size: number): Promise<BanListPage> {
+		let uriParams: string[] = [];
+
+		if (template && template !== "")
+			uriParams.push(`template=${template}`);
+
+		if (isBanned !== undefined) 
+			uriParams.push(`isBanned=${isBanned}`);
+
+		
+		if (page && page > 0)
+			uriParams.push(`page=${page}`);
+	  
+		if (size && size > 0)
+			uriParams.push(`size=${size}`);
+
+		return this.dataService.getRequest<BanListPage>(`${this.apiController}/banned/search?${uriParams.join('&')}`);
 	}
 }

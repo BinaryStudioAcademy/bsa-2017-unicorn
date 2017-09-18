@@ -37,12 +37,11 @@
 
 <ng-template let-context let-modal="modal" #modalTemplate>
     <div class="content">
-            <div *ngIf="context.report.Type === 1" class="ui large header">Feedback message</div>
-            <div *ngIf="context.report.Type === 2" class="ui large header">
-            The {{context.report.ProfileType}} with profile 
-            <a routerLink="/{{context.report.ProfileType}}/{{context.report.ProfileId}}">{{context.report.ProfileName}}</a> 
-            received a complaint with message
-            </div>
+        <div *ngIf="context.report.Type === 1" class="ui large header">Feedback message</div>
+        <div *ngIf="context.report.Type === 2" class="ui large header">
+            The {{context.report.ProfileType}} with profile
+            <a routerLink="/{{context.report.ProfileType}}/{{context.report.ProfileId}}">{{context.report.ProfileName}}</a>            received a complaint with message
+        </div>
         <p>{{ context.report.Message }}</p>
     </div>
 </ng-template>
