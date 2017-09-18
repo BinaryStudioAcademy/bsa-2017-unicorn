@@ -100,7 +100,7 @@ export class RegisterCompanyComponent implements OnInit {
         this.companyService.addCompanyContact(+this.tokenHelper.getClaimByName('profileid'),emailContact);
         this.companyService.addCompanyContact(+this.tokenHelper.getClaimByName('profileid'),phoneContact);
         this.authEventService.signIn();
-        this.calendarService.createCalendar(+this.tokenHelper.getClaimByName('accountid'), this.checkTheDate(new Date()));
+        this.calendarService.createCalendar(+this.tokenHelper.getClaimByName('accountid'), new Date().toDateString());
         this.helperService.redirectAfterAuthentication();
       }).catch(err => this.loader = false);
     }
