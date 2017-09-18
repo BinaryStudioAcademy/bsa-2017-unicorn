@@ -13,6 +13,7 @@ import { TokenHelperService } from "../../services/helper/tokenhelper.service";
 import { VendorService } from "../../services/vendor.service";
 import { Contact } from "../../models/contact.model";
 import { CalendarService } from "../../services/calendar-service";
+import { CalendarModel } from "../../models/calendar/calendar";
 
 
 @Component({
@@ -118,14 +119,27 @@ export class RegisterVendorComponent implements OnInit {
           this.vendorService.postVendorContact(+this.tokenHelper.getClaimByName('profileid'),emailContact);
           this.vendorService.postVendorContact(+this.tokenHelper.getClaimByName('profileid'),phoneContact);
           this.authEventService.signIn();
-          this.calendarService.createCalendar(+this.tokenHelper.getClaimByName('accountid'), new Date().toDateString());
+          this.calendarService.createCalendar(+this.tokenHelper.getClaimByName('accountid'), this.createCalendar());
           this.helperService.redirectAfterAuthentication();
         })
         .catch(err => this.loader = false);
     }
   }
 
-  checkTheDate(date: Date):string{    
-      return new Date(date.setHours(date.getHours() - date.getTimezoneOffset() / 60)).toJSON();    
+  checkTheDate(date: Date):Date{    
+      return new Date(date.setHours(date.getHours() - date.getTimezoneOffset() / 60));    
+  }
+
+  createCalendar():CalendarModel{
+    return {
+      Id: null,
+      StartDate: this.checkTheDate(new Date()),
+      Events: null,
+      EndDate: null,
+      ExtraDayOffs: null,
+      ExtraWorkDays: null,
+      SeveralTasksPerDay: null,
+      WorkOnWeekend: null
+    }
   }
 }

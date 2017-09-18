@@ -40,7 +40,7 @@ namespace Unicorn.Core.Services
 
         private DateTime? ParseTheDate(string date)
         {
-            if (date == "null")
+            if (date == null)
             {
                 return null;
             }
