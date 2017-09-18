@@ -50,6 +50,8 @@ export class FeedbackComponent implements OnInit {
   openReportInModal(report: Report): void {
     const config = new TemplateModalConfig<IContext, string, string>(this.modalTemplate);
     config.context = { report: report };
+    config.isClosable = true;
+    config.isInverted = true;
     
     this.modalService
       .open(config)
