@@ -223,5 +223,4 @@ export class VendorsComponent implements OnInit {
     this.selected = per.Name;
     this.scrollToElement(per.PerformerType + per.Id);
   }
-
 }
