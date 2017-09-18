@@ -17,11 +17,25 @@
             <p (click)="openMap(book.Id)" class="mapInfo"><i class="colored map pin icon"></i>{{book.Location.City}},&nbsp;{{book.Location.Adress}}</p>
         </div>
         <div class="book-actions four wide column">
-            <div style="margin: auto">
+            <div *ngIf="!isVendorAssigned(book.Id)">
                 <a (click)="createTasks(book.Id)" class="ui button accept-btn" [ngClass]="{'loading': loads[book.Id], 'disabled': loads[book.Id] || someFormOpened}">Create tasks</a>
             </div>
         </div>
-      </div>  
+      </div>
+      <div class="row" *ngIf="isVendorAssigned(book.Id)">
+        <div class="sixteen wide column">
+          <table class="ui selectable padded single line table">
+            <tbody>
+              <tr *ngFor="let task of getTasksByBook(book.Id)">
+                <td><img class="ui mini circular image task-item-image" src="{{task.Vendor.Avatar}}"></td>
+                <td>{{task.Vendor.FIO}}</td>
+                <td>{{task.Work.Name}}</td>
+                <td>{{getStatusName(task.Status)}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
       <div class="ui divider no-bottom-margin" *ngIf="taskFormOpen[book.Id]"></div>
       <div class="row no-padd-top no-padd-bottom" *ngIf="taskFormOpen[book.Id]">
         <div class="vendor-assign-div sixteen wide column">

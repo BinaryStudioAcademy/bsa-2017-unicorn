@@ -599,6 +599,10 @@ namespace Unicorn.Core.Services
         {
             var tasks = await _unitOfWork.BookRepository
                 .Query
+                .Include(b => b.Vendor)
+                .Include(b => b.Vendor.Person)
+                .Include(b => b.Vendor.Person.Account)
+                .Include(b => b.Work)
                 .Where(b => b.IsCompanyTask && b.Company.Id == companyId)
                 .ToListAsync();
             return tasks.Select(b => new BookDTO
@@ -606,7 +610,19 @@ namespace Unicorn.Core.Services
                 Id = b.Id,
                 ParentBookId = b.ParentBookId,
                 Status = b.Status,
-                IsCompanyTask = b.IsCompanyTask
+                IsCompanyTask = b.IsCompanyTask,
+                DeclinedReason = b.DeclinedReason,
+                Vendor = new VendorDTO
+                {
+                    Id = b.Vendor.Id,
+                    FIO = $"{b.Vendor.Person.Name} {b.Vendor.Person.Surname}",
+                    Avatar = b.Vendor.Person.Account.Avatar
+                },
+                Work = new WorkDTO
+                {
+                    Id = b.Work.Id,
+                    Name = b.Work.Name
+                }
             }).ToList();
         }
     }

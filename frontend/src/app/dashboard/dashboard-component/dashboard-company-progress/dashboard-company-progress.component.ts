@@ -229,4 +229,22 @@ export class DashboardCompanyProgressComponent implements OnInit, OnDestroy {
     return this.vendors.filter(v => v.Id === task.VendorId)[0].Avatar;
   }
 
+  isVendorAssigned(id: number): boolean {
+    return this.tasks.filter(t => t.ParentBookId === id).length > 0;
+  }
+
+  getTasksByBook(id: number): CompanyTask[] {
+    return this.tasks.filter(t => t.ParentBookId === id);
+  }
+
+  getStatusName(status: BookStatus): string {
+    switch (status) {
+      case BookStatus.Pending: return 'Pending..';
+      case BookStatus.Accepted: return 'Accepted';
+      case BookStatus.Declined: return 'Declined';
+      case BookStatus.Finished: return 'Finished';
+    }
+    return 'None';
+  }
+
 }
