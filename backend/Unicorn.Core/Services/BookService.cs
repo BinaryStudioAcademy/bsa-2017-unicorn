@@ -585,14 +585,22 @@ namespace Unicorn.Core.Services
             {
                 return;
             }
-            var taskBooks = _unitOfWork.BookRepository.Query.Where(b => b.ParentBookId == book.ParentBookId).ToList();
-            if (taskBooks.Count(b => b.Status != book.Status) == 0)
+            if (book.Status == BookStatus.Declined)
             {
-                var parentBook = await _unitOfWork.BookRepository.GetByIdAsync(book.ParentBookId);
-                parentBook.Status = book.Status;
-                _unitOfWork.BookRepository.Update(parentBook);
-                await _unitOfWork.SaveAsync();
+
             }
+            else
+            {
+                var taskBooks = _unitOfWork.BookRepository.Query.Where(b => b.ParentBookId == book.ParentBookId).ToList();
+                if (taskBooks.Count(b => b.Status != book.Status) == 0)
+                {
+                    var parentBook = await _unitOfWork.BookRepository.GetByIdAsync(book.ParentBookId);
+                    parentBook.Status = book.Status;
+                    _unitOfWork.BookRepository.Update(parentBook);
+                    await _unitOfWork.SaveAsync();
+                }
+            }
+            
         }
 
         public async Task<List<BookDTO>> GetCompanyTasks(long companyId)
@@ -624,6 +632,36 @@ namespace Unicorn.Core.Services
                     Name = b.Work.Name
                 }
             }).ToList();
+        }
+
+        public async Task ReassignCompanyTask(ShortTaskDTO task, long companyId)
+        {
+            var vendor = await _unitOfWork.VendorRepository.GetByIdAsync(task.VendorId);
+            var company = await _unitOfWork.CompanyRepository.GetByIdAsync(companyId);
+            var book = await _unitOfWork.BookRepository.GetByIdAsync(task.BookId);
+            var work = await _unitOfWork.WorkRepository.GetByIdAsync(task.WorkId);
+
+            var companyTask = await _unitOfWork.BookRepository.GetByIdAsync(task.Id);
+            companyTask.ParentBookId = 0;
+
+            var companyBook = new Book();
+            companyBook.Date = book.Date;
+            companyBook.EndDate = book.EndDate;
+            companyBook.Description = task.Description;
+            companyBook.Status = BookStatus.Pending;
+            companyBook.IsCompanyTask = true;
+            companyBook.Vendor = vendor;
+            companyBook.Location = book.Location;
+            companyBook.Customer = book.Customer;
+            companyBook.CustomerPhone = book.CustomerPhone;
+            companyBook.ParentBookId = book.Id;
+            companyBook.Work = work;
+            companyBook.Company = company;
+
+            _unitOfWork.BookRepository.Update(companyTask);
+            _unitOfWork.BookRepository.Create(companyBook);
+
+            await _unitOfWork.SaveAsync();
         }
     }
 }

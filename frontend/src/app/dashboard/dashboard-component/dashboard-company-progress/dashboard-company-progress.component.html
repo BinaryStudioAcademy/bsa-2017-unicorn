@@ -20,6 +20,9 @@
             <div *ngIf="!isVendorAssigned(book.Id)">
                 <a (click)="createTasks(book.Id)" class="ui button accept-btn" [ngClass]="{'loading': loads[book.Id], 'disabled': loads[book.Id] || someFormOpened}">Create tasks</a>
             </div>
+            <div *ngIf="isVendorAssigned(book.Id)">
+                <h4>{{calcFinishedTasks(book.Id)}}/{{calcAllTasks(book.Id)}}</h4>
+            </div>
         </div>
       </div>
       <div class="row" *ngIf="isVendorAssigned(book.Id)">
@@ -30,7 +33,12 @@
                 <td><img class="ui mini circular image task-item-image" src="{{task.Vendor.Avatar}}"></td>
                 <td>{{task.Vendor.FIO}}</td>
                 <td>{{task.Work.Name}}</td>
-                <td>{{getStatusName(task.Status)}}</td>
+                <td>
+                  <span>{{getStatusName(task.Status)}}&nbsp;</span>
+                  <span *ngIf="task.Status == 2">
+                    <a class="cursor-pointer" (click)="showReason(task.DeclinedReason)">Why?</a>
+                  </span>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -122,5 +130,14 @@
 </ng-template>
 <ng-template let-option #optionWorkTemplate>
   {{option.Name}}
+</ng-template>
+<ng-template let-context let-modal="modal" #reasonModal>
+    <div class="ui content">
+        <form class="ui reply form">
+            <div class="field">
+                <textarea readonly name="reason">{{context.reason}}</textarea>
+            </div>
+        </form>
+    </div>
 </ng-template>
 <div class="ui active centered inline loader" *ngIf="books === undefined"></div>

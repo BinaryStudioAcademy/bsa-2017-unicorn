@@ -146,6 +146,13 @@ namespace Unicorn.Controllers
             await _bookService.CreateTasks(tasks, id);
         }
 
+        [HttpPut]
+        [Route("book/company/{id}/tasks")]
+        public async Task CreateTasks(ShortTaskDTO task, long id)
+        {
+            await _bookService.ReassignCompanyTask(task, id);
+        }
+
         [HttpGet]
         [Route("book/company/{id}/tasks")]
         public async Task<List<BookDTO>> CreateTasks(long id)

@@ -18,8 +18,13 @@ import {SuiModalService, TemplateModalConfig, ModalTemplate, ModalSize, SuiActiv
 import { Subscription } from 'rxjs/Subscription';
 import { MapModel } from "../../../models/map.model";
 import { DashboardEventsService } from "../../../services/events/dashboard-events.service";
+
 export interface IDeclineConfirm {
   id: number;
+}
+
+export interface IDeclinedReasonContext {
+  reason: string;
 }
 
 @Component({
@@ -30,7 +35,11 @@ export interface IDeclineConfirm {
 export class DashboardCompanyProgressComponent implements OnInit, OnDestroy {
 
   @ViewChild('mapModal')
-  public modalTemplate:ModalTemplate<IDeclineConfirm, void, void>
+  public modalTemplate:ModalTemplate<IDeclineConfirm, void, void>;
+
+  @ViewChild('reasonModal')
+  public reasonModal:ModalTemplate<IDeclinedReasonContext, void, void>;
+
   currModal: SuiActiveModal<IDeclineConfirm, {}, void>;
   books: BookCard[];
   loads: {[bookId: number]: boolean} = {};
@@ -61,14 +70,16 @@ export class DashboardCompanyProgressComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
-  loadData() {
+  loadData(): Promise<any> {
     this.dashboardService.getCompanyVendorsWithWorks().then(resp => {
+      this.vendors = [];
+      this.availableVendors = [];
       resp.forEach(x => {
         this.vendors.push(x);
         this.availableVendors.push(x);
       });
     });
-    this.dashboardService.getCompanyTasks().then(resp => {
+    return this.dashboardService.getCompanyTasks().then(resp => {
       this.tasks = resp;
       console.log('ra', this.tasks);
       return this.dashboardService.getAcceptedBooks();
@@ -197,15 +208,25 @@ export class DashboardCompanyProgressComponent implements OnInit, OnDestroy {
     this.assignLoader = true;
     this.dashboardService.createTasks(this.shortTasks).then(resp => {
       this.toastr.success("Tasks created");
-      this.assignLoader = false;
-      this.assignedBooks[id] = true;
-      this.taskFormOpen[id] = false;
-      this.taskFormOpened = false;
-      this.editMode = false;
+      this.shortTasks = [];
+      this.restoreAvailableVendors();
+      this.loadData().then(() => {
+        this.assignLoader = false;
+        this.assignedBooks[id] = true;
+        this.taskFormOpen[id] = false;
+        this.taskFormOpened = false;
+        this.someFormOpened = false;
+        this.editMode = false;
+      });
     }).catch(err => {
       this.toastr.error("Problems");
       this.assignLoader = false;
     });
+  }
+
+  restoreAvailableVendors() {
+    this.availableVendors = [];
+    this.vendors.forEach(v => this.availableVendors.push(v));
   }
 
   getVendorIcon(task: ShortTask): string {
@@ -240,11 +261,19 @@ export class DashboardCompanyProgressComponent implements OnInit, OnDestroy {
   getStatusName(status: BookStatus): string {
     switch (status) {
       case BookStatus.Pending: return 'Pending..';
-      case BookStatus.Accepted: return 'Accepted';
+      case BookStatus.Accepted: return 'In progress';
       case BookStatus.Declined: return 'Declined';
       case BookStatus.Finished: return 'Finished';
     }
     return 'None';
+  }
+
+  showReason(reason: string) {
+    const config = new TemplateModalConfig<IDeclinedReasonContext, void, void>(this.reasonModal);
+    config.context = {reason: reason};
+    config.isInverted = true;
+    config.size = ModalSize.Tiny;
+    this.modalService.open(config);
   }
 
 }
