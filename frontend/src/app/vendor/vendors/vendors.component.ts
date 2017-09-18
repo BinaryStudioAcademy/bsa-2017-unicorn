@@ -62,7 +62,6 @@ export class VendorsComponent implements OnInit {
   subcategories: Subcategory[];
 
   selPerformer: Performer;
-
   constructor(
     private performerService: PerformerService,
     private ref: ChangeDetectorRef,
