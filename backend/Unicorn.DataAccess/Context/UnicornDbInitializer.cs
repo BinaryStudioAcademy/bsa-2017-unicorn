@@ -1224,7 +1224,7 @@ namespace Unicorn.DataAccess.Context
                 Category = category1,
                 Tags = "washing,wash,clothes,dry,apparel,wear,vesture,wearing apparel,garments,dresses,fashions," +
                        "shirts,gowns,costumes,outerwear,garment,linens,robes,jackets,garbs,duds,dressing,vests," +
-                       "fatigues,suits,textiles,naked,washing,habits,children,straitjackets,threads,woodworking," +
+                       "fatigues,suits,textiles,naked,habits,children,straitjackets,threads,woodworking," +
                        "plainclothes,claws,clones,inflatable,cases,affairs,guises,plain-clothes,attire,uniforms,outfits,"
             };
 
@@ -1235,7 +1235,7 @@ namespace Unicorn.DataAccess.Context
                 Name = "Cats care",
                 IsDeleted = false,
                 Category = category2,
-                Tags = "cats care,cat,cats,care,kitten,puss,pussycat,pot,pool,pussy,jackpot,kitty-cat,pet,cats,poodle,cub,sweetie,beaver," +
+                Tags = "cats care,cat,cats,care,kitten,puss,pussycat,pot,pool,pussy,jackpot,kitty-cat,pet,poodle,cub,sweetie,beaver," +
                        "Koko,bimbo,commie,coconut,baby,bucket,spade,coco,geezer,mom,little,boy,playboy,Cathy,rug," +
                        "Katie,bogeyman,wuss,petit,cold,nice,kath,hood,chat,stop"
             };
