@@ -38,7 +38,6 @@ export class VendorsComponent implements OnInit {
   name: string;
 
   center: google.maps.LatLng;
-
   autocomplete: google.maps.places.Autocomplete;
   address: any = {};
 
