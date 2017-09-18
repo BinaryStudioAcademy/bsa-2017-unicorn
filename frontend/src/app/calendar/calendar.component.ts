@@ -84,7 +84,7 @@ export class CalendarComponent implements OnInit {
       }
       else{
         this.weekendDays = [0,6];
-      }      
+      }            
       if(this.calendarModel.Events){
         this.calendarModel.Events.forEach(event => {
           if(event.Status !== BookStatus.Declined && event.Status !== BookStatus.Finished && event.Status !== BookStatus.Confirmed){
@@ -115,7 +115,7 @@ export class CalendarComponent implements OnInit {
   }
 
   weekDayClicked(day: any){    
-    let events = this.events.filter(x => x.start.toLocaleDateString() === day.date.toLocaleDateString());
+    let events = this.events.filter(x => day.date.toLocaleDateString() >= x.start.toLocaleDateString() && day.date.toLocaleDateString() <= x.end.toLocaleDateString() );
     this.openDayModal(day, events);
   }
 
@@ -125,28 +125,38 @@ export class CalendarComponent implements OnInit {
     config.context = {date:day.date, events:events, day: day};
     config.isInverted = true;
     config.size = ModalSize.Normal;
-    this.activeModal = this.modalService.open(config);    
+    this.activeModal = this.modalService.open(config).onDeny(() => {
+      this.zone.run(() => this.activeModal.deny(null));
+    });    
   }
 
-  openSettingsModal(){
+  openSettingsModal(){    
     const config = new TemplateModalConfig<ISettingsContext, void, void>(this.settingsModalTemplate);
     config.context = {
-      startDate:this.calendarModel.StartDate,
-      endDate:this.calendarModel.EndDate,
+      startDate: new Date(this.calendarModel.StartDate),
+      endDate: this.calendarModel.EndDate !== null ? new Date(this.calendarModel.EndDate): null,
       workOnWeekend: this.calendarModel.WorkOnWeekend,
       severalTasksPerDay: this.calendarModel.SeveralTasksPerDay
     };
     config.isInverted = true;
     config.size = ModalSize.Tiny;
-    this.activeModal = this.modalService.open(config);    
+    this.activeModal = this.modalService.open(config).onDeny(() => {
+      this.zone.run(() => this.activeModal.deny(null));
+    });
   }
 
-  closeSettingsModal(context: any){
-    let _startDate = new Date(context.startDate);
-    let _endDate = new Date(context.endDate);
+  closeSettingsModal(context: any){ 
+    debugger;  
     this.isChangedWorktime = true;
-    this.calendarModel.StartDate = this.checkTheDate(_startDate);
-    this.calendarModel.EndDate = this.checkTheDate(_endDate);
+    if(context.startDate){
+    this.calendarModel.StartDate = this.checkTheDate(new Date(context.startDate));
+    }    
+    if(context.endDate){
+      this.calendarModel.EndDate = this.checkTheDate(new Date(context.endDate));
+    }
+    else{
+      this.calendarModel.EndDate = null;
+    }
     this.calendarModel.WorkOnWeekend = context.workOnWeekend;
     this.calendarModel.SeveralTasksPerDay = context.severalTasksPerDay;
     
@@ -160,13 +170,14 @@ export class CalendarComponent implements OnInit {
     }
     this.calendarService.saveCalendar(this.calendarModel).then(() => {
       this.isChangedWorktime = false;
-      this.activeModal.deny(null);          
+      this.zone.run(() => this.activeModal.deny(null));     
     }); 
   }
 
   closeDayModal(day: any){     
     if(day.isWeekend !== this.wasWeekend){
       this.isSavingWeekend = true;      
+      let _currentDate = this.checkTheDate(new Date(day.date)).toJSON(); 
       if(day.isWeekend && ((day.date.getDay() !== 6 && day.date.getDay() !== 0) ||
         ((day.date.getDay() === 6 || day.date.getDay() === 0) && this.calendarModel.WorkOnWeekend))){
         let _date = new Date(day.date);
@@ -187,21 +198,21 @@ export class CalendarComponent implements OnInit {
         });        
       }
       else if(!day.isWeekend && (day.date.getDay() === 6 || day.date.getDay() === 0) && this.calendarModel.WorkOnWeekend){   
-        this.calendarModel.ExtraDayOffs = this.calendarModel.ExtraDayOffs.filter(x => new Date(x.Day).toLocaleDateString() !== day.date.toLocaleDateString());
+        this.calendarModel.ExtraDayOffs = this.calendarModel.ExtraDayOffs.filter(x => new Date(x.Day).toJSON() !== _currentDate);
       }
       else if(day.isWeekend && (day.date.getDay() === 6 || day.date.getDay() === 0) && !this.calendarModel.WorkOnWeekend){
-        this.calendarModel.ExtraWorkDays = this.calendarModel.ExtraWorkDays.filter(x => new Date(x.Day).toLocaleDateString() !== day.date.toLocaleDateString());
+        this.calendarModel.ExtraWorkDays = this.calendarModel.ExtraWorkDays.filter(x => new Date(x.Day).toJSON() !== _currentDate);
       }
       else if(!day.isWeekend && (day.date.getDay() !== 6 && day.date.getDay() !== 0)){
-        this.calendarModel.ExtraDayOffs = this.calendarModel.ExtraDayOffs.filter(x => new Date(x.Day).toLocaleDateString() !== day.date.toLocaleDateString());
+        this.calendarModel.ExtraDayOffs = this.calendarModel.ExtraDayOffs.filter(x => new Date(x.Day).toJSON() !== _currentDate);
       }      
       this.calendarService.saveCalendar(this.calendarModel).then(() => {
         this.isSavingWeekend = false;
-        this.activeModal.deny(null);    
+        this.zone.run(() => this.activeModal.deny(null));
       }); 
     }
     else{
-      this.activeModal.deny(null);        
+      this.zone.run(() => this.activeModal.deny(null)); 
     }        
     this.wasWeekend = undefined;   
   }
@@ -214,13 +225,13 @@ export class CalendarComponent implements OnInit {
     this.render(header);
   }
 
-  render(mas: any[]){
-    debugger;
-    mas.forEach(day => {          
-      if(this.calendarModel.ExtraWorkDays.find(x => new Date(x.Day).toLocaleDateString() == day.date.toLocaleDateString())){
+  render(mas: any[]){    
+    mas.forEach(day => {
+      let _currentDate = this.checkTheDate(new Date(day.date)).toJSON(); 
+      if(this.calendarModel.ExtraWorkDays.find(x => new Date(x.Day).toJSON() == _currentDate)){        
         day.isWeekend = false;
       }
-      else if(this.calendarModel.ExtraDayOffs.find(x => new Date(x.Day).toLocaleDateString() == day.date.toLocaleDateString())){
+      else if(this.calendarModel.ExtraDayOffs.find(x => new Date(x.Day).toJSON() == _currentDate)){
         day.isWeekend = true;
       }  
     });
