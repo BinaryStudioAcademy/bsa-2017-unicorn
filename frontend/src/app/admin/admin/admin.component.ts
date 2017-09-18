@@ -9,14 +9,21 @@ import { TokenHelperService } from "../../services/helper/tokenhelper.service";
   styleUrls: ['./admin.component.sass']
 })
 export class AdminComponent implements OnInit {
+  isLoggedIn: boolean;
 
-  constructor(private modalService: SuiModalService, private tokenHelper: TokenHelperService) { }
-
-  ngOnInit() {
+  constructor(private modalService: SuiModalService, private tokenHelper: TokenHelperService) {
     if (!this.tokenHelper.isAdminAccount()) {
       this.modalService
-        .open(new AuthModal("tiny"));
+        .open(new AuthModal("tiny"))
+        .onApprove(() => this.isLoggedIn = true);
     }
+    else {
+      this.isLoggedIn = true;
+    }
+   }
+
+  ngOnInit() {
+
   }
 
 }

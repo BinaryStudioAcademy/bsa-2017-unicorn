@@ -183,20 +183,32 @@ export class ChatComponent implements OnInit {
     }
     else {
       let dialog = this.dialogs.find(x => x.Id === mes.DialogId);
-      if(this.isHided(dialog))
-     {  
-        dialog.Participant1_Hided = false;
-        dialog.Participant2_Hided = false;
-     }
+    
       if (dialog && this.selectedId === dialog.Id) {
+        if(this.isHided(dialog))
+        { 
+           dialog.Participant1_Hided = false;
+           dialog.Participant2_Hided = false;
+           this.getDialog();
+        } else
         this.messages.push(mes);
         this.checkLastMessage(this.dialogs.find(x => x.Id === dialog.Id), mes.OwnerId);
         this.startScroll();
       }
       else if (dialog && this.selectedId !== dialog.Id && this.ownerId !== mes.OwnerId) {
+        if(this.isHided(dialog))
+        {  
+           dialog.Participant1_Hided = false;
+           dialog.Participant2_Hided = false;
+        }
         this.checkLastMessage(this.dialogs.find(x => x.Id === dialog.Id), mes.OwnerId);
       }
       else if (!dialog) {
+        if(this.isHided(dialog))
+        {  
+           dialog.Participant1_Hided = false;
+           dialog.Participant2_Hided = false;
+        }
         this.chatService.getDialogByOwner(mes.DialogId, this.ownerId).then(res => {
           this.dialogs.push(res);
         });

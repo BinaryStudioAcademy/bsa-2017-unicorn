@@ -169,14 +169,14 @@
           </div>
           
         </div>
-        <div (clickOutside)="closeNewSubcategoryEdit()" class="item">
+        <div class="item">
           <div *ngIf="selectedSubcategory.CategoryId == category.Id && isNewSubcategoryEditOpen then subcategoryEdit; else subcategoryNew" class="ui right floated segment">
             <h5>Create new subcategory of {{category.Name}}</h5>
             <a (click)="editSubcategory(category)" class="ui button new">New subcategory</a>
           </div>
         </div>
         <ng-template #subcategoryEdit>
-          <div class="ui right floated segment">
+          <div (clickOutside)="closeNewSubcategoryEdit()"  class="ui right floated segment">
               <div class="subcategory ui form">
                 <div class="fields">
                   <div class="twelve wide field">
