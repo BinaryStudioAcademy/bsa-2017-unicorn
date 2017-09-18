@@ -21,11 +21,12 @@
                 <a (click)="createTasks(book.Id)" class="ui button accept-btn" [ngClass]="{'loading': loads[book.Id], 'disabled': loads[book.Id] || someFormOpened}">Create tasks</a>
             </div>
             <div *ngIf="isVendorAssigned(book.Id)">
-                <h4>{{calcFinishedTasks(book.Id)}}/{{calcAllTasks(book.Id)}}</h4>
+                <span>PROGRESS/DONE</span>
+                <h4 class="cursor-pointer" (click)="toggleTaskList(book.Id)">{{calcFinishedTasks(book.Id)}}/{{calcAllTasks(book.Id)}}</h4>
             </div>
         </div>
       </div>
-      <div class="row" *ngIf="isVendorAssigned(book.Id)">
+      <div class="row" *ngIf="isVendorAssigned(book.Id) && taskListOpened[book.Id]">
         <div class="sixteen wide column">
           <table class="ui selectable padded single line table">
             <tbody>
@@ -39,6 +40,12 @@
                     <a class="cursor-pointer" (click)="showReason(task.DeclinedReason)">Why?</a>
                   </span>
                 </td>
+                <td class="right aligned" *ngIf="task.Status == 1 || task.Status == 0">
+                  <a class="ui basic button assign-btn" (click)="decline(task.Id)">Decline</a>
+                </td>
+                <td class="right aligned" *ngIf="task.Status == 2">
+                  <a class="ui basic button assign-btn" (click)="reassign(task)">Reassign</a>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -47,8 +54,8 @@
       <div class="ui divider no-bottom-margin" *ngIf="taskFormOpen[book.Id]"></div>
       <div class="row no-padd-top no-padd-bottom" *ngIf="taskFormOpen[book.Id]">
         <div class="vendor-assign-div sixteen wide column">
-          <div class="ui two column grid">
-              <div class="column">
+          <div class="ui grid">
+              <div class="six wide column">
                 <div class="task-header">
                   <span><h5>TASKS <i class="ui icon green add add-icon" (click)="newTask(book.Id)"></i></h5></span>
                   
@@ -67,7 +74,7 @@
                   </div>
                 </div>
               </div>
-              <div class="column">
+              <div class="ten wide column">
                 <div class="form-header">
                   <span><h5>TASK DESCRIPTION</h5></span>
                 </div>
@@ -139,5 +146,56 @@
             </div>
         </form>
     </div>
+</ng-template>
+<ng-template let-context let-modal="modal" #declineModal>
+  <div class="ui content">
+      <form class="ui reply form" name="reviewForm" #declineForm="ngForm">
+          <div class="field">
+              <textarea required placeholder="TYPE THE REASON" name="reason" [(ngModel)]="reason" #reasonText="ngModel"></textarea>
+          </div>
+          <div class="save-btn">
+              <a (click)="declineConfirm(context.id)" [ngClass]="{'loading': loader, 'disabled': declineForm.invalid || loader}" class="ui basic button decline-confirm">
+                  <p *ngIf="!loader" style="color:#FF647A;">Save</p>
+              </a>
+          </div>
+      </form>
+  </div>
+</ng-template>
+<ng-template let-context let-modal="modal" #reassignModal>
+  <div class="ui content">
+      <div class="task-form">
+          <form class="ui form" #form="ngForm">
+            <div class="field">
+              <div class="ui input">
+                <textarea rows="3" required placeholder="DESCRIPTION" 
+                  [(ngModel)]="reassignTask.Description" name="taskDesc">
+                </textarea>
+              </div>
+            </div>
+            <div class="field">
+              <sui-select required class="selection" 
+                [optionTemplate]="optionVendorTemplate" 
+                placeholder="SELECT VENDOR"
+                (selectedOptionChange)="changeVendor()"
+                [(ngModel)]="selectedVendor"
+                name="vendorSelect">
+                <sui-select-option class="select-option" *ngFor="let vendor of availableVendors" [value]="vendor">
+                </sui-select-option>
+              </sui-select>
+            </div>
+            <div class="field">
+              <sui-select required class="selection"
+                [optionTemplate]="optionWorkTemplate"
+                placeholder="SELECT WORK"
+                [(ngModel)]="selectedWork"
+                name="workSelect">
+                <sui-select-option class="select-option" *ngFor="let work of works" [value]="work">
+                </sui-select-option>
+              </sui-select>
+            </div>
+          <a class="ui fluid button accept-btn" [ngClass]="{'disabled': form.invalid}" (click)="reassignConfirm()">CONFIRM</a>
+        </form>
+      </div>
+  </div>
 </ng-template>
 <div class="ui active centered inline loader" *ngIf="books === undefined"></div>

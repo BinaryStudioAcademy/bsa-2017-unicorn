@@ -44,6 +44,10 @@ export class DashboardService {
     return this.dataService.putRequest('book', book);
   }
 
+  updateTask(book: CompanyTask): Promise<any> {
+    return this.dataService.putRequest('book', book);
+  }
+
   //vendor assign
 
   getCompanyVendorsWithWorks(): Promise<Vendor[]> {
@@ -56,5 +60,9 @@ export class DashboardService {
 
   getCompanyTasks(): Promise<CompanyTask[]> {
     return this.dataService.getRequest(`book/company/${this.getId()}/tasks`);
+  }
+
+  reassignVendor(task: ShortTask): Promise<any> {
+    return this.dataService.putRequest(`book/company/${this.getId()}/tasks`, task);
   }
 }

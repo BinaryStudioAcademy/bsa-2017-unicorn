@@ -40,6 +40,12 @@ export class DashboardCompanyProgressComponent implements OnInit, OnDestroy {
   @ViewChild('reasonModal')
   public reasonModal:ModalTemplate<IDeclinedReasonContext, void, void>;
 
+  @ViewChild('declineModal')
+  public declineTemplate:ModalTemplate<IDeclineConfirm, void, void>
+
+  @ViewChild('reassignModal')
+  public reassignTemplate:ModalTemplate<void, void, void>
+
   currModal: SuiActiveModal<IDeclineConfirm, {}, void>;
   books: BookCard[];
   loads: {[bookId: number]: boolean} = {};
@@ -143,10 +149,14 @@ export class DashboardCompanyProgressComponent implements OnInit, OnDestroy {
   
 
   //vendor assign
+
+
   assignLoader: boolean;
   editMode: boolean;
+  loader: boolean;
 
   shortTasks: ShortTask[] = [];
+  taskListOpened: {[bookId: number]: boolean} = {};
 
   vendors: Vendor[] = [];
   availableVendors: Vendor[] = [];
@@ -156,6 +166,8 @@ export class DashboardCompanyProgressComponent implements OnInit, OnDestroy {
   selectedWork: Work;
   selectedTask: ShortTask;
   description: string;
+
+  reason: string;
 
   assignedBooks: {[bookId: number]: boolean} = {};
 
@@ -167,6 +179,7 @@ export class DashboardCompanyProgressComponent implements OnInit, OnDestroy {
   taskFormOpened: boolean;
   someFormOpened: boolean;
   taskFormOpen: {[bookId: number]: boolean} = {};
+
   currentTask: ShortTask = {
     Id: null,
     BookId: null,
@@ -175,6 +188,8 @@ export class DashboardCompanyProgressComponent implements OnInit, OnDestroy {
     WorkId: null,
     VendorId: null
   };
+
+  reassignTask: ShortTask;
 
   newTask(bookId: number) {
     this.currentTask = {
@@ -274,6 +289,80 @@ export class DashboardCompanyProgressComponent implements OnInit, OnDestroy {
     config.isInverted = true;
     config.size = ModalSize.Tiny;
     this.modalService.open(config);
+  }
+
+  toggleTaskList(id: number) {
+    this.taskListOpened[id] = !this.taskListOpened[id];
+  }
+
+  decline(id: number) {
+    this.reason = '';
+    const config = new TemplateModalConfig<IDeclineConfirm, void, void>(this.declineTemplate);
+    config.context = {id: id};
+    config.isInverted = true;
+    config.size = ModalSize.Tiny;
+    this.currModal = this.modalService.open(config);
+  }
+
+  declineConfirm(id: number) {
+    let book: CompanyTask = this.tasks.filter(b => b.Id == id)[0];
+    book.Status = BookStatus.Declined;
+    book.DeclinedReason = this.reason;
+    this.loader = true;
+    this.dashboardService.updateTask(book).then(resp => {
+      this.loader = false;
+      this.reason = null;
+      this.loadData();
+      this.currModal.deny(undefined);
+      this.toastr.success('Declined task');
+    }).catch(err => {
+      this.loader = false;
+      this.reason = null;
+      this.currModal.deny(undefined);
+      this.toastr.error('Ops. Cannot decline task');
+    });
+  }
+
+  reassign(task: CompanyTask) {
+    this.reassignTask = {
+      Id: task.Id,
+      BookId: task.ParentBookId,
+      DeclinedReason: null,
+      Description: null,
+      WorkId: null,
+      VendorId: null
+    }
+    this.selectedVendor = null;
+    this.selectedWork = null;
+    this.availableVendors = [];
+    this.vendors.filter(v => !this.isVendorInBook(v, task)).forEach(v => this.availableVendors.push(v));
+
+    const config = new TemplateModalConfig<void, void, void>(this.reassignTemplate);
+    config.isInverted = true;
+    config.size = ModalSize.Tiny;
+    this.currModal = this.modalService.open(config);
+  }
+
+  isVendorInBook(vendor: Vendor, task: CompanyTask): boolean {
+    this.tasks.filter(t => t.ParentBookId === task.ParentBookId)
+      .forEach(t => {
+        if (t.Vendor.Id === vendor.Id) {
+          return true;
+        }
+      });
+    return false;
+  }
+
+  reassignConfirm() {
+    debugger;
+    this.reassignTask.VendorId = this.selectedVendor.Id;
+    this.reassignTask.WorkId = this.selectedWork.Id;
+    this.dashboardService.reassignVendor(this.reassignTask).then(resp => {
+      this.currModal.deny(undefined);
+    })
+    .catch(err => {
+
+    });
   }
 
 }

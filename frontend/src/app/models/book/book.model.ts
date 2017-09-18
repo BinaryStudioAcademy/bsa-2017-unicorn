@@ -16,9 +16,11 @@ export interface Book {
 }
 
 export interface CompanyTask {
+    Id: number;
     Date: Date;
     EndDate: Date;
     Description: string;
+    DeclinedReason: string;
     IsCompanyTask: boolean;
     ParentBookId: number;
     Vendor: Vendor;
