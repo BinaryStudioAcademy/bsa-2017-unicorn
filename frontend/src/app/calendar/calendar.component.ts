@@ -11,6 +11,7 @@ import { BookStatus } from "../models/book/book.model";
 import { CalendarEventsService } from "../services/events/calendar-events.service";
 import { Subscription } from "rxjs/Subscription";
 import { WeekDay } from "calendar-utils/dist/calendar-utils";
+import { NotificationService } from "../services/notifications/notification.service";
 
 export interface IDayContext {
   date: Date,
@@ -61,19 +62,36 @@ export class CalendarComponent implements OnInit {
   view: string = 'month';  
   viewDate: Date = new Date();    
 
-  //refresh: Subject<any> = new Subject();
+  refresh: Subject<any> = new Subject();
 
   constructor(
     private tokenHelper: TokenHelperService,
     private calendarService: CalendarService,
     private modalService: SuiModalService,
     private calendarEventsService: CalendarEventsService,
-    private zone: NgZone,) { }
+    private notificationService: NotificationService) { }
 
   ngOnInit() {   
     this.settingsClicked = this.calendarEventsService.settingsClickEvent$.subscribe(() => {      
       this.openSettingsModal();
     })
+
+    this.notificationService.listen<VendorBook>("RefreshCalendarsEvents", res => {       
+      this.events.push({
+        start: new Date(res.Date),
+        title: res.Work.Name,
+        end: new Date(res.EndDate),        
+        color: colors.blue,
+        meta: {
+          status: BookStatus[res.Status],
+          description: res.Description,
+          customer: res.Customer,
+          customerPhone: res.CustomerPhone,
+          workIcon: res.Work.Icon
+        }
+      }); 
+      this.refresh.next();       
+    });
     
 
     this.calendarService.getCalendarByAccount(this.accountId)
@@ -125,12 +143,10 @@ export class CalendarComponent implements OnInit {
     config.context = {date:day.date, events:events, day: day};
     config.isInverted = true;
     config.size = ModalSize.Normal;
-    this.activeModal = this.modalService.open(config).onDeny(() => {
-      this.zone.run(() => this.activeModal.deny(null));
-    });    
+    this.activeModal = this.modalService.open(config);    
   }
 
-  openSettingsModal(){    
+  openSettingsModal(){
     const config = new TemplateModalConfig<ISettingsContext, void, void>(this.settingsModalTemplate);
     config.context = {
       startDate: new Date(this.calendarModel.StartDate),
@@ -140,9 +156,7 @@ export class CalendarComponent implements OnInit {
     };
     config.isInverted = true;
     config.size = ModalSize.Tiny;
-    this.activeModal = this.modalService.open(config).onDeny(() => {
-      this.zone.run(() => this.activeModal.deny(null));
-    });
+    this.activeModal = this.modalService.open(config);    
   }
 
   closeSettingsModal(context: any){ 
@@ -170,7 +184,7 @@ export class CalendarComponent implements OnInit {
     }
     this.calendarService.saveCalendar(this.calendarModel).then(() => {
       this.isChangedWorktime = false;
-      this.zone.run(() => this.activeModal.deny(null));     
+      this.activeModal.deny(null);     
     }); 
   }
 
@@ -208,11 +222,11 @@ export class CalendarComponent implements OnInit {
       }      
       this.calendarService.saveCalendar(this.calendarModel).then(() => {
         this.isSavingWeekend = false;
-        this.zone.run(() => this.activeModal.deny(null));
+        this.activeModal.deny(null);
       }); 
     }
     else{
-      this.zone.run(() => this.activeModal.deny(null)); 
+      this.activeModal.deny(null); 
     }        
     this.wasWeekend = undefined;   
   }

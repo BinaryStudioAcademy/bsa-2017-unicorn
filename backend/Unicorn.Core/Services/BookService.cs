@@ -191,7 +191,7 @@ namespace Unicorn.Core.Services
                     .Include(v => v.Person.Account)
                     .SingleAsync(v => v.Id == book.ProfileId);
             }
-            
+
             Book _book = new Book()
             {
                 IsDeleted = false,
@@ -208,8 +208,8 @@ namespace Unicorn.Core.Services
             };
 
             _unitOfWork.BookRepository.Create(_book);
-            await _unitOfWork.SaveAsync();          
-            
+            await _unitOfWork.SaveAsync();
+
             /* Send Notification */
             var notification = new NotificationDTO()
             {
@@ -220,8 +220,27 @@ namespace Unicorn.Core.Services
                 Type = NotificationType.TaskNotification
             };
 
+            VendorBookDTO _event = null;             
+
+            _event = new VendorBookDTO
+            {
+                Status = BookStatus.Pending,
+                Customer = customer.Person.Name + " " + customer.Person.Surname,
+                Date = book.Date,
+                EndDate = book.EndDate,
+                Description = book.Description,
+                Work = new WorkDTO
+                {
+                    Id = work.Id,
+                    Icon = work.Icon,
+                    Name = work.Name
+                }
+            };
+
             var receiverId = vendor != null ? vendor.Person.Account.Id : company.Account.Id;
             await _notificationService.CreateAsync(receiverId, notification);
+            await _notificationService.CreateAsync(receiverId, _event);
+
 
             /* Send Message */
             string msg = EmailTemplate.NewOrderTemplate(_book.Customer.Person.Name, _book.Customer.Person.Surname, _book.Work?.Name, book.CustomerId);

@@ -13,6 +13,7 @@ using Unicorn.DataAccess.Entities;
 using Unicorn.DataAccess.Interfaces;
 using Unicorn.DataAccess.Entities.Enum;
 using Unicorn.Shared.DTOs.Chat;
+using Unicorn.Shared.DTOs.Book;
 
 namespace Unicorn.Core.Services
 {
@@ -87,6 +88,11 @@ namespace Unicorn.Core.Services
         public async Task CreateAsync(long accountId, long dialogId)
         {
             await _proxy.ReadNotReadedMessages(accountId, dialogId);
+        }
+
+        public async Task CreateAsync(long accountId, VendorBookDTO book)
+        {
+            await _proxy.RefreshCalendarsEvents(accountId, book);
         }
 
         public async Task CreateDelAsync(long accountId, long dialogId)

@@ -37,6 +37,11 @@ namespace Unicorn.Core.Infrastructure.SignalR
             await _context.Clients.Group($"accountId={accountId}").RefreshMessages(payload);
         }
 
+        public async Task RefreshCalendarsEvents<T>(long accountId, T payload)
+        {
+            await _context.Clients.Group($"accountId={accountId}").RefreshCalendarsEvents(payload);
+        }
+
         public async Task ReadNotReadedMessages(long accountId, long dialogId)
         {
             await _context.Clients.Group($"accountId={accountId}").ReadNotReadedMessages(dialogId);
