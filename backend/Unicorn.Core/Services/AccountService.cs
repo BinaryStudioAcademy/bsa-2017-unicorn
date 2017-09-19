@@ -126,6 +126,8 @@ namespace Unicorn.Core.Services
         {
             var persons = await _unitOfWork.PersonRepository.Query
                 .Include(p => p.Account)
+                .Include(p => p.Account.Role)
+                .Where(p => p.Account.Role.Id != 5)
                 .Where(p => p.Account.Email.Contains(template) || (p.Name + " " + p.Surname + " " + p.MiddleName).Contains(template))
                 .Select(p => new ShortProfileInfoDTO
                 {

@@ -17,6 +17,8 @@ import { AccountService } from "../services/account.service";
 import { ReportService } from "../services/report.service";
 import { CategoryService } from "../services/category.service";
 import { AdminAuthService } from "../services/admin-auth.service";
+import { ChatModule } from '../chat/chat.module';
+import { MessagesComponent } from './admin/messages/messages.component';
 
 @NgModule({
   imports: [
@@ -24,14 +26,16 @@ import { AdminAuthService } from "../services/admin-auth.service";
     FormsModule,
     SuiModule,
     AdminRoutingModule,
-    ClickOutsideModule
+    ClickOutsideModule,
+    ChatModule
   ],
   declarations: [
     AdminComponent,
     BanListComponent, 
     CategoriesComponent, 
     FeedbackComponent, 
-    AuthModalComponent
+    AuthModalComponent, 
+    MessagesComponent
   ],
   providers: [
     AccountService,

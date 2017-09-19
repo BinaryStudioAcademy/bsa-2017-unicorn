@@ -63,6 +63,7 @@
     <Compile Include="Entities\ChatFile.cs" />
     <Compile Include="Entities\ChatMessage.cs" />
     <Compile Include="Entities\ContactProvider.cs" />
+    <Compile Include="Entities\Enum\AccountStatus.cs" />
     <Compile Include="Entities\Enum\BookStatus.cs" />
     <Compile Include="Entities\Enum\NotificationType.cs" />
     <Compile Include="Entities\Enum\OfferStatus.cs" />
