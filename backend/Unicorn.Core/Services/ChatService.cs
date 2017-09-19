@@ -424,6 +424,9 @@ namespace Unicorn.Core.Services
 
         private async Task<long> GetProfileIdAsync(Account acc)
         {
+            if (acc.Role.Type == RoleType.Admin)
+                return 0;
+
             if (acc.Role.Type == RoleType.Vendor)
             {
                 var prof = await _unitOfWork.VendorRepository.Query

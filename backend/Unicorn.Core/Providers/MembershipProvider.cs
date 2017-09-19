@@ -23,7 +23,6 @@ namespace Unicorn.Core.Providers
             var account = await _unitOfWork.AccountRepository.Query
                 .Include(a => a.Role)
                 .Where(a => !a.IsDeleted)
-                .Where(a => !a.IsBanned)
                 .SingleOrDefaultAsync(a => a.Id == accountId);
             long profileId = 0;
 
@@ -45,7 +44,8 @@ namespace Unicorn.Core.Providers
                 {
                     new Claim("accountid", account.Id.ToString()),
                     new Claim("roleid", account.Role.Id.ToString()),
-                    new Claim("profileid", profileId.ToString())
+                    new Claim("profileid", profileId.ToString()),
+                    new Claim("isbanned", account.IsBanned.ToString())
                 };
 
             return new ClaimsIdentity(claims, "Token");

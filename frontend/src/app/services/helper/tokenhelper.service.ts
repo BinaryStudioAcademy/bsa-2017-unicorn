@@ -32,6 +32,10 @@ export class TokenHelperService {
     return this.isTokenValid() && this.isTokenNotExpired() && roleName === 'admin';
   }
 
+  public isAccountBanned(): boolean {
+    return this.getClaimByName('isbanned').toLowerCase() === 'true';
+  }
+
   public getAllClaims(): object {
     const token = localStorage.getItem('token');
     let claims;
