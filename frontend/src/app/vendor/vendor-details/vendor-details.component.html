@@ -17,48 +17,43 @@
                 </div>
             </div>
         </div>
-
-        <div class="sixteen wide column container">
-            <sui-tabset *ngIf="vendor !== undefined">
-                <div class="ui pointing secondary menu">
-                    <a routerLink="/vendor/{{vendor.Id}}" [queryParams]="{tab: 'info'}" class="item" suiTabHeader="1">INFO</a>
-                    <a routerLink="/vendor/{{vendor.Id}}" [queryParams]="{tab: 'portfolio'}" class="item" suiTabHeader="2">PORTFOLIO</a>
-                    <a routerLink="/vendor/{{vendor.Id}}" [queryParams]="{tab: 'reviews'}" class="item" suiTabHeader="3" [isActive]="tabActive">REVIEWS</a>
-                    <a routerLink="/vendor/{{vendor.Id}}" [queryParams]="{tab: 'contacts'}" class="item" suiTabHeader="4">CONTACTS</a>
-                </div>
-                <div class="row">
-                    <div class="ui equal width grid container">
+        <div class="ui grid container">
+            <div class="row">
+                <div class="sixteen wide column container">
+                    <sui-tabset *ngIf="vendor !== undefined">
+                        <div class="ui pointing secondary menu">
+                            <a routerLink="/vendor/{{vendor.Id}}" [queryParams]="{tab: 'info'}" class="item" suiTabHeader="1">INFO</a>
+                            <a routerLink="/vendor/{{vendor.Id}}" [queryParams]="{tab: 'portfolio'}" class="item" suiTabHeader="2">PORTFOLIO</a>
+                            <a routerLink="/vendor/{{vendor.Id}}" [queryParams]="{tab: 'reviews'}" class="item" suiTabHeader="3" [isActive]="tabActive">REVIEWS</a>
+                            <a routerLink="/vendor/{{vendor.Id}}" [queryParams]="{tab: 'contacts'}" class="item" suiTabHeader="4">CONTACTS</a>
+                        </div>
                         <div class="row">
-                            <div class="container column">
-                                <div class="ui segment" suiTabContent="1">
-                                    <app-vendor-profile-info [vendor]="vendor" (notify)='onWorksLoaded($event)'></app-vendor-profile-info>
-                                </div>
-                                <div class="container column">
+                            <div class="two column stackable ui grid">
+                                <div class="ten wide column">
+                                    <div class="ui segment" suiTabContent="1">
+                                        <app-vendor-profile-info [vendor]="vendor" (notify)='onWorksLoaded($event)'></app-vendor-profile-info>
+                                    </div>
                                     <div class="ui segment" suiTabContent="2">
                                         <app-vendor-profile-portfolio [vendorId]="vendor.Id"></app-vendor-profile-portfolio>
                                     </div>
-                                </div>
-                                <div class="container column">
                                     <div class="ui segment" suiTabContent="3">
                                         <app-vendor-profile-reviews [vendorId]="vendor.Id"></app-vendor-profile-reviews>
                                     </div>
-                                </div>
-                                <div class="container column">
                                     <div class="ui segment" suiTabContent="4">
                                         <app-vendor-profile-contacts [vendorId]="vendor.Id" [accountId]="vendor.AccountId" [isGuest]="isGuest"></app-vendor-profile-contacts>
                                     </div>
-                                </div>
-                            </div>
-                            <div *ngIf="isUser||isGuest" class="six wide column">
-                                <div class="ui segment">
-                                    <app-sign-block *ngIf="isGuest"></app-sign-block>
-                                    <app-book #bookComponent *ngIf="!isGuest" [routePath]="routePath" [routeId]="routeid" [works]="works"></app-book>
+                                    <div *ngIf="isUser||isGuest" class="six wide column">
+                                        <div class="ui segment">
+                                            <app-sign-block *ngIf="isGuest"></app-sign-block>
+                                            <app-book #bookComponent *ngIf="!isGuest" [routePath]="routePath" [routeId]="routeid" [works]="works"></app-book>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </sui-tabset>
                 </div>
-            </sui-tabset>
+            </div>
         </div>
     </div>
 </div>
