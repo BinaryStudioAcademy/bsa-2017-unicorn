@@ -1,8 +1,8 @@
 <link rel="stylesheet" href="https://unpkg.com/semantic-ui-calendar/dist/calendar.min.css">
 
 <div *ngIf="company !== undefined" class="flex-container">
-    <form name="companyForm" #companyForm="ngForm" class="container">
-        <div class="main-information">
+    <form name="companyForm" #companyForm="ngForm" class="two stackable column">
+        <div class="column">
             <div class="ui form">
                 <div class="field">
                     <label>Company name</label>
@@ -26,18 +26,20 @@
                 </div>
             </div>
         </div>
-        <div class="map">
-            <div class="map" *ngIf="map !== undefined">
-                <div class="ui form">
-                    <div class="field">
-                        <label>Change your location</label>
-                        <div class="ui input">
-                            <input places-auto-complete (initialized$)="initialized($event)" (place_changed)="placeChanged($event)" [types]="['geocode']" placeholder="TYPE HERE..." />
+        <div class="column">
+            <div class="map">
+                <div class="map" *ngIf="map !== undefined">
+                    <div class="ui form">
+                        <div class="field">
+                            <label>Change your location</label>
+                            <div class="ui input">
+                                <input places-auto-complete (initialized$)="initialized($event)" (place_changed)="placeChanged($event)" [types]="['geocode']" placeholder="TYPE HERE..." />
+                            </div>
+                            <ngui-map class="map" zoom="14" [center]="position" style="margin-top: 5px">
+                                <marker [position]="position" [draggable]="true" (dragend)="markerDragged($event)">
+                                </marker>
+                            </ngui-map>
                         </div>
-                        <ngui-map class="map" zoom="14" [center]="position" style="margin-top: 5px">
-                            <marker [position]="position" [draggable]="true" (dragend)="markerDragged($event)">
-                            </marker>
-                        </ngui-map>
                     </div>
                 </div>
             </div>

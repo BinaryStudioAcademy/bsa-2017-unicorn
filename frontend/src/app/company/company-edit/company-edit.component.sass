@@ -55,3 +55,24 @@ div
 .ui.dimmer
     background-color: rgba(0,0,0,.6);
     z-index: 0;
+
+
+$small: 550px;
+$large: 660px;
+
+@mixin respond-to($media) 
+  @if $media == handhelds 
+    @media only screen and (max-width: $small) { @content; }
+  
+  @else if $media == medium-screens 
+    @media only screen and (min-width: $small + 1) and (max-width: $large - 1) { @content; }
+  
+  @else if $media == wide-screens 
+    @media only screen and (min-width: $large) { @content; }
+  
+
+
+.ui.menu
+  @include respond-to(handhelds) { font-size: 0.55rem!important ;}
+  @include respond-to(medium-screens) { font-size: 0.8rem!important ; }
+  @include respond-to(wide-screens) { font-size: 1rem!important ; }
