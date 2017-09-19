@@ -21,8 +21,12 @@
                 <a (click)="createTasks(book.Id)" class="ui button accept-btn" [ngClass]="{'loading': loads[book.Id], 'disabled': loads[book.Id] || someFormOpened}">Create tasks</a>
             </div>
             <div *ngIf="isVendorAssigned(book.Id)">
-                <span>DONE/ALL</span>
-                <h4 class="cursor-pointer" (click)="toggleTaskList(book.Id)">{{calcFinishedTasks(book.Id)}}/{{calcAllTasks(book.Id)}}</h4>
+                <a class="ui button accept-btn" 
+                  *ngIf="calcFinishedTasks(book.Id) === calcAllTasks(book.Id)"
+                  (click)="finish(book.Id)"
+                  [ngClass]="{'loading': loads[book.Id]}">Finish</a>
+                <span *ngIf="calcFinishedTasks(book.Id) !== calcAllTasks(book.Id)">DONE/ALL</span>
+                <h4 class="cursor-pointer count-tasks" (click)="toggleTaskList(book.Id)">{{calcFinishedTasks(book.Id)}}/{{calcAllTasks(book.Id)}}</h4>
             </div>
         </div>
       </div>

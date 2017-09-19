@@ -396,7 +396,7 @@ namespace Unicorn.Core.Services
             }
 
             _unitOfWork.BookRepository.Update(book);
-            await CheckBooks(book);
+            //await CheckBooks(book);
             await _unitOfWork.SaveAsync();
 
             if (isStatusChanged)

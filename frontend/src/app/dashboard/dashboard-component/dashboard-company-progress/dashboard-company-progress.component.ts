@@ -117,6 +117,23 @@ export class DashboardCompanyProgressComponent implements OnInit, OnDestroy {
     // });
   }
 
+  finish(id: number) {
+    let book: BookCard = this.books.filter(b => b.Id == id)[0];
+    book.Status = BookStatus.Finished;
+    this.loads[book.Id] = true;
+    this.dashboardService.update(book).then(resp => {
+      this.dashboardEventsService.changeStatusToFinished();
+      this.books.splice(this.books.findIndex(b => b.Id === id), 1);
+      this.loads[book.Id] = false;
+      this.dashMessaging.changeProgress();
+      this.toastr.success('Finished task');
+    })
+    .catch(err => {
+      this.loads[book.Id] = false;      
+      this.toastr.error('Cannot finish task');
+    });
+  }
+
   getEndDate(book: BookCard): string {
     let date = this.datePipe.transform(book.Date, 'dd/MM/yyyy');
     let endDate = this.datePipe.transform(book.EndDate, 'dd/MM/yyyy');
@@ -273,8 +290,10 @@ export class DashboardCompanyProgressComponent implements OnInit, OnDestroy {
   }
 
   restoreAvailableVendorsFromBookIdShort(id: number) {
-    let existingTasks = this.shortTasks.filter(t => t.BookId === id);
-    this.availableVendors = this.vendors.filter(v => existingTasks.findIndex(t => t.VendorId === v.Id) === -1);
+    let existingShortTasks = this.shortTasks.filter(t => t.BookId === id);
+    let existingTasks = this.tasks.filter(t => t.ParentBookId === id);
+    this.availableVendors = this.vendors.filter(v => existingShortTasks.findIndex(t => t.VendorId === v.Id) === -1);
+    this.availableVendors = this.availableVendors.filter(v => existingTasks.findIndex(t => t.Vendor.Id === v.Id) === -1);
   }
 
   getVendorIcon(task: ShortTask): string {
