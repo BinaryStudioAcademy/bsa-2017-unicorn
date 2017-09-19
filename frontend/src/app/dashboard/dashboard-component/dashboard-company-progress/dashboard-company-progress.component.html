@@ -48,7 +48,7 @@
                   <a class="ui basic button assign-btn" (click)="reassign(task)">Reassign</a>
                 </td>
               </tr>
-              <tr>
+              <!-- <tr>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -56,18 +56,21 @@
                 <td class="right aligned">
                   <a (click)="createTasks(book.Id)" class="ui basic button assign-btn" [ngClass]="{'loading': loads[book.Id], 'disabled': loads[book.Id] || someFormOpened}">Add tasks</a>
                 </td>
-              </tr>
+              </tr> -->
             </tbody>
           </table>
         </div>
       </div>
-      <!-- <div class="row no-padd-top" *ngIf="isVendorAssigned(book.Id) && taskListOpened[book.Id]">
+      <div class="row no-padd-top" *ngIf="isVendorAssigned(book.Id) && taskListOpened[book.Id]">
         <div class="sixteen wide column">
           <div class="flex-right">
-            <a (click)="createTasks(book.Id)" class="ui button accept-btn" [ngClass]="{'loading': loads[book.Id], 'disabled': loads[book.Id] || someFormOpened}">Add tasks</a>
+            <a (click)="createTasks(book.Id)" 
+              class="ui basic button assign-btn" 
+              style="margin-right: 2%"
+              [ngClass]="{'loading': loads[book.Id], 'disabled': loads[book.Id] || someFormOpened}">Add tasks</a>
           </div>
         </div>
-      </div> -->
+      </div>
       <div class="ui divider no-bottom-margin" *ngIf="taskFormOpen[book.Id]"></div>
       <div class="row no-padd-bottom" *ngIf="taskFormOpen[book.Id]">
         <div class="vendor-assign-div sixteen wide column">

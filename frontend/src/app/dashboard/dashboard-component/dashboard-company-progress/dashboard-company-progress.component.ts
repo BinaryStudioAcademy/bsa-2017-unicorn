@@ -234,7 +234,7 @@ export class DashboardCompanyProgressComponent implements OnInit, OnDestroy {
     this.assignLoader = true;
     this.dashboardService.createTasks(this.shortTasks).then(resp => {
       this.toastr.success("Tasks created");
-      this.shortTasks = [];
+      
       this.restoreAvailableVendors();
       this.loadData().then(() => {
         this.assignLoader = false;
@@ -243,6 +243,7 @@ export class DashboardCompanyProgressComponent implements OnInit, OnDestroy {
         this.taskFormOpened = false;
         this.someFormOpened = false;
         this.editMode = false;
+        this.shortTasks = [];
       });
     }).catch(err => {
       this.toastr.error("Problems");
@@ -265,8 +266,8 @@ export class DashboardCompanyProgressComponent implements OnInit, OnDestroy {
   }
 
   restoreAvailableVendorsFromBookId(id: number) {
-    let existingTasks = this.shortTasks.filter(t => t.BookId === id);
-    this.availableVendors = this.vendors.filter(v => existingTasks.findIndex(t => t.VendorId === v.Id) === -1);
+    let existingTasks = this.tasks.filter(t => t.ParentBookId === id);
+    this.availableVendors = this.vendors.filter(v => existingTasks.findIndex(t => t.Vendor.Id === v.Id) === -1);
   }
 
   getVendorIcon(task: ShortTask): string {
