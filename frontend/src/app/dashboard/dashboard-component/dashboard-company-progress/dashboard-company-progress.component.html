@@ -21,7 +21,7 @@
                 <a (click)="createTasks(book.Id)" class="ui button accept-btn" [ngClass]="{'loading': loads[book.Id], 'disabled': loads[book.Id] || someFormOpened}">Create tasks</a>
             </div>
             <div *ngIf="isVendorAssigned(book.Id)">
-                <span>PROGRESS/DONE</span>
+                <span>DONE/ALL</span>
                 <h4 class="cursor-pointer" (click)="toggleTaskList(book.Id)">{{calcFinishedTasks(book.Id)}}/{{calcAllTasks(book.Id)}}</h4>
             </div>
         </div>
@@ -40,6 +40,7 @@
                     <a class="cursor-pointer" (click)="showReason(task.DeclinedReason)">Why?</a>
                   </span>
                 </td>
+                <td *ngIf="task.Status == 4"></td>
                 <td class="right aligned" *ngIf="task.Status == 1 || task.Status == 0">
                   <a class="ui basic button assign-btn" (click)="decline(task.Id)">Decline</a>
                 </td>
@@ -52,24 +53,23 @@
         </div>
       </div>
       <div class="ui divider no-bottom-margin" *ngIf="taskFormOpen[book.Id]"></div>
-      <div class="row no-padd-top no-padd-bottom" *ngIf="taskFormOpen[book.Id]">
+      <div class="row no-padd-bottom" *ngIf="taskFormOpen[book.Id]">
         <div class="vendor-assign-div sixteen wide column">
           <div class="ui grid">
               <div class="six wide column">
                 <div class="task-header">
-                  <span><h5>TASKS <i class="ui icon green add add-icon" (click)="newTask(book.Id)"></i></h5></span>
-                  
+                  <span><h5>VENDORS &nbsp;<i class="ui icon green add add-icon" (click)="newTask(book.Id)"></i></h5></span>
                 </div>
                 <div class="task-list">
-                  <div class="task-item" *ngFor="let task of shortTasks" (click)="editTask(task)">
+                  <div class="task-item" (click)="editTask(task)" *ngFor="let task of shortTasks">
                     <div>
                       <img class="ui mini circular image task-item-image" src="{{getVendorAvatar(task)}}">
                     </div>
                     <div>
-                      <span class="task-item-span">{{task.Description}}</span>
+                      <span class="task-item-span">{{getVendorFio(task)}}</span>
                     </div>
-                    <div>
-                      <span class="task-item-span">{{task.Status}}</span>
+                    <div class="task-item-del">
+                      <i (click)="deleteTask(task)" class="ui icon red close"></i>
                     </div>
                   </div>
                 </div>
@@ -117,10 +117,13 @@
           </div>
         </div>
       </div>
-      <div class="ui divider" *ngIf="taskFormOpen[book.Id]"></div>
-      <div class="row" *ngIf="taskFormOpen[book.Id]">
-        <div class="right aligned column">
-          <div class="field">
+      <div class="ui divider no-bottom-margin" *ngIf="taskFormOpen[book.Id]"></div>
+      <div class="sixteen wide column vendor-assign-actions" *ngIf="taskFormOpen[book.Id]">
+        <div class="flex-right">
+          <div class="">
+            <a class="ui button simple" (click)="cancelAssign(book.Id)">CANCEL</a>
+          </div>
+          <div class="">
             <a class="ui button accept-btn" [ngClass]="{'disabled': shortTasks.length === 0, 'loading': assignLoader}" (click)="asignVendors(book.Id)">ASSIGN VENDORS</a>
           </div>
         </div>
@@ -193,7 +196,7 @@
                 </sui-select-option>
               </sui-select>
             </div>
-          <a class="ui fluid button accept-btn" [ngClass]="{'disabled': form.invalid}" (click)="reassignConfirm()">CONFIRM</a>
+          <a class="ui fluid button accept-btn" [ngClass]="{'disabled': form.invalid, 'loading': reassignLoader}" (click)="reassignConfirm()">CONFIRM</a>
         </form>
       </div>
   </div>

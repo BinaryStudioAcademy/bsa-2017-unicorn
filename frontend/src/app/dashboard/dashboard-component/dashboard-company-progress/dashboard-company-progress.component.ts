@@ -154,6 +154,7 @@ export class DashboardCompanyProgressComponent implements OnInit, OnDestroy {
   assignLoader: boolean;
   editMode: boolean;
   loader: boolean;
+  reassignLoader: boolean;
 
   shortTasks: ShortTask[] = [];
   taskListOpened: {[bookId: number]: boolean} = {};
@@ -210,6 +211,7 @@ export class DashboardCompanyProgressComponent implements OnInit, OnDestroy {
     this.currentTask.WorkId = this.selectedWork.Id;
     this.currentTask.VendorId = this.selectedVendor.Id;
     if (this.editMode) {
+      
     } else {
       this.availableVendors.splice(this.availableVendors.findIndex(v => v.Id === this.selectedVendor.Id), 1);
       this.shortTasks.push(this.currentTask);
@@ -239,6 +241,15 @@ export class DashboardCompanyProgressComponent implements OnInit, OnDestroy {
     });
   }
 
+  cancelAssign(id: number) {
+    this.shortTasks = [];
+    this.restoreAvailableVendors();
+    this.taskFormOpen[id] = false;
+    this.taskFormOpened = false;
+    this.someFormOpened = false;
+    this.editMode = false;
+  }
+
   restoreAvailableVendors() {
     this.availableVendors = [];
     this.vendors.forEach(v => this.availableVendors.push(v));
@@ -256,13 +267,26 @@ export class DashboardCompanyProgressComponent implements OnInit, OnDestroy {
     this.currentTask = task;
     this.selectedWork = this.works.filter(w => w.Id === task.WorkId)[0];
     let vendor = this.vendors.filter(v => v.Id === task.VendorId)[0];
-    this.availableVendors.push(vendor);
+    if (this.availableVendors.findIndex(v => v.Id === vendor.Id) == -1) {
+      this.availableVendors.push(vendor);
+    }
     this.selectedVendor = vendor;
     this.taskFormOpened = true;
   }
 
+  deleteTask(task: ShortTask) {
+    this.shortTasks.splice(this.shortTasks.findIndex(t => t.VendorId === task.VendorId), 1);
+    this.restoreAvailableVendors();
+    this.taskFormOpened = false;
+    this.editMode = false;
+  }
+
   getVendorAvatar(task: ShortTask): string {
     return this.vendors.filter(v => v.Id === task.VendorId)[0].Avatar;
+  }
+
+  getVendorFio(task: ShortTask): string {
+    return this.vendors.filter(v => v.Id === task.VendorId)[0].FIO;
   }
 
   isVendorAssigned(id: number): boolean {
@@ -335,7 +359,7 @@ export class DashboardCompanyProgressComponent implements OnInit, OnDestroy {
     this.selectedVendor = null;
     this.selectedWork = null;
     this.availableVendors = [];
-    this.vendors.filter(v => !this.isVendorInBook(v, task)).forEach(v => this.availableVendors.push(v));
+    this.vendors.forEach(v => this.availableVendors.push(v));
 
     const config = new TemplateModalConfig<void, void, void>(this.reassignTemplate);
     config.isInverted = true;
@@ -344,24 +368,30 @@ export class DashboardCompanyProgressComponent implements OnInit, OnDestroy {
   }
 
   isVendorInBook(vendor: Vendor, task: CompanyTask): boolean {
+    let result = false;
     this.tasks.filter(t => t.ParentBookId === task.ParentBookId)
       .forEach(t => {
         if (t.Vendor.Id === vendor.Id) {
-          return true;
+          result = true;
         }
       });
-    return false;
+    return result;
   }
 
   reassignConfirm() {
     debugger;
     this.reassignTask.VendorId = this.selectedVendor.Id;
     this.reassignTask.WorkId = this.selectedWork.Id;
+    this.reassignLoader = true;
     this.dashboardService.reassignVendor(this.reassignTask).then(resp => {
       this.currModal.deny(undefined);
+      this.loadData();
+      this.reassignLoader = false;
+      this.toastr.success('Vendor was successfully reassigned');
     })
     .catch(err => {
-
+      this.reassignLoader = false;
+      this.toastr.error('Ops. Cannot reassign vendor');
     });
   }
 
