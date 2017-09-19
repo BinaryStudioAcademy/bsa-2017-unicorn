@@ -110,7 +110,7 @@ export class RegisterCompanyComponent implements OnInit {
   createCalendar():CalendarModel{
     return {
       Id: null,
-      StartDate: this.checkTheDate(new Date()),
+      StartDate: new Date(),
       Events: null,
       EndDate: null,
       ExtraDayOffs: null,
@@ -120,7 +120,7 @@ export class RegisterCompanyComponent implements OnInit {
     }
   }
 
-  checkTheDate(date: Date):Date{    
-      return new Date(date.setHours(date.getHours() - date.getTimezoneOffset() / 60));   
-  }
+  // checkTheDate(date: Date):Date{    
+  //     return new Date(date.setHours(date.getHours() - date.getTimezoneOffset() / 60));   
+  // }
 }

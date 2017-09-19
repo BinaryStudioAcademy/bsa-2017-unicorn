@@ -122,18 +122,21 @@ export class VendorsComponent implements OnInit {
               .find(s => s.Id === sctgId) === undefined));
         }
 
-    let date;
-    let _date = new Date(this.date);    
+    let date; 
+    let timeZone;   
     if(this.date){      
-      date = this.checkTheDate(_date);
+      date = new Date(this.date).toJSON();
+      timeZone = this.date.getTimezoneOffset();
     }
     else{ 
       date = null;
-    }    
+      timeZone = 0;
+    }   
+     
     return this.performerService
       .getPerformersByFilters(
         this.city, this.name, this.role, this.rating, this.ratingCondition, this.withReviews, filteredCategories, this.selectedSubcategories, 
-        this.selectedPage, Number(this.pageSize), this.latitude, this.longitude, this.distance, this.sort, date
+        this.selectedPage, Number(this.pageSize), this.latitude, this.longitude, this.distance, this.sort, date, timeZone
       )
       .then(resp => {
         this.performers = resp.Items;
@@ -150,9 +153,9 @@ export class VendorsComponent implements OnInit {
       .catch(err => this.searchLoading = false);
   }
 
-  checkTheDate(date: Date):string{ 
-    return new Date(date.setHours(date.getHours() - date.getTimezoneOffset() / 60)).toJSON();    
-  }
+  // checkTheDate(date: Date):string{ 
+  //   return new Date(date.setHours(date.getHours() - date.getTimezoneOffset() / 60)).toJSON();    
+  // }
 
   reset() {
     this.city = '';

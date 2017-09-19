@@ -92,14 +92,15 @@ export class SearchComponent implements OnInit {
     this.works = [];
     this.spinner = true;
     let date = null;
-    this.getWorksByBaseFilters(this.category, this.subcategory, date);    
+    let timeZone = 0;
+    this.getWorksByBaseFilters(this.category, this.subcategory, date, timeZone);    
     this.pagedWorks = this.getWorksPage();
     this.searchMarkers = this.getMarkers();
   }
 
-  getWorksByBaseFilters(category: string, subcategory: string, date: string) {
+  getWorksByBaseFilters(category: string, subcategory: string, date: string, timeZone: number) {
     this.works = [];
-    this.searchService.getWorksByBaseFilters(category, subcategory, date)
+    this.searchService.getWorksByBaseFilters(category, subcategory, date, timeZone)
     .then(works => {      
       this.works = works;
       this.pagedWorks = this.getWorksPage();
@@ -233,24 +234,26 @@ export class SearchComponent implements OnInit {
     this.ratingCmp = this.convertRatingType(this.ratingCompare);
     this.selSort = this.convertSortType(this.sort);   
 
-    let date;
-    let _date = new Date(this.date);    
+    let date; 
+    let timeZone;   
     if(this.date){      
-       date = this.checkTheDate(_date);
+      date = new Date(this.date).toJSON();
+      timeZone = this.date.getTimezoneOffset();
     }
     else{ 
       date = null;
-    }  
-    this.getWorksByAdvFilters(this.category, this.subcategory, date,
+      timeZone = 0;
+    }   
+    this.getWorksByAdvFilters(this.category, this.subcategory, date, timeZone,
            this.vendorName, this.ratingCmp, this.rating, this.reviewsChecked,
            this.latitude, this.longitude, this.distance,
            this.selCategories, this.selSubcategories, this.city, this.selSort);
   }
 
 
-  checkTheDate(date: Date):string{        
-    return new Date(date.setHours(date.getHours() - date.getTimezoneOffset() / 60)).toJSON();    
-  }
+  // checkTheDate(date: Date):string{        
+  //   return new Date(date.setHours(date.getHours() - date.getTimezoneOffset() / 60)).toJSON();    
+  // }
 
   convertRatingType(rating: string) {
     switch (rating) {
@@ -276,12 +279,12 @@ export class SearchComponent implements OnInit {
     }
   }
 
-  getWorksByAdvFilters(category: string, subcategory: string, date: string,
+  getWorksByAdvFilters(category: string, subcategory: string, date: string, timeZone: number,
       vendor: string, ratingcompare: string, rating: number, reviews: boolean,
       latitude: number, longitude: number, distance: number,
       categories: string[], subcategories: string[], city: string, sort: number) {
         this.works = [];
-    this.searchService.getWorksByAdvFilters(category, subcategory, date,
+    this.searchService.getWorksByAdvFilters(category, subcategory, date, timeZone,
     vendor, ratingcompare, rating, reviews, latitude, longitude, distance,
     categories, subcategories, city, sort)
     .then(works => {      
