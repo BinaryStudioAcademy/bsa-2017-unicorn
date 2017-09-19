@@ -153,10 +153,6 @@ export class VendorsComponent implements OnInit {
       .catch(err => this.searchLoading = false);
   }
 
-  // checkTheDate(date: Date):string{ 
-  //   return new Date(date.setHours(date.getHours() - date.getTimezoneOffset() / 60)).toJSON();    
-  // }
-
   reset() {
     this.city = '';
     this.name = '';

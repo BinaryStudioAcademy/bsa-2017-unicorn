@@ -248,12 +248,7 @@ export class SearchComponent implements OnInit {
            this.vendorName, this.ratingCmp, this.rating, this.reviewsChecked,
            this.latitude, this.longitude, this.distance,
            this.selCategories, this.selSubcategories, this.city, this.selSort);
-  }
-
-
-  // checkTheDate(date: Date):string{        
-  //   return new Date(date.setHours(date.getHours() - date.getTimezoneOffset() / 60)).toJSON();    
-  // }
+  } 
 
   convertRatingType(rating: string) {
     switch (rating) {

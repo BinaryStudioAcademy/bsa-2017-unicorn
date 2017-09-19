@@ -248,10 +248,6 @@ export class CalendarComponent implements OnInit {
     });
   }
 
-  // checkTheDate(date: Date):Date{     
-  //     return new Date(date.setHours(date.getHours() - date.getTimezoneOffset() / 60));    
-  // }
-
   ngOnDestroy() {
     this.settingsClicked.unsubscribe();
   }
