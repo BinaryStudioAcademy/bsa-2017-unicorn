@@ -25,12 +25,12 @@ namespace Unicorn.Filters
 
                 if (authorization == null)
                 {
-                    context.ErrorResult = new AuthenticationFailureResult("Missing autorization header", request);
+                    context.ErrorResult = new AuthenticationFailureResult("Missing authorization header", request);
                     return;
                 }
                 if (authorization.Scheme != "Bearer")
                 {
-                    context.ErrorResult = new AuthenticationFailureResult("Invalid autorization scheme", request);
+                    context.ErrorResult = new AuthenticationFailureResult("Invalid authorization scheme", request);
                     return;
                 }
                 if (string.IsNullOrEmpty(authorization.Parameter))
