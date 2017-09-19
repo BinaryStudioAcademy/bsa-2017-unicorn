@@ -124,3 +124,18 @@ a {
 .question-lbl>label {
     font-weight: normal;
 }
+
+.account-info > .ui.form {
+    margin: 10px 0px 10px 0px;
+}
+
+.account-info > .ui.button {
+    width: 100%;
+    background-color: #ff8080;
+    color: white;
+}
+
+.account-info > .ui.button:hover{
+    background-color: #ff6666;
+    color: white;
+}
