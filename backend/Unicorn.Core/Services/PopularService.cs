@@ -131,7 +131,7 @@ namespace Unicorn.Core.Services
                 {
                     if (calendar.SeveralTaskPerDay)
                     {
-                        if (date.GetValueOrDefault().DayOfWeek == DayOfWeek.Saturday || date.GetValueOrDefault().DayOfWeek == DayOfWeek.Sunday)
+                        if (weekendDate.DayOfWeek == DayOfWeek.Saturday || weekendDate.DayOfWeek == DayOfWeek.Sunday)
                         {
                             if (calendar.WorkOnWeekend)
                             {
