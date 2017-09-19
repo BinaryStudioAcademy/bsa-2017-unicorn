@@ -105,7 +105,7 @@ export class CalendarComponent implements OnInit {
       }            
       if(this.calendarModel.Events){        
         this.calendarModel.Events.forEach(event => {
-          if(event.Status !== BookStatus.Declined && event.Status !== BookStatus.Finished && event.Status !== BookStatus.Confirmed){
+          if(event.Status === BookStatus.InProgress || event.Status === BookStatus.Accepted){
           this.events.push({
               start: new Date(event.Date),
               title: event.Work.Name,

@@ -220,26 +220,10 @@ namespace Unicorn.Core.Services
                 Type = NotificationType.TaskNotification
             };
 
-            VendorBookDTO _event = null;             
-
-            _event = new VendorBookDTO
-            {
-                Status = BookStatus.Pending,
-                Customer = customer.Person.Name + " " + customer.Person.Surname,
-                Date = book.Date,
-                EndDate = book.EndDate,
-                Description = book.Description,
-                Work = new WorkDTO
-                {
-                    Id = work.Id,
-                    Icon = work.Icon,
-                    Name = work.Name
-                }
-            };
+           
 
             var receiverId = vendor != null ? vendor.Person.Account.Id : company.Account.Id;
-            await _notificationService.CreateAsync(receiverId, notification);
-            await _notificationService.CreateAsync(receiverId, _event);
+            await _notificationService.CreateAsync(receiverId, notification);            
 
 
             /* Send Message */
@@ -424,7 +408,22 @@ namespace Unicorn.Core.Services
                 string newBookStatus = null;
                 switch (book.Status)
                 {
-                    case BookStatus.Accepted:
+                    case BookStatus.Accepted:                        
+                        VendorBookDTO _event = new VendorBookDTO
+                        {
+                            Status = bookDto.Status,
+                            Customer = bookDto.Customer,
+                            Date = bookDto.Date,
+                            EndDate = bookDto.EndDate,
+                            Description = bookDto.Description,
+                            Work = new WorkDTO
+                            {
+                                Id = bookDto.Work.Id,
+                                Icon = bookDto.Work.Icon,
+                                Name = bookDto.Work.Name
+                            }
+                        };
+                        await _notificationService.CreateAsync(receiverId, _event);
                         notification.Title = newBookStatus = "Order accepted";
                         notification.Description = $"{performerName} accepted your order ({book.Work.Name}).";
                         break;
@@ -502,12 +501,12 @@ namespace Unicorn.Core.Services
                         if ((_book.Status == BookStatus.Pending && book.Status != BookStatus.Pending
                         && book.Status != BookStatus.Declined && book.Status != BookStatus.Finished
                         && book.Status != BookStatus.Confirmed
-                        && ((_book.Date >= book.Date && _book.Date <= book.EndDate)
-                        || (_book.EndDate <= book.EndDate && _book.EndDate >= book.Date)))
+                        && ((_book.Date.Date >= book.Date.Date && _book.Date.Date <= book.EndDate.Date)
+                        || (_book.EndDate.Date <= book.EndDate.Date && _book.EndDate.Date >= book.Date.Date)))
                         || (_book.Status == BookStatus.Pending
                         && (book.Status == BookStatus.Accepted || book.Status == BookStatus.InProgress)
-                        && ((book.Date >= _book.Date && book.Date <= _book.EndDate)
-                        || (book.EndDate <= _book.EndDate && book.EndDate >= _book.Date))))
+                        && ((book.Date.Date >= _book.Date.Date && book.Date.Date <= _book.EndDate.Date)
+                        || (book.EndDate.Date <= _book.EndDate.Date && book.EndDate.Date >= _book.Date.Date))))
                         {
                             foreach (var b in books)
                             {
