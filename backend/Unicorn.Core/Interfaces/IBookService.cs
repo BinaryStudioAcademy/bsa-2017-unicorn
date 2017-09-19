@@ -23,5 +23,6 @@ namespace Unicorn.Core.Interfaces
         Task CreateTasks(List<ShortTaskDTO> tasks, long companyId);
         Task<List<BookDTO>> GetCompanyTasks(long companyId);
         Task ReassignCompanyTask(ShortTaskDTO task, long companyId);
+        Task DeleteCompanyTask(long taskId);
     }
 }

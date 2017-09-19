@@ -65,4 +65,8 @@ export class DashboardService {
   reassignVendor(task: ShortTask): Promise<any> {
     return this.dataService.putRequest(`book/company/${this.getId()}/tasks`, task);
   }
+
+  deleteCompanyTask(id: number): Promise<any> {
+    return this.dataService.deleteRequest(`book/tasks/${id}`);
+  }
 }

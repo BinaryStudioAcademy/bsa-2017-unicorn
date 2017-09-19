@@ -42,7 +42,20 @@
    box-shadow: 0 0 0 1px $primary_color;
    color:  $primary_color;
    background: none;
-   width: 8em;
+   width: 9.5em;
+
+.ui.basic.button.del-btn
+   box-shadow: 0 0 0 1px $primary_color;
+   color:  $primary_color;
+   background: none;
+   width: 2em;
+   margin-left: 1px;
+   margin-right: 3px;
+   position: relative
+
+.ui.basic.button.del-btn i.icon.trash:before
+    position: absolute
+    right: 14px
 
 .ui.basic.button.decline-confirm
    box-shadow: 0 0 0 1px $primary_color;
@@ -51,6 +64,12 @@
    width: 100px;
    min-height: 2.8em;
    margin: auto
+
+.ui.basic.button.d-assign-btn
+   box-shadow: 0 0 0 1px $primary_color;
+   color:  $primary_color;
+   background: none;
+   width: 6.5em;
 
 .save-btn
     text-align: center
@@ -68,8 +87,8 @@
     padding-right: 5%!important
 
 .vendor-assign-actions
-    padding-left: 5%!important
-    padding-right: 5%!important
+    padding-left: 3%!important
+    padding-right: 3%!important
 
 .task-item-image
     width: 30px!important

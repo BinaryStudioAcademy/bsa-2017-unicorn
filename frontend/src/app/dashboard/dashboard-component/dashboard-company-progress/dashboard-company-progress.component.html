@@ -45,7 +45,10 @@
                   <a class="ui basic button assign-btn" (click)="decline(task.Id)">Decline</a>
                 </td>
                 <td class="right aligned" *ngIf="task.Status == 2">
-                  <a class="ui basic button assign-btn" (click)="reassign(task)">Reassign</a>
+                  <div class="ui buttons">
+                    <button class="ui basic button d-assign-btn" (click)="reassign(task)">Reassign</button>
+                    <button class="ui basic button del-btn" [ngClass]="{'loading': dloads[task.Id]}" (click)="deleteBook(task)"><i *ngIf="!dloads[task.Id]" class="colored trash icon"></i></button>
+                  </div>
                 </td>
               </tr>
               <!-- <tr>
@@ -67,7 +70,7 @@
             <a (click)="createTasks(book.Id)" 
               class="ui basic button assign-btn" 
               style="margin-right: 2%"
-              [ngClass]="{'loading': loads[book.Id], 'disabled': loads[book.Id] || someFormOpened}">Add tasks</a>
+              [ngClass]="{'loading': loads[book.Id], 'disabled': loads[book.Id] || someFormOpened}">Add vendors</a>
           </div>
         </div>
       </div>

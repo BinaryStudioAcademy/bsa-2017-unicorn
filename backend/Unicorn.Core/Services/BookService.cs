@@ -681,5 +681,13 @@ namespace Unicorn.Core.Services
 
             await _unitOfWork.SaveAsync();
         }
+
+        public async Task DeleteCompanyTask(long taskId)
+        {
+            var task = await _unitOfWork.BookRepository.GetByIdAsync(taskId);
+            task.ParentBookId = 0;
+            _unitOfWork.BookRepository.Update(task);
+            await _unitOfWork.SaveAsync();
+        }
     }
 }

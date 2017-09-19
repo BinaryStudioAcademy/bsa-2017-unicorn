@@ -159,5 +159,12 @@ namespace Unicorn.Controllers
         {
             return await _bookService.GetCompanyTasks(id);
         }
+
+        [HttpDelete]
+        [Route("book/tasks/{id}")]
+        public async Task DeleteTask(long id)
+        {
+            await _bookService.DeleteCompanyTask(id);
+        }
     }
 }

@@ -162,6 +162,8 @@ export class DashboardCompanyProgressComponent implements OnInit, OnDestroy {
   shortTasks: ShortTask[] = [];
   taskListOpened: {[bookId: number]: boolean} = {};
 
+  dloads: {[bookId: number]: boolean} = {};
+
   vendors: Vendor[] = [];
   availableVendors: Vendor[] = [];
   selectedVendor: Vendor;
@@ -205,7 +207,7 @@ export class DashboardCompanyProgressComponent implements OnInit, OnDestroy {
       WorkId: null,
       VendorId: null
     };
-    this.restoreAvailableVendorsFromBookId(bookId);
+    this.restoreAvailableVendorsFromBookIdShort(bookId);
     this.taskFormOpened = true;
     this.selectedWork = null;
     this.selectedVendor = null;
@@ -268,6 +270,11 @@ export class DashboardCompanyProgressComponent implements OnInit, OnDestroy {
   restoreAvailableVendorsFromBookId(id: number) {
     let existingTasks = this.tasks.filter(t => t.ParentBookId === id);
     this.availableVendors = this.vendors.filter(v => existingTasks.findIndex(t => t.Vendor.Id === v.Id) === -1);
+  }
+
+  restoreAvailableVendorsFromBookIdShort(id: number) {
+    let existingTasks = this.shortTasks.filter(t => t.BookId === id);
+    this.availableVendors = this.vendors.filter(v => existingTasks.findIndex(t => t.VendorId === v.Id) === -1);
   }
 
   getVendorIcon(task: ShortTask): string {
@@ -369,6 +376,19 @@ export class DashboardCompanyProgressComponent implements OnInit, OnDestroy {
       this.reason = null;
       this.currModal.deny(undefined);
       this.toastr.error('Ops. Cannot decline task');
+    });
+  }
+
+  deleteBook(task: CompanyTask) {
+    this.dloads[task.Id] = true;
+    this.dashboardService.deleteCompanyTask(task.Id).then(resp => {
+      this.toastr.success('Deleted task');
+      return this.loadData();
+    }).then(resp => {
+      this.dloads[task.Id] = false;
+    }).catch(err => {
+      this.toastr.error('Ops. Cannot delete task');
+      this.dloads[task.Id] = false;
     });
   }
 
