@@ -60,7 +60,7 @@
             <textarea rows="3" name="desc" placeholder="TELL US ABOUT YOUR TASK" [(ngModel)]="book.description" #desc="ngModel"></textarea>            
         </div>
         <div style="display: flex; justify-content: center;">
-            <button class="ui button" type="submit" (click)="makeOrder()">ORDER</button>
+            <button [ngClass]="{'disabled': bookForm.invalid}" class="ui button" type="submit" (click)="makeOrder()">ORDER</button>
         </div>
     </form>
 </div>
