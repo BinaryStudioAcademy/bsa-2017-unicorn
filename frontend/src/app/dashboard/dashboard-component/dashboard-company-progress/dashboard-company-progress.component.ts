@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild  } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, NgZone } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
 import { BookCard, BookStatus } from '../../../models/dashboard/book-card';
@@ -55,6 +55,7 @@ export class DashboardCompanyProgressComponent implements OnInit, OnDestroy {
   tasks: CompanyTask[];
 
   constructor(
+    private zone: NgZone,
     private dashboardService: DashboardService,
     private dashMessaging: DashMessagingService,
     private notificationService: NotificationService,
@@ -96,6 +97,8 @@ export class DashboardCompanyProgressComponent implements OnInit, OnDestroy {
   }
 
   createTasks(id: number) {
+    let existingTasks = this.tasks.filter(t => t.ParentBookId === id);
+    this.availableVendors = this.vendors.filter(v => existingTasks.findIndex(t => t.Vendor.Id === v.Id) === -1);
     this.taskFormOpen[id] = true;
     this.someFormOpened = true;
     // let book: BookCard = this.books.filter(b => b.Id == id)[0];
@@ -193,6 +196,7 @@ export class DashboardCompanyProgressComponent implements OnInit, OnDestroy {
   reassignTask: ShortTask;
 
   newTask(bookId: number) {
+    this.editMode = false;
     this.currentTask = {
       Id: null,
       BookId: bookId,
@@ -201,6 +205,7 @@ export class DashboardCompanyProgressComponent implements OnInit, OnDestroy {
       WorkId: null,
       VendorId: null
     };
+    this.restoreAvailableVendorsFromBookId(bookId);
     this.taskFormOpened = true;
     this.selectedWork = null;
     this.selectedVendor = null;
@@ -208,10 +213,14 @@ export class DashboardCompanyProgressComponent implements OnInit, OnDestroy {
   }
 
   saveTask(bookId: number) {
+    let oldVend = this.currentTask.VendorId;
     this.currentTask.WorkId = this.selectedWork.Id;
     this.currentTask.VendorId = this.selectedVendor.Id;
     if (this.editMode) {
-      
+      let oldTaskIndex = this.shortTasks.findIndex(t => t.VendorId === oldVend);
+      this.shortTasks[oldTaskIndex].Description = this.currentTask.Description;
+      this.shortTasks[oldTaskIndex].VendorId = this.selectedVendor.Id;
+      this.shortTasks[oldTaskIndex].WorkId = this.selectedWork.Id;
     } else {
       this.availableVendors.splice(this.availableVendors.findIndex(v => v.Id === this.selectedVendor.Id), 1);
       this.shortTasks.push(this.currentTask);
@@ -255,6 +264,11 @@ export class DashboardCompanyProgressComponent implements OnInit, OnDestroy {
     this.vendors.forEach(v => this.availableVendors.push(v));
   }
 
+  restoreAvailableVendorsFromBookId(id: number) {
+    let existingTasks = this.shortTasks.filter(t => t.BookId === id);
+    this.availableVendors = this.vendors.filter(v => existingTasks.findIndex(t => t.VendorId === v.Id) === -1);
+  }
+
   getVendorIcon(task: ShortTask): string {
     debugger;
     let ven = this.vendors.filter(v => v.Id === task.VendorId)
@@ -264,19 +278,29 @@ export class DashboardCompanyProgressComponent implements OnInit, OnDestroy {
 
   editTask(task: ShortTask) {
     this.editMode = true;
-    this.currentTask = task;
-    this.selectedWork = this.works.filter(w => w.Id === task.WorkId)[0];
+    this.currentTask = {
+      Id: null,
+      BookId: task.BookId,
+      DeclinedReason: null,
+      Description: task.Description,
+      WorkId: null,
+      VendorId: task.VendorId
+    };
     let vendor = this.vendors.filter(v => v.Id === task.VendorId)[0];
     if (this.availableVendors.findIndex(v => v.Id === vendor.Id) == -1) {
       this.availableVendors.push(vendor);
     }
-    this.selectedVendor = vendor;
-    this.taskFormOpened = true;
+    this.zone.run(() => {
+      this.selectedVendor = vendor;
+      this.works = this.selectedVendor.Works;
+      this.selectedWork = this.works.filter(w => w.Id === task.WorkId)[0];
+      this.taskFormOpened = true;
+    });
   }
 
   deleteTask(task: ShortTask) {
     this.shortTasks.splice(this.shortTasks.findIndex(t => t.VendorId === task.VendorId), 1);
-    this.restoreAvailableVendors();
+    this.restoreAvailableVendorsFromBookId(task.BookId);
     this.taskFormOpened = false;
     this.editMode = false;
   }
