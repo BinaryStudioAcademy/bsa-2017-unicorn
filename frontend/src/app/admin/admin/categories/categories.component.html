@@ -58,9 +58,9 @@
   </div>
 </div>
 
-<sui-accordion [closeOthers]="false">
-  <sui-accordion-panel *ngFor="let category of categories">
-    <div title>
+<sui-accordion [closeOthers]="true">
+  <sui-accordion-panel [(isOpen)]="openedCategoryPanels[category.Id]" *ngFor="let category of categories">
+    <div title (click)="onCategoryPanelOpen()">
       <div *ngIf="category !== selectedCategory; else categoryEdit" [ngClass]="{'disabled': isCategoryOnPending(category)}" class="category-title">
         <div class="category-icon">
           <img class="ui circular image" src="{{category.Icon}}">

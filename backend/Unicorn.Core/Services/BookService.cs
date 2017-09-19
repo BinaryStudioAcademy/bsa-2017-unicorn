@@ -191,7 +191,7 @@ namespace Unicorn.Core.Services
                     .Include(v => v.Person.Account)
                     .SingleAsync(v => v.Id == book.ProfileId);
             }
-            
+
             Book _book = new Book()
             {
                 IsDeleted = false,
@@ -208,8 +208,8 @@ namespace Unicorn.Core.Services
             };
 
             _unitOfWork.BookRepository.Create(_book);
-            await _unitOfWork.SaveAsync();          
-            
+            await _unitOfWork.SaveAsync();
+
             /* Send Notification */
             var notification = new NotificationDTO()
             {
@@ -220,8 +220,11 @@ namespace Unicorn.Core.Services
                 Type = NotificationType.TaskNotification
             };
 
+           
+
             var receiverId = vendor != null ? vendor.Person.Account.Id : company.Account.Id;
-            await _notificationService.CreateAsync(receiverId, notification);
+            await _notificationService.CreateAsync(receiverId, notification);            
+
 
             /* Send Message */
             string msg = EmailTemplate.NewOrderTemplate(_book.Customer.Person.Name, _book.Customer.Person.Surname, _book.Work?.Name, book.CustomerId);
@@ -406,7 +409,22 @@ namespace Unicorn.Core.Services
                 string newBookStatus = null;
                 switch (book.Status)
                 {
-                    case BookStatus.Accepted:
+                    case BookStatus.Accepted:                        
+                        VendorBookDTO _event = new VendorBookDTO
+                        {
+                            Status = bookDto.Status,
+                            Customer = bookDto.Customer,
+                            Date = bookDto.Date,
+                            EndDate = bookDto.EndDate,
+                            Description = bookDto.Description,
+                            Work = new WorkDTO
+                            {
+                                Id = bookDto.Work.Id,
+                                Icon = bookDto.Work.Icon,
+                                Name = bookDto.Work.Name
+                            }
+                        };
+                        await _notificationService.CreateAsync(receiverId, _event);
                         notification.Title = newBookStatus = "Order accepted";
                         notification.Description = $"{performerName} accepted your order ({book.Work.Name}).";
                         break;
@@ -484,12 +502,12 @@ namespace Unicorn.Core.Services
                         if ((_book.Status == BookStatus.Pending && book.Status != BookStatus.Pending
                         && book.Status != BookStatus.Declined && book.Status != BookStatus.Finished
                         && book.Status != BookStatus.Confirmed
-                        && ((_book.Date >= book.Date && _book.Date <= book.EndDate)
-                        || (_book.EndDate <= book.EndDate && _book.EndDate >= book.Date)))
+                        && ((_book.Date.Date >= book.Date.Date && _book.Date.Date <= book.EndDate.Date)
+                        || (_book.EndDate.Date <= book.EndDate.Date && _book.EndDate.Date >= book.Date.Date)))
                         || (_book.Status == BookStatus.Pending
                         && (book.Status == BookStatus.Accepted || book.Status == BookStatus.InProgress)
-                        && ((book.Date >= _book.Date && book.Date <= _book.EndDate)
-                        || (book.EndDate <= _book.EndDate && book.EndDate >= _book.Date))))
+                        && ((book.Date.Date >= _book.Date.Date && book.Date.Date <= _book.EndDate.Date)
+                        || (book.EndDate.Date <= _book.EndDate.Date && book.EndDate.Date >= _book.Date.Date))))
                         {
                             foreach (var b in books)
                             {

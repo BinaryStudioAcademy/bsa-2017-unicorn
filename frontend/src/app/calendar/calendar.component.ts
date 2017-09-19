@@ -11,6 +11,7 @@ import { BookStatus } from "../models/book/book.model";
 import { CalendarEventsService } from "../services/events/calendar-events.service";
 import { Subscription } from "rxjs/Subscription";
 import { WeekDay } from "calendar-utils/dist/calendar-utils";
+import { NotificationService } from "../services/notifications/notification.service";
 
 export interface IDayContext {
   date: Date,
@@ -61,19 +62,36 @@ export class CalendarComponent implements OnInit {
   view: string = 'month';  
   viewDate: Date = new Date();    
 
-  //refresh: Subject<any> = new Subject();
+  refresh: Subject<any> = new Subject();
 
   constructor(
     private tokenHelper: TokenHelperService,
     private calendarService: CalendarService,
     private modalService: SuiModalService,
     private calendarEventsService: CalendarEventsService,
-    private zone: NgZone,) { }
+    private notificationService: NotificationService) { }
 
   ngOnInit() {   
     this.settingsClicked = this.calendarEventsService.settingsClickEvent$.subscribe(() => {      
       this.openSettingsModal();
     })
+
+    this.notificationService.listen<VendorBook>("RefreshCalendarsEvents", res => {   
+      this.events.push({
+        start: new Date(res.Date),
+        title: res.Work.Name,
+        end: new Date(res.EndDate),        
+        color: colors.blue,
+        meta: {
+          status: BookStatus[res.Status],
+          description: res.Description,
+          customer: res.Customer,
+          customerPhone: res.CustomerPhone,
+          workIcon: res.Work.Icon
+        }
+      }); 
+      this.refresh.next();       
+    });
     
 
     this.calendarService.getCalendarByAccount(this.accountId)
@@ -85,9 +103,9 @@ export class CalendarComponent implements OnInit {
       else{
         this.weekendDays = [0,6];
       }            
-      if(this.calendarModel.Events){
+      if(this.calendarModel.Events){        
         this.calendarModel.Events.forEach(event => {
-          if(event.Status !== BookStatus.Declined && event.Status !== BookStatus.Finished && event.Status !== BookStatus.Confirmed){
+          if(event.Status === BookStatus.InProgress || event.Status === BookStatus.Accepted){
           this.events.push({
               start: new Date(event.Date),
               title: event.Work.Name,
@@ -125,12 +143,10 @@ export class CalendarComponent implements OnInit {
     config.context = {date:day.date, events:events, day: day};
     config.isInverted = true;
     config.size = ModalSize.Normal;
-    this.activeModal = this.modalService.open(config).onDeny(() => {
-      this.zone.run(() => this.activeModal.deny(null));
-    });    
+    this.activeModal = this.modalService.open(config);    
   }
 
-  openSettingsModal(){    
+  openSettingsModal(){
     const config = new TemplateModalConfig<ISettingsContext, void, void>(this.settingsModalTemplate);
     config.context = {
       startDate: new Date(this.calendarModel.StartDate),
@@ -140,19 +156,16 @@ export class CalendarComponent implements OnInit {
     };
     config.isInverted = true;
     config.size = ModalSize.Tiny;
-    this.activeModal = this.modalService.open(config).onDeny(() => {
-      this.zone.run(() => this.activeModal.deny(null));
-    });
+    this.activeModal = this.modalService.open(config);    
   }
 
-  closeSettingsModal(context: any){ 
-    debugger;  
+  closeSettingsModal(context: any){    
     this.isChangedWorktime = true;
     if(context.startDate){
-    this.calendarModel.StartDate = this.checkTheDate(new Date(context.startDate));
+    this.calendarModel.StartDate = new Date(context.startDate);
     }    
     if(context.endDate){
-      this.calendarModel.EndDate = this.checkTheDate(new Date(context.endDate));
+      this.calendarModel.EndDate = new Date(context.endDate);
     }
     else{
       this.calendarModel.EndDate = null;
@@ -170,49 +183,47 @@ export class CalendarComponent implements OnInit {
     }
     this.calendarService.saveCalendar(this.calendarModel).then(() => {
       this.isChangedWorktime = false;
-      this.zone.run(() => this.activeModal.deny(null));     
+      this.activeModal.deny(null);     
     }); 
   }
 
   closeDayModal(day: any){     
     if(day.isWeekend !== this.wasWeekend){
       this.isSavingWeekend = true;      
-      let _currentDate = this.checkTheDate(new Date(day.date)).toJSON(); 
+      // let _currentDate = this.checkTheDate(new Date(day.date)).toJSON(); 
       if(day.isWeekend && ((day.date.getDay() !== 6 && day.date.getDay() !== 0) ||
         ((day.date.getDay() === 6 || day.date.getDay() === 0) && this.calendarModel.WorkOnWeekend))){
-        let _date = new Date(day.date);
         this.calendarModel.ExtraDayOffs.push({
           Id: null,
           CalendarId: this.calendarModel.Id,
-          Day: this.checkTheDate(_date),
+          Day: new Date(day.date),
           DayOff: true
         });
       }      
       else if(!day.isWeekend && (day.date.getDay() === 6 || day.date.getDay() === 0) && !this.calendarModel.WorkOnWeekend){        
-        let _date = new Date(day.date);
         this.calendarModel.ExtraWorkDays.push({
           Id: null,
           CalendarId: this.calendarModel.Id,
-          Day: this.checkTheDate(_date),
+          Day: new Date(day.date),
           DayOff: false
         });        
       }
       else if(!day.isWeekend && (day.date.getDay() === 6 || day.date.getDay() === 0) && this.calendarModel.WorkOnWeekend){   
-        this.calendarModel.ExtraDayOffs = this.calendarModel.ExtraDayOffs.filter(x => new Date(x.Day).toJSON() !== _currentDate);
+        this.calendarModel.ExtraDayOffs = this.calendarModel.ExtraDayOffs.filter(x => new Date(x.Day).toLocaleDateString() !== day.date.toLocaleDateString());
       }
       else if(day.isWeekend && (day.date.getDay() === 6 || day.date.getDay() === 0) && !this.calendarModel.WorkOnWeekend){
-        this.calendarModel.ExtraWorkDays = this.calendarModel.ExtraWorkDays.filter(x => new Date(x.Day).toJSON() !== _currentDate);
+        this.calendarModel.ExtraWorkDays = this.calendarModel.ExtraWorkDays.filter(x => new Date(x.Day).toLocaleDateString() !== day.date.toLocaleDateString());
       }
       else if(!day.isWeekend && (day.date.getDay() !== 6 && day.date.getDay() !== 0)){
-        this.calendarModel.ExtraDayOffs = this.calendarModel.ExtraDayOffs.filter(x => new Date(x.Day).toJSON() !== _currentDate);
+        this.calendarModel.ExtraDayOffs = this.calendarModel.ExtraDayOffs.filter(x => new Date(x.Day).toLocaleDateString() !== day.date.toLocaleDateString());
       }      
       this.calendarService.saveCalendar(this.calendarModel).then(() => {
         this.isSavingWeekend = false;
-        this.zone.run(() => this.activeModal.deny(null));
+        this.activeModal.deny(null);
       }); 
     }
     else{
-      this.zone.run(() => this.activeModal.deny(null)); 
+      this.activeModal.deny(null); 
     }        
     this.wasWeekend = undefined;   
   }
@@ -227,18 +238,18 @@ export class CalendarComponent implements OnInit {
 
   render(mas: any[]){    
     mas.forEach(day => {
-      let _currentDate = this.checkTheDate(new Date(day.date)).toJSON(); 
-      if(this.calendarModel.ExtraWorkDays.find(x => new Date(x.Day).toJSON() == _currentDate)){        
+      // let _currentDate = this.checkTheDate(new Date(day.date)).toJSON(); 
+      if(this.calendarModel.ExtraWorkDays.find(x => new Date(x.Day).toLocaleDateString() == day.date.toLocaleDateString())){        
         day.isWeekend = false;
       }
-      else if(this.calendarModel.ExtraDayOffs.find(x => new Date(x.Day).toJSON() == _currentDate)){
+      else if(this.calendarModel.ExtraDayOffs.find(x => new Date(x.Day).toLocaleDateString() == day.date.toLocaleDateString())){
         day.isWeekend = true;
       }  
     });
   }
 
-  checkTheDate(date: Date):Date{     
-      return new Date(date.setHours(date.getHours() - date.getTimezoneOffset() / 60));    
+  ngOnDestroy() {
+    this.settingsClicked.unsubscribe();
   }
 
 }

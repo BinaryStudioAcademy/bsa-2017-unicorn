@@ -23,13 +23,13 @@ namespace Unicorn.Controllers
 
         [HttpGet]
         [Route("search")]
-        public async Task<List<SearchWorkDTO>> GetPerformersByFilters(  string category, string subcategory, string date,
+        public async Task<List<SearchWorkDTO>> GetPerformersByFilters(  string category, string subcategory, DateTimeOffset? date, int timeZone,
                                                                         string vendor, string ratingcompare, double? rating, bool? reviews,
                                                                         double? latitude, double? longitude, double? distance,
                                                                         [FromUri] string[] categories, [FromUri] string[] subcategories, string city,
                                                                         int? sort  )
         {           
-            return await _searchService.GetWorksByFilters(  category, subcategory, date,
+            return await _searchService.GetWorksByFilters(  category, subcategory, date, timeZone,
                                                             vendor, ratingcompare, rating, reviews,
                                                             latitude, longitude, distance,
                                                             categories, subcategories, city,
@@ -38,9 +38,9 @@ namespace Unicorn.Controllers
 
         [HttpGet]
         [Route("search")]
-        public async Task<List<SearchWorkDTO>> GetPerformersByBaseFilters(string category, string subcategory, string date)
+        public async Task<List<SearchWorkDTO>> GetPerformersByBaseFilters(string category, string subcategory, DateTimeOffset? date, int timeZone)
         {            
-            return await _searchService.GetWorksByBaseFilters(category, subcategory, date);
+            return await _searchService.GetWorksByBaseFilters(category, subcategory, date, timeZone);
         }
 
         [HttpGet]

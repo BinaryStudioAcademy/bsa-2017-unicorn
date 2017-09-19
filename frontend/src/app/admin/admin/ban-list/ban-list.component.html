@@ -2,11 +2,18 @@
 
 <div class="ui fluid grid">
   <div class="row">
-    <div class="eleven wide column">
+    <div class="seven wide column">
       <div class="ui fluid left icon input">
         <input type="text" placeholder="Search..." [(ngModel)]="searchTemplate" (ngModelChange)="load()">
         <i class="circular search link icon"></i>
       </div>
+    </div>
+    <div class="four wide column">
+        <div class="label-box">
+            <div (click)="isBanned = true; load()" [ngClass]="{'selected': isBanned === true}" class="ui horizontal label">Banned</div>
+            <div (click)="isBanned = false; load()" [ngClass]="{'selected': isBanned === false}" class="ui horizontal label">Not banned</div>
+            <div (click)="isBanned = undefined; load()" [ngClass]="{'selected': isBanned === undefined}" class="ui selected horizontal label">All</div>
+        </div>
     </div>
     <div class="two wide right aligned middle aligned column">
         <p style="font-size: 16px;">Page size: </p>

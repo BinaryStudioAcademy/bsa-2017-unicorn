@@ -92,14 +92,15 @@ export class SearchComponent implements OnInit {
     this.works = [];
     this.spinner = true;
     let date = null;
-    this.getWorksByBaseFilters(this.category, this.subcategory, date);    
+    let timeZone = 0;
+    this.getWorksByBaseFilters(this.category, this.subcategory, date, timeZone);    
     this.pagedWorks = this.getWorksPage();
     this.searchMarkers = this.getMarkers();
   }
 
-  getWorksByBaseFilters(category: string, subcategory: string, date: string) {
+  getWorksByBaseFilters(category: string, subcategory: string, date: string, timeZone: number) {
     this.works = [];
-    this.searchService.getWorksByBaseFilters(category, subcategory, date)
+    this.searchService.getWorksByBaseFilters(category, subcategory, date, timeZone)
     .then(works => {      
       this.works = works;
       this.pagedWorks = this.getWorksPage();
@@ -131,7 +132,8 @@ export class SearchComponent implements OnInit {
               const html = start + '<b>' + input + '</b>' + end;
               const tagObj = {
                 Name: tags[j],
-                Value: html,
+                Html: html,
+                Value: arr[i].Name,
                 Group: arr[i].Name,
                 Icon: arr[i].Icon
               };
@@ -146,6 +148,7 @@ export class SearchComponent implements OnInit {
         for (let i = 0; i < arr.length; i++) {
           const tagObj = {
             Name: arr[i].Name,
+            Html: arr[i].Name,
             Value: arr[i].Name,
             Group: '',
             Icon: arr[i].Icon
@@ -167,11 +170,18 @@ export class SearchComponent implements OnInit {
   filterSubcategory() {
     let subcategories = [];
     if (this.category) {
-      subcategories = this.categories.find(c => c.Name === this.category).Subcategories;
+      const category = this.categories.find(c => c.Name === this.category);
+      if (category) {
+        subcategories = category.Subcategories;
+      } else {
+        return;
+      }
     } else {
       subcategories = getAllSubcategories(this.categories);
     }
-    this.filterSubctgs = this.filter(subcategories, this.subcategory);
+    if (subcategories) {
+      this.filterSubctgs = this.filter(subcategories, this.subcategory);
+    }
 
     function getAllSubcategories(categories) {
       let result = [];
@@ -185,13 +195,13 @@ export class SearchComponent implements OnInit {
   }
 
   selectCategory(item) {
-    this.category = this.capitalizeFirstLetter(item.Name);
+    this.category = this.capitalizeFirstLetter(item.Value);
     this.filterCtgs = [];
     this.subcategory = undefined;
   }
 
   selectSubcategory(item) {
-    this.subcategory = this.capitalizeFirstLetter(item.Name);
+    this.subcategory = this.capitalizeFirstLetter(item.Value);
     this.filterSubctgs = [];
   }
 
@@ -224,24 +234,21 @@ export class SearchComponent implements OnInit {
     this.ratingCmp = this.convertRatingType(this.ratingCompare);
     this.selSort = this.convertSortType(this.sort);   
 
-    let date;
-    let _date = new Date(this.date);    
+    let date; 
+    let timeZone;   
     if(this.date){      
-       date = this.checkTheDate(_date);
+      date = new Date(this.date).toJSON();
+      timeZone = this.date.getTimezoneOffset();
     }
     else{ 
       date = null;
-    }  
-    this.getWorksByAdvFilters(this.category, this.subcategory, date,
+      timeZone = 0;
+    }   
+    this.getWorksByAdvFilters(this.category, this.subcategory, date, timeZone,
            this.vendorName, this.ratingCmp, this.rating, this.reviewsChecked,
            this.latitude, this.longitude, this.distance,
            this.selCategories, this.selSubcategories, this.city, this.selSort);
-  }
-
-
-  checkTheDate(date: Date):string{        
-    return new Date(date.setHours(date.getHours() - date.getTimezoneOffset() / 60)).toJSON();    
-  }
+  } 
 
   convertRatingType(rating: string) {
     switch (rating) {
@@ -267,12 +274,12 @@ export class SearchComponent implements OnInit {
     }
   }
 
-  getWorksByAdvFilters(category: string, subcategory: string, date: string,
+  getWorksByAdvFilters(category: string, subcategory: string, date: string, timeZone: number,
       vendor: string, ratingcompare: string, rating: number, reviews: boolean,
       latitude: number, longitude: number, distance: number,
       categories: string[], subcategories: string[], city: string, sort: number) {
         this.works = [];
-    this.searchService.getWorksByAdvFilters(category, subcategory, date,
+    this.searchService.getWorksByAdvFilters(category, subcategory, date, timeZone,
     vendor, ratingcompare, rating, reviews, latitude, longitude, distance,
     categories, subcategories, city, sort)
     .then(works => {      
@@ -463,6 +470,7 @@ export class SearchComponent implements OnInit {
     if ((this.works.length - (this.selectedPage - 1) * Number(this.pageSize)) <= 0) {
       this.selectedPage = 1;
     }
+    this.pageChanged(this.selectedPage);
   }
 
   initialized(autocomplete: any) {

@@ -104,6 +104,11 @@ export class VendorsComponent implements OnInit {
     return Number(this.pageSize);
   }
 
+  pageSizeChanged() {
+    this.selectedPage = 1;
+    this.search();
+  }
+
   search() {
     this.searchLoading = true;
     this.filtersIsOpen = false;
@@ -117,34 +122,35 @@ export class VendorsComponent implements OnInit {
               .find(s => s.Id === sctgId) === undefined));
         }
 
-    let date;
-    let _date = new Date(this.date);    
+    let date; 
+    let timeZone;   
     if(this.date){      
-      date = this.checkTheDate(_date);
+      date = new Date(this.date).toJSON();
+      timeZone = this.date.getTimezoneOffset();
     }
     else{ 
       date = null;
-    }    
+      timeZone = 0;
+    }   
+     
     return this.performerService
       .getPerformersByFilters(
         this.city, this.name, this.role, this.rating, this.ratingCondition, this.withReviews, filteredCategories, this.selectedSubcategories, 
-        this.selectedPage, Number(this.pageSize), this.latitude, this.longitude, this.distance, this.sort, date
+        this.selectedPage, Number(this.pageSize), this.latitude, this.longitude, this.distance, this.sort, date, timeZone
       )
       .then(resp => {
         this.performers = resp.Items;
+        // this.performers = this.performers.concat(resp.Items); // for debugging should be deleted
         this.selectedPage = resp.CurrentPage;
         this.pageSize = resp.PageSize.toString();
         this.totalCount = resp.TotalCount;
+
 
         this.searchLoading = false;
         this.mapRedirect();
         this.ref.detectChanges();
       })
       .catch(err => this.searchLoading = false);
-  }
-
-  checkTheDate(date: Date):string{ 
-    return new Date(date.setHours(date.getHours() - date.getTimezoneOffset() / 60)).toJSON();    
   }
 
   reset() {
@@ -216,5 +222,4 @@ export class VendorsComponent implements OnInit {
     this.selected = per.Name;
     this.scrollToElement(per.PerformerType + per.Id);
   }
-
 }

@@ -372,4 +372,10 @@ export class MiniChatComponent implements OnInit {
     }
   }
 
+  ngOnDestroy() {
+    this.messageDelete.unsubscribe();
+    this.messageCreate.unsubscribe();
+    this.messageRead.unsubscribe();
+  }
+
 }

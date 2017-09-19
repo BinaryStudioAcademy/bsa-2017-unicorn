@@ -11,6 +11,7 @@ import { AccountService } from "../../../services/account.service";
 export class BanListComponent implements OnInit {
 
   accounts: AdminAccountViewModel[];
+  isBanned: boolean;
   page: number = 1;
   pageSize: number = 20;
   totalCount: number = 0;
@@ -26,13 +27,14 @@ export class BanListComponent implements OnInit {
   ngOnInit() {
     this.load();
     this.pendingAccounts = [];
+    this.isBanned = undefined;
   }
 
   load(): void {
     this.isLoaded = false;
     this.pendingAccounts = [];
 
-    this.accountService.searchInBanListByTemplate(this.searchTemplate, this.page, this.pageSize)
+    this.accountService.searchInBanListByTemplate(this.searchTemplate, this.isBanned, this.page, this.pageSize)
       .then(p => {
         this.page = p.CurrentPage;
         this.pageSize = p.PageSize;

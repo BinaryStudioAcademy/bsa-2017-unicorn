@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Unicorn.Core.Interfaces;
 using Unicorn.DataAccess.Entities;
+using Unicorn.DataAccess.Entities.Enum;
 using Unicorn.DataAccess.Interfaces;
 using Unicorn.Shared.DTOs;
 
@@ -14,10 +15,12 @@ namespace Unicorn.Core.Services
     public class ReportService : IReportService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly INotificationService _notificationService;
 
-        public ReportService(IUnitOfWork unitOfWork)
+        public ReportService(IUnitOfWork unitOfWork, INotificationService notificationService)
         {
             _unitOfWork = unitOfWork;
+            _notificationService = notificationService;
         }
 
         public async Task<IEnumerable<ReportDTO>> GetAllAsync()
@@ -38,6 +41,9 @@ namespace Unicorn.Core.Services
         {
             var report = CreateReport(reportDto);
 
+            var accountId = _unitOfWork.AccountRepository.Query.FirstOrDefault(x => x.Role.Type == RoleType.Admin).Id;
+            await _notificationService.CreateAsync(accountId, reportDto);            
+
             _unitOfWork.ReportRepository.Create(report);
             await _unitOfWork.SaveAsync();
 
@@ -47,6 +53,9 @@ namespace Unicorn.Core.Services
         public async Task UpdateAsync(ReportDTO reportDto)
         {
             var report = CreateReport(reportDto);
+
+            var accountId = _unitOfWork.AccountRepository.Query.FirstOrDefault(x => x.Role.Type == RoleType.Admin).Id;
+            await _notificationService.CreateAsync(accountId, reportDto);
 
             _unitOfWork.ReportRepository.Update(report);
             await _unitOfWork.SaveAsync();
@@ -87,7 +96,7 @@ namespace Unicorn.Core.Services
                 ProfileId = reportDto.ProfileId,
                 ProfileName = reportDto.ProfileName,
                 ProfileType = reportDto.ProfileType
-            };
+            };    
         }
     }
 }

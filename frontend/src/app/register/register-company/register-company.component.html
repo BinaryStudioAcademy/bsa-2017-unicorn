@@ -29,14 +29,15 @@
 
             <div class="field">
                 <input required type="number" name="stuff" placeholder="STAFF" [(ngModel)]="staff" #stuff="ngModel">
-                <div *ngIf="stuff.invalid && (stuff.dirty)" class="valid-error">required</div>
+                <div *ngIf="stuff.invalid && (stuff.dirty)" class="valid-error">* Required</div>
             </div>
 
             <div class="field">
                 <div class="ui left icon input">
                     <i class="calendar icon"></i>
-                    <input suiDatepicker placeholder="FOUNDATION" name="foundation" [(ngModel)]="foundation" [pickerMode]="mode">
+                    <input suiDatepicker required placeholder="FOUNDATION" #date="ngModel" name="date" [(ngModel)]="foundation" [pickerMode]="mode">
                 </div>
+                <div *ngIf="date.invalid && (date.touched)" class="valid-error">* Required</div>
             </div>
             <div class="field">
                 <input places-auto-complete id="autocomplete" [types]="['geocode']" placeholder="LOCATION" value={{location.City}}/>

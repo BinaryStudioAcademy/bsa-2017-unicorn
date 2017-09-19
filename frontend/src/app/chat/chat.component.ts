@@ -465,4 +465,10 @@ export class ChatComponent implements OnInit {
       inputEl.value = null;
     }
   }
+
+  ngOnDestroy() {
+    this.dialogCreate.unsubscribe();
+    this.messageCreate.unsubscribe();
+    this.messageRead.unsubscribe();
+  }
 }
