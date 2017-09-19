@@ -95,9 +95,7 @@
     </div>
     <div class="ui divider" *ngIf="isEditOpen"></div>
     <div class="centered row" *ngIf="isEditOpen">
-        <div class="three wide column">
-            <button (click)="selectedWork.Id !== null ? updateWork() : createWork()" [ngClass]="{'disabled': !isWorkValid()}" class="ui basic button"><h5>Save</h5></button>
-        </div>
+        <button (click)="selectedWork.Id !== null ? updateWork() : createWork()" [ngClass]="{'disabled': !isWorkValid()}" class="ui basic button"><h5>Save</h5></button>
     </div>
 </div>
 <div *ngIf="works === undefined || !loader" class="ui active inverted dimmer" style="background-color: rgba(255,255,255,.85)">
