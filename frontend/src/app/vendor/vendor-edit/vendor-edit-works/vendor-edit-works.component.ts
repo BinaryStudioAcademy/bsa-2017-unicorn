@@ -118,6 +118,10 @@ export class VendorEditWorksComponent implements OnInit {
 
     let work = this.selectedWork;
 
+    if (work.Icon === null || work.Icon === '' || work.Icon === undefined) {
+      work.Icon = this.selectedCategory.Icon;
+    }
+
     this.pendingWorks.push(work);
     this.works.push(work)
     this.vendorService.postVendorWork(this.vendorId, this.selectedWork)
