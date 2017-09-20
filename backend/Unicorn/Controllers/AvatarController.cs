@@ -11,7 +11,7 @@ using Unicorn.Filters;
 namespace Unicorn.Controllers
 {
     [EnableCors("*", "*", "*")]
-    //[TokenAuthenticate]
+    [TokenAuthenticate]
     public class AvatarController : ApiController
     {
         private readonly IAvatarService _avatarService;

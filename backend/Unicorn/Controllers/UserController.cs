@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using Unicorn.Core.Interfaces;
+using Unicorn.Filters;
 using Unicorn.Shared.DTOs.User;
 
 namespace Unicorn.Controllers
@@ -49,6 +50,7 @@ namespace Unicorn.Controllers
 
         [HttpPut]
         [Route("{id}")]
+        [TokenAuthenticate]
         public async Task<HttpResponseMessage> UpdateCustomerAsync(long id, [FromBody]UserShortDTO userDTO)
         {
             await _customerService.UpdateCustomerAsync(userDTO);

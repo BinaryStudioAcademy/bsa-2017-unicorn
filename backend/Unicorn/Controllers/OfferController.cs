@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using Unicorn.Core.Interfaces;
+using Unicorn.Filters;
 using Unicorn.Shared.DTOs.Offer;
 
 namespace Unicorn.Controllers
@@ -23,6 +24,7 @@ namespace Unicorn.Controllers
 
         [HttpPost]
         [Route("offer")]
+        [TokenAuthenticate]
         public async Task SendOffersAsync(IEnumerable<ShortOfferDTO> offers)
         {
             
@@ -62,6 +64,7 @@ namespace Unicorn.Controllers
 
         [HttpPut]
         [Route("offer")]
+        [TokenAuthenticate]
         public async Task<HttpResponseMessage> UpdateOfferAsync(OfferDTO offer)
         {
             try
@@ -77,6 +80,7 @@ namespace Unicorn.Controllers
 
         [HttpDelete]
         [Route("offer/{id}")]
+        [TokenAuthenticate]
         public async Task<HttpResponseMessage> DeleteOfferAsync(long id)
         {
             try

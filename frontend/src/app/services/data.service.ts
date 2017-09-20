@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
+import { TokenHelperService } from "./helper/tokenhelper.service";
 
 import 'rxjs/add/operator/toPromise';
 import { Observable } from 'rxjs/Observable';
@@ -37,6 +38,7 @@ export class DataService {
   }
 
   getHeaders(): HttpHeaders {
+    this.setHeader('Authorization','Bearer ' + this.tokenHelper.getToken());
     return new HttpHeaders(this.headers);
   }
 
@@ -44,7 +46,7 @@ export class DataService {
     return JSON.stringify(payload);
   }
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private tokenHelper: TokenHelperService) { }
 
   getData() {
     return this.http.get(environment.apiUrl + 'values');
@@ -52,14 +54,14 @@ export class DataService {
 
   getRequest<T>(url: string): Promise<T> {
     return this.http
-      .get<T>(this.buildUrl(url))
+      .get<T>(this.buildUrl(url), { headers: this.getHeaders() })
       .toPromise()
       .catch(this.handleError);
   }
 
   getFullRequest<T>(url: string): Promise<T> {
     return this.http
-      .get<T>(this.buildUrl(url), { observe: 'response' })
+      .get<T>(this.buildUrl(url), { observe: 'response',  headers: this.getHeaders() })
       .toPromise()
       .catch(this.handleError);
   }

@@ -8,13 +8,14 @@ using System.Web.Http;
 using System.Web.Http.Cors;
 
 using Unicorn.Core.Interfaces;
+using Unicorn.Filters;
 using Unicorn.Shared.DTOs;
 using Unicorn.Shared.DTOs.Subcategory;
 
 namespace Unicorn.Controllers
 {
     [RoutePrefix("categories")]
-    [EnableCors("*", "*", "*")]
+    [EnableCors("*", "*", "*")]    
     public class CategoriesController : ApiController
     {
         public CategoriesController(ICategoryService categoryService, ISubcategoryService subcategoryService)
@@ -34,6 +35,7 @@ namespace Unicorn.Controllers
 
         [HttpPost]
         [Route("")]
+        [TokenAuthenticate]
         public async Task<HttpResponseMessage> Create([FromBody] CategoryDTO dto)
         {
             var result = await _categoryService.CreateAsync(dto);
@@ -59,6 +61,7 @@ namespace Unicorn.Controllers
 
         [HttpPut]
         [Route("{id}")]
+        [TokenAuthenticate]
         public async Task<HttpResponseMessage> Update(long id, [FromBody] CategoryDTO dto)
         {
             var result = await _categoryService.UpdateAsync(dto);
@@ -75,6 +78,7 @@ namespace Unicorn.Controllers
 
         [HttpDelete]
         [Route("{id}")]
+        [TokenAuthenticate]
         public async Task<HttpResponseMessage> RemoveById(long id)
         {
             await _categoryService.RemoveAsync(id);
@@ -100,6 +104,7 @@ namespace Unicorn.Controllers
 
         [HttpPost]
         [Route("{id}/subcategories")]
+        [TokenAuthenticate]
         public async Task<HttpResponseMessage> CreateSubcategory(long id, [FromBody] SubcategoryShortDTO dto)
         {
             var result = await _subcategoryService.CreateAsync(id, dto);
@@ -125,6 +130,7 @@ namespace Unicorn.Controllers
 
         [HttpPut]
         [Route("{categoryId}/subcategories/{id}")]
+        [TokenAuthenticate]
         public async Task<HttpResponseMessage> UpdateSubcategory(long categoryId, long id, [FromBody] SubcategoryShortDTO dto)
         {
             var result = await _subcategoryService.UpdateAsync(dto);
@@ -141,6 +147,7 @@ namespace Unicorn.Controllers
 
         [HttpDelete]
         [Route("{categoryId}/subcategories/{id}")]
+        [TokenAuthenticate]
         public async Task<HttpResponseMessage> RemoveSubcategory(long categoryId, long id)
         {
             await _subcategoryService.RemoveAsync(id);

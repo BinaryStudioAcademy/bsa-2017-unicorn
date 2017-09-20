@@ -8,6 +8,7 @@ using System.Web.Http;
 using System.Web.Http.Cors;
 
 using Unicorn.Core.Interfaces;
+using Unicorn.Filters;
 using Unicorn.Shared.DTOs;
 using Unicorn.Shared.DTOs.Admin;
 using Unicorn.Shared.DTOs.Notification;
@@ -15,7 +16,7 @@ using Unicorn.Shared.DTOs.Notification;
 namespace Unicorn.Controllers
 {
     [RoutePrefix("account")]
-    [EnableCors("*", "*", "*")]
+    [EnableCors("*", "*", "*")]    
     public class AccountController : ApiController
     {
         public AccountController(
@@ -30,6 +31,7 @@ namespace Unicorn.Controllers
 
         [HttpGet]
         [Route("{id}")]
+        [TokenAuthenticate]
         public async Task<HttpResponseMessage> GetProfileById(long id)
         {
             var result = await _accountService.GetProfileInfoAsync(id);
@@ -42,6 +44,7 @@ namespace Unicorn.Controllers
 
         [HttpPost]
         [Route("{id}/ban")]
+        [TokenAuthenticate]
         public async Task<HttpResponseMessage> Ban(long id)
         {
             try
@@ -57,6 +60,7 @@ namespace Unicorn.Controllers
 
         [HttpPost]
         [Route("{id}/unban")]
+        [TokenAuthenticate]
         public async Task<HttpResponseMessage> Unban(long id)
         {
             try
@@ -72,6 +76,7 @@ namespace Unicorn.Controllers
 
         [HttpGet]
         [Route("{id}/notifications")]
+        [TokenAuthenticate]
         public async Task<HttpResponseMessage> GetNotifications(long id)
         {
             var result = await _notificationService.GetByAccountIdAsync(id);
@@ -84,6 +89,7 @@ namespace Unicorn.Controllers
 
         [HttpPut]
         [Route("{id}/notifications/{notificationId}")]
+        [TokenAuthenticate]
         public async Task<HttpResponseMessage> UpdateNotifications(long id, long notificationId, [FromBody]NotificationDTO notificationDto)
         {
             await _notificationService.UpdateAsync(notificationDto);
@@ -93,6 +99,7 @@ namespace Unicorn.Controllers
 
         [HttpDelete]
         [Route("{id}/notifications/{notificationId}")]
+        [TokenAuthenticate]
         public async Task<HttpResponseMessage> RemoveNotifications(long id, long notificationId)
         {
             await _notificationService.RemoveAsync(notificationId);
@@ -109,6 +116,7 @@ namespace Unicorn.Controllers
 
         [HttpGet]
         [Route("banned")]
+        [TokenAuthenticate]
         public async Task<AccountsPage> GetBannedAccounts(int page, int size)
         {
             var banlist = await _adminService.GetAllAsync();
@@ -118,6 +126,7 @@ namespace Unicorn.Controllers
 
         [HttpGet]
         [Route("banned/search")]
+        [TokenAuthenticate]
         public async Task<AccountsPage> GetBannedAccounts(bool isBanned, string template = "", string role = "all", int page = 1, int size = 20)
         {
             var banlist = await _adminService.SearchAsync(template, isBanned, role);
@@ -127,6 +136,7 @@ namespace Unicorn.Controllers
 
         [HttpGet]
         [Route("banned/search")]
+        [TokenAuthenticate]
         public async Task<AccountsPage> GetBannedAccounts(string template = "", string role = "all", int page = 1, int size = 20)
         {
             var banlist = await _adminService.SearchAsync(template, role);
