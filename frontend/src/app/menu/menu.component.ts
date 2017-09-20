@@ -65,6 +65,10 @@ export class MenuComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (this.tokenHelper.isAccountBanned()) {
+      this.signOut();
+    }
+
     this.roleRouter = new RoleRouter();
     if (this.isLogged) {      
       this.accountService.getShortInfo(+this.tokenHelper.getClaimByName("accountid"))

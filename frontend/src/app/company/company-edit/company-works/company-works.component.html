@@ -93,10 +93,8 @@
     </div>
     <div class="ui divider" *ngIf="openedDetailedWindow"></div>
     <div class="centered row" *ngIf="openedDetailedWindow">
-        <div class="three wide column">
-            <button class="ui basic button" (click)="addOrSaveWork()" [ngClass]="{'loading':isLoaded}">
+        <button class="ui basic button" (click)="addOrSaveWork()" [ngClass]="{'loading':isLoaded}">
                         <h5 *ngIf="!isLoaded">Save</h5></button>
-        </div>
     </div>
 </div>
 

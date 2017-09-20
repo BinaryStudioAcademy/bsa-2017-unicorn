@@ -1,5 +1,5 @@
-<div class="main-content">
-    <div *ngIf="company !== undefined">
+<div *ngIf="company !== undefined" class="ui grid container remove-margin-top-bottom">
+    <div class="row remove-padding-top">
         <div class="sixteen wide column container">
             <div id="header" class="ui segment" (mouseenter)="isDimmed = !isDimmed" (mouseleave)="isDimmed = !isDimmed">
                 <img class="ui fluid image" src={{company.Avatar}}>
@@ -12,22 +12,24 @@
                 <input type="file" id="banner-input" accept="image/*" (change)="bannerListener($event)">
             </div>
         </div>
-        <div class="ui grid container">
-            <div class="row">
-                <div class="sixteen wide column container">
-                    <sui-tabset>
-                        <div class="ui pointing secondary menu">
-                            <a routerLink="/company/{{company.Id}}/edit" [queryParams]="{tab: 'info'}" class="item" suiTabHeader="1">EDIT</a>
-                            <a routerLink="/company/{{company.Id}}/edit" [queryParams]="{tab: 'portfolio'}" class="item" suiTabHeader="2">PORTFOLIO</a>
-                            <a routerLink="/company/{{company.Id}}/edit" [queryParams]="{tab: 'vendors'}" class="item" suiTabHeader="3" [isActive]="vendorsTabActive">VENDORS</a>
-                            <a routerLink="/company/{{company.Id}}/edit" [queryParams]="{tab: 'works'}" class="item" suiTabHeader="4" [isActive]="worksTabActive">WORKS</a>
-                            <a routerLink="/company/{{company.Id}}/edit" [queryParams]="{tab: 'messages'}" class="item" suiTabHeader="5" [isActive]="messagesTabActive">MESSAGES
+    </div>
+    <div class="ui grid container">
+        <div class="row">
+            <div class="sixteen wide column container without-padd">
+                <sui-tabset>
+                    <div class="ui pointing secondary menu">
+                        <a routerLink="/company/{{company.Id}}/edit" [queryParams]="{tab: 'info'}" class="item" suiTabHeader="1">EDIT</a>
+                        <a routerLink="/company/{{company.Id}}/edit" [queryParams]="{tab: 'portfolio'}" class="item" suiTabHeader="2">PORTFOLIO</a>
+                        <a routerLink="/company/{{company.Id}}/edit" [queryParams]="{tab: 'vendors'}" class="item" suiTabHeader="3" [isActive]="vendorsTabActive">VENDORS</a>
+                        <a routerLink="/company/{{company.Id}}/edit" [queryParams]="{tab: 'works'}" class="item" suiTabHeader="4" [isActive]="worksTabActive">WORKS</a>
+                        <a routerLink="/company/{{company.Id}}/edit" [queryParams]="{tab: 'messages'}" class="item" suiTabHeader="5" [isActive]="messagesTabActive">MESSAGES
                                 <label *ngIf="unreadDialogCount > 0" class="unread-msg"></label>
                             </a>
-                            <a routerLink="/company/{{company.Id}}/edit" [queryParams]="{tab: 'contacts'}" class="item" suiTabHeader="6">CONTACTS</a>
-                            <a routerLink="/company/{{company.Id}}/edit" [queryParams]="{tab: 'calendar'}" class="item" suiTabHeader="7">CALENDAR</a>
-                            <a routerLink="/company/{{company.Id}}/edit" [queryParams]="{tab: 'charts'}" class="item" suiTabHeader="8" (activate)="activateCharts()">ANALYTICS</a>
-                        </div>
+                        <a routerLink="/company/{{company.Id}}/edit" [queryParams]="{tab: 'contacts'}" class="item" suiTabHeader="6">CONTACTS</a>
+                        <a routerLink="/company/{{company.Id}}/edit" [queryParams]="{tab: 'calendar'}" class="item" suiTabHeader="7">CALENDAR</a>
+                        <a routerLink="/company/{{company.Id}}/edit" [queryParams]="{tab: 'charts'}" class="item" suiTabHeader="8" (activate)="activateCharts()">ANALYTICS</a>
+                    </div>
+                    <div class="row">
                         <div class="ui segment" suiTabContent="1">
                             <app-company-main-information></app-company-main-information>
                         </div>
@@ -52,15 +54,13 @@
                         <div class="ui segment" suiTabContent="8">
                             <app-company-charts></app-company-charts>
                         </div>
-                    </sui-tabset>
-                </div>
+                    </div>
+                </sui-tabset>
             </div>
         </div>
     </div>
+</div>
 
-    <div *ngIf="company === undefined" class="ui active inverted dimmer" style="background-color: rgba(255,255,255,.85)">
-        <div class="ui text loader">Loading</div>
-    </div>
-    <p></p>
-
+<div *ngIf="company === undefined" class="ui active inverted dimmer" style="background-color: rgba(255,255,255,.85)">
+    <div class="ui text loader">Loading</div>
 </div>

@@ -1,5 +1,5 @@
-<div class="main-content">
-    <div *ngIf="company !== undefined">
+<div *ngIf="company !== undefined" class="ui grid container remove-margin-top-bottom">
+    <div class="row remove-padding-top">
         <div class="sixteen wide column container">
             <div id="header" class="ui segment">
                 <img class="ui fluid image" src={{company.Avatar}}>
@@ -17,30 +17,28 @@
                             <a routerLink="/company/{{company.Id}}" [queryParams]="{tab: 'contacts'}" class="item" suiTabHeader="5">Contacts</a>
                         </div>
                         <div class="row">
-                            <div class="ui equal width grid container">
-                                <div class="row">
-                                    <div class="container column">
-                                        <div class="ui segment" suiTabContent="1">
-                                            <company-general-information (notify)='onWorksLoaded($event)'></company-general-information>
-                                        </div>
-                                        <div class="ui segment" suiTabContent="2">
-                                            <company-portfolio></company-portfolio>
-                                        </div>
-                                        <div class="ui segment" suiTabContent="3">
-                                            <company-reviews></company-reviews>
-                                        </div>
-                                        <div class="ui segment" suiTabContent="4">
-                                            <company-vendors></company-vendors>
-                                        </div>
-                                        <div class="ui segment" suiTabContent="5">
-                                            <company-contacts [name]="company.Name" [accountId]="company.AccountId" [isGuest]="isGuest"></company-contacts>
-                                        </div>
+                            <div class="two column stackable ui grid">
+                                <div class="ten wide column">
+                                    <div class="ui segment" suiTabContent="1">
+                                        <company-general-information (notify)='onWorksLoaded($event)'></company-general-information>
                                     </div>
-                                    <div *ngIf="isUser||isGuest" class="six wide column">
-                                        <div class="ui segment">
-                                            <app-sign-block *ngIf="isGuest"></app-sign-block>
-                                            <app-book #bookComponent *ngIf="!isGuest" [routePath]="routePath" [routeId]="routeid" [works]="works"></app-book>
-                                        </div>
+                                    <div class="ui segment" suiTabContent="2">
+                                        <company-portfolio></company-portfolio>
+                                    </div>
+                                    <div class="ui segment" suiTabContent="3">
+                                        <company-reviews></company-reviews>
+                                    </div>
+                                    <div class="ui segment" suiTabContent="4">
+                                        <company-vendors></company-vendors>
+                                    </div>
+                                    <div class="ui segment" suiTabContent="5">
+                                        <company-contacts [name]="company.Name" [accountId]="company.AccountId" [isGuest]="isGuest"></company-contacts>
+                                    </div>
+                                </div>
+                                <div *ngIf="isUser||isGuest" class="six wide column">
+                                    <div class="ui segment">
+                                        <app-sign-block *ngIf="isGuest"></app-sign-block>
+                                        <app-book #bookComponent *ngIf="!isGuest" [routePath]="routePath" [routeId]="routeid" [works]="works"></app-book>
                                     </div>
                                 </div>
                             </div>
@@ -53,5 +51,4 @@
     <div *ngIf="company === undefined" class="ui active inverted dimmer" style="z-index: 0;">
         <div class="ui text loader">Loading</div>
     </div>
-    <p></p>
 </div>

@@ -1,73 +1,66 @@
 <link rel="stylesheet" href="https://unpkg.com/semantic-ui-calendar/dist/calendar.min.css">
 
-<div class="ui equal width grid container">
-    <div class="row">
-        <div class="eight wide column">
-            <div class="ui equal width grid">
-                <div class="row">
-                    <div class="column">
-                        <form name="vendorForm" #vendorForm="ngForm">
-                            <div class="ui form">
-                                <div class="field">
-                                    <label>Name</label>
-                                    <div class="three fields">
-                                        <div class="field">
-                                            <input required type="text" [(ngModel)]="vendor.Name" name="first-name" placeholder="FIRST NAME" #fname="ngModel">
-                                            <div *ngIf="fname.invalid && (fname.dirty)" class="valid-error">* Required</div>
-                                        </div>
-                                        <div class="field">
-                                            <input required type="text" [(ngModel)]="vendor.Surname" name="second-name" placeholder="SURNAME" #surname="ngModel">
-                                            <div *ngIf="surname.invalid && (surname.dirty)" class="valid-error">* Required</div>
-                                        </div>
-                                        <div class="field">
-                                            <input type="text" [(ngModel)]="vendor.MiddleName" name="middle-name" placeholder="MIDDLE NAME (OPTIONAL)" #middlename="ngModel">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="field">
-                                    <label>Birthday</label>
-                                    <div class="ui left icon input">
-                                        <i class="calendar icon"></i>
-                                        <input suiDatepicker pickerMode="date" [(ngModel)]="vendor.Birthday" name="birthday" placeholder="BIRTHDAY">
-                                    </div>
-                                </div>
-                                <div class="field">
-                                    <label>Position</label>
-                                    <input required type="text" [(ngModel)]="vendor.Position" name="position" placeholder="MIDDLE .NET DEVELOPER" #pos="ngModel">
-                                    <div *ngIf="pos.invalid && (pos.dirty)" class="valid-error">* Required</div>
-                                </div>
-                                <div class="ui divider"></div>
-                                <div class="field">
-                                    <label>About me</label>
-                                    <textarea [(ngModel)]="vendor.WorkLetter" name="workLetter" placeholder="FEW WORDS ABOUT YOU AND YOUR WORK" #about="ngModel">
-                                </textarea>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="ui container column">
+<div class="two column stackable ui grid">
+    <div class="column">
+        <form name="vendorForm" #vendorForm="ngForm">
             <div class="ui form">
                 <div class="field">
-                    <label>Help customers find you</label>
-                    <div class="ui icon input">
-                        <input places-auto-complete (initialized$)="initialized($event)" (place_changed)="placeChanged($event)" [types]="['geocode']" placeholder="TYPE HERE..." />
+                    <label>Name</label>
+                    <div class="three fields">
+                        <div class="field">
+                            <input required type="text" [(ngModel)]="vendor.Name" name="first-name" placeholder="FIRST NAME" #fname="ngModel">
+                            <div *ngIf="fname.invalid && (fname.dirty)" class="valid-error">* Required</div>
+                        </div>
+                        <div class="field">
+                            <input required type="text" [(ngModel)]="vendor.Surname" name="second-name" placeholder="SURNAME" #surname="ngModel">
+                            <div *ngIf="surname.invalid && (surname.dirty)" class="valid-error">* Required</div>
+                        </div>
+                        <div class="field">
+                            <input type="text" [(ngModel)]="vendor.MiddleName" name="middle-name" placeholder="MIDDLE NAME (OPTIONAL)" #middlename="ngModel">
+                        </div>
                     </div>
-                    <ngui-map class="map" zoom="14" [center]="position">
-                        <marker [position]="position" [draggable]="true" (dragend)="markerDragged($event)">
-                        </marker>
-                    </ngui-map>
                 </div>
+                <div class="field">
+                    <label>Birthday</label>
+                    <div class="ui left icon input">
+                        <i class="calendar icon"></i>
+                        <input suiDatepicker pickerMode="date" [(ngModel)]="vendor.Birthday" name="birthday" placeholder="BIRTHDAY">
+                    </div>
+                </div>
+                <div class="field">
+                    <label>Position</label>
+                    <input required type="text" [(ngModel)]="vendor.Position" name="position" placeholder="MIDDLE .NET DEVELOPER" #pos="ngModel">
+                    <div *ngIf="pos.invalid && (pos.dirty)" class="valid-error">* Required</div>
+                </div>
+                <div class="ui divider"></div>
+                <div class="field">
+                    <label>About me</label>
+                    <textarea [(ngModel)]="vendor.WorkLetter" name="workLetter" placeholder="FEW WORDS ABOUT YOU AND YOUR WORK" #about="ngModel">
+                                </textarea>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="column">
+        <div class="ui form">
+            <div class="field">
+                <label>Help customers find you</label>
+                <div class="ui icon input">
+                    <input places-auto-complete (initialized$)="initialized($event)" (place_changed)="placeChanged($event)" [types]="['geocode']" placeholder="TYPE HERE..." />
+                </div>
+                <ngui-map class="map" zoom="14" [center]="position">
+                    <marker [position]="position" [draggable]="true" (dragend)="markerDragged($event)">
+                    </marker>
+                </ngui-map>
             </div>
         </div>
     </div>
-    <div class="ui divider"></div>
+</div>
+<div class="ui divider"></div>
+<div class="ui grid">
     <div class="centered row">
-        <div class="centered three wide column" style="align-content:center">
-            <button *ngIf="dataLoaded" (click)="saveVendor()" class="ui basic button"><h5>Save</h5></button>
-            <button *ngIf="!dataLoaded" class="ui loading button">Loading</button>
-        </div>
+        <button *ngIf="dataLoaded" (click)="saveVendor()" class="ui basic button"><h5>Save</h5></button>
+        <button *ngIf="!dataLoaded" class="ui loading button">Loading</button>
     </div>
 </div>
