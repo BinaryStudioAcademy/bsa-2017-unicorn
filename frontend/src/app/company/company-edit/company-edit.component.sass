@@ -57,10 +57,10 @@ div
     z-index: 0;
 
 
-$small: 530px;
+$small: 520px;
 $medium: 560px;
-$large: 750px;
-$normal: 900px;
+$large: 655px;
+$normal: 1000px;
 
 @mixin respond-to($media) 
   @if $media == handhelds 
@@ -80,5 +80,5 @@ $normal: 900px;
   @include respond-to(handhelds) { font-size: 0.53rem!important ;}
   @include respond-to(medium-screens1) { font-size: 0.57rem!important ; }
   @include respond-to(medium-screens2) { font-size: 0.65rem!important ; }
-  @include respond-to(medium-screens3) { font-size: 0.9rem!important ; }
+  @include respond-to(medium-screens3) { font-size: 0.8rem!important ; }
   @include respond-to(wide-screens) { font-size: 1rem!important ; }
