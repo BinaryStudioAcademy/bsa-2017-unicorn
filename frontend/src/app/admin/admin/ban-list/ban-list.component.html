@@ -19,7 +19,7 @@
             <p style="font-size: 16px;">Page size: </p>
         </div>
         <div class="three wide column">
-            <sui-select [(ngModel)]="pageSize" class="fluid selection" (ngModelChange)="load()">
+            <sui-select [(ngModel)]="pageSize" class="fluid selection" (ngModelChange)="this.page=1;load();">
                 <sui-select-option [value]=20></sui-select-option>
                 <sui-select-option [value]=40></sui-select-option>
                 <sui-select-option [value]=60></sui-select-option>
