@@ -45,7 +45,9 @@ export class RegisterCompanyComponent implements OnInit {
     private companyService: CompanyService,
     private calendarService: CalendarService,
     private ref: ChangeDetectorRef) { }
-
+  
+    getCurrDate() { return new Date() }
+  
   ngOnInit() {
     this.apiLoader.load();
     this.LocationService.getGoogle().then((g) => {

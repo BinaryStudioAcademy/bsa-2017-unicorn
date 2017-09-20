@@ -62,6 +62,9 @@ export class RegisterVendorComponent implements OnInit {
         this.location.Adress=(result.address_components[1].short_name+','+result.address_components[0].short_name)
          this.location.City=result.address_components[3].short_name;});
   }
+  
+  getCurrDate() { return new Date() }
+
   ngOnInit() {
     this.apiLoader.load();
     this.LocationService.getGoogle().then((g) => {
