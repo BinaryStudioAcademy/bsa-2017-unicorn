@@ -55,7 +55,11 @@ export class DashboardProgressComponent implements OnInit, OnDestroy {
 
   loadData() {
     this.dashboardService.getAcceptedBooks().then(resp => {
-      this.books = resp;
+      this.books = resp.sort((b1, b2) => {
+        let f = new Date(b1.Date).getTime();
+        let s = new Date(b2.Date).getTime();
+        return s - f;
+      });
       console.log(this.books);
     });
   }
