@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
 
 import * as firebase from 'firebase/app';
 import { RegisterService } from '../../services/register.service';
@@ -43,7 +43,8 @@ export class RegisterCompanyComponent implements OnInit {
     private apiLoader: NgMapAsyncApiLoader, 
     private tokenHelper: TokenHelperService,
     private companyService: CompanyService,
-    private calendarService: CalendarService) { }
+    private calendarService: CalendarService,
+    private ref: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.apiLoader.load();
@@ -106,7 +107,17 @@ export class RegisterCompanyComponent implements OnInit {
       }).catch(err => this.loader = false);
     }
   }
-
+  placeChanged(event) {
+    
+    this.location.Latitude = event.geometry.location.lat();
+    this.location.Longitude = event.geometry.location.lng()
+    this.ref.detectChanges();
+    this.LocationService.getLocDetails(this.location.Latitude,this.location.Longitude)
+    .subscribe(
+     result => {    
+        this.location.Adress=(result.address_components[1].short_name+','+result.address_components[0].short_name)
+         this.location.City=result.address_components[3].short_name;});
+  }
   createCalendar():CalendarModel{
     return {
       Id: null,

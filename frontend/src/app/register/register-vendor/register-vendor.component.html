@@ -54,7 +54,7 @@
                 </div>
             </div>
             <div class="field">
-                <input places-auto-complete id="autocomplete" [types]="['geocode']" placeholder="LOCATION" value={{location.City}}/>
+                <input places-auto-complete id="autocomplete" [types]="['geocode']" placeholder="LOCATION" value={{location.City}} (place_changed)="placeChanged($event)" />
             </div>
             <div class="field">
                 <a [ngClass]="{'disabled': vendorForm.invalid, 'loading': loader}" class="ui button reg-btn" (click)="confirmRegister(vendorForm)">REGISTER</a>
