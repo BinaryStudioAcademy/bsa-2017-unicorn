@@ -8,7 +8,7 @@ export class AuthGuard implements CanActivate {
   constructor(private router: Router, private tokenHelper: TokenHelperService) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    if (this.tokenHelper.isTokenValid() && this.tokenHelper.isTokenNotExpired()) {
+    if (this.tokenHelper.isTokenValid() && this.tokenHelper.isTokenNotExpired() && !this.tokenHelper.isAccountBanned()) {
       return true;
     } else {
       localStorage.removeItem('token');

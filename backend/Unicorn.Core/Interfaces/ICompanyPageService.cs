@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Unicorn.Shared.DTOs.Company;
 using Unicorn.Shared.DTOs.CompanyPage;
 using Unicorn.Shared.DTOs.Contact;
+using Unicorn.Shared.DTOs.Vendor;
 
 namespace Unicorn.Core.Interfaces
 {
@@ -30,6 +31,8 @@ namespace Unicorn.Core.Interfaces
         Task AddCompanyVendors(CompanyVendors companyVendorsDTO);
 
         Task DeleteCompanyVendor(long companyId, long vendorId);
+
+        Task<List<VendorDTO>> GetCompanyVendorsWithWorks(long companyId);
 
 
 

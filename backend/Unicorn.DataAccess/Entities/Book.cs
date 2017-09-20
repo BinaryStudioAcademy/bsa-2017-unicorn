@@ -32,5 +32,9 @@ namespace Unicorn.DataAccess.Entities
         public virtual Location Location { get; set; }
 
         public bool IsHidden { get; set; }
+
+        public bool IsCompanyTask { get; set; }
+
+        public long ParentBookId { get; set; }
     }
 }

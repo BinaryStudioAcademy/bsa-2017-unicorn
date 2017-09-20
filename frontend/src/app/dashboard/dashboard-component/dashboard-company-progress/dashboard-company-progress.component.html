@@ -1,0 +1,230 @@
+<div class="sixteen wide column" *ngIf="books !== undefined">
+    <div class="ui segment" *ngIf="books.length == 0">
+        <span id="empty-header">There are no tasks in progress</span>
+    </div>
+    <div class="ui segment book-card grid" *ngFor="let book of books">
+      <div class="row">
+        <div class="book-img two wide column">
+            <img class="ui tiny circular image" src="{{book.Work.Icon}}">
+        </div>
+        <div class="book-info five wide column">
+            <p>{{book.Work.Name}} <span align=right>{{book.Date | date: 'dd/MM/yyyy'}}{{getEndDate(book)}}</span></p>
+            <p>{{book.Description}}</p>
+        </div>
+        <div class="customer-info five wide column">
+            <p><a routerLink="/user/{{book.CustomerId}}">{{book.Customer}}</a></p>
+            <p><i class="colored call icon"></i>{{book.CustomerPhone}}</p>
+            <p (click)="openMap(book.Id)" class="mapInfo"><i class="colored map pin icon"></i>{{book.Location.City}},&nbsp;{{book.Location.Adress}}</p>
+        </div>
+        <div class="book-actions four wide column">
+            <div *ngIf="!isVendorAssigned(book.Id)">
+                <a (click)="createTasks(book.Id)" class="ui button accept-btn" [ngClass]="{'loading': loads[book.Id], 'disabled': loads[book.Id] || someFormOpened}">Create tasks</a>
+            </div>
+            <div *ngIf="isVendorAssigned(book.Id)">
+                <a class="ui button accept-btn" 
+                  *ngIf="calcFinishedTasks(book.Id) === calcAllTasks(book.Id)"
+                  (click)="finish(book.Id)"
+                  [ngClass]="{'loading': loads[book.Id]}">Finish</a>
+                <span *ngIf="calcFinishedTasks(book.Id) !== calcAllTasks(book.Id)">DONE/ALL</span>
+                <h4 class="cursor-pointer count-tasks" (click)="toggleTaskList(book.Id)">{{calcFinishedTasks(book.Id)}}/{{calcAllTasks(book.Id)}}</h4>
+            </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="isVendorAssigned(book.Id) && taskListOpened[book.Id]">
+        <div class="sixteen wide column">
+          <table class="ui selectable padded single line table">
+            <tbody>
+              <tr *ngFor="let task of getTasksByBook(book.Id)">
+                <td><img class="ui mini circular image task-item-image" src="{{task.Vendor.Avatar}}"></td>
+                <td>{{task.Vendor.FIO}}</td>
+                <td>{{task.Work.Name}}</td>
+                <td>
+                  <span>{{getStatusName(task.Status)}}&nbsp;</span>
+                  <span *ngIf="task.Status == 2">
+                    <a class="cursor-pointer" (click)="showReason(task.DeclinedReason)">Why?</a>
+                  </span>
+                </td>
+                <td *ngIf="task.Status == 4"></td>
+                <td class="right aligned" *ngIf="task.Status == 1 || task.Status == 0">
+                  <a class="ui basic button assign-btn" (click)="decline(task.Id)">Decline</a>
+                </td>
+                <td class="right aligned" *ngIf="task.Status == 2">
+                  <div class="ui buttons">
+                    <button class="ui basic button d-assign-btn" (click)="reassign(task)">Reassign</button>
+                    <button class="ui basic button del-btn" [ngClass]="{'loading': dloads[task.Id]}" (click)="deleteBook(task)"><i *ngIf="!dloads[task.Id]" class="colored trash icon"></i></button>
+                  </div>
+                </td>
+              </tr>
+              <!-- <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td class="right aligned">
+                  <a (click)="createTasks(book.Id)" class="ui basic button assign-btn" [ngClass]="{'loading': loads[book.Id], 'disabled': loads[book.Id] || someFormOpened}">Add tasks</a>
+                </td>
+              </tr> -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="row no-padd-top" *ngIf="isVendorAssigned(book.Id) && taskListOpened[book.Id]">
+        <div class="sixteen wide column">
+          <div class="flex-right">
+            <a (click)="createTasks(book.Id)" 
+              class="ui basic button assign-btn" 
+              style="margin-right: 2%"
+              [ngClass]="{'loading': loads[book.Id], 'disabled': loads[book.Id] || someFormOpened}">Add vendors</a>
+          </div>
+        </div>
+      </div>
+      <div class="ui divider no-bottom-margin" *ngIf="taskFormOpen[book.Id]"></div>
+      <div class="row no-padd-bottom" *ngIf="taskFormOpen[book.Id]">
+        <div class="vendor-assign-div sixteen wide column">
+          <div class="ui grid">
+              <div class="six wide column">
+                <div class="task-header">
+                  <span><h5>VENDORS &nbsp;<i class="ui icon green add add-icon" (click)="newTask(book.Id)"></i></h5></span>
+                </div>
+                <div class="task-list">
+                  <div class="task-item" (click)="editTask(task)" *ngFor="let task of shortTasks">
+                    <div>
+                      <img class="ui mini circular image task-item-image" src="{{getVendorAvatar(task)}}">
+                    </div>
+                    <div>
+                      <span class="task-item-span">{{getVendorFio(task)}}</span>
+                    </div>
+                    <div class="task-item-del">
+                      <i (click)="deleteTask(task)" class="ui icon red close"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="ten wide column">
+                <div class="form-header">
+                  <span><h5>TASK DESCRIPTION</h5></span>
+                </div>
+                <div class="task-form" *ngIf="taskFormOpened">
+                  <form class="ui form" #form="ngForm">
+                    <div class="field">
+                      <div class="ui input">
+                        <textarea rows="3" required placeholder="DESCRIPTION" 
+                          [(ngModel)]="currentTask.Description" name="taskDesc">
+                        </textarea>
+                      </div>
+                    </div>
+                    <div class="two fields">
+                      <div class="field">
+                        <sui-select required class="selection" 
+                          [optionTemplate]="optionVendorTemplate" 
+                          placeholder="SELECT VENDOR"
+                          (selectedOptionChange)="changeVendor()"
+                          [(ngModel)]="selectedVendor"
+                          name="vendorSelect">
+                          <sui-select-option class="select-option" *ngFor="let vendor of availableVendors" [value]="vendor">
+                          </sui-select-option>
+                        </sui-select>
+                      </div>
+                      <div class="field">
+                        <sui-select required class="selection"
+                          [optionTemplate]="optionWorkTemplate"
+                          placeholder="SELECT WORK"
+                          [(ngModel)]="selectedWork"
+                          name="workSelect">
+                          <sui-select-option class="select-option" *ngFor="let work of works" [value]="work">
+                          </sui-select-option>
+                        </sui-select>
+                      </div>
+                    </div>
+                    <a class="ui button accept-btn" [ngClass]="{'disabled': form.invalid}" (click)="saveTask()">SAVE</a>
+                  </form>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+      <div class="ui divider no-bottom-margin" *ngIf="taskFormOpen[book.Id]"></div>
+      <div class="sixteen wide column vendor-assign-actions" *ngIf="taskFormOpen[book.Id]">
+        <div class="flex-right">
+          <div class="">
+            <a class="ui button simple" (click)="cancelAssign(book.Id)">CANCEL</a>
+          </div>
+          <div class="">
+            <a class="ui button accept-btn" [ngClass]="{'disabled': shortTasks.length === 0, 'loading': assignLoader}" (click)="asignVendors(book.Id)">ASSIGN VENDORS</a>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+<ng-template let-context let-modal="modal" #mapModal>
+    <div class="ui content">
+        <app-map [inputMap]="map"></app-map>
+    </div>
+</ng-template>
+<ng-template let-option #optionVendorTemplate>
+  <img class="ui avatar circular image vendor-img" src="{{option.Avatar}}">{{option.FIO}}
+</ng-template>
+<ng-template let-option #optionWorkTemplate>
+  {{option.Name}}
+</ng-template>
+<ng-template let-context let-modal="modal" #reasonModal>
+    <div class="ui content">
+        <form class="ui reply form">
+            <div class="field">
+                <textarea readonly name="reason">{{context.reason}}</textarea>
+            </div>
+        </form>
+    </div>
+</ng-template>
+<ng-template let-context let-modal="modal" #declineModal>
+  <div class="ui content">
+      <form class="ui reply form" name="reviewForm" #declineForm="ngForm">
+          <div class="field">
+              <textarea required placeholder="TYPE THE REASON" name="reason" [(ngModel)]="reason" #reasonText="ngModel"></textarea>
+          </div>
+          <div class="save-btn">
+              <a (click)="declineConfirm(context.id)" [ngClass]="{'loading': loader, 'disabled': declineForm.invalid || loader}" class="ui basic button decline-confirm">
+                  <p *ngIf="!loader" style="color:#FF647A;">Save</p>
+              </a>
+          </div>
+      </form>
+  </div>
+</ng-template>
+<ng-template let-context let-modal="modal" #reassignModal>
+  <div class="ui content">
+      <div class="task-form">
+          <form class="ui form" #form="ngForm">
+            <div class="field">
+              <div class="ui input">
+                <textarea rows="3" required placeholder="DESCRIPTION" 
+                  [(ngModel)]="reassignTask.Description" name="taskDesc">
+                </textarea>
+              </div>
+            </div>
+            <div class="field">
+              <sui-select required class="selection" 
+                [optionTemplate]="optionVendorTemplate" 
+                placeholder="SELECT VENDOR"
+                (selectedOptionChange)="changeVendor()"
+                [(ngModel)]="selectedVendor"
+                name="vendorSelect">
+                <sui-select-option class="select-option" *ngFor="let vendor of availableVendors" [value]="vendor">
+                </sui-select-option>
+              </sui-select>
+            </div>
+            <div class="field">
+              <sui-select required class="selection"
+                [optionTemplate]="optionWorkTemplate"
+                placeholder="SELECT WORK"
+                [(ngModel)]="selectedWork"
+                name="workSelect">
+                <sui-select-option class="select-option" *ngFor="let work of works" [value]="work">
+                </sui-select-option>
+              </sui-select>
+            </div>
+          <a class="ui fluid button accept-btn" [ngClass]="{'disabled': form.invalid, 'loading': reassignLoader}" (click)="reassignConfirm()">CONFIRM</a>
+        </form>
+      </div>
+  </div>
+</ng-template>
+<div class="ui active centered inline loader" *ngIf="books === undefined"></div>

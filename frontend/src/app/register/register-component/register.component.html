@@ -25,6 +25,17 @@
             <p>Unable to authorize user</p>
         </sui-message>
     </div>
+
+    <div class="account-info" *ngIf="isBanned">
+        <sui-message class="info">
+            <div class="header">
+                Your account is banned
+            </div>
+            <p>Contact with administration for details</p>
+            <a (click)="createChat()"><i class="comment outline icon"></i> Open chat</a>
+        </sui-message>
+    </div>
+
     <ng-template #authorized>
         <div class="roles">
             <div class="question-lbl">

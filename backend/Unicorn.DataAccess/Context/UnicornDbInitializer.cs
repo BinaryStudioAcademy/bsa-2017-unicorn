@@ -434,7 +434,7 @@ namespace Unicorn.DataAccess.Context
                 Latitude = 50.447252,
                 Longitude = 30.532936,
                 IsDeleted = false,
-                City = "Kyiv",
+                City = "Kiev",
                 PostIndex = "61002"
             };
 
@@ -445,7 +445,7 @@ namespace Unicorn.DataAccess.Context
                 Latitude = 49.841377,                
                 Longitude = 24.031699,
                 IsDeleted = false,
-                City = "L'viv",
+                City = "Lviv",
                 PostIndex = "71002"
             };
 
@@ -507,11 +507,11 @@ namespace Unicorn.DataAccess.Context
             Location location8 = new Location()
             {
                 Id = 8,
-                Adress = "Skisna 39",
-                Latitude = 46.474878,
-                Longitude = 30.712037,
+                Adress = "Barikadna 4A",
+                Latitude = 48.462562,                
+                Longitude = 35.052371,
                 IsDeleted = false,
-                City = "Odessa",
+                City = "Dnipro",
                 PostIndex = "91002"
             };
 
@@ -555,7 +555,7 @@ namespace Unicorn.DataAccess.Context
                 Latitude = 49.823970,
                 Longitude = 24.006666,
                 IsDeleted = false,
-                City = "L'viv",
+                City = "Lviv",
                 PostIndex = "71014"
             };
 
@@ -567,7 +567,7 @@ namespace Unicorn.DataAccess.Context
                 Latitude = 49.833720,
                 Longitude = 24.038185,
                 IsDeleted = false,
-                City = "L'viv",
+                City = "Lviv",
                 PostIndex = "71054"
             };
 
@@ -589,7 +589,7 @@ namespace Unicorn.DataAccess.Context
                 Latitude = 50.413609,
                 Longitude = 30.670130,
                 IsDeleted = false,
-                City = "Kyiv",
+                City = "Kiev",
                 PostIndex = "61302"
             };
             Location location16 = new Location()
@@ -599,7 +599,7 @@ namespace Unicorn.DataAccess.Context
                 Latitude = 50.467732,
                 Longitude = 30.650091,
                 IsDeleted = false,
-                City = "Kyiv",
+                City = "Kiev",
                 PostIndex = "65002"
             };
             Location location17 = new Location()
@@ -609,7 +609,7 @@ namespace Unicorn.DataAccess.Context
                 Latitude = 50.473794,
                 Longitude = 30.481694,
                 IsDeleted = false,
-                City = "Kyiv",
+                City = "Kiev",
                 PostIndex = "61562"
             };
             Location location18 = new Location()
@@ -619,7 +619,7 @@ namespace Unicorn.DataAccess.Context
                 Latitude = 50.346039,
                 Longitude = 30.547797,
                 IsDeleted = false,
-                City = "Kyiv",
+                City = "Kiev",
                 PostIndex = "61882"
             };
 
@@ -1224,7 +1224,7 @@ namespace Unicorn.DataAccess.Context
                 Category = category1,
                 Tags = "washing,wash,clothes,dry,apparel,wear,vesture,wearing apparel,garments,dresses,fashions," +
                        "shirts,gowns,costumes,outerwear,garment,linens,robes,jackets,garbs,duds,dressing,vests," +
-                       "fatigues,suits,textiles,naked,habits,children,straitjackets,threads,woodworking," +
+                       "fatigues,suits,textiles,naked,washing,habits,children,straitjackets,threads,woodworking," +
                        "plainclothes,claws,clones,inflatable,cases,affairs,guises,plain-clothes,attire,uniforms,outfits,"
             };
 
@@ -1235,7 +1235,7 @@ namespace Unicorn.DataAccess.Context
                 Name = "Cats care",
                 IsDeleted = false,
                 Category = category2,
-                Tags = "cats care,cat,cats,care,kitten,puss,pussycat,pot,pool,pussy,jackpot,kitty-cat,pet,poodle,cub,sweetie,beaver," +
+                Tags = "cats care,cat,cats,care,kitten,puss,pussycat,pot,pool,pussy,jackpot,kitty-cat,pet,cats,poodle,cub,sweetie,beaver," +
                        "Koko,bimbo,commie,coconut,baby,bucket,spade,coco,geezer,mom,little,boy,playboy,Cathy,rug," +
                        "Katie,bogeyman,wuss,petit,cold,nice,kath,hood,chat,stop"
             };
@@ -2195,7 +2195,7 @@ namespace Unicorn.DataAccess.Context
                 Location = new Location()
                 {
                     Adress = "Lebedeva-Kumacha 7a str.",
-                    City = "Kyiv",
+                    City = "Kiev",
                     Latitude = 50.437,
                     Longitude = 30.439,
                     IsDeleted = false,
@@ -2216,7 +2216,7 @@ namespace Unicorn.DataAccess.Context
                 Location = new Location()
                 {
                     Adress = "Lebedeva-Kumacha 7a str.",
-                    City = "Kyiv",
+                    City = "Kiev",
                     Latitude = 50.437,
                     Longitude = 30.439,
                     IsDeleted = false,
@@ -2237,7 +2237,7 @@ namespace Unicorn.DataAccess.Context
                 Location = new Location()
                 {
                     Adress = "Lebedeva-Kumacha 7a str.",
-                    City = "Kyiv",
+                    City = "Kiev",
                     Latitude = 50.437,
                     Longitude = 30.439,
                     IsDeleted = false,
@@ -2261,7 +2261,7 @@ namespace Unicorn.DataAccess.Context
                 Location = new Location()
                 {
                     Adress = "Lebedeva-Kumacha 7a str.",
-                    City = "Kyiv",
+                    City = "Kiev",
                     Latitude = 50.437,
                     Longitude = 30.439,
                     IsDeleted = false,
@@ -2284,7 +2284,7 @@ namespace Unicorn.DataAccess.Context
                 Location = new Location()
                 {
                     Adress = "Lebedeva-Kumacha 7a str.",
-                    City = "Kyiv",
+                    City = "Kiev",
                     Latitude = 50.437,
                     Longitude = 30.439,
                     IsDeleted = false,
@@ -2305,7 +2305,7 @@ namespace Unicorn.DataAccess.Context
                 Location = new Location()
                 {
                     Adress = "Lebedeva-Kumacha 7a str.",
-                    City = "Kyiv",
+                    City = "Kiev",
                     Latitude = 50.437,
                     Longitude = 30.439,
                     IsDeleted = false,
@@ -2326,7 +2326,7 @@ namespace Unicorn.DataAccess.Context
                 Location = new Location()
                 {
                     Adress = "Lebedeva-Kumacha 7a str.",
-                    City = "Kyiv",
+                    City = "Kiev",
                     Latitude = 50.437,
                     Longitude = 30.439,
                     IsDeleted = false,
@@ -2347,7 +2347,7 @@ namespace Unicorn.DataAccess.Context
                 Location = new Location()
                 {
                     Adress = "Lebedeva-Kumacha 7a str.",
-                    City = "Kyiv",
+                    City = "Kiev",
                     Latitude = 50.437,
                     Longitude = 30.439,
                     IsDeleted = false,
@@ -2368,7 +2368,7 @@ namespace Unicorn.DataAccess.Context
                 Location = new Location()
                 {
                     Adress = "Lebedeva-Kumacha 7a str.",
-                    City = "Kyiv",
+                    City = "Kiev",
                     Latitude = 50.437,
                     Longitude = 30.439,
                     IsDeleted = false,
@@ -2389,7 +2389,7 @@ namespace Unicorn.DataAccess.Context
                 Location = new Location()
                 {
                     Adress = "Lebedeva-Kumacha 7a str.",
-                    City = "Kyiv",
+                    City = "Kiev",
                     Latitude = 50.437,
                     Longitude = 30.439,
                     IsDeleted = false,

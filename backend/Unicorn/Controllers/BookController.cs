@@ -138,5 +138,33 @@ namespace Unicorn.Controllers
 
             return Request.CreateResponse(HttpStatusCode.OK);
         }
+
+        [HttpPost]
+        [Route("book/company/{id}/tasks")]
+        public async Task CreateTasks(List<ShortTaskDTO> tasks, long id)
+        {
+            await _bookService.CreateTasks(tasks, id);
+        }
+
+        [HttpPut]
+        [Route("book/company/{id}/tasks")]
+        public async Task CreateTasks(ShortTaskDTO task, long id)
+        {
+            await _bookService.ReassignCompanyTask(task, id);
+        }
+
+        [HttpGet]
+        [Route("book/company/{id}/tasks")]
+        public async Task<List<BookDTO>> CreateTasks(long id)
+        {
+            return await _bookService.GetCompanyTasks(id);
+        }
+
+        [HttpDelete]
+        [Route("book/tasks/{id}")]
+        public async Task DeleteTask(long id)
+        {
+            await _bookService.DeleteCompanyTask(id);
+        }
     }
 }

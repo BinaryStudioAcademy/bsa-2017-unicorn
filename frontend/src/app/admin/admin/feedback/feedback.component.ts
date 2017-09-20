@@ -6,6 +6,7 @@ import { ReportService } from "../../../services/report.service";
 import { AccountService } from "../../../services/account.service";
 
 import { Report } from "../../../models/report/report.model";
+import { NotificationService } from "../../../services/notifications/notification.service";
 
 export interface IContext {
   report: Report;
@@ -24,7 +25,8 @@ export class FeedbackComponent implements OnInit {
   constructor(
     private reportService: ReportService, 
     private accountService: AccountService,
-    public modalService:SuiModalService
+    public modalService:SuiModalService,
+    private notificationService: NotificationService
   ) { }
 
   reports: Report[];
@@ -33,6 +35,10 @@ export class FeedbackComponent implements OnInit {
   isLoaded: boolean;
 
   ngOnInit() {
+    this.notificationService.listen<any>("RefreshAdminFeedbacks", res => {
+      this.reports.push(res);
+     });
+
     this.pendingReports = [];
     this.load();
   }
@@ -50,6 +56,8 @@ export class FeedbackComponent implements OnInit {
   openReportInModal(report: Report): void {
     const config = new TemplateModalConfig<IContext, string, string>(this.modalTemplate);
     config.context = { report: report };
+    config.isClosable = true;
+    config.isInverted = true;
     
     this.modalService
       .open(config)

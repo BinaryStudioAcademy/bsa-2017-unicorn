@@ -10,12 +10,14 @@ import { TokenHelperService } from '../../services/helper/tokenhelper.service';
 })
 export class DashboardComponent implements OnInit {
 
-  isVendor: boolean
+  isVendor: boolean;
+  isCompany: boolean;
 
   constructor(
     private route: ActivatedRoute,
     private tokenHelper: TokenHelperService
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     this.initRole();
@@ -24,6 +26,7 @@ export class DashboardComponent implements OnInit {
   initRole() {
     let role = +this.tokenHelper.getClaimByName('roleid');
     this.isVendor = role === 3;
+    this.isCompany = role === 4;
   }
 
 }
