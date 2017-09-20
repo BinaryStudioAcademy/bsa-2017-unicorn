@@ -22,10 +22,10 @@
             </div>
             <div *ngIf="isVendorAssigned(book.Id)">
                 <a class="ui button accept-btn" 
-                  *ngIf="calcFinishedTasks(book.Id) === calcAllTasks(book.Id)"
+                  *ngIf="showFinish(book.Id)"
                   (click)="finish(book.Id)"
                   [ngClass]="{'loading': loads[book.Id]}">Finish</a>
-                <span *ngIf="calcFinishedTasks(book.Id) !== calcAllTasks(book.Id)">DONE/ALL</span>
+                <span *ngIf="!showFinish(book.Id)">DONE/ALL</span>
                 <h4 class="cursor-pointer count-tasks" (click)="toggleTaskList(book.Id)">{{calcFinishedTasks(book.Id)}}/{{calcAllTasks(book.Id)}}</h4>
             </div>
         </div>
@@ -44,7 +44,9 @@
                     <a class="cursor-pointer" (click)="showReason(task.DeclinedReason)">Why?</a>
                   </span>
                 </td>
-                <td *ngIf="task.Status == 4"></td>
+                <td class="right aligned" *ngIf="task.Status == 4">
+                  <a class="ui basic button assign-btn" (click)="leaveReview(task.Id)">Review</a>
+                </td>
                 <td class="right aligned" *ngIf="task.Status == 1 || task.Status == 0">
                   <a class="ui basic button assign-btn" (click)="decline(task.Id)">Decline</a>
                 </td>
@@ -55,15 +57,6 @@
                   </div>
                 </td>
               </tr>
-              <!-- <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td class="right aligned">
-                  <a (click)="createTasks(book.Id)" class="ui basic button assign-btn" [ngClass]="{'loading': loads[book.Id], 'disabled': loads[book.Id] || someFormOpened}">Add tasks</a>
-                </td>
-              </tr> -->
             </tbody>
           </table>
         </div>
@@ -225,6 +218,32 @@
           <a class="ui fluid button accept-btn" [ngClass]="{'disabled': form.invalid, 'loading': reassignLoader}" (click)="reassignConfirm()">CONFIRM</a>
         </form>
       </div>
+  </div>
+</ng-template>
+<ng-template let-context let-modal="modal" #reviewTemplate>
+  <div class="ui comments content">
+      <div class="comment">
+          <a class="avatar">
+              <img src="{{getVendorReviewAvatar(context.id)}}">
+          </a>
+          <div class="content">
+              <a class="author">{{getVendorReviewFio(context.id)}}</a>
+              <div class="text">
+                  <sui-rating (click)="gradeSelected = true" name="rating" [(ngModel)]="review.Grade" class="star" [isReadonly]="false"></sui-rating>
+                  <span *ngIf="error" class="valid-error">* Required</span>
+              </div>
+          </div>
+      </div>
+      <form class="ui reply form" name="reviewForm" #reviewForm="ngForm">
+          <div class="field">
+              <textarea placeholder="LEAVE REVIEW" name="review" [(ngModel)]="review.Text" #taskreview="ngModel"></textarea>
+          </div>
+          <div class="save-btn">
+              <a (click)="leaveReviewConfirm(context.id)" [ngClass]="{'loading': reviewLoader, 'disabled': !gradeSelected || reviewLoader}" class="ui basic button">
+                  <p *ngIf="!loader" style="color:#FF647A;">Save</p>
+              </a>
+          </div>
+      </form>
   </div>
 </ng-template>
 <div class="ui active centered inline loader" *ngIf="books === undefined"></div>

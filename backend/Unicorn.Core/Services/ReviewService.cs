@@ -159,7 +159,14 @@ namespace Unicorn.Core.Services
                 review.Description = reviewDto.Text;
                 review.Grade = reviewDto.Grade;
                 review.WorkName = book.Work.Name;
-                review.Sender = book.Customer.Person.Account;
+                if (book.IsCompanyTask)
+                {
+                    review.Sender = book.Company.Account;
+                }
+                else
+                {
+                    review.Sender = book.Customer.Person.Account;
+                }
                 if (reviewDto.PerformerType == "vendor")
                 {
                     review.To = book.Vendor.Person.Name;
@@ -181,17 +188,33 @@ namespace Unicorn.Core.Services
             var rating = new Rating();
             rating.Book = book;
             rating.Grade = reviewDto.Grade;
-            rating.Sender = book.Customer.Person.Account;
+            if (book.IsCompanyTask)
+            {
+                rating.Sender = book.Company.Account;
+            }
+            else
+            {
+                rating.Sender = book.Customer.Person.Account;
+            }
             rating.Reciever = (reviewDto.PerformerType == "vendor" ? book.Vendor.Person.Account : book.Company.Account);
 
             _unitOfWork.RatingRepository.Create(rating);
 
             await _unitOfWork.SaveAsync();
 
+            string senderName;
+            if (book.IsCompanyTask)
+            {
+                senderName = book.Company.Name;
+            }
+            else
+            {
+                senderName = $"{book.Customer.Person.Name} {book.Customer.Person.Surname}";
+            }
             var notification = new NotificationDTO()
             {
                 Title = $"New review",
-                Description = $"{book.Customer.Person.Name} {book.Customer.Person.Surname} send review for your work {book.Work.Name}.",
+                Description = $"{senderName} send review for your work {book.Work.Name}.",
                 SourceItemId = book.Id,
                 Time = DateTime.Now,
                 Type = NotificationType.TaskNotification
