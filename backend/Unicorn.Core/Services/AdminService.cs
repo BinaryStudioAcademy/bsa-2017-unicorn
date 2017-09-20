@@ -56,7 +56,7 @@ namespace Unicorn.Core.Services
             return await Task.Run(() => new AccountsPage
             {
                 Items = items.Skip(size * (page - 1))
-                    .Take(size).ToList(),
+                    .Take(Math.Min(size, items.Count()-size * (page - 1))).ToList(),
                 CurrentPage = page,
                 PageSize = size,
                 TotalCount = items.Count()
