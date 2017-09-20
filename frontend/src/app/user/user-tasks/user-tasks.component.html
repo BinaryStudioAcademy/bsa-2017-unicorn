@@ -59,6 +59,7 @@
             <div class="save-btn">
                 <a (click)="saveReview(context.id)" [ngClass]="{'loading': loader, 'disabled': reviewForm.invalid || loader}" class="ui basic button">
                     <p *ngIf="!loader" style="color:#FF647A;">Save</p>
+                    <p *ngIf="loader">&nbsp;</p>
                 </a>
             </div>
         </form>

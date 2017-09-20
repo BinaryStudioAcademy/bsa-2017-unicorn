@@ -1,8 +1,31 @@
 <div class="container" [ngStyle]="{'height.px': containerHeight}" *ngIf="dialogs !== undefined">
-    <div class="side-bar">
-        <div class="ui fluid icon input dialog-search">
-            <input type="text" [(ngModel)]="searchString" style="border-radius: 0!important;" (ngModelChange)="searchNewPartitipants()" placeholder="Search...">
-            <i class="search icon"></i>
+    <div class="r-dialogs-list">
+        <div class="ui button" (click)="hideResponsiveSideBar()">
+            <i class="list icon"></i>
+        </div>
+        <div *ngFor="let _dialog of dialogs">
+            <div *ngIf="isHided(_dialog)===false" class="upper-user" (click)="onSelect(_dialog.Id)" [ngClass]="{'active': _dialog.Id === selectedId}">
+                <div class="remove-block">
+                    <i class="remove icon" (click)="deleteDialogModal(_dialog)"></i>
+                </div>
+                <div class="user" [ngClass]="{'active': _dialog.Id === selectedId}">
+                    <img class="ui avatar image r-avatar" src="{{_dialog.ParticipantAvatar}}">
+                    <div class="unread-msg" *ngIf="!_dialog.IsReadedLastMessage">
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="isHided(_dialog)===false" class="ui divider"></div>
+        </div>
+    </div>
+    <div *ngIf="sideBarEnabled" class="side-bar" (clickOutside)="clickOutsideSideBar()">
+        <div class="header-sidebar">
+            <div *ngIf="sideBarEnabled && windowWidth <= 800" class="ui button" (click)="hideResponsiveSideBar()">
+                <i class="remove icon"></i>
+            </div>
+            <div class="ui fluid icon input dialog-search">
+                <input type="text" [(ngModel)]="searchString" style="border-radius: 0!important;" (ngModelChange)="searchNewPartitipants()" placeholder="Search...">
+                <i class="search icon"></i>
+            </div>
         </div>
         <div class="users">
             <div *ngFor="let _dialog of filterDialogsByPartitipantName(searchString)">
@@ -24,6 +47,7 @@
                         </div>
                     </div>
                 </div>
+                <div *ngIf="isHided(_dialog)===false" class="ui divider"></div>
             </div>
             <p *ngIf="searchResults.length > 0" class="ui horizontal divider small header">
                 <i class="plus icon"></i> Start a chat with

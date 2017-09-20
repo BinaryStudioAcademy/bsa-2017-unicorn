@@ -101,7 +101,11 @@ export class DashboardCompanyProgressComponent implements OnInit, OnDestroy {
       console.log('ra', this.tasks);
       return this.dashboardService.getAcceptedBooks();
     }).then(resp => {
-      this.books = resp;
+      this.books = resp.sort((b1, b2) => {
+        let f = new Date(b1.Date).getTime();
+        let s = new Date(b2.Date).getTime();
+        return s - f;
+      });
       console.log(this.books);
     });
   }
@@ -111,20 +115,6 @@ export class DashboardCompanyProgressComponent implements OnInit, OnDestroy {
     this.availableVendors = this.vendors.filter(v => existingTasks.findIndex(t => t.Vendor.Id === v.Id) === -1);
     this.taskFormOpen[id] = true;
     this.someFormOpened = true;
-    // let book: BookCard = this.books.filter(b => b.Id == id)[0];
-    // book.Status = BookStatus.Finished;
-    // this.loads[book.Id] = true;
-    // this.dashboardService.update(book).then(resp => {
-    //   this.dashboardEventsService.changeStatusToFinished();
-    //   this.books.splice(this.books.findIndex(b => b.Id === id), 1);
-    //   this.loads[book.Id] = false;
-    //   this.dashMessaging.changeProgress();
-    //   this.toastr.success('Finished task');
-    // })
-    // .catch(err => {
-    //   this.loads[book.Id] = false;      
-    //   this.toastr.error('Cannot finish task');
-    // });
   }
 
   finish(id: number) {
@@ -509,9 +499,10 @@ export class DashboardCompanyProgressComponent implements OnInit, OnDestroy {
     this.review.PerformerId = task.Vendor.Id;
     this.review.PerformerType = 'vendor';
     this.reviewService.saveReview(this.review).then(resp => {
+      return this.loadData();
+    }).then(resp => {
       this.reviewLoader = false;
       this.currModal.deny(undefined);
-      this.loadData();
       this.toastr.success('Vendor was successfully reviewed');
     }).catch(err => {
       this.reviewLoader = false;

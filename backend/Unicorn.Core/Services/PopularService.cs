@@ -481,7 +481,9 @@ namespace Unicorn.Core.Services
                     PerformerType = "vendor",
                     Link = $"vendor/" + v.Vendor.Id,
                     City = v.Vendor.Person.Account.Location.City
-                });
+                })
+                .GroupBy(p => p.Id)
+                .Select(g => g.First());
 
             var companies = works
                 .Where(c => c.Company != null)
@@ -495,7 +497,9 @@ namespace Unicorn.Core.Services
                     PerformerType = "company",
                     Link = "company/" + c.Company.Id,
                     City = c.Company.Account.Location.City
-                });
+                })
+                .GroupBy(p => p.Id)
+                .Select(g => g.First());
 
             var performers = vendors
                 .Concat(companies)
