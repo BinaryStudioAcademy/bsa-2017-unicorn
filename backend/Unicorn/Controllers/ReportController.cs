@@ -8,11 +8,13 @@ using System.Web.Http;
 using System.Web.Http.Cors;
 using Unicorn.Core.Interfaces;
 using Unicorn.DataAccess.Entities.Enum;
+using Unicorn.Filters;
 using Unicorn.Shared.DTOs;
 
 namespace Unicorn.Controllers
 {
     [EnableCors("*", "*", "*")]
+    [TokenAuthenticate]
     public class ReportController : ApiController
     {
         private readonly IReportService _reportService;
