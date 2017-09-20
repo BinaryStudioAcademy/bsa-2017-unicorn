@@ -13,9 +13,9 @@
 .unread-msg {
     width: 10px;
     height: 10px;
-    margin: 5px 10px;    
+    margin: 0 10px;
     background: #5bb0ff;
-    border-radius: 10px;  
+    border-radius: 10px;
 }
 
 
@@ -47,27 +47,24 @@
         bottom: 100%!important;
         top: unset!important;
     }
-
     #search-bar div.menu.transition {
         bottom: 100%!important;
         top: unset!important;
     }
-    
 }
 
-#charts-main g > text {
+#charts-main g>text {
     transform: unset;
     font-size: 10px!important;
     fill: gray!important;
     text-anchor: middle;
 }
 
-#charts-main ngx-charts-line-chart g > text {
+#charts-main ngx-charts-line-chart g>text {
     transform: translate(-5px);
 }
 
-#charts-main ngx-charts-line-chart g > rect {
+#charts-main ngx-charts-line-chart g>rect {
     fill: #e6f5ff!important;
     opacity: 0.3!important;
 }
-

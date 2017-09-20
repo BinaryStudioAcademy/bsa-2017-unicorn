@@ -20,8 +20,6 @@ export class CompanyEditComponent implements OnInit {
 
   @ViewChild(CompanyChartsComponent)
   charts: CompanyChartsComponent;
-
-  menuEventsService: MenuEventsService;
   isDimmed: boolean = false;
   company: CompanyShort;  
   uploading: boolean;
@@ -38,7 +36,8 @@ export class CompanyEditComponent implements OnInit {
     private route: ActivatedRoute,
     private unreadDialogs: UnreadDialogsService,
     private chatEventsService: ChatEventsService,
-    private photoService: PhotoService) { }
+    private photoService: PhotoService,
+    private menuEventsService: MenuEventsService) { }
 
   ngOnInit() {
     this.route.params
@@ -70,11 +69,11 @@ export class CompanyEditComponent implements OnInit {
     let file: File = $event.target.files[0];
     console.log(file);
     this.uploading = true;
-    this.photoService.uploadToImgur(file).then(link => {      
+    this.photoService.uploadToImgur(file).then(link => {          
       return this.photoService.saveAvatar(link);
-    }).then(link => {      
-        this.company.Avatar = link;
-        this.menuEventsService.changedAvatar(link); 
+    }).then(link => {  
+        this.menuEventsService.changedAvatar(link);       
+        this.company.Avatar = link;        
         this.uploading = false;
       }).catch(err => {
         console.log(err);

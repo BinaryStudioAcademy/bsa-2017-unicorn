@@ -6,8 +6,7 @@ import { CompanyCategory } from "../../../models/company-page/company-category.m
 import { CompanyWork } from "../../../models/company-page/company-work.model";
 
 import { SuiModule } from 'ng2-semantic-ui';
-import { SuiModalService, TemplateModalConfig
-  , ModalTemplate, ModalSize, SuiActiveModal } from 'ng2-semantic-ui';
+import { SuiModalService, TemplateModalConfig, ModalTemplate, ModalSize, SuiActiveModal } from 'ng2-semantic-ui';
 import { ReportService } from '../../../services/report.service';
 import { AccountService } from '../../../services/account.service';
 import { TokenHelperService } from '../../../services/helper/tokenhelper.service';
