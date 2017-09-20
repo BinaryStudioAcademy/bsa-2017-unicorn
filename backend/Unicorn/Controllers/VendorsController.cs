@@ -9,6 +9,7 @@ using System.Web.Http.Cors;
 
 using Unicorn.Core.Interfaces;
 using Unicorn.DataAccess.Entities;
+using Unicorn.Filters;
 using Unicorn.Shared.DTOs;
 using Unicorn.Shared.DTOs.Book;
 using Unicorn.Shared.DTOs.Chart;
@@ -70,6 +71,7 @@ namespace Unicorn.Controllers
 
         [HttpPut]
         [Route("{id}")]
+        [TokenAuthenticate]
         public async Task<HttpResponseMessage> UpdateVendor(long id, [FromBody]ShortVendorDTO vendor)
         {
             await _vendorService.UpdateAsync(vendor);
@@ -97,6 +99,7 @@ namespace Unicorn.Controllers
 
         [HttpGet]
         [Route("{id}/charts")]
+        [TokenAuthenticate]
         public async Task<AnalyticsDTO> GetVendorCharts(long id)
         {
             return await _analyticsService.GetVendorAnalytics(id);
@@ -116,6 +119,7 @@ namespace Unicorn.Controllers
 
         [HttpPost]
         [Route("{id}/works")]
+        [TokenAuthenticate]
         public async Task<HttpResponseMessage> CreateVendorWork(long id, [FromBody]WorkDTO workDto)
         {
             workDto.VendorId = id;
@@ -129,6 +133,7 @@ namespace Unicorn.Controllers
 
         [HttpPut]
         [Route("{id}/works/{workId}")]
+        [TokenAuthenticate]
         public async Task<HttpResponseMessage> UpdateVendorWork(long id, long workId, [FromBody]WorkDTO workDto)
         {
             await _workService.UpdateAsync(workDto);
@@ -138,6 +143,7 @@ namespace Unicorn.Controllers
 
         [HttpDelete]
         [Route("{id}/works/{workId}")]
+        [TokenAuthenticate]
         public async Task<HttpResponseMessage> UpdateVendorWork(long id, long workId)
         {
             await _workService.RemoveByIdAsync(workId);
@@ -176,6 +182,7 @@ namespace Unicorn.Controllers
 
         [HttpPut]
         [Route("{id}/orders/{orderId}")]
+        [TokenAuthenticate]
         public async Task<HttpResponseMessage> UpdateVendor(long id, long orderId, [FromBody]VendorBookDTO order)
         {
             var book = await _bookService.GetByIdAsync(orderId);
@@ -204,6 +211,7 @@ namespace Unicorn.Controllers
 
         [HttpPost]
         [Route("{id}/contacts")]
+        [TokenAuthenticate]
         public async Task<HttpResponseMessage> PostVendorContact(long id, [FromBody]ContactShortDTO contact)
         {
             var accountId = await _vendorService.GetVendorAccountIdAsync(id);
@@ -217,6 +225,7 @@ namespace Unicorn.Controllers
 
         [HttpPut]
         [Route("{id}/contacts/{contactId}")]
+        [TokenAuthenticate]
         public async Task<HttpResponseMessage> PutVendorContact(long id, long contactId, [FromBody]ContactShortDTO contact)
         {
             var accountId = await _vendorService.GetVendorAccountIdAsync(id);
@@ -232,6 +241,7 @@ namespace Unicorn.Controllers
 
         [HttpDelete]
         [Route("{id}/contacts/{contactId}")]
+        [TokenAuthenticate]
         public async Task<HttpResponseMessage> DeleteVendorContact(long id, long contactId)
         {
             var accountId = await _vendorService.GetVendorAccountIdAsync(id);
@@ -277,6 +287,7 @@ namespace Unicorn.Controllers
         
         [HttpPost]
         [Route("{id}/portfolio")]
+        [TokenAuthenticate]
         public async Task<HttpResponseMessage> GetVendorPortfolio(long id, [FromBody] PortfolioItemDTO itemDto)
         {
             await _portfolioService.CreateAsync(id, itemDto);

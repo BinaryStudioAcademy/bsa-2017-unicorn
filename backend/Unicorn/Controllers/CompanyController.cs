@@ -6,6 +6,7 @@ using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Web.Mvc;
 using Unicorn.Core.Interfaces;
+using Unicorn.Filters;
 using Unicorn.Shared.DTOs.Chart;
 using Unicorn.Shared.DTOs.Company;
 using Unicorn.Shared.DTOs.CompanyPage;
@@ -13,7 +14,7 @@ using Unicorn.Shared.DTOs.Contact;
 
 namespace Unicorn.Controllers
 {
-    [EnableCors("*", "*", "*")]
+    [EnableCors("*", "*", "*")]    
     public class CompanyController : ApiController
     {
         private readonly ICompanyPageService _companyService;
@@ -63,6 +64,7 @@ namespace Unicorn.Controllers
         // POST: company/details
         [System.Web.Http.HttpPost]
         [System.Web.Http.Route("company/details")]
+        [TokenAuthenticate]
         public async Task SaveCompanyDetails([FromBody]CompanyDetails companyDetails)
         {
             await _companyService.SaveCompanyDetails(companyDetails);
@@ -83,6 +85,7 @@ namespace Unicorn.Controllers
         // PUT: company/reviews
         [System.Web.Http.HttpPut]
         [System.Web.Http.Route("company/reviews")]
+        [TokenAuthenticate]
         public async Task AddCompanyReviews([FromBody]CompanyReviews companyReviews)
         {
             await _companyService.AddCompanyReviews(companyReviews);
@@ -103,6 +106,7 @@ namespace Unicorn.Controllers
         // PUT: company/vendors
         [System.Web.Http.HttpPut]
         [System.Web.Http.Route("company/vendors")]
+        [TokenAuthenticate]
         public async Task AddCompanyVendors([FromBody]CompanyVendors companyVendors)
         {
             await _companyService.AddCompanyVendors(companyVendors);
@@ -110,6 +114,7 @@ namespace Unicorn.Controllers
         // DELETE: company/vendor/5/4
         [System.Web.Http.HttpDelete]
         [System.Web.Http.Route("company/vendor/{companyId}/{vendorId}")]
+        [TokenAuthenticate]
         public async Task DeleteCompanyVendor(long companyId, long vendorId)
         {
             await _companyService.DeleteCompanyVendor(companyId, vendorId);
@@ -130,6 +135,7 @@ namespace Unicorn.Controllers
         // POST: company/contacts
         [System.Web.Http.HttpPost]
         [System.Web.Http.Route("company/contact")]
+        [TokenAuthenticate]
         public async Task SaveCompanyContact([FromBody]ContactShortDTO companyContact)
         {
             await _companyService.SaveCompanyContact(companyContact);
@@ -137,6 +143,7 @@ namespace Unicorn.Controllers
         // PUT: company/contact/5
         [System.Web.Http.HttpPut]
         [System.Web.Http.Route("company/contact/{companyId}")]
+        [TokenAuthenticate]
         public async Task AddCompanyContact(long companyId, [FromBody]ContactShortDTO companyContact)
         {
             await _companyService.AddCompanyContact(companyId, companyContact);
@@ -144,6 +151,7 @@ namespace Unicorn.Controllers
         // DELETE: company/contact/5
         [System.Web.Http.HttpDelete]
         [System.Web.Http.Route("company/contact/{companyId}/{contactId}")]
+        [TokenAuthenticate]
         public async Task DeleteCompanyContact(long companyId, long contactId)
         {
             await _companyService.DeleteCompanyContact(companyId, contactId);
@@ -164,6 +172,7 @@ namespace Unicorn.Controllers
         // POST: company/work
         [System.Web.Http.HttpPost]
         [System.Web.Http.Route("company/work")]
+        [TokenAuthenticate]
         public async Task SaveCompanyWork([FromBody]CompanyWork companyWork)
         {
             await _companyService.SaveCompanyWork(companyWork);
@@ -171,6 +180,7 @@ namespace Unicorn.Controllers
         // PUT: company/work/5
         [System.Web.Http.HttpPut]
         [System.Web.Http.Route("company/work/{companyId}")]
+        [TokenAuthenticate]
         public async Task AddCompanyWork(long companyId, [FromBody]CompanyWork companyWork)
         {
             await _companyService.AddCompanyWork(companyId, companyWork);
@@ -178,6 +188,7 @@ namespace Unicorn.Controllers
         // DELETE: company/work/5
         [System.Web.Http.HttpDelete]
         [System.Web.Http.Route("company/work/{companyId}/{workId}")]
+        [TokenAuthenticate]
         public async Task DeleteCompanyWork(long companyId, long workId)
         {
             await _companyService.DeleteCompanyWork(companyId, workId);
@@ -198,6 +209,7 @@ namespace Unicorn.Controllers
         // POST: company/book
         [System.Web.Http.HttpPost]
         [System.Web.Http.Route("company/book")]
+        [TokenAuthenticate]
         public async Task SaveCompanyBook([FromBody]CompanyBook companyBook)
         {
             await _companyService.SaveCompanyBook(companyBook);
@@ -217,6 +229,7 @@ namespace Unicorn.Controllers
 
         [System.Web.Http.HttpGet]
         [System.Web.Http.Route("company/{id}/charts")]
+        [TokenAuthenticate]
         public async Task<AnalyticsDTO> GetCompanyCharts(long id)
         {
             return await _analytics.GetCompanyAnalytics(id);

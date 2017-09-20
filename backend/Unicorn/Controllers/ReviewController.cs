@@ -7,11 +7,13 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using Unicorn.Core.Interfaces;
+using Unicorn.Filters;
 using Unicorn.Shared.DTOs.Review;
 
 namespace Unicorn.Controllers
 {
     [EnableCors("*", "*", "*")]
+    [TokenAuthenticate]
     public class ReviewController : ApiController
     {
         private readonly IReviewService _reviewService;

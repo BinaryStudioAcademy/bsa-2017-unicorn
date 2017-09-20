@@ -8,13 +8,14 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using Unicorn.Core.Interfaces;
+using Unicorn.Filters;
 using Unicorn.Providers;
 using Unicorn.Shared.DTOs.Chat;
 
 namespace Unicorn.Controllers
 {
     [EnableCors("*", "*", "*")]
-    [RoutePrefix("chat")]
+    [RoutePrefix("chat")]    
     public class ChatController : ApiController
     {
         private readonly IChatService _chatService;
@@ -25,6 +26,7 @@ namespace Unicorn.Controllers
         }
 
         [HttpGet]
+        [TokenAuthenticate]
         public async Task<HttpResponseMessage> Get(int id)
         {
             try
@@ -40,6 +42,7 @@ namespace Unicorn.Controllers
 
         [HttpGet]
         [Route("{dialogId}/{ownerId}")]
+        [TokenAuthenticate]
         public async Task<HttpResponseMessage> Get(long dialogId, long ownerId)
         {
             try
@@ -55,6 +58,7 @@ namespace Unicorn.Controllers
 
         [HttpGet]
         [Route("dialogs/{id}")]
+        [TokenAuthenticate]
         public async Task<HttpResponseMessage> GetAllDialogs(int id)
         {
             try
@@ -70,6 +74,7 @@ namespace Unicorn.Controllers
 
         [HttpGet]
         [Route("dialog/find/{participantOneId}/{participantTwoId}")]
+        [TokenAuthenticate]
         public async Task<HttpResponseMessage> FindDialog(int participantOneId, int participantTwoId)
         {
             try
@@ -85,6 +90,7 @@ namespace Unicorn.Controllers
 
         [HttpPost]
         [Route("dialog")]
+        [TokenAuthenticate]
         public async Task<HttpResponseMessage> CreateDialog(ChatDialogDTO dialog)
         {
             try
@@ -100,6 +106,7 @@ namespace Unicorn.Controllers
 
         [HttpPost]
         [Route("messages/update/{dialogId}")]
+        [TokenAuthenticate]
         public async Task<HttpResponseMessage> ReadNotReadedMessages(long dialogId, [FromBody] long ownerId)
         {
             try
@@ -115,6 +122,7 @@ namespace Unicorn.Controllers
 
         [HttpPost]
         [Route("send")]
+        [TokenAuthenticate]
         public async Task<HttpResponseMessage> SendMessage(ChatMessageDTO msg)
         {
             try
@@ -129,6 +137,7 @@ namespace Unicorn.Controllers
         }
         [HttpDelete]
         [Route("dialog/hide/{dialogId}/{ownerId}")]
+        [TokenAuthenticate]
         public async Task<HttpResponseMessage> DeleteDialog(long dialogId, long ownerId)
         {
             try
@@ -144,6 +153,7 @@ namespace Unicorn.Controllers
 
         [HttpDelete]
         [Route("messages/{id}")]
+        [TokenAuthenticate]
         public async Task<HttpResponseMessage> DeleteMessage(long id)
         {
             try
@@ -198,6 +208,7 @@ namespace Unicorn.Controllers
 
         [HttpGet]
         [Route("unread/{id}")]
+        [TokenAuthenticate]
         public async Task<HttpResponseMessage> UnreadDialogsCount(long id)
         {
             try

@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using Unicorn.Core.Interfaces;
+using Unicorn.Filters;
 using Unicorn.Shared.DTOs.Book;
 
 namespace Unicorn.Controllers
 {
-    [EnableCors("*", "*", "*")]
+    [EnableCors("*", "*", "*")]    
     public class BookController : ApiController
     {
         private IBookService _bookService;
@@ -25,6 +26,7 @@ namespace Unicorn.Controllers
 
         [HttpPost]
         [Route("{id}/order")]
+        [TokenAuthenticate]
         public async Task<HttpResponseMessage> Order(BookOrderDTO book)
         {
             try
@@ -92,6 +94,7 @@ namespace Unicorn.Controllers
 
         [HttpPut]
         [Route("book")]
+        [TokenAuthenticate]
         public async Task<HttpResponseMessage> UpdateBook(VendorBookDTO book)
         {
             try
@@ -125,6 +128,7 @@ namespace Unicorn.Controllers
 
         [HttpDelete]
         [Route("book/{id}")]
+        [TokenAuthenticate]
         public async Task<HttpResponseMessage> DeleteBook(long id)
         {
             try
