@@ -453,18 +453,18 @@ namespace Unicorn.Core.Services
                 await _notificationService.CreateAsync(receiverId, notification);
 
                 /* Send Message */
-                //if (book.Status != BookStatus.Confirmed) // Only for customer events
-                //{
-                //    string msg = EmailTemplate.OrderStatusChanged(book.Work.Name, newBookStatus, book.Customer.Id);
-                //    string receiverEmail = book.Vendor != null ? book.Vendor.Person.Account.Email : book.Company.Account.Email;
-                //    _mailService.Send(new EmailMessage
-                //    {
-                //        ReceiverEmail = receiverEmail,
-                //        Subject = "Work status changed",
-                //        Body = msg,
-                //        IsHtml = true
-                //    });
-                //}
+                if (book.Status != BookStatus.Confirmed) // Only for customer events
+                {
+                    string msg = EmailTemplate.OrderStatusChanged(book.Work.Name, newBookStatus, book.Customer.Id);
+                    string receiverEmail = book.Vendor != null ? book.Vendor.Person.Account.Email : book.Company.Account.Email;
+                    _mailService.Send(new EmailMessage
+                    {
+                        ReceiverEmail = receiverEmail,
+                        Subject = "Work status changed",
+                        Body = msg,
+                        IsHtml = true
+                    });
+                }
             }
         }
 
