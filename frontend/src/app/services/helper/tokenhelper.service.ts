@@ -33,7 +33,7 @@ export class TokenHelperService {
   }
 
   public isAccountBanned(): boolean {
-    return this.getClaimByName('isbanned').toLowerCase() === 'true';
+    return this.getClaimByName('isbanned') && this.getClaimByName('isbanned').toLowerCase() === 'true';
   }
 
   public getAllClaims(): object {
