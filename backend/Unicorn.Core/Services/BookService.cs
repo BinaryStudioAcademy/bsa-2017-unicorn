@@ -573,7 +573,12 @@ namespace Unicorn.Core.Services
 
         private async Task CreateTask(ShortTaskDTO task, long companyId)
         {
-            var vendor = await _unitOfWork.VendorRepository.GetByIdAsync(task.VendorId);
+            var vendor = await _unitOfWork.VendorRepository
+                .Query
+                .Include(v => v.Person)
+                .Include(v => v.Person.Account)
+                .Where(v => v.Id == task.VendorId)
+                .SingleOrDefaultAsync();
             var company = await _unitOfWork.CompanyRepository.GetByIdAsync(companyId);
             var book = await _unitOfWork.BookRepository.GetByIdAsync(task.BookId);
             var work = await _unitOfWork.WorkRepository.GetByIdAsync(task.WorkId);
@@ -595,6 +600,18 @@ namespace Unicorn.Core.Services
             _unitOfWork.BookRepository.Create(companyBook);
 
             await _unitOfWork.SaveAsync();
+
+            /* Send Notification */
+            var notification = new NotificationDTO()
+            {
+                Title = $"New order for {work.Name}",
+                Description = $"{company.Name} assigned you for {work.Name}. Check your dashboard to find out details.",
+                SourceItemId = book.Id,
+                Time = DateTime.Now,
+                Type = NotificationType.TaskNotification
+            };
+            var receiverId = vendor.Person.Account.Id;
+            await _notificationService.CreateAsync(receiverId, notification);
         }
 
         private async Task CheckBooks(Book book)
@@ -654,7 +671,12 @@ namespace Unicorn.Core.Services
 
         public async Task ReassignCompanyTask(ShortTaskDTO task, long companyId)
         {
-            var vendor = await _unitOfWork.VendorRepository.GetByIdAsync(task.VendorId);
+            var vendor = await _unitOfWork.VendorRepository
+                .Query
+                .Include(v => v.Person)
+                .Include(v => v.Person.Account)
+                .Where(v => v.Id == task.VendorId)
+                .SingleOrDefaultAsync();
             var company = await _unitOfWork.CompanyRepository.GetByIdAsync(companyId);
             var book = await _unitOfWork.BookRepository.GetByIdAsync(task.BookId);
             var work = await _unitOfWork.WorkRepository.GetByIdAsync(task.WorkId);
@@ -680,14 +702,47 @@ namespace Unicorn.Core.Services
             _unitOfWork.BookRepository.Create(companyBook);
 
             await _unitOfWork.SaveAsync();
+
+            /* Send Notification */
+            var notification = new NotificationDTO()
+            {
+                Title = $"New order for {work.Name}",
+                Description = $"{company.Name} assigned you for {work.Name}. Check your dashboard to find out details.",
+                SourceItemId = book.Id,
+                Time = DateTime.Now,
+                Type = NotificationType.TaskNotification
+            };
+            var receiverId = vendor.Person.Account.Id;
+            await _notificationService.CreateAsync(receiverId, notification);
         }
 
         public async Task DeleteCompanyTask(long taskId)
         {
-            var task = await _unitOfWork.BookRepository.GetByIdAsync(taskId);
+            var task = await _unitOfWork.BookRepository
+                .Query
+                .Include(b => b.Company)
+                .Include(b => b.Vendor)
+                .Include(b => b.Vendor.Person)
+                .Include(b => b.Vendor.Person.Account)
+                .Include(b => b.Work)
+                .Where(b => b.Id == taskId)
+                .SingleOrDefaultAsync();
+
             task.ParentBookId = 0;
             _unitOfWork.BookRepository.Update(task);
             await _unitOfWork.SaveAsync();
+
+            /* Send Notification */
+            var notification = new NotificationDTO()
+            {
+                Title = $"New order for {task.Work.Name}",
+                Description = $"{task.Company.Name} deleted your task {task.Work.Name}.",
+                SourceItemId = task.Id,
+                Time = DateTime.Now,
+                Type = NotificationType.TaskNotification
+            };
+            var receiverId = task.Vendor.Person.Account.Id;
+            await _notificationService.CreateAsync(receiverId, notification);
         }
     }
 }
