@@ -509,7 +509,6 @@ export class DashboardCompanyProgressComponent implements OnInit, OnDestroy {
     this.review.PerformerId = task.Vendor.Id;
     this.review.PerformerType = 'vendor';
     this.reviewService.saveReview(this.review).then(resp => {
-      this.books.splice(this.books.findIndex(b => b.Id === id), 1);
       this.reviewLoader = false;
       this.currModal.deny(undefined);
       this.loadData();

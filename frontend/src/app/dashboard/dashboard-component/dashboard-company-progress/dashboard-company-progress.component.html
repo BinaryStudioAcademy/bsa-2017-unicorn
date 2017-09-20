@@ -18,7 +18,10 @@
         </div>
         <div class="book-actions four wide column">
             <div *ngIf="!isVendorAssigned(book.Id)">
-                <a (click)="createTasks(book.Id)" class="ui button accept-btn" [ngClass]="{'loading': loads[book.Id], 'disabled': loads[book.Id] || someFormOpened}">Create tasks</a>
+                <a class="ui button accept-btn" 
+                  (click)="finish(book.Id)"
+                  [ngClass]="{'loading': loads[book.Id]}">Finish</a>
+                <a (click)="createTasks(book.Id)" class="ui button basic assign-vendors" [ngClass]="{'disabled': loads[book.Id] || someFormOpened}">Assign</a>
             </div>
             <div *ngIf="isVendorAssigned(book.Id)">
                 <a class="ui button accept-btn" 
@@ -178,6 +181,7 @@
           <div class="save-btn">
               <a (click)="declineConfirm(context.id)" [ngClass]="{'loading': loader, 'disabled': declineForm.invalid || loader}" class="ui basic button decline-confirm">
                   <p *ngIf="!loader" style="color:#FF647A;">Save</p>
+                  <p *ngIf="loader">&nbsp;</p>
               </a>
           </div>
       </form>
@@ -240,7 +244,8 @@
           </div>
           <div class="save-btn">
               <a (click)="leaveReviewConfirm(context.id)" [ngClass]="{'loading': reviewLoader, 'disabled': !gradeSelected || reviewLoader}" class="ui basic button">
-                  <p *ngIf="!loader" style="color:#FF647A;">Save</p>
+                  <p *ngIf="!reviewLoader" style="color:#FF647A;">Save</p>
+                  <p *ngIf="reviewLoader" style="color:#FF647A;">&nbsp;</p>
               </a>
           </div>
       </form>
