@@ -14,6 +14,7 @@ using Unicorn.Shared.DTOs.Contact;
 using Unicorn.Shared.DTOs.Review;
 using Unicorn.Shared.DTOs.Notification;
 using Unicorn.DataAccess.Entities.Enum;
+using Unicorn.Shared.DTOs.Vendor;
 
 namespace Unicorn.Core.Services
 {
@@ -342,6 +343,31 @@ namespace Unicorn.Core.Services
             }
 
             return null;
+        }
+
+        public async Task<List<VendorDTO>> GetCompanyVendorsWithWorks(long companyId)
+        {
+            var company = await _unitOfWork.CompanyRepository.GetByIdAsync(companyId);
+            var vendors = await _unitOfWork.VendorRepository
+                .Query
+                .Include(v => v.Person)
+                .Include(v => v.Person.Account)
+                .Include(v => v.Works)
+                .Include(v => v.Company)
+                .Where(v => v.Company != null && v.Company.Id == companyId)
+                .ToListAsync();
+
+            return vendors.Select(v => new VendorDTO
+            {
+                Id = v.Id,
+                FIO = $"{v.Person.Name} {v.Person.Surname}",
+                Avatar = v.Person.Account.Avatar,
+                Works = v.Works.Select(w => new WorkDTO
+                {
+                    Id = w.Id,
+                    Name = w.Name
+                }).ToList()
+            }).ToList();
         }
 
         private async Task AddCompanyVendorsMethod(CompanyVendors companyVendorsDTO)

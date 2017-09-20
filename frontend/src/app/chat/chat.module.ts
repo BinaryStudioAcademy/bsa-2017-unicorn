@@ -6,13 +6,15 @@ import { FormsModule } from '@angular/forms'
 import { MomentModule } from "angular2-moment";
 import { ChatService } from "../services/chat/chat.service";
 import { MiniChatComponent } from './mini-chat/mini-chat.component';
+import { SuiModule } from 'ng2-semantic-ui';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     MomentModule,
-    RouterModule
+    RouterModule,
+    SuiModule
   ],
   declarations: [
     ChatComponent,

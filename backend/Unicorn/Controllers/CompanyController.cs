@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Helpers;
@@ -11,6 +12,7 @@ using Unicorn.Shared.DTOs.Chart;
 using Unicorn.Shared.DTOs.Company;
 using Unicorn.Shared.DTOs.CompanyPage;
 using Unicorn.Shared.DTOs.Contact;
+using Unicorn.Shared.DTOs.Vendor;
 
 namespace Unicorn.Controllers
 {
@@ -92,6 +94,13 @@ namespace Unicorn.Controllers
         }
 
 
+        // GET: company/dashboard/vendors/5
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("company/{id}/dashboard/vendors")]
+        public async Task<List<VendorDTO>> GetCompanyVendorsWithWorks(long id)
+        {
+            return await _companyService.GetCompanyVendorsWithWorks(id);
+        }
 
         // GET: company/vendors/5
         [System.Web.Http.HttpGet]

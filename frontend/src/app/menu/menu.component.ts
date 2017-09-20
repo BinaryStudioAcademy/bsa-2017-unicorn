@@ -61,10 +61,14 @@ export class MenuComponent implements OnInit {
     private notificationService: NotificationService,
     private menuEventsService: MenuEventsService,
     private chatEventsService: ChatEventsService) {
-    this.isLogged = this.tokenHelper.isTokenValid() && this.tokenHelper.isTokenNotExpired();
+    this.isLogged = this.tokenHelper.isTokenValid() && this.tokenHelper.isTokenNotExpired() && !this.tokenHelper.isAccountBanned();
   }
 
   ngOnInit() {
+    if (this.tokenHelper.isAccountBanned()) {
+      this.signOut();
+    }
+
     this.roleRouter = new RoleRouter();
     if (this.isLogged) {      
       this.accountService.getShortInfo(+this.tokenHelper.getClaimByName("accountid"))
@@ -106,8 +110,12 @@ export class MenuComponent implements OnInit {
       .subscribe(() => {
         this.isLogged = true;
         this.notificationService.connect(+this.tokenHelper.getClaimByName("accountid"))
-        .then(() => this.notificationService
-          .listen<Notification>("OnNotificationRecieved", notification => this.addNotification(notification)));
+        .then(() => {
+          this.notificationService
+            .listen<Notification>("OnNotificationRecieved", notification => this.addNotification(notification));
+          this.notificationService
+            .listen<Notification>("SignOut", notification => this.signOut());
+        });
       this.accountService.getNotifications(+this.tokenHelper.getClaimByName("accountid"))
         .then(resp => {
           this.notifications = (resp.body as Notification[]);

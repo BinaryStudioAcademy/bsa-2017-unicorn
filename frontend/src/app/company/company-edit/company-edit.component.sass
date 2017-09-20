@@ -6,7 +6,8 @@ div
 .main-content    
     max-width: 960px;
     margin: 0 auto;
-
+.chart
+  min-width: 1024px;
 .photo.icon
     font-size: 4em;
     line-height: 1;
@@ -55,3 +56,30 @@ div
 .ui.dimmer
     background-color: rgba(0,0,0,.6);
     z-index: 0;
+
+
+$small: 520px;
+$medium: 560px;
+$large: 655px;
+$normal: 1000px;
+
+@mixin respond-to($media) 
+  @if $media == handhelds 
+    @media only screen and (max-width: $small) { @content; }
+  @else if $media == medium-screens1 
+    @media only screen and (min-width: $small + 1) and (max-width: $medium - 1) { @content; }
+  @else if $media == medium-screens2
+    @media only screen and (min-width: $medium) and (max-width: $large - 1) { @content; }
+  @else if $media == medium-screens3
+    @media only screen and (min-width: $large) and (max-width: $normal - 1) { @content; }
+  @else if $media == wide-screens 
+    @media only screen and (min-width: $normal) { @content; }
+  
+
+
+.ui.menu
+  @include respond-to(handhelds) { font-size: 0.53rem!important ;}
+  @include respond-to(medium-screens1) { font-size: 0.57rem!important ; }
+  @include respond-to(medium-screens2) { font-size: 0.65rem!important ; }
+  @include respond-to(medium-screens3) { font-size: 0.8rem!important ; }
+  @include respond-to(wide-screens) { font-size: 1rem!important ; }

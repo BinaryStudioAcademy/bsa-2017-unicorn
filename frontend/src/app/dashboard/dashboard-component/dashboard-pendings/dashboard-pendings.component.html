@@ -18,7 +18,7 @@
         <div class="book-actions four wide column">
             <a (click)="accept(book.Id)" class="ui button accept-btn" [ngClass]="{'loading': aloads[book.Id], 'disabled': aloads[book.Id] || dloads[book.Id]}">Accept</a>
             <a (click)="decline(book.Id)" class="ui button basic decline-btn" [ngClass]="{'loading': dloads[book.Id], 'disabled': aloads[book.Id] || dloads[book.Id]}">Decline</a>
-            <div class="book-warning" *ngIf="book.MoreTasksPerDay">WARNING! This task might make one of your work days with more than one task. Check your calendar.</div>
+            <div class="book-warning" *ngIf="book.MoreTasksPerDay">WARNING! This task might make one of your work days with more than one task.</div>
         </div>
     </div>
 </div>

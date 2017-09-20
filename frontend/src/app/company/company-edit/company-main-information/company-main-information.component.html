@@ -1,52 +1,60 @@
 <link rel="stylesheet" href="https://unpkg.com/semantic-ui-calendar/dist/calendar.min.css">
-
-<div *ngIf="company !== undefined" class="flex-container">
-    <form name="companyForm" #companyForm="ngForm" class="container">
-        <div class="main-information">
-            <div class="ui form">
-                <div class="field">
-                    <label>Company name</label>
-                    <input required type="text" name="name" [(ngModel)]="company.Name" #compname="ngModel">
-                    <div *ngIf="compname.invalid && (compname.dirty)" class="valid-error">* Required</div>
-                </div>
-                <div class="field">
-                    <label>Description</label>
-                    <textarea name="description" [(ngModel)]="company.Description" #desc="ngModel"></textarea>
-                </div>
-                <div class="field">
-                    <label>Foundation date</label>
-                    <div class="ui left icon input">
-                        <i class="calendar icon"></i>
-                        <input suiDatepicker [(ngModel)]="company.FoundationDate" name="foundation-date" pickerMode="date" placeholder="FOUNDATION DATE">
-                    </div>
-                </div>
-                <div class="field">
-                    <label>CEO</label>
-                    <input name="director" type="text" [(ngModel)]="company.Director" #dir="ngModel">
-                </div>
-            </div>
-        </div>
-        <div class="map">
-            <div class="map" *ngIf="map !== undefined">
+<div *ngIf="company !== undefined">
+    <div class="two column stackable ui grid">
+        <div class="column">
+            <form name="companyForm" #companyForm="ngForm">
                 <div class="ui form">
                     <div class="field">
-                        <label>Change your location</label>
-                        <div class="ui input">
-                            <input places-auto-complete (initialized$)="initialized($event)" (place_changed)="placeChanged($event)" [types]="['geocode']" placeholder="TYPE HERE..." />
+                        <label>Company name</label>
+                        <input required type="text" name="name" [(ngModel)]="company.Name" #compname="ngModel">
+                        <div *ngIf="compname.invalid && (compname.dirty)" class="valid-error">* Required</div>
+                    </div>
+                    <div class="field">
+                        <label>Description</label>
+                        <textarea name="description" [(ngModel)]="company.Description" #desc="ngModel"></textarea>
+                    </div>
+                    <div class="field">
+                        <label>Foundation date</label>
+                        <div class="ui left icon input">
+                            <i class="calendar icon"></i>
+                            <input suiDatepicker [(ngModel)]="company.FoundationDate" name="foundation-date" pickerMode="date" placeholder="FOUNDATION DATE">
                         </div>
-                        <ngui-map class="map" zoom="14" [center]="position" style="margin-top: 5px">
-                            <marker [position]="position" [draggable]="true" (dragend)="markerDragged($event)">
-                            </marker>
-                        </ngui-map>
+                    </div>
+                    <div class="field">
+                        <label>CEO</label>
+                        <input name="director" type="text" [(ngModel)]="company.Director" #dir="ngModel">
+                    </div>
+                </div>
+            </form>
+
+        </div>
+        <div class="column">
+            <div class="map">
+                <div class="map" *ngIf="map !== undefined">
+                    <div class="ui form">
+                        <div class="field">
+                            <label>Change your location</label>
+                            <div class="ui input">
+                                <input places-auto-complete (initialized$)="initialized($event)" (place_changed)="placeChanged($event)" [types]="['geocode']" placeholder="TYPE HERE..." />
+                            </div>
+                            <ngui-map class="map" zoom="14" [center]="position" style="margin-top: 5px">
+                                <marker [position]="position" [draggable]="true" (dragend)="markerDragged($event)">
+                                </marker>
+                            </ngui-map>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </form>
+    </div>
     <div class="ui divider"></div>
-    <div class="align-button">
-        <button class="ui basic button" (click)="save()" [ngClass]="{'loading':isLoaded}">
-            <p *ngIf="!isLoaded" style="color:#FF647A;">Save</p></button>
+    <div class="ui grid">
+        <div class="centered row">
+            <div class="align-button">
+                <button class="ui basic button" (click)="save()" [ngClass]="{'loading':isLoaded}">
+        <p *ngIf="!isLoaded" style="color:#FF647A;">Save</p></button>
+            </div>
+        </div>
     </div>
 </div>
 <div *ngIf="company === undefined" class="ui active inverted dimmer" style="background-color: rgba(255,255,255,.85); z-index: 0;">

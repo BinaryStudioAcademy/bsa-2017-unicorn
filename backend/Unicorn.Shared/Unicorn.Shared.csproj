@@ -51,6 +51,7 @@
     <Compile Include="DTOs\Book\BookDTO.cs" />
     <Compile Include="DTOs\Book\BookOrderDTO.cs" />
     <Compile Include="DTOs\Book\CustomerBookDTO.cs" />
+    <Compile Include="DTOs\Book\ShortTaskDTO.cs" />
     <Compile Include="DTOs\Book\VendorBookDTO.cs" />
     <Compile Include="DTOs\CalendarDTO.cs" />
     <Compile Include="DTOs\CategoryDTO.cs" />

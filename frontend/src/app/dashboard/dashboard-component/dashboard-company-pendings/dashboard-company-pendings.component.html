@@ -1,0 +1,129 @@
+<div class="sixteen wide column" *ngIf="books !== undefined">
+  <div class="ui segment" *ngIf="books.length == 0">
+      <span id="empty-header">There are no tasks in pending</span>
+  </div>
+  <div class="ui segment book-card grid" *ngFor="let book of books">
+      <div class="row">
+        <div class="book-img two wide column">
+            <img class="ui tiny circular image" src="{{book.Work.Icon}}">
+        </div>
+        <div class="book-info five wide column">
+            <p>{{book.Work.Name}} <span align=right>{{book.Date | date: 'dd/MM/yyyy'}}{{getEndDate(book)}}</span></p>
+            <p>{{book.Description}}</p>
+        </div>
+        <div class="customer-info five wide column">
+            <p><a routerLink="/user/{{book.CustomerId}}">{{book.Customer}}</a></p>
+            <p><i class="colored call icon"></i>{{book.CustomerPhone}}</p>
+            <p (click)="openMap(book.Id)" class="mapInfo"><i class="colored map pin icon"></i>{{book.Location.City}},&nbsp;{{book.Location.Adress}}</p>
+        </div>
+        <div class="book-actions four wide column" *ngIf="!assignedBooks[book.Id]">
+            <a (click)="accept(book.Id)" class="ui button accept-btn" [ngClass]="{'loading': aloads[book.Id], 'disabled': aloads[book.Id] || dloads[book.Id]}">Accept</a>
+            <a (click)="decline(book.Id)" class="ui button basic decline-btn" [ngClass]="{'loading': dloads[book.Id], 'disabled': aloads[book.Id] || dloads[book.Id]}">Decline</a>
+            <div class="book-warning" *ngIf="book.MoreTasksPerDay">WARNING! This task might make one of your work days with more than one task. Check your calendar.</div>
+        </div>
+        <div class="book-actions four wide column" *ngIf="assignedBooks[book.Id]">
+            <h5>Waiting vendors..</h5>
+        </div>
+      </div>
+      <div class="ui divider no-bottom-margin" *ngIf="taskFormOpen[book.Id]"></div>
+      <div class="row no-padd-top no-padd-bottom" *ngIf="taskFormOpen[book.Id]">
+        <div class="vendor-assign-div sixteen wide column">
+          <div class="ui two column grid">
+              <div class="column">
+                <div class="task-header">
+                  <span><h5>TASKS <i class="ui icon green add add-icon" (click)="newTask(book.Id)"></i></h5></span>
+                  
+                </div>
+                <div class="task-list">
+                  <div class="task-item" *ngFor="let task of tasks" (click)="editTask(task)">
+                    <div>
+                      <img class="ui mini circular image task-item-image" src="{{getVendorAvatar(task)}}">
+                    </div>
+                    <div>
+                      <span class="task-item-span">{{task.Description}}</span>
+                    </div>
+                    <div>
+                      <span class="task-item-span">{{task.Status}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="column">
+                <div class="form-header">
+                  <span><h5>TASK DESCRIPTION</h5></span>
+                </div>
+                <div class="task-form" *ngIf="taskFormOpened">
+                  <form class="ui form" #form="ngForm">
+                    <div class="field">
+                      <div class="ui input">
+                        <textarea rows="3" required placeholder="DESCRIPTION" 
+                          [(ngModel)]="currentTask.Description" name="taskDesc">
+                        </textarea>
+                      </div>
+                    </div>
+                    <div class="two fields">
+                      <div class="field">
+                        <sui-select required class="selection" 
+                          [optionTemplate]="optionVendorTemplate" 
+                          placeholder="SELECT VENDOR"
+                          (selectedOptionChange)="changeVendor()"
+                          [(ngModel)]="selectedVendor"
+                          name="vendorSelect">
+                          <sui-select-option class="select-option" *ngFor="let vendor of availableVendors" [value]="vendor">
+                          </sui-select-option>
+                        </sui-select>
+                      </div>
+                      <div class="field">
+                        <sui-select required class="selection"
+                          [optionTemplate]="optionWorkTemplate"
+                          placeholder="SELECT WORK"
+                          [(ngModel)]="selectedWork"
+                          name="workSelect">
+                          <sui-select-option class="select-option" *ngFor="let work of works" [value]="work">
+                          </sui-select-option>
+                        </sui-select>
+                      </div>
+                    </div>
+                    <a class="ui button accept-btn" [ngClass]="{'disabled': form.invalid}" (click)="saveTask()">SAVE</a>
+                  </form>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+      <div class="ui divider" *ngIf="taskFormOpen[book.Id]"></div>
+      <div class="row" *ngIf="taskFormOpen[book.Id]">
+        <div class="right aligned column">
+          <div class="field">
+            <a class="ui button accept-btn" [ngClass]="{'disabled': tasks.length === 0, 'loading': assignLoader}" (click)="asignVendors(book.Id)">ASSIGN VENDORS</a>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+<ng-template let-context let-modal="modal" #declineModal>
+  <div class="ui content">
+      <form class="ui reply form" name="reviewForm" #declineForm="ngForm">
+          <div class="field">
+              <textarea required placeholder="TYPE THE REASON" name="reason" [(ngModel)]="reason" #reasonText="ngModel"></textarea>
+          </div>
+          <div class="save-btn">
+              <a (click)="declineConfirm(context.id)" [ngClass]="{'loading': loader, 'disabled': declineForm.invalid || loader}" class="ui basic button decline-confirm">
+                  <p *ngIf="!loader" style="color:#FF647A;">Save</p>
+              </a>
+          </div>
+      </form>
+  </div>
+</ng-template>
+<ng-template let-context let-modal="modal" #mapModal>
+  <div class="ui content">
+      <app-map [inputMap]="map" *ngIf="map"></app-map>
+  </div>
+</ng-template>
+<ng-template let-option #optionVendorTemplate>
+  <img class="ui avatar circular image vendor-img" src="{{option.Avatar}}">{{option.FIO}}
+</ng-template>
+<ng-template let-option #optionWorkTemplate>
+  {{option.Name}}
+</ng-template>
+<div class="ui active centered inline loader" *ngIf="books === undefined"></div>

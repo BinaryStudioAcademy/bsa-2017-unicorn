@@ -82,7 +82,7 @@ export class IndexComponent implements OnInit {
 
   isPerformer(): boolean {
     let role = this.tokenHelper.getRoleName();
-    return role === 'vendor' || role === 'company';
+    return (role === 'vendor' || role === 'company') && !this.tokenHelper.isAccountBanned();
   }
 
   filter(arr, search = '') {

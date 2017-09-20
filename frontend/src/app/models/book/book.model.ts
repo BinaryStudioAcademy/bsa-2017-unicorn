@@ -8,7 +8,22 @@ export interface Book {
     Date: Date;
     EndDate: Date;
 	Description: string;
-	Vendor: Vendor;
+    Vendor: Vendor;
+	Company: CompanyShort;
+	Location: LocationModel;
+	Status: BookStatus;
+	Work: Work;
+}
+
+export interface CompanyTask {
+    Id: number;
+    Date: Date;
+    EndDate: Date;
+    Description: string;
+    DeclinedReason: string;
+    IsCompanyTask: boolean;
+    ParentBookId: number;
+    Vendor: Vendor;
 	Company: CompanyShort;
 	Location: LocationModel;
 	Status: BookStatus;

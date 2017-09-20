@@ -20,6 +20,8 @@ import { OfferService } from '../services/offer.service';
 import { NguiMapModule } from "@ngui/map/dist";
 import { environment } from "../../environments/environment";
 import { MapModule } from '../map/map.module';
+import { DashboardCompanyPendingsComponent } from './dashboard-component/dashboard-company-pendings/dashboard-company-pendings.component';
+import { DashboardCompanyProgressComponent } from './dashboard-component/dashboard-company-progress/dashboard-company-progress.component';
 
 @NgModule({
   imports: [
@@ -39,7 +41,9 @@ import { MapModule } from '../map/map.module';
     DashboardPendingsComponent,
     DashboardProgressComponent,
     DashboardFinishedComponent,
-    DashboardOffersComponent
+    DashboardOffersComponent,
+    DashboardCompanyPendingsComponent,
+    DashboardCompanyProgressComponent
   ],
   providers: [
     DashboardService,

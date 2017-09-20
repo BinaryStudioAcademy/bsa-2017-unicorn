@@ -20,6 +20,10 @@ namespace Unicorn.Shared.DTOs.Book
 
         public string DeclinedReason { get; set; }
 
+        public long ParentBookId { get; set; }
+
+        public bool IsCompanyTask { get; set; }
+
         public CustomerDTO Customer { get; set; }
 
         public VendorDTO Vendor { get; set; }

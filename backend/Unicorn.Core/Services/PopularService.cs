@@ -38,21 +38,21 @@ namespace Unicorn.Core.Services
             };
         }
 
-        private DateTime? ParseTheDate(string date)
-        {
-            if (date == null)
-            {
-                return null;
-            }
-            else
-            {
-                var partsOfTheTime = date.Split('-');
-                var year = int.Parse(partsOfTheTime[0]);
-                var month = int.Parse(partsOfTheTime[1]);
-                var day = int.Parse(partsOfTheTime[2].Split('T')[0]);
-                return new DateTime(year, month, day);
-            }
-        }
+        //private DateTime? ParseTheDate(string date)
+        //{
+        //    if (date == null)
+        //    {
+        //        return null;
+        //    }
+        //    else
+        //    {
+        //        var partsOfTheTime = date.Split('-');
+        //        var year = int.Parse(partsOfTheTime[0]);
+        //        var month = int.Parse(partsOfTheTime[1]);
+        //        var day = int.Parse(partsOfTheTime[2].Split('T')[0]);
+        //        return new DateTime(year, month, day);
+        //    }
+        //}
 
         private bool IsVendorWorkingOnThisDate(long id, DateTimeOffset? date)
         {
@@ -70,8 +70,8 @@ namespace Unicorn.Core.Services
 
             foreach (var book in books)
             {
-                var bookDate = book.Date.ToUniversalTime();
-                var bookEndDate = book.EndDate.ToUniversalTime();
+                var bookDate = book.Date;
+                var bookEndDate = book.EndDate;
 
                 if (date >= bookDate && date <= bookEndDate)
                 {
@@ -99,8 +99,8 @@ namespace Unicorn.Core.Services
 
             foreach (var book in books)
             {
-                var bookDate = book.Date.ToUniversalTime();
-                var bookEndDate = book.EndDate.ToUniversalTime();
+                var bookDate = book.Date;
+                var bookEndDate = book.EndDate;
                 if (date >= bookDate && date <= bookEndDate)
                 {
                     return true;
@@ -109,15 +109,17 @@ namespace Unicorn.Core.Services
             return false;
         }
 
-        private bool SynchronizeWorkDateWithVendorsWorkDays(Calendar calendar, DateTimeOffset? date, bool isWorkingOnThisDate)
+        private bool SynchronizeWorkDateWithVendorsWorkDays(Calendar calendar, DateTimeOffset? date, bool isWorkingOnThisDate, int timeZone)
         {
             if (date == null)
             {
                 return true;
             }
-            var calendarStartDate = calendar.StartDate.ToUniversalTime().Date;
+            var calendarStartDate = calendar.StartDate.Date;
             var calendarEndDate = calendar.EndDate != null ?
                 calendar.EndDate.GetValueOrDefault().Date : calendar.EndDate;
+
+            var weekendDate = date.GetValueOrDefault().AddHours(-(timeZone / 60));
 
             if (calendarStartDate <= date && (calendarEndDate == null || date <= calendarEndDate))
             {
@@ -129,7 +131,7 @@ namespace Unicorn.Core.Services
                 {
                     if (calendar.SeveralTaskPerDay)
                     {
-                        if (date.GetValueOrDefault().DayOfWeek == DayOfWeek.Saturday || date.GetValueOrDefault().DayOfWeek == DayOfWeek.Sunday)
+                        if (weekendDate.DayOfWeek == DayOfWeek.Saturday || weekendDate.DayOfWeek == DayOfWeek.Sunday)
                         {
                             if (calendar.WorkOnWeekend)
                             {
@@ -163,10 +165,9 @@ namespace Unicorn.Core.Services
 
         public async Task<List<FullPerformerDTO>> GetPerformersByFilterAsync(
             string city, string name, string role, double? rating, string ratingCondition, bool withReviews, string categoriesString,
-            string subcategoriesString, double? latitude, double? longitude, double? distance, string sort, string date
+            string subcategoriesString, double? latitude, double? longitude, double? distance, string sort, DateTimeOffset? date, int timeZone
             )
-        {
-            var _date = ParseTheDate(date);
+        {            
 
             var reviewsTask = _uow.ReviewRepository.GetAllAsync();
             var categories = !string.IsNullOrEmpty(categoriesString) ? categoriesString.Split(' ').Select(c => Int64.Parse(c)).ToList() : new List<long>();
@@ -281,7 +282,7 @@ namespace Unicorn.Core.Services
 
             var vendorsList = await vendorsTask;
 
-            var vendorsWorksSyncWithDate = vendorsList.Where(x => SynchronizeWorkDateWithVendorsWorkDays(x.Calendar, _date, IsVendorWorkingOnThisDate(x.Id, _date))).ToList();
+            var vendorsWorksSyncWithDate = vendorsList.Where(x => SynchronizeWorkDateWithVendorsWorkDays(x.Calendar, date, IsVendorWorkingOnThisDate(x.Id, date), timeZone)).ToList();
 
             var vendors = vendorsWorksSyncWithDate
                 .Select(v => VendorToFullPerformer(v, reviews, longitude, latitude))
@@ -289,7 +290,7 @@ namespace Unicorn.Core.Services
 
             var companiesList = await companiesTask;
 
-            var companiesWorksSyncWithDate = companiesList.Where(x => SynchronizeWorkDateWithVendorsWorkDays(x.Calendar, _date, IsCompanyWorkingOnThisDate(x.Id, _date))).ToList();
+            var companiesWorksSyncWithDate = companiesList.Where(x => SynchronizeWorkDateWithVendorsWorkDays(x.Calendar, date, IsCompanyWorkingOnThisDate(x.Id, date), timeZone)).ToList();
 
             var companies = companiesWorksSyncWithDate
                 .Select(c => CompanyToFullPerformer(c, reviews, longitude, latitude))

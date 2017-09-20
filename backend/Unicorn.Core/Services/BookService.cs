@@ -191,7 +191,7 @@ namespace Unicorn.Core.Services
                     .Include(v => v.Person.Account)
                     .SingleAsync(v => v.Id == book.ProfileId);
             }
-            
+
             Book _book = new Book()
             {
                 IsDeleted = false,
@@ -208,8 +208,8 @@ namespace Unicorn.Core.Services
             };
 
             _unitOfWork.BookRepository.Create(_book);
-            await _unitOfWork.SaveAsync();          
-            
+            await _unitOfWork.SaveAsync();
+
             /* Send Notification */
             var notification = new NotificationDTO()
             {
@@ -220,8 +220,11 @@ namespace Unicorn.Core.Services
                 Type = NotificationType.TaskNotification
             };
 
+           
+
             var receiverId = vendor != null ? vendor.Person.Account.Id : company.Account.Id;
-            await _notificationService.CreateAsync(receiverId, notification);
+            await _notificationService.CreateAsync(receiverId, notification);            
+
 
             /* Send Message */
             string msg = EmailTemplate.NewOrderTemplate(_book.Customer.Person.Name, _book.Customer.Person.Surname, _book.Work?.Name, book.CustomerId);
@@ -274,7 +277,7 @@ namespace Unicorn.Core.Services
                 case "company":
                     {
                         query = query
-                            .Where(b => b.Company != null)
+                            .Where(b => b.Company != null && !b.IsCompanyTask)
                             .Where(b => b.Company.Id == id);
                         break;
                     }
@@ -315,7 +318,7 @@ namespace Unicorn.Core.Services
                         CategoryId = b.Work.Subcategory.Category.Id,
                         Subcategory = b.Work.Subcategory.Name,
                         SubcategoryId = b.Work.Subcategory.Id,
-                        Icon = b.Work.Icon ?? b.Work.Subcategory.Category.Icon
+                        Icon = string.IsNullOrEmpty(b.Work.Icon) ? b.Work.Subcategory.Category.Icon : b.Work.Icon
                     }
                 }).ToList();
         }
@@ -332,7 +335,7 @@ namespace Unicorn.Core.Services
                 .Include(b => b.Work.Subcategory)
                 .Include(b => b.Work.Subcategory.Category)
                 .Include(b => b.Location)
-                .Where(b => b.Customer.Id == id)
+                .Where(b => b.Customer.Id == id && !b.IsCompanyTask)
                 .ToListAsync();
 
             var customerBooks = books
@@ -374,7 +377,7 @@ namespace Unicorn.Core.Services
                     CategoryId = b.Work.Subcategory.Category.Id,
                     Subcategory = b.Work.Subcategory.Name,
                     SubcategoryId = b.Work.Subcategory.Id,
-                    Icon = b.Work.Icon
+                    Icon = string.IsNullOrEmpty(b.Work.Icon) ? b.Work.Subcategory.Category.Icon : b.Work.Icon 
                 }
             };
         }
@@ -393,6 +396,7 @@ namespace Unicorn.Core.Services
             }
 
             _unitOfWork.BookRepository.Update(book);
+            //await CheckBooks(book);
             await _unitOfWork.SaveAsync();
 
             if (isStatusChanged)
@@ -405,7 +409,22 @@ namespace Unicorn.Core.Services
                 string newBookStatus = null;
                 switch (book.Status)
                 {
-                    case BookStatus.Accepted:
+                    case BookStatus.Accepted:                        
+                        VendorBookDTO _event = new VendorBookDTO
+                        {
+                            Status = bookDto.Status,
+                            Customer = bookDto.Customer,
+                            Date = bookDto.Date,
+                            EndDate = bookDto.EndDate,
+                            Description = bookDto.Description,
+                            Work = new WorkDTO
+                            {
+                                Id = bookDto.Work.Id,
+                                Icon = bookDto.Work.Icon,
+                                Name = bookDto.Work.Name
+                            }
+                        };
+                        await _notificationService.CreateAsync(receiverId, _event);
                         notification.Title = newBookStatus = "Order accepted";
                         notification.Description = $"{performerName} accepted your order ({book.Work.Name}).";
                         break;
@@ -483,12 +502,12 @@ namespace Unicorn.Core.Services
                         if ((_book.Status == BookStatus.Pending && book.Status != BookStatus.Pending
                         && book.Status != BookStatus.Declined && book.Status != BookStatus.Finished
                         && book.Status != BookStatus.Confirmed
-                        && ((_book.Date >= book.Date && _book.Date <= book.EndDate)
-                        || (_book.EndDate <= book.EndDate && _book.EndDate >= book.Date)))
+                        && ((_book.Date.Date >= book.Date.Date && _book.Date.Date <= book.EndDate.Date)
+                        || (_book.EndDate.Date <= book.EndDate.Date && _book.EndDate.Date >= book.Date.Date)))
                         || (_book.Status == BookStatus.Pending
                         && (book.Status == BookStatus.Accepted || book.Status == BookStatus.InProgress)
-                        && ((book.Date >= _book.Date && book.Date <= _book.EndDate)
-                        || (book.EndDate <= _book.EndDate && book.EndDate >= _book.Date))))
+                        && ((book.Date.Date >= _book.Date.Date && book.Date.Date <= _book.EndDate.Date)
+                        || (book.EndDate.Date <= _book.EndDate.Date && book.EndDate.Date >= _book.Date.Date))))
                         {
                             foreach (var b in books)
                             {
@@ -513,7 +532,7 @@ namespace Unicorn.Core.Services
             if(role == "vendor")
             {
                 var vendor = await _unitOfWork.VendorRepository.GetByIdAsync(id);
-                if (!vendor.Calendar.SeveralTaskPerDay)
+                if (vendor != null && vendor.Calendar != null && !vendor.Calendar.SeveralTaskPerDay)
                 {
                     _booksEntity = _unitOfWork.BookRepository.Query.Where(x => x.Vendor.Id == id).ToList();
                     CheckBooks(_booksEntity, ref booksDTO);
@@ -522,7 +541,7 @@ namespace Unicorn.Core.Services
             else if(role == "company")
             {
                 var company = await _unitOfWork.CompanyRepository.GetByIdAsync(id);
-                if (!company.Calendar.SeveralTaskPerDay)
+                if (company != null && company.Calendar != null && !company.Calendar.SeveralTaskPerDay)
                 {
                     _booksEntity = _unitOfWork.BookRepository.Query.Where(x => x.Company.Id == id).ToList();
                     CheckBooks(_booksEntity, ref booksDTO);
@@ -542,6 +561,188 @@ namespace Unicorn.Core.Services
             book.IsDeleted = true;
             _unitOfWork.BookRepository.Update(book);
             await _unitOfWork.SaveAsync();
+        }
+
+        public async Task CreateTasks(List<ShortTaskDTO> tasks, long companyId)
+        {
+            foreach (var task in tasks)
+            {
+                await CreateTask(task, companyId);
+            }
+        }
+
+        private async Task CreateTask(ShortTaskDTO task, long companyId)
+        {
+            var vendor = await _unitOfWork.VendorRepository
+                .Query
+                .Include(v => v.Person)
+                .Include(v => v.Person.Account)
+                .Where(v => v.Id == task.VendorId)
+                .SingleOrDefaultAsync();
+            var company = await _unitOfWork.CompanyRepository.GetByIdAsync(companyId);
+            var book = await _unitOfWork.BookRepository.GetByIdAsync(task.BookId);
+            var work = await _unitOfWork.WorkRepository.GetByIdAsync(task.WorkId);
+
+            var companyBook = new Book();
+            companyBook.Date = book.Date;
+            companyBook.EndDate = book.EndDate;
+            companyBook.Description = task.Description;
+            companyBook.Status = BookStatus.Pending;
+            companyBook.IsCompanyTask = true;
+            companyBook.Vendor = vendor;
+            companyBook.Location = book.Location;
+            companyBook.Customer = book.Customer;
+            companyBook.CustomerPhone = book.CustomerPhone;
+            companyBook.ParentBookId = book.Id;
+            companyBook.Work = work;
+            companyBook.Company = company;
+
+            _unitOfWork.BookRepository.Create(companyBook);
+
+            await _unitOfWork.SaveAsync();
+
+            /* Send Notification */
+            var notification = new NotificationDTO()
+            {
+                Title = $"New order for {work.Name}",
+                Description = $"{company.Name} assigned you for {work.Name}. Check your dashboard to find out details.",
+                SourceItemId = book.Id,
+                Time = DateTime.Now,
+                Type = NotificationType.TaskNotification
+            };
+            var receiverId = vendor.Person.Account.Id;
+            await _notificationService.CreateAsync(receiverId, notification);
+        }
+
+        private async Task CheckBooks(Book book)
+        {
+            if (!book.IsCompanyTask)
+            {
+                return;
+            }
+            if (book.Status == BookStatus.Declined)
+            {
+
+            }
+            else
+            {
+                var taskBooks = _unitOfWork.BookRepository.Query.Where(b => b.ParentBookId == book.ParentBookId).ToList();
+                if (taskBooks.Count(b => b.Status != book.Status) == 0)
+                {
+                    var parentBook = await _unitOfWork.BookRepository.GetByIdAsync(book.ParentBookId);
+                    parentBook.Status = book.Status;
+                    _unitOfWork.BookRepository.Update(parentBook);
+                    await _unitOfWork.SaveAsync();
+                }
+            }
+            
+        }
+
+        public async Task<List<BookDTO>> GetCompanyTasks(long companyId)
+        {
+            var tasks = await _unitOfWork.BookRepository
+                .Query
+                .Include(b => b.Vendor)
+                .Include(b => b.Vendor.Person)
+                .Include(b => b.Vendor.Person.Account)
+                .Include(b => b.Work)
+                .Where(b => b.IsCompanyTask && b.Company.Id == companyId)
+                .ToListAsync();
+            return tasks.Select(b => new BookDTO
+            {
+                Id = b.Id,
+                ParentBookId = b.ParentBookId,
+                Status = b.Status,
+                IsCompanyTask = b.IsCompanyTask,
+                DeclinedReason = b.DeclinedReason,
+                Vendor = new VendorDTO
+                {
+                    Id = b.Vendor.Id,
+                    FIO = $"{b.Vendor.Person.Name} {b.Vendor.Person.Surname}",
+                    Avatar = b.Vendor.Person.Account.Avatar
+                },
+                Work = new WorkDTO
+                {
+                    Id = b.Work.Id,
+                    Name = b.Work.Name
+                }
+            }).ToList();
+        }
+
+        public async Task ReassignCompanyTask(ShortTaskDTO task, long companyId)
+        {
+            var vendor = await _unitOfWork.VendorRepository
+                .Query
+                .Include(v => v.Person)
+                .Include(v => v.Person.Account)
+                .Where(v => v.Id == task.VendorId)
+                .SingleOrDefaultAsync();
+            var company = await _unitOfWork.CompanyRepository.GetByIdAsync(companyId);
+            var book = await _unitOfWork.BookRepository.GetByIdAsync(task.BookId);
+            var work = await _unitOfWork.WorkRepository.GetByIdAsync(task.WorkId);
+
+            var companyTask = await _unitOfWork.BookRepository.GetByIdAsync(task.Id);
+            companyTask.ParentBookId = 0;
+
+            var companyBook = new Book();
+            companyBook.Date = book.Date;
+            companyBook.EndDate = book.EndDate;
+            companyBook.Description = task.Description;
+            companyBook.Status = BookStatus.Pending;
+            companyBook.IsCompanyTask = true;
+            companyBook.Vendor = vendor;
+            companyBook.Location = book.Location;
+            companyBook.Customer = book.Customer;
+            companyBook.CustomerPhone = book.CustomerPhone;
+            companyBook.ParentBookId = book.Id;
+            companyBook.Work = work;
+            companyBook.Company = company;
+
+            _unitOfWork.BookRepository.Update(companyTask);
+            _unitOfWork.BookRepository.Create(companyBook);
+
+            await _unitOfWork.SaveAsync();
+
+            /* Send Notification */
+            var notification = new NotificationDTO()
+            {
+                Title = $"New order for {work.Name}",
+                Description = $"{company.Name} assigned you for {work.Name}. Check your dashboard to find out details.",
+                SourceItemId = book.Id,
+                Time = DateTime.Now,
+                Type = NotificationType.TaskNotification
+            };
+            var receiverId = vendor.Person.Account.Id;
+            await _notificationService.CreateAsync(receiverId, notification);
+        }
+
+        public async Task DeleteCompanyTask(long taskId)
+        {
+            var task = await _unitOfWork.BookRepository
+                .Query
+                .Include(b => b.Company)
+                .Include(b => b.Vendor)
+                .Include(b => b.Vendor.Person)
+                .Include(b => b.Vendor.Person.Account)
+                .Include(b => b.Work)
+                .Where(b => b.Id == taskId)
+                .SingleOrDefaultAsync();
+
+            task.ParentBookId = 0;
+            _unitOfWork.BookRepository.Update(task);
+            await _unitOfWork.SaveAsync();
+
+            /* Send Notification */
+            var notification = new NotificationDTO()
+            {
+                Title = $"New order for {task.Work.Name}",
+                Description = $"{task.Company.Name} deleted your task {task.Work.Name}.",
+                SourceItemId = task.Id,
+                Time = DateTime.Now,
+                Type = NotificationType.TaskNotification
+            };
+            var receiverId = task.Vendor.Person.Account.Id;
+            await _notificationService.CreateAsync(receiverId, notification);
         }
     }
 }

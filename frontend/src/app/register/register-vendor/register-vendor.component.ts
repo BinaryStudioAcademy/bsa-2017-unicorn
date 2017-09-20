@@ -124,16 +124,12 @@ export class RegisterVendorComponent implements OnInit {
         })
         .catch(err => this.loader = false);
     }
-  }
-
-  checkTheDate(date: Date):Date{    
-      return new Date(date.setHours(date.getHours() - date.getTimezoneOffset() / 60));    
-  }
+  }  
 
   createCalendar():CalendarModel{
     return {
       Id: null,
-      StartDate: this.checkTheDate(new Date()),
+      StartDate: new Date(),
       Events: null,
       EndDate: null,
       ExtraDayOffs: null,
