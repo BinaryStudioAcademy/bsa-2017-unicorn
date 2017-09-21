@@ -1,5 +1,5 @@
 ﻿<div class="sixteen wide column" *ngIf="books !== undefined">
-    <div id="empty-header" *ngIf="books ===null || books.length == 0">
+    <div class="ui center aligned header empty-header" *ngIf="books ===null || books.length == 0">
         <span>There are no finished orders</span>
     </div>
     <div class="ui segment book-card stackable ui grid" *ngFor="let book of books">
@@ -21,6 +21,9 @@
             <p *ngIf="book.Review"><a class="rev-link" (click)="showReview(book.Id)">Review</a></p>
         </div>
     </div>
+</div>
+<div *ngIf="books === undefined" class="ui active inverted dimmer" style="z-index: 0;">
+    <div class="ui text loader">Loading</div>
 </div>
 <ng-template let-context let-modal="modal" #mapModal>
     <div class="ui content">
