@@ -13,20 +13,37 @@
    color:  $primary_color;
    background: none;
    width: 8em;
-   margin-bottom: 1.5em;
 
 .ui.loading.button
-  padding: 15px;
+  box-shadow: 0 0 0 1px $primary_color;
+  color:  $primary_color;
+  background: none;
+  padding: 13px;
   width: 8em;
-  margin-bottom: 1.5em;
 
 .ui.basic.button h5
 	color: $primary-color;
 .map
   width: 100%;
   margin-top: 5px;
+  height: 340px
 .container
     padding: 15px;
     
 .centered.row > .column:not(.aligned):not(.justified) 
     text-align: center;
+
+.ui.form.no-left-right-margin
+  margin-left: 0!important
+  margin-right: 0!important
+
+.ui.divider.save-divider
+  margin-left: 1em
+  margin-right: 1em
+
+.ui.form > .field > label
+  padding: 0
+  margin-bottom: 4px
+  margin-left: 0
+  color: #4d4d4d
+  font-weight: 600

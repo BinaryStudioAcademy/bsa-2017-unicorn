@@ -10,12 +10,15 @@
    color:  $primary_color;
    background: none;
    width: 8em;
-   margin-bottom: 1.5em;
+   margin-bottom: 0;
 
 .ui.loading.button
-  padding: 15px;
+  box-shadow: 0 0 0 1px $primary_color;
+  color:  $primary_color;
+  background: none;
+  padding: 13px;
   width: 8em;
-  margin-bottom: 1.3em;
+  margin-bottom: 0;
 
 .ui.basic.button h5
 	color: $primary-color;
@@ -33,3 +36,10 @@
     margin-bottom: 0.5em;
 .centered.row > .column:not(.aligned):not(.justified) 
     text-align: center;
+
+.ui.form > .field > label
+  padding: 0
+  margin-bottom: 4px
+  margin-left: 0
+  color: #4d4d4d
+  font-weight: 600

@@ -1,9 +1,9 @@
 <link rel="stylesheet" href="https://unpkg.com/semantic-ui-calendar/dist/calendar.min.css">
 
-<div class="two column stackable ui grid">
+<div class="two column stackable ui grid" style="margin: 0 !important">
     <div class="column">
         <form name="vendorForm" #vendorForm="ngForm">
-            <div class="ui form">
+            <div class="ui form no-left-right-margin">
                 <div class="field">
                     <label>Name</label>
                     <div class="three fields">
@@ -32,7 +32,6 @@
                     <input required type="text" [(ngModel)]="vendor.Position" name="position" placeholder="MIDDLE .NET DEVELOPER" #pos="ngModel">
                     <div *ngIf="pos.invalid && (pos.dirty)" class="valid-error">* Required</div>
                 </div>
-                <div class="ui divider"></div>
                 <div class="field">
                     <label>About me</label>
                     <textarea [(ngModel)]="vendor.WorkLetter" name="workLetter" placeholder="FEW WORDS ABOUT YOU AND YOUR WORK" #about="ngModel">
@@ -43,12 +42,14 @@
     </div>
 
     <div class="column">
-        <div class="ui form">
+        <div class="ui form no-left-right-margin">
             <div class="field">
                 <label>Help customers find you</label>
                 <div class="ui icon input">
                     <input places-auto-complete (initialized$)="initialized($event)" (place_changed)="placeChanged($event)" [types]="['geocode']" placeholder="TYPE HERE..." />
                 </div>
+            </div>
+            <div class="field">
                 <ngui-map class="map" zoom="14" [center]="position">
                     <marker [position]="position" [draggable]="true" (dragend)="markerDragged($event)">
                     </marker>
@@ -57,9 +58,9 @@
         </div>
     </div>
 </div>
-<div class="ui divider"></div>
+<div class="ui divider save-divider remove-margin-top"></div>
 <div class="ui grid">
-    <div class="centered row">
+    <div class="centered row remove-padding-top">
         <button *ngIf="dataLoaded" (click)="saveVendor()" class="ui basic button"><h5>Save</h5></button>
         <button *ngIf="!dataLoaded" class="ui loading button">Loading</button>
     </div>

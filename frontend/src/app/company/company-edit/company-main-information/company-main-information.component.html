@@ -1,9 +1,9 @@
 <link rel="stylesheet" href="https://unpkg.com/semantic-ui-calendar/dist/calendar.min.css">
 <div *ngIf="company !== undefined">
-    <div class="two column stackable ui grid">
+    <div class="two column stackable ui grid" style="margin: 0 !important">
         <div class="column">
             <form name="companyForm" #companyForm="ngForm">
-                <div class="ui form">
+                <div class="ui form no-left-right-margin">
                     <div class="field">
                         <label>Company name</label>
                         <input required type="text" name="name" [(ngModel)]="company.Name" #compname="ngModel">
@@ -31,12 +31,14 @@
         <div class="column">
             <div class="map">
                 <div class="map" *ngIf="map !== undefined">
-                    <div class="ui form">
+                    <div class="ui form no-left-right-margin">
                         <div class="field">
                             <label>Change your location</label>
                             <div class="ui input">
                                 <input places-auto-complete (initialized$)="initialized($event)" (place_changed)="placeChanged($event)" [types]="['geocode']" placeholder="TYPE HERE..." />
                             </div>
+                        </div>
+                        <div class="field">
                             <ngui-map class="map" zoom="14" [center]="position" style="margin-top: 5px">
                                 <marker [position]="position" [draggable]="true" (dragend)="markerDragged($event)">
                                 </marker>
@@ -52,7 +54,7 @@
         <div class="centered row">
             <div class="align-button">
                 <button class="ui basic button" (click)="save()" [ngClass]="{'loading':isLoaded}">
-        <p *ngIf="!isLoaded" style="color:#FF647A;">Save</p></button>
+        <h5 *ngIf="!isLoaded" style="color:#FF647A;">Save</h5></button>
             </div>
         </div>
     </div>
