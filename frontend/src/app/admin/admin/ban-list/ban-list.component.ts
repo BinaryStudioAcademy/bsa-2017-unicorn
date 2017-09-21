@@ -33,7 +33,6 @@ export class BanListComponent implements OnInit {
   load(): void {
     this.isLoaded = false;
     this.pendingAccounts = [];
-
     this.accountService.searchInBanListByTemplate(this.searchTemplate, this.isBanned, this.page, this.pageSize)
       .then(p => {
         this.page = p.CurrentPage;

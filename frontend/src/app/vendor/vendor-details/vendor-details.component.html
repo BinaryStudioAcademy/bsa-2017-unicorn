@@ -28,7 +28,7 @@
                             <a routerLink="/vendor/{{vendor.Id}}" [queryParams]="{tab: 'contacts'}" class="item" suiTabHeader="4">CONTACTS</a>
                         </div>
                         <div class="row">
-                            <div class="two column stackable ui grid">
+                            <div *ngIf="isUser||isGuest" class="two column stackable ui grid">
                                 <div class="ten wide column">
                                     <div class="ui segment" suiTabContent="1">
                                         <app-vendor-profile-info [vendor]="vendor" (notify)='onWorksLoaded($event)'></app-vendor-profile-info>
@@ -43,10 +43,26 @@
                                         <app-vendor-profile-contacts [vendorId]="vendor.Id" [accountId]="vendor.AccountId" [isGuest]="isGuest"></app-vendor-profile-contacts>
                                     </div>
                                 </div>
-                                <div *ngIf="isUser||isGuest" class="six wide column">
+                                <div class="six wide column">
                                     <div class="ui segment">
                                         <app-sign-block *ngIf="isGuest"></app-sign-block>
                                         <app-book #bookComponent *ngIf="!isGuest" [routePath]="routePath" [routeId]="routeid" [works]="works"></app-book>
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngIf="!(isUser||isGuest)" class="ui grid">
+                                <div class="sixteen wide column">
+                                    <div class="ui segment" suiTabContent="1">
+                                        <app-vendor-profile-info [vendor]="vendor" (notify)='onWorksLoaded($event)'></app-vendor-profile-info>
+                                    </div>
+                                    <div class="ui segment" suiTabContent="2">
+                                        <app-vendor-profile-portfolio [vendorId]="vendor.Id"></app-vendor-profile-portfolio>
+                                    </div>
+                                    <div class="ui segment" suiTabContent="3">
+                                        <app-vendor-profile-reviews [vendorId]="vendor.Id"></app-vendor-profile-reviews>
+                                    </div>
+                                    <div class="ui segment" suiTabContent="4">
+                                        <app-vendor-profile-contacts [vendorId]="vendor.Id" [accountId]="vendor.AccountId" [isGuest]="isGuest"></app-vendor-profile-contacts>
                                     </div>
                                 </div>
                             </div>

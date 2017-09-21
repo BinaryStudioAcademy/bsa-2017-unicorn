@@ -1,22 +1,24 @@
-<div class="ui cards" id="portfolio" *ngIf="books !== undefined">
-    <div class="ui card" *ngFor="let book of books; let i = index">
-        <div class="content">
-            <div class="right floated meta">{{book.Date | date: 'dd/MM/yyyy'}}</div>
-            <div class="right floated meta"></div>
-            <img class="ui avatar image" src="{{book.Work.Icon}}"> {{book.Work.Name}}
-        </div>
-        <div class="content">
-            {{book.Description}}
-        </div>
-        <div class="content">
-            <sui-rating class="star" [isReadonly]="true" [ngModel]="book.Rating"></sui-rating>
-            <span *ngIf="book.Review" class="right floated"><a (click)="showReview(book.Id)">Review</a></span>
+<div class="container">
+    <div class="ui cards" id="portfolio" *ngIf="books !== undefined && books !== null && books.length !== 0">
+        <div class="ui card" *ngFor="let book of books; let i = index">
+            <div class="content">
+                <div class="right floated meta">{{book.Date | date: 'dd/MM/yyyy'}}</div>
+                <div class="right floated meta"></div>
+                <img class="ui avatar image" src="{{book.Work.Icon}}"> {{book.Work.Name}}
+            </div>
+            <div class="content">
+                {{book.Description}}
+            </div>
+            <div class="content">
+                <sui-rating class="star" [isReadonly]="true" [ngModel]="book.Rating"></sui-rating>
+                <span *ngIf="book.Review" class="right floated"><a (click)="showReview(book.Id)">Review</a></span>
+            </div>
         </div>
     </div>
-</div>
-<div *ngIf="!isLoaded" class="ui active inverted dimmer" style="z-index: 0;">
-    <div class="ui text loader">Loading</div>
-</div>
-<div *ngIf="isLoaded && (books === null || books.length == 0)" class="ui center aligned header empty-header">
-    <span>There is nothing in portfolio</span>
+    <div *ngIf="!isLoaded" class="ui active inverted dimmer" style="z-index: 0;">
+        <div class="ui text loader">Loading</div>
+    </div>
+    <div *ngIf="isLoaded && (books === null || books.length == 0)" class="ui center aligned header empty-header">
+        There is nothing in portfolio
+    </div>
 </div>

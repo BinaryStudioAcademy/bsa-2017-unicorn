@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ChangeDetectorRef, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef, ElementRef, HostListener } from '@angular/core';
 import { DialogModel } from "../models/chat/dialog.model";
 import { MessageModel } from "../models/chat/message.model";
 import { ChatFile } from "../models/chat/chat-file";
@@ -48,6 +48,12 @@ export class ChatComponent implements OnInit {
   searchResults: ProfileShortInfo[];
   messageToDelete;
   dialogToDelete;
+
+  sideBarEnabled: boolean = true;
+  windowWidth: number = window.innerWidth;
+  hideButtonClicked = false;
+
+
   constructor(private chatService: ChatService,
     private tokenHelper: TokenHelperService,
     private cdr: ChangeDetectorRef,
@@ -55,6 +61,41 @@ export class ChatComponent implements OnInit {
     private chatEventsService: ChatEventsService,
     private accountService: AccountService,
     private modalService: SuiModalService) { }
+
+  ngAfterViewInit() {
+      this.windowWidth = window.innerWidth;
+      if(this.windowWidth <= 800){
+        this.sideBarEnabled = false;
+      }
+  }
+
+  @HostListener('window:resize', ['$event'])
+  resize(event) {
+      this.windowWidth = window.innerWidth;
+      if(window.innerWidth > 800){
+        this.sideBarEnabled = true;
+      }
+      else if(window.innerWidth <= 800){
+        this.sideBarEnabled = false;
+      }
+  }
+
+  hideResponsiveSideBar(){
+    this.hideButtonClicked = true;    
+    if(this.sideBarEnabled){
+    this.sideBarEnabled = false;
+    }
+    else{
+      this.sideBarEnabled = true;
+    }    
+  }
+
+  clickOutsideSideBar(){    
+    if(this.sideBarEnabled && this.windowWidth <= 800 && !this.hideButtonClicked){
+      this.sideBarEnabled = false;
+    }  
+    this.hideButtonClicked = false;
+  }
 
   ngOnInit() {
     this.getDialogs().then(() => this.startScroll());
@@ -169,9 +210,17 @@ export class ChatComponent implements OnInit {
   
   isHided(_dialog: DialogModel):boolean
   {
-     if(_dialog.Participant1_Hided && _dialog.ParticipantOneId==this.ownerId) return true; else
-     if(_dialog.Participant2_Hided && _dialog.ParticipantTwoId==this.ownerId) return true; else
-     return false;
+    if(_dialog){
+      if(_dialog.Participant1_Hided && _dialog.ParticipantOneId==this.ownerId) {
+        return true;
+      } 
+      else if(_dialog.Participant2_Hided && _dialog.ParticipantTwoId==this.ownerId){
+        return true;
+      } 
+      else{
+      return false;
+      }
+    }
   }
 
   //get message, if anybody sent one to us

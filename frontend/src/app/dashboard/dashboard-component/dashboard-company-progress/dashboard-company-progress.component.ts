@@ -6,10 +6,12 @@ import { CompanyTask } from '../../../models/book/book.model';
 import { ShortTask } from '../../../models/dashboard/company-task';
 import { Vendor } from '../../../models/company-page/vendor';
 import { Work } from '../../../models/work.model';
+import { ShortReview } from '../../../models/short-review';
 
 import { DashboardService } from '../../../services/dashboard/dashboard.service';
 import { DashMessagingService } from '../../../services/dashboard/dash-messaging.service';
 import { NotificationService } from "../../../services/notifications/notification.service";
+import { ReviewService } from '../../../services/review.service';
 
 import {ToastsManager, Toast} from 'ng2-toastr';
 import {ToastOptions} from 'ng2-toastr';
@@ -27,12 +29,19 @@ export interface IDeclinedReasonContext {
   reason: string;
 }
 
+export interface IReviewContext {
+  id: number;
+}
+
 @Component({
   selector: 'app-dashboard-company-progress',
   templateUrl: './dashboard-company-progress.component.html',
   styleUrls: ['./dashboard-company-progress.component.sass']
 })
 export class DashboardCompanyProgressComponent implements OnInit, OnDestroy {
+
+  @ViewChild('reviewTemplate')
+  public reviewTemplate:ModalTemplate<IReviewContext, void, void>;
 
   @ViewChild('mapModal')
   public modalTemplate:ModalTemplate<IDeclineConfirm, void, void>;
@@ -56,6 +65,7 @@ export class DashboardCompanyProgressComponent implements OnInit, OnDestroy {
 
   constructor(
     private zone: NgZone,
+    private reviewService: ReviewService,
     private dashboardService: DashboardService,
     private dashMessaging: DashMessagingService,
     private notificationService: NotificationService,
@@ -91,7 +101,11 @@ export class DashboardCompanyProgressComponent implements OnInit, OnDestroy {
       console.log('ra', this.tasks);
       return this.dashboardService.getAcceptedBooks();
     }).then(resp => {
-      this.books = resp;
+      this.books = resp.sort((b1, b2) => {
+        let f = new Date(b1.Date).getTime();
+        let s = new Date(b2.Date).getTime();
+        return s - f;
+      });
       console.log(this.books);
     });
   }
@@ -101,20 +115,6 @@ export class DashboardCompanyProgressComponent implements OnInit, OnDestroy {
     this.availableVendors = this.vendors.filter(v => existingTasks.findIndex(t => t.Vendor.Id === v.Id) === -1);
     this.taskFormOpen[id] = true;
     this.someFormOpened = true;
-    // let book: BookCard = this.books.filter(b => b.Id == id)[0];
-    // book.Status = BookStatus.Finished;
-    // this.loads[book.Id] = true;
-    // this.dashboardService.update(book).then(resp => {
-    //   this.dashboardEventsService.changeStatusToFinished();
-    //   this.books.splice(this.books.findIndex(b => b.Id === id), 1);
-    //   this.loads[book.Id] = false;
-    //   this.dashMessaging.changeProgress();
-    //   this.toastr.success('Finished task');
-    // })
-    // .catch(err => {
-    //   this.loads[book.Id] = false;      
-    //   this.toastr.error('Cannot finish task');
-    // });
   }
 
   finish(id: number) {
@@ -163,13 +163,26 @@ export class DashboardCompanyProgressComponent implements OnInit, OnDestroy {
   }
 
   calcFinishedTasks(id: number): number {
-    return this.tasks.filter(t => t.ParentBookId === id && t.Status === BookStatus.Finished).length;
+    return this.tasks.filter(t => t.ParentBookId === id && (t.Status === BookStatus.Finished || t.Status === BookStatus.Confirmed)).length;
+  }
+
+  calcConfirmedTasks(id: number): number {
+    return this.tasks.filter(t => t.ParentBookId === id && t.Status === BookStatus.Confirmed).length;
   }
 
   
 
   //vendor assign
 
+  review: ShortReview = {
+    BookId: 0,
+    Grade: 0,
+    PerformerId: 0,
+    PerformerType: '',
+    Text: ''
+  };
+  gradeSelected: boolean;
+  reviewLoader: boolean;
 
   assignLoader: boolean;
   editMode: boolean;
@@ -354,6 +367,7 @@ export class DashboardCompanyProgressComponent implements OnInit, OnDestroy {
       case BookStatus.Accepted: return 'In progress';
       case BookStatus.Declined: return 'Declined';
       case BookStatus.Finished: return 'Finished';
+      case BookStatus.Confirmed: return 'Reviewed';
     }
     return 'None';
   }
@@ -457,6 +471,57 @@ export class DashboardCompanyProgressComponent implements OnInit, OnDestroy {
       this.reassignLoader = false;
       this.toastr.error('Ops. Cannot reassign vendor');
     });
+  }
+
+  leaveReview(id: number) {
+    const config = new TemplateModalConfig<IReviewContext, void, void>(this.reviewTemplate);
+    config.context = {id: id};
+    config.isInverted = true;
+    config.size = ModalSize.Tiny;
+    this.currModal = this.modalService.open(config).onDeny(() => {
+      this.review = {
+        BookId: 0,
+        Grade: 0,
+        PerformerId: 0,
+        PerformerType: '',
+        Text: ''
+      };
+    });
+  }
+
+  leaveReviewConfirm(id: number) {
+    if (this.review.Grade == 0) {
+      return;
+    }
+    this.reviewLoader = true;
+    let task = this.tasks.filter(t => t.Id === id)[0];
+    this.review.BookId = id;
+    this.review.PerformerId = task.Vendor.Id;
+    this.review.PerformerType = 'vendor';
+    this.reviewService.saveReview(this.review).then(resp => {
+      return this.loadData();
+    }).then(resp => {
+      this.reviewLoader = false;
+      this.currModal.deny(undefined);
+      this.toastr.success('Vendor was successfully reviewed');
+    }).catch(err => {
+      this.reviewLoader = false;
+      this.currModal.deny(undefined);
+      this.toastr.error('Ops. Cannot review vendor');
+    });
+  }
+
+  getVendorReviewAvatar(id: number): string {
+    return this.tasks.filter(t => t.Id === id)[0].Vendor.Avatar;
+  }
+
+  getVendorReviewFio(id: number): string {
+    let vendor = this.tasks.filter(t => t.Id === id)[0].Vendor as any;
+    return vendor.FIO;
+  }
+
+  showFinish(id: number): boolean {
+    return this.calcAllTasks(id) === this.calcConfirmedTasks(id);
   }
 
 }

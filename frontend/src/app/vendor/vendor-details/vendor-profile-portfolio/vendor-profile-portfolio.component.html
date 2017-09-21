@@ -1,5 +1,5 @@
 <div class="container">
-    <div class="ui cards" id="portfolio" *ngIf="books !== undefined">
+    <div class="ui cards" id="portfolio" *ngIf="books !== undefined && books !== null && books.length !== 0">
         <div class="ui card" *ngFor="let book of books; let i = index">
             <div class="content">
                 <div class="right floated meta">{{book.Date | date: 'dd/MM/yyyy'}}</div>

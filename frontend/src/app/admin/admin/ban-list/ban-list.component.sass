@@ -15,8 +15,8 @@
 	border-bottom: 1px solid #d0dcdc;
 
 .account-list > .item > .account-avatar > img
-	height: 80px;
-	width: 80px;
+	height: 3rem;
+	width: 3rem;
 	object-fit: cover;
 
 .account-list > .item > .account-name
@@ -30,6 +30,7 @@
 	color: #666;
 	font-size: 12px;
 	width: 25%;
+	word-wrap: break-word;
 
 .account-list > .item > .ban-actions > .ui.button
 	width: 7em;
@@ -54,11 +55,53 @@
 	justify-content: center;
 
 .label-box
-    display: flex;
-    margin-top: 0.6em;
-    justify-content: center;
-    &:hover
+	display: flex;
+	margin-top: 0.6em;
+	justify-content: center;
+	width: fit-content;
+	&:hover
         cursor: pointer;
-    .selected
+	.selected
         background: $primary-color;
         color: white;
+
+.menu-column
+	display: flex!important;
+	justify-content: space-between;
+	align-items: baseline;
+
+@media only screen and (max-width: 767px)
+	.ui.grid>.stackable.stackable.row>.column, .ui.stackable.grid>.column.grid>.column, .ui.stackable.grid>.column.row>.column, .ui.stackable.grid>.column:not(.row), .ui.stackable.grid>.row>.column, .ui.stackable.grid>.row>.wide.column, .ui.stackable.grid>.wide.column
+		padding-bottom: 0!important;
+		padding-top: 0!important;
+
+$small: 600px;
+$medium: 745px;
+$large: 750px;
+$normal: 800px;
+
+@mixin respond-to($media) 
+  @if $media == handhelds 
+    @media only screen and (max-width: $small) { @content; }
+  @else if $media == medium-screens1 
+    @media only screen and (min-width: $small + 1) and (max-width: $medium - 1) { @content; }
+  @else if $media == medium-screens2
+    @media only screen and (min-width: $medium) and (max-width: $large - 1) { @content; }
+  @else if $media == medium-screens3
+    @media only screen and (min-width: $large) and (max-width: $normal - 1) { @content; }
+  @else if $media == wide-screens 
+    @media only screen and (min-width: $normal) { @content; }
+
+.item p, h5, .ui.button
+	@include respond-to(handhelds) { font-size: 0.55rem!important ;}
+	@include respond-to(medium-screens1) { font-size: 0.68rem!important ; }
+	@include respond-to(medium-screens2) { font-size: 0.8rem!important ; }
+	@include respond-to(medium-screens3) { font-size: 0.9rem!important ; }
+	@include respond-to(wide-screens) { font-size: 1rem!important ; }
+
+.account-list > .item > .account-email p
+	@include respond-to(handhelds) { font-size: 0.35rem!important ;}
+	@include respond-to(medium-screens1) { font-size: 0.48rem!important ; }
+	@include respond-to(medium-screens2) { font-size: 0.6rem!important ; }
+	@include respond-to(medium-screens3) { font-size: 0.7rem!important ; }
+	@include respond-to(wide-screens) { font-size: 0.8rem!important ; }

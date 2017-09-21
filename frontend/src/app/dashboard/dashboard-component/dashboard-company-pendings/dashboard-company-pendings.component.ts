@@ -72,7 +72,11 @@ export class DashboardCompanyPendingsComponent implements OnInit {
 
   loadData() {
     this.dashboardService.getPendingBooks().then(resp => {
-      this.books = resp;           
+      this.books = resp.sort((b1, b2) => {
+        let f = new Date(b1.Date).getTime();
+        let s = new Date(b2.Date).getTime();
+        return s - f;
+      });          
     });
     this.dashboardService.getCompanyVendorsWithWorks().then(resp => {
       resp.forEach(x => {

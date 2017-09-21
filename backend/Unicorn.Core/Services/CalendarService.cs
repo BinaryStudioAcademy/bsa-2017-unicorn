@@ -53,7 +53,7 @@ namespace Unicorn.Core.Services
                     Work = new WorkDTO
                     {
                         Id = x.Work.Id,
-                        Icon = x.Work.Icon,
+                        Icon = x.Work.Icon == "" ? x.Work.Subcategory.Category.Icon : x.Work.Icon,
                         Name = x.Work.Name
                     }
                 }).ToList(),
@@ -167,7 +167,7 @@ namespace Unicorn.Core.Services
                             Work = new WorkDTO
                             {
                                 Id = x.Work.Id,
-                                Icon = x.Work.Icon,
+                                Icon = String.IsNullOrEmpty(x.Work.Icon) ? x.Work.Subcategory.Category.Icon : x.Work.Icon,
                                 Name = x.Work.Name
                             }
                         }).ToList(),
@@ -207,7 +207,7 @@ namespace Unicorn.Core.Services
                             Work = new WorkDTO
                             {
                                 Id = x.Work.Id,
-                                Icon = x.Work.Icon,
+                                Icon = String.IsNullOrEmpty(x.Work.Icon) ? x.Work.Subcategory.Category.Icon : x.Work.Icon,
                                 Name = x.Work.Name
                             }
                         }).ToList(),

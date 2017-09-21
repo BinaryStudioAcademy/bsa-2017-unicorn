@@ -1,4 +1,4 @@
-<div class="two column stackable ui grid">
+<div class="two column stackable" style="margin: 5px;">
     <div class="column">
         <div class="ui form">
             <div class="field">
@@ -20,45 +20,45 @@
             </div>
         </ng-template>
     </div>
-    <div class="ui divider"></div>
-    <div class="column">
-        <div class="ui container">
-            <div *ngIf="workCategories === undefined" class="ui active inverted dimmer" style="z-index: 0;">
-                <div class="ui text loader">Loading</div>
-            </div>
-            <div class="flex-body" *ngIf="workCategories !== null">
-                <div *ngFor="let category of workCategories" class="four wide column flex-category" id="divCategory{{category.Id}}" [ngClass]="{'selected-category': selectedCategory===category}" (click)="onCategorySelect(category)">
-                    <img class="ui circular image image-category" src={{category.Icon}} id="imgCategory{{category.Id}}">
-                    <h5 class="category-name" id="h5Category{{category.Id}}">{{category.Name}}</h5>
-                </div>
+</div>
+<div class="ui divider"></div>
+<div class="column">
+    <div class="ui container">
+        <div *ngIf="workCategories === undefined" class="ui active inverted dimmer" style="z-index: 0;">
+            <div class="ui text loader">Loading</div>
+        </div>
+        <div class="flex-body" *ngIf="workCategories !== null">
+            <div *ngFor="let category of workCategories" class="four wide column flex-category" id="divCategory{{category.Id}}" [ngClass]="{'selected-category': selectedCategory===category}" (click)="onCategorySelect(category)">
+                <img class="ui circular image image-category" src={{category.Icon}} id="imgCategory{{category.Id}}">
+                <h5 class="category-name" id="h5Category{{category.Id}}">{{category.Name}}</h5>
             </div>
         </div>
     </div>
-    <div class="ui divider"></div>
-    <div class="column">
-        <div *ngIf="openedCategoryDetails" (clickOutside)="closeCategoryDetails($event)" class="works-wrapper">
-            <div *ngFor="let work of categoryWorks">
-                <div class="ui container grid no-padd">
-                    <div class="row">
-                        <div class=" two wide column flex-container">
-                            <div class="work-column">
-                                <img class="ui circular image work-icon" src="{{getWorkIcon(work)}}">
-                            </div>
+</div>
+<div class="ui divider"></div>
+<div class="column">
+    <div *ngIf="openedCategoryDetails" (clickOutside)="closeCategoryDetails($event)" class="works-wrapper">
+        <div *ngFor="let work of categoryWorks">
+            <div class="ui container grid no-padd">
+                <div class="row">
+                    <div class=" two wide column flex-container">
+                        <div class="work-column">
+                            <img class="ui circular image work-icon" src="{{getWorkIcon(work)}}">
                         </div>
-                        <div class="four wide column flex-container">
-                            <div class="work-column">
-                                <p class="work-name">{{work.Name}}</p>
-                            </div>
+                    </div>
+                    <div class="four wide column flex-container">
+                        <div class="work-column">
+                            <p class="work-name">{{work.Name}}</p>
                         </div>
-                        <div class="six wide column flex-container">
-                            <div class="work-column">
-                                <p class="work-desc">{{work.Description}}</p>
-                            </div>
+                    </div>
+                    <div class="six wide column flex-container">
+                        <div class="work-column">
+                            <p class="work-desc">{{work.Description}}</p>
                         </div>
-                        <div class="four wide column flex-container">
-                            <div class="work-column left-marged">
-                                <a class="ui tag label">{{work.Subcategory}}</a>
-                            </div>
+                    </div>
+                    <div class="four wide column flex-container">
+                        <div class="work-column left-marged">
+                            <a class="ui tag label">{{work.Subcategory}}</a>
                         </div>
                     </div>
                 </div>

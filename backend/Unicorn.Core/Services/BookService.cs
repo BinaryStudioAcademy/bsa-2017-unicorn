@@ -405,6 +405,12 @@ namespace Unicorn.Core.Services
                 var notification = new NotificationDTO();
                 string performerName = book.Vendor != null ? $"{book.Vendor.Person.Name} {book.Vendor.Person.Surname}" : book.Company.Name;
                 long receiverId = book.Customer.Person.Account.Id;
+                string confirmedBy = $"{book.Customer.Person.Name} {book.Customer.Person.Surname}";
+                if (book.IsCompanyTask)
+                {
+                    receiverId = book.Company.Account.Id;
+                    confirmedBy = book.Company.Name;
+                }
 
                 string newBookStatus = null;
                 switch (book.Status)
@@ -435,7 +441,7 @@ namespace Unicorn.Core.Services
                     case BookStatus.Confirmed:
                         receiverId = book.Vendor != null ? book.Vendor.Person.Account.Id : book.Company.Account.Id;
                         notification.Title = "Work confirmed";
-                        notification.Description = $"{book.Work.Name} was confirmed  by {book.Customer.Person.Name} {book.Customer.Person.Surname}.";
+                        notification.Description = $"{book.Work.Name} was confirmed  by {confirmedBy}.";
                         break;
                     case BookStatus.Declined:
                         notification.Title = newBookStatus = "Order was declined";
