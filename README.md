@@ -18,7 +18,7 @@ Web application which allows to connect users and vendors. If user has any probl
   * Semantic UI
 
 
-[Contributors:](#contributors)
+## [Contributors:](#contributors)
 
 
 
