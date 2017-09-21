@@ -176,7 +176,7 @@
             </div>
         </div>
         <div *ngIf="!searchLoading && performers.length === 0" class="ui center aligned segment">
-            No results found
+            <span class="empty-header">No results found</span>
         </div>
         <div *ngIf="searchLoading" class="ui active inverted dimmer" style="z-index: 0;">
             <div class="ui text loader">Loading</div>

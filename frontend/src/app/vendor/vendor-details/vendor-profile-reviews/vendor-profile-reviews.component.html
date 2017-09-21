@@ -28,7 +28,9 @@
         </div>
     </div>
     <ng-template #reviewsIsEmpty>
-        <div class="ui center aligned empty-header header">There are no reviews</div>
+        <div class="ui center aligned header">
+            <span class="empty-header">There are no reviews</span>
+        </div>
     </ng-template>
 </div>
 <div *ngIf="reviews === undefined" class="ui active inverted dimmer" style="z-index: 0;">
