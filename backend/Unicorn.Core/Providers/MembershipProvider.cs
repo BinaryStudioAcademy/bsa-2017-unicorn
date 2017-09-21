@@ -21,8 +21,7 @@ namespace Unicorn.Core.Providers
         public async Task<ClaimsIdentity> GetUserClaims(long accountId)
         {
             var account = await _unitOfWork.AccountRepository.Query
-                .Include(a => a.Role)
-                .Where(a => !a.IsDeleted)
+                .Include(a => a.Role)                
                 .SingleOrDefaultAsync(a => a.Id == accountId);
             long profileId = 0;
 

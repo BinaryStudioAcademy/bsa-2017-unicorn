@@ -26,6 +26,7 @@ import { CategoryModule } from './category/category.module';
 import { CompanyModule } from './company/company.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { DbModule } from './db/db.module';
+import { SwitchModule } from './switch/switch.module';
 import { RegisterModule } from './register/register.module';
 import { UserModule } from './user/user.module';
 import { VendorModule } from './vendor/vendor.module';
@@ -104,6 +105,7 @@ export function getDefaultSignalRConfig(): SignalRConfiguration {
     CompanyModule,
     DashboardModule,
     DbModule,
+    SwitchModule,
     RegisterModule,
     UserModule,
     VendorModule,
