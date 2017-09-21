@@ -24,7 +24,7 @@ namespace Unicorn.Core.Services
         {
             var subcategory = await _unitOfWork.SubcategoryRepository.GetByIdAsync(dto.SubcategoryId);
             var vendor = await _unitOfWork.VendorRepository.GetByIdAsync(dto.VendorId);
-            var company = await _unitOfWork.CompanyRepository.GetByIdAsync(dto.CompanyId);
+            var company = await _unitOfWork.CompanyRepository.GetByIdAsync(dto.CompanyId);       
 
             var work = new Work()
             {

@@ -144,7 +144,7 @@ export class MenuComponent implements OnInit {
     });
 
     this.onChangeAvatar = this.menuEventsService.avatarChangedEvent$
-    .subscribe(avatar => {
+    .subscribe(avatar => {      
       this.profileInfo.Avatar = avatar;
     });
   }

@@ -7,6 +7,7 @@ import { MomentModule } from "angular2-moment";
 import { ChatService } from "../services/chat/chat.service";
 import { MiniChatComponent } from './mini-chat/mini-chat.component';
 import { SuiModule } from 'ng2-semantic-ui';
+import { ClickOutsideModule } from 'ng-click-outside';
 
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import { SuiModule } from 'ng2-semantic-ui';
     FormsModule,
     MomentModule,
     RouterModule,
-    SuiModule
+    SuiModule,
+    ClickOutsideModule
   ],
   declarations: [
     ChatComponent,

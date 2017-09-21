@@ -55,9 +55,11 @@ $tab-color: #FF647A;
     font-weight: 700;
 
 .upper-user
-    //height: 23%;
+    position: relative;
     padding: 10px;
-    border-bottom: 1px solid lightgray;
+
+.ui.divider
+    margin: 0;    
 
 .upper-user:hover 
     cursor: pointer;
@@ -92,9 +94,12 @@ textarea
     border-radius: 10px;
     margin-bottom: 5px;
     font-family: Helvetica, Arial, sans-serif;
-    max-width: 45%;
-    min-width: 20%;  
+    max-width: 75%;
+    min-width: 90px;  
     word-wrap: break-word;      
+
+.ui.icon.input
+    height: 45px;
 
 .concrete-message.me
     text-align: left;
@@ -123,11 +128,12 @@ textarea
     display: flex;
     justify-content: space-between;
     height: 500px;
+    position: relative;
 
 .users     
     overflow-y: auto;
     overflow-x: hidden;
-    height: 85%;
+    height: 455px;
 
 .chat-block    
     display: flex;
@@ -146,6 +152,7 @@ textarea
     display: flex;
     flex-direction: column;
     padding: 5px 10px;      
+    margin: 0 1px;
 
 .date-me
     font-family: Helvetica, Arial, sans-serif;
@@ -168,13 +175,14 @@ textarea
 .ui.icon.input
     flex-basis: 7%;
     height: 43px;
+    min-width: 43px;
 
 .outline.link.icon
     background: rgb(176, 213, 247);
     font-size: 1.2em;
     font-weight: 700;
     color: black;   
-    width: 100%; 
+    width: 100%!important; 
     border-radius: 0;
     border: 1px solid rgba(34,36,38,.15);
 
@@ -203,7 +211,7 @@ textarea
     opacity: 0.4;    
 
 .side-bar
-    width: 35%;
+    width: 35%;    
 
 .ui.horizontal.divider.small.header
     margin-top: 5px;
@@ -251,8 +259,10 @@ textarea
 	margin: 0 .25em 0 0;
 	width: 7.3em;
 .remove-block
-   display: flex;
-   justify-content: flex-end;
+   position: absolute;
+   top: 0;
+   right: 0;
+
 .remove.icon
    color: grey;
    margin: 0px;
@@ -269,3 +279,102 @@ textarea
 .ui.icon.input>i.icon
     position: inherit!important;
     border-radius: 0!important;
+
+.r-dialogs-list
+    display: none;
+
+
+//responsive
+
+@media only screen and (max-width: 800px)
+    .r-dialogs-list .remove-block
+        display: none;
+
+    .r-dialogs-list
+        display: inline-block;
+        overflow-y: auto;
+        overflow-x: hidden;         
+        min-width: 55px;       
+
+    .side-bar
+        position: absolute;
+        left: 0;
+        top: 0;       
+        border-right: 1px solid lightgrey; 
+        width: 60%;
+        background: white;
+        z-index: 1;      
+
+    .chat-block
+        width: 100%;
+
+    .r-dialogs-list .r-avatar
+        width: 50px;
+        height: 50px;
+        margin-right: 0!important;
+        padding: 3px;
+    
+    .r-dialogs-list .upper-user
+        padding: 0;
+        position: relative;        
+    
+    .r-dialogs-list .upper-user:hover
+        .remove-block
+            display: flex;
+
+    .r-dialogs-list .user
+        padding-left: 0;
+        justify-content: center;
+
+    .r-dialogs-list .remove-block
+        position: absolute;
+        right: 0;
+        top: 0;
+    
+    .r-dialogs-list .user.active
+        background: rgba(176, 213, 247, 0.2);
+
+    .r-dialogs-list .remove-block i.icon
+        display: flex!important;
+        align-items: center!important;
+        height: 10px!important;
+        width: auto!important;
+
+
+
+    .r-dialogs-list .ui.button, .side-bar .ui.button
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 43px;
+        width: 55px;
+        padding: 0;
+        margin: 0;
+        min-height: inherit;
+        border-radius: 0;
+        background: #d7eafb;
+        .icon
+            margin: 0;
+            color: grey;
+            height: 15px;
+            font-size: 20px;
+
+    .side-bar .ui.button
+        min-width: 55px!important;        
+
+    .r-dialogs-list .ui.button:hover, .side-bar .ui.button:hover
+        .icon
+            color: black; 
+
+    .side-bar .header-sidebar
+        display: flex; 
+        .dialog-search
+            width: 100%;
+            flex-basis: inherit;
+
+    .r-dialogs-list
+        .unread-msg
+            position: absolute;
+            left: 1px;
+            top: 1px;
+            margin: 0;

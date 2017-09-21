@@ -17,7 +17,7 @@
                             <a routerLink="/company/{{company.Id}}" [queryParams]="{tab: 'contacts'}" class="item" suiTabHeader="5">Contacts</a>
                         </div>
                         <div class="row">
-                            <div class="two column stackable ui grid">
+                            <div *ngIf="isUser||isGuest" class="two column stackable ui grid">
                                 <div class="ten wide column">
                                     <div class="ui segment" suiTabContent="1">
                                         <company-general-information (notify)='onWorksLoaded($event)'></company-general-information>
@@ -35,11 +35,30 @@
                                         <company-contacts [name]="company.Name" [accountId]="company.AccountId" [isGuest]="isGuest"></company-contacts>
                                     </div>
                                 </div>
-                                <div *ngIf="isUser||isGuest" class="six wide column">
+                                <div class="six wide column">
                                     <div class="ui segment">
                                         <app-sign-block *ngIf="isGuest"></app-sign-block>
                                         <app-book #bookComponent *ngIf="!isGuest" [routePath]="routePath" [routeId]="routeid" [works]="works"></app-book>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="!(isUser||isGuest)" class="two column stackable ui grid">
+                            <div class="sixteen wide column">
+                                <div class="ui segment" suiTabContent="1">
+                                    <company-general-information (notify)='onWorksLoaded($event)'></company-general-information>
+                                </div>
+                                <div class="ui segment" suiTabContent="2">
+                                    <company-portfolio></company-portfolio>
+                                </div>
+                                <div class="ui segment" suiTabContent="3">
+                                    <company-reviews></company-reviews>
+                                </div>
+                                <div class="ui segment" suiTabContent="4">
+                                    <company-vendors></company-vendors>
+                                </div>
+                                <div class="ui segment" suiTabContent="5">
+                                    <company-contacts [name]="company.Name" [accountId]="company.AccountId" [isGuest]="isGuest"></company-contacts>
                                 </div>
                             </div>
                         </div>

@@ -18,7 +18,7 @@
             <div class="field">
                 <div class="ui left icon input">
                     <i class="calendar icon"></i>
-                    <input class="fluid" suiDatepicker required placeholder="BIRTHDAY" #date="ngModel" name="date" [(ngModel)]="birthday" [pickerMode]="mode">
+                    <input class="fluid" suiDatepicker required placeholder="BIRTHDAY" #date="ngModel" name="date" [(ngModel)]="birthday" [pickerMode]="mode" [pickerMaxDate]="getCurrDate()">
                 </div>
                 <div *ngIf="date.invalid && (date.touched)" class="valid-error">* Required</div>
             </div>
@@ -40,7 +40,7 @@
             </div>
 
             <div class="field">
-                <input places-auto-complete id="autocomplete" [types]="['geocode']" placeholder="LOCATION" value={{location.City}}/>
+                <input places-auto-complete id="autocomplete" [types]="['geocode']" placeholder="LOCATION" value={{location.City}} (place_changed)="placeChanged($event)" />
             </div>
             <!-- <div *ngIf="error" class="error-field">
             <sui-message class="error">
