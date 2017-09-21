@@ -12,4 +12,8 @@ export class AdminAuthService {
   public signIn(login: string, pass: string): Promise<any> {
     return this.dataService.getFullRequest(`admin/auth?login=${login}&password=${pass}`);
   }
+
+  public switchAccount(accountId: number): Promise<any> {
+    return this.dataService.getFullRequest(`switch/${accountId}`);
+  }
 }

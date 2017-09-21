@@ -22,7 +22,7 @@ namespace Unicorn.Core.Services
         private static SymmetricSecurityKey GetSymmetricSecurityKey()
         {
             return new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Properties.Settings.Default.PrivateKey));
-        }
+        }       
 
         public async Task<string> GenerateJwtTokenAsync(string provider, string uid)
         {
@@ -33,6 +33,11 @@ namespace Unicorn.Core.Services
                 return null;
             }
 
+            return await GenerateToken(accountId);
+        }
+
+        public async Task<string> GenerateToken(long accountId)
+        {
             ClaimsIdentity identity = await membershipProvider.GetUserClaims(accountId); // Role, email etc.            
 
             var dateTimeNow = DateTime.UtcNow;
@@ -42,7 +47,7 @@ namespace Unicorn.Core.Services
                     audience: Properties.Settings.Default.Audience,
                     notBefore: dateTimeNow,
                     claims: identity.Claims,
-                    expires: new DateTime(2017, 09, 23),//dateTimeNow.Add(TimeSpan.FromMinutes(Properties.Settings.Default.TokenLifeTime)), // + 5 minutes by default claim time
+                    expires: new DateTime(2017, 09, 29),//dateTimeNow.Add(TimeSpan.FromMinutes(Properties.Settings.Default.TokenLifeTime)), // + 5 minutes by default claim time
                     signingCredentials: new SigningCredentials(GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
 
             return new JwtSecurityTokenHandler().WriteToken(jwt);
