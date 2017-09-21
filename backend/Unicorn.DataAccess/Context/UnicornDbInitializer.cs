@@ -2705,7 +2705,6 @@ namespace Unicorn.DataAccess.Context
             #endregion
 
             context.SaveChanges();
-
             base.Seed(context);
         }
     }
