@@ -106,7 +106,7 @@ namespace Unicorn.Core.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("19")]
+        [global::System.Configuration.DefaultSettingValueAttribute("16")]
         public long AdminAccountId {
             get {
                 return ((long)(this["AdminAccountId"]));

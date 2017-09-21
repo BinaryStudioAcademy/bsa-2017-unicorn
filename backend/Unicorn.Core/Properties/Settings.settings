@@ -30,7 +30,7 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="AdminAccountId" Type="System.Int64" Scope="Application">
-      <Value Profile="(Default)">19</Value>
+      <Value Profile="(Default)">16</Value>
     </Setting>
   </Settings>
 </SettingsFile>
