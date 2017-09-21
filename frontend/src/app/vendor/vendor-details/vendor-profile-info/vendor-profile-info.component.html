@@ -1,3 +1,4 @@
+<div class="container">
 <div class="two column stackable" style="margin: 5px;">
     <div class="column">
         <div class="ui form">
@@ -24,8 +25,8 @@
 <div class="ui divider"></div>
 <div class="column">
     <div class="ui container">
-        <div *ngIf="workCategories === undefined" class="ui active inverted dimmer" style="z-index: 0;">
-            <div class="ui text loader">Loading</div>
+        <div *ngIf="workCategories === undefined">
+            <div class="ui active centered inline loader"></div>
         </div>
         <div class="flex-body" *ngIf="workCategories !== null">
             <div *ngFor="let category of workCategories" class="four wide column flex-category" id="divCategory{{category.Id}}" [ngClass]="{'selected-category': selectedCategory===category}" (click)="onCategorySelect(category)">
@@ -65,4 +66,5 @@
             </div>
         </div>
     </div>
+</div>
 </div>
