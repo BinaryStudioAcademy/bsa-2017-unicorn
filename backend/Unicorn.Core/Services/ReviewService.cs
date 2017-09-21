@@ -40,8 +40,9 @@ namespace Unicorn.Core.Services
                 .ToListAsync();
 
             return reviews
-                .OrderBy(r => r.Date)
-                .Select(r => ReviewToDTO(r)).ToList();
+                .OrderByDescending(r => r.Date)
+                .Select(r => ReviewToDTO(r))
+                .ToList();
 
         }
 
