@@ -1,6 +1,6 @@
 ﻿<div class="sixteen wide column" *ngIf="books !== undefined">
-    <div class="ui center aligned header empty-header" *ngIf="books ===null || books.length == 0">
-        <span>There are no finished orders</span>
+    <div class="ui center aligned header" *ngIf="books ===null || books.length == 0">
+        <span class="empty-header">There are no finished orders</span>
     </div>
     <div class="ui segment book-card stackable ui grid" *ngFor="let book of books">
         <div class="book-img two wide column">
