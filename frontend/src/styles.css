@@ -75,3 +75,15 @@
 canvas {
     width: 100%!important;
 }
+
+/*Responsive notification tab*/
+@media only screen and (max-width: 767px) {
+    .ui.items:not(.unstackable)>.item.no-wrap-item {
+        flex-direction: unset;
+        margin: unset;
+    }
+
+    .ui.items:not(.unstackable)>.item>.image+.content.no-padd-content {
+        padding: 0 0 0 1em;
+    }
+}

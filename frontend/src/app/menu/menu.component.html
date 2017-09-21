@@ -19,12 +19,12 @@
                     <div class="dropdown-content" *ngIf="showAccountDetails && profileInfo !== undefined" (clickOutside)="hideDetails()">
                         <div class="mainInfo">
                             <div class="ui items">
-                                <div class="item">
+                                <div class="item no-wrap-item">
                                     <div class="ui small circular image smallAvatar">
                                         <img *ngIf="!profileInfo.CroppedAvatar" id="profile-avatar" src="{{profileInfo.Avatar}}" />
                                         <img *ngIf="profileInfo.CroppedAvatar" id="profile-avatar" src="{{profileInfo.CroppedAvatar}}" />
                                     </div>
-                                    <div class="content">
+                                    <div class="content no-padd-content">
                                         <h5>{{profileInfo.Name}}</h5>
                                         <div class="description">
                                             <p class="email">{{profileInfo.Email}}</p>
