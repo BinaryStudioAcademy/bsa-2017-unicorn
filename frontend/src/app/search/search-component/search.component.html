@@ -175,7 +175,7 @@
             <div class="ui fluid divider"></div>
         </div>
         <div *ngIf="spinner" class="ui active centered inline ui text loader">Loading</div>
-        <div *ngIf="emptyWorks()" class="ui center aligned segment">
+        <div *ngIf="emptyWorks()" class="ui center aligned empty-header segment">
             No results found
         </div>
         <div *ngIf="works && works.length > 0" class="ui grid" id="works-grid">
