@@ -56,7 +56,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   tloader: boolean;
 
   isBanned: boolean;
-  private adminAccountId: number = 19;
+  private adminAccountId: number = 16;
 
   constructor(
     public modal: SuiModal<void>,

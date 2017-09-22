@@ -13,8 +13,7 @@ using Unicorn.Shared.DTOs;
 
 namespace Unicorn.Controllers
 {
-    [EnableCors("*", "*", "*")]
-    [TokenAuthenticate]
+    [EnableCors("*", "*", "*")]    
     public class ReportController : ApiController
     {
         private readonly IReportService _reportService;
@@ -90,6 +89,7 @@ namespace Unicorn.Controllers
 
         [HttpDelete]
         [Route("report/{id}")]
+        [TokenAuthenticate]
         public async Task<HttpResponseMessage> DeleteReportAsync(long id)
         {
             try

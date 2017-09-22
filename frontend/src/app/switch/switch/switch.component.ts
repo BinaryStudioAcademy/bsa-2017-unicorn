@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminAuthService } from "../../services/admin-auth.service";
 import { ActivatedRoute } from "@angular/router";
+import { SuiDimmerModule } from "ng2-semantic-ui";
 
 @Component({
   selector: 'app-switch',
