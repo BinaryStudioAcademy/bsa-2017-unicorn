@@ -4,12 +4,12 @@
             <div class="sixteen wide column">
                 <div class="row">
                     <div class="ui grid">
-                        <div class="row">
+                        <div class="stackable row">
                             <div class="four wide column">
                                 <p class="from"><a>{{report.Email}}</a></p>
                                 <span class="date">{{report.Date|date:fullDate}}</span>
                             </div>
-                            <div class="ten wide column">
+                            <div class="eight wide column">
                                 <h5 *ngIf="report.Type === 1">Feedback message</h5>
                                 <h5 *ngIf="report.Type === 2">The {{report.ProfileType}} with profile <a routerLink="/{{report.ProfileType}}/{{report.ProfileId}}">{{report.ProfileName}}</a> received a complaint with message</h5>
                                 <div (click)="openReportInModal(report)" class="review-text">

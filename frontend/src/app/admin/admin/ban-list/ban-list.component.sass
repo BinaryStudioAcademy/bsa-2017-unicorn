@@ -92,7 +92,7 @@ $normal: 800px;
   @else if $media == wide-screens 
     @media only screen and (min-width: $normal) { @content; }
 
-.item p, h5, .ui.button
+.item p, h5, .ui.button, .ui.horizontal.label
 	@include respond-to(handhelds) { font-size: 0.55rem!important ;}
 	@include respond-to(medium-screens1) { font-size: 0.68rem!important ; }
 	@include respond-to(medium-screens2) { font-size: 0.8rem!important ; }
