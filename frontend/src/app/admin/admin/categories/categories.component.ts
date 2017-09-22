@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, NgZone, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ViewChild, NgZone, ChangeDetectorRef, HostListener } from '@angular/core';
 
 import {SuiModalService, TemplateModalConfig, ModalTemplate} from 'ng2-semantic-ui';
 
@@ -26,6 +26,11 @@ export class CategoriesComponent implements OnInit {
     private zone: NgZone,
     private changeDetector: ChangeDetectorRef
   ) { }
+  
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.screenWidth = window.screen.width;
+  }
 
   categories: Category[];
 
@@ -41,6 +46,8 @@ export class CategoriesComponent implements OnInit {
   openedCategoryPanels: boolean[];
   
   searchTemplate: string;
+
+  screenWidth: number = window.screen.width;
 
   ngOnInit() {
     this.openedCategoryPanels = [];

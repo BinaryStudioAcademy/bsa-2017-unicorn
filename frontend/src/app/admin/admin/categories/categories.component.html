@@ -16,7 +16,9 @@
 
 <div *ngIf="isNewCategoryEditOpen" class="ui segment">
   <div (click)="stopPropagation($event)" class="category-title edit">
-    <div class="ui container grid">
+    <div *ngIf="screenWidth <= 767; then smallCategoryEdit; else largeCategoryEdit">
+    </div>
+    <!-- <div class="ui container grid">
       <div class="row">
         <div class="four wide middle aligned column">
           <div class="ui circular segment category-icon" (mouseenter)="isDimmed = !isDimmed" (mouseleave)="isDimmed = !isDimmed">
@@ -54,7 +56,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </div>
 
@@ -74,90 +76,20 @@
           <a (click)="stopPropagation($event); removeCategory(category)" [ngClass]="{'disabled': isCategoryOnPending(category)}" class="ui button remove">Remove</a>
         </div>
       </div>
+
       <ng-template #categoryEdit>
-          <div (click)="stopPropagation($event)" class="category-title edit">
-              <div class="ui container grid">
-                <div class="row">
-                  <div class="four wide middle aligned column">
-                    <div class="ui circular segment category-icon" (mouseenter)="isDimmed = !isDimmed" (mouseleave)="isDimmed = !isDimmed">
-                      <img class="ui circular image" src="{{selectedCategory.Icon}}">
-                      <sui-dimmer [(isDimmed)]="isDimmed" [isClickable]="false" (click)="selectImage()">
-                        <h4 class="ui inverted header">Upload</h4>
-                      </sui-dimmer>
-                    </div>
-                  </div>
-                  <div class="twelve wide unpadded column">
-                    <div class="ui form">
-                      <div class="fields">
-                        <div class="twelve wide field">
-                          <label>Name</label>
-                          <input name="category-name" type="text" [(ngModel)]="selectedCategory.Name">
-                        </div>
-                        <div class="field category-actions">
-                          <a (click)="stopPropagation($event); saveCategory()" [ngClass]="{'disabled': !isCategoryValid()}" class="ui button save">Save</a>
-                        </div>
-                      </div>
-                      <div class="field">
-                        <label>Description</label>
-                        <textarea [(ngModel)]="selectedCategory.Description" rows="2"></textarea>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="row unpadded-top">
-                  <div class="sixteen wide unpadded column">
-                    <div class="ui form">
-                      <div class="field">
-                        <label>Tags</label>
-                        <textarea [(ngModel)]="selectedCategory.Tags" rows="3"></textarea>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-      <!-- <div (click)="stopPropagation($event)" class="category-title edit">
-        <div class="ui container grid">
-          <div class="row">
-            <div class="four wide middle aligned column">
-              <div class="category-icon">
-                <img class="ui circular image" src="{{selectedCategory.Icon}}">
-              </div>
-            </div>
-            <div class="eleven wide unpadded column">
-              <div class="ui form">
-                <div class="field">
-                  <label>Name</label>
-                  <input name="category-name" type="text" [(ngModel)]="selectedCategory.Name">
-                </div>
-                <div class="field">
-                  <label>Description</label>
-                  <textarea [(ngModel)]="selectedCategory.Description" rows="2"></textarea>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row unpadded-top">
-            <div class="fifteen wide unpadded column">
-              <div class="ui form">
-                <div class="field">
-                  <label>Tags</label>
-                  <textarea [(ngModel)]="selectedCategory.Tags" rows="3"></textarea>
-                </div>
-              </div>
-            </div>
+        <div (click)="stopPropagation($event)" class="category-title edit">
+          <div *ngIf="screenWidth <= 767; then smallCategoryEdit; else largeCategoryEdit">
           </div>
         </div>
-        <div class="category-actions">
-          <a class="ui button save">Save</a>
-        </div>
-      </div> -->
       </ng-template>
+
     </div>
     <div content>
       <div class="ui items subcategory-list">
         <div *ngFor="let subcategory of category.Subcategories" class="item">
-          <div *ngIf="subcategory !== selectedSubcategory; else subcategoryEdit" [ngClass]="{'disabled': isSubcategoryOnPending(subcategory)}" class="ui right floated segment">
+          <div *ngIf="subcategory !== selectedSubcategory; else subcategoryEdit" [ngClass]="{'disabled': isSubcategoryOnPending(subcategory)}"
+            class="ui right floated segment">
             <div class="category-name">
               <h5>{{subcategory.Name}}</h5>
               <p>{{subcategory.Description}}</p>
@@ -167,65 +99,159 @@
               <a (click)="removeSubcategory(subcategory)" [ngClass]="{'disabled': isSubcategoryOnPending(subcategory)}" class="ui button remove">Remove</a>
             </div>
           </div>
-          
+
         </div>
         <div class="item">
-          <div *ngIf="selectedSubcategory.CategoryId == category.Id && isNewSubcategoryEditOpen then subcategoryEdit; else subcategoryNew" class="ui right floated segment">
+          <div *ngIf="selectedSubcategory.CategoryId == category.Id && isNewSubcategoryEditOpen then subcategoryEdit; else subcategoryNew"
+            class="ui right floated segment">
             <h5>Create new subcategory of {{category.Name}}</h5>
             <a (click)="editSubcategory(category)" class="ui button new">New subcategory</a>
           </div>
         </div>
-        <ng-template #subcategoryEdit>
-          <div (clickOutside)="closeNewSubcategoryEdit()"  class="ui right floated segment">
-              <div class="subcategory ui form">
-                <div class="fields">
-                  <div class="twelve wide field">
-                    <label>Name</label>
-                    <input name="category-name" type="text" [(ngModel)]="selectedSubcategory.Name">
-                  </div>
-                  <div class="field category-actions">
-                    <a (click)="saveSubcategory()" [ngClass]="{'disabled': !isSubcategoryValid()}" class="ui button save">Save</a>
-                  </div>
-                </div>
 
-                <div class="field">
-                  <label>Description</label>
-                  <textarea [(ngModel)]="selectedSubcategory.Description" rows="2"></textarea>
-                </div>
-                <div class="field">
-                  <label>Tags</label>
-                  <textarea [(ngModel)]="selectedSubcategory.Tags" rows="3"></textarea>
-                </div>
-              </div>
-            
-            <!-- <div class="category-name">
-              <div class="ui form">
-                <div class="field">
-                  <label>Name</label>
-                  <input name="category-name" type="text" [(ngModel)]="selectedSubcategory.Name">
-                </div>
-                <div class="field">
-                  <label>Description</label>
-                  <textarea [(ngModel)]="selectedSubcategory.Description" rows="2"></textarea>
-                </div>
-                <div class="field">
-                  <label>Tags</label>
-                  <textarea [(ngModel)]="selectedSubcategory.Tags" rows="3"></textarea>
-                </div>
-              </div>
+        <ng-template #subcategoryEdit>
+          <div (clickOutside)="closeNewSubcategoryEdit()" class="ui right floated segment">
+            <div *ngIf="screenWidth <= 767; then smallSubcategoryEdit; else largeSubcategoryEdit">
             </div>
-            <div class="category-actions">
-              <a class="ui button save">Save</a>
-            </div> -->
           </div>
         </ng-template>
+
+        <ng-template #largeSubcategoryEdit>
+          <div class="subcategory ui form">
+            <div class="fields">
+              <div class="twelve wide field">
+                <label>Name</label>
+                <input name="category-name" type="text" [(ngModel)]="selectedSubcategory.Name">
+              </div>
+              <div class="field category-actions">
+                <a (click)="saveSubcategory()" [ngClass]="{'disabled': !isSubcategoryValid()}" class="ui button save">Save</a>
+              </div>
+            </div>
+
+            <div class="field">
+              <label>Description</label>
+              <textarea [(ngModel)]="selectedSubcategory.Description" rows="2"></textarea>
+            </div>
+            <div class="field">
+              <label>Tags</label>
+              <textarea [(ngModel)]="selectedSubcategory.Tags" rows="3"></textarea>
+            </div>
+          </div>
+        </ng-template>
+
+        <ng-template #smallSubcategoryEdit>
+          <div class="subcategory mini ui form">
+            <div class="field">
+              <label>Name</label>
+              <input name="category-name" type="text" [(ngModel)]="selectedSubcategory.Name">
+            </div>
+
+            <div class="field">
+              <label>Description</label>
+              <textarea [(ngModel)]="selectedSubcategory.Description" rows="2"></textarea>
+            </div>
+            <div class="field">
+              <label>Tags</label>
+              <textarea [(ngModel)]="selectedSubcategory.Tags" rows="3"></textarea>
+            </div>
+            <div class="field category-actions">
+              <a (click)="saveSubcategory()" [ngClass]="{'disabled': !isSubcategoryValid()}" class="ui button save">Save</a>
+            </div>
+          </div>
+        </ng-template>
+
         <ng-template #subcategoryNew>
           <div class="ui right floated segment">
             <h5>Create new subcategory of {{category.Name}}</h5>
             <a (click)="editSubcategory(category)" class="ui button new">New subcategory</a>
           </div>
         </ng-template>
+
       </div>
     </div>
   </sui-accordion-panel>
 </sui-accordion>
+
+<ng-template #largeCategoryEdit>
+  <div class="ui container grid">
+    <div class="row">
+      <div class="four wide middle aligned column">
+        <div class="ui circular segment category-icon" (mouseenter)="isDimmed = !isDimmed" (mouseleave)="isDimmed = !isDimmed">
+          <img class="ui circular image" src="{{selectedCategory.Icon}}">
+          <sui-dimmer [(isDimmed)]="isDimmed" [isClickable]="false" (click)="selectImage()">
+            <h4 class="ui inverted header">Upload</h4>
+          </sui-dimmer>
+        </div>
+      </div>
+      <div class="twelve wide unpadded column">
+        <div class="ui form">
+          <div class="fields">
+            <div class="twelve wide field">
+              <label>Name</label>
+              <input name="category-name" type="text" [(ngModel)]="selectedCategory.Name">
+            </div>
+            <div class="field category-actions">
+              <a (click)="stopPropagation($event); saveCategory()" [ngClass]="{'disabled': !isCategoryValid()}" class="ui button save">Save</a>
+            </div>
+          </div>
+          <div class="field">
+            <label>Description</label>
+            <textarea [(ngModel)]="selectedCategory.Description" rows="2"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row unpadded-top">
+      <div class="sixteen wide unpadded column">
+        <div class="ui form">
+          <div class="field">
+            <label>Tags</label>
+            <textarea [(ngModel)]="selectedCategory.Tags" rows="3"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #smallCategoryEdit>
+  <div class="ui container grid">
+    <div class="row">
+      <div class="six wide middle aligned column">
+        <div class="ui circular segment category-icon" (mouseenter)="isDimmed = !isDimmed" (mouseleave)="isDimmed = !isDimmed">
+          <img class="ui circular image" src="{{selectedCategory.Icon}}">
+          <sui-dimmer [(isDimmed)]="isDimmed" [isClickable]="false" (click)="selectImage()">
+            <h4 class="ui inverted header">Upload</h4>
+          </sui-dimmer>
+        </div>
+      </div>
+      <div class="ten wide unpadded column">
+        <div class="ui mini form">
+          <div class="field">
+            <label>Name</label>
+            <input name="category-name" type="text" [(ngModel)]="selectedCategory.Name">
+          </div>
+          <div class="field">
+            <label>Description</label>
+            <textarea [(ngModel)]="selectedCategory.Description" rows="2"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row unpadded-top">
+      <div class="sixteen wide unpadded column">
+        <div class="ui mini form">
+          <div class="field">
+            <label>Tags</label>
+            <textarea [(ngModel)]="selectedCategory.Tags" rows="3"></textarea>
+          </div>
+          <div class="field">
+            <div class="field category-actions">
+              <a (click)="stopPropagation($event); saveCategory()" [ngClass]="{'disabled': !isCategoryValid()}" class="ui button save">Save</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
