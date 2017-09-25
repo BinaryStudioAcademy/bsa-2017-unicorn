@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Unicorn.Shared.DTOs;
@@ -15,10 +12,7 @@ namespace Unicorn.Core.Services
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public PermissionService(IUnitOfWork unitOfWork)
-        {
-            _unitOfWork = unitOfWork;
-        }
+        public PermissionService(IUnitOfWork unitOfWork) => _unitOfWork = unitOfWork;
 
         public async Task<IEnumerable<PermissionDTO>> GetAllAsync()
         {

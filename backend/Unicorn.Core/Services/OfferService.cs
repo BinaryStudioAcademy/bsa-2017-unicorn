@@ -51,6 +51,7 @@ namespace Unicorn.Core.Services
 
                 string msg = EmailTemplate.NewOfferTemplate(company.Name, company.Id);
                 string receiverEmail = vendor.Person.Account.Email;
+
                 _mailService.Send(new EmailMessage
                 {
                     ReceiverEmail = receiverEmail,
@@ -120,17 +121,22 @@ namespace Unicorn.Core.Services
                 .Include(o => o.Vendor)
                 .Include(o => o.Vendor.Person)
                 .SingleOrDefaultAsync(o => o.Id == offerDto.Id);
+
             if (offer == null)
             {
                 throw new Exception();
             }
+
             if (!string.IsNullOrEmpty(offerDto.DeclinedMessage))
             {
                 offer.DeclinedMessage = offerDto.DeclinedMessage;
             }
+
             offer.Status = offerDto.Status;
             _unitOfWork.OfferRepository.Update(offer);
+
             await _unitOfWork.SaveAsync();
+
             if (offer.Status == OfferStatus.Accepted)
             {
                 await AcceptVendorAsync(offer);
@@ -142,6 +148,7 @@ namespace Unicorn.Core.Services
 
             string msg = EmailTemplate.OfferStatusChanged(offer.Vendor.Person.Name, status, offer.Company.Id, offer.Vendor.Id);
             string receiverEmail = offer.Company.Account.Email;
+
             _mailService.Send(new EmailMessage
             {
                 ReceiverEmail = receiverEmail,
@@ -151,7 +158,7 @@ namespace Unicorn.Core.Services
             });
 
             /*Send notification*/
-            
+
             var notification = new NotificationDTO()
             {
                 Title = $"Offer status changed",
@@ -170,6 +177,7 @@ namespace Unicorn.Core.Services
             var offer = await _unitOfWork.OfferRepository.GetByIdAsync(id);
             offer.IsDeleted = true;
             _unitOfWork.OfferRepository.Update(offer);
+
             await _unitOfWork.SaveAsync();
         }
 
@@ -181,6 +189,7 @@ namespace Unicorn.Core.Services
             vendor.Company = company;
             _unitOfWork.VendorRepository.Update(vendor);
             _unitOfWork.CompanyRepository.Update(company);
+
             await _unitOfWork.SaveAsync();
         }
 
@@ -215,9 +224,8 @@ namespace Unicorn.Core.Services
         {
             var select = _unitOfWork.RatingRepository.Query
                 .Where(p => p.Reciever.Id == receiverId).Select(z => z.Grade);
+
             return select.Any() ? select.Average() : 0;
-
         }
-
     }
 }

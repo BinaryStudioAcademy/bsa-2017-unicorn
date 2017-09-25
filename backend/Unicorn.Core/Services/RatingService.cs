@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Unicorn.Core.Interfaces;
 using Unicorn.DataAccess.Entities;
@@ -11,36 +10,34 @@ using Unicorn.Shared.DTOs;
 
 namespace Unicorn.Core.Services
 {
-    public class RatingService: IRatingService
+    public class RatingService : IRatingService
     {
         private IUnitOfWork _unitOfWork;
-        public RatingService(IUnitOfWork unitOfWork)
-        {
-            _unitOfWork = unitOfWork;
-        }
+
+        public RatingService(IUnitOfWork unitOfWork) => _unitOfWork = unitOfWork;
 
         public async Task<RatingDTO> GetByIdAsync(long id)
         {
             var rating = await _unitOfWork.RatingRepository.GetByIdAsync(id);
 
-            return new RatingDTO()
+            return new RatingDTO
             {
                 Id = rating.Id,
                 Grade = rating.Grade,
-                Reciever = new AccountDTO()
+                Reciever = new AccountDTO
                 {
                     Id = rating.Reciever.Id,
                     Avatar = rating.Reciever.Avatar,
                     DateCreated = rating.Reciever.DateCreated,
                     Email = rating.Reciever.Email,
                     EmailConfirmed = rating.Reciever.EmailConfirmed,
-                    Role = new RoleDTO()
+                    Role = new RoleDTO
                     {
                         Id = rating.Reciever.Role.Id,
                         Name = rating.Reciever.Role.Name
                     }
                 },
-                Sender = new AccountDTO()
+                Sender = new AccountDTO
                 {
                     Id = rating.Sender.Id,
                     Avatar = rating.Sender.Avatar,
@@ -62,13 +59,13 @@ namespace Unicorn.Core.Services
                 .Include(v => v.Reciever)
                 .Include(v => v.Sender)
                 .Where(x => x.Reciever.Id == id).ToListAsync();
-            return ratings.Select(RatingToDTO);
 
+            return ratings.Select(RatingToDTO);
         }
 
         public Task<IEnumerable<RatingDTO>> GetBySenderIdAsync(long id)
         {
-            return null;
+            throw new NotImplementedException();
         }
 
         public async Task<double> GetAvarageByRecieverId(long id)
@@ -76,24 +73,20 @@ namespace Unicorn.Core.Services
             var ratings = await GetByReceiverIdAsync(id);
 
             return ratings.Any() ? ratings.Average(x => x.Grade) : 0;
-
         }
 
-        private RatingDTO RatingToDTO(Rating rating)
+        private RatingDTO RatingToDTO(Rating rating) => new RatingDTO
         {
-            return new RatingDTO
+            Id = rating.Id,
+            Grade = rating.Grade,
+            Reciever = new AccountDTO
             {
-                Id = rating.Id,
-                Grade = rating.Grade,
-                Reciever = new AccountDTO
-                {
-                  Id = rating.Reciever.Id,
-                  Avatar = rating.Reciever.Avatar,
-                  DateCreated = rating.Reciever.DateCreated,
-                  Email = rating.Reciever.Email,
-                  EmailConfirmed = rating.Reciever.EmailConfirmed
-                }
-            };
-        }
+                Id = rating.Reciever.Id,
+                Avatar = rating.Reciever.Avatar,
+                DateCreated = rating.Reciever.DateCreated,
+                Email = rating.Reciever.Email,
+                EmailConfirmed = rating.Reciever.EmailConfirmed
+            }
+        };
     }
 }

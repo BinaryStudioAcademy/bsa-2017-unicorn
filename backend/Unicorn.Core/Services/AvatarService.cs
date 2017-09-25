@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Unicorn.Core.Interfaces;
 using Unicorn.DataAccess.Entities;
 using Unicorn.DataAccess.Interfaces;
@@ -25,6 +21,7 @@ namespace Unicorn.Core.Services
             Account account = await _unitOfWork.AccountRepository.GetByIdAsync(id);
             account.Avatar = imageUrl;
             _unitOfWork.AccountRepository.Update(account);
+
             await _unitOfWork.SaveAsync();
         }
 
@@ -33,6 +30,7 @@ namespace Unicorn.Core.Services
             Account account = await _unitOfWork.AccountRepository.GetByIdAsync(id);
             account.CroppedAvatar = imageUrl;
             _unitOfWork.AccountRepository.Update(account);
+
             await _unitOfWork.SaveAsync();
         }
 
@@ -41,6 +39,7 @@ namespace Unicorn.Core.Services
             Account account = await _unitOfWork.AccountRepository.GetByIdAsync(id);
             account.Background = imageUrl;
             _unitOfWork.AccountRepository.Update(account);
+
             await _unitOfWork.SaveAsync();
         }
     }

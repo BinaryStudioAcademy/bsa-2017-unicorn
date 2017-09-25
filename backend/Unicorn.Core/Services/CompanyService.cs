@@ -13,11 +13,8 @@ namespace Unicorn.Core.Services
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public CompanyService(IUnitOfWork unitOfWork)
-        {
-            _unitOfWork = unitOfWork;
-        }
-        
+        public CompanyService(IUnitOfWork unitOfWork) => _unitOfWork = unitOfWork;
+
         public async Task Create(CompanyRegisterDTO companyDto)
         {
             var account = new Account();
@@ -59,4 +56,3 @@ namespace Unicorn.Core.Services
     }
 }
 
- 

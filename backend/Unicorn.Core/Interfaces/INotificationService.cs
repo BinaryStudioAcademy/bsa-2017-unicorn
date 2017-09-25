@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Unicorn.Shared.DTOs;
 using Unicorn.Shared.DTOs.Book;
-using Unicorn.Shared.DTOs.Chat;
 using Unicorn.Shared.DTOs.Notification;
 
 namespace Unicorn.Core.Interfaces

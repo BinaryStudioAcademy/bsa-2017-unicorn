@@ -5,7 +5,6 @@ using Unicorn.Shared.DTOs;
 using Unicorn.Shared.DTOs.Register;
 using Unicorn.Shared.DTOs.Vendor;
 using Unicorn.Shared.DTOs.Contact;
-using Unicorn.Shared.DTOs.Book;
 
 namespace Unicorn.Core.Interfaces
 {

@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-
-using Microsoft.AspNet.SignalR;
-
-using Unicorn.Core.Infrastructure.SignalR;
 using Unicorn.Core.Interfaces;
 using Unicorn.Shared.DTOs.Notification;
 using Unicorn.DataAccess.Entities;
 using Unicorn.DataAccess.Interfaces;
 using Unicorn.DataAccess.Entities.Enum;
-using Unicorn.Shared.DTOs.Chat;
 using Unicorn.Shared.DTOs.Book;
 using Unicorn.Shared.DTOs;
 
@@ -48,7 +41,7 @@ namespace Unicorn.Core.Services
             _unitOfWork.NotificationRepository.Query
                 .Where(n => !n.IsDeleted && !n.IsViewed && n.Type == NotificationType.ChatNotification)
                 .ToList()
-                .ForEach(n => 
+                .ForEach(n =>
                 {
                     n.IsViewed = true;
                     _unitOfWork.NotificationRepository.Update(n);
@@ -86,25 +79,13 @@ namespace Unicorn.Core.Services
             await _proxy.SendNotification(accountId, notificationDto);
         }
 
-        public async Task CreateAsync(long accountId, long dialogId)
-        {
-            await _proxy.ReadNotReadedMessages(accountId, dialogId);
-        }
+        public async Task CreateAsync(long accountId, long dialogId) => await _proxy.ReadNotReadedMessages(accountId, dialogId);
 
-        public async Task CreateAsync(long accountId, VendorBookDTO book)
-        {
-            await _proxy.RefreshCalendarsEvents(accountId, book);
-        }
+        public async Task CreateAsync(long accountId, VendorBookDTO book) => await _proxy.RefreshCalendarsEvents(accountId, book);
 
-        public async Task CreateAsync(long accountId, ReportDTO report)
-        {
-            await _proxy.RefreshAdminFeedbacks(accountId, report);
-        }
+        public async Task CreateAsync(long accountId, ReportDTO report) => await _proxy.RefreshAdminFeedbacks(accountId, report);
 
-        public async Task CreateDelAsync(long accountId, long dialogId)
-        {
-            await _proxy.DeleteMessage(accountId, dialogId);
-        }
+        public async Task CreateDelAsync(long accountId, long dialogId) => await _proxy.DeleteMessage(accountId, dialogId);
 
         public async Task<IEnumerable<NotificationDTO>> GetAllAsync()
         {
@@ -130,7 +111,7 @@ namespace Unicorn.Core.Services
                 Title = notification.Title,
                 Description = notification.Description,
                 SourceItemId = notification.SourceItemId,
-                IsViewed = notification.IsViewed, 
+                IsViewed = notification.IsViewed,
                 Time = notification.Time,
                 Type = notification.Type
             };

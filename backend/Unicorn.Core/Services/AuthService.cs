@@ -14,15 +14,9 @@ namespace Unicorn.Core.Services
     {
         private readonly IMembershipProvider membershipProvider;
 
-        public AuthJWTService(IMembershipProvider membershipProvider)
-        {
-            this.membershipProvider = membershipProvider;
-        }
+        public AuthJWTService(IMembershipProvider membershipProvider) => this.membershipProvider = membershipProvider;
 
-        private static SymmetricSecurityKey GetSymmetricSecurityKey()
-        {
-            return new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Properties.Settings.Default.PrivateKey));
-        }       
+        private static SymmetricSecurityKey GetSymmetricSecurityKey() => new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Properties.Settings.Default.PrivateKey));
 
         public async Task<string> GenerateJwtTokenAsync(string provider, string uid)
         {
@@ -47,7 +41,7 @@ namespace Unicorn.Core.Services
                     audience: Properties.Settings.Default.Audience,
                     notBefore: dateTimeNow,
                     claims: identity.Claims,
-                    expires: new DateTime(2017, 09, 29),//dateTimeNow.Add(TimeSpan.FromMinutes(Properties.Settings.Default.TokenLifeTime)), // + 5 minutes by default claim time
+                    expires: dateTimeNow.Add(TimeSpan.FromMinutes(Properties.Settings.Default.TokenLifeTime)), // + 5 minutes by default claim time
                     signingCredentials: new SigningCredentials(GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
 
             return new JwtSecurityTokenHandler().WriteToken(jwt);

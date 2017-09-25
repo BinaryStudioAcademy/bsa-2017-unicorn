@@ -29,6 +29,7 @@ namespace Unicorn.Core.Services
         public async Task<object> GetById(long id)
         {
             var result = await GetCustomerAsync(id);
+
             return result;
         }
 
@@ -73,6 +74,7 @@ namespace Unicorn.Core.Services
             customer.Books = new List<Book>();
             customer.History = new List<History>();
             _unitOfWork.CustomerRepository.Create(customer);
+
             await _unitOfWork.SaveAsync();
         }
 
@@ -101,14 +103,17 @@ namespace Unicorn.Core.Services
                 await _unitOfWork.SaveAsync();
             }
         }
+
         public async Task<long> GetUserAccountIdAsync(long id)
         {
             var user = await _unitOfWork.CustomerRepository.Query
                 .Include(v => v.Person)
                 .Include(v => v.Person.Account)
                 .SingleAsync(x => x.Id == id);
+
             return user.Person.Account.Id;
         }
+
         public async Task<object> GetCustomerAsync(long id)
         {
             var customer = await _unitOfWork.CustomerRepository.
@@ -116,6 +121,7 @@ namespace Unicorn.Core.Services
                 Include(c => c.Books.Select(h => h.Vendor.Person)).
                 Include(c => c.Person.Account.Location).
                 SingleAsync(c => c.Id == id);
+
             if (customer != null)
             {
                 var customerDto = new UserShortDTO()
@@ -151,8 +157,10 @@ namespace Unicorn.Core.Services
                         workDescription = x.WorkDescription
                     }).ToList()
                 };
+
                 return customerDto;
             }
+
             return null;
         }
 

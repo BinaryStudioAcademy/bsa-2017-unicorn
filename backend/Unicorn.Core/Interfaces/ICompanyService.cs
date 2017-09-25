@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Threading.Tasks;
-using Unicorn.Shared.DTOs;
-using Unicorn.Shared.DTOs.Company;
+﻿using System.Threading.Tasks;
 using Unicorn.Shared.DTOs.Register;
 
 namespace Unicorn.Core.Interfaces

@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Unicorn.Core.Interfaces;
 using Unicorn.DataAccess.Entities;
@@ -13,10 +11,7 @@ namespace Unicorn.Core.Services
 {
     public class SubcategoryService : ISubcategoryService
     {
-        public SubcategoryService(IUnitOfWork unitOfWork)
-        {
-            _unitOfWork = unitOfWork;
-        }
+        public SubcategoryService(IUnitOfWork unitOfWork) => _unitOfWork = unitOfWork;
 
         public async Task<SubcategoryShortDTO> CreateAsync(long categoryId, SubcategoryShortDTO subcategoryDTO)
         {
@@ -76,12 +71,13 @@ namespace Unicorn.Core.Services
                 Id = subcategoryDto.Id,
                 Description = subcategoryDto.Description,
                 Tags = subcategoryDto.Tags
-            }; ;
+            };
         }
 
         public async Task RemoveAsync(long id)
         {
             _unitOfWork.SubcategoryRepository.Delete(id);
+
             await _unitOfWork.SaveAsync();
         }
 

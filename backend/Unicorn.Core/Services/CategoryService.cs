@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 using Unicorn.Core.Interfaces;
@@ -15,14 +14,9 @@ namespace Unicorn.Core.Services
 {
     public class CategoryService : ICategoryService
     {
-        public CategoryService(IUnitOfWork unitOfWork)
-        {
-            _unitOfWork = unitOfWork;
-        }
+        public CategoryService(IUnitOfWork unitOfWork) => _unitOfWork = unitOfWork;
 
-        public async Task<IEnumerable<CategoryDTO>> GetAllAsync()
-        {
-            return await _unitOfWork.CategoryRepository.Query
+        public async Task<IEnumerable<CategoryDTO>> GetAllAsync() => await _unitOfWork.CategoryRepository.Query
                 .Include(c => c.Subcategories)
                 .Select(c => new CategoryDTO()
                 {
@@ -32,7 +26,7 @@ namespace Unicorn.Core.Services
                     Tags = c.Tags,
                     Icon = c.Icon,
                     Subcategories = c.Subcategories
-                        .Where(s => !s.IsDeleted)    
+                        .Where(s => !s.IsDeleted)
                         .Select(s => new SubcategoryShortDTO()
                         {
                             Id = s.Id,
@@ -44,12 +38,8 @@ namespace Unicorn.Core.Services
                             Icon = s.Icon
                         }).ToList()
                 }).ToListAsync();
-        }
 
-        public Task<CategoryDTO> GetByIdAsync(long id)
-        {
-            throw new NotImplementedException();
-        }
+        public Task<CategoryDTO> GetByIdAsync(long id) => throw new NotImplementedException();
 
         public async Task<CategoryDTO> CreateAsync(CategoryDTO categoryDTO)
         {
@@ -92,9 +82,7 @@ namespace Unicorn.Core.Services
             return categoryDTO;
         }
 
-        public async Task<List<CategoryDTO>> SearchByNameAsync(string template)
-        {
-            return await _unitOfWork.CategoryRepository.Query
+        public async Task<List<CategoryDTO>> SearchByNameAsync(string template) => await _unitOfWork.CategoryRepository.Query
                 .Include(c => c.Subcategories)
                 .Where(c => c.Name.ToLower().Contains(template.ToLower()))
                 .Select(c => new CategoryDTO()
@@ -117,7 +105,6 @@ namespace Unicorn.Core.Services
                             Icon = s.Icon
                         }).ToList()
                 }).ToListAsync();
-        }
 
         private readonly IUnitOfWork _unitOfWork;
     }
