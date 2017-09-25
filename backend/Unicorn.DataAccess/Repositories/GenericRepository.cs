@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Unicorn.DataAccess.Context;
 using Unicorn.DataAccess.Interfaces;
 
 namespace Unicorn.DataAccess.Repositories
@@ -14,24 +12,13 @@ namespace Unicorn.DataAccess.Repositories
         private DbContext context;
         private IDbSet<T> _entities;
 
-        public GenericRepository(DbContext context)
-        {
-            this.context = context;
-        }
-        public T GetById(long id)
-        {
-            return Query.First(x => x.Id == id);
-        }
-        public async Task<T> GetByIdAsync(long id)
-        {
-            return await Query.SingleOrDefaultAsync(i => i.Id == id);
+        public GenericRepository(DbContext context) => this.context = context;
 
-        }
+        public T GetById(long id) => Query.First(x => x.Id == id);
 
-        public async Task<T> GetByIdDeletedAsync(long id)
-        {
-            return await Deleted.SingleOrDefaultAsync(i => i.Id == id);
-        }
+        public async Task<T> GetByIdAsync(long id) => await Query.SingleOrDefaultAsync(i => i.Id == id);
+
+        public async Task<T> GetByIdDeletedAsync(long id) => await Deleted.SingleOrDefaultAsync(i => i.Id == id);
 
         public T Create(T entity)
         {
@@ -41,6 +28,7 @@ namespace Unicorn.DataAccess.Repositories
                 {
                     throw new ArgumentNullException(nameof(entity));
                 }
+
                 return Entities.Add(entity);
             }
             catch (Exception ex)
@@ -57,6 +45,7 @@ namespace Unicorn.DataAccess.Repositories
                 {
                     throw new ArgumentNullException(nameof(entity));
                 }
+
                 context.Entry(entity).State = EntityState.Modified;
             }
             catch (Exception ex)
@@ -70,6 +59,7 @@ namespace Unicorn.DataAccess.Repositories
             try
             {
                 var entity = GetById(id);
+
                 if (entity == null)
                 {
                     throw new ArgumentNullException(nameof(id));
@@ -88,10 +78,12 @@ namespace Unicorn.DataAccess.Repositories
             try
             {
                 var entity = await GetByIdDeletedAsync(id);
+
                 if (entity == null)
                 {
                     throw new ArgumentNullException(nameof(id));
                 }
+
                 Entities.Remove(entity);
             }
             catch (Exception ex)
@@ -105,10 +97,12 @@ namespace Unicorn.DataAccess.Repositories
             try
             {
                 var entity = await GetByIdDeletedAsync(id);
+
                 if (entity == null)
                 {
                     throw new ArgumentNullException(nameof(id));
                 }
+
                 entity.IsDeleted = false;
             }
             catch (Exception ex)
@@ -117,15 +111,9 @@ namespace Unicorn.DataAccess.Repositories
             }
         }
 
-        public IEnumerable<T> GetAll()
-        {
-            return Query.ToList();
-        }
+        public IEnumerable<T> GetAll() => Query.ToList();
 
-        public async Task<IEnumerable<T>> GetAllAsync()
-        {
-            return await Query.ToListAsync();
-        }
+        public async Task<IEnumerable<T>> GetAllAsync() => await Query.ToListAsync();
 
         protected IDbSet<T> Entities => _entities ?? (_entities = context.Set<T>());
 

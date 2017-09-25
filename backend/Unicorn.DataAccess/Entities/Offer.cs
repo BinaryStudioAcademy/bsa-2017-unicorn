@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Unicorn.DataAccess.Entities.Enum;
+﻿using Unicorn.DataAccess.Entities.Enum;
 using Unicorn.DataAccess.Interfaces;
 
 namespace Unicorn.DataAccess.Entities
@@ -21,7 +16,7 @@ namespace Unicorn.DataAccess.Entities
         public OfferStatus Status { get; set; }
 
         public virtual Company Company { get; set; }
-        
+
         public virtual Vendor Vendor { get; set; }
     }
 }

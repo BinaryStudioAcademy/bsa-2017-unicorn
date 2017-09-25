@@ -17,7 +17,7 @@ namespace Unicorn.DataAccess.Entities
         public DateTime FoundationDate { get; set; }
 
         public string Director { get; set; }
-        
+
         public int Staff { get; set; }
 
         public string DirectorContact { get; set; }
@@ -25,7 +25,7 @@ namespace Unicorn.DataAccess.Entities
         public virtual Account Account { get; set; }
 
         public virtual Calendar Calendar { get; set; }
-       
+
         public virtual ICollection<Vendor> Vendors { get; set; }
 
         public virtual ICollection<Work> Works { get; set; }

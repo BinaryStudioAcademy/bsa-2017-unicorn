@@ -12,7 +12,7 @@ namespace Unicorn.DataAccess.Entities
         public Account Sender { get; set; }
 
         public long ToAccountId { get; set; }
-        public string To {get; set; }
+        public string To { get; set; }
 
         public DateTimeOffset Date { get; set; }
 
