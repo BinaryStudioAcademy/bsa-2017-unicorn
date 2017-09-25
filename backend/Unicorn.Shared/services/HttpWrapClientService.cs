@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Unicorn.Shared.services.interception;
@@ -42,16 +40,10 @@ namespace Unicorn.Shared.services
             _interceptors = new List<IHttpInterceptor>();
         }
 
-        public void Dispose()
-        {
-            _httpClient.Dispose();
-        }
+        public void Dispose() => _httpClient.Dispose();
 
         public async Task<IHttpWrapResponse> GetAsync(string path, Action<HttpStatusCode, string> errorHandler = null,
-            Dictionary<string, string> customHeaders = null, TimeSpan? requestTimeout = null)
-        {
-            return await RequestAsync(HttpMethod.Get, path, null, errorHandler, customHeaders, requestTimeout);
-        }
+            Dictionary<string, string> customHeaders = null, TimeSpan? requestTimeout = null) => await RequestAsync(HttpMethod.Get, path, null, errorHandler, customHeaders, requestTimeout);
 
 
         public async Task<IHttpWrapResponse> GetAsync(string path, object payload,
@@ -76,10 +68,8 @@ namespace Unicorn.Shared.services
         }
 
         public IHttpWrapResponse Get(string path, Action<HttpStatusCode, string> errorHandler = null,
-            Dictionary<string, string> customHeaders = null, TimeSpan? requestTimeout = null)
-        {
-            return Request(HttpMethod.Get, path, null, errorHandler, customHeaders, requestTimeout);
-        }
+            Dictionary<string, string> customHeaders = null, TimeSpan? requestTimeout = null) => Request(HttpMethod.Get, path, null, errorHandler, customHeaders, requestTimeout);
+
         public IHttpWrapResponse Get(string path, object payload, Action<HttpStatusCode, string> errorHandler = null, Dictionary<string, string> customHeaders = null, TimeSpan? requestTimeout = null)
         {
             path = $"{path}?{_queryStringBuilder.BuildFrom(payload)}";
@@ -93,10 +83,7 @@ namespace Unicorn.Shared.services
             return await RequestAsync(HttpMethod.Put, path, data, errorHandler, customHeaders, requestTimeout);
         }
 
-        public IHttpWrapResponse Put<T>(string path, T data, Action<HttpStatusCode, string> errorHandler = null, Dictionary<string, string> customHeaders = null, TimeSpan? requestTimeout = null)
-        {
-            return Request(HttpMethod.Put, path, data, errorHandler, customHeaders, requestTimeout);
-        }
+        public IHttpWrapResponse Put<T>(string path, T data, Action<HttpStatusCode, string> errorHandler = null, Dictionary<string, string> customHeaders = null, TimeSpan? requestTimeout = null) => Request(HttpMethod.Put, path, data, errorHandler, customHeaders, requestTimeout);
 
         public async Task<IHttpWrapResponse> PostAsync<T>(string path, T data,
             Action<HttpStatusCode, string> errorHandler = null, Dictionary<string, string> customHeaders = null, TimeSpan? requestTimeout = null)
@@ -104,22 +91,12 @@ namespace Unicorn.Shared.services
             return await RequestAsync(HttpMethod.Post, path, data, errorHandler, customHeaders, requestTimeout);
         }
 
-        public IHttpWrapResponse Post<T>(string path, T data, Action<HttpStatusCode, string> errorHandler = null, Dictionary<string, string> customHeaders = null, TimeSpan? requestTimeout = null)
-        {
-            return Request(HttpMethod.Post, path, data, errorHandler, customHeaders, requestTimeout);
-        }
+        public IHttpWrapResponse Post<T>(string path, T data, Action<HttpStatusCode, string> errorHandler = null, Dictionary<string, string> customHeaders = null, TimeSpan? requestTimeout = null) => Request(HttpMethod.Post, path, data, errorHandler, customHeaders, requestTimeout);
 
         public async Task<IHttpWrapResponse> DeleteAsync(string path, Action<HttpStatusCode, string> errorHandler = null,
-            Dictionary<string, string> customHeaders = null, TimeSpan? requestTimeout = null)
-        {
-            return await RequestAsync(HttpMethod.Delete, path, null, errorHandler, customHeaders, requestTimeout);
-        }
+            Dictionary<string, string> customHeaders = null, TimeSpan? requestTimeout = null) => await RequestAsync(HttpMethod.Delete, path, null, errorHandler, customHeaders, requestTimeout);
 
-        public IHttpWrapResponse Delete(string path, Action<HttpStatusCode, string> errorHandler = null, Dictionary<string, string> customHeaders = null, TimeSpan? requestTimeout = null)
-        {
-            return Request(HttpMethod.Delete, path, null, errorHandler, customHeaders, requestTimeout);
-
-        }
+        public IHttpWrapResponse Delete(string path, Action<HttpStatusCode, string> errorHandler = null, Dictionary<string, string> customHeaders = null, TimeSpan? requestTimeout = null) => Request(HttpMethod.Delete, path, null, errorHandler, customHeaders, requestTimeout);
 
         public async Task<IHttpWrapResponse> PatchAsync<T>(string path, T data,
             Action<HttpStatusCode, string> errorHandler = null, Dictionary<string, string> customHeaders = null, TimeSpan? requestTimeout = null)
@@ -127,15 +104,9 @@ namespace Unicorn.Shared.services
             return await RequestAsync(new HttpMethod("PATCH"), path, data, errorHandler, customHeaders, requestTimeout);
         }
 
-        public IHttpWrapResponse Patch<T>(string path, T data, Action<HttpStatusCode, string> errorHandler = null, Dictionary<string, string> customHeaders = null, TimeSpan? requestTimeout = null)
-        {
-            return Request(new HttpMethod("PATCH"), path, data, errorHandler, customHeaders, requestTimeout);
-        }
+        public IHttpWrapResponse Patch<T>(string path, T data, Action<HttpStatusCode, string> errorHandler = null, Dictionary<string, string> customHeaders = null, TimeSpan? requestTimeout = null) => Request(new HttpMethod("PATCH"), path, data, errorHandler, customHeaders, requestTimeout);
 
-        public void AddInterceptor(IHttpInterceptor interceptor)
-        {
-            _interceptors.Add(interceptor);
-        }
+        public void AddInterceptor(IHttpInterceptor interceptor) => _interceptors.Add(interceptor);
 
         private IHttpWrapResponse Request(HttpMethod method, string path, object body,
             Action<HttpStatusCode, string> errorHandler = null, Dictionary<string, string> customHeaders = null, TimeSpan? requestTimeout = null)
@@ -268,7 +239,6 @@ namespace Unicorn.Shared.services
         private HttpRequestMessage PrepareRequest(HttpMethod method, object body, string path,
             Dictionary<string, string> customHeaders = null)
         {
-            //var url = $"{_configuration.BasePath}{path}";
             string url;
             if (path.StartsWith("http://") || path.StartsWith("https://"))
             {
