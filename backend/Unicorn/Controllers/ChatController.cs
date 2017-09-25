@@ -15,7 +15,7 @@ using Unicorn.Shared.DTOs.Chat;
 namespace Unicorn.Controllers
 {
     [EnableCors("*", "*", "*")]
-    [RoutePrefix("chat")]    
+    [RoutePrefix("chat")]
     public class ChatController : ApiController
     {
         private readonly IChatService _chatService;
@@ -135,6 +135,7 @@ namespace Unicorn.Controllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
         }
+
         [HttpDelete]
         [Route("dialog/hide/{dialogId}/{ownerId}")]
         [TokenAuthenticate]
@@ -142,7 +143,7 @@ namespace Unicorn.Controllers
         {
             try
             {
-                await _chatService.RemoveDialog(dialogId,ownerId);
+                await _chatService.RemoveDialog(dialogId, ownerId);
                 return Request.CreateResponse(HttpStatusCode.OK);
             }
             catch

@@ -240,7 +240,6 @@
     <Compile Include="Controllers\ReviewController.cs" />
     <Compile Include="Controllers\SwitchController.cs" />
     <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Controllers\VendorsController.cs" />
     <Compile Include="Controllers\LocationController.cs" />
     <Compile Include="Controllers\WorkController.cs" />
@@ -268,7 +267,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Search\" />
+    <Folder Include="Views\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

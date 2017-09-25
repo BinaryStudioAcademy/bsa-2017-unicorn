@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -15,7 +13,7 @@ using Unicorn.Shared.DTOs.Subcategory;
 namespace Unicorn.Controllers
 {
     [RoutePrefix("categories")]
-    [EnableCors("*", "*", "*")]    
+    [EnableCors("*", "*", "*")]
     public class CategoriesController : ApiController
     {
         public CategoriesController(ICategoryService categoryService, ISubcategoryService subcategoryService)
@@ -49,14 +47,12 @@ namespace Unicorn.Controllers
         {
             var result = await _categoryService.GetByIdAsync(id);
 
-            if (result != null)
-            {
-                return Request.CreateResponse(HttpStatusCode.OK, result);
-            }
-            else
+            if (result == null)
             {
                 return Request.CreateResponse(HttpStatusCode.NotFound);
             }
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         [HttpPut]
@@ -66,14 +62,12 @@ namespace Unicorn.Controllers
         {
             var result = await _categoryService.UpdateAsync(dto);
 
-            if (result != null)
-            {
-                return Request.CreateResponse(HttpStatusCode.OK, result);
-            }
-            else
+            if (result == null)
             {
                 return Request.CreateResponse(HttpStatusCode.NotFound);
             }
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         [HttpDelete]
@@ -92,14 +86,12 @@ namespace Unicorn.Controllers
         {
             var result = await _subcategoryService.GetByCategoryId(id);
 
-            if (result != null)
-            {
-                return Request.CreateResponse(HttpStatusCode.OK, result);
-            }
-            else
+            if (result == null)
             {
                 return Request.CreateResponse(HttpStatusCode.NotFound);
             }
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         [HttpPost]
@@ -118,14 +110,12 @@ namespace Unicorn.Controllers
         {
             var result = await _subcategoryService.GetByIdAsync(id);
 
-            if (result != null)
-            {
-                return Request.CreateResponse(HttpStatusCode.OK, result);
-            }
-            else
+            if (result == null)
             {
                 return Request.CreateResponse(HttpStatusCode.NotFound);
             }
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         [HttpPut]
@@ -135,14 +125,12 @@ namespace Unicorn.Controllers
         {
             var result = await _subcategoryService.UpdateAsync(dto);
 
-            if (result != null)
-            {
-                return Request.CreateResponse(HttpStatusCode.OK, result);
-            }
-            else
+            if (result == null)
             {
                 return Request.CreateResponse(HttpStatusCode.NotFound);
             }
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         [HttpDelete]
@@ -157,10 +145,7 @@ namespace Unicorn.Controllers
 
         [HttpGet]
         [Route("search")]
-        public async Task<List<CategoryDTO>> SearchByName(string template)
-        {
-            return await _categoryService.SearchByNameAsync(template);
-        }
+        public async Task<List<CategoryDTO>> SearchByName(string template) => await _categoryService.SearchByNameAsync(template);
 
         private readonly ICategoryService _categoryService;
         private readonly ISubcategoryService _subcategoryService;

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -25,12 +23,7 @@ namespace Unicorn.Controllers
         [HttpPost]
         [Route("offer")]
         [TokenAuthenticate]
-        public async Task SendOffersAsync(IEnumerable<ShortOfferDTO> offers)
-        {
-            
-                await _offerService.CreateOffersAsync(offers);
-            
-        }
+        public async Task SendOffersAsync(IEnumerable<ShortOfferDTO> offers) => await _offerService.CreateOffersAsync(offers);
 
         [HttpGet]
         [Route("offer/vendor/{id}")]
@@ -75,6 +68,7 @@ namespace Unicorn.Controllers
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
+
             return Request.CreateResponse(HttpStatusCode.OK);
         }
 
@@ -91,6 +85,7 @@ namespace Unicorn.Controllers
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
+
             return Request.CreateResponse(HttpStatusCode.OK);
         }
     }
