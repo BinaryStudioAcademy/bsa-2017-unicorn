@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Unicorn.Shared.DTOs.Offer
+﻿namespace Unicorn.Shared.DTOs.Offer
 {
     public class ShortOfferDTO
     {

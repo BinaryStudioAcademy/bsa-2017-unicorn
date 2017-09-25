@@ -11,7 +11,7 @@ namespace Unicorn.Shared.DTOs.Book
         public DateTimeOffset EndDate { get; set; }
         public string Description { get; set; }
         public string Profile { get; set; }
-        public long ProfileId { get; set; }       
+        public long ProfileId { get; set; }
         public long WorkId { get; set; }
     }
 }

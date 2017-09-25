@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Unicorn.Shared.DTOs.Admin
+﻿namespace Unicorn.Shared.DTOs.Admin
 {
     public class AccountDTO
     {

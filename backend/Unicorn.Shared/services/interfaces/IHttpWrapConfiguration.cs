@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Net.Http;
 
 namespace Unicorn.Shared.services.interfaces
 {
@@ -11,7 +6,6 @@ namespace Unicorn.Shared.services.interfaces
     {
         string BasePath { get; }
         ISerializer Serializer { get; }
-        //Credentials Credentials { get; set; }
         HttpClient GetHttpClient();
     }
 }

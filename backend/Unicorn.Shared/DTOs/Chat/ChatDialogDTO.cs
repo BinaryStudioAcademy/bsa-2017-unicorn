@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 namespace Unicorn.Shared.DTOs.Chat
-{  
+{
     public class ChatDialogDTO
     {
         public long Id { get; set; }

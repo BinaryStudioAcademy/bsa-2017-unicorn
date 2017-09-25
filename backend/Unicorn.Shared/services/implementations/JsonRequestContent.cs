@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Text;
-using System.Threading.Tasks;
 using Unicorn.Shared.services.interfaces;
 
 namespace Unicorn.Shared.services
@@ -21,13 +19,8 @@ namespace Unicorn.Shared.services
                 throw new ArgumentNullException("value");
             }
 
-            if (serializerWrapper == null)
-            {
-                throw new ArgumentNullException("serializerWrapper");
-            }
-
             _value = value;
-            _serializerWrapper = serializerWrapper;
+            _serializerWrapper = serializerWrapper ?? throw new ArgumentNullException("serializerWrapper");
         }
 
 

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Unicorn.Shared.DTOs.Contact;
-using Unicorn.Shared.DTOs.Vendor;
-
-namespace Unicorn.Shared.DTOs.Company
+﻿namespace Unicorn.Shared.DTOs.Company
 {
     public class ShortCompanyDTO
     {

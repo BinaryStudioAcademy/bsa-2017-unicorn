@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Unicorn.Shared.DTOs.CompanyPage
+﻿namespace Unicorn.Shared.DTOs.CompanyPage
 {
     public class CompanyWork
     {

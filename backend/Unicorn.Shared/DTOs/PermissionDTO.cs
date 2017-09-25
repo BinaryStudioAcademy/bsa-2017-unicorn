@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Unicorn.Shared.DTOs
+﻿namespace Unicorn.Shared.DTOs
 {
     public class PermissionDTO
     {
