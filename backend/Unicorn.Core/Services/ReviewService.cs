@@ -2,14 +2,12 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 using Unicorn.Core.Interfaces;
 using Unicorn.DataAccess.Entities;
 using Unicorn.DataAccess.Entities.Enum;
 using Unicorn.DataAccess.Interfaces;
-using Unicorn.Shared.DTOs;
 using Unicorn.Shared.DTOs.Notification;
 using Unicorn.Shared.DTOs.Review;
 
@@ -43,7 +41,6 @@ namespace Unicorn.Core.Services
                 .OrderByDescending(r => r.Date)
                 .Select(r => ReviewToDTO(r))
                 .ToList();
-
         }
 
         public async Task<IEnumerable<ReviewDTO>> GetBySenderIdAsync(long id)
@@ -52,6 +49,7 @@ namespace Unicorn.Core.Services
                 .Include(r => r.Sender)
                 .Where(r => r.Sender.Id == id)
                 .ToListAsync();
+
             return reviews
                 .Select(r => ReviewToDTO(r)).ToList();
         }
@@ -71,10 +69,7 @@ namespace Unicorn.Core.Services
                 .Include(r => r.Sender)
                 .SingleOrDefault(r => r.BookId == id);
 
-            if (review != null)
-                return ReviewToDTO(review);
-            else
-                return null;
+            return review == null ? null : ReviewToDTO(review);
         }
 
         private ReviewDTO ReviewToDTO(Review review)
@@ -85,8 +80,8 @@ namespace Unicorn.Core.Services
                 .Where(b => b.Id == review.BookId)
                 .Select(b => b.Work.Name)
                 .FirstOrDefault();
-                
-            var reviewDto = new ReviewDTO()
+
+            var reviewDto = new ReviewDTO
             {
                 Id = review.Id,
                 BookId = review.BookId,
@@ -121,6 +116,7 @@ namespace Unicorn.Core.Services
                     var adminPerson = _unitOfWork.PersonRepository.Query
                         .Include(p => p.Account)
                         .FirstOrDefault(x => x.Account.Id == review.Sender.Id);
+
                     if (adminPerson == null)
                     {
                         var adminCompany = _unitOfWork.CompanyRepository.Query
@@ -153,13 +149,14 @@ namespace Unicorn.Core.Services
                 .Include(b => b.Company.Account)
                 .SingleAsync(b => b.Id == reviewDto.BookId);
 
-            if(!string.IsNullOrEmpty(reviewDto.Text.Trim()))
+            if (!string.IsNullOrEmpty(reviewDto.Text.Trim()))
             {
                 var review = new Review();
                 review.BookId = reviewDto.BookId;
                 review.Description = reviewDto.Text;
                 review.Grade = reviewDto.Grade;
                 review.WorkName = book.Work.Name;
+
                 if (book.IsCompanyTask)
                 {
                     review.Sender = book.Company.Account;
@@ -168,6 +165,7 @@ namespace Unicorn.Core.Services
                 {
                     review.Sender = book.Customer.Person.Account;
                 }
+
                 if (reviewDto.PerformerType == "vendor")
                 {
                     review.To = book.Vendor.Person.Name;
@@ -178,17 +176,19 @@ namespace Unicorn.Core.Services
                     review.To = book.Company.Name;
                     review.ToAccountId = book.Company.Account.Id;
                 }
+
                 review.Date = DateTime.Now;
 
                 _unitOfWork.ReviewRepository.Create(review);
             }
-            
+
             book.Status = BookStatus.Confirmed;
             _unitOfWork.BookRepository.Update(book);
 
             var rating = new Rating();
             rating.Book = book;
             rating.Grade = reviewDto.Grade;
+
             if (book.IsCompanyTask)
             {
                 rating.Sender = book.Company.Account;
@@ -197,6 +197,7 @@ namespace Unicorn.Core.Services
             {
                 rating.Sender = book.Customer.Person.Account;
             }
+
             rating.Reciever = (reviewDto.PerformerType == "vendor" ? book.Vendor.Person.Account : book.Company.Account);
 
             _unitOfWork.RatingRepository.Create(rating);
@@ -204,6 +205,7 @@ namespace Unicorn.Core.Services
             await _unitOfWork.SaveAsync();
 
             string senderName;
+
             if (book.IsCompanyTask)
             {
                 senderName = book.Company.Name;
@@ -212,6 +214,7 @@ namespace Unicorn.Core.Services
             {
                 senderName = $"{book.Customer.Person.Name} {book.Customer.Person.Surname}";
             }
+
             var notification = new NotificationDTO()
             {
                 Title = $"New review",
@@ -223,7 +226,6 @@ namespace Unicorn.Core.Services
 
             var receiverId = rating.Reciever.Id;
             await _notificationService.CreateAsync(receiverId, notification);
-
         }
 
         private IUnitOfWork _unitOfWork;

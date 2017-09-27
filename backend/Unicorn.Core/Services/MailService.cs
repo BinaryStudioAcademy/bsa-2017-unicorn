@@ -1,5 +1,4 @@
-﻿using System;
-using System.Net;
+﻿using System.Net;
 using System.Net.Mail;
 using Unicorn.Core.Interfaces;
 using Unicorn.Shared.DTOs.Email;

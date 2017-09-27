@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 using Unicorn.Core.Interfaces;
@@ -15,10 +13,7 @@ namespace Unicorn.Core.Services
 {
     public class ContactService : IContactService
     {
-        public ContactService(IUnitOfWork unitOfWork)
-        {
-            _unitOfWork = unitOfWork;
-        }
+        public ContactService(IUnitOfWork unitOfWork) => _unitOfWork = unitOfWork;
 
         public async Task<IEnumerable<ContactProviderDTO>> GetAllProvidersAsync()
         {

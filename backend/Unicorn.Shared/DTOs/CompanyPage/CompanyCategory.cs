@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Unicorn.Shared.DTOs.Subcategory;
 
 namespace Unicorn.Shared.DTOs.CompanyPage
 {

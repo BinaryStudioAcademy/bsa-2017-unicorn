@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using Unicorn.Core.Interfaces;
@@ -29,11 +26,12 @@ namespace Unicorn.Controllers
             {
                 return BadRequest();
             }
+
             try
             {
                 await _avatarService.UploadAvatar(imageUrl, id);
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return InternalServerError();
             }
@@ -49,6 +47,7 @@ namespace Unicorn.Controllers
             {
                 return BadRequest();
             }
+
             try
             {
                 await _avatarService.UploadCroppedAvatar(imageUrl, id);
@@ -69,6 +68,7 @@ namespace Unicorn.Controllers
             {
                 return BadRequest();
             }
+
             try
             {
                 await _avatarService.UploadBackground(imageUrl, id);

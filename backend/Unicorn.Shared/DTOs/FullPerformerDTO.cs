@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Unicorn.Shared.DTOs
+﻿namespace Unicorn.Shared.DTOs
 {
     public class FullPerformerDTO
     {
@@ -18,7 +12,7 @@ namespace Unicorn.Shared.DTOs
 
         public string Avatar { get; set; }
 
-        public string PerformerType { get; set; } //vendor or company
+        public string PerformerType { get; set; }
 
         public string Link { get; set; }
 

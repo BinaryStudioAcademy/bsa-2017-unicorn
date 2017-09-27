@@ -21,6 +21,5 @@ namespace Unicorn.DataAccess.Entities
         public string Phone { get; set; }
 
         public virtual Account Account { get; set; }
-        
     }
 }

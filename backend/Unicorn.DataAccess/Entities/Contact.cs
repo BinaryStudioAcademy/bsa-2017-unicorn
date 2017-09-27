@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Unicorn.DataAccess.Interfaces;
+﻿using Unicorn.DataAccess.Interfaces;
 
 namespace Unicorn.DataAccess.Entities
 {
@@ -16,7 +11,5 @@ namespace Unicorn.DataAccess.Entities
 
         public virtual ContactProvider Provider { get; set; }
         public virtual Account Account { get; set; }
-
-        
     }
 }

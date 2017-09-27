@@ -24,13 +24,13 @@ namespace Unicorn.Core.Services
             _notificationService = notificationService;
         }
 
-
         private async Task<string> GetParticipant(Role role, long ownerId)
         {
             if (role.Type == RoleType.Company)
             {
                 var participant = await _unitOfWork.CompanyRepository
                     .Query.SingleAsync(x => x.Account.Id == ownerId);
+
                 return participant.Name + "(company)";
             }
             else if (role.Type == RoleType.Vendor || role.Type == RoleType.Customer)
@@ -50,11 +50,9 @@ namespace Unicorn.Core.Services
                         .Include(p => p.Account).SingleAsync(p => p.Account.Id == ownerId);
 
                     return participantCompany.Name + "(company)";
-
                 }
 
                 return participantPerson.Name + " " + participantPerson.Surname + "(person)";
-
             }
         }
 
@@ -83,8 +81,8 @@ namespace Unicorn.Core.Services
             dialog.Participant1_Hided = false;
             dialog.Participant2_Hided = false;
             await _unitOfWork.SaveAsync();
-      
-            var notification = new NotificationDTO()
+
+            var notification = new NotificationDTO
             {
                 Title = $"New message from {participant}",
                 Description = $"{participant} sent you a message. Check your messages to read it.",
@@ -94,6 +92,7 @@ namespace Unicorn.Core.Services
             };
 
             long receiverId;
+
             if (dialog.Participant1.Id != owner.Id)
             {
                 receiverId = dialog.Participant1.Id;
@@ -102,6 +101,7 @@ namespace Unicorn.Core.Services
             {
                 receiverId = dialog.Participant2.Id;
             }
+
             await _notificationService.CreateAsync(receiverId, notification, msg);
         }
 
@@ -112,6 +112,7 @@ namespace Unicorn.Core.Services
             _unitOfWork.ChatDialogRepository.Update(dialog);
 
             long receiverId;
+
             if (dialog.Participant1.Id != ownerId)
             {
                 receiverId = dialog.Participant1.Id;
@@ -120,6 +121,7 @@ namespace Unicorn.Core.Services
             {
                 receiverId = dialog.Participant2.Id;
             }
+
             await _notificationService.CreateAsync(receiverId, dialogId);
             await _unitOfWork.SaveAsync();
         }
@@ -263,6 +265,7 @@ namespace Unicorn.Core.Services
             var avatars = dialogs.SelectMany(x => new List<Account> { x.Participant1, x.Participant2 })
                 .Where(x => x.Id != accountId)
                 .Select(x => x.CroppedAvatar ?? x.Avatar).ToList();
+
             int i = 0;
 
             var result = dialogs.Select(x => new ChatDialogDTO()
@@ -363,15 +366,21 @@ namespace Unicorn.Core.Services
         public async Task RemoveDialog(long dialogId, long userId)
         {
             var dialog = await _unitOfWork.ChatDialogRepository.GetByIdAsync(dialogId);
+
             if (dialog.Participant1.Id == userId)
+            {
                 dialog.Participant1_Hided = !dialog.Participant1_Hided;
-            else dialog.Participant2_Hided = !dialog.Participant2_Hided;
+            }
+            else
+            {
+                dialog.Participant2_Hided = !dialog.Participant2_Hided;
+            }
+
             await _unitOfWork.SaveAsync();
         }
 
         public async Task RemoveMessage(long messageId)
         {
-
             var mes = await _unitOfWork.ChatMessageRepository.GetByIdAsync(messageId);
             var notification = new NotificationDTO()
             {
@@ -381,8 +390,11 @@ namespace Unicorn.Core.Services
                 Time = DateTime.Now,
                 Type = NotificationType.ChatNotification
             };
+
             _unitOfWork.ChatMessageRepository.Delete(messageId);
+
             long receiverId;
+
             if (mes.Dialog.Participant1.Id != mes.Owner.Id)
             {
                 receiverId = mes.Dialog.Participant1.Id;
@@ -391,14 +403,12 @@ namespace Unicorn.Core.Services
             {
                 receiverId = mes.Dialog.Participant2.Id;
             };
+
             await _notificationService.CreateDelAsync(receiverId, mes.Dialog.Id);
             await _unitOfWork.SaveAsync();
         }
 
-        public Task Update(ChatMessageDTO msg)
-        {
-            throw new NotImplementedException();
-        }
+        public Task Update(ChatMessageDTO msg) => throw new NotImplementedException();
 
         private string GetName(Account acc)
         {
@@ -425,7 +435,9 @@ namespace Unicorn.Core.Services
         private async Task<long> GetProfileIdAsync(Account acc)
         {
             if (acc.Role.Type == RoleType.Admin)
+            {
                 return 0;
+            }
 
             if (acc.Role.Type == RoleType.Vendor)
             {
@@ -433,6 +445,7 @@ namespace Unicorn.Core.Services
                     .Include(x => x.Person)
                     .Include(x => x.Person.Account)
                     .FirstAsync(x => x.Person.Account.Id == acc.Id);
+
                 return prof.Id;
             }
             else if (acc.Role.Type == RoleType.Customer)
@@ -441,6 +454,7 @@ namespace Unicorn.Core.Services
                     .Include(x => x.Person)
                     .Include(x => x.Person.Account)
                     .FirstAsync(x => x.Person.Account.Id == acc.Id);
+
                 return prof.Id;
             }
             else
@@ -448,6 +462,7 @@ namespace Unicorn.Core.Services
                 var prof = await _unitOfWork.CompanyRepository.Query
                    .Include(x => x.Account)
                    .FirstAsync(x => x.Account.Id == acc.Id);
+
                 return prof.Id;
             }
         }

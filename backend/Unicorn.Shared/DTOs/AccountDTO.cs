@@ -18,7 +18,7 @@ namespace Unicorn.Shared.DTOs
         public string CroppedAvatar { get; set; }
 
         public LocationDTO Location { get; set; }
-       
+
         public virtual RoleDTO Role { get; set; }
 
         public virtual ICollection<SocialAccountDTO> SocialAccounts { get; set; }

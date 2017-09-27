@@ -1,20 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Cors;
 
 using Unicorn.Core.Interfaces;
-using Unicorn.DataAccess.Entities;
 using Unicorn.Filters;
 using Unicorn.Shared.DTOs;
 using Unicorn.Shared.DTOs.Book;
 using Unicorn.Shared.DTOs.Chart;
 using Unicorn.Shared.DTOs.Contact;
-using Unicorn.Shared.DTOs.Subcategory;
 using Unicorn.Shared.DTOs.Vendor;
 
 namespace Unicorn.Controllers
@@ -24,9 +19,9 @@ namespace Unicorn.Controllers
     public class VendorsController : ApiController
     {
         public VendorsController(
-            IVendorService vendorService, 
-            IReviewService reviewService, 
-            IPortfolioService portfolioService, 
+            IVendorService vendorService,
+            IReviewService reviewService,
+            IPortfolioService portfolioService,
             IBookService bookService,
             IHistoryService historyService,
             IWorkService workService,
@@ -63,11 +58,12 @@ namespace Unicorn.Controllers
             var result = await _vendorService.GetByIdAsync(id);
 
             if (result == null)
+            {
                 return Request.CreateResponse(HttpStatusCode.NotFound);
-            else
-                return Request.CreateResponse(HttpStatusCode.OK, result);
-        }
+            }
 
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
 
         [HttpPut]
         [Route("{id}")]
@@ -75,13 +71,14 @@ namespace Unicorn.Controllers
         public async Task<HttpResponseMessage> UpdateVendor(long id, [FromBody]ShortVendorDTO vendor)
         {
             await _vendorService.UpdateAsync(vendor);
-
             var result = await _vendorService.GetByIdAsync(id);
 
             if (result == null)
+            {
                 return Request.CreateResponse(HttpStatusCode.NotFound);
-            else
-                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         [HttpGet]
@@ -91,19 +88,18 @@ namespace Unicorn.Controllers
             var result = await _vendorService.GetVendorCategoriesAsync(id);
 
             if (result == null)
+            {
                 return Request.CreateResponse(HttpStatusCode.NotFound);
-            else
-                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
 
         [HttpGet]
         [Route("{id}/charts")]
         [TokenAuthenticate]
-        public async Task<AnalyticsDTO> GetVendorCharts(long id)
-        {
-            return await _analyticsService.GetVendorAnalytics(id);
-        }
+        public async Task<AnalyticsDTO> GetVendorCharts(long id) => await _analyticsService.GetVendorAnalytics(id);
 
         [HttpGet]
         [Route("{id}/works")]
@@ -112,9 +108,11 @@ namespace Unicorn.Controllers
             var result = await _vendorService.GetVendorWorksAsync(id);
 
             if (result == null)
+            {
                 return Request.CreateResponse(HttpStatusCode.NotFound);
-            else
-                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         [HttpPost]
@@ -126,9 +124,11 @@ namespace Unicorn.Controllers
             var result = await _workService.CreateAsync(workDto);
 
             if (result == null)
+            {
                 return Request.CreateResponse(HttpStatusCode.NotFound);
-            else
-                return Request.CreateResponse(HttpStatusCode.Created, result);
+            }
+
+            return Request.CreateResponse(HttpStatusCode.Created, result);
         }
 
         [HttpPut]
@@ -147,13 +147,14 @@ namespace Unicorn.Controllers
         public async Task<HttpResponseMessage> UpdateVendorWork(long id, long workId)
         {
             await _workService.RemoveByIdAsync(workId);
-
             var result = await _vendorService.GetVendorWorksAsync(id);
 
             if (result == null)
+            {
                 return Request.CreateResponse(HttpStatusCode.NotFound);
-            else
-                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         [HttpGet]
@@ -163,9 +164,11 @@ namespace Unicorn.Controllers
             var result = await _historyService.GetVendorHistoryAsync(id);
 
             if (result == null)
+            {
                 return Request.CreateResponse(HttpStatusCode.NotFound);
-            else
-                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         [HttpGet]
@@ -175,9 +178,11 @@ namespace Unicorn.Controllers
             var result = await _bookService.GetOrdersAsync("vendor", id);
 
             if (result == null)
+            {
                 return Request.CreateResponse(HttpStatusCode.NotFound);
-            else
-                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         [HttpPut]
@@ -188,13 +193,14 @@ namespace Unicorn.Controllers
             var book = await _bookService.GetByIdAsync(orderId);
             book.Status = order.Status;
             await _bookService.Update(book);
-
             var result = await _bookService.GetOrdersAsync("vendor", id);
 
             if (result == null)
+            {
                 return Request.CreateResponse(HttpStatusCode.NotFound);
-            else
-                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         [HttpGet]
@@ -204,9 +210,11 @@ namespace Unicorn.Controllers
             var result = await _vendorService.GetVendorContactsAsync(id);
 
             if (result == null)
+            {
                 return Request.CreateResponse(HttpStatusCode.NotFound);
-            else
-                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         [HttpPost]
@@ -218,9 +226,11 @@ namespace Unicorn.Controllers
             var result = await _contactService.CreateAsync(accountId, contact);
 
             if (result == null)
+            {
                 return Request.CreateResponse(HttpStatusCode.NotFound);
-            else
-                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         [HttpPut]
@@ -230,13 +240,14 @@ namespace Unicorn.Controllers
         {
             var accountId = await _vendorService.GetVendorAccountIdAsync(id);
             await _contactService.UpdateAsync(accountId, contact);
-
             var result = await _contactService.GetByIdAsync(contactId);
 
             if (result == null)
+            {
                 return Request.CreateResponse(HttpStatusCode.NotFound);
-            else
-                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         [HttpDelete]
@@ -258,9 +269,11 @@ namespace Unicorn.Controllers
             var result = await _reviewService.GetByReceiverIdAsync(accountId);
 
             if (result == null)
+            {
                 return Request.CreateResponse(HttpStatusCode.NotFound);
-            else
-                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         [HttpGet]
@@ -269,8 +282,8 @@ namespace Unicorn.Controllers
         {
             var accountId = await _vendorService.GetVendorAccountIdAsync(id);
             var result = await _ratingService.GetAvarageByRecieverId(accountId);
-            return Request.CreateResponse(HttpStatusCode.OK, result);
 
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         [HttpGet]
@@ -280,11 +293,13 @@ namespace Unicorn.Controllers
             var result = await _portfolioService.GetItemsByVendorIdAsync(id);
 
             if (result == null)
+            {
                 return Request.CreateResponse(HttpStatusCode.NotFound);
-            else
-                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
-        
+
         [HttpPost]
         [Route("{id}/portfolio")]
         [TokenAuthenticate]

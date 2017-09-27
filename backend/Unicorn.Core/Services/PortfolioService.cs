@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
 
@@ -14,10 +12,7 @@ namespace Unicorn.Core.Services
 {
     public class PortfolioService : IPortfolioService
     {
-        public PortfolioService(IUnitOfWork unitOfWork)
-        {
-            _unitOfWork = unitOfWork;
-        }
+        public PortfolioService(IUnitOfWork unitOfWork) => _unitOfWork = unitOfWork;
 
         public async Task<PortfolioItemDTO> GetItemByIdAsync(long id)
         {
@@ -38,17 +33,14 @@ namespace Unicorn.Core.Services
             return items.Select(i => PortfolioItemToDTO(i)).ToList();
         }
 
-        private PortfolioItemDTO PortfolioItemToDTO(PortfolioItem item)
+        private PortfolioItemDTO PortfolioItemToDTO(PortfolioItem item) => new PortfolioItemDTO
         {
-            return new PortfolioItemDTO()
-            {
-                Id = item.Id,
-                HistoryEntryId = item.HistoryEntryId,
-                Image = item.Image,
-                Category = item.Subcategory.Category.Name,
-                WorkType = item.WorkType.Name
-            };
-        }
+            Id = item.Id,
+            HistoryEntryId = item.HistoryEntryId,
+            Image = item.Image,
+            Category = item.Subcategory.Category.Name,
+            WorkType = item.WorkType.Name
+        };
 
         public async Task CreateAsync(long vendorId, PortfolioItemDTO itemDto)
         {

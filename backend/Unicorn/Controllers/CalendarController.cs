@@ -1,5 +1,4 @@
-﻿using System;
-using System.Net;
+﻿using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -7,13 +6,12 @@ using System.Web.Http.Cors;
 using Unicorn.Core.Interfaces;
 using Unicorn.Filters;
 using Unicorn.Shared.DTOs;
-using Unicorn.Shared.DTOs.Chat;
 
 namespace Unicorn.Controllers
 {
     [EnableCors("*", "*", "*")]
     [TokenAuthenticate]
-    public class CalendarController:ApiController
+    public class CalendarController : ApiController
     {
         private readonly ICalendarService _calendarService;
 

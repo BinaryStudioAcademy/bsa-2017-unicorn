@@ -4,7 +4,7 @@ using Unicorn.DataAccess.Interfaces;
 
 namespace Unicorn.DataAccess.Entities
 {
-    public class Calendar:IEntity
+    public class Calendar : IEntity
     {
         public long Id { get; set; }
 

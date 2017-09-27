@@ -11,7 +11,6 @@ using Unicorn.Shared.DTOs.Subcategory;
 using Unicorn.Shared.DTOs.Register;
 using Unicorn.Shared.DTOs.Vendor;
 using Unicorn.Shared.DTOs.Contact;
-using Unicorn.Shared.DTOs.Book;
 using Unicorn.DataAccess.Entities.Enum;
 
 namespace Unicorn.Core.Services
@@ -20,10 +19,7 @@ namespace Unicorn.Core.Services
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public VendorService(IUnitOfWork unitOfWork)
-        {
-            _unitOfWork = unitOfWork;
-        }
+        public VendorService(IUnitOfWork unitOfWork) => _unitOfWork = unitOfWork;
 
         public async Task<IEnumerable<ShortVendorDTO>> GetAllAsync()
         {
@@ -45,6 +41,7 @@ namespace Unicorn.Core.Services
                 .Include(v => v.PortfolioItems)
                 .Include(v => v.Company)
                 .SingleAsync(x => x.Id == id);
+
             return VendorToDTO(vendor);
         }
 
@@ -57,7 +54,8 @@ namespace Unicorn.Core.Services
 
             return vendor.Person.Account.Contacts
                 .Where(c => !c.IsDeleted)
-                .Select(c => new ContactShortDTO() {
+                .Select(c => new ContactShortDTO
+                {
                     Id = c.Id,
                     Type = c.Provider.Type,
                     Provider = c.Provider.Name,
@@ -73,15 +71,16 @@ namespace Unicorn.Core.Services
                 .SingleAsync(x => x.Id == id);
 
             var works = vendor.Works.Where(w => !w.IsDeleted);
+
             return works.GroupBy(w => w.Subcategory.Category)
-                .Select(g => new CategoryDTO()
+                .Select(g => new CategoryDTO
                 {
                     Id = g.Key.Id,
                     Name = g.Key.Name,
                     Description = g.Key.Description,
                     Icon = g.Key.Icon,
                     Subcategories = g.Key.Subcategories
-                        .Select(s => new SubcategoryShortDTO()
+                        .Select(s => new SubcategoryShortDTO
                         {
                             Category = g.Key.Name,
                             CategoryId = g.Key.Id,
@@ -99,46 +98,44 @@ namespace Unicorn.Core.Services
                 .Include(v => v.Person)
                 .Include(v => v.Person.Account)
                 .SingleAsync(x => x.Id == id);
+
             return vendor.Person.Account.Id;
         }
 
-        private ShortVendorDTO VendorToDTO(Vendor vendor)
+        private ShortVendorDTO VendorToDTO(Vendor vendor) => new ShortVendorDTO
         {
-            return new ShortVendorDTO()
+            Avatar = vendor.Person.Account.Avatar,
+            CroppedAvatar = vendor.Person.Account.CroppedAvatar,
+            Background = vendor.Person.Account.Background,
+            Company = vendor.Company?.Name,
+            CompanyId = vendor.Company?.Id,
+            Experience = vendor.Experience,
+            ExWork = vendor.ExWork,
+            Name = vendor.Person.Name,
+            Surname = vendor.Person.Surname,
+            MiddleName = vendor.Person.MiddleName,
+            Id = vendor.Id,
+            AccountId = vendor.Person.Account.Id,
+            City = vendor.Person.Account.Location.City,
+            Location = new LocationDTO
             {
-                Avatar = vendor.Person.Account.Avatar,
-                CroppedAvatar = vendor.Person.Account.CroppedAvatar,
-                Background = vendor.Person.Account.Background,
-                Company = vendor.Company?.Name,
-                CompanyId = vendor.Company?.Id,
-                Experience = vendor.Experience,
-                ExWork = vendor.ExWork,
-                Name = vendor.Person.Name,
-                Surname = vendor.Person.Surname,
-                MiddleName = vendor.Person.MiddleName,
-                Id = vendor.Id,
-                AccountId = vendor.Person.Account.Id,
+                Id = vendor.Person.Account.Location.Id,
+                Adress = vendor.Person.Account.Location.Adress,
                 City = vendor.Person.Account.Location.City,
-                Location = new LocationDTO()
-                {
-                    Id = vendor.Person.Account.Location.Id,
-                    Adress = vendor.Person.Account.Location.Adress,
-                    City = vendor.Person.Account.Location.City,
-                    Latitude = vendor.Person.Account.Location.Latitude,
-                    Longitude = vendor.Person.Account.Location.Longitude,
-                    PostIndex = vendor.Person.Account.Location.PostIndex
-                },
-                Position = vendor.Position,
-                WorkLetter = vendor.WorkLetter,
-                Birthday = vendor.Person.Birthday
-            };
-        }
+                Latitude = vendor.Person.Account.Location.Latitude,
+                Longitude = vendor.Person.Account.Location.Longitude,
+                PostIndex = vendor.Person.Account.Location.PostIndex
+            },
+            Position = vendor.Position,
+            WorkLetter = vendor.WorkLetter,
+            Birthday = vendor.Person.Birthday
+        };
 
         public async Task CreateAsync(VendorRegisterDTO ShortVendorDTO)
         {
             var account = new Account();
-            var role = await _unitOfWork.RoleRepository.GetByIdAsync((long)RoleType.Vendor);            
-            var socialAccounts = new List<SocialAccount>();            
+            var role = await _unitOfWork.RoleRepository.GetByIdAsync((long)RoleType.Vendor);
+            var socialAccounts = new List<SocialAccount>();
             var socialAccount = new SocialAccount();
             var vendor = new Vendor();
             var person = new Person();
@@ -177,6 +174,7 @@ namespace Unicorn.Core.Services
             vendor.ExWork = ShortVendorDTO.Speciality;
 
             _unitOfWork.VendorRepository.Create(vendor);
+
             await _unitOfWork.SaveAsync();
         }
 
@@ -189,7 +187,7 @@ namespace Unicorn.Core.Services
                 .Include(v => v.Works)
                 .Include(v => v.Company)
                 .SingleAsync(x => x.Id == vendorDto.Id);
-            vendor.Person.Account.Location = new Location()
+            vendor.Person.Account.Location = new Location
             {
                 Adress = vendorDto.Location.Adress,
                 City = vendorDto.Location.City,
@@ -214,7 +212,8 @@ namespace Unicorn.Core.Services
             var vendor = await _unitOfWork.VendorRepository.Query
                 .Include(v => v.Works)
                 .SingleAsync(v => v.Id == id);
-            return vendor.Works.Where(w => !w.IsDeleted).Select(w => new WorkDTO()
+
+            return vendor.Works.Where(w => !w.IsDeleted).Select(w => new WorkDTO
             {
                 Id = w.Id,
                 Category = w.Subcategory.Category.Name,

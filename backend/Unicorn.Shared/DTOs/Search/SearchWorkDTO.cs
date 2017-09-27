@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Unicorn.Shared.DTOs.Subcategory;
-
-namespace Unicorn.Shared.DTOs.Search
+﻿namespace Unicorn.Shared.DTOs.Search
 {
     public class SearchWorkDTO
     {
@@ -19,7 +12,7 @@ namespace Unicorn.Shared.DTOs.Search
 
         public string Avatar { get; set; }
 
-        public string PerformerType { get; set; } //vendor or company
+        public string PerformerType { get; set; }
 
         public string PerformerName { get; set; }
 

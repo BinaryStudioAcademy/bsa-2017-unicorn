@@ -38,22 +38,6 @@ namespace Unicorn.Core.Services
             };
         }
 
-        //private DateTime? ParseTheDate(string date)
-        //{
-        //    if (date == null)
-        //    {
-        //        return null;
-        //    }
-        //    else
-        //    {
-        //        var partsOfTheTime = date.Split('-');
-        //        var year = int.Parse(partsOfTheTime[0]);
-        //        var month = int.Parse(partsOfTheTime[1]);
-        //        var day = int.Parse(partsOfTheTime[2].Split('T')[0]);
-        //        return new DateTime(year, month, day);
-        //    }
-        //}
-
         private bool IsVendorWorkingOnThisDate(long id, DateTimeOffset? date)
         {
             date = date != null ?
@@ -101,11 +85,13 @@ namespace Unicorn.Core.Services
             {
                 var bookDate = book.Date;
                 var bookEndDate = book.EndDate;
+
                 if (date >= bookDate && date <= bookEndDate)
                 {
                     return true;
                 }
             }
+
             return false;
         }
 
@@ -115,6 +101,7 @@ namespace Unicorn.Core.Services
             {
                 return true;
             }
+
             var calendarStartDate = calendar.StartDate.Date;
             var calendarEndDate = calendar.EndDate != null ?
                 calendar.EndDate.GetValueOrDefault().Date : calendar.EndDate;
@@ -127,6 +114,7 @@ namespace Unicorn.Core.Services
                 {
                     return true;
                 }
+
                 if (calendar.ExtraDayOffs.FirstOrDefault(x => x.Day.Date == date.GetValueOrDefault().Date) == null)
                 {
                     if (calendar.SeveralTaskPerDay)
@@ -159,6 +147,7 @@ namespace Unicorn.Core.Services
                     }
                 }
             }
+
             return false;
         }
 
@@ -167,7 +156,7 @@ namespace Unicorn.Core.Services
             string city, string name, string role, double? rating, string ratingCondition, bool withReviews, string categoriesString,
             string subcategoriesString, double? latitude, double? longitude, double? distance, string sort, DateTimeOffset? date, int timeZone
             )
-        {            
+        {
 
             var reviewsTask = _uow.ReviewRepository.GetAllAsync();
             var categories = !string.IsNullOrEmpty(categoriesString) ? categoriesString.Split(' ').Select(c => Int64.Parse(c)).ToList() : new List<long>();
@@ -176,11 +165,11 @@ namespace Unicorn.Core.Services
             IQueryable<Vendor> vendorsQuery = null;
             IQueryable<Company> companiesQuery = null;
 
-            var vendorsTask = Task.Run(() => 
+            var vendorsTask = Task.Run(() =>
             {
                 IUnitOfWork uow;
 
-                lock(_uowFactory)
+                lock (_uowFactory)
                 {
                     uow = _uowFactory.CreateUnitOfWork();
                 }
@@ -228,7 +217,7 @@ namespace Unicorn.Core.Services
                 return vendorsQuery != null ? vendorsSubcategoryQuery.Intersect(vendorsCategoryQuery).ToList() : new List<Vendor>();
             });
 
-            var companiesTask = Task.Run(() => 
+            var companiesTask = Task.Run(() =>
             {
                 IUnitOfWork uow;
 
@@ -236,7 +225,6 @@ namespace Unicorn.Core.Services
                 {
                     uow = _uowFactory.CreateUnitOfWork();
                 }
-
 
                 if (role == "company" || role == "all")
                 {
@@ -246,6 +234,7 @@ namespace Unicorn.Core.Services
                     .Include(c => c.Account)
                     .Include(c => c.Account.Location);
                 }
+
                 if (!string.IsNullOrEmpty(name))
                 {
                     companiesQuery = companiesQuery?
@@ -277,7 +266,7 @@ namespace Unicorn.Core.Services
 
                 return companiesQuery != null ? companiesSubcategoryQuery.Intersect(companiesCategoryQuery).ToList() : new List<Company>();
             });
-            
+
             var reviews = await reviewsTask;
 
             var vendorsList = await vendorsTask;
@@ -345,6 +334,7 @@ namespace Unicorn.Core.Services
 
             return performersQuery.ToList();
         }
+
         public async Task<List<FullPerformerDTO>> GetAllPerformersAsync()
         {
             var reviews = await _uow.ReviewRepository.GetAllAsync();
@@ -371,13 +361,10 @@ namespace Unicorn.Core.Services
             return ConcatPerformers(vendors, companies);
         }
 
-        private List<FullPerformerDTO> ConcatPerformers(List<FullPerformerDTO> p1, List<FullPerformerDTO> p2)
-        {
-            return p1.Concat(p2)
+        private List<FullPerformerDTO> ConcatPerformers(List<FullPerformerDTO> p1, List<FullPerformerDTO> p2) => p1.Concat(p2)
                 .OrderByDescending(p => p.Rating)
                 .Distinct()
                 .ToList();
-        }
 
         public async Task<List<PopularCategoryDTO>> GetPopularCategories()
         {
@@ -492,7 +479,7 @@ namespace Unicorn.Core.Services
                     Id = c.Company.Id,
                     Avatar = c.Company.Account.Avatar,
                     Name = c.Company.Name,
-                    Rating = CalculateRating(c.Company.Account.Id),//_ratingService.GetAvarageByRecieverId(c.Company.Account.Id).Result,
+                    Rating = CalculateRating(c.Company.Account.Id),
                     ReviewsCount = reviews.Count(r => r.ToAccountId == c.Company.Account.Id),
                     PerformerType = "company",
                     Link = "company/" + c.Company.Id,
@@ -511,64 +498,62 @@ namespace Unicorn.Core.Services
             return performers;
         }
 
-        private FullPerformerDTO CompanyToFullPerformer(Company c, IEnumerable<Review> reviews, double? longitude, double? latitude)
+        private FullPerformerDTO CompanyToFullPerformer(Company c, IEnumerable<Review> reviews, double? longitude, double? latitude) => new FullPerformerDTO
         {
-            return new FullPerformerDTO
+            Id = c.Id,
+            Avatar = c.Account.Avatar,
+            Name = c.Name,
+            Description = c.Description,
+            Rating = CalculateRating(c.Account.Id),
+            ReviewsCount = reviews.Count(r => r.ToAccountId == c.Account.Id),
+            PerformerType = "company",
+            Link = "company/" + c.Id,
+            Location = new LocationDTO
             {
-                Id = c.Id,
-                Avatar = c.Account.Avatar,
-                Name = c.Name,
-                Description = c.Description,
-                Rating = CalculateRating(c.Account.Id),
-                ReviewsCount = reviews.Count(r => r.ToAccountId == c.Account.Id),
-                PerformerType = "company",
-                Link = "company/" + c.Id,
-                Location = new LocationDTO
-                {
-                    Id = c.Account.Location.Id,
-                    City = c.Account.Location.City,
-                    Adress = c.Account.Location.Adress,
-                    Latitude = c.Account.Location.Latitude,
-                    Longitude = c.Account.Location.Longitude,
-                    PostIndex = c.Account.Location.PostIndex
-                },
-                Distance = CalculateDistance(c.Account.Location.Latitude, c.Account.Location.Longitude, latitude, longitude)
-            };
-        }
+                Id = c.Account.Location.Id,
+                City = c.Account.Location.City,
+                Adress = c.Account.Location.Adress,
+                Latitude = c.Account.Location.Latitude,
+                Longitude = c.Account.Location.Longitude,
+                PostIndex = c.Account.Location.PostIndex
+            },
+            Distance = CalculateDistance(c.Account.Location.Latitude, c.Account.Location.Longitude, latitude, longitude)
+        };
 
 
-        private FullPerformerDTO VendorToFullPerformer(Vendor v, IEnumerable<Review> reviews, double? longitude, double? latitude)
+        private FullPerformerDTO VendorToFullPerformer(Vendor v, IEnumerable<Review> reviews, double? longitude, double? latitude) => new FullPerformerDTO
         {
-            return new FullPerformerDTO
+            Id = v.Id,
+            Avatar = v.Person.Account.Avatar,
+            Name = v.Person.Name,
+            Description = v.Position,
+            Rating = CalculateRating(v.Person.Account.Id),
+            ReviewsCount = reviews.Count(r => r.ToAccountId == v.Person.Account.Id),
+            PerformerType = "vendor",
+            Link = "vendor/" + v.Id,
+            Location = new LocationDTO
             {
-                Id = v.Id,
-                Avatar = v.Person.Account.Avatar,
-                Name = v.Person.Name,
-                Description = v.Position,
-                Rating = CalculateRating(v.Person.Account.Id),
-                ReviewsCount = reviews.Count(r => r.ToAccountId == v.Person.Account.Id),
-                PerformerType = "vendor",
-                Link = "vendor/" + v.Id,
-                Location = new LocationDTO
-                {
-                    Id = v.Person.Account.Location.Id,
-                    City = v.Person.Account.Location.City,
-                    Adress = v.Person.Account.Location.Adress,
-                    Latitude = v.Person.Account.Location.Latitude,
-                    Longitude = v.Person.Account.Location.Longitude,
-                    PostIndex = v.Person.Account.Location.PostIndex
-                },
-                Distance = CalculateDistance(v.Person.Account.Location.Latitude, v.Person.Account.Location.Longitude, latitude, longitude)
-            };
-        }
+                Id = v.Person.Account.Location.Id,
+                City = v.Person.Account.Location.City,
+                Adress = v.Person.Account.Location.Adress,
+                Latitude = v.Person.Account.Location.Latitude,
+                Longitude = v.Person.Account.Location.Longitude,
+                PostIndex = v.Person.Account.Location.PostIndex
+            },
+            Distance = CalculateDistance(v.Person.Account.Location.Latitude, v.Person.Account.Location.Longitude, latitude, longitude)
+        };
 
         private double CalculateDistance(double lat1, double long1, double? lat2, double? long2)
         {
             if (lat2 == null || long2 == null)
+            {
                 return 0;
+            }
+
             var coord1 = new GeoCoordinate(lat1, long1);
             var coord2 = new GeoCoordinate((double)lat2, (double)long2);
             var distance = coord1.GetDistanceTo(coord2) / 1000;
+
             return distance;
         }
 

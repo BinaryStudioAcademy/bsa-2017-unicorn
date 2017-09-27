@@ -4,17 +4,13 @@ using System.Threading.Tasks;
 using Unicorn.Shared.DTOs;
 using Unicorn.Core.Interfaces;
 using Unicorn.DataAccess.Interfaces;
-using System;
 using System.Data.Entity;
 
 namespace Unicorn.Core.Services
 {
     public class AccountService : IAccountService
     {
-        public AccountService(IUnitOfWork unitOfWork)
-        {
-            _unitOfWork = unitOfWork;
-        }
+        public AccountService(IUnitOfWork unitOfWork) => _unitOfWork = unitOfWork;
 
         public async Task<IEnumerable<AccountDTO>> GetAllAsync()
         {
@@ -39,11 +35,12 @@ namespace Unicorn.Core.Services
                         Longitude = account.Location.Longitude
                     },
                     EmailConfirmed = account.EmailConfirmed,
-                    SocialAccounts = account.SocialAccounts.Select(x => new SocialAccountDTO { Id = x.Id, Provider = x.Provider, Uid = x.Uid}).ToList(),
+                    SocialAccounts = account.SocialAccounts.Select(x => new SocialAccountDTO { Id = x.Id, Provider = x.Provider, Uid = x.Uid }).ToList(),
                     Role = new RoleDTO { Id = account.Role.Id, Name = account.Role.Name }
                 };
                 allaccountsData.Add(accountDto);
             }
+
             return allaccountsData;
         }
 
@@ -57,7 +54,7 @@ namespace Unicorn.Core.Services
                 CroppedAvatar = account.CroppedAvatar,
                 DateCreated = account.DateCreated,
                 Email = account.Email,
-                EmailConfirmed =account.EmailConfirmed,
+                EmailConfirmed = account.EmailConfirmed,
                 Location = new LocationDTO()
                 {
                     Id = account.Location.Id,
@@ -67,9 +64,10 @@ namespace Unicorn.Core.Services
                     Latitude = account.Location.Latitude,
                     Longitude = account.Location.Longitude
                 },
-                SocialAccounts = account.SocialAccounts.Select(x => new SocialAccountDTO { Id = x.Id, Provider = x.Provider, Uid= x.Uid}).ToList(),
+                SocialAccounts = account.SocialAccounts.Select(x => new SocialAccountDTO { Id = x.Id, Provider = x.Provider, Uid = x.Uid }).ToList(),
                 Role = new RoleDTO { Id = account.Role.Id, Name = account.Role.Name }
             };
+
             return accountDto;
         }
 
@@ -96,8 +94,8 @@ namespace Unicorn.Core.Services
                         .SingleAsync(p => p.Account.Id == id);
                     result.Name = $"{person.Name} {person.Surname}";
                     return result;
-                    
-                case 4: 
+
+                case 4:
                     var company = await _unitOfWork.CompanyRepository.Query
                         .Include(p => p.Account)
                         .SingleAsync(p => p.Account.Id == id);
@@ -137,6 +135,7 @@ namespace Unicorn.Core.Services
                     Role = p.Account.Role.Name,
                     Name = p.Name + " " + p.Surname + " " + p.MiddleName
                 }).ToListAsync();
+
             var companies = await _unitOfWork.CompanyRepository.Query
                 .Include(c => c.Account)
                 .Where(c => c.Account.Email.Contains(template) || c.Name.Contains(template))

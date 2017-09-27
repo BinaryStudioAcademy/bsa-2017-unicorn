@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Unicorn.DataAccess.Entities;
 using Unicorn.Shared.DTOs.Book;
 
 namespace Unicorn.Shared.DTOs

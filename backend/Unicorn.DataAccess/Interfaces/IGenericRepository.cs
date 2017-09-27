@@ -6,6 +6,7 @@ namespace Unicorn.DataAccess.Interfaces
 {
     public interface IRepository
     { }
+
     public interface IGenericRepository<T> : IRepository
     {
         Task<IEnumerable<T>> GetAllAsync();

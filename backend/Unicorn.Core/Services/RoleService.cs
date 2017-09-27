@@ -12,10 +12,7 @@ namespace Unicorn.Core.Services
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public RoleService(IUnitOfWork unitOfWork)
-        {
-            _unitOfWork = unitOfWork;
-        }
+        public RoleService(IUnitOfWork unitOfWork) => _unitOfWork = unitOfWork;
 
         public async Task<IEnumerable<RoleDTO>> GetAllAsync()
         {
@@ -30,6 +27,7 @@ namespace Unicorn.Core.Services
                 };
                 rolesdata.Add(roleDto);
             }
+
             return rolesdata;
         }
 
@@ -41,6 +39,7 @@ namespace Unicorn.Core.Services
                 Id = role.Id,
                 Name = role.Name,
             };
+
             return roleDto;
         }
 
@@ -49,15 +48,18 @@ namespace Unicorn.Core.Services
             var account = await _unitOfWork.AccountRepository.GetByIdAsync(uid);
 
             if (account == null)
+            {
                 return null;
+            }
 
             Mapper.Initialize(cfg => cfg.CreateMap<Permission, PermissionDTO>());
+
             return new RoleDTO
             {
                 Id = account.Role.Id,
                 Name = account.Role.Name,
                 Permissions = Mapper.Map<IEnumerable<Permission>, List<PermissionDTO>>(account.Role.Permissions)
-        };
+            };
         }
     }
 }

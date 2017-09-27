@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Net.Http;
 using Unicorn.Shared.services.interfaces;
 
 namespace Unicorn.Shared.services.implementations
@@ -14,10 +9,6 @@ namespace Unicorn.Shared.services.implementations
 
         public ISerializer Serializer => new JsonSerializer();
 
-        public HttpClient GetHttpClient()
-        {
-            return new HttpClient();
-        }
-
+        public HttpClient GetHttpClient() => new HttpClient();
     }
 }

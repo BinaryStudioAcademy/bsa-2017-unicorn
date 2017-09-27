@@ -9,7 +9,6 @@ using Unicorn.Shared.DTOs;
 using Unicorn.Shared.DTOs.Search;
 using System.Device.Location;
 using System;
-using Unicorn.Shared.DTOs.Subcategory;
 
 namespace Unicorn.Core.Services
 {
@@ -17,26 +16,7 @@ namespace Unicorn.Core.Services
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public SearchService(IUnitOfWork unitOfWork)
-        {
-            _unitOfWork = unitOfWork;
-        }    
-        
-        //private DateTime? ParseTheDate(string date)
-        //{            
-        //    if(date == null)
-        //    {
-        //        return null;
-        //    }
-        //    else
-        //    {
-        //        var partsOfTheTime = date.Split('-');
-        //        var year = int.Parse(partsOfTheTime[0]);
-        //        var month = int.Parse(partsOfTheTime[1]);
-        //        var day = int.Parse(partsOfTheTime[2].Split('T')[0]);
-        //        return new DateTime(year, month, day);
-        //    }
-        //}
+        public SearchService(IUnitOfWork unitOfWork) => _unitOfWork = unitOfWork;
 
         private bool IsVendorWorkingOnThisDate(long id, DateTimeOffset? date)
         {
@@ -46,8 +26,8 @@ namespace Unicorn.Core.Services
             if (date == null)
             {
                 return false;
-            }           
-            
+            }
+
             var books = _unitOfWork.BookRepository.Query.Where(x => x.Vendor.Id == id &&
             x.Status != DataAccess.Entities.Enum.BookStatus.Finished && x.Status != DataAccess.Entities.Enum.BookStatus.Declined
                 && x.Status != DataAccess.Entities.Enum.BookStatus.Confirmed);
@@ -85,22 +65,25 @@ namespace Unicorn.Core.Services
             {
                 var bookDate = book.Date;
                 var bookEndDate = book.EndDate;
+
                 if (date >= bookDate && date <= bookEndDate)
                 {
                     return true;
-                }                
+                }
             }
-            return false;            
+
+            return false;
         }
 
         private bool SynchronizeWorkDateWithVendorsWorkDays(Calendar calendar, DateTimeOffset? date, bool isWorkingOnThisDate, int timeZone)
-        {    
+        {
             if (date == null)
             {
                 return true;
             }
+
             var calendarStartDate = calendar.StartDate.Date;
-            var calendarEndDate = calendar.EndDate != null ? 
+            var calendarEndDate = calendar.EndDate != null ?
                 calendar.EndDate.GetValueOrDefault().Date : calendar.EndDate;
 
             var weekendDate = date.GetValueOrDefault().AddHours(-(timeZone / 60));
@@ -111,6 +94,7 @@ namespace Unicorn.Core.Services
                 {
                     return true;
                 }
+
                 if (calendar.ExtraDayOffs.FirstOrDefault(x => x.Day.Date == date.GetValueOrDefault().Date) == null)
                 {
                     if (calendar.SeveralTaskPerDay)
@@ -121,9 +105,10 @@ namespace Unicorn.Core.Services
                             {
                                 return true;
                             }
-                            return false;                            
+
+                            return false;
                         }
-                        return true;                       
+                        return true;
                     }
                     else
                     {
@@ -133,30 +118,34 @@ namespace Unicorn.Core.Services
                             {
                                 return true;
                             }
+
                             return false;
                         }
+
                         if (!isWorkingOnThisDate)
                         {
                             return true;
                         }
+
                         return false;
                     }
                 }
             }
-            return false;  
+
+            return false;
         }
 
-        public async Task<List<SearchWorkDTO>> GetWorksByFilters(  string category, string subcategory, DateTimeOffset? date, int timeZone,
+        public async Task<List<SearchWorkDTO>> GetWorksByFilters(string category, string subcategory, DateTimeOffset? date, int timeZone,
                                                                    string vendor, string ratingcompare, double? rating, bool? reviews,
                                                                    double? latitude, double? longitude, double? distance,
                                                                    string[] categories, string[] subcategories, string city,
-                                                                   int? sort  )
-        {          
+                                                                   int? sort)
+        {
             var reviewsList = await _unitOfWork.ReviewRepository.GetAllAsync();
 
             var vendorsWorksList = await _unitOfWork.WorkRepository
                 .Query
-                .Where(w => w.Vendor != null)                
+                .Where(w => w.Vendor != null)
                 .Where(x => string.IsNullOrEmpty(category) || (x.Subcategory.Category.Name.Contains(category) || x.Subcategory.Category.Tags.Contains(category)))
                 .Where(x => string.IsNullOrEmpty(subcategory) || (x.Subcategory.Name.Contains(subcategory) || x.Subcategory.Tags.Contains(subcategory)))
                 .Where(w => string.IsNullOrEmpty(vendor) || w.Vendor.Person.Name.Contains(vendor))
@@ -167,9 +156,8 @@ namespace Unicorn.Core.Services
 
             var vendorsWorksSyncWithDate = vendorsWorksList.Where(x => SynchronizeWorkDateWithVendorsWorkDays(x.Vendor.Calendar, date, IsVendorWorkingOnThisDate(x.Vendor.Id, date), timeZone)).ToList();
 
-            var vendorsWorks = CreateVendorsWorksAdv(vendorsWorksSyncWithDate, reviewsList, 
+            var vendorsWorks = CreateVendorsWorksAdv(vendorsWorksSyncWithDate, reviewsList,
                 ratingcompare, rating, reviews, latitude, longitude, distance, categories, subcategories, city);
-
 
             var companiesWorksList = await _unitOfWork.WorkRepository
                 .Query
@@ -250,8 +238,10 @@ namespace Unicorn.Core.Services
             if (distance == 0 || distance == null)
             {
                 if (!string.IsNullOrEmpty(city))
+                {
                     worksQuery = worksQuery?
                         .Where(p => p.Location.City.Contains(city));
+                }
             }
             else
             {
@@ -262,7 +252,7 @@ namespace Unicorn.Core.Services
             return worksQuery.ToList();
         }
 
-        private List<SearchWorkDTO> CreateCompaniesWorksAdv( List<Work> works, IEnumerable<Review> reviewsList,
+        private List<SearchWorkDTO> CreateCompaniesWorksAdv(List<Work> works, IEnumerable<Review> reviewsList,
                                                           string ratingcompare, double? rating, bool? reviews,
                                                           double? latitude, double? longitude, double? distance,
                                                           string[] categories, string[] subcategories, string city)
@@ -300,8 +290,10 @@ namespace Unicorn.Core.Services
             if (distance == 0 || distance == null)
             {
                 if (!string.IsNullOrEmpty(city))
+                {
                     worksQuery = worksQuery?
                         .Where(p => p.Location.City.Contains(city));
+                }
             }
             else
             {
@@ -325,10 +317,14 @@ namespace Unicorn.Core.Services
         private double CalculateDistance(double lat1, double long1, double? lat2, double? long2)
         {
             if (lat2 == null || long2 == null)
+            {
                 return 0;
+            }
+
             var coord1 = new GeoCoordinate(lat1, long1);
             var coord2 = new GeoCoordinate((double)lat2, (double)long2);
             var distance = coord1.GetDistanceTo(coord2) / 1000;
+
             return distance;
         }
 
@@ -363,7 +359,7 @@ namespace Unicorn.Core.Services
         }
 
         public async Task<List<SearchWorkDTO>> GetWorksByBaseFilters(string category, string subcategory, DateTimeOffset? date, int timeZone)
-        {  
+        {
             var reviewsList = await _unitOfWork.ReviewRepository.GetAllAsync();
 
             var vendorsWorksList = await _unitOfWork.WorkRepository
@@ -402,9 +398,7 @@ namespace Unicorn.Core.Services
             return searchWorks;
         }
 
-        private List<SearchWorkDTO> CreateVendorsWorks(List<Work> works, IEnumerable<Review> reviews)
-        {
-            return works
+        private List<SearchWorkDTO> CreateVendorsWorks(List<Work> works, IEnumerable<Review> reviews) => works
                 .Select(w => new SearchWorkDTO
                 {
                     Id = w.Id,
@@ -425,11 +419,8 @@ namespace Unicorn.Core.Services
                         PostIndex = w.Vendor.Person.Account.Location.PostIndex
                     },
                 }).ToList();
-        }
 
-        private List<SearchWorkDTO> CreateCompaniesWorks(List<Work> works, IEnumerable<Review> reviews)
-        {
-            return works
+        private List<SearchWorkDTO> CreateCompaniesWorks(List<Work> works, IEnumerable<Review> reviews) => works
                 .Select(w => new SearchWorkDTO
                 {
                     Id = w.Id,
@@ -450,6 +441,5 @@ namespace Unicorn.Core.Services
                         PostIndex = w.Company.Account.Location.PostIndex
                     },
                 }).ToList();
-        }
     }
 }

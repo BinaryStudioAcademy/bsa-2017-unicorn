@@ -1,9 +1,8 @@
-﻿﻿using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System;
 using System.Linq;
- using System.Runtime.InteropServices;
- using System.Threading.Tasks;
+using System.Threading.Tasks;
 using Unicorn.Core.Interfaces;
 using Unicorn.DataAccess.Entities;
 using Unicorn.DataAccess.Interfaces;
@@ -18,7 +17,7 @@ using Unicorn.Shared.DTOs.Vendor;
 
 namespace Unicorn.Core.Services
 {
-    public class CompanyPageService:ICompanyPageService
+    public class CompanyPageService : ICompanyPageService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IReviewService _reviewService;
@@ -33,113 +32,43 @@ namespace Unicorn.Core.Services
             _notifyService = notifyService;
         }
 
-        public async Task<ICollection<ShortCompanyDTO>> GetAllCompanies()
-        {
-            return await GetAllCompaniesMethod();
-        }
+        public async Task<ICollection<ShortCompanyDTO>> GetAllCompanies() => await GetAllCompaniesMethod();
 
+        public async Task<ShortCompanyDTO> GetCompanyShort(long id) => await GetCompanyShortMethod(id);
 
+        public async Task<CompanyDetails> GetCompanyDetails(long id) => await GetCompanyDetailsMethod(id);
 
-        public async Task<ShortCompanyDTO> GetCompanyShort(long id)
-        {
-            return await GetCompanyShortMethod(id);
-        }
+        public async Task SaveCompanyDetails(CompanyDetails companyDetailsDTO) => await SaveCompanyDetailsMethod(companyDetailsDTO);
 
-        public async Task<CompanyDetails> GetCompanyDetails(long id)
-        {
-            return await GetCompanyDetailsMethod(id);
-        }
+        public async Task<CompanyReviews> GetCompanyReviews(long id) => await GetCompanyReviewsMethod(id);
 
-        public async Task SaveCompanyDetails(CompanyDetails companyDetailsDTO)
-        {
-            await SaveCompanyDetailsMethod(companyDetailsDTO);
-        }
+        public async Task AddCompanyReviews(CompanyReviews companyReviewsDTO) => await AddCompanyReviewsMethod(companyReviewsDTO);
 
+        public async Task<CompanyVendors> GetCompanyVendors(long id) => await GetCompanyVendorsMethod(id);
 
+        public async Task AddCompanyVendors(CompanyVendors companyVendorsDTO) => await AddCompanyVendorsMethod(companyVendorsDTO);
 
-        public async Task<CompanyReviews> GetCompanyReviews(long id)
-        {
-            return await GetCompanyReviewsMethod(id);
-        }
+        public async Task DeleteCompanyVendor(long companyId, long vendorId) => await DeleteCompanyVendorMethod(companyId, vendorId);
 
-        public async Task AddCompanyReviews(CompanyReviews companyReviewsDTO)
-        {
-            await AddCompanyReviewsMethod(companyReviewsDTO);
-        }
+        public async Task<CompanyContacts> GetCompanyContacts(long id) => await GetCompanyContactsMethod(id);
 
+        public async Task SaveCompanyContact(ContactShortDTO companyContactDTO) => await SaveCompanyContactMethod(companyContactDTO);
 
+        public async Task AddCompanyContact(long companyId, ContactShortDTO companyContactDTO) => await AddCompanyContactMethod(companyId, companyContactDTO);
 
-        public async Task<CompanyVendors> GetCompanyVendors(long id)
-        {
-            return await GetCompanyVendorsMethod(id);
-        }
+        public async Task DeleteCompanyContact(long companyId, long contactId) => await DeleteCompanyContactMethod(companyId, contactId);
 
-        public async Task AddCompanyVendors(CompanyVendors companyVendorsDTO)
-        {
-            await AddCompanyVendorsMethod(companyVendorsDTO);
-        }
+        public async Task<CompanyWorks> GetCompanyWorks(long id) => await GetCompanyWorksMethod(id);
 
-        public async Task DeleteCompanyVendor(long companyId, long vendorId)
-        {
-            await DeleteCompanyVendorMethod(companyId, vendorId);
-        }
+        public async Task SaveCompanyWork(CompanyWork companyWorkDTO) => await SaveCompanyWorkMethod(companyWorkDTO);
 
+        public async Task AddCompanyWork(long companyId, CompanyWork companyWorkDTO) => await AddCompanyWorkMethod(companyId, companyWorkDTO);
 
+        public async Task DeleteCompanyWork(long companyId, long workId) => await DeleteCompanyWorkMethod(companyId, workId);
 
-        public async Task<CompanyContacts> GetCompanyContacts(long id)
-        {
-            return await GetCompanyContactsMethod(id);
-        }
+        public async Task<CompanyBooks> GetCompanyBooks(long id) => await GetCompanyBooksMethod(id);
 
-        public async Task SaveCompanyContact(ContactShortDTO companyContactDTO)
-        {
-            await SaveCompanyContactMethod(companyContactDTO);
-        }
-
-        public async Task AddCompanyContact(long companyId, ContactShortDTO companyContactDTO)
-        {
-            await AddCompanyContactMethod(companyId, companyContactDTO);
-        }
-
-        public async Task DeleteCompanyContact(long companyId, long contactId)
-        {
-            await DeleteCompanyContactMethod(companyId, contactId);
-        }
-        
-        
-
-        public async Task<CompanyWorks> GetCompanyWorks(long id)
-        {
-            return await GetCompanyWorksMethod(id);
-        }
-
-        public async Task SaveCompanyWork(CompanyWork companyWorkDTO)
-        {
-            await SaveCompanyWorkMethod(companyWorkDTO);
-        }
-
-        public async Task AddCompanyWork(long companyId, CompanyWork companyWorkDTO)
-        {
-            await AddCompanyWorkMethod(companyId, companyWorkDTO);
-        }
-
-        public async Task DeleteCompanyWork(long companyId, long workId)
-        {
-            await DeleteCompanyWorkMethod(companyId, workId);
-        }
-
-
-
-        public async Task<CompanyBooks> GetCompanyBooks(long id)
-        {
-            return await GetCompanyBooksMethod(id);
-        }
-
-        public async Task SaveCompanyBook(CompanyBook companyBookDTO)
-        {
-            await SaveCompanyBookMethod(companyBookDTO);
-        }
-
+        public async Task SaveCompanyBook(CompanyBook companyBookDTO) => await SaveCompanyBookMethod(companyBookDTO);
 
         #endregion
 
@@ -149,6 +78,7 @@ namespace Unicorn.Core.Services
         {
             var companies = await _unitOfWork.CompanyRepository.Query.
                   Include(c => c.Account.Location).ToListAsync();
+
             if (companies.Any())
             {
                 var companiesDTO = companies.Select(
@@ -168,8 +98,10 @@ namespace Unicorn.Core.Services
                                 Latitude = company.Account.Location.Latitude
                             }
                         }).ToList();
+
                 return companiesDTO;
             }
+
             return null;
         }
 
@@ -183,22 +115,24 @@ namespace Unicorn.Core.Services
             if (company != null)
             {
                 var companyDTO = new ShortCompanyDTO
-                        {
-                            Id = company.Id,
-                            AccountId = company.Account.Id,
-                            Avatar = company.Account.Avatar,
-                            Name = company.Name,
-                            Location = new LocationDTO
-                            {
-                                Id = company.Account.Location.Id,
-                                City = company.Account.Location.City,
-                                Adress = company.Account.Location.Adress,
-                                Longitude = company.Account.Location.Longitude,
-                                Latitude = company.Account.Location.Latitude
-                            }
+                {
+                    Id = company.Id,
+                    AccountId = company.Account.Id,
+                    Avatar = company.Account.Avatar,
+                    Name = company.Name,
+                    Location = new LocationDTO
+                    {
+                        Id = company.Account.Location.Id,
+                        City = company.Account.Location.City,
+                        Adress = company.Account.Location.Adress,
+                        Longitude = company.Account.Location.Longitude,
+                        Latitude = company.Account.Location.Latitude
+                    }
                 };
+
                 return companyDTO;
             }
+
             return null;
         }
 
@@ -225,7 +159,7 @@ namespace Unicorn.Core.Services
                         Id = z.Id,
                         Description = z.Description,
                         Name = z.Name,
-                        
+
                         Subcategory = new CompanySubcategory
                         {
                             Id = z.Subcategory.Id,
@@ -275,7 +209,7 @@ namespace Unicorn.Core.Services
                     Longitude = companyDetailsDTO.Location.Longitude,
                     Latitude = companyDetailsDTO.Location.Latitude
                 };
-                
+
 
                 _unitOfWork.CompanyRepository.Update(company);
                 await _unitOfWork.SaveAsync();
@@ -316,27 +250,22 @@ namespace Unicorn.Core.Services
             return rating == null ? 0 : rating.Grade;
         }
 
-        private Task AddCompanyReviewsMethod(CompanyReviews companyReviewsDTO)
-        {
-            throw new NotImplementedException();
-        }
-
-
+        private Task AddCompanyReviewsMethod(CompanyReviews companyReviewsDTO) => throw new NotImplementedException();
 
         private async Task<CompanyVendors> GetCompanyVendorsMethod(long id)
         {
             var company = await _unitOfWork.CompanyRepository.GetByIdAsync(id);
             var allVendors = await _unitOfWork.VendorRepository.GetAllAsync();
-            var reviews = await _unitOfWork.ReviewRepository.GetAllAsync();      
+            var reviews = await _unitOfWork.ReviewRepository.GetAllAsync();
 
-            if (company != null )
+            if (company != null)
             {
                 var companyVendors = new CompanyVendors
                 {
                     Id = company.Id,
                     Vendors = CreateCompanyVendor(company.Vendors?.Where(v => v.Company.Id == company.Id), reviews, company),
-                    AllVendors = CreateCompanyVendor( allVendors.Where(x => x.Company == null && x.Company?.Id != company.Id), reviews, company)
-                           
+                    AllVendors = CreateCompanyVendor(allVendors.Where(x => x.Company == null && x.Company?.Id != company.Id), reviews, company)
+
                 };
 
                 return companyVendors;
@@ -379,6 +308,7 @@ namespace Unicorn.Core.Services
                 foreach (var companyDtoVendor in companyVendorsDTO.Vendors)
                 {
                     var vendor = await _unitOfWork.VendorRepository.GetByIdAsync(companyDtoVendor.Id);
+
                     if (vendor != null)
                     {
                         company.Vendors.Add(vendor);
@@ -430,16 +360,14 @@ namespace Unicorn.Core.Services
         {
             var select = _unitOfWork.RatingRepository.Query
                 .Where(p => p.Reciever.Id == receiverId).Select(z => z.Grade);
+
             return select.Any() ? select.Average() : 0;
-
         }
-        
-
 
         private async Task<CompanyContacts> GetCompanyContactsMethod(long id)
         {
             var company = await _unitOfWork.CompanyRepository.Query.
-                Include(c => c.Account.Location).SingleAsync(c=>c.Id==id);
+                Include(c => c.Account.Location).SingleAsync(c => c.Id == id);
 
             if (company != null)
             {
@@ -512,10 +440,7 @@ namespace Unicorn.Core.Services
                 _unitOfWork.ContactRepository.Delete(contactId);
                 await _unitOfWork.SaveAsync();
             }
-            
         }
-        
-
 
         private async Task<CompanyWorks> GetCompanyWorksMethod(long id)
         {
@@ -570,6 +495,7 @@ namespace Unicorn.Core.Services
 
                 return companyWorks;
             }
+
             return null;
         }
 
@@ -598,12 +524,12 @@ namespace Unicorn.Core.Services
             {
                 _unitOfWork.WorkRepository.Create(new Work
                 {
-                   Company = company,
-                   Description = companyWorkDTO.Description,
-                   Icon = companyWorkDTO.Icon,
-                   Name = companyWorkDTO.Name,
-                   Subcategory = subcategory,
-                   IsDeleted = false
+                    Company = company,
+                    Description = companyWorkDTO.Description,
+                    Icon = companyWorkDTO.Icon,
+                    Name = companyWorkDTO.Name,
+                    Subcategory = subcategory,
+                    IsDeleted = false
                 });
 
                 await _unitOfWork.SaveAsync();
@@ -623,13 +549,11 @@ namespace Unicorn.Core.Services
             }
         }
 
-        
-
         private async Task<CompanyBooks> GetCompanyBooksMethod(long id)
         {
             var company = await _unitOfWork.CompanyRepository.GetByIdAsync(id);
             var books = await _unitOfWork.BookRepository.GetAllAsync();
-            
+
             if (company != null)
             {
                 var companyBooks = new CompanyBooks
@@ -642,7 +566,8 @@ namespace Unicorn.Core.Services
                         CustomerId = book.Customer.Id,
                         Date = book.Date,
                         Description = book.Description,
-                        Location = new LocationDTO{
+                        Location = new LocationDTO
+                        {
                             Id = book.Location.Id,
                             Adress = book.Location.Adress,
                             City = book.Location.City,
@@ -672,10 +597,10 @@ namespace Unicorn.Core.Services
                         }
                     }).ToList()
                 };
-                
 
                 return companyBooks;
             }
+
             return null;
         }
 
@@ -691,13 +616,12 @@ namespace Unicorn.Core.Services
             }
         }
 
-
-
         public async Task<long> GetCompanyAccountId(long id)
         {
             var company = await _unitOfWork.CompanyRepository.Query
                .Include(v => v.Account)
                .SingleAsync(x => x.Id == id);
+
             return company.Account.Id;
         }
 
@@ -750,9 +674,11 @@ namespace Unicorn.Core.Services
                                 Longitude = company.Account.Location?.Longitude ?? 0
                             },
                         }).ToList();
+
                 return companiesDetail;
             }
-            return null;           
+
+            return null;
         }
 
         private double CalculateCompanyRating(long recieverId)

@@ -1,9 +1,5 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Cors;
@@ -25,31 +21,19 @@ namespace Unicorn.Controllers
 
         [HttpGet]
         [Route("popular/categories")]
-        public async Task<List<PopularCategoryDTO>> GetCategories()
-        {
-            return await _popularService.GetPopularCategories();
-        }
+        public async Task<List<PopularCategoryDTO>> GetCategories() => await _popularService.GetPopularCategories();
 
         [HttpGet]
         [Route("popular/performers")]
-        public async Task<List<PerformerDTO>> GetPerformers()
-        {
-            return await _popularService.GetPopularPerformers();
-        }
+        public async Task<List<PerformerDTO>> GetPerformers() => await _popularService.GetPopularPerformers();
 
         [HttpGet]
         [Route("popular/performers/{id}")]
-        public async Task<List<PerformerDTO>> GetPerformersById(long id) // id - category id
-        {
-            return await _popularService.GetPopularPerformers(id);
-        }
+        public async Task<List<PerformerDTO>> GetPerformersById(long id) => await _popularService.GetPopularPerformers(id);
 
         [HttpGet]
         [Route("popular/allperformers")]
-        public async Task<List<FullPerformerDTO>> GetAllPerformers()
-        {
-            return await _popularService.GetAllPerformersAsync();
-        }
+        public async Task<List<FullPerformerDTO>> GetAllPerformers() => await _popularService.GetAllPerformersAsync();
 
         [HttpGet]
         [Route("popular/search")]
@@ -59,7 +43,7 @@ namespace Unicorn.Controllers
             )
         {
             try
-            {               
+            {
                 var performers = await _popularService.GetPerformersByFilterAsync(city, name, role, rating, ratingCondition, withReviews, categoriesString,
                     subcategoriesString, latitude, longitude, distance, sort, date, timeZone);
 

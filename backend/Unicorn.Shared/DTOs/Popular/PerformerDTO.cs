@@ -1,9 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace Unicorn.Shared.DTOs.Popular
 {
     public class PerformerDTO
@@ -18,7 +12,7 @@ namespace Unicorn.Shared.DTOs.Popular
 
         public string Avatar { get; set; }
 
-        public string PerformerType { get; set; } //vendor or company
+        public string PerformerType { get; set; }
 
         public string Link { get; set; }
 

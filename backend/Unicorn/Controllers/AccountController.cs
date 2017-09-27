@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -16,7 +14,7 @@ using Unicorn.Shared.DTOs.Notification;
 namespace Unicorn.Controllers
 {
     [RoutePrefix("account")]
-    [EnableCors("*", "*", "*")]    
+    [EnableCors("*", "*", "*")]
     public class AccountController : ApiController
     {
         public AccountController(
@@ -37,9 +35,11 @@ namespace Unicorn.Controllers
             var result = await _accountService.GetProfileInfoAsync(id);
 
             if (result == null)
+            {
                 return Request.CreateResponse(HttpStatusCode.NotFound);
-            else
-                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         [HttpPost]
@@ -82,9 +82,11 @@ namespace Unicorn.Controllers
             var result = await _notificationService.GetByAccountIdAsync(id);
 
             if (result == null)
+            {
                 return Request.CreateResponse(HttpStatusCode.NotFound);
-            else
-                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
         [HttpPut]
@@ -109,10 +111,7 @@ namespace Unicorn.Controllers
 
         [HttpGet]
         [Route("search")]
-        public async Task<List<ShortProfileInfoDTO>> SearchByTemplate(string template, int count)
-        {
-            return await _accountService.SearchByTemplate(template, count);
-        }
+        public async Task<List<ShortProfileInfoDTO>> SearchByTemplate(string template, int count) => await _accountService.SearchByTemplate(template, count);
 
         [HttpGet]
         [Route("banned")]
