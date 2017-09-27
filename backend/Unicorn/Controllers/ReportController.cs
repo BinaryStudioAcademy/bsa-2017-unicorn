@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -13,7 +11,7 @@ using Unicorn.Shared.DTOs;
 
 namespace Unicorn.Controllers
 {
-    [EnableCors("*", "*", "*")]    
+    [EnableCors("*", "*", "*")]
     public class ReportController : ApiController
     {
         private readonly IReportService _reportService;
@@ -56,19 +54,21 @@ namespace Unicorn.Controllers
         [HttpPost]
         [Route("report")]
         public async Task<HttpResponseMessage> SendReportAsync(ReportDTO report)
-        {            
+        {
             try
             {
                 if (string.IsNullOrEmpty(report.Message) || (report.Type != ReportType.Feedback && report.Type != ReportType.Complaint))
                 {
                     throw new ArgumentException();
                 }
+
                 await _reportService.CreateAsync(report);
             }
             catch
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
-            }            
+            }
+
             return Request.CreateResponse(HttpStatusCode.OK);
         }
 
@@ -84,6 +84,7 @@ namespace Unicorn.Controllers
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
+
             return Request.CreateResponse(HttpStatusCode.OK);
         }
 
@@ -100,6 +101,7 @@ namespace Unicorn.Controllers
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
+
             return Request.CreateResponse(HttpStatusCode.OK);
         }
     }

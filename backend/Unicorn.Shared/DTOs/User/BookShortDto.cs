@@ -1,7 +1,4 @@
 ﻿using System;
-using Unicorn.Shared.DTOs.Vendor;
-
-using Unicorn.DataAccess.Entities;
 using Unicorn.DataAccess.Entities.Enum;
 
 namespace Unicorn.Shared.DTOs.User

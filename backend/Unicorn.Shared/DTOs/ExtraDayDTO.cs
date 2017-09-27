@@ -1,5 +1,4 @@
 ﻿using System;
-using Unicorn.DataAccess.Entities;
 
 namespace Unicorn.Shared.DTOs
 {

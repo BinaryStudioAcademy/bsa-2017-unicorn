@@ -14,6 +14,6 @@
 
         public double Rating { get; set; }
 
-        public int  Reviews { get; set; }
+        public int Reviews { get; set; }
     }
 }

@@ -11,59 +11,50 @@ using Unicorn.Shared.DTOs.Book;
 
 namespace Unicorn.Core.Services
 {
-    public class CalendarService:ICalendarService
+    public class CalendarService : ICalendarService
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public CalendarService(IUnitOfWork unitOfWork)
-        {
-            _unitOfWork = unitOfWork;
-        }     
+        public CalendarService(IUnitOfWork unitOfWork) => _unitOfWork = unitOfWork;
 
-        private Calendar CreateClndr(DateTimeOffset date)
+        private Calendar CreateClndr(DateTimeOffset date) => new Calendar
         {
-            return new Calendar
-            {
-                StartDate = date,
-                EndDate = null,
-                ExtraDayOffs = new List<ExtraDay>(),
-                ExtraWorkDays = new List<ExtraDay>(),
-                WorkOnWeekend = false,
-                SeveralTaskPerDay = true
-            };
-        }
+            StartDate = date,
+            EndDate = null,
+            ExtraDayOffs = new List<ExtraDay>(),
+            ExtraWorkDays = new List<ExtraDay>(),
+            WorkOnWeekend = false,
+            SeveralTaskPerDay = true
+        };
 
-        private CalendarDTO ReturnCalendar(Calendar calendar, ICollection<Book> events)
+        private CalendarDTO ReturnCalendar(Calendar calendar, ICollection<Book> events) => new CalendarDTO
         {
-            return new CalendarDTO
+            Id = calendar.Id,
+            StartDate = calendar.StartDate,
+            EndDate = calendar.EndDate,
+            ExtraDayOffs = new List<ExtraDayDTO>(),
+            ExtraWorkDays = new List<ExtraDayDTO>(),
+            Events = events.Select(x => new VendorBookDTO
             {
-                Id = calendar.Id,
-                StartDate = calendar.StartDate,
-                EndDate = calendar.EndDate,
-                ExtraDayOffs = new List<ExtraDayDTO>(),
-                ExtraWorkDays = new List<ExtraDayDTO>(),
-                Events = events.Select(x => new VendorBookDTO
+                Status = x.Status,
+                Customer = x.Customer.Person.Name + " " + x.Customer.Person.Surname,
+                CustomerPhone = x.CustomerPhone,
+                Date = x.Date,
+                EndDate = x.EndDate,
+                Description = x.Description,
+                Work = new WorkDTO
                 {
-                    Status = x.Status,
-                    Customer = x.Customer.Person.Name + " " + x.Customer.Person.Surname,
-                    CustomerPhone = x.CustomerPhone,
-                    Date = x.Date,
-                    EndDate = x.EndDate,
-                    Description = x.Description,
-                    Work = new WorkDTO
-                    {
-                        Id = x.Work.Id,
-                        Icon = x.Work.Icon == "" ? x.Work.Subcategory.Category.Icon : x.Work.Icon,
-                        Name = x.Work.Name
-                    }
-                }).ToList(),
-                WorkOnWeekend = false,
-                SeveralTasksPerDay = true
-            };
-        }
+                    Id = x.Work.Id,
+                    Icon = x.Work.Icon == "" ? x.Work.Subcategory.Category.Icon : x.Work.Icon,
+                    Name = x.Work.Name
+                }
+            }).ToList(),
+            WorkOnWeekend = false,
+            SeveralTasksPerDay = true
+        };
 
         public async Task<CalendarDTO> CreateCalendar(long accountId, CalendarDTO _calendar)
-        {       
+        {
             var account = await _unitOfWork.AccountRepository.GetByIdAsync(accountId);
             var calendar = CreateClndr(_calendar.StartDate);
             _unitOfWork.CalendarRepository.Create(calendar);
@@ -82,7 +73,7 @@ namespace Unicorn.Core.Services
                     await _unitOfWork.SaveAsync();
 
                     return ReturnCalendar(calendar, events);
-                    
+
                 case RoleType.Vendor:
                     var vendor = _unitOfWork.VendorRepository.Query.SingleOrDefault(x => x.Person.Account.Id == accountId);
                     events =
@@ -96,8 +87,6 @@ namespace Unicorn.Core.Services
                 default:
                     return null;
             }
-            
-
         }
 
         public async Task SaveCalendar(CalendarDTO calendarDTO)
@@ -113,13 +102,13 @@ namespace Unicorn.Core.Services
             calendar.ExtraWorkDays.Clear();
 
             calendar.ExtraDayOffs = calendarDTO.ExtraDayOffs.Select(x => new ExtraDay
-            {                
+            {
                 Day = x.Day,
                 DayOff = x.DayOff
             }).ToList();
 
             calendar.ExtraWorkDays = calendarDTO.ExtraWorkDays.Select(x => new ExtraDay
-            {                
+            {
                 Day = x.Day,
                 DayOff = x.DayOff
             }).ToList();
@@ -139,6 +128,7 @@ namespace Unicorn.Core.Services
                     var company = _unitOfWork.CompanyRepository.Query.SingleOrDefault(x => x.Account.Id == accountId);
                     var companyEvents =
                         _unitOfWork.BookRepository.Query.Where(x => x.Company.Account.Id == company.Account.Id);
+
                     calendar = new CalendarDTO
                     {
                         Id = company.Calendar.Id,
@@ -179,6 +169,7 @@ namespace Unicorn.Core.Services
                     var vendor = _unitOfWork.VendorRepository.Query.SingleOrDefault(x => x.Person.Account.Id == accountId);
                     var vendorEvents =
                         _unitOfWork.BookRepository.Query.Where(x => x.Vendor.Person.Account.Id == vendor.Person.Account.Id);
+
                     calendar = new CalendarDTO
                     {
                         Id = vendor.Calendar.Id,
@@ -215,11 +206,10 @@ namespace Unicorn.Core.Services
                         SeveralTasksPerDay = vendor.Calendar.SeveralTaskPerDay
                     };
                     return calendar;
+
                 default:
                     return null;
             }
         }
-
-
     }
 }

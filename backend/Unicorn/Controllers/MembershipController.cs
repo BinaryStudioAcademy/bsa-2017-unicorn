@@ -1,5 +1,4 @@
-﻿using System;
-using System.Net;
+﻿using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -59,6 +58,7 @@ namespace Unicorn.Controllers
         public async Task<HttpResponseMessage> ConfirmCustomer(CustomerRegisterDTO customer)
         {
             string token = null;
+
             try
             {
                 await customerService.CreateAsync(customer);

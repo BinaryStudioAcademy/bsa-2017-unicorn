@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
 
@@ -15,16 +14,13 @@ namespace Unicorn.Core.Services
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public WorkService(IUnitOfWork unitOfWork)
-        {
-            _unitOfWork = unitOfWork;
-        }
+        public WorkService(IUnitOfWork unitOfWork) => _unitOfWork = unitOfWork;
 
         public async Task<WorkDTO> CreateAsync(WorkDTO dto)
         {
             var subcategory = await _unitOfWork.SubcategoryRepository.GetByIdAsync(dto.SubcategoryId);
             var vendor = await _unitOfWork.VendorRepository.GetByIdAsync(dto.VendorId);
-            var company = await _unitOfWork.CompanyRepository.GetByIdAsync(dto.CompanyId);       
+            var company = await _unitOfWork.CompanyRepository.GetByIdAsync(dto.CompanyId);
 
             var work = new Work()
             {
@@ -63,7 +59,8 @@ namespace Unicorn.Core.Services
             {
                 _unitOfWork.WorkRepository.Delete(id);
                 await _unitOfWork.SaveAsync();
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 throw ex;
             }
@@ -83,16 +80,13 @@ namespace Unicorn.Core.Services
             await _unitOfWork.SaveAsync();
         }
 
-        private WorkDTO WorkToDTO(Work work)
+        private WorkDTO WorkToDTO(Work work) => new WorkDTO
         {
-            return new WorkDTO()
-            {
-                Name = work.Name,
-                Description = work.Description,
-                Subcategory = work.Subcategory.Name,
-                SubcategoryId = work.Subcategory.Id,
-                Id = work.Id
-            };
-        }
+            Name = work.Name,
+            Description = work.Description,
+            Subcategory = work.Subcategory.Name,
+            SubcategoryId = work.Subcategory.Id,
+            Id = work.Id
+        };
     }
 }

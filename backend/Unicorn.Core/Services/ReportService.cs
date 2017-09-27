@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Unicorn.Core.Interfaces;
 using Unicorn.DataAccess.Entities;
@@ -42,7 +41,7 @@ namespace Unicorn.Core.Services
             var report = CreateReport(reportDto);
 
             var accountId = _unitOfWork.AccountRepository.Query.FirstOrDefault(x => x.Role.Type == RoleType.Admin).Id;
-            await _notificationService.CreateAsync(accountId, reportDto);            
+            await _notificationService.CreateAsync(accountId, reportDto);
 
             _unitOfWork.ReportRepository.Create(report);
             await _unitOfWork.SaveAsync();
@@ -69,34 +68,28 @@ namespace Unicorn.Core.Services
             await _unitOfWork.SaveAsync();
         }
 
-        private ReportDTO ReportToDTO(Report report)
+        private ReportDTO ReportToDTO(Report report) => new ReportDTO
         {
-            return new ReportDTO()
-            {
-                Id = report.Id,
-                Date = report.Date,
-                Type = report.Type,
-                Message = report.Message,
-                Email = report.Email,
-                ProfileId = report.ProfileId,
-                ProfileName = report.ProfileName,                
-                ProfileType = report.ProfileType,
-            };            
-        }
+            Id = report.Id,
+            Date = report.Date,
+            Type = report.Type,
+            Message = report.Message,
+            Email = report.Email,
+            ProfileId = report.ProfileId,
+            ProfileName = report.ProfileName,
+            ProfileType = report.ProfileType,
+        };
 
-        private Report CreateReport(ReportDTO reportDto)
+        private Report CreateReport(ReportDTO reportDto) => new Report
         {
-            return new Report
-            {
-                Id = reportDto.Id,
-                Date = DateTime.Now,
-                Type = reportDto.Type,
-                Message = reportDto.Message,
-                Email = reportDto.Email,
-                ProfileId = reportDto.ProfileId,
-                ProfileName = reportDto.ProfileName,
-                ProfileType = reportDto.ProfileType
-            };    
-        }
+            Id = reportDto.Id,
+            Date = DateTime.Now,
+            Type = reportDto.Type,
+            Message = reportDto.Message,
+            Email = reportDto.Email,
+            ProfileId = reportDto.ProfileId,
+            ProfileName = reportDto.ProfileName,
+            ProfileType = reportDto.ProfileType
+        };
     }
 }

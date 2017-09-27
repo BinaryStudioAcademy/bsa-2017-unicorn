@@ -1,5 +1,4 @@
 ﻿using System;
-using Unicorn.DataAccess.Entities;
 using Unicorn.DataAccess.Entities.Enum;
 
 namespace Unicorn.Shared.DTOs.CompanyPage

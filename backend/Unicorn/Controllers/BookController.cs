@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -12,7 +10,7 @@ using Unicorn.Shared.DTOs.Book;
 
 namespace Unicorn.Controllers
 {
-    [EnableCors("*", "*", "*")]    
+    [EnableCors("*", "*", "*")]
     public class BookController : ApiController
     {
         private IBookService _bookService;
@@ -46,6 +44,7 @@ namespace Unicorn.Controllers
         public async Task<HttpResponseMessage> GetPendingBooks(string role, long id)
         {
             IEnumerable<VendorBookDTO> books;
+
             try
             {
                 books = await _bookService.GetPendingOrdersAsync(role, id);
@@ -63,6 +62,7 @@ namespace Unicorn.Controllers
         public async Task<HttpResponseMessage> GetVendorBooks(string role, long id)
         {
             IEnumerable<VendorBookDTO> books;
+
             try
             {
                 books = await _bookService.GetAcceptedOrdersAsync(role, id);
@@ -80,6 +80,7 @@ namespace Unicorn.Controllers
         public async Task<HttpResponseMessage> GetFinishedBooks(string role, long id)
         {
             IEnumerable<VendorBookDTO> books;
+
             try
             {
                 books = await _bookService.GetFinishedOrdersAsync(role, id);
@@ -114,6 +115,7 @@ namespace Unicorn.Controllers
         public async Task<HttpResponseMessage> GetCustomerBooks(long id)
         {
             IEnumerable<CustomerBookDTO> books;
+
             try
             {
                 books = await _bookService.GetCustomerBooks(id);
@@ -145,33 +147,21 @@ namespace Unicorn.Controllers
 
         [HttpPost]
         [Route("book/company/{id}/tasks")]
-		[TokenAuthenticate]
-        public async Task CreateTasks(List<ShortTaskDTO> tasks, long id)
-        {
-            await _bookService.CreateTasks(tasks, id);
-        }
+        [TokenAuthenticate]
+        public async Task CreateTasks(List<ShortTaskDTO> tasks, long id) => await _bookService.CreateTasks(tasks, id);
 
         [HttpPut]
         [Route("book/company/{id}/tasks")]
-		[TokenAuthenticate]
-        public async Task CreateTasks(ShortTaskDTO task, long id)
-        {
-            await _bookService.ReassignCompanyTask(task, id);
-        }
+        [TokenAuthenticate]
+        public async Task CreateTasks(ShortTaskDTO task, long id) => await _bookService.ReassignCompanyTask(task, id);
 
         [HttpGet]
         [Route("book/company/{id}/tasks")]
-        public async Task<List<BookDTO>> CreateTasks(long id)
-        {
-            return await _bookService.GetCompanyTasks(id);
-        }
+        public async Task<List<BookDTO>> CreateTasks(long id) => await _bookService.GetCompanyTasks(id);
 
         [HttpDelete]
         [Route("book/tasks/{id}")]
-		[TokenAuthenticate]
-        public async Task DeleteTask(long id)
-        {
-            await _bookService.DeleteCompanyTask(id);
-        }
+        [TokenAuthenticate]
+        public async Task DeleteTask(long id) => await _bookService.DeleteCompanyTask(id);
     }
 }

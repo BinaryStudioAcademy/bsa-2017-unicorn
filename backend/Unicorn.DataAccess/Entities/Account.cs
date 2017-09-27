@@ -19,13 +19,13 @@ namespace Unicorn.DataAccess.Entities
 
         public string CroppedAvatar { get; set; }
 
-        public string Background { get; set; } 
+        public string Background { get; set; }
 
         public Location Location { get; set; }
-        
+
         public virtual Role Role { get; set; }
 
-        public virtual ICollection<SocialAccount> SocialAccounts { get; set; }        
+        public virtual ICollection<SocialAccount> SocialAccounts { get; set; }
 
         public virtual ICollection<Contact> Contacts { get; set; }
 

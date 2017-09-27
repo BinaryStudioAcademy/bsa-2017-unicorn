@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 
 using Unicorn.Shared.DTOs;
-using Unicorn.Shared.DTOs.Subcategory;
 
 namespace Unicorn.Core.Interfaces
 {

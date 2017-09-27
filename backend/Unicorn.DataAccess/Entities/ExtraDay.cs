@@ -3,7 +3,7 @@ using Unicorn.DataAccess.Interfaces;
 
 namespace Unicorn.DataAccess.Entities
 {
-    public class ExtraDay:IEntity
+    public class ExtraDay : IEntity
     {
         public long Id { get; set; }
 

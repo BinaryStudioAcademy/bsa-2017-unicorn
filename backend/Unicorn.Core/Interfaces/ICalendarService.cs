@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Unicorn.Shared.DTOs;
 
 namespace Unicorn.Core.Interfaces

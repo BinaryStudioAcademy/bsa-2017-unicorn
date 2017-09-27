@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 using Unicorn.Core.Interfaces;
@@ -14,13 +12,11 @@ using Unicorn.Shared.DTOs.Vendor;
 
 namespace Unicorn.Core.Services
 {
-    public class HistoryService: IHistoryService
+    public class HistoryService : IHistoryService
     {
         private readonly IUnitOfWork _unitOfWork;
-        public HistoryService(IUnitOfWork unitOfWork)
-        {
-            _unitOfWork = unitOfWork;
-        }
+
+        public HistoryService(IUnitOfWork unitOfWork) => _unitOfWork = unitOfWork;
 
         public async Task<IEnumerable<HistoryDTO>> GetAllAsync()
         {
@@ -38,21 +34,20 @@ namespace Unicorn.Core.Services
                     BookDescription = element.BookDescription,
                     CategoryName = element.CategoryName,
                     SubcategoryName = element.SubcategoryName,
-                    WorkDescription =element.WorkDescription,
-                   
+                    WorkDescription = element.WorkDescription,
+
                     Customer = new CustomerDTO()
                     {
                         Id = element.Customer.Id,
                         Person = new PersonDTO()
-                        {   Id = element.Customer.Person.Id,
+                        {
+                            Id = element.Customer.Person.Id,
                             Name = element.Customer.Person.Name,
                             Surname = element.Customer.Person.Surname,
                             Phone = element.Customer.Person.Phone
                         }
                     }
                 };
-
-                
 
                 if (element.Vendor != null)
                 {
@@ -70,18 +65,25 @@ namespace Unicorn.Core.Services
                     historyDto.Company = new CompanyDTO()
                     {
                         Id = element.Company.Id,
-                        Account = new AccountDTO() {
+                        Account = new AccountDTO()
+                        {
                             Id = element.Company.Account.Id,
                             DateCreated = element.Company.Account.DateCreated
-                            },
-                            Vendors = element.Company.Vendors.Select
-                            (x => new VendorDTO { Id = x.Id, Person = new PersonDTO()
-                            { Id = x.Person.Id, Name = x.Person.Name, Surname = x.Person.Surname } })
+                        },
+                        Vendors = element.Company.Vendors.Select
+                            (x => new VendorDTO
+                            {
+                                Id = x.Id,
+                                Person = new PersonDTO()
+                                { Id = x.Person.Id, Name = x.Person.Name, Surname = x.Person.Surname }
+                            })
                             .ToList()
                     };
                 }
+
                 datareturn.Add(historyDto);
             }
+
             return datareturn;
         }
 
@@ -106,7 +108,8 @@ namespace Unicorn.Core.Services
                         Id = history.Customer.Person.Id,
                         Name = history.Customer.Person.Name,
                         Surname = history.Customer.Person.Surname,
-                        Phone = history.Customer.Person.Phone }
+                        Phone = history.Customer.Person.Phone
+                    }
                 }
             };
 
@@ -126,6 +129,7 @@ namespace Unicorn.Core.Services
                     ToAccountId = history.Review.ToAccountId
                 };
             }
+
             if (history.Vendor != null)
             {
                 historyDto.Vendor = new ShortVendorDTO()
@@ -133,17 +137,21 @@ namespace Unicorn.Core.Services
                     Name = "ololo"
                 };
             }
+
             if (history.Company != null)
             {
                 historyDto.Company = new CompanyDTO()
                 {
                     Id = history.Company.Id,
-                    Account = new AccountDTO() { Id = history.Company.Account.Id,
+                    Account = new AccountDTO()
+                    {
+                        Id = history.Company.Account.Id,
                         DateCreated = history.Company.Account.DateCreated
-                        },
+                    },
                     Vendors = history.Company.Vendors.Select(x => new VendorDTO { Id = x.Id, Person = new PersonDTO() { Id = x.Person.Id, Name = x.Person.Name, Surname = x.Person.Surname } }).ToList()
                 };
             }
+
             return historyDto;
         }
 
@@ -152,6 +160,7 @@ namespace Unicorn.Core.Services
             var history = await _unitOfWork.HistoryRepository.Query
                  .Include(h => h.Vendor)
                  .Where(h => h.Vendor.Id == vendorId).ToListAsync();
+
             return history
                     .Select(h => new VendorHistoryDTO()
                     {

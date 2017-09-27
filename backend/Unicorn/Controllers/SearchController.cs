@@ -1,6 +1,4 @@
-﻿
-using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -23,31 +21,22 @@ namespace Unicorn.Controllers
 
         [HttpGet]
         [Route("search")]
-        public async Task<List<SearchWorkDTO>> GetPerformersByFilters(  string category, string subcategory, DateTimeOffset? date, int timeZone,
+        public async Task<List<SearchWorkDTO>> GetPerformersByFilters(string category, string subcategory, DateTimeOffset? date, int timeZone,
                                                                         string vendor, string ratingcompare, double? rating, bool? reviews,
                                                                         double? latitude, double? longitude, double? distance,
                                                                         [FromUri] string[] categories, [FromUri] string[] subcategories, string city,
-                                                                        int? sort  )
-        {           
-            return await _searchService.GetWorksByFilters(  category, subcategory, date, timeZone,
+                                                                        int? sort) => await _searchService.GetWorksByFilters(category, subcategory, date, timeZone,
                                                             vendor, ratingcompare, rating, reviews,
                                                             latitude, longitude, distance,
                                                             categories, subcategories, city,
-                                                            sort );
-        }
+                                                            sort);
 
         [HttpGet]
         [Route("search")]
-        public async Task<List<SearchWorkDTO>> GetPerformersByBaseFilters(string category, string subcategory, DateTimeOffset? date, int timeZone)
-        {            
-            return await _searchService.GetWorksByBaseFilters(category, subcategory, date, timeZone);
-        }
+        public async Task<List<SearchWorkDTO>> GetPerformersByBaseFilters(string category, string subcategory, DateTimeOffset? date, int timeZone) => await _searchService.GetWorksByBaseFilters(category, subcategory, date, timeZone);
 
         [HttpGet]
         [Route("search")]
-        public async Task<List<SearchWorkDTO>> GetAllPerformers()
-        {
-            return await _searchService.GetAllWorks();
-        }
+        public async Task<List<SearchWorkDTO>> GetAllPerformers() => await _searchService.GetAllWorks();
     }
 }

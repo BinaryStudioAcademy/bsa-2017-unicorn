@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Unicorn.Shared.DTOs.Review
+﻿namespace Unicorn.Shared.DTOs.Review
 {
     public class ShortReviewDTO
     {
@@ -17,6 +11,5 @@ namespace Unicorn.Shared.DTOs.Review
         public string Text { get; set; }
 
         public int Grade { get; set; }
-       
     }
 }

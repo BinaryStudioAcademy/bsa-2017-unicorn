@@ -11,10 +11,10 @@ namespace Unicorn.Core.Interfaces
 
         Task<List<SearchWorkDTO>> GetWorksByBaseFilters(string category, string subcategory, DateTimeOffset? date, int timeZone);
 
-        Task<List<SearchWorkDTO>> GetWorksByFilters(  string category, string subcategory, DateTimeOffset? date, int timeZone,
+        Task<List<SearchWorkDTO>> GetWorksByFilters(string category, string subcategory, DateTimeOffset? date, int timeZone,
                                                       string vendor, string ratingcompare, double? rating, bool? reviews,
                                                       double? latitude, double? longitude, double? distance,
                                                       string[] categories, string[] subcategories, string city,
-                                                      int? sort  );
+                                                      int? sort);
     }
 }

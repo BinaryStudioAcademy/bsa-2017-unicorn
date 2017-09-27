@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 using Unicorn.Shared.services.interfaces;
 
 namespace Unicorn.Shared.services
@@ -27,10 +22,7 @@ namespace Unicorn.Shared.services
         public HttpStatusCode StatusCode { get; protected set; }
         public string Body { get; protected set; }
 
-        public virtual bool Success
-        {
-            get { return StatusCode == HttpStatusCode.OK; }
-        }
+        public virtual bool Success => StatusCode == HttpStatusCode.OK;
 
         public HttpResponseMessage Raw { get; protected set; }
     }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Unicorn.Shared.DTOs.Contact;
 
 namespace Unicorn.Shared.DTOs.CompanyPage
 {

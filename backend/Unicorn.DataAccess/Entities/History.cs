@@ -30,7 +30,5 @@ namespace Unicorn.DataAccess.Entities
         public virtual Vendor Vendor { get; set; }
 
         public virtual Company Company { get; set; }
-
-       
     }
 }

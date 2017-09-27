@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using Unicorn.DataAccess.Entities.Enum;
 using Unicorn.DataAccess.Interfaces;
 
 namespace Unicorn.DataAccess.Entities
 {
-    public class Report: IEntity
+    public class Report : IEntity
     {
         public long Id { get; set; }
 
@@ -24,6 +23,5 @@ namespace Unicorn.DataAccess.Entities
         public string ProfileName { get; set; }
 
         public string ProfileType { get; set; }
-
     }
 }

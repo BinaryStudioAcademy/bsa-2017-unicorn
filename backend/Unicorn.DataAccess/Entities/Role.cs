@@ -2,7 +2,7 @@
 using Unicorn.DataAccess.Entities.Enum;
 using Unicorn.DataAccess.Interfaces;
 
-namespace Unicorn.DataAccess.Entities 
+namespace Unicorn.DataAccess.Entities
 {
     public class Role : IEntity
     {
